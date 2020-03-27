@@ -1,2 +1,3 @@
 # googology-in-coq
-Googology in Coq
+
+巨大数論を Coq で形式化することを試みます。気が済むまで構成的にするために標準ライブラリは使いません。
