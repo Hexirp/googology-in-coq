@@ -9,7 +9,7 @@ Set Universe Polymorphism.
 Set Polymorphic Inductive Cumulativity.
 
 Inductive Unit@{i} : Type@{i} := unit : Unit.
-</code><pre>
+</code></pre>
 
 まず、最初にいくつかのフラグをオンにしたりオフにしたりしています。一つ目の節では、自動的に帰納法の原理が定義されるのを解除しています。二つ目の節では宇宙多相を有効にします。
 
