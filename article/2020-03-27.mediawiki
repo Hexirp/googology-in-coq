@@ -4,14 +4,14 @@ Coq で巨大数論 (Googology in Coq) は、単純に巨大数論を Coq で形
 
 初回はユニット型を作成します。ユニット型は値が一つだけしかない型です。カリー＝ハワード対応を通して恒真式 ( \( \top \), <code>\top</code> ) に対応します。
 
-<pre><code>
+<pre class="code">
 Unset Elimination Schemes.
 
 Set Universe Polymorphism.
 Set Polymorphic Inductive Cumulativity.
 
 Inductive Unit@{i} : Type@{i} := unit : Unit.
-</code></pre>
+</pre>
 
 まず、最初にいくつかのフラグをオンにしたりオフにしたりしています。一つ目の節では、自動的に帰納法の原理が定義されるのを解除しています。二つ目の節では宇宙多相を有効にします。
 
