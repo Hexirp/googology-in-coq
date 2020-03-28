@@ -9,3 +9,13 @@ Inductive Unit@{i} : Type@{i} := unit : Unit.
 </pre>
 
 <code>Inductive</code> キーワードを用いてユニット型を定義します。この型の構築子は一つだけであり、それは何も引数を受け取りません。
+
+== 2020-03-28 ==
+
+今日は関数型の表記を追加します。関数型はもともと Coq に組み込まれている全称量化型あるいは依存積型 <code>forall x, T</code> の特殊な場合として表されます。具体的に言うならば、ここでの <code>T</code> が <code>x</code> に依存していない場合が関数型です。
+
+<pre class="code">
+Notation "x -> y" := (forall (_ : x), y) (at level 99, right associativity, y at level 200).
+</pre>
+
+わざわざ <code>forall</code> を書くのは面倒なので矢印で書けるように記法を設定します。
