@@ -28,3 +28,8 @@ Inductive Sum@{i j} (A : Type@{i}) (B : Type@{j}) : Type@{max(i,j)} :=
 
 Arguments left {A} {B} a.
 Arguments right {A} {B} b.
+
+Inductive DSum@{i j} (A : Type@{i}) (B : A -> Type@{j}) : Type@{max(i,j)} :=
+  | dpair : forall a : A, B a -> DSum A B.
+
+Arguments dpair {A} {B} {a} b.
