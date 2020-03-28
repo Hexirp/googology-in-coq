@@ -47,4 +47,6 @@ Arguments Path {A} a a'.
 
 Arguments idpath {A} {a}, [A] a.
 
-Print idpath.
+Definition idmap@{i} {A : Type@{i}} (x : A) : A := x.
+
+Print idmap.
