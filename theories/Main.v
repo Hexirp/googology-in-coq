@@ -15,4 +15,5 @@ Inductive Sum@{i j} (A : Type@{i}) (B : Type@{j}) : Type@{max(i,j)} :=
   | left : A -> Sum A B
   | right : B -> Sum A B.
 
-Print Sum.
+Arguments left {A} {B} a.
+Arguments right {A} {B} b.
