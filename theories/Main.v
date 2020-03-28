@@ -39,3 +39,12 @@ Definition dfst@{i j} {A : Type@{i}} {B : A -> Type@{j}} (x : DSum@{i j} A B) : 
 
 Definition dsnd@{i j} {A : Type@{i}} {B : A -> Type@{j}} (x : DSum@{i j} A B) : B (dfst@{i j} x) :=
   match x with dpair a b => b end.
+
+Inductive Path@{i} (A : Type@{i}) (a : A) : A -> Type@{i} :=
+  | idpath : Path A a a.
+
+Arguments Path {A} a a'.
+
+Arguments idpath {A} {a}, [A] a.
+
+Print idpath.
