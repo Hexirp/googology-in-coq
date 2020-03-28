@@ -32,4 +32,10 @@ Arguments right {A} {B} b.
 Inductive DSum@{i j} (A : Type@{i}) (B : A -> Type@{j}) : Type@{max(i,j)} :=
   | dpair : forall a : A, B a -> DSum A B.
 
-Arguments dpair {A} {B} {a} b.
+Arguments dpair {A} {B} a b.
+
+Definition dfst@{i j} {A : Type@{i}} {B : A -> Type@{j}} (x : DSum@{i j} A B) : A :=
+  match x with dpair a b => a end.
+
+Definition dsnd@{i j} {A : Type@{i}} {B : A -> Type@{j}} (x : DSum@{i j} A B) : B (dfst@{i j} x) :=
+  match x with dpair a b => b end.
