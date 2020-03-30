@@ -51,13 +51,13 @@ Definition idmap@{i} {A : Type@{i}} (x : A) : A := x.
 
 Definition const@{i j} {A : Type@{i}} {B : Type@{j}} (x : A) (y : B) : A := x.
 
-Definition comp_f@{i j k} {A : Type@{i}} {B : Type@{j}} {C : Type@{k}} (f : B -> C) (g : A -> B) (x : A) : C := f (g x).
+Definition comp@{i j k} {A : Type@{i}} {B : Type@{j}} {C : Type@{k}} (f : B -> C) (g : A -> B) (x : A) : C := f (g x).
 
-Definition comp_d@{i j k} {A : Type@{i}} {B : Type@{j}} {C : B -> Type@{k}} (f : forall b : B, C b) (g : A -> B) (x : A) : C (g x) := f (g x).
+Definition compD@{i j k} {A : Type@{i}} {B : Type@{j}} {C : B -> Type@{k}} (f : forall b : B, C b) (g : A -> B) (x : A) : C (g x) := f (g x).
 
-Definition ap_f@{i j} {A : Type@{i}} {B : Type@{j}} (f : A -> B) (x : A) : B := f x.
+Definition apply@{i j} {A : Type@{i}} {B : Type@{j}} (f : A -> B) (x : A) : B := f x.
 
-Definition ap_d@{i j} {A : Type@{i}} {B : A -> Type@{j}} (f : forall a : A, B a) (x : A) : B x := f x.
+Definition applyD@{i j} {A : Type@{i}} {B : A -> Type@{j}} (f : forall a : A, B a) (x : A) : B x := f x.
 
 Definition absurd@{i j} {A : Type@{i}} (x : Void@{j}) : A :=
   match x with end.
@@ -74,7 +74,7 @@ Definition inv@{i} {A : Type@{i}} {x y : A} (p : Path@{i} x y) : Path@{i} y x :=
 Definition conc@{i} {A : Type@{i}} {x y z : A} (p : Path@{i} x y) (q : Path@{i} y z) : Path@{i} x z :=
   match q with idpath => match p with idpath => idpath end end.
 
-Definition ap_p@{i j} {A : Type@{i}} {B : Type@{j}} (f : A -> B) {x y : A} (p : Path@{i} x y) : Path@{j} (f x) (f y) :=
+Definition ap@{i j} {A : Type@{i}} {B : Type@{j}} (f : A -> B) {x y : A} (p : Path@{i} x y) : Path@{j} (f x) (f y) :=
   match p with idpath => idpath end.
 
-Print ap_p.
+Print ap.
