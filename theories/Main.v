@@ -55,4 +55,8 @@ Definition comp_f@{i j k} {A : Type@{i}} {B : Type@{j}} {C : Type@{k}} (f : B ->
 
 Definition comp_d@{i j k} {A : Type@{i}} {B : Type@{j}} {C : B -> Type@{k}} (f : forall b : B, C b) (g : A -> B) (x : A) : C (g x) := f (g x).
 
-Print comp_d.
+Definition ap_f@{i j} {A : Type@{i}} {B : Type@{j}} (f : A -> B) (x : A) : B := f x.
+
+Definition ap_d@{i j} {A : Type@{i}} {B : A -> Type@{j}} (f : forall a : A, B a) (x : A) : B x := f x.
+
+Print ap_d.
