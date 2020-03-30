@@ -49,4 +49,8 @@ Arguments idpath {A} {a}, [A] a.
 
 Definition idmap@{i} {A : Type@{i}} (x : A) : A := x.
 
-Print idmap.
+Definition const@{i j} {A : Type@{i}} {B : Type@{j}} (x : A) (y : B) : A := x.
+
+Definition comp_f@{i j k} {A : Type@{i}} {B : Type@{j}} {C : Type@{k}} (f : B -> C) (g : A -> B) (x : A) : C := f (g x).
+
+Print comp_f.
