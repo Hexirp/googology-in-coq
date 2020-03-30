@@ -62,4 +62,10 @@ Definition ap_d@{i j} {A : Type@{i}} {B : A -> Type@{j}} (f : forall a : A, B a)
 Definition absurd@{i j} {A : Type@{i}} (x : Void@{j}) : A :=
   match x with end.
 
-Print absurd.
+Definition curry@{i j k} {A : Type@{i}} {B : Type@{j}} {C : Type@{k}} (f : Prod@{i j} A B -> C) (x : A) (y : B) : C :=
+  f (pair x y).
+
+Definition uncurry@{i j k} {A : Type@{i}} {B : Type@{j}} {C : Type@{k}} (f : A -> B -> C) (x : Prod@{i j} A B) : C :=
+  match x with pair a b => f a b end.
+
+Print uncurry.
