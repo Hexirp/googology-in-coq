@@ -59,4 +59,7 @@ Definition ap_f@{i j} {A : Type@{i}} {B : Type@{j}} (f : A -> B) (x : A) : B := 
 
 Definition ap_d@{i j} {A : Type@{i}} {B : A -> Type@{j}} (f : forall a : A, B a) (x : A) : B x := f x.
 
-Print ap_d.
+Definition absurd@{i j} {A : Type@{i}} (x : Void@{j}) : A :=
+  match x with end.
+
+Print absurd.
