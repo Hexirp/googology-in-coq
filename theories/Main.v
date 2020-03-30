@@ -68,4 +68,7 @@ Definition curry@{i j k} {A : Type@{i}} {B : Type@{j}} {C : Type@{k}} (f : Prod@
 Definition uncurry@{i j k} {A : Type@{i}} {B : Type@{j}} {C : Type@{k}} (f : A -> B -> C) (x : Prod@{i j} A B) : C :=
   match x with pair a b => f a b end.
 
-Print uncurry.
+Definition inv@{i} {A : Type@{i}} {x y : A} (p : Path@{i} x y) : Path@{i} y x :=
+  match p with idpath => idpath end.
+
+Print inv.
