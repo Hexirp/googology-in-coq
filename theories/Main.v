@@ -71,7 +71,10 @@ Definition uncurry@{i j k} {A : Type@{i}} {B : Type@{j}} {C : Type@{k}} (f : A -
 Definition inv@{i} {A : Type@{i}} {x y : A} (p : Path@{i} x y) : Path@{i} y x :=
   match p with idpath => idpath end.
 
-Definition conc@{i} {A : Type@{i}} (x y z : A) (p : Path@{i} x y) (q : Path@{i} y z) : Path@{i} x z :=
+Definition conc@{i} {A : Type@{i}} {x y z : A} (p : Path@{i} x y) (q : Path@{i} y z) : Path@{i} x z :=
   match q with idpath => match p with idpath => idpath end end.
 
-Print conc.
+Definition ap_p@{i j} {A : Type@{i}} {B : Type@{j}} (f : A -> B) {x y : A} (p : Path@{i} x y) : Path@{j} (f x) (f y) :=
+  match p with idpath => idpath end.
+
+Print ap_p.
