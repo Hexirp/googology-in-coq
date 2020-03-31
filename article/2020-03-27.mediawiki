@@ -50,7 +50,7 @@ Arguments pair {A} {B} a b.
 <pre class="code">
 Definition fst@{i j} {A : Type@{i}} {B : Type@{j}} (x : Prod@{i j} A B) : A :=
   match x with pair a b => a end.
-<pre class="code">
+</pre>
 
 これからも直積を基本とする型には射影関数を定義していきたいと思います。ちなみに、直積を基本とする型は余帰納型として射影関数により定義するのが理想です。圏論の双対になっているから美しくなります（帰納型／余帰納型、直和／直積、構築子／射影関数）。理想に反して <code>Prod</code> を <code>Inductive</code> で定義する理由は、 Coq においての余帰納型は射影関数を基本として定義できなかったりバグが見つかることがあったり自動で簡約されなかったりと色々扱いが悪いからです。
 
