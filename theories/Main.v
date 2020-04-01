@@ -77,4 +77,6 @@ Definition conc@{i} {A : Type@{i}} {x y z : A} (p : Path@{i} x y) (q : Path@{i} 
 Definition ap@{i j} {A : Type@{i}} {B : Type@{j}} (f : A -> B) {x y : A} (p : Path@{i} x y) : Path@{j} (f x) (f y) :=
   match p with idpath => idpath end.
 
-Print ap.
+Inductive Bool@{i} : Type@{i} :=
+  | false : Bool
+  | true : Bool.
