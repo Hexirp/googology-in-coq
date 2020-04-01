@@ -86,6 +86,6 @@ Inductive Ordering@{i} : Type@{i} :=
   | eql : Ordering
   | grt : Ordering.
 
-Definition Rel@{i j} (A : Type@{i}) : Type@{max(i,j+1)} := A -> A -> Type@{j}.
+Definition Rel@{i j} (A : Type@{i}) : Type@{max(i,j)} := A -> A -> Bool@{j}.
 
 Print Rel.
