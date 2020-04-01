@@ -80,3 +80,8 @@ Definition ap@{i j} {A : Type@{i}} {B : Type@{j}} (f : A -> B) {x y : A} (p : Pa
 Inductive Bool@{i} : Type@{i} :=
   | false : Bool
   | true : Bool.
+
+Inductive Ordering@{i} : Type@{i} :=
+  | les : Ordering
+  | eql : Ordering
+  | grt : Ordering.
