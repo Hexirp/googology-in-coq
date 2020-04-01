@@ -88,4 +88,7 @@ Inductive Ordering@{i} : Type@{i} :=
 
 Definition Rel@{i j} (A : Type@{i}) : Type@{max(i,j)} := A -> A -> Bool@{j}.
 
-Print Rel.
+Inductive Acc@{i j} {A : Type@{i}} (r : Rel@{i j} A) : A -> Type@{max(i,j)} :=
+  mkAcc : forall a : A, (forall a' : A, Path@{j} (r a' a) true -> Acc r a') -> Acc r a.
+
+Print Acc.
