@@ -116,10 +116,10 @@ Definition natOrd@{i j} : Ord@{i j} Nat@{i}
 Definition natOrd_m_S_n@{i j} {m n : Nat@{i}} (p : Path@{j} (natOrd@{i j} m (succ@{i} n)) les@{j})
   : Sum@{j j} (Path@{j} (natOrd@{i j} m n) eql@{j}) (Path@{j} (natOrd@{i j} m n) les@{j})
   := let r
-    := fix r (m n : Nat@{i}) (p : Path@{j} (natOrd@{i j} m (succ@{i} n)) les@{j}) {struct m}
-      : Sum@{j j} (Path@{j} (natOrd@{i j} m n) eql@{j}) (Path@{j} (natOrd@{i j} m n) les@{j})
+    := fix r (m n : Nat@{i}) {struct m}
+      : Path@{j} (natOrd@{i j} m (succ@{i} n)) les@{j} -> Sum@{j j} (Path@{j} (natOrd@{i j} m n) eql@{j}) (Path@{j} (natOrd@{i j} m n) les@{j})
       := match m, n with
-      | zero, zero => left@{j j} unit
+      | zero, zero => fun _ => left@{j j} unit
       | zero, succ np => unit
       | succ mp, zero => unit
       | succ mp, succ np => unit
