@@ -113,10 +113,11 @@ Definition natOrd@{i j} : Ord@{i j} Nat@{i}
     | succ xp, succ yp => r xp yp
     end.
 
-Definition natOrd_m_S_n@{i j} {m n : Nat@{i}} (p : Path@{j} (natOrd@{i j} m (succ n)) les)
-  : Sum@{j j} (Path@{j} (natOrd@{i j} m n) eql) (Path@{j} (natOrd@{i j} m n) les)
+Definition natOrd_m_S_n@{i j} {m n : Nat@{i}} (p : Path@{j} (natOrd@{i j} m (succ@{i} n)) les@{j})
+  : Sum@{j j} (Path@{j} (natOrd@{i j} m n) eql@{j}) (Path@{j} (natOrd@{i j} m n) les@{j})
   := let r
-    := fix r (m n : Nat@{i}) (p : Path@{j} (natOrd@{i j} m (succ n)) les) {struct m} : Sum@{j j} (Path@{j} (natOrd@{i j} m n) eql) (Path@{j} (natOrd@{i j} m n) les)
+    := fix r (m n : Nat@{i}) (p : Path@{j} (natOrd@{i j} m (succ@{i} n)) les@{j}) {struct m}
+      : Sum@{j j} (Path@{j} (natOrd@{i j} m n) eql@{j}) (Path@{j} (natOrd@{i j} m n) les@{j})
       := unit
     in r m n p.
 
