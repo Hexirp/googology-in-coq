@@ -133,7 +133,7 @@ Definition natOrd_m_O@{i j k k'} {m : Nat@{i}} (p : Path@{j} (natOrd@{i j} m zer
 
 Print natOrd_m_O.
 
-Definition natOrd_m_S_n@{i j} {m n : Nat@{i}} (p : Path@{j} (natOrd@{i j} m (succ@{i} n)) les@{j})
+Definition natOrd_m_S_n@{i j j' | j < j'} {m n : Nat@{i}} (p : Path@{j} (natOrd@{i j} m (succ@{i} n)) les@{j})
   : Sum@{j j} (Path@{j} (natOrd@{i j} m n) eql@{j}) (Path@{j} (natOrd@{i j} m n) les@{j})
   := let r
     := fix r (m n : Nat@{i}) {struct m}
@@ -141,7 +141,7 @@ Definition natOrd_m_S_n@{i j} {m n : Nat@{i}} (p : Path@{j} (natOrd@{i j} m (suc
       := match m, n with
       | zero, zero => fun _ => left@{j j} idpath@{j}
       | zero, succ np => fun _ => right@{j j} idpath@{j}
-      | succ mp, zero => fun p => absurd@{j j} (natOrd_m_O@{i j j} p)
+      | succ mp, zero => fun p => absurd@{j j} (natOrd_m_O@{i j j j'} p)
       | succ mp, succ np => fun p => r mp np p
       end
     in r m n p.
