@@ -125,9 +125,9 @@ Definition natOrd_m_O@{i j k k'} {m : Nat@{i}} (p : Path@{j} (natOrd@{i j} m zer
     | grt => Unit@{k}
     end
     in let d
-      := fun p : Path@{j} (natOrd@{i j} m zero@{i}) les@{j} => match m with
-      | zero => p_U_V@{k k'} (ap@{j k'} D p)
-      | succ mp => p_U_V@{k k'} (ap@{j k'} D p)
+      := match m as m' return Path@{j} (natOrd@{i j} m' zero@{i}) les@{j} -> Void@{k} with
+      | zero => fun p => p_U_V@{k k'} (ap@{j k'} D p)
+      | succ mp => fun p => p_U_V@{k k'} (ap@{j k'} D p)
       end
       in d p.
 
