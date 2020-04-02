@@ -94,4 +94,9 @@ Inductive Acc@{i j} {A : Type@{i}} (r : Rel@{i j} A) : A -> Type@{max(i,j)} :=
 Definition WFd@{i j} {A : Type@{i}} (r : Rel@{i j} A) : Type@{max(i,j)} :=
   forall a : A, Acc@{i j} r a.
 
-Print WFd.
+Definition Ord@{i j} (A : Type@{i}) : Type@{max(i,j)} := A -> A -> Ordering@{j}.
+
+Definition fOrdToRef@{i j k} {A : Type@{i}} (ord : Ord@{i j} A) : Rel@{i k} A :=
+  fun (x y : A) => match ord x y with les => false | eql => false | grt => true end.
+
+Print fOrdToRef.
