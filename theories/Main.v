@@ -135,11 +135,7 @@ Definition natOrd_m_S_n@{i j} {m n : Nat@{i}} (p : Path@{j} (natOrd@{i j} m (suc
       := match m, n with
       | zero, zero => fun _ => left idpath
       | zero, succ np => fun _ => right idpath
-      | succ mp, zero => fun p => let void
-        := let D
-          := fun x => match x with grt => Unit | les => Void | eql => Void end
-          in unit
-        in absurd void
+      | succ mp, zero => fun p => absurd (natOrd_m_O (natOrd_S_m_S_n p))
       | succ mp, succ np => unit
       end
     in r m n p.
