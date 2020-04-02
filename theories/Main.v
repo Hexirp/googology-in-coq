@@ -116,7 +116,7 @@ Definition natOrd@{i j} : Ord@{i j} Nat@{i}
 Definition p_U_V@{i i' | i < i'} (p : Path@{i'} Unit@{i} Void@{i}) : Void@{i}
   := match p with idpath => unit@{i} end.
 
-Definition natOrd_m_O@{i j k k'} {m : Nat@{i}} (p : Path@{j} (natOrd@{i j} m zero@{i}) les@{j})
+Definition natOrd_m_O@{i j k k' | k < k'} {m : Nat@{i}} (p : Path@{j} (natOrd@{i j} m zero@{i}) les@{j})
   : Void@{k}
   := let D
     := fun x : Ordering@{j} => match x with
