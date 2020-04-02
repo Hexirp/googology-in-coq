@@ -121,7 +121,7 @@ Definition natOrd_m_S_n@{i j} {m n : Nat@{i}} (p : Path@{j} (natOrd@{i j} m (suc
       := match m, n with
       | zero, zero => fun _ => left idpath
       | zero, succ np => fun _ => right idpath
-      | succ mp, zero => unit
+      | succ mp, zero => fun p => absurd unit
       | succ mp, succ np => unit
       end
     in r m n p.
