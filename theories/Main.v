@@ -105,4 +105,8 @@ Definition OrdCoh@{i j} {A : Type@{i}} (ord : Ord@{i j} A) : Type@{max(i,j)} :=
     let R := Path@{j} (ord y x) grt in
       Prod@{j j} (L -> R) (R -> L).
 
-Print OrdCoh.
+Inductive Nat@{i} : Type@{i} :=
+  | zero : Nat
+  | succ : Nat -> Nat.
+
+Print Nat.
