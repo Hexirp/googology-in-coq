@@ -116,11 +116,20 @@ Definition natOrd@{i j} : Ord@{i j} Nat@{i}
 Definition p_U_V@{i i' | i < i'} (p : Path@{i'} Unit@{i} Void@{i}) : Void@{i}
   := match p with idpath => unit@{i} end.
 
-Definition natOrd_m_O@{i j k} {m : Nat@{i}} (p : Path@{j} (natOrd@{i j} m zero@{i}) les@{j})
+Definition natOrd_m_O@{i j k k'} {m : Nat@{i}} (p : Path@{j} (natOrd@{i j} m zero@{i}) les@{j})
   : Void@{k}
   := let D
-    := fun x => match x with les => Void | eql => Unit | grt => Unit end
-    in unit.
+    := fun x : Ordering@{j} => match x with
+    | les => Void@{k}
+    | eql => Unit@{k}
+    | grt => Unit@{k}
+    end
+    in let d
+      := fun p : Path@{j} (natOrd@{i j} m zero@{i}) les@{j} => match m with
+      | zero => p_U_V@{k k'} (ap@{j k'} D p)
+      | succ mp => p_U_V@{k k'} (ap@{j k'} D p)
+      end
+      in d p.
 
 Print natOrd_m_O.
 
