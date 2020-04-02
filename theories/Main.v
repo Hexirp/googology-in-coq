@@ -118,4 +118,9 @@ Definition natOrd@{i j} : Ord@{i j} Nat@{i} :=
     | succ xp, succ yp => natOrd xp yp
     end.
 
-Print natOrd.
+Definition natOrd_m_S_n@{i j} {m n : Nat@{i}} (p : Path@{j} (natOrd@{i j} m (succ n)) les)
+  : Sum@{j j} (Path@{j} (natOrd@{i j} m n) eql) (Path@{j} (natOrd@{i j} m n) les).
+Proof.
+Admitted.
+
+Print natOrd_m_S_n.
