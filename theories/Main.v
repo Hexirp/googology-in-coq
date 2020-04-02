@@ -133,10 +133,10 @@ Definition natOrd_m_S_n@{i j} {m n : Nat@{i}} (p : Path@{j} (natOrd@{i j} m (suc
     := fix r (m n : Nat@{i}) {struct m}
       : Path@{j} (natOrd@{i j} m (succ@{i} n)) les@{j} -> Sum@{j j} (Path@{j} (natOrd@{i j} m n) eql@{j}) (Path@{j} (natOrd@{i j} m n) les@{j})
       := match m, n with
-      | zero, zero => fun _ => left idpath
-      | zero, succ np => fun _ => right idpath
-      | succ mp, zero => fun p => absurd (natOrd_m_O (natOrd_S_m_S_n p))
-      | succ mp, succ np => fun p => r mp np (natOrd_S_m_S_n p)
+      | zero, zero => fun _ => left@{j j} idpath@{j}
+      | zero, succ np => fun _ => right@{j j} idpath@{j}
+      | succ mp, zero => fun p => absurd@{j j} (natOrd_m_O@{i j j} (natOrd_S_m_S_n@{i j} p))
+      | succ mp, succ np => fun p => r mp np (natOrd_S_m_S_n@{i j} p)
       end
     in r m n p.
 
