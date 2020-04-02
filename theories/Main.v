@@ -136,7 +136,7 @@ Definition natOrd_m_S_n@{i j} {m n : Nat@{i}} (p : Path@{j} (natOrd@{i j} m (suc
       | zero, zero => fun _ => left idpath
       | zero, succ np => fun _ => right idpath
       | succ mp, zero => fun p => absurd (natOrd_m_O (natOrd_S_m_S_n p))
-      | succ mp, succ np => unit
+      | succ mp, succ np => fun p => r mp np (natOrd_S_m_S_n p)
       end
     in r m n p.
 
