@@ -113,6 +113,20 @@ Definition natOrd@{i j} : Ord@{i j} Nat@{i}
     | succ xp, succ yp => r xp yp
     end.
 
+Definition natOrd_m_O@{i j k} {m : Nat@{i}} (p : Path@{j} (natOrd@{i j} m zero@{i}) les@{j})
+  : Void@{k}.
+Proof.
+Admitted.
+
+Print natOrd_m_O.
+
+Definition natOrd_S_m_S_n@{i j} {m n : Nat@{i}} {o : Ordering@{j}} (p : Path@{j} (natOrd@{i j} (succ@{i} m) (succ@{i} n)) o)
+  : Path@{j} (natOrd@{i j} m n) o.
+Proof.
+Admitted.
+
+Print natOrd_S_m_S_n.
+
 Definition natOrd_m_S_n@{i j} {m n : Nat@{i}} (p : Path@{j} (natOrd@{i j} m (succ@{i} n)) les@{j})
   : Sum@{j j} (Path@{j} (natOrd@{i j} m n) eql@{j}) (Path@{j} (natOrd@{i j} m n) les@{j})
   := let r
