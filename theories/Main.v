@@ -109,4 +109,13 @@ Inductive Nat@{i} : Type@{i} :=
   | zero : Nat
   | succ : Nat -> Nat.
 
-Print Nat.
+Definition natOrd@{i j} : Ord@{i j} Nat@{i} :=
+  fix natOrd (x y : Nat@{i}) {struct x} : Ordering@{j} :=
+    match x, y with
+    | zero, zero => eql
+    | zero, succ yp => les
+    | succ xp, zero => grt
+    | succ xp, succ yp => natOrd xp yp
+    end.
+
+Print natOrd.
