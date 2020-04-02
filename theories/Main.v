@@ -118,7 +118,12 @@ Definition natOrd_m_S_n@{i j} {m n : Nat@{i}} (p : Path@{j} (natOrd@{i j} m (suc
   := let r
     := fix r (m n : Nat@{i}) (p : Path@{j} (natOrd@{i j} m (succ@{i} n)) les@{j}) {struct m}
       : Sum@{j j} (Path@{j} (natOrd@{i j} m n) eql@{j}) (Path@{j} (natOrd@{i j} m n) les@{j})
-      := unit
+      := match m, n with
+      | zero, zero => unit
+      | zero, succ np => unit
+      | succ mp, zero => unit
+      | succ mp, succ np => unit
+      end
     in r m n p.
 
 Print natOrd_m_S_n.
