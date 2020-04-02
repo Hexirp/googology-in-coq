@@ -120,13 +120,6 @@ Admitted.
 
 Print natOrd_m_O.
 
-Definition natOrd_S_m_S_n@{i j} {m n : Nat@{i}} {o : Ordering@{j}} (p : Path@{j} (natOrd@{i j} (succ@{i} m) (succ@{i} n)) o)
-  : Path@{j} (natOrd@{i j} m n) o.
-Proof.
-Admitted.
-
-Print natOrd_S_m_S_n.
-
 Definition natOrd_m_S_n@{i j} {m n : Nat@{i}} (p : Path@{j} (natOrd@{i j} m (succ@{i} n)) les@{j})
   : Sum@{j j} (Path@{j} (natOrd@{i j} m n) eql@{j}) (Path@{j} (natOrd@{i j} m n) les@{j})
   := let r
@@ -135,8 +128,8 @@ Definition natOrd_m_S_n@{i j} {m n : Nat@{i}} (p : Path@{j} (natOrd@{i j} m (suc
       := match m, n with
       | zero, zero => fun _ => left@{j j} idpath@{j}
       | zero, succ np => fun _ => right@{j j} idpath@{j}
-      | succ mp, zero => fun p => absurd@{j j} (natOrd_m_O@{i j j} (natOrd_S_m_S_n@{i j} p))
-      | succ mp, succ np => fun p => r mp np (natOrd_S_m_S_n@{i j} p)
+      | succ mp, zero => fun p => absurd@{j j} (natOrd_m_O@{i j j} p)
+      | succ mp, succ np => fun p => r mp np p
       end
     in r m n p.
 
