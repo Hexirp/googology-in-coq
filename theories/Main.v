@@ -114,9 +114,10 @@ Definition natOrd@{i j} : Ord@{i j} Nat@{i}
     end.
 
 Definition natOrd_m_O@{i j k} {m : Nat@{i}} (p : Path@{j} (natOrd@{i j} m zero@{i}) les@{j})
-  : Void@{k}.
-Proof.
-Admitted.
+  : Void@{k}
+  := let D
+    := fun x => match x with les => Void | eql => Unit | grt => Unit end
+    in unit.
 
 Print natOrd_m_O.
 
