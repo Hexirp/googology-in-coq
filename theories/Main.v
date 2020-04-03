@@ -100,9 +100,9 @@ Definition OrdCohR@{i j} {A : Type@{i}} (ord : Ord@{i j} A) : Type@{max(i,j)}
 
 Definition OrdCohS@{i j} {A : Type@{i}} (ord : Ord@{i j} A) : Type@{max(i,j)}
   := forall x y : A,
-    let L := Path@{j} (ord x y) les in
-    let R := Path@{j} (ord y x) grt in
-      Prod@{j j} (L -> R) (R -> L).
+    let L := Path@{j} (ord x y) les
+      in let R := Path@{j} (ord y x) grt
+        in Prod@{j j} (L -> R) (R -> L).
 
 Inductive Nat@{i} : Type@{i}
   := zero : Nat | succ : Nat -> Nat.
@@ -110,10 +110,10 @@ Inductive Nat@{i} : Type@{i}
 Definition natOrd@{i j} : Ord@{i j} Nat@{i}
   := fix r (x y : Nat@{i}) {struct x} : Ordering@{j}
     := match x, y with
-    | zero, zero => eql
-    | zero, succ yp => les
-    | succ xp, zero => grt
-    | succ xp, succ yp => r xp yp
+      | zero, zero => eql
+      | zero, succ yp => les
+      | succ xp, zero => grt
+      | succ xp, succ yp => r xp yp
     end.
 
 Definition p_U_V@{i i' | i < i'} (p : Path@{i'} Unit@{i} Void@{i}) : Void@{i}
@@ -123,14 +123,14 @@ Definition natOrd_m_O@{i j k k' | k < k'} {m : Nat@{i}} (p : Path@{j} (natOrd@{i
   : Void@{k}
   := let D
     := fun x : Ordering@{j} => match x with
-    | les => Void@{k}
-    | eql => Unit@{k}
-    | grt => Unit@{k}
+      | les => Void@{k}
+      | eql => Unit@{k}
+      | grt => Unit@{k}
     end
     in let d
       := match m as m' return Path@{j} (natOrd@{i j} m' zero@{i}) les@{j} -> Void@{k} with
-      | zero => fun p => p_U_V@{k k'} (ap@{j k'} D p)
-      | succ mp => fun p => p_U_V@{k k'} (ap@{j k'} D p)
+        | zero => fun p => p_U_V@{k k'} (ap@{j k'} D p)
+        | succ mp => fun p => p_U_V@{k k'} (ap@{j k'} D p)
       end
       in d p.
 
@@ -142,10 +142,10 @@ Definition natOrd_m_S_n@{i j j' | j < j'} {m n : Nat@{i}} (p : Path@{j} (natOrd@
     := fix r (m n : Nat@{i}) {struct m}
       : Path@{j} (natOrd@{i j} m (succ@{i} n)) les@{j} -> Sum@{j j} (Path@{j} (natOrd@{i j} m n) eql@{j}) (Path@{j} (natOrd@{i j} m n) les@{j})
       := match m, n with
-      | zero, zero => fun _ => left@{j j} idpath@{j}
-      | zero, succ np => fun _ => right@{j j} idpath@{j}
-      | succ mp, zero => fun p => absurd@{j j} (natOrd_m_O@{i j j j'} p)
-      | succ mp, succ np => fun p => r mp np p
+        | zero, zero => fun _ => left@{j j} idpath@{j}
+        | zero, succ np => fun _ => right@{j j} idpath@{j}
+        | succ mp, zero => fun p => absurd@{j j} (natOrd_m_O@{i j j j'} p)
+        | succ mp, succ np => fun p => r mp np p
       end
     in r m n p.
 
