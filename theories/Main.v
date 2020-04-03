@@ -161,4 +161,5 @@ Definition natOrd_m_S_n@{i j j' | j < j'} {m n : Nat@{i}} (p : Path@{j} (natOrd@
 Print natOrd_m_S_n.
 
 Definition WFd_natOrd@{i j j'} : OrdWFd@{i j} natOrd@{i j} :=
-  unit.
+  fix r (x : Nat@{i}) {struct x} : OrdAcc@{i j} natOrd@{i j} x
+    := unit.
