@@ -165,6 +165,9 @@ Definition WFd_natOrd@{i j k k' | k < k'} : OrdWFd@{i j} natOrd@{i j} :=
     := match x with
       | zero => mkOrdAcc@{i j} natOrd@{i j} zero@{i} (fun x' o_x'_x => absurd@{j k} (natOrd_m_O@{i j k k'} o_x'_x) )
       | succ xp => match r xp with
-        | mkOrdAcc _ _ xpH => mkOrdAcc@{i j} natOrd@{i j} (succ@{i} xp) (fun x' o_x'_x => unit)
+        | mkOrdAcc _ _ xpH => mkOrdAcc@{i j} natOrd@{i j} (succ@{i} xp) (fun x' o_x'_x => match natOrd_m_S_n o_x'_x with
+          | left p_x'_xp => unit
+          | right o_x'_xp => unit
+        end)
       end
     end.
