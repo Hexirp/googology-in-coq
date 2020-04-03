@@ -145,7 +145,7 @@ Definition natOrd_m_O@{i j k k' | k < k'} {m : Nat@{i}} (p : Path@{j} (natOrd@{i
 
 Print natOrd_m_O.
 
-Definition natOrd_m_S_n@{i j j' | j < j'} {m n : Nat@{i}} (p : Path@{j} (natOrd@{i j} m (succ@{i} n)) les@{j})
+Definition natOrd_m_S_n@{i j k k' | k < k'} {m n : Nat@{i}} (p : Path@{j} (natOrd@{i j} m (succ@{i} n)) les@{j})
   : Sum@{j j} (Path@{j} (natOrd@{i j} m n) eql@{j}) (Path@{j} (natOrd@{i j} m n) les@{j})
   := let r
     := fix r (m n : Nat@{i}) {struct m}
@@ -153,7 +153,7 @@ Definition natOrd_m_S_n@{i j j' | j < j'} {m n : Nat@{i}} (p : Path@{j} (natOrd@
       := match m, n with
         | zero, zero => fun _ => left@{j j} idpath@{j}
         | zero, succ np => fun _ => right@{j j} idpath@{j}
-        | succ mp, zero => fun p => absurd@{j j} (natOrd_m_O@{i j j j'} p)
+        | succ mp, zero => fun p => absurd@{j k} (natOrd_m_O@{i j k k'} p)
         | succ mp, succ np => fun p => r mp np p
       end
     in r m n p.
@@ -163,6 +163,6 @@ Print natOrd_m_S_n.
 Definition WFd_natOrd@{i j j'} : OrdWFd@{i j} natOrd@{i j} :=
   fix r (x : Nat@{i}) {struct x} : OrdAcc@{i j} natOrd@{i j} x
     := match x with
-      | zero => mkOrdAcc@{i j} natOrd@{i j} zero@{i} (fun x' o_x'_x => absurd@{j j} unit)
+      | zero => mkOrdAcc@{i j} natOrd@{i j} zero@{i} (fun x' o_x'_x => absurd@{j j} (natOrd_m_O@{i j j ))
       | succ xp => unit
     end.
