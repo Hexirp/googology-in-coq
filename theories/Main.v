@@ -168,8 +168,12 @@ Definition WFd_natOrd@{i j k k' | k < k'} : OrdWFd@{i j} natOrd@{i j} :=
   fix r (x : Nat@{i}) {struct x} : OrdAcc@{i j} natOrd@{i j} x
     := match x with
       | zero => mkOrdAcc@{i j} natOrd@{i j} zero@{i} (fun x' o_x'_x => absurd@{j k} (natOrd_m_O@{i j k k'} o_x'_x) )
-      | succ xp => mkOrdAcc@{i j} natOrd@{i j} (succ@{i} xp) (fun x' o_x'_x => match natOrd_m_S_n o_x'_x with
+      | succ xp => mkOrdAcc@{i j} natOrd@{i j} (succ@{i} xp) (fun x' o_x'_x => match natOrd_m_S_n@{i j k k'} o_x'_x with
         | left p_x'_xp => trpt@{j j} (inv@{i} (natOrd_m_n@{i j} p_x'_xp)) (r xp)
-        | right o_x'_xp => unit
+        | right o_x'_xp => let D
+          := match r xp in OrdAcc _ xp' return Path@{i} xp xp' -> OrdAcc@{i j} natOrd@{i j} _ with
+            | mkOrdAcc _ xp' ds_r_xp' => fun p => ds_r_xp' x' (trpt@{j j} p o_x'_xp)
+          end
+          in D idpath
       end)
     end.
