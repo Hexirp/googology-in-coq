@@ -160,6 +160,10 @@ Definition natOrd_m_S_n@{i j k k' | k < k'} {m n : Nat@{i}} (p : Path@{j} (natOr
 
 Print natOrd_m_S_n.
 
+Definition natOrd_m_n@{i j} {m n : Nat@{i}} (p : Path@{j} (natOrd@{i j} m n) eql) : Path@{i} m n.
+Proof.
+Admitted.
+
 Definition WFd_natOrd@{i j k k' | k < k'} : OrdWFd@{i j} natOrd@{i j} :=
   fix r (x : Nat@{i}) {struct x} : OrdAcc@{i j} natOrd@{i j} x
     := match x with
