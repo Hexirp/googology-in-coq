@@ -95,10 +95,10 @@ Definition Ord@{i j} (A : Type@{i}) : Type@{max(i,j)} := A -> A -> Ordering@{j}.
 Definition fOrdToRef@{i j k} {A : Type@{i}} (ord : Ord@{i j} A) : Rel@{i k} A
   := fun x y : A => match ord x y with les => true | eql => false | grt => false end.
 
-Definition OrdCohR@{i j} {A : Type@{i}} (ord : Ord@{i j} A) : Type@{max(i,j)}
+Definition OrdRfl@{i j} {A : Type@{i}} (ord : Ord@{i j} A) : Type@{max(i,j)}
   := forall x : A, Path@{j} (ord x x) eql.
 
-Definition OrdCohS@{i j} {A : Type@{i}} (ord : Ord@{i j} A) : Type@{max(i,j)}
+Definition OrdSym@{i j} {A : Type@{i}} (ord : Ord@{i j} A) : Type@{max(i,j)}
   := forall x y : A,
     let L := Path@{j} (ord x y) les
       in let R := Path@{j} (ord y x) grt
