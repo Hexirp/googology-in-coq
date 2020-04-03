@@ -153,3 +153,5 @@ Definition natOrd_m_S_n@{i j j' | j < j'} {m n : Nat@{i}} (p : Path@{j} (natOrd@
     in r m n p.
 
 Print natOrd_m_S_n.
+
+Definition WFd_natOrd@{i j j'} : WFd@{i j} natOrd@{i j}.
