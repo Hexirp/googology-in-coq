@@ -107,6 +107,12 @@ Definition OrdSym@{i j} {A : Type@{i}} (ord : Ord@{i j} A) : Type@{max(i,j)}
       in let R := Path@{j} (ord y x) grt
         in Prod@{j j} (L -> R) (R -> L).
 
+Inductive OrdAcc@{i j} {A : Type@{i}} (r : Ord@{i j} A) : A -> Type@{max(i,j)}
+  := mkOrdAcc : forall a : A, (forall a' : A, Path@{j} (r a' a) les -> OrdAcc r a') -> OrdAcc r a.
+
+Definition OrdWFd@{i j} {A : Type@{i}} (r : Ord@{i j} A) : Type@{max(i,j)}
+  := forall a : A, OrdAcc@{i j} r a.
+
 Inductive Nat@{i} : Type@{i}
   := zero : Nat | succ : Nat -> Nat.
 
@@ -154,4 +160,4 @@ Definition natOrd_m_S_n@{i j j' | j < j'} {m n : Nat@{i}} (p : Path@{j} (natOrd@
 
 Print natOrd_m_S_n.
 
-Definition WFd_natOrd@{i j j'} : WFd@{i j} natOrd@{i j}.
+Definition WFd_natOrd@{i j j'} : OrdWFd@{i j} natOrd@{i j}.
