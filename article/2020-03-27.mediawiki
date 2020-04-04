@@ -116,6 +116,19 @@ Cubical Type Theory を見るにつき Univalent Foundations には現実性が�
 
 Univalent Foundations の主な部分を定めた Vladimir Voevodsky は 2017 年に 51 歳という若さで逝去しています。
 
+== 2020-04-05 ==
+
+今日は依存和型の第二引数を取り出す関数を作成します。
+
+<pre class="code">
+Definition dsnd@{i j} {A : Type@{i}} {B : A -> Type@{j}} (x : DSum@{i j} A B) : B (dfst@{i j} x)
+  := match x with dpair a b => b end.
+</pre>
+
+この関数の型は <code>dfst</code> という他の関数を使っているという点で面白いものだと思います。
+
+前日に続いて ABC 予想の話題ですが、 nLab の universe polymorphism のページ ([https://ncatlab.org/nlab/show/universe+polymorphism universe polymorphism in nLab]. Retrieved 2020-04-05.) には宇宙際タイヒミュラー理論が宇宙多相に関係があると書かれています。クエスチョンマークがついているので怪しそうですが……。
+
 == ??? ==
 
 <code>natOrd_m_S_n</code> は https://github.com/Hexirp/googology-in-coq/compare/ad6954416c4ae19eaa181020ac348ebc590970e3...ace068b9a473aaec07fcf2891fb545976109c81b の一連のコミットで証明を行っている。 Coq ではどうやって命題を証明するかの参考になると思う。
