@@ -108,9 +108,13 @@ Definition dfst@{i j} {A : Type@{i}} {B : A -> Type@{j}} (x : DSum@{i j} A B) : 
 
 ABC 予想を証明したとする論文の査読には 8 年を要しました。数学は当然のことながら時間が経つにつれて複雑化してきます。しかし、それが度を超すと人生の全てをかけても一つの分野の最先端に到達すらできない人が増えていくことになります。それは、数学にとっての危機であるように思えます。人間が検証を出来ないのならば機械に検証させればいいという考え方があります。カリー＝ハワード対応を通した方法が Coq や Agda で実現されています。それは実際に四色定理の証明において実行されています。
 
-しかし、旧来のシステムでは二つの問題があります。一つ目は、詳細な表現に注意を向けなければならないことです。たとえば、ゼロと後続による自然数とバイナリによる自然数との二つの表現があったとしましょう。ゼロと後続による自然数に対する性質を定義したとき、それをバイナリによる自然数に適用することは出来ません。二つ目は、集合の商のような同一視を行うことが出来ないことです。これにより集合などの型をリストにより実現することが困難でした。
+しかし、旧来のシステムでは二つの問題があります。一つ目は、詳細な表現に注意を向けなければならないことです。たとえば、ゼロと後続による自然数とバイナリによる自然数との二つの表現があったとしましょう。ゼロと後続による自然数に対する性質を定義したとき、それをバイナリによる自然数に適用することは出来ません。二つ目は、集合の商のような同一視を行うことが出来ないことです。これにより数学的な対象を実装することが困難でした。
 
-そのような問題を解決して数学の基礎を機械に移そうとするプロジェクトが Univalent Foundations です。最初に Univalent Axiom (UA, 単葉公理<ref>筆者による訳である。</ref>）が複数の型の表現を同一視することを可能にします。次に Higher Inductive Type (HIT, 高階帰納型) が値の同一視を実現します。それらを含む基礎となるのが Homotopy Type Theory (HoTT) という型理論です。 Coq においては [https://homotopytypetheory.org/coq/ Code | Homotopy Type Theory] であげられているように UniMath と CoqHoTT という二つのライブラリがありました。私が少しだけ読んだことがある CoqHoTT においては UA と HIT について公理が追加されています。そのため UA と HIT に関する計算は公理を使って証明をしながら進める必要がありました。しかし、つい最近に Cubical Type Theory という Homototy Type Theory の一種が考案されました。そこでは UA が公理ではなく、 HIT も組み込みであり、それらについての計算を機械が進めることができます。そのシステムは Cubical Agda として Agda に組み込まれました。
+そのような問題を解決して数学の基礎を機械に移すというプロジェクトが Univalent Foundations です。最初に Univalent Axiom (UA) が複数の型の表現を同一視することを可能にします。次に Higher Inductive Type (HIT, 高階帰納型) が値の同一視を実現します。それらを含む基礎となるのが Homotopy Type Theory (HoTT) という型理論です。 Coq においては [https://homotopytypetheory.org/coq/ Code | Homotopy Type Theory] であげられているように UniMath と CoqHoTT という二つのライブラリがありました。私が少しだけ読んだことがある CoqHoTT においては UA と HIT について公理が追加されています。そのため UA と HIT に関する計算は公理を使って証明をしながら進める必要がありました。しかし、つい最近に Cubical Type Theory という Homototy Type Theory の一種が考案されました。そこでは UA が公理ではなく、 HIT も組み込みであり、それらについての計算を機械が進めることができます。その型システムは最初に cubicaltt という言語として実装され、次に Cubical Agda として Agda に組み込まれました。
+
+このような状況を見るにつき Univalent Foundations には現実性があると私は思います。これらの記述は Homotopy Type Theory: Univalent Foundations of Mathematics の About this book と Introduction を参考にしました。 Univalent Foundations の意義と Cubical Type Theory の説明については、この出典を元としていません。
+
+Univalent Foundations の主な部分を定めた Vladimir Voevodsky は 2017 年に 51 歳という若さで逝去されました。
 
 == ??? ==
 
