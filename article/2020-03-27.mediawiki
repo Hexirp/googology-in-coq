@@ -104,7 +104,7 @@ Definition dfst@{i j} {A : Type@{i}} {B : A -> Type@{j}} (x : DSum@{i j} A B) : 
   := match x with dpair a b => a end.
 </pre>
 
-望月新一教授により出版された ABC 予想を証明したとする論文が PRIMS に掲載されると京都大学が 4 月 3 日に発表しました。掲載されるまでの査読は約 8 年を要しました。<ref>{{cite_web |url=https://mainichi.jp/articles/20200403/k00/00m/040/093000c |title=未解明だった数学の超難問「ABC予想」を証明　京大の望月教授　斬新・難解で査読に8年 |date=2020-04-03 |website=毎日新聞 |publisher=毎日新聞 |accessdate=2020-04-04 }}</ref><ref>{{cite_web |url=https://www.yomiuri.co.jp/science/20200403-OYT1T50201/ |title=数学の未解決難問「ＡＢＣ予想」、望月・京大教授が証明…論文掲載へ |date=2020-04-03 |website=読売新聞オンライン |publisher=読売新聞 |accessdate=2020-04-04 }}</ref><ref>{{cite_web |url=https://www3.nhk.or.jp/news/html/20200403/k10012366491000.html |title=難問「ＡＢＣ予想」京大教授が証明 専門家「歴史に残る成果」 |date=2020-04-03 |website=NHKニュース |publisher=日本放送協会 |accessdate=2020-04-04 }}</ref><ref>{{cite_web |url=https://www.itmedia.co.jp/news/articles/2004/03/news155.html |title=査読8年、京大教授の「ABC予想」証明理論　ついに論文誌掲載へ |date=2020-04-03 |website=ITmedia NEWS |publisher=ITmedia |accessdate=2020-04-04 }}
+望月新一教授により出版された ABC 予想を証明したとする論文が PRIMS に掲載されると京都大学が 4 月 3 日に発表しました。掲載されるまでの査読は約 8 年を要しました。<ref>{{cite_web |url=https://mainichi.jp/articles/20200403/k00/00m/040/093000c |title=未解明だった数学の超難問「ABC予想」を証明　京大の望月教授　斬新・難解で査読に8年 |date=2020-04-03 |website=毎日新聞 |publisher=毎日新聞 |accessdate=2020-04-04 }}</ref><ref>{{cite_web |url=https://www.yomiuri.co.jp/science/20200403-OYT1T50201/ |title=数学の未解決難問「ＡＢＣ予想」、望月・京大教授が証明…論文掲載へ |date=2020-04-03 |website=読売新聞オンライン |publisher=読売新聞 |accessdate=2020-04-04 }}</ref><ref>{{cite_web |url=https://www3.nhk.or.jp/news/html/20200403/k10012366491000.html |title=難問「ＡＢＣ予想」京大教授が証明 専門家「歴史に残る成果」 |date=2020-04-03 |website=NHKニュース |publisher=日本放送協会 |accessdate=2020-04-04 }}</ref><ref>{{cite_web |url=https://www.itmedia.co.jp/news/articles/2004/03/news155.html |title=査読8年、京大教授の「ABC予想」証明理論　ついに論文誌掲載へ |date=2020-04-03 |website=ITmedia NEWS |publisher=ITmedia |accessdate=2020-04-04 }}</ref>
 
 ABC 予想を証明したとする論文の査読には 8 年を要しました。数学は当然のことながら時間が経つにつれて複雑化してきます。しかし、それが度を超すと人生の全てをかけても一つの分野の最先端に到達すらできない人が増えていくことになります。それは、数学にとっての危機であるように思えます。人間が検証を出来ないのならば機械に検証させればいいという考え方があります。カリー＝ハワード対応を通した方法が Coq や Agda で実現されています。それは実際に四色定理の証明において実行されています。
 
@@ -119,3 +119,7 @@ Univalent Foundations の主な部分を定めた Vladimir Voevodsky は 2017 �
 == ??? ==
 
 <code>natOrd_m_S_n</code> は https://github.com/Hexirp/googology-in-coq/compare/ad6954416c4ae19eaa181020ac348ebc590970e3...ace068b9a473aaec07fcf2891fb545976109c81b の一連のコミットで証明を行っている。 Coq ではどうやって命題を証明するかの参考になると思う。
+
+== 脚注 ==
+
+<references />
