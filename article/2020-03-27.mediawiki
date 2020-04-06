@@ -127,7 +127,24 @@ Definition dsnd@{i j} {A : Type@{i}} {B : A -> Type@{j}} (x : DSum@{i j} A B) : 
 
 この関数の型は <code>dfst</code> という他の関数を使っているという点で面白いものだと思います。
 
-前日に続いて ABC 予想の話題ですが、 nLab の universe polymorphism のページ ([https://ncatlab.org/nlab/show/universe+polymorphism universe polymorphism in nLab]. Retrieved 2020-04-05.) には宇宙際タイヒミュラー理論が宇宙多相に関係があると書かれています。クエスチョンマークがついているので怪しそうですが……。
+前日に続いて ABC 予想の話題ですが、 nLab の universe polymorphism のページ ([https://ncatlab.org/nlab/show/universe+polymorphism universe polymorphism in nLab]. Retrieved 2020-04-05.) には宇宙際タイヒミュラー理論が宇宙多相に関係があると書かれています。クエスチョンマークがついているので怪しいですが……。
+
+== 2020-04-06 ===
+
+今日は等式型を作成します。等式型は、ある型を受け取り、その型のある二つの値を受け取り、その二つが等しいことの証拠となります。カリー＝ハワード対応を通して等号 ( \( x = y \) ) に対応します。
+
+<pre class="code">
+Inductive Path@{i} (A : Type@{i}) (a : A) : A -> Type@{i}
+  := idpath : Path A a a.
+
+Arguments Path {A} a a'.
+
+Arguments idpath {A} {a}, [A] a.
+</pre>
+
+一階述語論理の等号は値のみを対象とします。ですが、この等式型は <code>{i i' | i < i'}</code> という宇宙の環境の下で <code>Path@{i'} Type@{i} Unit@{i} Unit@{i}</code> と書けるように、型の等しさも扱うことが出来ます。さらに <code>Path@{i} (Path@{i} Unit@{i} unit@{i} unit@{i}) idpath@{i} idpath@{i}</code> というように等しさの等しさも扱うことが出来ます。こうまでになると、等式という名前はふさわしくないように思えます。道 (path) の方がいいでしょう。この「道」型は Homotopy Type Theory を理解するための中核となるアイデアです。
+
+<code>idpath</code> は特殊な暗黙引数の設定をしています。具体的に言うならば <code>idpath</code> と書かれているときは <code>@idpath _ _</code> というように補い <code>idpath a</code> と書かれているときは <code>@idpath _ a</code> と補います。
 
 == ??? ==
 
