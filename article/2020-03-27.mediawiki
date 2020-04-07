@@ -146,6 +146,18 @@ Arguments idpath {A} {a}, [A] a.
 
 <code>idpath</code> は特殊な暗黙引数の設定をしています。具体的に言うならば <code>idpath</code> と書かれているときは <code>@idpath _ _</code> というように補い <code>idpath a</code> と書かれているときは <code>@idpath _ a</code> と補います。
 
+== 2020-04-07 ==
+
+今日は恒等写像を定義します。カリー＝ハワード対応を通して \( \forall A \ldotp A \rightarrow A \) に対応します。
+
+<pre class="code">
+Definition idmap@{i} {A : Type@{i}} (x : A) : A := x.
+</pre>
+
+Homotopy Type Theory では x が y と等しいとは x から y への道があると読み替えられます。それは x と y の型を空間として考えたときの道です。そして x から y への道 p と q が等しいとは p から q へ連続的に変形できると読み替えられます。
+
+A の値を対象として A に対する道を射として見做します。恒等射があり結合が可能であり、反転も可能です。 1-groupoid になります。そして、それの射である A に対する道、それらに対する道も考えられます。そのような構造も考えられるので 2-groupoid になります。さらに A に対する道に対する道に対する道と限りなく続けられますので ∞-groupoid になります。 ∞-groupoid は単純に定義できるように見えて、定義が難しいのですが、少なくとも Homotopy Type Theory の根幹にはこのアイデアがあるようです。
+
 == ??? ==
 
 <code>natOrd_m_S_n</code> は https://github.com/Hexirp/googology-in-coq/compare/ad6954416c4ae19eaa181020ac348ebc590970e3...ace068b9a473aaec07fcf2891fb545976109c81b の一連のコミットで証明を行っている。 Coq ではどうやって命題を証明するかの参考になると思う。
