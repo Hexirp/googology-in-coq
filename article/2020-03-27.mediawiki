@@ -148,7 +148,7 @@ Arguments idpath {A} {a}, [A] a.
 
 == 2020-04-07 ==
 
-今日は恒等写像を定義します。カリー＝ハワード対応を通して \( \forall A \ldotp A \rightarrow A \) に対応します。
+今日は恒等写像を定義します。カリー＝ハワード対応を通して \( A \rightarrow A \) に対応します。
 
 <pre class="code">
 Definition idmap@{i} {A : Type@{i}} (x : A) : A := x.
