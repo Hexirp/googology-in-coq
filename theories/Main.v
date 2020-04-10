@@ -211,6 +211,33 @@ Print p_natOrd_m_S_n_les.
 
 Definition natOrd_m_n@{i j} {m n : Nat@{i}} (p : Path@{j} (natOrd@{i j} m n) eql) : Path@{i} m n.
 Proof.
+  refine (let r := ?[r] : forall m n : Nat@{i}, Path@{j} (natOrd@{i j} m n) eql@{j} -> Path@{i} m n in _).
+  [r]: {
+    refine (fix r (m n : Nat@{i}) {struct m} : Path@{j} (natOrd@{i j} m n) eql@{j} -> Path@{i} m n := _).
+    refine (
+      match m, n with
+        | zero, zero => _
+        | zero, succ np => _
+        | succ mp, zero => _
+        | succ mp, succ np => _
+      end).
+    {
+      refine (fun p => _).
+      exact idpath@{i}.
+    }
+    {
+      admit.
+    }
+    {
+      admit.
+    }
+    {
+      refine (fun p => _).
+      refine (ap@{i i} succ@{i} _).
+      refine (r mp np _).
+      exact p.
+    }
+  }
 Admitted.
 
 Definition WFd_natOrd@{i j k k' | k < k'} : OrdWFd@{i j} natOrd@{i j} :=
