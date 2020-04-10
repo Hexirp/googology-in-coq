@@ -135,10 +135,10 @@ Definition p_natOrd_m_O_les@{i j k k' | k < k'}
   {m : Nat@{i}} (p : Path@{j} (natOrd@{i j} m zero@{i}) les@{j})
   : Void@{k}.
 Proof.
-  refine (let D := ?[D] : Ordering@{j} -> Type@{k'} in _).
+  refine (let D := ?[D] : Ordering@{j} -> Type@{k} in _).
   [D]: {
     refine (fun x : Ordering@{j} => _).
-    refine (match x return Type@{k'} with les => Void@{k} | eql => Unit@{k} | grt => Unit@{k} end).
+    refine (match x return Type@{k} with les => Void@{k} | eql => Unit@{k} | grt => Unit@{k} end).
   }
   refine (let d := ?[d] : Path@{j} (natOrd@{i j} m zero@{i}) les@{j} -> Void@{k} in _).
   [d]: {
@@ -146,6 +146,8 @@ Proof.
     {
       refine (fun p => _).
       refine (p_U_V@{k k'} _).
+      exact (ap@{j k'} D p).
+    }
 Admitted.
 
 Definition natOrd_m_O@{i j k k' | k < k'} {m : Nat@{i}} (p : Path@{j} (natOrd@{i j} m zero@{i}) les@{j})
