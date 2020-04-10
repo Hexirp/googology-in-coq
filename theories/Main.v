@@ -103,9 +103,9 @@ Definition OrdRfl@{i j} {A : Type@{i}} (ord : Ord@{i j} A) : Type@{max(i,j)}
 
 Definition OrdSym@{i j} {A : Type@{i}} (ord : Ord@{i j} A) : Type@{max(i,j)}
   := forall x y : A,
-    let L := Path@{j} (ord x y) les
-      in let R := Path@{j} (ord y x) grt
-        in Prod@{j j} (L -> R) (R -> L).
+    Prod@{j j}
+      (Path@{j} (ord x y) les -> Path@{j} (ord y x) grt)
+      (Path@{j} (ord y x) grt -> Path@{j} (ord x y) les).
 
 Inductive OrdAcc@{i j} {A : Type@{i}} (r : Ord@{i j} A) : A -> Type@{max(i,j)}
   := mkOrdAcc : forall a : A, (forall a' : A, Path@{j} (r a' a) les -> OrdAcc r a') -> OrdAcc r a.
