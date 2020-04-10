@@ -128,6 +128,15 @@ Definition natOrd@{i j} : Ord@{i j} Nat@{i}
 Definition p_U_V@{i i' | i < i'} (p : Path@{i'} Unit@{i} Void@{i}) : Void@{i}
   := match p with idpath => unit@{i} end.
 
+Declare ML Module "ltac_plugin" .
+Set Default Proof Mode "Classic" .
+
+Definition p_natOrd_m_O_les@{i j k k' | k < k'}
+  {m : Nat@{i}} (p : Path@{j} (natOrd@{i j} m zero@{i}) les@{j})
+  : Void@{k}.
+Proof.
+Admitted.
+
 Definition natOrd_m_O@{i j k k' | k < k'} {m : Nat@{i}} (p : Path@{j} (natOrd@{i j} m zero@{i}) les@{j})
   : Void@{k}
   := let D
