@@ -153,7 +153,9 @@ Proof.
       refine (p_U_V@{k k'} _).
       exact (ap@{j k'} D p).
     }
-Admitted.
+  }
+  exact (d p).
+Defined.
 
 Definition natOrd_m_O@{i j k k' | k < k'} {m : Nat@{i}} (p : Path@{j} (natOrd@{i j} m zero@{i}) les@{j})
   : Void@{k}
