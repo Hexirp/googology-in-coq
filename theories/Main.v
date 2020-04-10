@@ -140,6 +140,12 @@ Proof.
     refine (fun x : Ordering@{j} => _).
     refine (match x return Type@{k'} with les => Void@{k} | eql => Unit@{k} | grt => Unit@{k} end).
   }
+  refine (let d := ?[d] : Path@{j} (natOrd@{i j} m zero@{i}) les@{j} -> Void@{k} in _).
+  [d]: {
+    refine (match m as m' return Path@{j} (natOrd@{i j} m' zero@{i}) les@{j} -> Void@{k} with zero => _ | succ mp => _ end).
+    {
+      refine (fun p => _).
+      refine (p_U_V@{k k'} _).
 Admitted.
 
 Definition natOrd_m_O@{i j k k' | k < k'} {m : Nat@{i}} (p : Path@{j} (natOrd@{i j} m zero@{i}) les@{j})
