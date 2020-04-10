@@ -163,24 +163,51 @@ Definition p_natOrd_m_S_n_les@{i j k k' | k < k'}
   {m n : Nat@{i}} (p : Path@{j} (natOrd@{i j} m (succ@{i} n)) les@{j})
   : Sum@{j j} (Path@{j} (natOrd@{i j} m n) eql@{j}) (Path@{j} (natOrd@{i j} m n) les@{j}).
 Proof.
-Admitted.
+  refine (
+    let r
+      := ?[r]
+        : forall m n : Nat@{i},
+          Path@{j} (natOrd@{i j} m (succ@{i} n)) les@{j} -> Sum@{j j} (Path@{j} (natOrd@{i j} m n) eql@{j}) (Path@{j} (natOrd@{i j} m n) les@{j})
+      in _).
+  [r]: {
+    refine (
+      fix r (m n : Nat@{i}) {struct m}
+        : Path@{j} (natOrd@{i j} m (succ@{i} n)) les@{j} -> Sum@{j j} (Path@{j} (natOrd@{i j} m n) eql@{j}) (Path@{j} (natOrd@{i j} m n) les@{j})
+        := _).
+    refine (
+      match m, n with
+        | zero, zero => _
+        | zero, succ np => _
+        | succ mp, zero => _
+        | succ mp, succ np => _
+      end).
+    {
+      refine (fun p => _).
+      refine (left@{j j} _).
+      exact idpath@{j}.
+    }
+    {
+      refine (fun p => _).
+      refine (right@{j j} _).
+      exact idpath@{j}.
+    }
+    {
+      refine (fun p => _).
+      refine (absurd@{j k} _).
+      refine (p_natOrd_m_O_les@{i j k k'} (m := mp) _).
+      exact p.
+    }
+    {
+      refine (fun p => _).
+      refine (r mp np _).
+      exact p.
+    }
+  }
+  refine (r m n _).
+  exact p.
+Defined.
 
-Definition natOrd_m_O@{i j k k' | k < k'} {m : Nat@{i}} (p : Path@{j} (natOrd@{i j} m zero@{i}) les@{j})
-  : Void@{k}
-  := let D
-    := fun x : Ordering@{j} => match x with
-      | les => Void@{k}
-      | eql => Unit@{k}
-      | grt => Unit@{k}
-    end
-    in let d
-      := match m as m' return Path@{j} (natOrd@{i j} m' zero@{i}) les@{j} -> Void@{k} with
-        | zero => fun p => p_U_V@{k k'} (ap@{j k'} D p)
-        | succ mp => fun p => p_U_V@{k k'} (ap@{j k'} D p)
-      end
-      in d p.
-
-Print natOrd_m_O.
+Print p_natOrd_m_S_n_les.
 
 Definition natOrd_m_S_n@{i j k k' | k < k'} {m n : Nat@{i}} (p : Path@{j} (natOrd@{i j} m (succ@{i} n)) les@{j})
   : Sum@{j j} (Path@{j} (natOrd@{i j} m n) eql@{j}) (Path@{j} (natOrd@{i j} m n) les@{j})
