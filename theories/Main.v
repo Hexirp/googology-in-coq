@@ -157,6 +157,14 @@ Proof.
   exact (d p).
 Defined.
 
+Print p_natOrd_m_O_les.
+
+Definition p_natOrd_m_S_n_les@{i j k k' | k < k'}
+  {m n : Nat@{i}} (p : Path@{j} (natOrd@{i j} m (succ@{i} n)) les@{j})
+  : Sum@{j j} (Path@{j} (natOrd@{i j} m n) eql@{j}) (Path@{j} (natOrd@{i j} m n) les@{j}).
+Proof.
+Admitted.
+
 Definition natOrd_m_O@{i j k k' | k < k'} {m : Nat@{i}} (p : Path@{j} (natOrd@{i j} m zero@{i}) les@{j})
   : Void@{k}
   := let D
