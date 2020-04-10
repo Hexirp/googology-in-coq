@@ -209,21 +209,6 @@ Defined.
 
 Print p_natOrd_m_S_n_les.
 
-Definition natOrd_m_S_n@{i j k k' | k < k'} {m n : Nat@{i}} (p : Path@{j} (natOrd@{i j} m (succ@{i} n)) les@{j})
-  : Sum@{j j} (Path@{j} (natOrd@{i j} m n) eql@{j}) (Path@{j} (natOrd@{i j} m n) les@{j})
-  := let r
-    := fix r (m n : Nat@{i}) {struct m}
-      : Path@{j} (natOrd@{i j} m (succ@{i} n)) les@{j} -> Sum@{j j} (Path@{j} (natOrd@{i j} m n) eql@{j}) (Path@{j} (natOrd@{i j} m n) les@{j})
-      := match m, n with
-        | zero, zero => fun _ => left@{j j} idpath@{j}
-        | zero, succ np => fun _ => right@{j j} idpath@{j}
-        | succ mp, zero => fun p => absurd@{j k} (natOrd_m_O@{i j k k'} p)
-        | succ mp, succ np => fun p => r mp np p
-      end
-    in r m n p.
-
-Print natOrd_m_S_n.
-
 Definition natOrd_m_n@{i j} {m n : Nat@{i}} (p : Path@{j} (natOrd@{i j} m n) eql) : Path@{i} m n.
 Proof.
 Admitted.
