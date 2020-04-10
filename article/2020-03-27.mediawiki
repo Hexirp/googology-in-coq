@@ -174,6 +174,16 @@ Definition const@{i j} {A : Type@{i}} {B : Type@{j}} (x : A) (y : B) : A := x.
 Definition comp@{i j k} {A : Type@{i}} {B : Type@{j}} {C : Type@{k}} (f : B -> C) (g : A -> B) (x : A) : C := f (g x).
 </pre>
 
+== 2020-04-10 ==
+
+今日は <code>comp</code> の依存版を定義します。定義は前と同じです。
+
+<pre class="code">
+Definition compD@{i j k} {A : Type@{i}} {B : Type@{j}} {C : B -> Type@{k}} (f : forall b : B, C b) (g : A -> B) (x : A) : C (g x) := f (g x).
+</pre>
+
+関数には時々依存版があることがあります。それらは末尾に dependent の d を付けて表したいと思います。
+
 == ??? ==
 
 <code>natOrd_m_S_n</code> は https://github.com/Hexirp/googology-in-coq/compare/ad6954416c4ae19eaa181020ac348ebc590970e3...ace068b9a473aaec07fcf2891fb545976109c81b の一連のコミットで証明を行っている。 Coq ではどうやって命題を証明するかの参考になると思う。
