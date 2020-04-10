@@ -209,6 +209,18 @@ Defined.
 
 Print p_natOrd_m_S_n_les.
 
+Definition p_natOrd_O_S_n_eql@{i j k k' | k < k'}
+  {n : Nat@{i}} (p : Path@{j} (natOrd@{i j} zero@{i} (succ@{i} n)) eql@{j})
+  : Void@{k}.
+Proof.
+  refine (let D := ?[D] : Ordering@{j} -> Type@{k} in _).
+  [D]: {
+    refine (fun x => _).
+    exact (match x with les => Unit@{k} | eql => Void@{k} | grt => Unit@{k} end).
+  }
+  refine (let d := ?[d] : Path@{j} (natOrd@{i j} zero@{i} (succ@{i} n)) eql@{j} -> Void@{k} in _).
+Admitted.
+
 Definition p_natOrd_m_n_eql@{i j} {m n : Nat@{i}} (p : Path@{j} (natOrd@{i j} m n) eql) : Path@{i} m n.
 Proof.
   refine (let r := ?[r] : forall m n : Nat@{i}, Path@{j} (natOrd@{i j} m n) eql@{j} -> Path@{i} m n in _).
