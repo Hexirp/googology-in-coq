@@ -138,11 +138,16 @@ Proof.
   refine (let D := ?[D] : Ordering@{j} -> Type@{k} in _).
   [D]: {
     refine (fun x : Ordering@{j} => _).
-    refine (match x return Type@{k} with les => Void@{k} | eql => Unit@{k} | grt => Unit@{k} end).
+    exact (match x return Type@{k} with les => Void@{k} | eql => Unit@{k} | grt => Unit@{k} end).
   }
   refine (let d := ?[d] : Path@{j} (natOrd@{i j} m zero@{i}) les@{j} -> Void@{k} in _).
   [d]: {
     refine (match m as m' return Path@{j} (natOrd@{i j} m' zero@{i}) les@{j} -> Void@{k} with zero => _ | succ mp => _ end).
+    {
+      refine (fun p => _).
+      refine (p_U_V@{k k'} _).
+      exact (ap@{j k'} D p).
+    }
     {
       refine (fun p => _).
       refine (p_U_V@{k k'} _).
