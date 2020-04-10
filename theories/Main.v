@@ -209,7 +209,7 @@ Defined.
 
 Print p_natOrd_m_S_n_les.
 
-Definition natOrd_m_n@{i j} {m n : Nat@{i}} (p : Path@{j} (natOrd@{i j} m n) eql) : Path@{i} m n.
+Definition p_natOrd_m_n_eql@{i j} {m n : Nat@{i}} (p : Path@{j} (natOrd@{i j} m n) eql) : Path@{i} m n.
 Proof.
   refine (let r := ?[r] : forall m n : Nat@{i}, Path@{j} (natOrd@{i j} m n) eql@{j} -> Path@{i} m n in _).
   [r]: {
