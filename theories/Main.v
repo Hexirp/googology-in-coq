@@ -218,8 +218,11 @@ Proof.
     refine (fun x => _).
     exact (match x with les => Unit@{k} | eql => Void@{k} | grt => Unit@{k} end).
   }
-  refine (let d := ?[d] : Path@{j} (natOrd@{i j} zero@{i} (succ@{i} n)) eql@{j} -> Void@{k} in _).
-Admitted.
+  refine (p_U_V@{k k'} _).
+  exact (ap@{j k'} D p).
+Defined.
+
+Print p_natOrd_O_S_n_eql.
 
 Definition p_natOrd_m_n_eql@{i j} {m n : Nat@{i}} (p : Path@{j} (natOrd@{i j} m n) eql) : Path@{i} m n.
 Proof.
