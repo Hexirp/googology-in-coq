@@ -279,26 +279,26 @@ Defined.
 
 Print p_natOrd_m_n_eql.
 
-Definition ordWFd_natOrd@{i j k k' | k < k'} : OrdWFd@{i j} natOrd@{i j}.
+Definition ordWFd_natOrd@{i j k l l' | i <= k, j <= k, l < l'} : OrdWFd@{i j} natOrd@{i j}.
 Proof.
   refine (fix r (x : Nat@{i}) {struct x} : OrdAcc@{i j} natOrd@{i j} x := _).
   refine (match x with zero => _ | succ xp => _ end).
   {
-    refine (mkOrdAcc@{i j} natOrd@{i j} zero@{i} _).
+    refine (mkOrdAcc@{i i} natOrd@{i j} zero@{i} _).
     refine (fun x' o_x'_x => _).
-    refine (absurd@{_ k} _). (* {i k} or {j k} *)
-    refine (p_natOrd_m_O_les@{i j k k'} (m := x') _).
+    refine (absurd@{k l} _).
+    refine (p_natOrd_m_O_les@{i j l l'} (m := x') _).
     exact o_x'_x.
   }
   {
     refine (mkOrdAcc@{i j} natOrd@{i j} (succ@{i} xp) _).
     refine (fun x' o_x'_x => _).
-    refine (match p_natOrd_m_S_n_les@{i j k k'} o_x'_x with left p_x'_xp => _ | right o_x'_xp => _ end).
+    refine (match p_natOrd_m_S_n_les@{i j l l'} o_x'_x with left p_x'_xp => _ | right o_x'_xp => _ end).
     {
-      refine (trpt@{i _} (A := Nat@{i}) (B := OrdAcc@{i j} natOrd@{i j}) (x := xp) (y := x') _ _). (* {i i} or {i j} *)
+      refine (trpt@{i k} (A := Nat@{i}) (B := OrdAcc@{i j} natOrd@{i j}) (x := xp) (y := x') _ _).
       {
         refine (inv@{i} _).
-        refine (p_natOrd_m_n_eql@{i j k k'} _).
+        refine (p_natOrd_m_n_eql@{i j l l'} _).
         exact p_x'_xp.
       }
       {
@@ -321,3 +321,5 @@ Proof.
     }
   }
 Defined.
+
+Print ordWFd_natOrd.
