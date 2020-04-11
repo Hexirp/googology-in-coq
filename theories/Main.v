@@ -293,7 +293,7 @@ Proof.
   {
     refine (mkOrdAcc@{i j} natOrd@{i j} (succ@{i} xp) _).
     refine (fun x' o_x'_x => _).
-    refine (match p_natOrd_m_S_n_les o_x'_x with left p_x'_xp => _ | right o_x'_xp => _ end).
+    refine (match p_natOrd_m_S_n_les@{i j k k'} o_x'_x with left p_x'_xp => _ | right o_x'_xp => _ end).
     {
       refine (trpt@{i _} (A := Nat@{i}) (B := OrdAcc@{i j} natOrd@{i j}) (x := xp) (y := x') _ _). (* {i i} or {i j} *)
       {
