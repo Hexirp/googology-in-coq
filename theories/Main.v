@@ -239,7 +239,7 @@ Defined.
 
 Print p_natOrd_O_S_n_eql.
 
-Definition p_natOrd_m_n_eql@{i j} {m n : Nat@{i}} (p : Path@{j} (natOrd@{i j} m n) eql) : Path@{i} m n.
+Definition p_natOrd_m_n_eql@{i j k k' | k < k'} {m n : Nat@{i}} (p : Path@{j} (natOrd@{i j} m n) eql) : Path@{i} m n.
 Proof.
   refine (let r := ?[r] : forall m n : Nat@{i}, Path@{j} (natOrd@{i j} m n) eql@{j} -> Path@{i} m n in _).
   [r]: {
@@ -256,10 +256,16 @@ Proof.
       exact idpath@{i}.
     }
     {
-      admit.
+      refine (fun p => _).
+      refine (absurd@{i k} _).
+      refine (p_natOrd_O_S_n_eql@{i j k k'} (n := np) _).
+      exact p.
     }
     {
-      admit.
+      refine (fun p => _).
+      refine (absurd@{i k} _).
+      refine (p_natOrd_S_m_O_eql@{i j k k'} (m := mp) _).
+      exact p.
     }
     {
       refine (fun p => _).
@@ -268,7 +274,10 @@ Proof.
       exact p.
     }
   }
-Admitted.
+  exact (r m n p).
+Defined.
+
+Print p_natOrd_m_n_eql.
 
 Definition WFd_natOrd@{i j k k' | k < k'} : OrdWFd@{i j} natOrd@{i j} :=
   fix r (x : Nat@{i}) {struct x} : OrdAcc@{i j} natOrd@{i j} x
