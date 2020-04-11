@@ -286,7 +286,7 @@ Proof.
   {
     refine (mkOrdAcc@{i j} natOrd@{i j} zero@{i} _).
     refine (fun x' o_x'_x => _).
-    refine (absurd@{i k} _). (* {i k} と {j k} のどっち？ *)
+    refine (absurd@{_ k} _). (* {i k} と {j k} のどっち？ *)
     refine (p_natOrd_m_O_les@{i j k k'} (m := x') _).
     exact o_x'_x.
   }
@@ -295,7 +295,7 @@ Proof.
     refine (fun x' o_x'_x => _).
     refine (match p_natOrd_m_S_n_les o_x'_x with left p_x'_xp => _ | right o_x'_xp => _ end).
     {
-      refine (trpt@{i i} (A := Nat@{i}) (B := OrdAcc@{i j} natOrd@{i j}) (x := xp) (y := x') _ _). (* {i i} と {i j} のどっち？ *)
+      refine (trpt@{i _} (A := Nat@{i}) (B := OrdAcc@{i j} natOrd@{i j}) (x := xp) (y := x') _ _). (* {i i} と {i j} のどっち？ *)
       {
         refine (inv@{i} _).
         refine (p_natOrd_m_n_eql@{i j k k'} _).
