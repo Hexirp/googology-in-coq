@@ -279,18 +279,45 @@ Defined.
 
 Print p_natOrd_m_n_eql.
 
-Definition WFd_natOrd@{i j k k' | k < k'} : OrdWFd@{i j} natOrd@{i j} :=
-  fix r (x : Nat@{i}) {struct x} : OrdAcc@{i j} natOrd@{i j} x
-    := match x with
-      | zero => mkOrdAcc@{i j} natOrd@{i j} zero@{i} (fun x' o_x'_x =>
-        absurd@{j k} (natOrd_m_O@{i j k k'} o_x'_x))
-      | succ xp => mkOrdAcc@{i j} natOrd@{i j} (succ@{i} xp) (fun x' o_x'_x =>
-        match natOrd_m_S_n@{i j k k'} o_x'_x with
-          | left p_x'_xp => trpt@{i j} (inv@{i} (natOrd_m_n@{i j} p_x'_xp)) (r xp)
-          | right o_x'_xp => let D
-            := match r xp in OrdAcc _ xp' return Path@{i} xp xp' -> OrdAcc@{i j} natOrd@{i j} x' with
-              | mkOrdAcc _ xp' ds_r_xp' => fun p => ds_r_xp' x' (trpt@{i j} p o_x'_xp)
-            end
-            in D idpath@{j}
-        end)
-    end.
+Definition ordWFd_natOrd@{i j k k' | k < k'} : OrdWFd@{i j} natOrd@{i j}.
+Proof.
+  refine (fix r (x : Nat@{i}) {struct x} : OrdAcc@{i j} natOrd@{i j} x := _).
+  refine (match x with zero => _ | succ xp => _ end).
+  {
+    refine (mkOrdAcc@{i j} natOrd@{i j} zero@{i} _).
+    refine (fun x' o_x'_x => _).
+    refine (absurd@{i k} _). (* {i k} と {j k} のどっち？ *)
+    refine (p_natOrd_m_O_les@{i j k k'} (m := x') _).
+    exact o_x'_x.
+  }
+  {
+    refine (mkOrdAcc@{i j} natOrd@{i j} (succ@{i} xp) _).
+    refine (fun x' o_x'_x => _).
+    refine (match p_natOrd_m_S_n_les o_x'_x with left p_x'_xp => _ | right o_x'_xp => _ end).
+    {
+      refine (trpt@{i i} (A := Nat@{i}) (B := OrdAcc@{i j} natOrd@{i j}) (x := xp) (y := x') _ _). (* {i i} と {i j} のどっち？ *)
+      {
+        refine (inv@{i} _).
+        refine (p_natOrd_m_n_eql@{i j k k'} _).
+        exact p_x'_xp.
+      }
+      {
+        exact (r xp).
+      }
+    }
+    {
+      refine (let D := ?[D] : Path@{i} xp xp -> OrdAcc@{i j} natOrd@{i j} x' in _).
+      [D]: {
+        refine (
+          match r xp in OrdAcc _ xp' return Path@{i} xp xp' -> OrdAcc@{i j} natOrd@{i j} x' with
+            mkOrdAcc _ xp' ds_r_xp' => _
+          end).
+        refine (fun p_xp_xp' => _).
+        refine (ds_r_xp' x' _).
+        refine (trpt@{i j} (A := Nat@{i}) (B := fun xp' => Path@{j} (natOrd@{i j} x' xp') les@{j}) p_xp_xp' _).
+        exact o_x'_xp.
+      }
+    exact (D idpath@{i}).
+    }
+  }
+Defined.
