@@ -215,7 +215,7 @@ Definition absurd@{i j} {A : Type@{i}} (x : Void@{j}) : A
 
 <code>Void</code> 型は値コンストラクタを一つも持ちません。そのためマッチするときはパターンが一つも必要がありません。
 
-=== 2020-04-14 ===
+== 2020-04-14 ===
 
 今日はカリー化の関数を定義します。カリー＝ハワード対応を通して \( ( A \land B \rightarrow C ) \rightarrow A \rightarrow B \rightarrow C \) に対応します。
 
