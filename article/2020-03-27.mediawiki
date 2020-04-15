@@ -215,7 +215,7 @@ Definition absurd@{i j} {A : Type@{i}} (x : Void@{j}) : A
 
 <code>Void</code> 型は値コンストラクタを一つも持ちません。そのためマッチするときはパターンが一つも必要がありません。
 
-== 2020-04-14 ===
+== 2020-04-14 ==
 
 今日はカリー化の関数を定義します。カリー＝ハワード対応を通して \( ( A \land B \rightarrow C ) \rightarrow A \rightarrow B \rightarrow C \) に対応します。
 
@@ -225,6 +225,17 @@ Definition curry@{i j k} {A : Type@{i}} {B : Type@{j}} {C : Type@{k}} (f : Prod@
 </pre>
 
 ちなみにカリー化とカリー＝ハワード対応のカリーは同じくハスケル・カリーに由来します。
+
+== 2020-04-14 ==
+
+今日はカリー化を元に戻す関数を定義します。カリー＝ハワード対応を通して \( ( A \rightarrow B \rightarrow C ) \rightarrow A \land B \rightarrow C \) に対応します。
+
+<pre class="code">
+Definition uncurry@{i j k} {A : Type@{i}} {B : Type@{j}} {C : Type@{k}} (f : A -> B -> C) (x : Prod@{i j} A B) : C
+  := match x with pair a b => f a b end.
+</pre>
+
+ちなみに Haskell にも <code>curry</code> と <code>uncurry</code> 関数があります。 Haskell ではほとんどの関数が既にカリー化された形で定義されるので、もっぱら <code>uncurry</code> の方がよく使います。
 
 == ??? ==
 
