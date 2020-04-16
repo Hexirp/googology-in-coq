@@ -524,4 +524,3 @@ Inductive OrdWOrd@{i j} {A : Type@{i}} (ord_A : Ord@{i j} A) : Type@{max(i,j)}
 Definition ordWOrd_natOrd@{i j k l l' | i <= k, j <= k, l < l'} : OrdWOrd@{i j} natOrd@{i j}
   := mkOrdWOrd@{i j} natOrd@{i j} ordRfl_natOrd@{i j} ordSym_natOrd@{i j l l'} ordWFd_natOrd@{i j k l l'}.
 
-Print ordWOrd_natOrd.
