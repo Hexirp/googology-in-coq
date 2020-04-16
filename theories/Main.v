@@ -101,11 +101,12 @@ Definition fOrdToRef@{i j k} {A : Type@{i}} (ord : Ord@{i j} A) : Rel@{i k} A
 Definition OrdRfl@{i j} {A : Type@{i}} (ord : Ord@{i j} A) : Type@{max(i,j)}
   := forall x : A, Path@{j} (ord x x) eql.
 
+Definition revOrdering@{i} (x : Ordering@{i}) : Ordering@{i}
+  := match x with les => grt | eql => eql | grt => les end.
+
 Definition OrdSym@{i j} {A : Type@{i}} (ord : Ord@{i j} A) : Type@{max(i,j)}
-  := forall x y : A,
-    Prod@{j j}
-      (Path@{j} (ord x y) les -> Path@{j} (ord y x) grt)
-      (Path@{j} (ord y x) grt -> Path@{j} (ord x y) les).
+  := forall x y : A, forall r : Ordering@{j},
+    Path@{j} (ord x y) r -> Path@{j} (ord y x) (revOrdering@{j} r).
 
 Inductive OrdAcc@{i j} {A : Type@{i}} (r : Ord@{i j} A) : A -> Type@{max(i,j)}
   := mkOrdAcc : forall a : A, (forall a' : A, Path@{j} (r a' a) les -> OrdAcc r a') -> OrdAcc r a.
