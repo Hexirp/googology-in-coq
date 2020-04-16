@@ -226,7 +226,7 @@ Definition curry@{i j k} {A : Type@{i}} {B : Type@{j}} {C : Type@{k}} (f : Prod@
 
 ちなみにカリー化とカリー＝ハワード対応のカリーは同じくハスケル・カリーに由来します。
 
-== 2020-04-14 ==
+== 2020-04-15 ==
 
 今日はカリー化を元に戻す関数を定義します。カリー＝ハワード対応を通して \( ( A \rightarrow B \rightarrow C ) \rightarrow A \land B \rightarrow C \) に対応します。
 
@@ -236,6 +236,17 @@ Definition uncurry@{i j k} {A : Type@{i}} {B : Type@{j}} {C : Type@{k}} (f : A -
 </pre>
 
 ちなみに Haskell にも <code>curry</code> と <code>uncurry</code> 関数があります。 Haskell ではほとんどの関数が既にカリー化された形で定義されるので、もっぱら <code>uncurry</code> の方がよく使います。
+
+== 2020-04-16 ==
+
+今日は道の反転を定義します。言い換えれば等式の対称性です。
+
+<pre class="code">
+Definition inv@{i} {A : Type@{i}} {x y : A} (p : Path@{i} x y) : Path@{i} y x
+  := match p with idpath => idpath end.
+</pre>
+
+ここでは <code>Path</code> に対するパターンマッチングが行われています。直感的にとらえにくいのですが、パターンマッチングの枝の中では y が x であることになります。すなわちパターンマッチングの式の全体の型は <code>Path y x</code> であり、その枝の全体の型は <code>Path x x</code> になっています。 Homotopy Type Theory においては基点付き道帰納法を行っていると言い換えられます。
 
 == ??? ==
 
