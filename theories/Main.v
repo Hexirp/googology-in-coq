@@ -517,3 +517,11 @@ Proof.
 Defined.
 
 Print ordSym_natOrd.
+
+Inductive OrdWOrd@{i j} {A : Type@{i}} (ord_A : Ord@{i j} A) : Type@{max(i,j)}
+  := mkOrdWOrd : OrdRfl ord_A -> OrdSym ord_A -> OrdWFd ord_A -> OrdWOrd ord_A.
+
+Definition ordWOrd_natOrd@{i j k l l' | i <= k, j <= k, l < l'} : OrdWOrd@{i j} natOrd@{i j}
+  := mkOrdWOrd@{i j} natOrd@{i j} ordRfl_natOrd@{i j} ordSym_natOrd@{i j l l'} ordWFd_natOrd@{i j k l l'}.
+
+Print ordWOrd_natOrd.
