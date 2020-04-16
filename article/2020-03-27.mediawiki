@@ -246,7 +246,7 @@ Definition inv@{i} {A : Type@{i}} {x y : A} (p : Path@{i} x y) : Path@{i} y x
   := match p with idpath => idpath end.
 </pre>
 
-ここでは <code>Path</code> に対するパターンマッチングが行われています。直感的にとらえにくいのですが、パターンマッチングの枝の中では y が x であることになります。すなわちパターンマッチングの式の全体の型は <code>Path y x</code> であり、その枝の全体の型は <code>Path x x</code> になっています。 Homotopy Type Theory においては基点付き道帰納法を行っていると言い換えられます。
+ここでは <code>Path</code> に対するパターンマッチングが行われています。直感的にとらえにくいのですが、パターンマッチングの枝の中では y が x であることになります。すなわちパターンマッチングの式の全体の型は <code>Path y x</code> であり、その枝の全体の型は <code>Path x x</code> になっています。このような <code>match</code> 式の外部と内部での型の変化は依存型に対するパターンマッチングで現れる非直感的な状況の一つです。 <code>Path</code> である値へのパターンマッチングは Homotopy Type Theory においては基点付き道帰納法を行っていると言い換えられます。
 
 == ??? ==
 
