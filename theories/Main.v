@@ -105,7 +105,7 @@ Definition revOrdering@{i} (x : Ordering@{i}) : Ordering@{i}
   := match x with les => grt | eql => eql | grt => les end.
 
 Definition OrdSym@{i j} {A : Type@{i}} (ord : Ord@{i j} A) : Type@{max(i,j)}
-  := forall res : Ordering@{j}, forall x y : A,
+  := forall x y : A, forall res : Ordering@{j},
     Path@{j} (ord x y) res -> Path@{j} (ord y x) (revOrdering@{j} res).
 
 Inductive OrdAcc@{i j} {A : Type@{i}} (r : Ord@{i j} A) : A -> Type@{max(i,j)}
@@ -341,37 +341,24 @@ Print ordRfl_natOrd.
 
 Definition ordSym_natOrd@{i j} : OrdSym@{i j} natOrd@{i j}.
 Proof.
-  refine (fun res => _).
-  refine (match res with les => _ | eql => _ | grt => _ end).
+  refine (fix r (x y : Nat@{i}) {struct x} : _ := _).
+  refine (
+    match x, y with
+      | zero, zero => _
+      | zero, succ yp => _
+      | succ xp, zero => _
+      | succ xp, succ yp => _
+    end).
   {
-    refine (
-      fix r (x y : Nat@{i}) {struct x}
-        : Path@{j} (natOrd@{i j} x y) les@{j} -> Path@{j} (natOrd@{i j} y x) (revOrdering@{j} les@{j})
-        := _).
-    refine (
-      match x, y with
-        | zero, zero => _
-        | zero, succ yp => _
-        | succ xp, zero => _
-        | succ xp, succ yp => _
-      end).
-    {
-      admit.
-    }
-    {
-      admit.
-    }
-    {
-      admit.
-    }
-    {
-      admit.
-    }
+    admit.
   }
   {
     admit.
   }
   {
     admit.
+  }
+  {
+    exact (r xp yp).
   }
 Admitted.
