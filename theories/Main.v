@@ -324,3 +324,17 @@ Proof.
 Defined.
 
 Print ordWFd_natOrd.
+
+Definition ordRfl_natOrd@{i j} : OrdRfl@{i j} natOrd@{i j}.
+Proof.
+  refine (fix r (x : Nat@{i}) {struct x} : Path@{j} (natOrd@{i j} x x) eql@{j} := _).
+  refine (match x with zero => _ | succ xp => _ end).
+  {
+    exact idpath.
+  }
+  {
+    exact (r xp).
+  }
+Defined.
+
+Print ordRfl_natOrd.
