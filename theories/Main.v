@@ -339,6 +339,108 @@ Defined.
 
 Print ordRfl_natOrd.
 
+Definition p_les_eql@{i j j' | j < j'} (p : Path@{i} les@{i} eql@{i}) : Void@{j}.
+Proof.
+  refine (p_U_V@{j j'} _).
+  refine (let D := ?[D] : Ordering@{i} -> Type@{j} in _).
+  [D]: {
+    refine (fun x => _).
+    exact (
+      match x with
+        | les => Unit@{j}
+        | eql => Void@{j}
+        | grt => Void@{j}
+      end).
+  }
+  refine (ap@{i j'} (x := les@{i}) (y := eql@{i}) D _).
+  exact p.
+Defined.
+
+Definition p_les_grt@{i j j' | j < j'} (p : Path@{i} les@{i} grt@{i}) : Void@{j}.
+Proof.
+  refine (p_U_V@{j j'} _).
+  refine (let D := ?[D] : Ordering@{i} -> Type@{j} in _).
+  [D]: {
+    refine (fun x => _).
+    exact (
+      match x with
+        | les => Unit@{j}
+        | eql => Void@{j}
+        | grt => Void@{j}
+      end).
+  }
+  refine (ap@{i j'} (x := les@{i}) (y := grt@{i}) D _).
+  exact p.
+Defined.
+
+Definition p_eql_les@{i j j' | j < j'} (p : Path@{i} eql@{i} les@{i}) : Void@{j}.
+Proof.
+  refine (p_U_V@{j j'} _).
+  refine (let D := ?[D] : Ordering@{i} -> Type@{j} in _).
+  [D]: {
+    refine (fun x => _).
+    exact (
+      match x with
+        | les => Void@{j}
+        | eql => Unit@{j}
+        | grt => Void@{j}
+      end).
+  }
+  refine (ap@{i j'} (x := eql@{i}) (y := les@{i}) D _).
+  exact p.
+Defined.
+
+Definition p_eql_grt@{i j j' | j < j'} (p : Path@{i} eql@{i} grt@{i}) : Void@{j}.
+Proof.
+  refine (p_U_V@{j j'} _).
+  refine (let D := ?[D] : Ordering@{i} -> Type@{j} in _).
+  [D]: {
+    refine (fun x => _).
+    exact (
+      match x with
+        | les => Void@{j}
+        | eql => Unit@{j}
+        | grt => Void@{j}
+      end).
+  }
+  refine (ap@{i j'} (x := eql@{i}) (y := grt@{i}) D _).
+  exact p.
+Defined.
+
+Definition p_grt_les@{i j j' | j < j'} (p : Path@{i} grt@{i} les@{i}) : Void@{j}.
+Proof.
+  refine (p_U_V@{j j'} _).
+  refine (let D := ?[D] : Ordering@{i} -> Type@{j} in _).
+  [D]: {
+    refine (fun x => _).
+    exact (
+      match x with
+        | les => Void@{j}
+        | eql => Void@{j}
+        | grt => Unit@{j}
+      end).
+  }
+  refine (ap@{i j'} (x := grt@{i}) (y := les@{i}) D _).
+  exact p.
+Defined.
+
+Definition p_grt_eql@{i j j' | j < j'} (p : Path@{i} grt@{i} eql@{i}) : Void@{j}.
+Proof.
+  refine (p_U_V@{j j'} _).
+  refine (let D := ?[D] : Ordering@{i} -> Type@{j} in _).
+  [D]: {
+    refine (fun x => _).
+    exact (
+      match x with
+        | les => Void@{j}
+        | eql => Void@{j}
+        | grt => Unit@{j}
+      end).
+  }
+  refine (ap@{i j'} (x := grt@{i}) (y := eql@{i}) D _).
+  exact p.
+Defined.
+
 Definition ordSym_natOrd@{i j} : OrdSym@{i j} natOrd@{i j}.
 Proof.
   refine (fix r (x y : Nat@{i}) {struct x} : _ := _).
