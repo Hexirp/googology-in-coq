@@ -441,7 +441,7 @@ Proof.
   exact p.
 Defined.
 
-Definition ordSym_natOrd@{i j} : OrdSym@{i j} natOrd@{i j}.
+Definition ordSym_natOrd@{i j k k' | k < k'} : OrdSym@{i j} natOrd@{i j}.
 Proof.
   refine (fix r (x y : Nat@{i}) {struct x} : _ := _).
   refine (
@@ -452,15 +452,68 @@ Proof.
       | succ xp, succ yp => _
     end).
   {
-    admit.
+    refine (fun res => _).
+    refine (match res with les => _ | eql => _ | grt => _ end).
+    {
+      refine (fun p => _).
+      refine (absurd@{j k} _).
+      refine (p_eql_les@{j k k'} _).
+      exact p.
+    }
+    {
+      refine (fun p => _).
+      exact idpath.
+    }
+    {
+      refine (fun p => _).
+      refine (absurd@{j k} _).
+      refine (p_eql_grt@{j k k'} _).
+      exact p.
+    }
   }
   {
-    admit.
+    refine (fun res => _).
+    refine (match res with les => _ | eql => _ | grt => _ end).
+    {
+      refine (fun p => _).
+      exact idpath.
+    }
+    {
+      refine (fun p => _).
+      refine (absurd@{j k} _).
+      refine (p_les_eql@{j k k'} _).
+      exact p.
+    }
+    {
+      refine (fun p => _).
+      refine (absurd@{j k} _).
+      refine (p_les_grt@{j k k'} _).
+      exact p.
+    }
   }
   {
-    admit.
+    refine (fun res => _).
+    refine (match res with les => _ | eql => _ | grt => _ end).
+    {
+      refine (fun p => _).
+      refine (absurd@{j k} _).
+      refine (p_grt_les@{j k k'} _).
+      exact p.
+    }
+    {
+      refine (fun p => _).
+      refine (absurd@{j k} _).
+      refine (p_grt_eql@{j k k'} _).
+      exact p.
+    }
+    {
+      refine (fun p => _).
+      exact idpath.
+    }
   }
   {
     exact (r xp yp).
   }
-Admitted.
+Defined.
+
+Print ordSym_natOrd.
