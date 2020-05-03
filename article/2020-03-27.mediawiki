@@ -405,6 +405,23 @@ Inductive Nat@{i} : Type@{i}
   := zero : Nat | succ : Nat -> Nat.
 </pre>
 
+== 2020-05-03 ==
+
+今日は自然数に対する通常の順序を定義します。
+
+<pre class="code">
+Definition natOrd@{i j} : Ord@{i j} Nat@{i}
+  := fix r (x y : Nat@{i}) {struct x} : Ordering@{j}
+    := match x, y with
+      | zero, zero => eql
+      | zero, succ yp => les
+      | succ xp, zero => grt
+      | succ xp, succ yp => r xp yp
+    end.
+</pre>
+
+この定義の <code>{struct x}</code> の部分は <code>{struct y}</code> でもよいのですが、最初の引数である <code>x</code> にしておきます。なお、ここの部分の意味は <code>x</code> の構造に対して帰納法を行うという指定です。
+
 == ??? ==
 
 https://github.com/Hexirp/googology-in-coq/compare/ad6954416c4ae19eaa181020ac348ebc590970e3...ace068b9a473aaec07fcf2891fb545976109c81b の一連のコミットで、生の式で証明を行っています。 Coq ではどうやって命題を証明するかの参考になると思います。ただし、生の式で証明するのは難しいです。
