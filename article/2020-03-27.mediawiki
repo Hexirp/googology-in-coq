@@ -435,9 +435,16 @@ Definition p_U_V@{i i' | i < i'} (p : Path@{i'} Unit@{i} Void@{i}) : Void@{i}
 
 == ??? ==
 
+今日は Coq のタクティックを使うための設定を行います。
+
+<pre class="code">
+Declare ML Module "ltac_plugin" .
+Set Default Proof Mode "Classic" .
+</pre>
+
 https://github.com/Hexirp/googology-in-coq/compare/ad6954416c4ae19eaa181020ac348ebc590970e3...ace068b9a473aaec07fcf2891fb545976109c81b の一連のコミットで、生の式で証明を行っています。 Coq ではどうやって命題を証明するかの参考になると思います。ただし、生の式で証明するのは難しいです。
 
-https://github.com/Hexirp/googology-in-coq/compare/628cdc01cbfb01e831ec2d1bf1a49dda66d5064d...35cbacf4e5cf355438ca7efdac54602b1d1341c3 の一連のコミットで tactic を使った証明を行っています。段階的に式を組み立てて、型の検査を分散することによって、証明が簡単になります。 <code>[ident]: {</code> が追加されたことにより let 式を使いやすくなったのは本当に嬉しいことですね。
+https://github.com/Hexirp/googology-in-coq/compare/628cdc01cbfb01e831ec2d1bf1a49dda66d5064d...35cbacf4e5cf355438ca7efdac54602b1d1341c3 の一連のコミットで tactic を使った証明を行っています。段階的に式を組み立てて、型の検査を分散することによって、証明が簡単になります。 <code>[ident]: {</code> が追加されたことにより let 式を使いやすくなってやりやすくなりました。
 
 == 脚注 ==
 
