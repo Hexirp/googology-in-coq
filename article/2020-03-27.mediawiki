@@ -446,6 +446,42 @@ https://github.com/Hexirp/googology-in-coq/compare/ad6954416c4ae19eaa181020ac348
 
 https://github.com/Hexirp/googology-in-coq/compare/628cdc01cbfb01e831ec2d1bf1a49dda66d5064d...35cbacf4e5cf355438ca7efdac54602b1d1341c3 の一連のコミットで tactic を使った証明を行っています。段階的に式を組み立てて、型の検査を分散することによって、証明が簡単になります。 <code>[ident]: {</code> が追加されたことにより let 式を使いやすくなってやりやすくなりました。
 
+== 2020-05-06 ==
+
+今日は <code>p_natOrd_m_O_les@{i j k k'} : forall m : Nat@{i}, Path@{j} (natOrd@{i j} m zero@{i}) les@{j} -> Void@{k} (* i j k k' |= k < k' *)</code> を証明します。この命題は \( \forall m \ldotp m \le 0 \rightarrow \bot \) と考えることができます。
+
+<pre class="code">
+Definition p_natOrd_m_O_les@{i j k k' | k < k'}
+  {m : Nat@{i}} (p : Path@{j} (natOrd@{i j} m zero@{i}) les@{j})
+  : Void@{k}.
+Proof.
+  refine (let D := ?[D] : Ordering@{j} -> Type@{k} in _).
+  [D]: {
+    refine (fun x : Ordering@{j} => _).
+    exact (match x return Type@{k} with les => Void@{k} | eql => Unit@{k} | grt => Unit@{k} end).
+  }
+  refine (let d := ?[d] : Path@{j} (natOrd@{i j} m zero@{i}) les@{j} -> Void@{k} in _).
+  [d]: {
+    refine (match m as m' return Path@{j} (natOrd@{i j} m' zero@{i}) les@{j} -> Void@{k} with zero => _ | succ mp => _ end).
+    {
+      refine (fun p => _).
+      refine (p_U_V@{k k'} _).
+      exact (ap@{j k'} D p).
+    }
+    {
+      refine (fun p => _).
+      refine (p_U_V@{k k'} _).
+      exact (ap@{j k'} D p).
+    }
+  }
+  exact (d p).
+Defined.
+</pre>
+
+let 式を使って読みやすくしたりしていますが、証明は <code>m</code> について場合分けした後で <code>natOrd@{i j} m zero@{i}</code> が決して <code>les@{j}</code> にならないことを証明して、最後に <code>p_U_V</code> により矛盾を導いているだけです。
+
+<code>p_U_V</code> により矛盾を導くのは常用するテクニックなので覚えておいた方がよいです。なお、 <code>D</code> という名前を使っている理由は判別 (discrimination) に由来します。ただし、この後の証明では本来の意味を離れて match 式が関数の適用において <code>(match ... with ... end) x</code> という風に現れる時に <code>let D := match ... with ... end in D x</code> と読みやすく書き直すときに使ったりしています。
+
 == 脚注 ==
 
 <references />
