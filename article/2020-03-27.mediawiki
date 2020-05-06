@@ -448,7 +448,7 @@ https://github.com/Hexirp/googology-in-coq/compare/628cdc01cbfb01e831ec2d1bf1a49
 
 == 2020-05-06 ==
 
-今日は <code>p_natOrd_m_O_les@{i j k k'} : forall m : Nat@{i}, Path@{j} (natOrd@{i j} m zero@{i}) les@{j} -> Void@{k} (* i j k k' |= k < k' *)</code> を証明します。この命題は \( \forall m \ldotp m \le 0 \rightarrow \bot \) と考えることができます。
+今日は <code>p_natOrd_m_O_les@{i j k k'} : forall m : Nat@{i}, Path@{j} (natOrd@{i j} m zero@{i}) les@{j} -> Void@{k} (* i j k k' |= k < k' *)</code> を証明します。この命題は \( \forall m \ldotp m < 0 \rightarrow \bot \) と考えることができます。
 
 <pre class="code">
 Definition p_natOrd_m_O_les@{i j k k' | k < k'}
