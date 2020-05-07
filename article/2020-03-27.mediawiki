@@ -482,6 +482,62 @@ let 式を使って読みやすくしたりしていますが、証明は <code>
 
 <code>p_U_V</code> により矛盾を導くのは常用するテクニックなので覚えておいた方がよいです。なお、 <code>D</code> という名前を使っている理由は判別 (discrimination) に由来します。ただし、この後の証明では本来の意味を離れて match 式が関数の適用において <code>(match ... with ... end) x</code> という風に現れる時に <code>let D := match ... with ... end in D x</code> と読みやすく書き直すときに使ったりしています。
 
+== 2920-05-06 ==
+
+今日は <code>p_natOrd_m_S_n_les@{i j k k' | k < k'} {m n : Nat@{i}} (p : Path@{j} (natOrd@{i j} m (succ@{i} n)) les@{j}) : Sum@{j j} (Path@{j} (natOrd@{i j} m n) eql@{j}) (Path@{j} (natOrd@{i j} m n) les@{j})</code> を証明します。この命題は \( \forall m n \ldotp m < n + 1 \rightarrow m = n \lor m < n \) だと考えることができます。
+
+\( \_ < \_ \) の整礎性は Coq の標準ライブラリにも \( \_ < \_ \) の推移性を使った証明が存在しますが、この補題を使った証明の方が使う定理が少なくて好きです。
+
+<pre class="code">
+Definition p_natOrd_m_S_n_les@{i j k k' | k < k'}
+  {m n : Nat@{i}} (p : Path@{j} (natOrd@{i j} m (succ@{i} n)) les@{j})
+  : Sum@{j j} (Path@{j} (natOrd@{i j} m n) eql@{j}) (Path@{j} (natOrd@{i j} m n) les@{j}).
+Proof.
+  refine (
+    let r
+      := ?[r]
+        : forall m n : Nat@{i},
+          Path@{j} (natOrd@{i j} m (succ@{i} n)) les@{j} -> Sum@{j j} (Path@{j} (natOrd@{i j} m n) eql@{j}) (Path@{j} (natOrd@{i j} m n) les@{j})
+      in _).
+  [r]: {
+    refine (
+      fix r (m n : Nat@{i}) {struct m}
+        : Path@{j} (natOrd@{i j} m (succ@{i} n)) les@{j} -> Sum@{j j} (Path@{j} (natOrd@{i j} m n) eql@{j}) (Path@{j} (natOrd@{i j} m n) les@{j})
+        := _).
+    refine (
+      match m, n with
+        | zero, zero => _
+        | zero, succ np => _
+        | succ mp, zero => _
+        | succ mp, succ np => _
+      end).
+    {
+      refine (fun p => _).
+      refine (left@{j j} _).
+      exact idpath@{j}.
+    }
+    {
+      refine (fun p => _).
+      refine (right@{j j} _).
+      exact idpath@{j}.
+    }
+    {
+      refine (fun p => _).
+      refine (absurd@{j k} _).
+      refine (p_natOrd_m_O_les@{i j k k'} (m := mp) _).
+      exact p.
+    }
+    {
+      refine (fun p => _).
+      refine (r mp np _).
+      exact p.
+    }
+  }
+  refine (r m n _).
+  exact p.
+Defined.
+</pre>
+
 == 脚注 ==
 
 <references />
