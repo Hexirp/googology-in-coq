@@ -484,7 +484,7 @@ let 式を使って読みやすくしたりしていますが、証明は <code>
 
 == 2920-05-06 ==
 
-今日は <code>p_natOrd_m_S_n_les@{i j k k' | k < k'} {m n : Nat@{i}} (p : Path@{j} (natOrd@{i j} m (succ@{i} n)) les@{j}) : Sum@{j j} (Path@{j} (natOrd@{i j} m n) eql@{j}) (Path@{j} (natOrd@{i j} m n) les@{j})</code> を証明します。この命題は \( \forall m n \ldotp m < n + 1 \rightarrow m = n \lor m < n \) だと考えることができます。
+今日は <code>p_natOrd_m_S_n_les@{i j k k' | k < k'} {m n : Nat@{i}} (p : Path@{j} (natOrd@{i j} m (succ@{i} n)) les@{j}) : Sum@{j j} (Path@{j} (natOrd@{i j} m n) eql@{j}) (Path@{j} (natOrd@{i j} m n) les@{j})</code> を証明します。この命題は \( \forall m \ldotp \forall n \ldotp m < n + 1 \rightarrow m = n \lor m < n \) だと考えることができます。
 
 \( \_ < \_ \) の整礎性は Coq の標準ライブラリにも \( \_ < \_ \) の推移性を使った証明が存在しますが、この補題を使った証明の方が使う定理が少なくて好きです。
 
@@ -535,6 +535,25 @@ Proof.
   }
   refine (r m n _).
   exact p.
+Defined.
+</pre>
+
+== 2020-05-08 ==
+
+今日は <code>p_natOrd_S_m_O_eql@{i j k k' | k < k'} {m : Nat@{i}} (p : Path@{j} (natOrd@{i j} (succ@{i} m) zero@{i}) eql@{j}) : Void@{k}</code> を証明します。この命題は \( \forall m \ldotp S ( m ) = 0 \rightarrow \bot \) だと考えることができます。
+
+<pre class="code">
+Definition p_natOrd_S_m_O_eql@{i j k k' | k < k'}
+  {m : Nat@{i}} (p : Path@{j} (natOrd@{i j} (succ@{i} m) zero@{i}) eql@{j})
+  : Void@{k}.
+Proof.
+  refine (let D := ?[D] : Ordering@{j} -> Type@{k} in _).
+  [D]: {
+    refine (fun x => _).
+    exact (match x with les => Unit@{k} | eql => Void@{k} | grt => Unit@{k} end).
+  }
+  refine (p_U_V@{k k'} _).
+  exact (ap@{j k'} D p).
 Defined.
 </pre>
 
