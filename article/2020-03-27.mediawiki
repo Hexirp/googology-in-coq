@@ -557,6 +557,25 @@ Proof.
 Defined.
 </pre>
 
+== 2020-05-09 ==
+
+今日は <code>p_natOrd_O_S_n_eql@{i j k k' | k < k'} {n : Nat@{i}} (p : Path@{j} (natOrd@{i j} zero@{i} (succ@{i} n)) eql@{j}) : Void@{k}</code> を証明します。この命題は \( \forall n \ldotp 0 = S ( n ) \rightarrow \bot \) だと考えることができます。
+
+<pre class="code">
+Definition p_natOrd_O_S_n_eql@{i j k k' | k < k'}
+  {n : Nat@{i}} (p : Path@{j} (natOrd@{i j} zero@{i} (succ@{i} n)) eql@{j})
+  : Void@{k}.
+Proof.
+  refine (let D := ?[D] : Ordering@{j} -> Type@{k} in _).
+  [D]: {
+    refine (fun x => _).
+    exact (match x with les => Unit@{k} | eql => Void@{k} | grt => Unit@{k} end).
+  }
+  refine (p_U_V@{k k'} _).
+  exact (ap@{j k'} D p).
+Defined.
+</pre>
+
 == 脚注 ==
 
 <references />
