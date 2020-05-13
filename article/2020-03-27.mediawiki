@@ -618,7 +618,56 @@ Proof.
   }
   exact (r m n p).
 Defined.
-</code>
+</pre>
+
+== 2020-05-11 ==
+
+今日は <pre>natOrd</code> の整礎性を証明します。
+
+<pre class="code">
+Definition ordWFd_natOrd@{i j k l l' | i <= k, j <= k, l < l'} : OrdWFd@{i j} natOrd@{i j}.
+Proof.
+  refine (fix r (x : Nat@{i}) {struct x} : OrdAcc@{i j} natOrd@{i j} x := _).
+  refine (match x with zero => _ | succ xp => _ end).
+  {
+    refine (mkOrdAcc@{i i} natOrd@{i j} zero@{i} _).
+    refine (fun x' o_x'_x => _).
+    refine (absurd@{k l} _).
+    refine (p_natOrd_m_O_les@{i j l l'} (m := x') _).
+    exact o_x'_x.
+  }
+  {
+    refine (mkOrdAcc@{i j} natOrd@{i j} (succ@{i} xp) _).
+    refine (fun x' o_x'_x => _).
+    refine (match p_natOrd_m_S_n_les@{i j l l'} o_x'_x with left p_x'_xp => _ | right o_x'_xp => _ end).
+    {
+      refine (trpt@{i k} (A := Nat@{i}) (B := OrdAcc@{i j} natOrd@{i j}) (x := xp) (y := x') _ _).
+      {
+        refine (inv@{i} _).
+        refine (p_natOrd_m_n_eql@{i j l l'} _).
+        exact p_x'_xp.
+      }
+      {
+        exact (r xp).
+      }
+    }
+    {
+      refine (let D := ?[D] : Path@{i} xp xp -> OrdAcc@{i j} natOrd@{i j} x' in _).
+      [D]: {
+        refine (
+          match r xp in OrdAcc _ xp' return Path@{i} xp xp' -> OrdAcc@{i j} natOrd@{i j} x' with
+            mkOrdAcc _ xp' ds_r_xp' => _
+          end).
+        refine (fun p_xp_xp' => _).
+        refine (ds_r_xp' x' _).
+        refine (trpt@{i j} (A := Nat@{i}) (B := fun xp' => Path@{j} (natOrd@{i j} x' xp') les@{j}) p_xp_xp' _).
+        exact o_x'_xp.
+      }
+    exact (D idpath@{i}).
+    }
+  }
+Defined.
+</pre>
 
 == 脚注 ==
 
