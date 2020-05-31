@@ -73,8 +73,14 @@ Definition inv@{i} {A : Type@{i}} {x y : A} (p : Path@{i} x y) : Path@{i} y x
 Definition conc@{i} {A : Type@{i}} {x y z : A} (p : Path@{i} x y) (q : Path@{i} y z) : Path@{i} x z
   := match q with idpath => match p with idpath => idpath end end.
 
+Definition conv@{i} {A : Type@{i}} {x y z : A} (p : Path@{i} x y) (q : Path@{i} x z) : Path@{i} y z
+  := conc@{i} (inv@{i} p) q.
+
 Definition trpt@{i j} {A : Type@{i}} {B : A -> Type@{j}} {x y : A} (p : Path@{i} x y) (u : B x) : B y
   := match p with idpath => u end.
+
+Definition trpv@{i j} {A : Type@{i}} {B : A -> Type@{j}} {x y : A} (p : Path@{i} x y) (u : B y) : B x
+  := trpt@{i j} (inv@{i} p) u.
 
 Definition ap@{i j} {A : Type@{i}} {B : Type@{j}} (f : A -> B) {x y : A} (p : Path@{i} x y) : Path@{j} (f x) (f y)
   := match p with idpath => idpath end.
