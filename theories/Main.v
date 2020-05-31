@@ -1,3 +1,5 @@
+(* Run with -nois. *)
+
 Unset Elimination Schemes.
 
 Set Universe Polymorphism.
