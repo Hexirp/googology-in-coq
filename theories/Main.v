@@ -1,3 +1,5 @@
+Require Import GiC.Core.
+
 Unset Elimination Schemes.
 
 Set Universe Polymorphism.
