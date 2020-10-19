@@ -1,12 +1,16 @@
 (* Run with -nois. *)
 
+(** 帰納原理 (induction principle) を自動的に生成しないように設定します。 *)
 Unset Elimination Schemes.
 
+(** 宇宙多相 (universe polymorphism) について設定します。 *)
 Set Universe Polymorphism.
 Set Polymorphic Inductive Cumulativity.
 
+(** 宇宙 (universe) について表示するように設定します。 *)
 Set Printing Universes.
 
+(** 関数の型を記号で書けるようにします。 *)
 Notation "x -> y" := (forall (_ : x), y) (at level 99, right associativity, y at level 200).
 
 Inductive Unit@{i} : Type@{i} := unit : Unit.
