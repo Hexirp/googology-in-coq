@@ -32,6 +32,13 @@ Definition mul@{i} (m n : Nat@{i}) : Nat@{i} :=
 Definition sub@{i} (m n : Nat@{i}) : Nat@{i} :=
   let
     sub_inner := fix sub_inner (m n : Nat@{i}) {struct m} :=
-      match m with zero => zero@{i} | succ mp => match n with zero => succ@{i} mp | succ np => sub_inner mp np end end
+      match m with
+      | zero => zero@{i}
+      | succ mp =>
+        match n with
+        | zero => succ@{i} mp
+        | succ np => sub_inner mp np
+        end
+      end
   in
     sub_inner m n.
