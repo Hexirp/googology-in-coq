@@ -66,44 +66,66 @@ Inductive Path@{i} (A : Type@{i}) (a : A) : A -> Type@{i}
 Arguments Path {A} a a'.
 Arguments idpath {A} {a}, [A] a.
 
-Definition idmap@{i} {A : Type@{i}} (x : A) : A := x.
+Definition idmap@{i} {A : Type@{i}}
+  : A -> A
+  := fun x => x.
 
-Definition const@{i j} {A : Type@{i}} {B : Type@{j}} (x : A) (y : B) : A := x.
+Definition const@{i j} {A : Type@{i}} {B : Type@{j}}
+  : A -> B -> A
+  := fun x y => x.
 
-Definition comp@{i j k} {A : Type@{i}} {B : Type@{j}} {C : Type@{k}} (f : B -> C) (g : A -> B) (x : A) : C := f (g x).
+Definition comp@{i j k} {A : Type@{i}} {B : Type@{j}} {C : Type@{k}}
+  : (B -> C) -> (A -> B) -> A -> C
+  := fun f g x => f (g x).
 
-Definition compD@{i j k} {A : Type@{i}} {B : Type@{j}} {C : B -> Type@{k}} (f : forall b : B, C b) (g : A -> B) (x : A) : C (g x) := f (g x).
+Definition compD@{i j k} {A : Type@{i}} {B : Type@{j}} {C : B -> Type@{k}}
+  : (forall b : B, C b) -> forall (g : A -> B) (x : A), C (g x)
+  := fun f g x => f (g x).
 
-Definition apply@{i j} {A : Type@{i}} {B : Type@{j}} (f : A -> B) (x : A) : B := f x.
+Definition apply@{i j} {A : Type@{i}} {B : Type@{j}}
+  : (A -> B) -> A -> B
+  := fun f x => f x.
 
-Definition applyD@{i j} {A : Type@{i}} {B : A -> Type@{j}} (f : forall a : A, B a) (x : A) : B x := f x.
+Definition applyD@{i j} {A : Type@{i}} {B : A -> Type@{j}}
+  : (forall a : A, B a) -> forall (x : A), B x
+  := fun f x => f x.
 
-Definition absurd@{i j} {A : Type@{i}} (x : Void@{j}) : A
-  := match x with end.
+Definition absurd@{i j} {A : Type@{i}}
+  : Void@{j} -> A
+  := fun x => match x with end.
 
-Definition curry@{i j k} {A : Type@{i}} {B : Type@{j}} {C : Type@{k}} (f : Prod@{i j} A B -> C) (x : A) (y : B) : C
-  := f (pair x y).
+Definition curry@{i j k} {A : Type@{i}} {B : Type@{j}} {C : Type@{k}}
+  : (Prod@{i j} A B -> C) -> A -> B -> C
+  := fun f x y => f (pair x y).
 
-Definition uncurry@{i j k} {A : Type@{i}} {B : Type@{j}} {C : Type@{k}} (f : A -> B -> C) (x : Prod@{i j} A B) : C
-  := match x with pair a b => f a b end.
+Definition uncurry@{i j k} {A : Type@{i}} {B : Type@{j}} {C : Type@{k}}
+  : (A -> B -> C) -> Prod@{i j} A B -> C
+  := fun f x => match x with pair a b => f a b end.
 
-Definition inv@{i} {A : Type@{i}} {x y : A} (p : Path@{i} x y) : Path@{i} y x
-  := match p with idpath => idpath end.
+Definition inv@{i} {A : Type@{i}} {x y : A}
+  : Path@{i} x y -> Path@{i} y x
+  := fun p => match p with idpath => idpath end.
 
-Definition conc@{i} {A : Type@{i}} {x y z : A} (p : Path@{i} x y) (q : Path@{i} y z) : Path@{i} x z
-  := match q with idpath => match p with idpath => idpath end end.
+Definition conc@{i} {A : Type@{i}} {x y z : A}
+  : Path@{i} x y -> Path@{i} y z -> Path@{i} x z
+  := fun p q => match q with idpath => match p with idpath => idpath end end.
 
-Definition conv@{i} {A : Type@{i}} {x y z : A} (p : Path@{i} x y) (q : Path@{i} x z) : Path@{i} y z
-  := conc@{i} (inv@{i} p) q.
+Definition conv@{i} {A : Type@{i}} {x y z : A}
+  : Path@{i} x y -> Path@{i} x z -> Path@{i} y z
+  := fun p q => conc@{i} (inv@{i} p) q.
 
-Definition trpt@{i j} {A : Type@{i}} {B : A -> Type@{j}} {x y : A} (p : Path@{i} x y) (u : B x) : B y
-  := match p with idpath => u end.
+Definition trpt@{i j} {A : Type@{i}} {B : A -> Type@{j}} {x y : A}
+  : Path@{i} x y -> B x -> B y
+  := fun p u => match p with idpath => u end.
 
-Definition trpv@{i j} {A : Type@{i}} {B : A -> Type@{j}} {x y : A} (p : Path@{i} x y) (u : B y) : B x
-  := trpt@{i j} (inv@{i} p) u.
+Definition trpv@{i j} {A : Type@{i}} {B : A -> Type@{j}} {x y : A}
+  : Path@{i} x y -> B y -> B x
+  := fun p u => trpt@{i j} (inv@{i} p) u.
 
-Definition ap@{i j} {A : Type@{i}} {B : Type@{j}} (f : A -> B) {x y : A} (p : Path@{i} x y) : Path@{j} (f x) (f y)
-  := match p with idpath => idpath end.
+Definition ap@{i j} {A : Type@{i}} {B : Type@{j}} (f : A -> B) {x y : A}
+  : Path@{i} x y -> Path@{j} (f x) (f y)
+  := fun p => match p with idpath => idpath end.
 
-Definition p_U_V@{i i' | i < i'} (p : Path@{i'} Unit@{i} Void@{i}) : Void@{i}
-  := match p with idpath => unit@{i} end.
+Definition p_U_V@{i i' | i < i'}
+  : Path@{i'} Unit@{i} Void@{i} -> Void@{i}
+  := fun p => match p with idpath => unit@{i} end.
