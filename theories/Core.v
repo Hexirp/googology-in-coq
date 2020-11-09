@@ -1,6 +1,6 @@
 (* Run with -nois. *)
 
-(** 帰納原理 (induction principle) を自動的に生成しないように設定します。 *)
+(** 帰納原理 (induction principle) を生成しないように設定します。 *)
 Unset Elimination Schemes.
 
 (** 宇宙多相 (universe polymorphism) について設定します。 *)
@@ -61,7 +61,8 @@ Definition dsnd@{i j} {A : Type@{i}} {B : A -> Type@{j}} (x : DSum@{i j} A B) : 
 Inductive Path@{i} (A : Type@{i}) (a : A) : A -> Type@{i}
   := idpath : Path A a a.
 
-(** 道型についての暗黙引数を設定します。 *)
+(** 道型についての暗黙引数を設定します。                                                  *)
+(**                                                                                       *)
 (** idpath と書かれるときは idpath _ _ ですが idpath a と書かれるときは idpath _ a です。 *)
 Arguments Path {A} a a'.
 Arguments idpath {A} {a}, [A] a.
