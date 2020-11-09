@@ -61,9 +61,10 @@ Definition dsnd@{i j} {A : Type@{i}} {B : A -> Type@{j}} (x : DSum@{i j} A B) : 
 Inductive Path@{i} (A : Type@{i}) (a : A) : A -> Type@{i}
   := idpath : Path A a a.
 
-(** 道型についての暗黙引数を設定します。                                                  *)
-(**                                                                                       *)
-(** idpath と書かれるときは idpath _ _ ですが idpath a と書かれるときは idpath _ a です。 *)
+(** 道型についての暗黙引数を設定します。
+
+    idpath と書かれるときは idpath _ _ ですが idpath a と書かれるときは idpath _ a です。
+  *)
 Arguments Path {A} a a'.
 Arguments idpath {A} {a}, [A] a.
 
