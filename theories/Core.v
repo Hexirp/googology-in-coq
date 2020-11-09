@@ -23,20 +23,22 @@ Inductive Void@{i} : Type@{i} :=.
 Inductive Prod@{i j} (A : Type@{i}) (B : Type@{j}) : Type@{max(i,j)}
   := pair : A -> B -> Prod A B.
 
+(** 直積型についての暗黙引数を設定します。 *)
 Arguments pair {A} {B} a b.
 
 (** 直積型の第一射影関数です。 *)
-Definition fst@{i j} {A : Type@{i}} {B : Type@{j}} (x : Prod@{i j} A B) : A
-  := match x with pair a b => a end.
+Definition fst@{i j} {A : Type@{i}} {B : Type@{j}} : Prod@{i j} A B -> A
+  := fun x => match x with pair a b => a end.
 
 (** 直積型の第二射影関数です。 *)
-Definition snd@{i j} {A : Type@{i}} {B : Type@{j}} (x : Prod@{i j} A B) : B
-  := match x with pair a b => b end.
+Definition snd@{i j} {A : Type@{i}} {B : Type@{j}} : Prod@{i j} A B -> B
+  := fun x => match x with pair a b => b end.
 
 (** 直和型です。 *)
 Inductive Sum@{i j} (A : Type@{i}) (B : Type@{j}) : Type@{max(i,j)}
   := left : A -> Sum A B | right : B -> Sum A B.
 
+(** 直和型についての暗黙引数を設定します。 *)
 Arguments left {A} {B} a.
 Arguments right {A} {B} b.
 
@@ -44,6 +46,7 @@ Arguments right {A} {B} b.
 Inductive DSum@{i j} (A : Type@{i}) (B : A -> Type@{j}) : Type@{max(i,j)}
   := dpair : forall a : A, B a -> DSum A B.
 
+(** 依存和型についての暗黙引数を設定します。 *)
 Arguments dpair {A} {B} a b.
 
 (** 依存和型の第一射影関数です。 *)
@@ -58,8 +61,9 @@ Definition dsnd@{i j} {A : Type@{i}} {B : A -> Type@{j}} (x : DSum@{i j} A B) : 
 Inductive Path@{i} (A : Type@{i}) (a : A) : A -> Type@{i}
   := idpath : Path A a a.
 
+(** 道型についての暗黙引数を設定します。 *)
+(** idpath と書かれるときは idpath _ _ ですが idpath a と書かれるときは idpath _ a です。 *)
 Arguments Path {A} a a'.
-
 Arguments idpath {A} {a}, [A] a.
 
 Definition idmap@{i} {A : Type@{i}} (x : A) : A := x.
