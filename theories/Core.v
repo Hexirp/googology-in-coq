@@ -10,11 +10,6 @@ Set Polymorphic Inductive Cumulativity.
 (** 宇宙 (universe) について表示するように設定します。 *)
 Set Printing Universes.
 
-Set Implicit Arguments.
-Unset Strict Implicit.
-
-Unset Printing Implicit Defensive.
-
 (** 関数の型を記号で書けるようにします。 *)
 Notation "x -> y" := (forall (_ : x), y) (at level 99, right associativity, y at level 200).
 
@@ -28,21 +23,22 @@ Inductive Void@{i} : Type@{i} :=.
 Inductive Prod@{i j} (A : Type@{i}) (B : Type@{j}) : Type@{max(i,j)}
   := pair : A -> B -> Prod A B.
 
+Arguments pair {A} {B} a b.
+
 (** 直積型の第一射影関数です。 *)
-Definition fst@{i j} (A : Type@{i}) (B : Type@{j}) : Prod@{i j} A B -> A
-  := fun x => match x with pair a b => a end.
+Definition fst@{i j} {A : Type@{i}} {B : Type@{j}} (x : Prod@{i j} A B) : A
+  := match x with pair a b => a end.
 
 (** 直積型の第二射影関数です。 *)
-Definition snd@{i j} (A : Type@{i}) (B : Type@{j}) : Prod@{i j} A B -> B
-  := fun x => match x with pair a b => b end.
+Definition snd@{i j} {A : Type@{i}} {B : Type@{j}} (x : Prod@{i j} A B) : B
+  := match x with pair a b => b end.
 
 (** 直和型です。 *)
 Inductive Sum@{i j} (A : Type@{i}) (B : Type@{j}) : Type@{max(i,j)}
   := left : A -> Sum A B | right : B -> Sum A B.
 
-(** 直和型の構築子の暗黙引数を設定します。 *)
-Arguments left {A} {B}.
-Arguments right {A} {B}.
+Arguments left {A} {B} a.
+Arguments right {A} {B} b.
 
 (** 依存和型です。 *)
 Inductive DSum@{i j} (A : Type@{i}) (B : A -> Type@{j}) : Type@{max(i,j)}
