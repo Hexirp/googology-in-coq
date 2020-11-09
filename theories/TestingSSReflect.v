@@ -16,3 +16,13 @@ Proof.
 Defined.
 
 Print example_1.
+
+Definition example_2 (A B C : Type) (f : B -> C) (g : A -> B) : A -> C.
+Proof.
+ move=> x.
+ apply: f.
+ apply: g.
+ refine x.
+Defined.
+
+Print example_2.
