@@ -51,6 +51,11 @@ Definition conc_cpq_vq@{i} {A : Type@{i}} {x y z : A}
 Definition conc_cpvq_q@{i} {A : Type@{i}} {x y z : A}
   : forall (p : Path@{i} x z) (q : Path@{i} y z), Path@{i} (conc (conc p (inv q)) q) p
   := fun p q => let
-    t := match q as q' in Path _ z' return forall p' : Path@{i} x z', Path@{i} (conc (conc p' (inv q')) q') p' with idpath => fun p' => match p' with idpath => idpath end end
+    t := match q
+      as q'
+      in Path _ z'
+      return forall p' : Path@{i} x z', Path@{i} (conc (conc p' (inv q')) q') p'
+      with idpath => fun p' => match p' with idpath => idpath end
+    end
   in
     t p.
