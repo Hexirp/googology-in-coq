@@ -67,8 +67,8 @@ Inductive Path@{i} (A : Type@{i}) (a : A) : A -> Type@{i}
 
 (** 道型についての暗黙引数を設定します。
 
-    idpath と書かれるときは idpath _ _ ですが idpath a と書かれるときは idpath _ a です。
-  *)
+    idpath と書いたときは idpath _ _ と補われます。 idpath a と書いたときは idpath _ a と補われます。
+ *)
 Arguments Path {A} a a'.
 Arguments idpath {A} {a}, [A] a.
 
@@ -147,6 +147,10 @@ Definition ap@{i j} {A : Type@{i}} {B : Type@{j}} (f : A -> B) {x y : A}
   : Path@{i} x y -> Path@{j} (f x) (f y)
   := fun p => match p with idpath => idpath end.
 
+(** Path_Unit_Void です。
+
+    この関数は仲間外れのように見えるかもしれませんが、そこがいいのです。
+ *)
 Definition p_U_V@{i i' | i < i'}
   : Path@{i'} Unit@{i} Void@{i} -> Void@{i}
   := fun p => match p with idpath => unit@{i} end.
