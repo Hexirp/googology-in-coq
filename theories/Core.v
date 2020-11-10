@@ -27,11 +27,13 @@ Inductive Prod@{i j} (A : Type@{i}) (B : Type@{j}) : Type@{max(i,j)}
 Arguments pair {A} {B} a b.
 
 (** 直積型の第一射影関数です。 *)
-Definition fst@{i j} {A : Type@{i}} {B : Type@{j}} : Prod@{i j} A B -> A
+Definition fst@{i j} {A : Type@{i}} {B : Type@{j}}
+  : Prod@{i j} A B -> A
   := fun x => match x with pair a b => a end.
 
 (** 直積型の第二射影関数です。 *)
-Definition snd@{i j} {A : Type@{i}} {B : Type@{j}} : Prod@{i j} A B -> B
+Definition snd@{i j} {A : Type@{i}} {B : Type@{j}}
+  : Prod@{i j} A B -> B
   := fun x => match x with pair a b => b end.
 
 (** 直和型です。 *)
@@ -50,12 +52,14 @@ Inductive DSum@{i j} (A : Type@{i}) (B : A -> Type@{j}) : Type@{max(i,j)}
 Arguments dpair {A} {B} a b.
 
 (** 依存和型の第一射影関数です。 *)
-Definition dfst@{i j} {A : Type@{i}} {B : A -> Type@{j}} (x : DSum@{i j} A B) : A
-  := match x with dpair a b => a end.
+Definition dfst@{i j} {A : Type@{i}} {B : A -> Type@{j}}
+  : DSum@{i j} A B -> A
+  := fun x => match x with dpair a b => a end.
 
 (** 依存和型の第二射影関数です。 *)
-Definition dsnd@{i j} {A : Type@{i}} {B : A -> Type@{j}} (x : DSum@{i j} A B) : B (dfst@{i j} x)
-  := match x with dpair a b => b end.
+Definition dsnd@{i j} {A : Type@{i}} {B : A -> Type@{j}}
+  : forall x : DSum@{i j} A B, B (dfst@{i j} x)
+  := fun x => match x with dpair a b => b end.
 
 (** 道型です。 *)
 Inductive Path@{i} (A : Type@{i}) (a : A) : A -> Type@{i}
