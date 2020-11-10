@@ -2,43 +2,20 @@
 
 Require Import GiC.Core.
 
+(** 帰納原理 (induction principle) を生成しないように設定します。 *)
 Unset Elimination Schemes.
 
+(** 宇宙多相 (universe polymorphism) について設定します。 *)
 Set Universe Polymorphism.
 Set Polymorphic Inductive Cumulativity.
 
+(** 宇宙 (universe) について表示するように設定します。 *)
 Set Printing Universes.
 
-Inductive Nat@{i} : Type@{i}
-  := zero : Nat | succ : Nat -> Nat.
+Definition conc_p_1@{i} {A : Type@{i}} {x y : A}
+  : forall p : Path@{i} x y, Path@{i} (conc@{i} p idpath) p
+  := fun p => match p with idpath => idpath end.
 
-Definition pred@{i} (n : Nat@{i}) : Nat@{i} :=
-  match n with zero => zero | succ np => np end.
-
-Definition add@{i} (m n : Nat@{i}) : Nat@{i} :=
-  let
-    add_inner := fix add_inner (m n : Nat@{i}) {struct m} :=
-      match m with zero => n | succ mp => succ@{i} (add_inner mp n) end
-  in
-    add_inner m n.
-
-Definition mul@{i} (m n : Nat@{i}) : Nat@{i} :=
-  let
-    mul_inner := fix mul_inner (m n : Nat@{i}) {struct m} :=
-      match m with zero => zero@{i} | succ mp => add@{i} n (mul_inner mp n) end
-  in
-    mul_inner m n.
-
-Definition sub@{i} (m n : Nat@{i}) : Nat@{i} :=
-  let
-    sub_inner := fix sub_inner (m n : Nat@{i}) {struct m} :=
-      match m with
-      | zero => zero@{i}
-      | succ mp =>
-        match n with
-        | zero => succ@{i} mp
-        | succ np => sub_inner mp np
-        end
-      end
-  in
-    sub_inner m n.
+Definition conc_1_p@{i} {A : Type@{i}} {x y : A}
+  : forall p : Path@{i} x y, Path@{i} (conc@{i} idpath p) p
+  := fun p => match p with idpath => idpath end.
