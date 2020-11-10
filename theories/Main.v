@@ -35,3 +35,19 @@ Definition conc_p_vp@{i} {A : Type@{i}} {x y : A}
 Definition conc_vp_p@{i} {A : Type@{i}} {x y : A}
   : forall p : Path@{i} x y, Path@{i} (conc (inv p) p) idpath
   := fun p => match p with idpath => idpath end.
+
+Definition conc_vp_cpq@{i} {A : Type@{i}} {x y z : A}
+  : forall (p : Path@{i} x y) (q : Path@{i} y z), Path@{i} (conc (inv p) (conc p q)) q
+  := fun p q => match q with idpath => match p with idpath => idpath end end.
+
+Definition conc_p_cvpq@{i} {A : Type@{i}} {x y z : A}
+  : forall (p : Path@{i} x y) (q : Path@{i} x z), Path@{i} (conc p (conc (inv p) q)) q
+  := fun p q => match q with idpath => match p with idpath => idpath end end.
+
+Definition conc_cpq_vq@{i} {A : Type@{i}} {x y z : A}
+  : forall (p : Path@{i} x y) (q : Path@{i} y z), Path@{i} (conc (conc p q) (inv q)) p
+  := fun p q => match q with idpath => match p with idpath => idpath end end.
+
+Definition conc_cpvq_q@{i} {A : Type@{i}} {x y z : A}
+  : forall (p : Path@{i} x z) (q : Path@{i} y z), Path@{i} (conc (conc p (inv q)) q) p
+  := fun p q => match q as q' in Path _ z' return Path@{i} (conc (conc p (inv q')) q') p with idpath => match p with idpath => idpath end end.
