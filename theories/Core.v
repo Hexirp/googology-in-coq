@@ -68,62 +68,77 @@ Inductive Path@{i} (A : Type@{i}) (a : A) : A -> Type@{i}
 Arguments Path {A} a a'.
 Arguments idpath {A} {a}, [A] a.
 
+(** 恒等関数です。 *)
 Definition idmap@{i} {A : Type@{i}}
   : A -> A
   := fun x => x.
 
+(** 定数関数です。 *)
 Definition const@{i j} {A : Type@{i}} {B : Type@{j}}
   : A -> B -> A
   := fun x y => x.
 
+(** 関数の合成です。 *)
 Definition comp@{i j k} {A : Type@{i}} {B : Type@{j}} {C : Type@{k}}
   : (B -> C) -> (A -> B) -> A -> C
   := fun f g x => f (g x).
 
+(** 依存型に対応する関数の合成です。 *)
 Definition compD@{i j k} {A : Type@{i}} {B : Type@{j}} {C : B -> Type@{k}}
   : (forall b : B, C b) -> forall (g : A -> B) (x : A), C (g x)
   := fun f g x => f (g x).
 
+(** 関数の適用です。 *)
 Definition apply@{i j} {A : Type@{i}} {B : Type@{j}}
   : (A -> B) -> A -> B
   := fun f x => f x.
 
+(** 依存型に対応する関数の適用です。 *)
 Definition applyD@{i j} {A : Type@{i}} {B : A -> Type@{j}}
   : (forall a : A, B a) -> forall (x : A), B x
   := fun f x => f x.
 
+(** 矛盾による証明です。 *)
 Definition absurd@{i j} {A : Type@{i}}
   : Void@{j} -> A
   := fun x => match x with end.
 
+(** 関数のカリー化です。 *)
 Definition curry@{i j k} {A : Type@{i}} {B : Type@{j}} {C : Type@{k}}
   : (Prod@{i j} A B -> C) -> A -> B -> C
   := fun f x y => f (pair x y).
 
+(** 関数の逆カリー化です。 *)
 Definition uncurry@{i j k} {A : Type@{i}} {B : Type@{j}} {C : Type@{k}}
   : (A -> B -> C) -> Prod@{i j} A B -> C
   := fun f x => match x with pair a b => f a b end.
 
+(** 道の逆です。 *)
 Definition inv@{i} {A : Type@{i}} {x y : A}
   : Path@{i} x y -> Path@{i} y x
   := fun p => match p with idpath => idpath end.
 
+(** 道の結合です。 *)
 Definition conc@{i} {A : Type@{i}} {x y z : A}
   : Path@{i} x y -> Path@{i} y z -> Path@{i} x z
   := fun p q => match q with idpath => match p with idpath => idpath end end.
 
+(** 道の結合と逆です。 *)
 Definition conv@{i} {A : Type@{i}} {x y z : A}
   : Path@{i} x y -> Path@{i} x z -> Path@{i} y z
   := fun p q => conc@{i} (inv@{i} p) q.
 
+(** 道の輸送です。 *)
 Definition trpt@{i j} {A : Type@{i}} {B : A -> Type@{j}} {x y : A}
   : Path@{i} x y -> B x -> B y
   := fun p u => match p with idpath => u end.
 
+(** 道の輸送と逆です。 *)
 Definition trpv@{i j} {A : Type@{i}} {B : A -> Type@{j}} {x y : A}
   : Path@{i} x y -> B y -> B x
   := fun p u => trpt@{i j} (inv@{i} p) u.
 
+(** 道への適用です。 *)
 Definition ap@{i j} {A : Type@{i}} {B : Type@{j}} (f : A -> B) {x y : A}
   : Path@{i} x y -> Path@{j} (f x) (f y)
   := fun p => match p with idpath => idpath end.
