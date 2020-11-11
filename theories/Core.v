@@ -1,5 +1,10 @@
 (* Run with -nois. *)
 
+(** GiC.Base は、命題を構築する基礎となる型や関数を定義します。
+
+    具体的には、一階述語論理に対応する型と、それに関する単純な関数を定義します。 GiC における標準的な命題は、ここで定義された型を使って様々な型を繋ぎ合わせることにより構築されます。
+ *)
+
 (** 帰納原理 (induction principle) を生成しないように設定します。 *)
 Unset Elimination Schemes.
 
@@ -149,7 +154,7 @@ Definition ap@{i j} {A : Type@{i}} {B : Type@{j}} (f : A -> B) {x y : A}
 
 (** Path_Unit_Void です。
 
-    この関数は仲間外れのように見えるかもしれませんが、そこがいいのです。
+    この関数は仲間外れですが、そこがいいのです。
  *)
 Definition p_U_V@{i i' | i < i'}
   : Path@{i'} Unit@{i} Void@{i} -> Void@{i}
