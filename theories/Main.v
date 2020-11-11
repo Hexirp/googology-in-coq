@@ -1,6 +1,6 @@
 (* Run with -nois. *)
 
-Require Import GiC.Core.
+Require Import GiC.Base.
 
 (** 帰納原理 (induction principle) を生成しないように設定します。 *)
 Unset Elimination Schemes.
