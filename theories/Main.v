@@ -103,6 +103,17 @@ Definition inv_vp@{i} {A : Type@{i}} {x y z : A}
   : forall p : Path@{i} x y, Path@{i} (inv (inv p)) p
   := fun p => match p with idpath => idpath end.
 
+Declare ML Module "ltac_plugin".
+Declare ML Module "ssrmatching_plugin".
+Declare ML Module "ssreflect_plugin".
+
+Set Default Proof Mode "Classic".
+
 (** Path_p_conc_inv_r_q です。 *)
 Definition path_p_cvrq@{i} {A : Type@{i}} {x y z : A}
   : forall (p : Path@{i} x z) (q : Path@{i} y z) (r : Path@{i} y x), Path@{i} p (conc (inv r) q) -> Path@{i} (conc r p) q.
+Proof.
+  move => p q r.
+  case : r p => p' path_p'_cv1q.
+  admit.
+Admitted.
