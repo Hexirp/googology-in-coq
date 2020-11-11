@@ -102,3 +102,7 @@ Definition inv_cvpvq@{i} {A : Type@{i}} {x y z : A}
 Definition inv_vp@{i} {A : Type@{i}} {x y z : A}
   : forall p : Path@{i} x y, Path@{i} (inv (inv p)) p
   := fun p => match p with idpath => idpath end.
+
+(** Path_p_conc_inv_r_q です。 *)
+Definition path_p_cvrq@{i} {A : Type@{i}} {x y z : A}
+  : forall (p : Path@{i} x z) (q : Path@{i} y z) (r : Path@{i} y x), Path@{i} p (conc (inv r) q) -> Path@{i} (conc r p) q.
