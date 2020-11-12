@@ -113,7 +113,25 @@ Set Default Proof Mode "Classic".
 Definition path_p_cvrq@{i} {A : Type@{i}} {x y z : A}
   : forall (p : Path@{i} x z) (q : Path@{i} y z) (r : Path@{i} y x), Path@{i} p (conc (inv r) q) -> Path@{i} (conc r p) q.
 Proof.
-  move => p q r.
-  case : r p => p' path_p'_cv1q.
-  admit.
-Admitted.
+  move=> p q r.
+  refine (let t := _ in t p).
+  refine (match r
+    as r'
+    in Path _ x'
+    return forall p' : Path x' z, Path p' (conc (inv r') q) -> Path (conc r' p') q
+    with idpath => _
+  end).
+  move=> p' path_p'_cv1q.
+  refine (conc _ (_ : Path@{i} p' _)).
+  -
+    exact (conc_1_p p').
+  -
+  refine (conc _ (_ : Path@{i} (conc (inv idpath) q) _)).
+  +
+    exact path_p'_cv1q.
+  +
+  simpl.
+  exact (conc_1_p q).
+Defined.
+
+Print path_p_cvrq.
