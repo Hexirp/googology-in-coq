@@ -2,11 +2,10 @@
 # neato を使用せよ。
 
 digraph G {
-    Base -> Path;
-    Base -> Data;
+    "GiC.Base" -> "GiC.Path";
+    "GiC.Base" -> "GiC.Data";
 
-    Base [pos = "0,0", pin = true];
-    Path [pos = "4,0", pin = true];
-    Data [pos = "2,-2", pin = true];
+    "GiC.Base" [pos = "0,0", pin = true];
+    "GiC.Path" [pos = "4,0", pin = true];
+    "GiC.Data" [pos = "2,-2", pin = true];
 }
-
