@@ -1,0 +1,12 @@
+# 左は単純、右は複雑。上は純粋的、下は複雑的。
+# neato を使用せよ。
+
+digraph G {
+    Base -> Path;
+    Base -> Data;
+
+    Base [pos = "0,0", pin = true];
+    Path [pos = "4,0", pin = true];
+    Data [pos = "2,-2", pin = true];
+}
+
