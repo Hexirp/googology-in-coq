@@ -272,3 +272,31 @@ Proof.
   +
   exact (inv (conc_1_p p')).
 Defined.
+
+(** Path_q_conc_r_p です。 *)
+Definition path_q_crp_R@{i} {A : Type@{i}} {x y z : A}
+  : forall (p : Path@{i} x z) (q : Path@{i} y z) (r : Path@{i} y x),
+    Path@{i} (conc q (inv p)) r -> Path@{i} q (conc r p).
+Proof.
+  move=> p q r.
+  refine (let t := _ in t q).
+  refine (match p
+    as p'
+    in Path _ z'
+    return forall q' : Path@{i} y z',
+      Path@{i} (conc q' (inv p')) r -> Path@{i} q' (conc r p')
+    with idpath => _
+  end).
+
+  move=> q' path_cq'v1_r.
+  refine (conc _ (_ : Path@{i} (conc q' (inv idpath)) _)).
+  -
+    simpl inv.
+    exact (inv (conc_1_p q')).
+  -
+  refine (conc _ (_ : Path@{i} r _)).
+  +
+    exact path_cq'v1_r.
+  +
+  exact (inv (conc_p_1 r)).
+Defined.
