@@ -133,8 +133,8 @@ Declare ML Module "ssreflect_plugin".
 
 Set Default Proof Mode "Classic".
 
-(** Path_p_conc_inv_r_q です。 *)
-Definition path_p_cvrq@{i} {A : Type@{i}} {x y z : A}
+(** Path_conc_r_p_q です。 *)
+Definition path_crp_q_L@{i} {A : Type@{i}} {x y z : A}
   : forall (p : Path@{i} x z) (q : Path@{i} y z) (r : Path@{i} y x),
     Path@{i} p (conc (inv r) q) -> Path@{i} (conc r p) q.
 Proof.
@@ -161,8 +161,8 @@ Proof.
   exact (conc_1_p q).
 Defined.
 
-(** Path_r_conc_q_inv_p です。 *)
-Definition path_r_cqvp@{i} {A : Type@{i}} {x y z : A}
+(** Path_conc_r_p_q です。 *)
+Definition path_crp_q_R@{i} {A : Type@{i}} {x y z : A}
   : forall (p : Path@{i} x z) (q : Path@{i} y z) (r : Path@{i} y x),
     Path@{i} r (conc q (inv p)) -> Path@{i} (conc r p) q.
 Proof.
@@ -189,8 +189,8 @@ Proof.
   exact (conc_p_1 q').
 Defined.
 
-(** Path_p_conc_r_q です。 *)
-Definition path_p_crq@{i} {A : Type@{i}} {x y z : A}
+(** Path_conc_inv_r_p_q です。 *)
+Definition path_cvrp_q@{i} {A : Type@{i}} {x y z : A}
   : forall (p : Path@{i} x z) (q : Path@{i} y z) (r : Path@{i} x y),
     Path@{i} p (conc r q) -> Path@{i} (conc (inv r) p) q.
 Proof.
@@ -217,8 +217,8 @@ Proof.
   exact (conc_1_p q').
 Defined.
 
-(** Path_r_conc_q_p です。 *)
-Definition path_r_cqp@{i} {A : Type@{i}} {x y z : A}
+(** Path_conc_r_inv_p_q です。 *)
+Definition path_crvp_q@{i} {A : Type@{i}} {x y z : A}
   : forall (p : Path@{i} z x) (q : Path@{i} y z) (r : Path@{i} y x),
     Path@{i} r (conc q p) -> Path@{i} (conc r (inv p)) q.
 Proof.
