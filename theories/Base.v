@@ -152,11 +152,6 @@ Definition ap@{i j} {A : Type@{i}} {B : Type@{j}} (f : A -> B) {x y : A}
   : Path@{i} x y -> Path@{j} (f x) (f y)
   := fun p => match p with idpath => idpath end.
 
-(** 依存型に対応する道への適用です。 *)
-Definition apD@{i j} {A : Type@{i}} {B : Type@{j}} (f : forall x : A, B) {x y : A}
-  : Path@{i} x y -> Path@{j} (f x) (f y)
-  := fun p => match p with idpath => idpath end.
-
 (** Path_Unit_Void です。
 
     この関数は仲間外れですが、そこがいいのです。
