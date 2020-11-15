@@ -548,3 +548,83 @@ Proof.
   -
   exact (conc_1_p q').
 Defined.
+
+(** Path_trpt_p_u_v です。 *)
+Definition path_tpu_v@{i j} {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
+  : forall (p : Path@{i} x y) (u : P x) (v : P y),
+    Path@{j} u (trpt (inv p) v) -> Path@{j} (trpt p u) v.
+Proof.
+  move=> p u v.
+  refine (let t := _ in t v).
+  refine (match p
+    as p'
+    in Path _ y'
+    return forall v' : P y',
+      Path@{j} u (trpt (inv p') v') -> Path@{j} (trpt p' u) v'
+    with idpath => _
+  end).
+
+  move=> v'.
+  simpl trpt.
+  exact idmap.
+Defined.
+
+(** Path_trpt_inv_p_u_v です。 *)
+Definition path_tvpu_v@{i j} {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
+  : forall (p : Path@{i} y x) (u : P x) (v : P y),
+    Path@{j} u (trpt p v) -> Path@{j} (trpt (inv p) u) v.
+Proof.
+  move=> p u v.
+  refine (let t := _ in t u).
+  refine (match p
+    as p'
+    in Path _ x'
+    return forall u' : P x',
+      Path@{j} u' (trpt p' v) -> Path@{j} (trpt (inv p') u') v
+    with idpath => _
+  end).
+
+  move=> u'.
+  simpl trpt.
+  exact idmap.
+Defined.
+
+(** Path_u_trpt_inv_p_v です。 *)
+Definition path_u_tvpv@{i j} {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
+  : forall (p : Path@{i} x y) (u : P x) (v : P y),
+    Path@{j} (trpt p u) v -> Path@{j} u (trpt (inv p) v).
+Proof.
+  move=> p u v.
+  refine (let t := _ in t v).
+  refine (match p
+    as p'
+    in Path _ y'
+    return forall v' : P y',
+      Path@{j} (trpt p' u) v' -> Path@{j} u (trpt (inv p') v')
+    with idpath => _
+  end).
+
+  move=> v'.
+  simpl trpt.
+  exact idmap.
+Defined.
+
+(** Path_u_trpt_p_v です。 *)
+Definition path_u_tpv@{i j} {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
+  : forall (p : Path@{i} y x) (u : P x) (v : P y),
+    Path@{j} (trpt (inv p) u) v -> Path@{j} u (trpt p v).
+Proof.
+  move=> p u v.
+  refine (let t := _ in t u).
+  refine (match p
+    as p'
+    in Path _ x'
+    return forall u' : P x',
+      Path@{j} (trpt (inv p') u') v -> Path@{j} u' (trpt p' v)
+    with idpath => _
+  end).
+
+  move=> u'.
+  simpl trpt.
+  exact idmap.
+Defined.
