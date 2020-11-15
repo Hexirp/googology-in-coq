@@ -356,3 +356,195 @@ Proof.
   simpl inv.
   exact (inv (conc_p_1 r')).
 Defined.
+
+(* Path_p_q です。 *)
+Definition path_p_q_L_L@{i} {A : Type@{i}} {x y : A}
+  : forall (p : Path@{i} x y) (q : Path@{i} x y),
+    Path@{i} (conc p (inv q)) idpath -> Path@{i} p q.
+Proof.
+  move=> p q.
+  refine (let t := _ in t p).
+  refine (match q
+    as q'
+    in Path _ y'
+    return forall p' : Path@{i} x y',
+      Path (conc p' (inv q')) idpath -> Path p' q'
+    with idpath => _
+  end).
+
+  move=> p' path_cp'v1_1.
+  refine (conc _ (_ : Path@{i} (conc p' (inv idpath)) _)).
+  -
+    simpl inv.
+    exact (inv (conc_p_1 p')).
+  -
+  exact path_cp'v1_1.
+Defined.
+
+(* Path_p_q です。 *)
+Definition path_p_q_L_R@{i} {A : Type@{i}} {x y : A}
+  : forall (p : Path@{i} x y) (q : Path@{i} x y),
+    Path@{i} (conc (inv q) p) idpath -> Path@{i} p q.
+Proof.
+  move=> p q.
+  refine (let t := _ in t p).
+  refine (match q
+    as q'
+    in Path _ y'
+    return forall p' : Path@{i} x y',
+      Path (conc (inv q') p') idpath -> Path p' q'
+    with idpath => _
+  end).
+
+  move=> p' path_cv1p'_1.
+  refine (conc _ (_ : Path@{i} (conc (inv idpath) p') _)).
+  -
+    simpl inv.
+    exact (inv (conc_1_p p')).
+  -
+  exact path_cv1p'_1.
+Defined.
+
+(* Path_p_inv_q です。 *)
+Definition path_p_vq_L@{i} {A : Type@{i}} {x y : A}
+  : forall (p : Path@{i} x y) (q : Path@{i} y x),
+    Path@{i} (conc p q) idpath -> Path@{i} p (inv q).
+Proof.
+  move=> p q.
+  refine (let t := _ in t p).
+  refine (match q
+    as q'
+    in Path _ x'
+    return forall p' : Path@{i} x' y,
+      Path (conc p' q') idpath -> Path p' (inv q')
+    with idpath => _
+  end).
+
+  move=> p' path_cp'1_1.
+  refine (conc _ (_ : Path@{i} (conc p' idpath) _)).
+  -
+    exact (inv (conc_p_1 p')).
+  -
+  simpl inv.
+  exact path_cp'1_1.
+Defined.
+
+(* Path_p_inv_q です。 *)
+Definition path_p_vq_R@{i} {A : Type@{i}} {x y : A}
+  : forall (p : Path@{i} x y) (q : Path@{i} y x),
+    Path@{i} (conc q p) idpath -> Path@{i} p (inv q).
+Proof.
+  move=> p q.
+  refine (let t := _ in t p).
+  refine (match q
+    as q'
+    in Path _ x'
+    return forall p' : Path@{i} x' y,
+      Path (conc q' p') idpath -> Path p' (inv q')
+    with idpath => _
+  end).
+
+  move=> p' path_c1p'_1.
+  refine (conc _ (_ : Path@{i} (conc idpath p') _)).
+  -
+    exact (inv (conc_1_p p')).
+  -
+  simpl inv.
+  exact path_c1p'_1.
+Defined.
+
+(* Path_p_q です。 *)
+Definition path_p_q_R_L@{i} {A : Type@{i}} {x y : A}
+  : forall (p : Path@{i} x y) (q : Path@{i} x y),
+    Path@{i} idpath (conc (inv p) q) -> Path@{i} p q.
+Proof.
+  move=> p q.
+  refine (let t := _ in t q).
+  refine (match p
+    as p'
+    in Path _ y'
+    return forall q' : Path@{i} x y',
+      Path idpath (conc (inv p') q') -> Path p' q'
+    with idpath => _
+  end).
+
+  move=> q' path_1_cv1q'.
+  refine (conc _ (_ : Path@{i} (conc (inv idpath) q') _)).
+  -
+    exact path_1_cv1q'.
+  -
+  simpl inv.
+  exact (conc_1_p q').
+Defined.
+
+(* Path_p_q です。 *)
+Definition path_p_q_R_R@{i} {A : Type@{i}} {x y : A}
+  : forall (p : Path@{i} x y) (q : Path@{i} x y),
+    Path@{i} idpath (conc q (inv p)) -> Path@{i} p q.
+Proof.
+  move=> p q.
+  refine (let t := _ in t q).
+  refine (match p
+    as p'
+    in Path _ y'
+    return forall q' : Path@{i} x y',
+      Path idpath (conc q' (inv p')) -> Path p' q'
+    with idpath => _
+  end).
+
+  move=> q' path_1_cq'v1.
+  refine (conc _ (_ : Path@{i} (conc q' (inv idpath)) _)).
+  -
+    exact path_1_cq'v1.
+  -
+  simpl inv.
+  exact (conc_p_1 q').
+Defined.
+
+(* Path_inv_p_q です。 *)
+Definition path_vp_q_L@{i} {A : Type@{i}} {x y : A}
+  : forall (p : Path@{i} x y) (q : Path@{i} y x),
+    Path@{i} idpath (conc q p) -> Path@{i} (inv p) q.
+Proof.
+  move=> p q.
+  refine (let t := _ in t q).
+  refine (match p
+    as p'
+    in Path _ y'
+    return forall q' : Path@{i} y' x,
+      Path idpath (conc q' p') -> Path (inv p') q'
+    with idpath => _
+  end).
+
+  move=> q' path_1_cq'1.
+  refine (conc _ (_ : Path@{i} (conc q' idpath) _)).
+  -
+    simpl inv.
+    exact path_1_cq'1.
+  -
+  exact (conc_p_1 q').
+Defined.
+
+(* Path_inv_p_q です。 *)
+Definition path_vp_q_R@{i} {A : Type@{i}} {x y : A}
+  : forall (p : Path@{i} x y) (q : Path@{i} y x),
+    Path@{i} idpath (conc p q) -> Path@{i} (inv p) q.
+Proof.
+  move=> p q.
+  refine (let t := _ in t q).
+  refine (match p
+    as p'
+    in Path _ y'
+    return forall q' : Path@{i} y' x,
+      Path idpath (conc p' q') -> Path (inv p') q'
+    with idpath => _
+  end).
+
+  move=> q' path_1_c1q'.
+  refine (conc _ (_ : Path@{i} (conc idpath q') _)).
+  -
+    simpl inv.
+    exact path_1_c1q'.
+  -
+  exact (conc_1_p q').
+Defined.
