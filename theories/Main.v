@@ -720,3 +720,26 @@ Proof.
   unfold idmap.
   exact idpath.
 Defined.
+
+(** ap_f_idpath です。 *)
+Definition ap_f_1@{i j} {A : Type@{i}} {B : Type@{j}} (x : A)
+  : forall f : A -> B, Path@{j} (ap f (idpath x)) idpath.
+Proof.
+  move=> f.
+  simpl ap.
+  exact idpath.
+Defined.
+
+(* memo: apD_1 *)
+
+(** ap_f_conc_p_q です。 *)
+Definition ap_f_cpq@{i j} {A : Type@{i}} {B : Type@{j}} {x y z : A}
+  : forall (p : Path@{i} x y) (q : Path@{i} y z) (f : A -> B),
+    Path@{i} (ap f (conc p q)) (conc (ap f p) (ap f q)).
+Proof.
+  move=> p q f.
+  refine (match q with idpath => _ end).
+  refine (match p with idpath => _ end).
+  simpl.
+  exact idpath.
+Defined.
