@@ -722,10 +722,9 @@ Proof.
 Defined.
 
 (** ap_f_idpath です。 *)
-Definition ap_f_1@{i j} {A : Type@{i}} {B : Type@{j}} (x : A)
-  : forall f : A -> B, Path@{j} (ap f (idpath x)) idpath.
+Definition ap_f_1@{i j} {A : Type@{i}} {B : Type@{j}} (f : A -> B) (x : A)
+  : Path@{j} (ap f (idpath x)) idpath.
 Proof.
-  move=> f.
   simpl ap.
   exact idpath.
 Defined.
@@ -733,13 +732,58 @@ Defined.
 (* memo: apD_1 *)
 
 (** ap_f_conc_p_q です。 *)
-Definition ap_f_cpq@{i j} {A : Type@{i}} {B : Type@{j}} {x y z : A}
-  : forall (p : Path@{i} x y) (q : Path@{i} y z) (f : A -> B),
+Definition ap_f_cpq@{i j} {A : Type@{i}} {B : Type@{j}} (f : A -> B) {x y z : A}
+  : forall (p : Path@{i} x y) (q : Path@{i} y z),
     Path@{i} (ap f (conc p q)) (conc (ap f p) (ap f q)).
 Proof.
-  move=> p q f.
+  move=> p q.
   refine (match q with idpath => _ end).
   refine (match p with idpath => _ end).
-  simpl.
+  simpl ap.
+  simpl conc.
   exact idpath.
+Defined.
+
+(** conc_r_ap_f_conc_p_q です。 *)
+Definition conc_r_ap_f_cpq@{i j}
+  {A : Type@{i}} {B : Type@{j}} (f : A -> B) {w : B} {x y z : A}
+  : forall (r : Path@{j} w (f x)) (p : Path@{i} x y) (q : Path@{i} y z),
+    Path@{j} (conc r (ap f (conc p q))) (conc (conc r (ap f p)) (ap f q)).
+Proof.
+  move=> r p q.
+  refine (match q with idpath => _ end).
+  refine (match p with idpath => _ end).
+  simpl ap.
+  change (Path (conc r (conc idpath idpath)) (conc (conc r idpath) idpath)).
+  exact (conc_p_cqr r idpath idpath).
+Defined.
+
+(** conc_ap_f_conc_p_q_r です。 *)
+Definition conc_ap_f_cpq_r@{i j}
+  {A : Type@{i}} {B : Type@{j}} (f : A -> B) {x y z : A} {w : B}
+  : forall (p : Path@{i} x y) (q : Path@{i} y z) (r : Path@{j} (f z) w),
+    Path@{j} (conc (ap f (conc p q)) r) (conc (ap f p) (conc (ap f q) r)).
+Proof.
+  move=> p q r.
+  refine (let t := _ in t r).
+  refine (match q
+    as q'
+    in Path _ z'
+    return forall r' : Path@{i} (f z') w,
+      Path@{j} (conc (ap f (conc p q')) r') (conc (ap f p) (conc (ap f q') r'))
+    with idpath => _
+  end).
+  refine (match p
+    as p'
+    in Path _ y'
+    return forall r' : Path@{i} (f y') w,
+      Path@{j}
+        (conc (ap f (conc p' idpath)) r')
+        (conc (ap f p') (conc (ap f idpath) r'))
+    with idpath => _
+  end).
+  move=> r'.
+  simpl ap.
+  change (Path (conc (conc idpath idpath) r') (conc idpath (conc idpath r'))).
+  exact (conc_cpq_r idpath idpath r').
 Defined.
