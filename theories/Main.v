@@ -787,3 +787,27 @@ Proof.
   change (Path (conc (conc idpath idpath) r') (conc idpath (conc idpath r'))).
   exact (conc_cpq_r idpath idpath r').
 Defined.
+
+(** inv_ap_f_p です。 *)
+Definition inv_ap_f_p@{i j}
+  {A : Type@{i} } {B : Type@{j}} (f : A -> B) {x y : A}
+  : forall p : Path@{i} x y, Path@{j} (inv (ap f p)) (ap f (inv p)).
+Proof.
+  move=> p.
+  refine (match p with idpath => _ end).
+  simpl ap.
+  simpl inv.
+  exact idpath.
+Defined.
+
+(** ap_f_inv_p です。 *)
+Definition ap_f_vp@{i j}
+  {A : Type@{i} } {B : Type@{j}} (f : A -> B) {x y : A}
+  : forall p : Path@{i} x y, Path@{j} (ap f (inv p)) (inv (ap f p)).
+Proof.
+  move=> p.
+  refine (match p with idpath => _ end).
+  simpl ap.
+  simpl inv.
+  exact idpath.
+Defined.
