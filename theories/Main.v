@@ -790,7 +790,7 @@ Defined.
 
 (** inv_ap_f_p です。 *)
 Definition inv_ap_f_p@{i j}
-  {A : Type@{i} } {B : Type@{j}} (f : A -> B) {x y : A}
+  {A : Type@{i}} {B : Type@{j}} (f : A -> B) {x y : A}
   : forall p : Path@{i} x y, Path@{j} (inv (ap f p)) (ap f (inv p)).
 Proof.
   move=> p.
@@ -802,12 +802,47 @@ Defined.
 
 (** ap_f_inv_p です。 *)
 Definition ap_f_vp@{i j}
-  {A : Type@{i} } {B : Type@{j}} (f : A -> B) {x y : A}
+  {A : Type@{i}} {B : Type@{j}} (f : A -> B) {x y : A}
   : forall p : Path@{i} x y, Path@{j} (ap f (inv p)) (inv (ap f p)).
 Proof.
   move=> p.
   refine (match p with idpath => _ end).
   simpl ap.
   simpl inv.
+  exact idpath.
+Defined.
+
+(** ap_idmap_p です。 *)
+Definition ap_idmap_p@{i}
+  {A : Type@{i}} {x y : A}
+  : forall p : Path@{i} x y, Path@{i} (ap idmap p) p.
+Proof.
+  move=> p.
+  refine (match p with idpath => _ end).
+  simpl ap.
+  exact idpath.
+Defined.
+
+(** ap_comp_f_g_p です。 *)
+Definition ap_cfg_p@{i j k}
+  {A : Type@{i}} {B : Type@{j}} {C : Type@{k}} (f : B -> C) (g : A -> B) {x y : A}
+  : forall p : Path@{i} x y, Path@{k} (ap (comp f g) p) (ap f (ap g p)).
+Proof.
+  move=> p.
+  refine (match p with idpath => _ end).
+  simpl ap.
+  exact idpath.
+Defined.
+
+(* memo: ap_compose' *)
+
+(** ap_const_z_p です。 *)
+Definition ap_const_z_p@{i j}
+  {A : Type@{i}} {B : Type@{j}} {x y : A} (z : B)
+  : forall p : Path@{i} x y, Path@{i} (ap (const z) p) idpath.
+Proof.
+  move=> p.
+  refine (match p with idpath => _ end).
+  simpl ap.
   exact idpath.
 Defined.
