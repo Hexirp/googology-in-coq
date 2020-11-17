@@ -859,10 +859,11 @@ Defined.
 (** conc_ap_f_q_p_y です。 *)
 Definition conc_ap_f_q_p_y@{i j}
   {A : Type@{i}} {B : Type@{j}} {f g : A -> B}
-  (p : forall x : A, Path@{j} (f x) (g x)) {x y : A}
-  : forall q : Path@{i} x y, Path@{j} (conc (ap f q) (p y)) (conc (p x) (ap g q)).
+  : forall (p : forall x : A, Path@{j} (f x) (g x))
+    {x y : A} (q : Path@{i} x y),
+      Path@{j} (conc (ap f q) (p y)) (conc (p x) (ap g q)).
 Proof.
-  move=> q.
+  move=> p x y q.
   refine (match q with idpath => _ end).
   simpl ap.
   refine (conc _ (_ : Path@{j} (p x) _)).
@@ -879,5 +880,9 @@ Definition ap_f_q@{i j}
   : forall q : Path@{i} x y,
     Path@{j} (ap f q) (conc (conc (p x) (ap g q)) (inv (p y))).
 Proof.
-  admit.
-Admitted.
+  move=> q.
+  SearchPattern (Path _ (conc _ (inv _))).
+  About path_q_crvp.
+  refine (path_q_crvp (p y) (ap f q) (conc (p x) (ap g q)) _).
+  exact (conc_ap_f_q_p_y p q).
+Defined.
