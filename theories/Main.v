@@ -547,7 +547,7 @@ Proof.
 Defined.
 
 (** Path_trpt_p_u_v です。 *)
-Definition path_tpu_v@{i j} {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
+Definition path_trpt_p_u_v@{i j} {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
   : forall (p : Path@{i} x y) (u : P x) (v : P y),
     Path@{j} u (trpt (inv p) v) -> Path@{j} (trpt p u) v.
 Proof.
@@ -567,7 +567,7 @@ Proof.
 Defined.
 
 (** Path_trpt_inv_p_u_v です。 *)
-Definition path_tvpu_v@{i j} {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
+Definition path_trpt_vp_u_v@{i j} {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
   : forall (p : Path@{i} y x) (u : P x) (v : P y),
     Path@{j} u (trpt p v) -> Path@{j} (trpt (inv p) u) v.
 Proof.
@@ -587,7 +587,7 @@ Proof.
 Defined.
 
 (** Path_u_trpt_inv_p_v です。 *)
-Definition path_u_tvpv@{i j} {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
+Definition path_u_trpt_vp_v@{i j} {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
   : forall (p : Path@{i} x y) (u : P x) (v : P y),
     Path@{j} (trpt p u) v -> Path@{j} u (trpt (inv p) v).
 Proof.
@@ -607,7 +607,7 @@ Proof.
 Defined.
 
 (** Path_u_trpt_p_v です。 *)
-Definition path_u_tpv@{i j} {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
+Definition path_u_trpt_p_v@{i j} {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
   : forall (p : Path@{i} y x) (u : P x) (v : P y),
     Path@{j} (trpt (inv p) u) v -> Path@{j} u (trpt p v).
 Proof.
@@ -626,10 +626,11 @@ Proof.
   exact idmap.
 Defined.
 
-(** inv_path_tpu_v_P_p_u_v_q です。 *)
-Definition inv_ptpuv_P_p_u_v_q@{i j} {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
+(** inv_'path_trpt_p_u_v'_P_p_u_v_q です。 *)
+Definition inv_'path_trpt_p_u_v'_P_p_u_v_q@{i j}
+  {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
   : forall (p : Path@{i} x y) (u : P x) (v : P y) (q : Path@{j} u (trpt (inv p) v)),
-    Path@{j} (inv (path_tpu_v P p u v q)) (path_u_tpv P p v u (inv q)).
+    Path@{j} (inv (path_trpt_p_u_v P p u v q)) (path_u_trpt_p_v P p v u (inv q)).
 Proof.
   move=> p u v q.
   refine (let t := _ in t v q).
@@ -637,22 +638,25 @@ Proof.
     as p'
     in Path _ y'
     return forall (v' : P y') (q' : Path@{j} u (trpt (inv p') v')),
-      Path@{j} (inv (path_tpu_v P p' u v' q')) (path_u_tpv P p' v' u (inv q'))
+      Path@{j}
+        (inv (path_trpt_p_u_v P p' u v' q'))
+        (path_u_trpt_p_v P p' v' u (inv q'))
     with idpath => _
   end).
 
   simpl trpt.
   move=> v' q'.
-  simpl path_tpu_v.
-  simpl path_u_tpv.
+  simpl path_trpt_p_u_v.
+  simpl path_u_trpt_p_v.
   unfold idmap.
   exact idpath.
 Defined.
 
-(** inv_path_tvpu_v_P_p_u_v_q です。 *)
-Definition inv_ptvpuv_P_p_u_v_q@{i j} {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
+(** inv_'path_trpt_vp_u_v'_P_p_u_v_q です。 *)
+Definition inv_'path_trpt_vp_u_v'_P_p_u_v_q@{i j}
+  {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
   : forall (p : Path@{i} y x) (u : P x) (v : P y) (q : Path@{j} u (trpt p v)),
-    Path@{j} (inv (path_tvpu_v P p u v q)) (path_u_tvpv P p v u (inv q)).
+    Path@{j} (inv (path_trpt_vp_u_v P p u v q)) (path_u_trpt_vp_v P p v u (inv q)).
 Proof.
   move=> p u v q.
   refine (let t := _ in t u q).
@@ -660,22 +664,25 @@ Proof.
     as p'
     in Path _ x'
     return forall (u' : P x') (q' : Path@{j} u' (trpt p' v)),
-      Path@{j} (inv (path_tvpu_v P p' u' v q')) (path_u_tvpv P p' v u' (inv q'))
+      Path@{j}
+        (inv (path_trpt_vp_u_v P p' u' v q'))
+        (path_u_trpt_vp_v P p' v u' (inv q'))
     with idpath => _
   end).
 
   simpl trpt.
   move=> u' q'.
-  simpl path_tvpu_v.
-  simpl path_u_tvpv.
+  simpl path_trpt_vp_u_v.
+  simpl path_u_trpt_vp_v.
   unfold idmap.
   exact idpath.
 Defined.
 
-(** inv_path_u_tvpv_P_p_u_v_q です。 *)
-Definition inv_putvpv_P_p_u_v_q@{i j} {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
+(** inv_'path_u_trpt_vp_v'_P_p_u_v_q です。 *)
+Definition inv_'path_u_trpt_vp_v'_P_p_u_v_q@{i j}
+  {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
   : forall (p : Path@{i} x y) (u : P x) (v : P y) (q : Path@{j} (trpt p u) v),
-    Path@{j} (inv (path_u_tvpv P p u v q)) (path_tvpu_v P p v u (inv q)).
+    Path@{j} (inv (path_u_trpt_vp_v P p u v q)) (path_trpt_vp_u_v P p v u (inv q)).
 Proof.
   move=> p u v q.
   refine (let t := _ in t v q).
@@ -683,22 +690,25 @@ Proof.
     as p'
     in Path _ y'
     return forall (v' : P y') (q' : Path@{j} (trpt p' u) v'),
-      Path@{j} (inv (path_u_tvpv P p' u v' q')) (path_tvpu_v P p' v' u (inv q'))
+      Path@{j}
+        (inv (path_u_trpt_vp_v P p' u v' q'))
+        (path_trpt_vp_u_v P p' v' u (inv q'))
     with idpath => _
   end).
 
   simpl trpt.
   move=> v' q'.
-  simpl path_u_tvpv.
-  simpl path_tvpu_v.
+  simpl path_u_trpt_vp_v.
+  simpl path_trpt_vp_u_v.
   unfold idmap.
   exact idpath.
 Defined.
 
-(** inv_path_u_tpv_P_p_u_v_q です。 *)
-Definition inv_putpv_P_p_u_v_q@{i j} {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
+(** inv_'path_u_trpt_p_v'_P_p_u_v_q です。 *)
+Definition inv_'path_u_trpt_p_v'_P_p_u_v_q@{i j}
+  {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
   : forall (p : Path@{i} y x) (u : P x) (v : P y) (q : Path@{j} (trpt (inv p) u) v),
-    Path@{j} (inv (path_u_tpv P p u v q)) (path_tpu_v P p v u (inv q)).
+    Path@{j} (inv (path_u_trpt_p_v P p u v q)) (path_trpt_p_u_v P p v u (inv q)).
 Proof.
   move=> p u v q.
   refine (let t := _ in t u q).
@@ -706,14 +716,16 @@ Proof.
     as p'
     in Path _ x'
     return forall (u' : P x') (q' : Path@{j} (trpt (inv p') u') v),
-      Path@{j} (inv (path_u_tpv P p' u' v q')) (path_tpu_v P p' v u' (inv q'))
+      Path@{j}
+        (inv (path_u_trpt_p_v P p' u' v q'))
+        (path_trpt_p_u_v P p' v u' (inv q'))
     with idpath => _
   end).
 
   simpl trpt.
   move=> u' q'.
-  simpl path_u_tpv.
-  simpl path_tpu_v.
+  simpl path_u_trpt_p_v.
+  simpl path_trpt_p_u_v.
   unfold idmap.
   exact idpath.
 Defined.
