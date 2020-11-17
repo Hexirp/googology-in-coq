@@ -871,3 +871,13 @@ Proof.
   -
     exact (inv (conc_p_1 (p x))).
 Defined.
+
+(** ap_f_q です。 *)
+Definition ap_f_q@{i j}
+  {A : Type@{i}} {B : Type@{j}} {f g : A -> B}
+  (p : forall x : A, Path@{j} (f x) (g x)) {x y : A}
+  : forall q : Path@{i} x y,
+    Path@{j} (ap f q) (conc (conc (p x) (ap g q)) (inv (p y))).
+Proof.
+  admit.
+Admitted.
