@@ -9,7 +9,6 @@
 Declare ML Module "ltac_plugin".
 Declare ML Module "ssrmatching_plugin".
 Declare ML Module "ssreflect_plugin".
-Declare ML Module "ssrsearch_plugin".
 
 (** タクティックが使用できるように設定します。 *)
 Set Default Proof Mode "Classic".
