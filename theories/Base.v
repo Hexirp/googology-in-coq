@@ -5,6 +5,15 @@
     具体的には、一階述語論理に対応する型と、それに関する単純な関数を定義します。 GiC における標準的な命題は、ここで定義された型を使って様々な型を繋ぎ合わせることにより構築されます。
  *)
 
+(** Coq と SSReflect のタクティックを使用するためにプラグインを読み込みます。 *)
+Declare ML Module "ltac_plugin".
+Declare ML Module "ssrmatching_plugin".
+Declare ML Module "ssreflect_plugin".
+Declare ML Module "ssrsearch_plugin".
+
+(** タクティックが使用できるように設定します。 *)
+Set Default Proof Mode "Classic".
+
 (** 帰納原理 (induction principle) を生成しないように設定します。 *)
 Unset Elimination Schemes.
 

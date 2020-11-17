@@ -2,6 +2,9 @@
 
 Require Import GiC.Base.
 
+(** タクティックが使用できるように設定します。 *)
+Set Default Proof Mode "Classic".
+
 (** 帰納原理 (induction principle) を生成しないように設定します。 *)
 Unset Elimination Schemes.
 
@@ -126,12 +129,6 @@ Definition inv_cvpvq@{i} {A : Type@{i}} {x y z : A}
 Definition inv_vp@{i} {A : Type@{i}} {x y z : A}
   : forall p : Path@{i} x y, Path@{i} (inv (inv p)) p
   := fun p => match p with idpath => idpath end.
-
-Declare ML Module "ltac_plugin".
-Declare ML Module "ssrmatching_plugin".
-Declare ML Module "ssreflect_plugin".
-
-Set Default Proof Mode "Classic".
 
 (** Path_conc_r_p_q です。 *)
 Definition path_crp_q_L@{i} {A : Type@{i}} {x y z : A}
