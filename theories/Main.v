@@ -846,3 +846,19 @@ Proof.
   simpl ap.
   exact idpath.
 Defined.
+
+(** conc_ap_f_q_p_y です。 *)
+Definition conc_ap_f_q_p_y@{i j}
+  {A : Type@{i}} {B : Type@{j}} {f g : A -> B}
+  (p : forall x : A, Path@{j} (f x) (g x)) {x y : A}
+  : forall q : Path@{i} x y, Path@{j} (conc (ap f q) (p y)) (conc (p x) (ap g q)).
+Proof.
+  move=> q.
+  refine (match q with idpath => _ end).
+  simpl ap.
+  refine (conc _ (_ : Path@{j} (p x) _)).
+  -
+    exact (conc_1_p (p x)).
+  -
+    exact (inv (conc_p_1 (p x))).
+Defined.
