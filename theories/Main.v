@@ -881,8 +881,6 @@ Definition ap_f_q@{i j}
     Path@{j} (ap f q) (conc (conc (p x) (ap g q)) (inv (p y))).
 Proof.
   move=> q.
-  SearchPattern (Path _ (conc _ (inv _))).
-  About path_q_crvp.
-  refine (path_q_crvp (p y) (ap f q) (conc (p x) (ap g q)) _).
+  refine (path_q_crvp _ _ _ _).
   exact (conc_ap_f_q_p_y p q).
 Defined.
