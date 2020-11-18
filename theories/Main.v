@@ -956,8 +956,18 @@ Proof.
     exact (inv (conc_1_p (p x))).
 Defined.
 
+Definition ap2@{i j k | }
+  {A : Type@{i}} {B : Type@{j}} {C : Type@{k}} (f : A -> B -> C)
+  {x x' : A} (p : Path@{i} x x') {y y' : B} (q : Path@{j} y y')
+  : Path@{k} (f x y) (f x' y').
+Proof.
+  refine (match p with idpath => _ end).
+  refine (ap (f x) _).
+  exact q.
+Defined.
+
 (** Path_conc_conc_r_ap_f_q_conc_p_y_s_conc_conc_r_p_x_conc_ap_g_q_s です。 *)
-Definition path_conc_crA_cPs_conc_crP_cAs@{i j}
+Definition path_conc_crA_cPs_conc_crP_cAs@{i j | }
   {A : Type@{i}} {B : Type@{j}} {f g : A -> B}
   (p : forall x : A, Path@{j} (f x) (g x)) {x y : A}
   (q : Path@{i} x y) {z w : B} (r : Path@{j} z (f x)) (s : Path@{j} (g y) w)
@@ -970,8 +980,12 @@ Proof.
   simpl ap.
   refine (conc _ (_ : Path@{j} (conc r (p x)) _)).
   -
-    admit.
+    refine (ap2 conc _ _).
+    +
+      exact (conc_p_1 r).
+    +
+      exact (conc_p_1 (p x)).
   -
     change (Path@{j} (conc r (p x)) (conc (conc r (p x)) idpath)).
     exact (inv (conc_p_1 (conc r (p x)))).
-Admitted.
+Defined.
