@@ -15,22 +15,22 @@ Set Polymorphic Inductive Cumulativity.
 (** 宇宙 (universe) について表示するように設定します。 *)
 Set Printing Universes.
 
+Definition apD@{i j | }
+  {A : Type@{i}} {B : A -> Type@{j}} (f : forall x : A, B x)
+  {x y : A} (p : Path@{i} x y)
+  : Path@{j} (trpt p (f x)) (f y)
+  := match p with idpath => idpath end.
+
 Definition ap1@{i j | }
   {A : Type@{i}} {B : Type@{j}} (f : A -> B) {x x' : A} (p : Path@{i} x x')
-  : Path@{j} (f x) (f x').
-Proof.
-  refine (match p with idpath => _ end).
-  exact idpath.
-Defined.
+  : Path@{j} (f x) (f x')
+  := ap f p.
 
 Definition ap2@{i j k | }
   {A : Type@{i}} {B : Type@{j}} {C : Type@{k}} (f : A -> B -> C)
   {x x' : A} (p : Path@{i} x x') {y y' : B} (q : Path@{j} y y')
-  : Path@{k} (f x y) (f x' y').
-Proof.
-  refine (match p with idpath => _ end).
-  exact (ap1 (f x) q).
-Defined.
+  : Path@{k} (f x y) (f x' y')
+  := match p with idpath => ap1 (f x) q end.
 
 Definition ap3@{i j k l | }
   {A : Type@{i}} {B : Type@{j}} {C : Type@{k}} {D : Type@{l}}
@@ -38,11 +38,8 @@ Definition ap3@{i j k l | }
   {x x' : A} (p : Path@{i} x x')
   {y y' : B} (q : Path@{j} y y')
   {z z' : C} (r : Path@{k} z z')
-  : Path@{l} (f x y z) (f x' y' z').
-Proof.
-  refine (match p with idpath => _ end).
-  refine (ap2 (f x) q r).
-Defined.
+  : Path@{l} (f x y z) (f x' y' z')
+  := match p with idpath => ap2 (f x) q r end.
 
 (** conc_p_idpath です。 *)
 Definition conc_p_1@{i | } {A : Type@{i}} {x y : A}
