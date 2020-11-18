@@ -15,6 +15,35 @@ Set Polymorphic Inductive Cumulativity.
 (** 宇宙 (universe) について表示するように設定します。 *)
 Set Printing Universes.
 
+Definition ap1@{i j | }
+  {A : Type@{i}} {B : Type@{j}} (f : A -> B) {x x' : A} (p : Path@{i} x x')
+  : Path@{j} (f x) (f x').
+Proof.
+  refine (match p with idpath => _ end).
+  exact idpath.
+Defined.
+
+Definition ap2@{i j k | }
+  {A : Type@{i}} {B : Type@{j}} {C : Type@{k}} (f : A -> B -> C)
+  {x x' : A} (p : Path@{i} x x') {y y' : B} (q : Path@{j} y y')
+  : Path@{k} (f x y) (f x' y').
+Proof.
+  refine (match p with idpath => _ end).
+  exact (ap1 (f x) q).
+Defined.
+
+Definition ap3@{i j k l | }
+  {A : Type@{i}} {B : Type@{j}} {C : Type@{k}} {D : Type@{l}}
+  (f : A -> B -> C -> D)
+  {x x' : A} (p : Path@{i} x x')
+  {y y' : B} (q : Path@{j} y y')
+  {z z' : C} (r : Path@{k} z z')
+  : Path@{l} (f x y z) (f x' y' z').
+Proof.
+  refine (match p with idpath => _ end).
+  refine (ap2 (f x) q r).
+Defined.
+
 (** conc_p_idpath です。 *)
 Definition conc_p_1@{i | } {A : Type@{i}} {x y : A}
   : forall p : Path@{i} x y, Path@{i} (conc p idpath) p
@@ -954,35 +983,6 @@ Proof.
     exact (conc_p_1 (p x)).
   -
     exact (inv (conc_1_p (p x))).
-Defined.
-
-Definition ap1@{i j | }
-  {A : Type@{i}} {B : Type@{j}} (f : A -> B) {x x' : A} (p : Path@{i} x x')
-  : Path@{j} (f x) (f x').
-Proof.
-  refine (match p with idpath => _ end).
-  exact idpath.
-Defined.
-
-Definition ap2@{i j k | }
-  {A : Type@{i}} {B : Type@{j}} {C : Type@{k}} (f : A -> B -> C)
-  {x x' : A} (p : Path@{i} x x') {y y' : B} (q : Path@{j} y y')
-  : Path@{k} (f x y) (f x' y').
-Proof.
-  refine (match p with idpath => _ end).
-  exact (ap1 (f x) q).
-Defined.
-
-Definition ap3@{i j k l | }
-  {A : Type@{i}} {B : Type@{j}} {C : Type@{k}} {D : Type@{l}}
-  (f : A -> B -> C -> D)
-  {x x' : A} (p : Path@{i} x x')
-  {y y' : B} (q : Path@{j} y y')
-  {z z' : C} (r : Path@{k} z z')
-  : Path@{l} (f x y z) (f x' y' z').
-Proof.
-  refine (match p with idpath => _ end).
-  refine (ap2 (f x) q r).
 Defined.
 
 (** Path_conc_conc_r_ap_f_q_conc_p_y_s_conc_conc_r_p_x_conc_ap_g_q_s です。 *)
