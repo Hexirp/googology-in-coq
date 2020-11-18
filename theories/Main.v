@@ -16,17 +16,17 @@ Set Polymorphic Inductive Cumulativity.
 Set Printing Universes.
 
 (** conc_p_idpath です。 *)
-Definition conc_p_1@{i} {A : Type@{i}} {x y : A}
+Definition conc_p_1@{i | } {A : Type@{i}} {x y : A}
   : forall p : Path@{i} x y, Path@{i} (conc p idpath) p
   := fun p => match p with idpath => idpath end.
 
 (** conc_idpath_p です。 *)
-Definition conc_1_p@{i} {A : Type@{i}} {x y : A}
+Definition conc_1_p@{i | } {A : Type@{i}} {x y : A}
   : forall p : Path@{i} x y, Path@{i} (conc idpath p) p
   := fun p => match p with idpath => idpath end.
 
 (** conc_p_conc_q_r です。 *)
-Definition conc_p_cqr@{i} {A : Type@{i}} {x y z w : A}
+Definition conc_p_cqr@{i | } {A : Type@{i}} {x y z w : A}
   : forall (p : Path@{i} x y) (q : Path@{i} y z) (r : Path@{i} z w),
     Path@{i} (conc p (conc q r)) (conc (conc p q) r)
   := fun p q r => match r
@@ -38,7 +38,7 @@ Definition conc_p_cqr@{i} {A : Type@{i}} {x y z w : A}
   end.
 
 (** conc_conc_p_q_r です。 *)
-Definition conc_cpq_r@{i} {A : Type@{i}} {x y z w : A}
+Definition conc_cpq_r@{i | } {A : Type@{i}} {x y z w : A}
   : forall (p : Path@{i} x y) (q : Path@{i} y z) (r : Path@{i} z w),
     Path@{i} (conc (conc p q) r) (conc p (conc q r))
   := fun p q r => match r
@@ -50,35 +50,35 @@ Definition conc_cpq_r@{i} {A : Type@{i}} {x y z w : A}
   end.
 
 (** conc_p_inv_p です。 *)
-Definition conc_p_vp@{i} {A : Type@{i}} {x y : A}
+Definition conc_p_vp@{i | } {A : Type@{i}} {x y : A}
   : forall p : Path@{i} x y, Path@{i} (conc p (inv p)) idpath
   := fun p => match p with idpath => idpath end.
 
 (** conc_inv_p_p です。 *)
-Definition conc_vp_p@{i} {A : Type@{i}} {x y : A}
+Definition conc_vp_p@{i | } {A : Type@{i}} {x y : A}
   : forall p : Path@{i} x y, Path@{i} (conc (inv p) p) idpath
   := fun p => match p with idpath => idpath end.
 
 (** conc_inv_p_conc_p_q です。 *)
-Definition conc_vp_cpq@{i} {A : Type@{i}} {x y z : A}
+Definition conc_vp_cpq@{i | } {A : Type@{i}} {x y z : A}
   : forall (p : Path@{i} x y) (q : Path@{i} y z),
     Path@{i} (conc (inv p) (conc p q)) q
   := fun p q => match q with idpath => match p with idpath => idpath end end.
 
 (** conc_p_conc_inv_p_q です。 *)
-Definition conc_p_cvpq@{i} {A : Type@{i}} {x y z : A}
+Definition conc_p_cvpq@{i | } {A : Type@{i}} {x y z : A}
   : forall (p : Path@{i} x y) (q : Path@{i} x z),
     Path@{i} (conc p (conc (inv p) q)) q
   := fun p q => match q with idpath => match p with idpath => idpath end end.
 
 (** conc_conc_p_q_inv_q です。 *)
-Definition conc_cpq_vq@{i} {A : Type@{i}} {x y z : A}
+Definition conc_cpq_vq@{i | } {A : Type@{i}} {x y z : A}
   : forall (p : Path@{i} x y) (q : Path@{i} y z),
     Path@{i} (conc (conc p q) (inv q)) p
   := fun p q => match q with idpath => match p with idpath => idpath end end.
 
 (** conc_conc_p_inv_q_q です。 *)
-Definition conc_cpvq_q@{i} {A : Type@{i}} {x y z : A}
+Definition conc_cpvq_q@{i | } {A : Type@{i}} {x y z : A}
   : forall (p : Path@{i} x z) (q : Path@{i} y z),
     Path@{i} (conc (conc p (inv q)) q) p
   := fun p q => let
@@ -93,19 +93,19 @@ Definition conc_cpvq_q@{i} {A : Type@{i}} {x y z : A}
     t p.
 
 (** inv_conc_p_q です。 *)
-Definition inv_cpq@{i} {A : Type@{i}} {x y z : A}
+Definition inv_cpq@{i | } {A : Type@{i}} {x y z : A}
   : forall (p : Path@{i} x y) (q : Path@{i} y z),
     Path@{i} (inv (conc p q)) (conc (inv q) (inv p))
   := fun p q => match q with idpath => match p with idpath => idpath end end.
 
 (** inv_conc_inv_p_q です。 *)
-Definition inv_cvpq@{i} {A : Type@{i}} {x y z : A}
+Definition inv_cvpq@{i | } {A : Type@{i}} {x y z : A}
   : forall (p : Path@{i} x y) (q : Path@{i} x z),
     Path@{i} (inv (conc (inv p) q)) (conc (inv q) p)
   := fun p q => match q with idpath => match p with idpath => idpath end end.
 
 (** inv_conc_p_inv_q です。 *)
-Definition inv_cpvq@{i} {A : Type@{i}} {x y z : A}
+Definition inv_cpvq@{i | } {A : Type@{i}} {x y z : A}
   : forall (p : Path@{i} x z) (q : Path@{i} y z),
     Path@{i} (inv (conc p (inv q))) (conc q (inv p))
   := fun p q => let
@@ -120,18 +120,18 @@ Definition inv_cpvq@{i} {A : Type@{i}} {x y z : A}
     t p.
 
 (** inv_conc_inv_p_inv_q です。 *)
-Definition inv_cvpvq@{i} {A : Type@{i}} {x y z : A}
+Definition inv_cvpvq@{i | } {A : Type@{i}} {x y z : A}
   : forall (p : Path@{i} y x) (q : Path@{i} z y),
     Path@{i} (inv (conc (inv p) (inv q))) (conc q p)
   := fun p q => match p with idpath => match q with idpath => idpath end end.
 
 (** inv_inv_p です。 *)
-Definition inv_vp@{i} {A : Type@{i}} {x y z : A}
+Definition inv_vp@{i | } {A : Type@{i}} {x y z : A}
   : forall p : Path@{i} x y, Path@{i} (inv (inv p)) p
   := fun p => match p with idpath => idpath end.
 
 (** Path_conc_r_p_q です。 *)
-Definition path_crp_q_L@{i} {A : Type@{i}} {x y z : A}
+Definition path_crp_q_L@{i | } {A : Type@{i}} {x y z : A}
   : forall (p : Path@{i} x z) (q : Path@{i} y z) (r : Path@{i} y x),
     Path@{i} p (conc (inv r) q) -> Path@{i} (conc r p) q.
 Proof.
@@ -159,7 +159,7 @@ Proof.
 Defined.
 
 (** Path_conc_r_p_q です。 *)
-Definition path_crp_q_R@{i} {A : Type@{i}} {x y z : A}
+Definition path_crp_q_R@{i | } {A : Type@{i}} {x y z : A}
   : forall (p : Path@{i} x z) (q : Path@{i} y z) (r : Path@{i} y x),
     Path@{i} r (conc q (inv p)) -> Path@{i} (conc r p) q.
 Proof.
@@ -187,7 +187,7 @@ Proof.
 Defined.
 
 (** Path_conc_inv_r_p_q です。 *)
-Definition path_cvrp_q@{i} {A : Type@{i}} {x y z : A}
+Definition path_cvrp_q@{i | } {A : Type@{i}} {x y z : A}
   : forall (p : Path@{i} x z) (q : Path@{i} y z) (r : Path@{i} x y),
     Path@{i} p (conc r q) -> Path@{i} (conc (inv r) p) q.
 Proof.
@@ -215,7 +215,7 @@ Proof.
 Defined.
 
 (** Path_conc_r_inv_p_q です。 *)
-Definition path_crvp_q@{i} {A : Type@{i}} {x y z : A}
+Definition path_crvp_q@{i | } {A : Type@{i}} {x y z : A}
   : forall (p : Path@{i} z x) (q : Path@{i} y z) (r : Path@{i} y x),
     Path@{i} r (conc q p) -> Path@{i} (conc r (inv p)) q.
 Proof.
@@ -243,7 +243,7 @@ Proof.
 Defined.
 
 (** Path_q_conc_r_p です。 *)
-Definition path_q_crp_L@{i} {A : Type@{i}} {x y z : A}
+Definition path_q_crp_L@{i | } {A : Type@{i}} {x y z : A}
   : forall (p : Path@{i} x z) (q : Path@{i} y z) (r : Path@{i} y x),
     Path@{i} (conc (inv r) q) p -> Path@{i} q (conc r p).
 Proof.
@@ -271,7 +271,7 @@ Proof.
 Defined.
 
 (** Path_q_conc_r_p です。 *)
-Definition path_q_crp_R@{i} {A : Type@{i}} {x y z : A}
+Definition path_q_crp_R@{i | } {A : Type@{i}} {x y z : A}
   : forall (p : Path@{i} x z) (q : Path@{i} y z) (r : Path@{i} y x),
     Path@{i} (conc q (inv p)) r -> Path@{i} q (conc r p).
 Proof.
@@ -299,7 +299,7 @@ Proof.
 Defined.
 
 (** Path_q_conc_inv_r_p です。 *)
-Definition path_q_cvrp@{i} {A : Type@{i}} {x y z : A}
+Definition path_q_cvrp@{i | } {A : Type@{i}} {x y z : A}
   : forall (p : Path@{i} x z) (q : Path@{i} y z) (r : Path@{i} x y),
     Path@{i} (conc r q) p -> Path@{i} q (conc (inv r) p).
 Proof.
@@ -327,7 +327,7 @@ Proof.
 Defined.
 
 (** Path_q_conc_r_inv_p です。 *)
-Definition path_q_crvp@{i} {A : Type@{i}} {x y z : A}
+Definition path_q_crvp@{i | } {A : Type@{i}} {x y z : A}
   : forall (p : Path@{i} z x) (q : Path@{i} y z) (r : Path@{i} y x),
     Path@{i} (conc q p) r -> Path@{i} q (conc r (inv p)).
 Proof.
@@ -355,7 +355,7 @@ Proof.
 Defined.
 
 (* Path_p_q です。 *)
-Definition path_p_q_L_L@{i} {A : Type@{i}} {x y : A}
+Definition path_p_q_L_L@{i | } {A : Type@{i}} {x y : A}
   : forall (p : Path@{i} x y) (q : Path@{i} x y),
     Path@{i} (conc p (inv q)) idpath -> Path@{i} p q.
 Proof.
@@ -379,7 +379,7 @@ Proof.
 Defined.
 
 (* Path_p_q です。 *)
-Definition path_p_q_L_R@{i} {A : Type@{i}} {x y : A}
+Definition path_p_q_L_R@{i | } {A : Type@{i}} {x y : A}
   : forall (p : Path@{i} x y) (q : Path@{i} x y),
     Path@{i} (conc (inv q) p) idpath -> Path@{i} p q.
 Proof.
@@ -403,7 +403,7 @@ Proof.
 Defined.
 
 (* Path_p_inv_q です。 *)
-Definition path_p_vq_L@{i} {A : Type@{i}} {x y : A}
+Definition path_p_vq_L@{i | } {A : Type@{i}} {x y : A}
   : forall (p : Path@{i} x y) (q : Path@{i} y x),
     Path@{i} (conc p q) idpath -> Path@{i} p (inv q).
 Proof.
@@ -427,7 +427,7 @@ Proof.
 Defined.
 
 (* Path_p_inv_q です。 *)
-Definition path_p_vq_R@{i} {A : Type@{i}} {x y : A}
+Definition path_p_vq_R@{i | } {A : Type@{i}} {x y : A}
   : forall (p : Path@{i} x y) (q : Path@{i} y x),
     Path@{i} (conc q p) idpath -> Path@{i} p (inv q).
 Proof.
@@ -451,7 +451,7 @@ Proof.
 Defined.
 
 (* Path_p_q です。 *)
-Definition path_p_q_R_L@{i} {A : Type@{i}} {x y : A}
+Definition path_p_q_R_L@{i | } {A : Type@{i}} {x y : A}
   : forall (p : Path@{i} x y) (q : Path@{i} x y),
     Path@{i} idpath (conc (inv p) q) -> Path@{i} p q.
 Proof.
@@ -475,7 +475,7 @@ Proof.
 Defined.
 
 (* Path_p_q です。 *)
-Definition path_p_q_R_R@{i} {A : Type@{i}} {x y : A}
+Definition path_p_q_R_R@{i | } {A : Type@{i}} {x y : A}
   : forall (p : Path@{i} x y) (q : Path@{i} x y),
     Path@{i} idpath (conc q (inv p)) -> Path@{i} p q.
 Proof.
@@ -499,7 +499,7 @@ Proof.
 Defined.
 
 (* Path_inv_p_q です。 *)
-Definition path_vp_q_L@{i} {A : Type@{i}} {x y : A}
+Definition path_vp_q_L@{i | } {A : Type@{i}} {x y : A}
   : forall (p : Path@{i} x y) (q : Path@{i} y x),
     Path@{i} idpath (conc q p) -> Path@{i} (inv p) q.
 Proof.
@@ -523,7 +523,7 @@ Proof.
 Defined.
 
 (* Path_inv_p_q です。 *)
-Definition path_vp_q_R@{i} {A : Type@{i}} {x y : A}
+Definition path_vp_q_R@{i | } {A : Type@{i}} {x y : A}
   : forall (p : Path@{i} x y) (q : Path@{i} y x),
     Path@{i} idpath (conc p q) -> Path@{i} (inv p) q.
 Proof.
@@ -547,7 +547,7 @@ Proof.
 Defined.
 
 (** Path_trpt_p_u_v です。 *)
-Definition path_trpt_p_u_v@{i j} {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
+Definition path_trpt_p_u_v@{i j | } {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
   : forall (p : Path@{i} x y) (u : P x) (v : P y),
     Path@{j} u (trpt (inv p) v) -> Path@{j} (trpt p u) v.
 Proof.
@@ -567,7 +567,7 @@ Proof.
 Defined.
 
 (** Path_trpt_inv_p_u_v です。 *)
-Definition path_trpt_vp_u_v@{i j} {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
+Definition path_trpt_vp_u_v@{i j | } {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
   : forall (p : Path@{i} y x) (u : P x) (v : P y),
     Path@{j} u (trpt p v) -> Path@{j} (trpt (inv p) u) v.
 Proof.
@@ -587,7 +587,7 @@ Proof.
 Defined.
 
 (** Path_u_trpt_inv_p_v です。 *)
-Definition path_u_trpt_vp_v@{i j} {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
+Definition path_u_trpt_vp_v@{i j | } {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
   : forall (p : Path@{i} x y) (u : P x) (v : P y),
     Path@{j} (trpt p u) v -> Path@{j} u (trpt (inv p) v).
 Proof.
@@ -607,7 +607,7 @@ Proof.
 Defined.
 
 (** Path_u_trpt_p_v です。 *)
-Definition path_u_trpt_p_v@{i j} {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
+Definition path_u_trpt_p_v@{i j | } {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
   : forall (p : Path@{i} y x) (u : P x) (v : P y),
     Path@{j} (trpt (inv p) u) v -> Path@{j} u (trpt p v).
 Proof.
@@ -627,7 +627,7 @@ Proof.
 Defined.
 
 (** inv_'path_trpt_p_u_v'_P_p_u_v_q です。 *)
-Definition inv_'path_trpt_p_u_v'_P_p_u_v_q@{i j}
+Definition inv_'path_trpt_p_u_v'_P_p_u_v_q@{i j | }
   {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
   (p : Path@{i} x y) (u : P x) (v : P y)
   : forall q : Path@{j} u (trpt (inv p) v),
@@ -656,7 +656,7 @@ Proof.
 Defined.
 
 (** inv_'path_trpt_vp_u_v'_P_p_u_v_q です。 *)
-Definition inv_'path_trpt_vp_u_v'_P_p_u_v_q@{i j}
+Definition inv_'path_trpt_vp_u_v'_P_p_u_v_q@{i j | }
   {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
   (p : Path@{i} y x) (u : P x) (v : P y)
   : forall q : Path@{j} u (trpt p v),
@@ -685,7 +685,7 @@ Proof.
 Defined.
 
 (** inv_'path_u_trpt_vp_v'_P_p_u_v_q です。 *)
-Definition inv_'path_u_trpt_vp_v'_P_p_u_v_q@{i j}
+Definition inv_'path_u_trpt_vp_v'_P_p_u_v_q@{i j | }
   {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
   (p : Path@{i} x y) (u : P x) (v : P y)
   : forall q : Path@{j} (trpt p u) v,
@@ -714,7 +714,7 @@ Proof.
 Defined.
 
 (** inv_'path_u_trpt_p_v'_P_p_u_v_q です。 *)
-Definition inv_'path_u_trpt_p_v'_P_p_u_v_q@{i j}
+Definition inv_'path_u_trpt_p_v'_P_p_u_v_q@{i j | }
   {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
   (p : Path@{i} y x) (u : P x) (v : P y)
   : forall q : Path@{j} (trpt (inv p) u) v,
@@ -743,7 +743,7 @@ Proof.
 Defined.
 
 (** ap_f_idpath です。 *)
-Definition ap_f_1@{i j} {A : Type@{i}} {B : Type@{j}} (f : A -> B) (x : A)
+Definition ap_f_1@{i j | } {A : Type@{i}} {B : Type@{j}} (f : A -> B) (x : A)
   : Path@{j} (ap f (idpath x)) idpath.
 Proof.
   simpl ap.
@@ -753,10 +753,10 @@ Defined.
 (* memo: apD_1 *)
 
 (** ap_f_conc_p_q です。 *)
-Definition ap_f_cpq@{i j}
+Definition ap_f_cpq@{i j | }
   {A : Type@{i}} {B : Type@{j}} (f : A -> B) {x y z : A}
   : forall (p : Path@{i} x y) (q : Path@{i} y z),
-    Path@{i} (ap f (conc p q)) (conc (ap f p) (ap f q)).
+    Path@{j} (ap f (conc p q)) (conc (ap f p) (ap f q)).
 Proof.
   move=> p q.
   refine (match q with idpath => _ end).
@@ -767,7 +767,7 @@ Proof.
 Defined.
 
 (** conc_r_ap_f_conc_p_q です。 *)
-Definition conc_r_ap_f_cpq@{i j}
+Definition conc_r_ap_f_cpq@{i j | }
   {A : Type@{i}} {B : Type@{j}} (f : A -> B) {w : B} {x y z : A}
   : forall (r : Path@{j} w (f x)) (p : Path@{i} x y) (q : Path@{i} y z),
     Path@{j} (conc r (ap f (conc p q))) (conc (conc r (ap f p)) (ap f q)).
@@ -781,7 +781,7 @@ Proof.
 Defined.
 
 (** conc_ap_f_conc_p_q_r です。 *)
-Definition conc_ap_f_cpq_r@{i j}
+Definition conc_ap_f_cpq_r@{i j | }
   {A : Type@{i}} {B : Type@{j}} (f : A -> B) {x y z : A} {w : B}
   : forall (p : Path@{i} x y) (q : Path@{i} y z) (r : Path@{j} (f z) w),
     Path@{j} (conc (ap f (conc p q)) r) (conc (ap f p) (conc (ap f q) r)).
@@ -811,7 +811,7 @@ Proof.
 Defined.
 
 (** inv_ap_f_p です。 *)
-Definition inv_ap_f_p@{i j}
+Definition inv_ap_f_p@{i j | }
   {A : Type@{i}} {B : Type@{j}} (f : A -> B) {x y : A}
   : forall p : Path@{i} x y, Path@{j} (inv (ap f p)) (ap f (inv p)).
 Proof.
@@ -823,7 +823,7 @@ Proof.
 Defined.
 
 (** ap_f_inv_p です。 *)
-Definition ap_f_vp@{i j}
+Definition ap_f_vp@{i j | }
   {A : Type@{i}} {B : Type@{j}} (f : A -> B) {x y : A}
   : forall p : Path@{i} x y, Path@{j} (ap f (inv p)) (inv (ap f p)).
 Proof.
@@ -835,7 +835,7 @@ Proof.
 Defined.
 
 (** ap_idmap_p です。 *)
-Definition ap_idmap_p@{i}
+Definition ap_idmap_p@{i | }
   {A : Type@{i}} {x y : A}
   : forall p : Path@{i} x y, Path@{i} (ap idmap p) p.
 Proof.
@@ -846,7 +846,7 @@ Proof.
 Defined.
 
 (** ap_comp_f_g_p です。 *)
-Definition ap_cfg_p@{i j k}
+Definition ap_cfg_p@{i j k | }
   {A : Type@{i}} {B : Type@{j}} {C : Type@{k}}
   (f : B -> C) (g : A -> B) {x y : A}
   : forall p : Path@{i} x y, Path@{k} (ap (comp f g) p) (ap f (ap g p)).
@@ -860,9 +860,9 @@ Defined.
 (* memo: ap_compose' *)
 
 (** ap_const_z_p です。 *)
-Definition ap_const_z_p@{i j}
+Definition ap_const_z_p@{i j | }
   {A : Type@{i}} {B : Type@{j}} {x y : A} (z : B)
-  : forall p : Path@{i} x y, Path@{i} (ap (const z) p) idpath.
+  : forall p : Path@{i} x y, Path@{j} (ap (const z) p) idpath.
 Proof.
   move=> p.
   refine (match p with idpath => _ end).
@@ -871,7 +871,7 @@ Proof.
 Defined.
 
 (** Path_conc_ap_f_q_p_y_conc_p_x_ap_g_q です。 *)
-Definition path_conc_afq_py_conc_px_agq@{i j}
+Definition path_conc_afq_py_conc_px_agq@{i j | }
   {A : Type@{i}} {B : Type@{j}} {f g : A -> B}
   (p : forall x : A, Path@{j} (f x) (g x)) {x y : A}
   : forall q : Path@{i} x y,
@@ -888,7 +888,7 @@ Proof.
 Defined.
 
 (** Path_ap_f_q_conc_conc_p_x_ap_g_q_inv_p_y です。 *)
-Definition path_afq_conc_conc_px_agq_inv_py@{i j}
+Definition path_afq_conc_conc_px_agq_inv_py@{i j | }
   {A : Type@{i}} {B : Type@{j}} {f g : A -> B}
   (p : forall x : A, Path@{j} (f x) (g x)) {x y : A}
   : forall q : Path@{i} x y,
@@ -900,7 +900,7 @@ Proof.
 Defined.
 
 (** Path_conc_p_x_ap_f_q_conc_ap_g_q_p_y です。 *)
-Definition path_conc_px_afq_conc_agq_py@{i j}
+Definition path_conc_px_afq_conc_agq_py@{i j | }
   {A : Type@{i}} {B : Type@{j}} {f g : A -> B}
   (p : forall x : A, Path@{j} (g x) (f x)) {x y : A}
   : forall q : Path@{i} x y,
@@ -917,7 +917,7 @@ Proof.
 Defined.
 
 (** Path_conc_ap_f_q_p_y_conc_p_x_q です。 *)
-Definition path_conc_afq_py_conc_px_q@{i}
+Definition path_conc_afq_py_conc_px_q@{i | }
   {A : Type@{i}} {f : A -> A} (p : forall x : A, Path@{i} (f x) x) {x y : A}
   : forall q : Path@{i} x y, Path@{i} (conc (ap f q) (p y)) (conc (p x) q).
 Proof.
@@ -932,7 +932,7 @@ Proof.
 Defined.
 
 (** Path_conc_ap_f_q_p_y_conc_p_x_q です。 *)
-Definition path_afq_conc_conc_px_q_inv_py@{i}
+Definition path_afq_conc_conc_px_q_inv_py@{i | }
   {A : Type@{i}} {f : A -> A} (p : forall x : A, Path@{i} (f x) x) {x y : A}
   : forall q : Path@{i} x y, Path@{i} (ap f q) (conc (conc (p x) q) (inv (p y))).
 Proof.
@@ -942,7 +942,7 @@ Proof.
 Defined.
 
 (** Path_conc_p_x_ap_f_q_conc_q_p_y です。 *)
-Definition path_conc_px_afq_conc_q_py@{i}
+Definition path_conc_px_afq_conc_q_py@{i | }
   {A : Type@{i}} {f : A -> A} (p : forall x : A, Path@{i} x (f x)) {x y : A}
   : forall q : Path@{i} x y, Path@{i} (conc (p x) (ap f q)) (conc q (p y)).
 Proof.
