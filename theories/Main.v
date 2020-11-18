@@ -776,7 +776,14 @@ Proof.
   exact idpath.
 Defined.
 
-(* memo: apD_1 *)
+(** apD_f_idpath です。 *)
+Definition apD_f_1@{i j | }
+  {A : Type@{i}} {B : A -> Type@{j}} (f : forall x : A, B x) (x : A)
+  : Path@{j} (apD f (idpath x)) idpath.
+Proof.
+  simpl apD.
+  exact idpath.
+Defined.
 
 (** ap_f_conc_p_q です。 *)
 Definition ap_f_cpq@{i j | }
@@ -883,12 +890,34 @@ Proof.
   exact idpath.
 Defined.
 
-(* memo: ap_compose' *)
+(** ap_lam_a_f_g_x_p です。 *)
+Definition ap_lam_x_f_g_x_p@{i j k | }
+  {A : Type@{i}} {B : Type@{j}} {C : Type@{k}}
+  (f : B -> C) (g : A -> B) {x y : A}
+  : forall p : Path@{i} x y,
+    Path@{k} (ap (fun a : A => f (g a)) p) (ap f (ap g p)).
+Proof.
+  move=> p.
+  refine (match p with idpath => _ end).
+  simpl ap.
+  exact idpath.
+Defined.
 
 (** ap_const_z_p です。 *)
 Definition ap_const_z_p@{i j | }
   {A : Type@{i}} {B : Type@{j}} {x y : A} (z : B)
   : forall p : Path@{i} x y, Path@{j} (ap (const z) p) idpath.
+Proof.
+  move=> p.
+  refine (match p with idpath => _ end).
+  simpl ap.
+  exact idpath.
+Defined.
+
+(** ap_lam_a_z_p です。 *)
+Definition ap_lam_a_z_p@{i j | }
+  {A : Type@{i}} {B : Type@{j}} {x y : A} (z : B)
+  : forall p : Path@{i} x y, Path@{j} (ap (fun a : A => z) p) idpath.
 Proof.
   move=> p.
   refine (match p with idpath => _ end).
