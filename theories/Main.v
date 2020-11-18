@@ -629,10 +629,13 @@ Defined.
 (** inv_'path_trpt_p_u_v'_P_p_u_v_q です。 *)
 Definition inv_'path_trpt_p_u_v'_P_p_u_v_q@{i j}
   {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
-  : forall (p : Path@{i} x y) (u : P x) (v : P y) (q : Path@{j} u (trpt (inv p) v)),
-    Path@{j} (inv (path_trpt_p_u_v P p u v q)) (path_u_trpt_p_v P p v u (inv q)).
+  (p : Path@{i} x y) (u : P x) (v : P y)
+  : forall q : Path@{j} u (trpt (inv p) v),
+    Path@{j}
+      (inv (path_trpt_p_u_v P p u v q))
+      (path_u_trpt_p_v P p v u (inv q)).
 Proof.
-  move=> p u v q.
+  move=> q.
   refine (let t := _ in t v q).
   refine (match p
     as p'
@@ -655,10 +658,13 @@ Defined.
 (** inv_'path_trpt_vp_u_v'_P_p_u_v_q です。 *)
 Definition inv_'path_trpt_vp_u_v'_P_p_u_v_q@{i j}
   {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
-  : forall (p : Path@{i} y x) (u : P x) (v : P y) (q : Path@{j} u (trpt p v)),
-    Path@{j} (inv (path_trpt_vp_u_v P p u v q)) (path_u_trpt_vp_v P p v u (inv q)).
+  (p : Path@{i} y x) (u : P x) (v : P y)
+  : forall q : Path@{j} u (trpt p v),
+    Path@{j}
+      (inv (path_trpt_vp_u_v P p u v q))
+      (path_u_trpt_vp_v P p v u (inv q)).
 Proof.
-  move=> p u v q.
+  move=> q.
   refine (let t := _ in t u q).
   refine (match p
     as p'
@@ -681,10 +687,13 @@ Defined.
 (** inv_'path_u_trpt_vp_v'_P_p_u_v_q です。 *)
 Definition inv_'path_u_trpt_vp_v'_P_p_u_v_q@{i j}
   {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
-  : forall (p : Path@{i} x y) (u : P x) (v : P y) (q : Path@{j} (trpt p u) v),
-    Path@{j} (inv (path_u_trpt_vp_v P p u v q)) (path_trpt_vp_u_v P p v u (inv q)).
+  (p : Path@{i} x y) (u : P x) (v : P y)
+  : forall q : Path@{j} (trpt p u) v,
+    Path@{j}
+      (inv (path_u_trpt_vp_v P p u v q))
+      (path_trpt_vp_u_v P p v u (inv q)).
 Proof.
-  move=> p u v q.
+  move=> q.
   refine (let t := _ in t v q).
   refine (match p
     as p'
@@ -707,10 +716,13 @@ Defined.
 (** inv_'path_u_trpt_p_v'_P_p_u_v_q です。 *)
 Definition inv_'path_u_trpt_p_v'_P_p_u_v_q@{i j}
   {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
-  : forall (p : Path@{i} y x) (u : P x) (v : P y) (q : Path@{j} (trpt (inv p) u) v),
-    Path@{j} (inv (path_u_trpt_p_v P p u v q)) (path_trpt_p_u_v P p v u (inv q)).
+  (p : Path@{i} y x) (u : P x) (v : P y)
+  : forall q : Path@{j} (trpt (inv p) u) v,
+    Path@{j}
+      (inv (path_u_trpt_p_v P p u v q))
+      (path_trpt_p_u_v P p v u (inv q)).
 Proof.
-  move=> p u v q.
+  move=> q.
   refine (let t := _ in t u q).
   refine (match p
     as p'
@@ -741,7 +753,8 @@ Defined.
 (* memo: apD_1 *)
 
 (** ap_f_conc_p_q です。 *)
-Definition ap_f_cpq@{i j} {A : Type@{i}} {B : Type@{j}} (f : A -> B) {x y z : A}
+Definition ap_f_cpq@{i j}
+  {A : Type@{i}} {B : Type@{j}} (f : A -> B) {x y z : A}
   : forall (p : Path@{i} x y) (q : Path@{i} y z),
     Path@{i} (ap f (conc p q)) (conc (ap f p) (ap f q)).
 Proof.
@@ -834,7 +847,8 @@ Defined.
 
 (** ap_comp_f_g_p です。 *)
 Definition ap_cfg_p@{i j k}
-  {A : Type@{i}} {B : Type@{j}} {C : Type@{k}} (f : B -> C) (g : A -> B) {x y : A}
+  {A : Type@{i}} {B : Type@{j}} {C : Type@{k}}
+  (f : B -> C) (g : A -> B) {x y : A}
   : forall p : Path@{i} x y, Path@{k} (ap (comp f g) p) (ap f (ap g p)).
 Proof.
   move=> p.
@@ -859,11 +873,11 @@ Defined.
 (** conc_ap_f_q_p_y です。 *)
 Definition conc_ap_f_q_p_y@{i j}
   {A : Type@{i}} {B : Type@{j}} {f g : A -> B}
-  : forall (p : forall x : A, Path@{j} (f x) (g x))
-    {x y : A} (q : Path@{i} x y),
-      Path@{j} (conc (ap f q) (p y)) (conc (p x) (ap g q)).
+  (p : forall x : A, Path@{j} (f x) (g x)) {x y : A}
+  : forall q : Path@{i} x y,
+    Path@{j} (conc (ap f q) (p y)) (conc (p x) (ap g q)).
 Proof.
-  move=> p x y q.
+  move=> q.
   refine (match q with idpath => _ end).
   simpl ap.
   refine (conc _ (_ : Path@{j} (p x) _)).
