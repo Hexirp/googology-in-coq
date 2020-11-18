@@ -776,7 +776,7 @@ Proof.
   refine (match q with idpath => _ end).
   refine (match p with idpath => _ end).
   simpl ap.
-  change (Path (conc r (conc idpath idpath)) (conc (conc r idpath) idpath)).
+  change (Path@{j} (conc r (conc idpath idpath)) (conc (conc r idpath) idpath)).
   exact (conc_p_cqr r idpath idpath).
 Defined.
 
@@ -791,14 +791,14 @@ Proof.
   refine (match q
     as q'
     in Path _ z'
-    return forall r' : Path@{i} (f z') w,
+    return forall r' : Path@{j} (f z') w,
       Path@{j} (conc (ap f (conc p q')) r') (conc (ap f p) (conc (ap f q') r'))
     with idpath => _
   end).
   refine (match p
     as p'
     in Path _ y'
-    return forall r' : Path@{i} (f y') w,
+    return forall r' : Path@{j} (f y') w,
       Path@{j}
         (conc (ap f (conc p' idpath)) r')
         (conc (ap f p') (conc (ap f idpath) r'))
@@ -806,7 +806,7 @@ Proof.
   end).
   move=> r'.
   simpl ap.
-  change (Path (conc (conc idpath idpath) r') (conc idpath (conc idpath r'))).
+  change (Path@{j} (conc (conc idpath idpath) r') (conc idpath (conc idpath r'))).
   exact (conc_cpq_r idpath idpath r').
 Defined.
 
@@ -941,7 +941,7 @@ Proof.
   exact (path_conc_afq_py_conc_px_q p q).
 Defined.
 
-(** Path_conc_p_x_ap_f_q_conc_q_p_y *)
+(** Path_conc_p_x_ap_f_q_conc_q_p_y です。 *)
 Definition path_conc_px_afq_conc_q_py@{i}
   {A : Type@{i}} {f : A -> A} (p : forall x : A, Path@{i} x (f x)) {x y : A}
   : forall q : Path@{i} x y, Path@{i} (conc (p x) (ap f q)) (conc q (p y)).
@@ -955,3 +955,23 @@ Proof.
   -
     exact (inv (conc_1_p (p x))).
 Defined.
+
+(** Path_conc_conc_r_ap_f_q_conc_p_y_s_conc_conc_r_p_x_conc_ap_g_q_s です。 *)
+Definition path_conc_crA_cPs_conc_crP_cAs@{i j}
+  {A : Type@{i}} {B : Type@{j}} {f g : A -> B}
+  (p : forall x : A, Path@{j} (f x) (g x)) {x y : A}
+  (q : Path@{i} x y) {z w : B} (r : Path@{j} z (f x)) (s : Path@{j} (g y) w)
+  : Path@{j}
+    (conc (conc r (ap f q)) (conc (p y) s))
+    (conc (conc r (p x)) (conc (ap g q) s)).
+Proof.
+  refine (match s with idpath => _ end).
+  refine (match q with idpath => _ end).
+  simpl ap.
+  refine (conc _ (_ : Path@{j} (conc r (p x)) _)).
+  -
+    admit.
+  -
+    change (Path@{j} (conc r (p x)) (conc (conc r (p x)) idpath)).
+    exact (inv (conc_p_1 (conc r (p x)))).
+Admitted.
