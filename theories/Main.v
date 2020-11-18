@@ -870,8 +870,8 @@ Proof.
   exact idpath.
 Defined.
 
-(** conc_ap_f_q_p_y です。 *)
-Definition conc_ap_f_q_p_y@{i j}
+(** Path_conc_ap_f_q_p_y_conc_p_x_ap_g_q です。 *)
+Definition path_conc_afq_py_conc_px_agq@{i j}
   {A : Type@{i}} {B : Type@{j}} {f g : A -> B}
   (p : forall x : A, Path@{j} (f x) (g x)) {x y : A}
   : forall q : Path@{i} x y,
@@ -887,8 +887,8 @@ Proof.
     exact (inv (conc_p_1 (p x))).
 Defined.
 
-(** ap_f_q です。 *)
-Definition ap_f_q@{i j}
+(** Path_ap_f_q_conc_conc_p_x_ap_g_q_inv_p_y です。 *)
+Definition path_afq_conc_conc_px_agq_inv_py@{i j}
   {A : Type@{i}} {B : Type@{j}} {f g : A -> B}
   (p : forall x : A, Path@{j} (f x) (g x)) {x y : A}
   : forall q : Path@{i} x y,
@@ -896,5 +896,45 @@ Definition ap_f_q@{i j}
 Proof.
   move=> q.
   refine (path_q_crvp _ _ _ _).
-  exact (conc_ap_f_q_p_y p q).
+  exact (path_conc_afq_py_conc_px_agq p q).
+Defined.
+
+(** Path_conc_ap_f_q_p_y_conc_p_x_q です。 *)
+Definition path_conc_afq_py_conc_px_q@{i}
+  {A : Type@{i}} {f : A -> A} (p : forall x : A, Path@{i} (f x) x) {x y : A}
+  : forall q : Path@{i} x y, Path@{i} (conc (ap f q) (p y)) (conc (p x) q).
+Proof.
+  move=> q.
+  refine (match q with idpath => _ end).
+  simpl ap.
+  refine (conc _ (_ : Path@{i} (p x) _)).
+  -
+    exact (conc_1_p (p x)).
+  -
+    exact (inv (conc_p_1 (p x))).
+Defined.
+
+(** Path_conc_ap_f_q_p_y_conc_p_x_q です。 *)
+Definition path_afq_conc_conc_px_q_inv_py@{i}
+  {A : Type@{i}} {f : A -> A} (p : forall x : A, Path@{i} (f x) x) {x y : A}
+  : forall q : Path@{i} x y, Path@{i} (ap f q) (conc (conc (p x) q) (inv (p y))).
+Proof.
+  move=> q.
+  refine (path_q_crvp _ _ _ _).
+  exact (path_conc_afq_py_conc_px_q p q).
+Defined.
+
+(** Path_conc_p_x_ap_f_q_conc_q_p_y *)
+Definition path_conc_px_afq_conc_q_px@{i}
+  {A : Type@{i}} {f : A -> A} (p : forall x : A, Path@{i} x (f x)) {x y : A}
+  : forall q : Path@{i} x y, Path@{i} (conc (p x) (ap f q)) (conc q (p y)).
+Proof.
+  move=> q.
+  refine (match q with idpath => _ end).
+  simpl ap.
+  refine (conc _ (_ : Path@{i} (p x) _)).
+  -
+    exact (conc_p_1 (p x)).
+  -
+    exact (inv (conc_1_p (p x))).
 Defined.
