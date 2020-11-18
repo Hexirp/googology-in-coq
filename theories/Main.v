@@ -1034,3 +1034,46 @@ Proof.
     change (Path@{j} (conc r (p x)) (conc (conc r (p x)) idpath)).
     exact (inv (conc_p_1 (conc r (p x)))).
 Defined.
+
+(** Path_conc_conc_r_ap_f_q_p_y_conc_conc_r_p_x_ap_g_q です。 *)
+Definition path_conc_crA_P_conc_crP_A@{i j | }
+  {A : Type@{i}} {B : Type@{j}} {f g : A -> B}
+  (p : forall x : A, Path@{j} (f x) (g x)) {x y : A}
+  (q : Path@{i} x y) {z : B} (r : Path@{j} z (f x))
+  : Path@{j}
+    (conc (conc r (ap f q)) (p y))
+    (conc (conc r (p x)) (ap g q)).
+Proof.
+  refine (match q with idpath => _ end).
+  simpl ap.
+  refine (conc _ (_ : Path@{j} (conc r (p x)) _)).
+  -
+    refine (ap (fun pzfx => conc pzfx (p x)) _).
+    exact (conc_p_1 r).
+  -
+    exact (inv (conc_p_1 (conc r (p x)))).
+Defined.
+
+(** Path_conc_ap_f_q_conc_p_y_s_conc_p_x_conc_ap_g_q_s です。 *)
+Definition path_conc_A_cPs_conc_P_cAs@{i j | }
+  {A : Type@{i}} {B : Type@{j}} {f g : A -> B}
+  (p : forall x : A, Path@{j} (f x) (g x)) {x y : A}
+  (q : Path@{i} x y) {w : B} (s : Path@{j} (g y) w)
+  : Path@{j}
+    (conc (ap f q) (conc (p y) s))
+    (conc (p x) (conc (ap g q) s)).
+Proof.
+  refine (match s with idpath => _ end).
+  refine (match q with idpath => _ end).
+  simpl ap.
+  refine (conc _ (_ : Path@{j} (p x) _)).
+  -
+    refine (conc _ (_ : Path (conc (p x) idpath) _)).
+    +
+      exact (conc_1_p (conc (p x) idpath)).
+    +
+      exact (conc_p_1 (p x)).
+  -
+    change (Path@{j} (p x) (conc (p x) idpath)).
+    exact (inv (conc_p_1 (p x))).
+Defined.
