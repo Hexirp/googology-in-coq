@@ -187,3 +187,4 @@ refine (conc _ (_ : Path@{i} y _)).
 * https://github.com/Hexirp/googology-in-coq/commit/e9d27ed9a1cc15848dcbaf9d01707ebff528b3c5 - ドキュメントのチェックのために coqdoc の使用が開始される。
 * https://github.com/Hexirp/googology-in-coq/commit/89d432c82e32e0be5d0d3a894a68c322baa5bf15 - coqdoc が使えるようになったため、ファイルの構造が分かりやすいように、セクション機能を利用するようになる。
 * https://github.com/Hexirp/googology-in-coq/commit/34cbcda37abceef8f06ad2c2b7a7e43fb1587d0d - Base.v と 四代目の Main.v を元にして詳細な命名規則が記述される。
+* https://github.com/Hexirp/googology-in-coq/commit/27ae14f9b5ad1cb2b2e71473691b23c016c53820 - Base.v と四代目の Main.v を元にして詳細な改行と字下げの規則が記十ツされる。
