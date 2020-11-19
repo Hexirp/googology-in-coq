@@ -23,7 +23,7 @@ refine _.
 
 `refine` でゴールが解消される時は、代わりに `exact` を使ってください。
 
-関数や定理などの名前はポーランド記法を基本にしますが、良い名前があるときはそれを使って構いません。次にコードから読み取れる細かい慣習を示します。
+関数や定理などの名前はポーランド記法を基本にしますが、良い名前があるときはそれを使って構いません。次に細かい慣習を示します。
 
 * 関数が返すのが `Type` 型の値の時は先頭を大文字にする。
 * そうではないときは先頭を小文字にする。
@@ -46,7 +46,98 @@ refine _.
 
 行が長すぎるときは、ちょうどよい区切りで改行してしてください。読みやすくするために字下げも行ってください。
 
-宇宙のレベルについては必ず記述してください。レベルの制約は Coq がチェックしてくれるので、たとえ制約が空だとしても記述してください。
+改行と字下げについての慣習を次に示します。改行すべき要素が括弧の中に入っていたり、他の規則によって既に字下げされている場合でも、最終的な分かりやすさのために機械的に慣習に従うことが多いです。
+
+```coq
+(* Definition _ : _ := _. 0. *)
+Definition foo _ : _ := _.
+
+(* Definition _ : _ := _. 1. *)
+Definition foo _ : _
+  := _.
+
+(* Definition _ : _ := _. 2. *)
+Definition foo _
+  : _
+  := _.
+
+(* Definition _ : _ := _. 3. *)
+Definition foo
+  _
+  : _
+  := _.
+
+(* Definition _ : _ := _. 4. *)
+Definition foo
+  _ _ _
+  _ _ _
+  : _
+  := _.
+
+(* Definition _ : _. 0. *)
+Definition foo _ : _.
+
+(* Definition _ : _. 1. *)
+Definition foo _
+  : _.
+
+(* Definition _ : _. 2. *)
+Definition foo
+  _
+  : _.
+
+(* Definition _ : _. 3. *)
+Definition foo
+  _ _ _
+  _ _ _
+  : _.
+
+(* forall x : T, P. 0. *)
+forall x : T, P
+
+(* forall x : T, P. 1. *)
+forall x : T,
+  P
+
+(* match _ as _ in _ return _ with _ end. 0. *)
+match _ as _ in _ return _ with _ end
+
+(* match _ as _ in _ return _ with _ end. 1. *)
+match _
+  as _
+  in _
+  return _
+  with _
+end
+
+(* with _. 0. match 式の with 節に該当. *)
+with _
+
+(* with _. 1. match 式の with 節に該当. *)
+with
+  | _ => _
+  | _ => _
+  | _ => _
+
+(* let _ := _ in _. 0. *)
+let _ := _ in _
+
+(* let _ := _ in _. 1. *)
+let
+  _ := _
+in
+  _
+
+(* f x y. 0. *)
+f x y
+
+(* f x y. 1. *)
+f
+  x
+  y
+```
+
+定義における宇宙のレベルについては必ず記述してください。定義におけるレベルの制約は Coq がチェックしてくれるので、たとえ制約が空だとしても記述してください。式における宇宙のレベルは、型を返す関数であるときは記述してください。それ以外については自由です。
 
 ## GiC.Core
 
