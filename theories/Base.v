@@ -1,6 +1,6 @@
 (* Run with -nois. *)
 
-(** * The base of GiC *)
+(** * GiC の基礎 *)
 
 (** GiC.Base は、命題を構築する基礎となる型や関数を定義します。
 

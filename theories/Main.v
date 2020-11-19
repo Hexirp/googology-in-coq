@@ -1,5 +1,7 @@
 (* Run with -nois. *)
 
+(** * 道についてのモジュール *)
+
 Require Import GiC.Base.
 
 (** タクティックが使用できるように設定します。 *)
@@ -15,23 +17,29 @@ Set Polymorphic Inductive Cumulativity.
 (** 宇宙 (universe) について表示するように設定します。 *)
 Set Printing Universes.
 
+(** ** 汎用的な関数の定義 *)
+
+(** 依存型に対応する ap です。 *)
 Definition apD@{i j | }
   {A : Type@{i}} {B : A -> Type@{j}} (f : forall x : A, B x)
   {x y : A} (p : Path@{i} x y)
   : Path@{j} (trpt p (f x)) (f y)
   := match p with idpath => idpath end.
 
+(** 一変数関数に対する ap です。 *)
 Definition ap1@{i j | }
   {A : Type@{i}} {B : Type@{j}} (f : A -> B) {x x' : A} (p : Path@{i} x x')
   : Path@{j} (f x) (f x')
   := ap f p.
 
+(** 二変数関数に対する ap です。 *)
 Definition ap2@{i j k | }
   {A : Type@{i}} {B : Type@{j}} {C : Type@{k}} (f : A -> B -> C)
   {x x' : A} (p : Path@{i} x x') {y y' : B} (q : Path@{j} y y')
   : Path@{k} (f x y) (f x' y')
   := match p with idpath => ap1 (f x) q end.
 
+(** 三変数関数に対する ap です。 *)
 Definition ap3@{i j k l | }
   {A : Type@{i}} {B : Type@{j}} {C : Type@{k}} {D : Type@{l}}
   (f : A -> B -> C -> D)
@@ -40,6 +48,8 @@ Definition ap3@{i j k l | }
   {z z' : C} (r : Path@{k} z z')
   : Path@{l} (f x y z) (f x' y' z')
   := match p with idpath => ap2 (f x) q r end.
+
+(** ** 1-次元の亜群構造 *)
 
 (** conc_p_idpath です。 *)
 Definition conc_p_1@{i | } {A : Type@{i}} {x y : A}
@@ -155,6 +165,8 @@ Definition inv_cvpvq@{i | } {A : Type@{i}} {x y z : A}
 Definition inv_vp@{i | } {A : Type@{i}} {x y z : A}
   : forall p : Path@{i} x y, Path@{i} (inv (inv p)) p
   := fun p => match p with idpath => idpath end.
+
+(** *** 移項のための補題 *)
 
 (** Path_conc_r_p_q です。 *)
 Definition path_crp_q_L@{i | } {A : Type@{i}} {x y z : A}
@@ -380,7 +392,7 @@ Proof.
   exact (inv (conc_p_1 r')).
 Defined.
 
-(* Path_p_q です。 *)
+(** Path_p_q です。 *)
 Definition path_p_q_L_L@{i | } {A : Type@{i}} {x y : A}
   : forall (p : Path@{i} x y) (q : Path@{i} x y),
     Path@{i} (conc p (inv q)) idpath -> Path@{i} p q.
@@ -404,7 +416,7 @@ Proof.
   exact path_cp'v1_1.
 Defined.
 
-(* Path_p_q です。 *)
+(** Path_p_q です。 *)
 Definition path_p_q_L_R@{i | } {A : Type@{i}} {x y : A}
   : forall (p : Path@{i} x y) (q : Path@{i} x y),
     Path@{i} (conc (inv q) p) idpath -> Path@{i} p q.
@@ -428,7 +440,7 @@ Proof.
   exact path_cv1p'_1.
 Defined.
 
-(* Path_p_inv_q です。 *)
+(** Path_p_inv_q です。 *)
 Definition path_p_vq_L@{i | } {A : Type@{i}} {x y : A}
   : forall (p : Path@{i} x y) (q : Path@{i} y x),
     Path@{i} (conc p q) idpath -> Path@{i} p (inv q).
@@ -452,7 +464,7 @@ Proof.
   exact path_cp'1_1.
 Defined.
 
-(* Path_p_inv_q です。 *)
+(** Path_p_inv_q です。 *)
 Definition path_p_vq_R@{i | } {A : Type@{i}} {x y : A}
   : forall (p : Path@{i} x y) (q : Path@{i} y x),
     Path@{i} (conc q p) idpath -> Path@{i} p (inv q).
@@ -476,7 +488,7 @@ Proof.
   exact path_c1p'_1.
 Defined.
 
-(* Path_p_q です。 *)
+(** Path_p_q です。 *)
 Definition path_p_q_R_L@{i | } {A : Type@{i}} {x y : A}
   : forall (p : Path@{i} x y) (q : Path@{i} x y),
     Path@{i} idpath (conc (inv p) q) -> Path@{i} p q.
@@ -500,7 +512,7 @@ Proof.
   exact (conc_1_p q').
 Defined.
 
-(* Path_p_q です。 *)
+(** Path_p_q です。 *)
 Definition path_p_q_R_R@{i | } {A : Type@{i}} {x y : A}
   : forall (p : Path@{i} x y) (q : Path@{i} x y),
     Path@{i} idpath (conc q (inv p)) -> Path@{i} p q.
@@ -524,7 +536,7 @@ Proof.
   exact (conc_p_1 q').
 Defined.
 
-(* Path_inv_p_q です。 *)
+(** Path_inv_p_q です。 *)
 Definition path_vp_q_L@{i | } {A : Type@{i}} {x y : A}
   : forall (p : Path@{i} x y) (q : Path@{i} y x),
     Path@{i} idpath (conc q p) -> Path@{i} (inv p) q.
@@ -548,7 +560,7 @@ Proof.
   exact (conc_p_1 q').
 Defined.
 
-(* Path_inv_p_q です。 *)
+(** Path_inv_p_q です。 *)
 Definition path_vp_q_R@{i | } {A : Type@{i}} {x y : A}
   : forall (p : Path@{i} x y) (q : Path@{i} y x),
     Path@{i} idpath (conc p q) -> Path@{i} (inv p) q.
@@ -767,6 +779,8 @@ Proof.
   unfold idmap.
   exact idpath.
 Defined.
+
+(** *** 関手としての関数 *)
 
 (** ap_f_idpath です。 *)
 Definition ap_f_1@{i j | } {A : Type@{i}} {B : Type@{j}} (f : A -> B) (x : A)
