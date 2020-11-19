@@ -167,6 +167,8 @@ refine (conc _ (_ : Path@{i} y _)).
 
 作者でも全ての定理を覚えられる自信がないので、 `SearchPattern` を使うことを推奨します。
 
+現在の内容は https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v をベースにしています。
+
 ## 歴史
 
 歴史を簡単にまとめます。
