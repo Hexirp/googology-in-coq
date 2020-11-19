@@ -6,6 +6,7 @@ COQ_PATH=/c/coq
 PATH=$COQ_PATH/bin:$PATH
 
 coqdoc \
+  -utf8 \
   -d docs \
   -R theories/ GiC \
   theories/Base.v \
