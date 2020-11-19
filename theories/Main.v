@@ -162,7 +162,7 @@ Definition inv_cvpvq@{i | } {A : Type@{i}} {x y z : A}
   := fun p q => match p with idpath => match q with idpath => idpath end end.
 
 (** inv_inv_p です。 *)
-Definition inv_vp@{i | } {A : Type@{i}} {x y z : A}
+Definition inv_vp@{i | } {A : Type@{i}} {x y : A}
   : forall p : Path@{i} x y, Path@{i} (inv (inv p)) p
   := fun p => match p with idpath => idpath end.
 
@@ -1224,4 +1224,26 @@ Proof.
   -
     change (Path@{i} (p x) (conc (p x) idpath)).
     exact (inv (conc_p_1 (p x))).
+Defined.
+
+(** path_conc_'conc_1_p'_p_q_ap_conc_1_q です。 *)
+Definition path_conc_'conc_1_p'_p_q_ap_conc_1_q@{i | }
+  {A : Type@{i}} {x : A} (p : Path@{i} x x) (q : Path@{i} p idpath)
+  : Path@{i} (conc (conc_1_p p) q) (ap (conc idpath) q).
+Proof.
+  refine (match inv_vp q
+    as _
+    in Path _ q'
+    return Path@{i} (conc (conc_1_p p) q') (ap (conc idpath) q')
+    with idpath => _
+  end).
+  refine (match inv q
+    as vq'
+    in Path _ p'
+    return Path@{i} (conc (conc_1_p p') (inv vq')) (ap (conc idpath) (inv vq'))
+    with idpath => _
+  end).
+  simpl ap.
+  simpl conc.
+  exact idpath.
 Defined.
