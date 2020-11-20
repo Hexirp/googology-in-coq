@@ -806,7 +806,7 @@ Defined.
 
 (** ap_f_idpath です。 *)
 Definition ap_f_1@{i j | } {A : Type@{i}} {B : Type@{j}} (f : A -> B) (x : A)
-  : Path@{j} (ap f (idpath x)) idpath.
+  : Path@{j} (ap f (idpath x)) (idpath (f x)).
 Proof.
   simpl ap.
   exact idpath.
@@ -815,7 +815,7 @@ Defined.
 (** apD_f_idpath です。 *)
 Definition apD_f_1@{i j | }
   {A : Type@{i}} {B : A -> Type@{j}} (f : forall x : A, B x) (x : A)
-  : Path@{j} (apD f (idpath x)) idpath.
+  : Path@{j} (apD f (idpath x)) (idpath (f x)).
 Proof.
   simpl apD.
   exact idpath.
@@ -1293,5 +1293,43 @@ Proof.
   end).
   simpl ap.
   simpl conc.
+  exact idpath.
+Defined.
+
+(** *** [ap10] についての定理 *)
+
+(** ap1D0_idpath_x です。 *)
+Definition ap1D0_1_x@{i j k | i <= k, j <= k}
+  {A : Type@{i}} {B : A -> Type@{j}} (f : forall x : A, B x) (x : A)
+  : Path@{j} (ap1D0 (idpath@{k} f) x) (idpath (f x)).
+Proof.
+  simpl ap1D0.
+  exact idpath.
+Defined.
+
+(** ap1D0_conc_p_q_x です。 *)
+Definition ap1D0_cpq_x@{i j k | i <= k, j <= k}
+  {A : Type@{i}} {B : A -> Type@{j}} {f f' f'' : forall x : A, B x}
+  (pff' : Path@{k} f f') (pf'f'' : Path@{k} f' f'') (x : A)
+  : Path@{j}
+    (ap1D0 (conc pff' pf'f'') x)
+    (conc (ap1D0 pff' x) (ap1D0 pf'f'' x)).
+Proof.
+  refine (match pf'f'' with idpath => _ end).
+  refine (match pff' with idpath => _ end).
+  simpl ap1D0.
+  simpl conc.
+  exact idpath.
+Defined.
+
+(** ap1D0_inv_p_x です。 *)
+Definition ap1D0_vp_x@{i j k | i <= k, j <= k}
+  {A : Type@{i}} {B : A -> Type@{j}} {f f' : forall x : A, B x}
+  (pff' : Path@{k} f f') (x : A)
+  : Path@{j} (ap1D0 (inv pff') x) (inv (ap1D0 pff' x)).
+Proof.
+  refine (match pff' with idpath => _ end).
+  simpl ap1D0.
+  simpl inv.
   exact idpath.
 Defined.
