@@ -50,22 +50,26 @@ Definition ap3@{i j k l | }
   := match p with idpath => ap2 (f x) q r end.
 
 (** 関数の 0-道を値の 1-道に適用する関数です。 *)
-Definition ap01@{i j | }
-  {A : Type@{i}} {B : Type@{j}} (f : A -> B) {x x' : A}
-  : Path@{i} x x' -> Path@{j} (f x) (f x')
-  := fun p => ap f p.
+Definition ap01@{i j | } {A : Type@{i}} {B : Type@{j}}
+  (f : A -> B) {x x' : A} (pxx' : Path@{i} x x') : Path@{j} (f x) (f x')
+  := ap f pxx'.
 
 (** 関数の 1-道を値の 0-道に適用する関数です。 *)
-Definition ap10@{i j k | i <= k, j <= k}
-  {A : Type@{i}} {B : Type@{j}} (f f' : A -> B) {x : A}
-  : Path@{k} f f' -> Path@{j} (f x) (f' x)
-  := fun p => match p with idpath => idpath end.
+Definition ap10@{i j k | i <= k, j <= k} {A : Type@{i}} {B : Type@{j}}
+  {f f' : A -> B} (pff' : Path@{k} f f') (x : A) : Path@{j} (f x) (f' x)
+  := match pff' with idpath => idpath end.
 
 (** 依存関数の 1-道を値の 0-道に適用する関数です。 *)
-Definition ap1D0@{i j k | i <= k, j <= k}
-  {A : Type@{i}} {B : A -> Type@{j}} (f f' : forall x : A, B x) {x : A}
-  : Path@{k} f f' -> Path@{j} (f x) (f' x)
-  := fun p => match p with idpath => idpath end.
+Definition ap1D0@{i j k | i <= k, j <= k} {A : Type@{i}} {B : A -> Type@{j}}
+  {f f' : forall x : A, B x} (pff' : Path@{k} f f') (x : A)
+  : Path@{j} (f x) (f' x)
+  := match pff' with idpath => idpath end.
+
+(** 関数の 1-道を値の 1-道に適用する関数です。 *)
+Definition ap11@{i j k | i <= k, j <= k} {A : Type@{i}} {B : Type@{j}}
+  {f f' : A -> B} (pff' : Path@{k} f f') {x x' : A} (pxx' : Path@{i} x x')
+  : Path@{j} (f x) (f' x)
+  := match pxx' with idpath => match pff' with idpath => idpath end end.
 
 (** ** 1-次元の亜群構造 *)
 
