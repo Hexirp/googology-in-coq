@@ -55,13 +55,14 @@ Definition ap01@{i j | } {A : Type@{i}} {B : Type@{j}}
   := ap f pxx'.
 
 (** 関数の 1-道を値の 0-道に適用する関数です。 *)
-Definition ap10@{i j k | i <= k, j <= k} {A : Type@{i}} {B : Type@{j}}
-  {f f' : A -> B} (pff' : Path@{k} f f') (x : A) : Path@{j} (f x) (f' x)
+Definition ap10@{i j mij | i <= mij, j <= mij} {A : Type@{i}} {B : Type@{j}}
+  {f f' : A -> B} (pff' : Path@{mij} f f') (x : A) : Path@{j} (f x) (f' x)
   := match pff' with idpath => idpath end.
 
 (** 依存関数の 1-道を値の 0-道に適用する関数です。 *)
-Definition ap1D0@{i j k | i <= k, j <= k} {A : Type@{i}} {B : A -> Type@{j}}
-  {f f' : forall x : A, B x} (pff' : Path@{k} f f') (x : A)
+Definition ap1D0@{i j mij | i <= mij, j <= mij}
+  {A : Type@{i}} {B : A -> Type@{j}}
+  {f f' : forall x : A, B x} (pff' : Path@{mij} f f') (x : A)
   : Path@{j} (f x) (f' x)
   := match pff' with idpath => idpath end.
 
@@ -1299,18 +1300,18 @@ Defined.
 (** *** [ap10] についての定理 *)
 
 (** ap10_idpath_x です。 *)
-Definition ap10_1_x@{i j k | i <= k, j <= k}
+Definition ap10_1_x@{i j mij | i <= mij, j <= mij}
   {A : Type@{i}} {B : Type@{j}} (f : A -> B) (x : A)
-  : Path@{j} (ap10 (idpath@{k} f) x) (idpath (f x)).
+  : Path@{j} (ap10 (idpath@{mij} f) x) (idpath (f x)).
 Proof.
   simpl ap10.
   exact idpath.
 Defined.
 
 (** ap10_conc_p_q_x です。 *)
-Definition ap10_cpq_x@{i j k | i <= k, j <= k}
+Definition ap10_cpq_x@{i j mij | i <= mij, j <= mij}
   {A : Type@{i}} {B : Type@{j}} {f f' f'' : A -> B}
-  (pff' : Path@{k} f f') (pf'f'' : Path@{k} f' f'') (x : A)
+  (pff' : Path@{mij} f f') (pf'f'' : Path@{mij} f' f'') (x : A)
   : Path@{j}
     (ap10 (conc pff' pf'f'') x)
     (conc (ap10 pff' x) (ap10 pf'f'' x)).
@@ -1323,9 +1324,9 @@ Proof.
 Defined.
 
 (** ap10_inv_p_x です。 *)
-Definition ap10_vp_x@{i j k | i <= k, j <= k}
+Definition ap10_vp_x@{i j mij | i <= mij, j <= mij}
   {A : Type@{i}} {B : Type@{j}} {f f' : A -> B}
-  (pff' : Path@{k} f f') (x : A)
+  (pff' : Path@{mij} f f') (x : A)
   : Path@{j} (ap10 (inv pff') x) (inv (ap10 pff' x)).
 Proof.
   refine (match pff' with idpath => _ end).
@@ -1335,18 +1336,18 @@ Proof.
 Defined.
 
 (** ap1D0_idpath_x です。 *)
-Definition ap1D0_1_x@{i j k | i <= k, j <= k}
+Definition ap1D0_1_x@{i j mij | i <= mij, j <= mij}
   {A : Type@{i}} {B : A -> Type@{j}} (f : forall x : A, B x) (x : A)
-  : Path@{j} (ap1D0 (idpath@{k} f) x) (idpath (f x)).
+  : Path@{j} (ap1D0 (idpath@{mij} f) x) (idpath (f x)).
 Proof.
   simpl ap1D0.
   exact idpath.
 Defined.
 
 (** ap1D0_conc_p_q_x です。 *)
-Definition ap1D0_cpq_x@{i j k | i <= k, j <= k}
+Definition ap1D0_cpq_x@{i j mij | i <= mij, j <= mij}
   {A : Type@{i}} {B : A -> Type@{j}} {f f' f'' : forall x : A, B x}
-  (pff' : Path@{k} f f') (pf'f'' : Path@{k} f' f'') (x : A)
+  (pff' : Path@{mij} f f') (pf'f'' : Path@{mij} f' f'') (x : A)
   : Path@{j}
     (ap1D0 (conc pff' pf'f'') x)
     (conc (ap1D0 pff' x) (ap1D0 pf'f'' x)).
@@ -1359,9 +1360,9 @@ Proof.
 Defined.
 
 (** ap1D0_inv_p_x です。 *)
-Definition ap1D0_vp_x@{i j k | i <= k, j <= k}
+Definition ap1D0_vp_x@{i j mij | i <= mij, j <= mij}
   {A : Type@{i}} {B : A -> Type@{j}} {f f' : forall x : A, B x}
-  (pff' : Path@{k} f f') (x : A)
+  (pff' : Path@{mij} f f') (x : A)
   : Path@{j} (ap1D0 (inv pff') x) (inv (ap1D0 pff' x)).
 Proof.
   refine (match pff' with idpath => _ end).

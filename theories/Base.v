@@ -166,6 +166,6 @@ Definition ap@{i j | } {A : Type@{i}} {B : Type@{j}} (f : A -> B) {x y : A}
 
     この関数は仲間外れですが、そこがいいのです。
  *)
-Definition p_U_V@{i i' | i < i'}
-  : Path@{i'} Unit@{i} Void@{i} -> Void@{i}
+Definition p_U_V@{i si | i < si}
+  : Path@{si} Unit@{i} Void@{i} -> Void@{i}
   := fun p => match p with idpath => unit@{i} end.
