@@ -1298,6 +1298,42 @@ Defined.
 
 (** *** [ap10] についての定理 *)
 
+(** ap10_idpath_x です。 *)
+Definition ap10_1_x@{i j k | i <= k, j <= k}
+  {A : Type@{i}} {B : Type@{j}} (f : A -> B) (x : A)
+  : Path@{j} (ap10 (idpath@{k} f) x) (idpath (f x)).
+Proof.
+  simpl ap10.
+  exact idpath.
+Defined.
+
+(** ap10_conc_p_q_x です。 *)
+Definition ap10_cpq_x@{i j k | i <= k, j <= k}
+  {A : Type@{i}} {B : Type@{j}} {f f' f'' : A -> B}
+  (pff' : Path@{k} f f') (pf'f'' : Path@{k} f' f'') (x : A)
+  : Path@{j}
+    (ap10 (conc pff' pf'f'') x)
+    (conc (ap10 pff' x) (ap10 pf'f'' x)).
+Proof.
+  refine (match pf'f'' with idpath => _ end).
+  refine (match pff' with idpath => _ end).
+  simpl ap10.
+  simpl conc.
+  exact idpath.
+Defined.
+
+(** ap10_inv_p_x です。 *)
+Definition ap10_vp_x@{i j k | i <= k, j <= k}
+  {A : Type@{i}} {B : Type@{j}} {f f' : A -> B}
+  (pff' : Path@{k} f f') (x : A)
+  : Path@{j} (ap10 (inv pff') x) (inv (ap10 pff' x)).
+Proof.
+  refine (match pff' with idpath => _ end).
+  simpl ap10.
+  simpl inv.
+  exact idpath.
+Defined.
+
 (** ap1D0_idpath_x です。 *)
 Definition ap1D0_1_x@{i j k | i <= k, j <= k}
   {A : Type@{i}} {B : A -> Type@{j}} (f : forall x : A, B x) (x : A)
@@ -1334,38 +1370,9 @@ Proof.
   exact idpath.
 Defined.
 
-(** ap10_idpath_x です。 *)
-Definition ap10_1_x@{i j k | i <= k, j <= k}
-  {A : Type@{i}} {B : Type@{j}} (f : A -> B) (x : A)
-  : Path@{j} (ap10 (idpath@{k} f) x) (idpath (f x)).
-Proof.
-  simpl ap10.
-  exact idpath.
-Defined.
-
-(** ap10_conc_p_q_x です。 *)
-Definition ap10_cpq_x@{i j k | i <= k, j <= k}
-  {A : Type@{i}} {B : Type@{j}} {f f' f'' : A -> B}
-  (pff' : Path@{k} f f') (pf'f'' : Path@{k} f' f'') (x : A)
-  : Path@{j}
-    (ap10 (conc pff' pf'f'') x)
-    (conc (ap10 pff' x) (ap10 pf'f'' x)).
-Proof.
-  refine (match pf'f'' with idpath => _ end).
-  refine (match pff' with idpath => _ end).
-  simpl ap10.
-  simpl conc.
-  exact idpath.
-Defined.
-
-(** ap10_inv_p_x です。 *)
-Definition ap10_vp_x@{i j k | i <= k, j <= k}
-  {A : Type@{i}} {B : Type@{j}} {f f' : A -> B}
-  (pff' : Path@{k} f f') (x : A)
-  : Path@{j} (ap10 (inv pff') x) (inv (ap10 pff' x)).
-Proof.
-  refine (match pff' with idpath => _ end).
-  simpl ap10.
-  simpl inv.
-  exact idpath.
-Defined.
+Definition t@{i j k mik mjk | i <= mik, k <= mik, j <= mjk, k <= mjk}
+  {A : Type@{i}} {B : Type@{j}} {C : Type@{k}} {f f' : B -> C} {g : A -> B}
+  (pff' : Path@{mjk} f f') (x : A)
+  : Path@{k}
+    (ap10@{i k mik} (ap (fun f => comp f g) pff') x)
+    (ap10@{j k mjk} pff' (g x)).
