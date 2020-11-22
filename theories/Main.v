@@ -932,7 +932,7 @@ Definition ap_lam_x_f_g_x_p@{i j k | }
   {A : Type@{i}} {B : Type@{j}} {C : Type@{k}}
   (f : B -> C) (g : A -> B) {x y : A}
   : forall p : Path@{i} x y,
-    Path@{k} (ap (fun a : A => f (g a)) p) (ap f (ap g p)).
+    Path@{k} (ap (fun x : A => f (g x)) p) (ap f (ap g p)).
 Proof.
   move=> p.
   refine (match p with idpath => _ end).
@@ -951,10 +951,10 @@ Proof.
   exact idpath.
 Defined.
 
-(** ap_lam_a_z_p です。 *)
+(** ap_lam_x_z_p です。 *)
 Definition ap_lam_a_z_p@{i j | }
   {A : Type@{i}} {B : Type@{j}} {x y : A} (z : B)
-  : forall p : Path@{i} x y, Path@{j} (ap (fun a : A => z) p) idpath.
+  : forall p : Path@{i} x y, Path@{j} (ap (fun x : A => z) p) idpath.
 Proof.
   move=> p.
   refine (match p with idpath => _ end).
@@ -1249,15 +1249,15 @@ Proof.
     exact (inv (conc_p_1 (p x))).
 Defined.
 
-(** path_conc_'conc_1_p'_p_q_ap_lam_a_conc_1_a_q です。 *)
-Definition path_conc_'conc_1_p'_p_q_ap_lam_a_conc_1_a_q@{i | }
+(** path_conc_'conc_1_p'_p_q_ap_lam_r_conc_1_r_q です。 *)
+Definition path_conc_'conc_1_p'_p_q_ap_lam_r_conc_1_r_q@{i | }
   {A : Type@{i}} {x : A} (p : Path@{i} x x) (q : Path@{i} p idpath)
-  : Path@{i} (conc (conc_1_p p) q) (ap (fun a => conc idpath a) q).
+  : Path@{i} (conc (conc_1_p p) q) (ap (fun r => conc idpath r) q).
 Proof.
   refine (match inv_vp q
     as _
     in Path _ q'
-    return Path@{i} (conc (conc_1_p p) q') (ap (fun a => conc idpath a) q')
+    return Path@{i} (conc (conc_1_p p) q') (ap (fun r => conc idpath r) q')
     with idpath => _
   end).
   refine (match inv q
@@ -1265,7 +1265,7 @@ Proof.
     in Path _ p'
     return Path@{i}
       (conc (conc_1_p p') (inv vq'))
-      (ap (fun a => conc idpath a) (inv vq'))
+      (ap (fun r => conc idpath r) (inv vq'))
     with idpath => _
   end).
   simpl ap.
@@ -1273,15 +1273,15 @@ Proof.
   exact idpath.
 Defined.
 
-(** path_conc_'conc_p_1'_p_q_ap_lam_a_conc_a_1_q です。 *)
-Definition path_conc_'conc_p_1'_p_q_ap_lam_a_conc_a_1_q@{i | }
+(** path_conc_'conc_p_1'_p_q_ap_lam_r_conc_r_1_q です。 *)
+Definition path_conc_'conc_p_1'_p_q_ap_lam_r_conc_r_1_q@{i | }
   {A : Type@{i}} {x : A} (p : Path@{i} x x) (q : Path@{i} p idpath)
-  : Path@{i} (conc (conc_p_1 p) q) (ap (fun a => conc a idpath) q).
+  : Path@{i} (conc (conc_p_1 p) q) (ap (fun r => conc r idpath) q).
 Proof.
   refine (match inv_vp q
     as _
     in Path _ q'
-    return Path@{i} (conc (conc_p_1 p) q') (ap (fun a => conc a idpath) q')
+    return Path@{i} (conc (conc_p_1 p) q') (ap (fun r => conc r idpath) q')
     with idpath => _
   end).
   refine (match inv q
@@ -1289,7 +1289,7 @@ Proof.
     in Path _ p'
     return Path@{i}
       (conc (conc_p_1 p') (inv vq'))
-      (ap (fun a => conc a idpath) (inv vq'))
+      (ap (fun r => conc r idpath) (inv vq'))
     with idpath => _
   end).
   simpl ap.
