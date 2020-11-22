@@ -1370,9 +1370,61 @@ Proof.
   exact idpath.
 Defined.
 
-Definition t@{i j k mik mjk | i <= mik, k <= mik, j <= mjk, k <= mjk}
+(** ap10_ap_lam_f_comp_f_g_p_x です。 *)
+Definition ap10_ap_lam_f_comp_f_g_p_x
+  @{i j k mjk mik | j <= mjk, k <= mjk, i <= mik, k <= mik}
   {A : Type@{i}} {B : Type@{j}} {C : Type@{k}} {f f' : B -> C} {g : A -> B}
   (pff' : Path@{mjk} f f') (x : A)
   : Path@{k}
     (ap10@{i k mik} (ap (fun f => comp f g) pff') x)
     (ap10@{j k mjk} pff' (g x)).
+Proof.
+  refine (match pff' with idpath => _ end).
+  simpl ap10.
+  exact idpath.
+Defined.
+
+(** ap1D0_ap_lam_f_compD_f_g_p_x です。 *)
+Definition ap1D0_ap_lam_f_comp_f_g_p_x
+  @{i j k mjk mik | j <= mjk, k <= mjk, i <= mik, k <= mik}
+  {A : Type@{i}} {B : Type@{j}} {C : B -> Type@{k}}
+  {f f' : forall x : B, C x} {g : A -> B}
+  (pff' : Path@{mjk} f f') (x : A)
+  : Path@{k}
+    (ap1D0@{i k mik} (ap (fun f => compD f g) pff') x)
+    (ap1D0@{j k mjk} pff' (g x)).
+Proof.
+  refine (match pff' with idpath => _ end).
+  simpl ap1D0.
+  exact idpath.
+Defined.
+
+(** ap10_ap_lam_g_comp_f_g_p_x です。 *)
+Definition ap10_ap_lam_g_comp_f_g_p_x
+  @{i j k mij mik | i <= mij, j <= mij, i <= mik, k <= mik}
+  {A : Type@{i}} {B : Type@{j}} {C : Type@{k}} {f : B -> C} {g g' : A -> B}
+  (pgg' : Path@{mij} g g') (x : A)
+  : Path@{k}
+    (ap10@{i k mik} (ap (fun g => comp f g) pgg') x)
+    (ap f (ap10@{i j mij} pgg' x)).
+Proof.
+  refine (match pgg' with idpath => _ end).
+  simpl ap10.
+  exact idpath.
+Defined.
+
+(** ap1D0_ap_lam_g_compD_f_g_p_x です。 *)
+Definition ap1D0_ap_lam_g_comp_f_g_p_x
+  @{i j k mij mik | i <= mij, j <= mij, i <= mik, k <= mik}
+  {A : Type@{i}} {B : A -> Type@{j}} {C : Type@{k}}
+  {f : forall x : A, B x -> C} {g g' : forall x : A, B x}
+  (pgg' : Path@{mij} g g') (x : A)
+  : Path@{k}
+    (ap1D0@{i k mik} (ap (fun g => fun x => f x (g x)) pgg') x)
+    (ap (f x) (ap1D0@{i j mij} pgg' x)).
+Proof.
+  refine (match pgg' with idpath => _ end).
+  simpl ap1D0.
+  simpl ap.
+  exact idpath.
+Defined.
