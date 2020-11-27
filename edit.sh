@@ -1,1 +1,3 @@
-./coqide.sh -R theories/ GiC
+./coqide.sh \
+  -nois \
+  -R theories/ GiC
