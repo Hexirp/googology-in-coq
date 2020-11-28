@@ -1514,7 +1514,7 @@ Proof.
   exact idpath.
 Defined.
 
-Section trpt_conc_p_conc_q_r_u_P_L_R.
+Section trpt_conc_p_conc_q_r_u_Path_L_R.
   Universe i j.
 
   Context {A : Type@{i}}.
@@ -1552,7 +1552,7 @@ Section trpt_conc_p_conc_q_r_u_P_L_R.
   Defined.
 
   (** Path_'trpt_conc_p_conc_q_r_u_L'_'trpt_conc_p_conc_q_r_u_R' です。 *)
-  Definition trpt_conc_p_conc_q_r_u_P_L_R
+  Definition trpt_conc_p_conc_q_r_u_Path_L_R
     : Path@{j} trpt_conc_p_conc_q_r_u_L trpt_conc_p_conc_q_r_u_R.
   Proof.
     unfold trpt_conc_p_conc_q_r_u_L.
@@ -1563,4 +1563,4 @@ Section trpt_conc_p_conc_q_r_u_P_L_R.
     simpl conc.
     exact idpath.
   Defined.
-End trpt_conc_p_conc_q_r_u_P_L_R.
+End trpt_conc_p_conc_q_r_u_Path_L_R.
