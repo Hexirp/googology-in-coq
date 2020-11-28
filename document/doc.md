@@ -196,23 +196,23 @@ Coq では Makefile を使うのがスタンダードのようなのですが、
 
 対象は次の通りです。
 
-1. theories/Base.v
-2. theories/Main.v
+* theories/Base.v
+* theories/Main.v
 
 生成する物は次の通りです。
 
-1. theories/Base.v から生成される物
-  1. theories/.Base.aux
-  2. theories/Base.glob
-  3. theories/Base.vo
-  4. theories/Base.vok
-  5. theories/Base.vos
-2. theories/Main.v から生成される物
-  1. theories/.Main.aux
-  2. theories/Main.glob
-  3. theories/Main.vo
-  4. theories/Main.vok
-  5. theories/Main.vos
+* theories/Base.v から生成される物
+  * theories/.Base.aux
+  * theories/Base.glob
+  * theories/Base.vo
+  * theories/Base.vok
+  * theories/Base.vos
+* theories/Main.v から生成される物
+  * theories/.Main.aux
+  * theories/Main.glob
+  * theories/Main.vo
+  * theories/Main.vok
+  * theories/Main.vos
 
 ### coqc.sh
 
@@ -238,17 +238,17 @@ Coq では Makefile を使うのがスタンダードのようなのですが、
 
 対象は次の通りです。
 
-1. theories/Base.v
-2. theories/Main.v
+* theories/Base.v
+* theories/Main.v
 
 生成する物は次の通りです。
 
-1. coqdoc.css
-2. index.html
-3. theories/Base.v から生成される物
-  1. docs/GiC.Base.html
-4. theories/Main.v から生成される物
-  1. docs/GiC.Main.html
+* coqdoc.css
+* index.html
+* theories/Base.v から生成される物
+  * docs/GiC.Base.html
+* theories/Main.v から生成される物
+  * docs/GiC.Main.html
 
 ## モジュール
 
