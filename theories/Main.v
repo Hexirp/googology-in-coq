@@ -1454,3 +1454,37 @@ Proof.
   simpl ap.
   exact idpath.
 Defined.
+
+(** *** 輸送と、道の亜群構造 *)
+
+(** trpt_idpath_u です。 *)
+Definition trpt_1_u@{i j | }
+  {A : Type@{i}} (P : A -> Type@{j}) {x : A} (u : P x)
+  : Path@{j} (trpt idpath u) u.
+Proof.
+  simpl trpt.
+  exact idpath.
+Defined.
+
+(** trpt_conc_p_q_u です。 *)
+Definition trpt_cpq_u@{i j | }
+  {A : Type@{i}} (P : A -> Type@{j}) {x y z : A}
+  (p : Path@{i} x y) (q : Path@{i} y z) (u : P x)
+  : Path@{j} (trpt (conc p q) u) u.
+Proof.
+  refine (match q with idpath => _ end).
+  refine (match p with idpath => _ end).
+  simpl trpt.
+  exact idpath.
+Defined.
+
+(** trpt_p_trpt_inv_p_u です。 *)
+Definition trpt_p_trpt_vp_u@{i j | }
+  {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
+  (p : Path@{i} x y) (u : P y)
+  : Path@{j} (trpt p (trpt (inv p) u)) u.
+Proof.
+  refine (conc _ (_ : Path@{j} (trpt (conc p (inv p)) u) _)).
+  -
+    refine (inv _).
+    refine (trpt_cpq_u P p (inv p) u).
