@@ -4,6 +4,10 @@ googology-in-coq は、プログラミングとして定理を証明していく
 
 ## コーディング
 
+標準ライブラリは使用しません。それを使用すると、以下で説明する制限を適用することが不可能になるからです。
+
+`Set` と `Prop` は使いません。これは homotopy type theory の上に立って開発を行う際に障害になるためです。
+
 帰納原理 (induction principle) の機能は、項をコントロールすることを困難にする上に、 `Set` と `Prop` を使うため、使用しません。次のような指定を Vernacular ファイルの最初で行ってください。
 
 ```
@@ -208,9 +212,75 @@ refine (conc _ (_ : Path@{i} y _)).
 
 `ap1D0` と `ap10` には、宇宙多相において `max` を取るパターンを含みます。これに関して宇宙制約の書き方を間違えると `Universe constraints are not implied by the ones declared.` とだけの分かりづらいエラーメッセージが出ます。そのため、原因が分かりづらく、注意が必要です。実際に、私は `GiC.Path` での `ap10` と `ap1D0` について扱う部分において苦労しました。
 
-作者でも全ての定理を覚えられる自信がないので、 `SearchPattern` を使うことを推奨します。
+作者でも全ての定理を覚えられていません。ここの定理を探すには `SearchPattern` を使うことを推奨します。
 
 現在の内容は https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v をベースにしています。
+
+## ビルド
+
+ビルドは shell ファイルを使って行います。
+
+Coq では Makefile を使うのがスタンダードのようなのですが、 Makefile を自動生成するためのファイルがあったり、そのためのツールがあったりと、複数の層があって訳が分からない上に、 Windows で使うことが困難なようなので、取り敢えずは shell ファイルを使っています。
+
+### build.sh
+
+プロジェクト全体をビルドします。標準ライブラリを使用しないために `-nois` を、詳細なログを出力させるために `-verbose` を、モジュールの構成のために `-R theories/ GiC` を、それぞれ `coqc` のオプションに与えています。
+
+対象は次の通りです。
+
+1. theories/Base.v
+2. theories/Main.v
+
+生成する物は次の通りです。
+
+1. theories/Base.v から生成される物
+  1. theories/.Base.aux
+  2. theories/Base.glob
+  3. theories/Base.vo
+  4. theories/Base.vok
+  5. theories/Base.vos
+2. theories/Main.v から生成される物
+  1. theories/.Main.aux
+  2. theories/Main.glob
+  3. theories/Main.vo
+  4. theories/Main.vok
+  5. theories/Main.vos
+
+### coqc.sh
+
+`coqc` のラッパーです。これを参照することで、別の環境でも、このファイルを書き換えるだけで対応できるようになっています。
+
+### coqdoc.sh
+
+`coqdoc` のラッパーです。これを参照することで、別の環境でも、このファイルを書き換>えるだけで対応できるようになっています。
+
+### coqide.sh
+
+`coqide` のラッパーです。これを参照することで、別の環境でも、このファイルを書き>換>えるだけで対応できるようになっています。
+
+### edit.sh
+
+プロジェクトの編集を開始します。標準ライブラリを使用しないために `-nois` を、モジュールの構成のために `-R theories/ GiC` を、それぞれ `coqide` のオプションに与えています。
+
+これを使うと、標準ライブラリとの名前の衝突が発生せず、 `Require GiC.Base.` というような記述が正常に動作します。
+
+### make\_document.sh
+
+プロジェクトのコメントによるドキュメントを生成します。日本語でも正常に動作させるために `-utf8` を、生成先として `docs/` を指定するために `-d docs/` を、モジュールの構成のために `-R theories/ GiC` を、それぞれ `coqdoc` のオプションに与えています。
+
+対象は次の通りです。
+
+1. theories/Base.v
+2. theories/Main.v
+
+生成する物は次の通りです。
+
+1. coqdoc.css
+2. index.html
+3. theories/Base.v から生成される物
+  1. docs/GiC.Base.html
+4. theories/Main.v から生成される物
+  1. docs/GiC.Main.html
 
 ## 歴史
 
