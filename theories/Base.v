@@ -101,7 +101,7 @@ Definition comp@{i j k | } {A : Type@{i}} {B : Type@{j}} {C : Type@{k}}
 
 (** 依存型に対応する関数の合成です。 *)
 Definition compD@{i j k | } {A : Type@{i}} {B : Type@{j}} {C : B -> Type@{k}}
-  : (forall b : B, C b) -> forall (g : A -> B) (x : A), C (g x)
+  : (forall b : B, C b) -> forall (g : A -> B) (a : A), C (g a)
   := fun f g x => f (g x).
 
 (** 関数の適用です。 *)
@@ -111,7 +111,7 @@ Definition apply@{i j | } {A : Type@{i}} {B : Type@{j}}
 
 (** 依存型に対応する関数の適用です。 *)
 Definition applyD@{i j | } {A : Type@{i}} {B : A -> Type@{j}}
-  : (forall a : A, B a) -> forall (x : A), B x
+  : (forall a : A, B a) -> forall (a : A), B a
   := fun f x => f x.
 
 (** 矛盾による証明です。 *)

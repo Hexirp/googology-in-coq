@@ -19,6 +19,31 @@ Set Default Proof Mode "Classic".
 
 (** ** 汎用的な関数の定義 *)
 
+(** 関数と関数の合成です。 *)
+Definition compNN@{i j k | }
+  {A : Type@{i}} {B : Type@{j}} {C : Type@{k}}
+  : (B -> C) -> (A -> B) -> A -> C
+  := comp.
+
+(** 関数と依存関数の合成です。 *)
+Definition compND@{i j k | }
+  {A : Type@{i}} {B : A -> Type@{j}} {C : Type@{k}}
+  : (forall a : A, B a -> C) -> (forall a : A, B a) -> A -> C
+  := fun f g x => f x (g x).
+
+(** 依存関数と関数の合成です。 *)
+Definition compDN@{i j k | }
+  {A : Type@{i}} {B : Type@{j}} {C : B -> Type@{k}}
+  : (forall b : B, C b) -> forall (g : A -> B) (a : A), C (g a)
+  := compD.
+
+(** 依存関数と依存関数の合成です。 *)
+Definition compDD@{i j k | }
+  {A : Type@{i}} {B : A -> Type@{j}} {C : forall a : A, B a -> Type@{k}}
+  : (forall (a : A) (b : B a), C a b) ->
+    forall (g : forall a : A, B a) (a : A), C a (g a)
+  := fun f g x => f x (g x).
+
 (** 依存型に対応する ap です。 *)
 Definition apD@{i j | }
   {A : Type@{i}} {B : A -> Type@{j}} (f : forall x : A, B x)
@@ -1377,7 +1402,7 @@ Definition ap10_ap_lam_f_comp_f_g_p_x
   {A : Type@{i}} {B : Type@{j}} {C : Type@{k}} {f f' : B -> C} {g : A -> B}
   (pff' : Path@{mjk} f f') (x : A)
   : Path@{k}
-    (ap10@{i k mik} (ap (fun f => comp f g) pff') x)
+    (ap10@{i k mik} (ap (fun f => compNN f g) pff') x)
     (ap10@{j k mjk} pff' (g x)).
 Proof.
   refine (match pff' with idpath => _ end).
@@ -1392,7 +1417,7 @@ Definition ap1D0_ap_lam_f_comp_f_g_p_x
   {f f' : forall x : B, C x} {g : A -> B}
   (pff' : Path@{mjk} f f') (x : A)
   : Path@{k}
-    (ap1D0@{i k mik} (ap (fun f => compD f g) pff') x)
+    (ap1D0@{i k mik} (ap (fun f => compDN f g) pff') x)
     (ap1D0@{j k mjk} pff' (g x)).
 Proof.
   refine (match pff' with idpath => _ end).
@@ -1406,7 +1431,7 @@ Definition ap10_ap_lam_g_comp_f_g_p_x
   {A : Type@{i}} {B : Type@{j}} {C : Type@{k}} {f : B -> C} {g g' : A -> B}
   (pgg' : Path@{mij} g g') (x : A)
   : Path@{k}
-    (ap10@{i k mik} (ap (fun g => comp f g) pgg') x)
+    (ap10@{i k mik} (ap (fun g => compNN f g) pgg') x)
     (ap f (ap10@{i j mij} pgg' x)).
 Proof.
   refine (match pgg' with idpath => _ end).
@@ -1421,7 +1446,7 @@ Definition ap1D0_ap_lam_g_comp_f_g_p_x
   {f : forall x : A, B x -> C} {g g' : forall x : A, B x}
   (pgg' : Path@{mij} g g') (x : A)
   : Path@{k}
-    (ap1D0@{i k mik} (ap (fun g => fun x => f x (g x)) pgg') x)
+    (ap1D0@{i k mik} (ap (fun g => compND f g) pgg') x)
     (ap (f x) (ap1D0@{i j mij} pgg' x)).
 Proof.
   refine (match pgg' with idpath => _ end).
