@@ -316,3 +316,5 @@ refine (conc _ (_ : Path@{i} y _)).
 * https://github.com/Hexirp/googology-in-coq/commit/34cbcda37abceef8f06ad2c2b7a7e43fb1587d0d - Base.v と 四代目の Main.v を元にして詳細な命名規則が記述される。
 * https://github.com/Hexirp/googology-in-coq/commit/27ae14f9b5ad1cb2b2e71473691b23c016c53820 - Base.v と四代目の Main.v を元にして詳細な改行と字下げの規則が記述される。
 * https://github.com/Hexirp/googology-in-coq/commit/9e0be8dde2927104fc51a0be805be1ba0fb42a61 - shell ファイルが整理され、それぞれの役割が明確になった。
+* https://github.com/Hexirp/googology-in-coq/commit/3d7f2c0d0417f0bd9a7c7376c42e13e575034ff1 - ドキュメントに詳細な節が導入されて構造が分かりやすくなった。
+* https://github.com/Hexirp/googology-in-coq/commit/abcb0ac369875055c50748796e8a973d162caaf5 - 型を単純化して理解を容易にするために Section 機能の使用が開始される。
