@@ -292,6 +292,8 @@ refine (conc _ (_ : Path@{i} y _)).
 
 頻出するパターンとして `refine (match p with idpath => _ end).` があります。これは as や return などを付けたりという場合があるので、タクティック化は検討していません。
 
+`compNN` と `compND` と `compDN` と `compDD` は、 `ap1D0_ap_lam_f_compDN_f_g_p_x` を美しく書くために追加した関数です。 `Path` と全く関係がないため、場所を移動することを検討しています。
+
 ## 歴史
 
 歴史を簡単にまとめます。
