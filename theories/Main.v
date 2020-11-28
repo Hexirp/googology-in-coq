@@ -4,9 +4,6 @@
 
 Require Import GiC.Base.
 
-(** タクティックが使用できるように設定します。 *)
-Set Default Proof Mode "Classic".
-
 (** 帰納原理 (induction principle) を生成しないように設定します。 *)
 Unset Elimination Schemes.
 
@@ -16,6 +13,9 @@ Set Polymorphic Inductive Cumulativity.
 
 (** 宇宙 (universe) について表示するように設定します。 *)
 Set Printing Universes.
+
+(** タクティックが使用できるように設定します。 *)
+Set Default Proof Mode "Classic".
 
 (** ** 汎用的な関数の定義 *)
 

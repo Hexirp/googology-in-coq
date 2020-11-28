@@ -12,9 +12,6 @@ Declare ML Module "ltac_plugin".
 Declare ML Module "ssrmatching_plugin".
 Declare ML Module "ssreflect_plugin".
 
-(** タクティックが使用できるように設定します。 *)
-Set Default Proof Mode "Classic".
-
 (** 帰納原理 (induction principle) を生成しないように設定します。 *)
 Unset Elimination Schemes.
 
