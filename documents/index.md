@@ -280,11 +280,17 @@ refine (conc _ (_ : Path@{i} y _)).
 
 ### GiC.Path
 
-`ap1D0` と `ap10` には、宇宙多相において `max` を取るパターンを含みます。これに関して宇宙制約の書き方を間違えると `Universe constraints are not implied by the ones declared.` とだけの分かりづらいエラーメッセージが出ます。そのため、原因が分かりづらく、注意が必要です。実際に、私は `GiC.Path` での `ap10` と `ap1D0` について扱う部分において苦労しました。
+`ap10` と `ap1D0` などには、宇宙多相において `max` を取るパターンを含みます。これに関して宇宙制約の書き方を間違えると `Universe constraints are not implied by the ones declared.` とだけの分かりづらいエラーメッセージが出ます。そのため、原因が分かりづらく、注意が必要です。実際に、私は `GiC.Path` の `ap10` と `ap1D0` を扱う部分において苦労しました。
 
 作者でも全ての定理を覚えられていません。ここの定理を探すには `SearchPattern` を使うことを推奨します。
 
 現在の内容は https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v をベースにしています。
+
+正しいはずの場所でエラーが起きたり、誤っているはずの場所でエラーが起きなかったりして、その原因が分からない場合は、最終手段として "View" タブの "Display all low-level contents" が使えます。
+
+頻出するパターンとして `refine (conc _ (_ : Path@{i} y _)).` があります。これは形に遊びが少ないのでタクティック化を検討しています。
+
+頻出するパターンとして `refine (match p with idpath => _ end).` があります。これは as や return などを付けたりという場合があるので、タクティック化は検討していません。
 
 ## 歴史
 
