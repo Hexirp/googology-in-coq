@@ -1514,23 +1514,53 @@ Proof.
   exact idpath.
 Defined.
 
-(** conc_conc_ap_lam_s_trpt_s_u_'conc_p_cqr'_p_q_r_'trpt_cpq_u'_P_conc_p_q_r_u_ap_trpt_r_'trpt_cpq_u'_P_p_q_u です。 *)
-Definition conc_conc_ap_lam_s_trpt_s_u_'conc_p_cqr'_p_q_r_'trpt_cpq_u'_P_conc_p_q_r_u_ap_trpt_r_'trpt_cpq_u'_P_p_q_u@{i j | }
-  {A : Type@{i}} (P : A -> Type@{j}) {x y z w : A}
-  (p : Path@{i} x y) (q : Path@{i} y z) (r : Path@{i} z w) (u : P x)
-  : Path@{j}
-    (conc
-      (conc
-        (ap (fun s => trpt s u) (conc_p_cqr p q r))
-        (trpt_cpq_u P (conc p q) r u))
-      (ap (trpt r) (trpt_cpq_u P p q u)))
-    (conc
-      (trpt_cpq_u P p (conc q r) u)
-      (trpt_cpq_u P q r (trpt p u))).
-Proof.
-  refine (match r with idpath => _ end).
-  refine (match q with idpath => _ end).
-  refine (match p with idpath => _ end).
-  simpl conc.
-  exact idpath.
-Defined.
+Section trpt_conc_p_conc_q_r_u_P_L_R.
+  Universe i j.
+
+  Context {A : Type@{i}}.
+  Context (P : A -> Type@{j}).
+  Context {x y z w : A}.
+  Context (p : Path@{i} x y).
+  Context (q : Path@{i} y z).
+  Context (r : Path@{i} z w).
+  Context (u : P x).
+
+  (** trpt_conc_p_conc_q_r_u です。 *)
+  Definition trpt_conc_p_conc_q_r_u_L
+    : Path@{j} (trpt (conc p (conc q r)) u) (trpt r (trpt q (trpt p u))).
+  Proof.
+    refine (conc _ (_ : Path@{j} (trpt r (trpt (conc p q) u)) _)).
+    -
+      refine (conc _ (_ : Path@{j} (trpt (conc (conc p q) r) u) _)).
+      +
+        exact (ap (fun s => trpt s u) (conc_p_cqr p q r)).
+      +
+        exact (trpt_cpq_u P (conc p q) r u).
+    -
+      exact (ap (trpt r) (trpt_cpq_u P p q u)).
+  Defined.
+
+  (** trpt_conc_p_conc_q_r_u です。 *)
+  Definition trpt_conc_p_conc_q_r_u_R
+    : Path@{j} (trpt (conc p (conc q r)) u) (trpt r (trpt q (trpt p u))).
+  Proof.
+    refine (conc _ (_ : Path@{j} (trpt (conc q r) (trpt p u)) _)).
+    -
+      exact (trpt_cpq_u P p (conc q r) u).
+    -
+      exact (trpt_cpq_u P q r (trpt p u)).
+  Defined.
+
+  (** Path_'trpt_conc_p_conc_q_r_u_L'_'trpt_conc_p_conc_q_r_u_R' です。 *)
+  Definition trpt_conc_p_conc_q_r_u_P_L_R
+    : Path@{j} trpt_conc_p_conc_q_r_u_L trpt_conc_p_conc_q_r_u_R.
+  Proof.
+    unfold trpt_conc_p_conc_q_r_u_L.
+    unfold trpt_conc_p_conc_q_r_u_R.
+    refine (match r with idpath => _ end).
+    refine (match q with idpath => _ end).
+    refine (match p with idpath => _ end).
+    simpl conc.
+    exact idpath.
+  Defined.
+End trpt_conc_p_conc_q_r_u_P_L_R.
