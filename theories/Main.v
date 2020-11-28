@@ -1544,21 +1544,31 @@ Section Foo.
   Definition trpt_conc_p_conc_q_r_u_R
     : Path@{j} (trpt (conc p (conc q r)) u) (trpt r (trpt q (trpt p u))).
   Proof.
-    refine (conc _ (_ : Path@{j} (trpt r _)).
+    refine (conc _ (_ : Path@{j} (trpt (conc q r) (trpt p u)) _)).
     -
-      refine (conc _ (_ : Path@{j} (trpt (conc (conc p q) r) u) _)).
-      +
-        exact (ap (fun s => trpt s u) (conc_p_cqr p q r)).
-      +
-        exact (trpt_cpq_u P (conc p q) r u).
+      exact (trpt_cpq_u P p (conc q r) u).
     -
-      exact (ap (trpt r) (trpt_cpq_u P p q u)).
+      exact (trpt_cpq_u P q r (trpt p u)).
   Defined.
 
-(** conc_conc_ap_lam_s_trpt_s_u_'conc_p_cqr'_p_q_r
-_'trpt_cpq_u'_P_conc_p_q_r_u_ap_trpt_r_'trpt_cpq_u'_P_p_q_u です。 *)
-Definition conc_conc_ap_lam_s_trpt_s_u_'conc_p_cqr'_p_q_r
-_'trpt_cpq_u'_P_conc_p_q_r_u_ap_trpt_r_'trpt_cpq_u'_P_p_q_u@{i j | }
+  (** Path_'trpt_conc_p_conc_q_r_u_L'_'trpt_conc_p_conc_q_r_u_R' です。 *)
+  Definition trpt_conc_p_conc_q_r_u_P_L_R
+    : Path@{j} trpt_conc_p_conc_q_r_u_L trpt_conc_p_conc_q_r_u_R.
+  Proof.
+    unfold trpt_conc_p_conc_q_r_u_L.
+    unfold trpt_conc_p_conc_q_r_u_R.
+    refine (match r with idpath => _ end).
+    refine (match q with idpath => _ end).
+    refine (match p with idpath => _ end).
+    simpl conc.
+    exact idpath.
+  Defined.
+End Foo.
+
+About trpt_conc_p_conc_q_r_u_P_L_R.
+
+(** conc_conc_ap_lam_s_trpt_s_u_'conc_p_cqr'_p_q_r_'trpt_cpq_u'_P_conc_p_q_r_u_ap_trpt_r_'trpt_cpq_u'_P_p_q_u です。 *)
+Definition conc_conc_ap_lam_s_trpt_s_u_'conc_p_cqr'_p_q_r_'trpt_cpq_u'_P_conc_p_q_r_u_ap_trpt_r_'trpt_cpq_u'_P_p_q_u@{i j | }
   {A : Type@{i}} (P : A -> Type@{j}) {x y z w : A}
   (p : Path@{i} x y) (q : Path@{i} y z) (r : Path@{i} z w) (u : P x)
   : Path@{j}
