@@ -1396,8 +1396,8 @@ Proof.
   exact idpath.
 Defined.
 
-(** ap10_ap_lam_f_comp_f_g_p_x です。 *)
-Definition ap10_ap_lam_f_comp_f_g_p_x
+(** ap10_ap_lam_f_compNN_f_g_p_x です。 *)
+Definition ap10_ap_lam_f_compNN_f_g_p_x
   @{i j k mjk mik | j <= mjk, k <= mjk, i <= mik, k <= mik}
   {A : Type@{i}} {B : Type@{j}} {C : Type@{k}} {f f' : B -> C} {g : A -> B}
   (pff' : Path@{mjk} f f') (x : A)
@@ -1410,8 +1410,8 @@ Proof.
   exact idpath.
 Defined.
 
-(** ap1D0_ap_lam_f_compD_f_g_p_x です。 *)
-Definition ap1D0_ap_lam_f_comp_f_g_p_x
+(** ap1D0_ap_lam_f_compDN_f_g_p_x です。 *)
+Definition ap1D0_ap_lam_f_compDN_f_g_p_x
   @{i j k mjk mik | j <= mjk, k <= mjk, i <= mik, k <= mik}
   {A : Type@{i}} {B : Type@{j}} {C : B -> Type@{k}}
   {f f' : forall x : B, C x} {g : A -> B}
@@ -1425,8 +1425,8 @@ Proof.
   exact idpath.
 Defined.
 
-(** ap10_ap_lam_g_comp_f_g_p_x です。 *)
-Definition ap10_ap_lam_g_comp_f_g_p_x
+(** ap10_ap_lam_g_compNN_f_g_p_x です。 *)
+Definition ap10_ap_lam_g_compNN_f_g_p_x
   @{i j k mij mik | i <= mij, j <= mij, i <= mik, k <= mik}
   {A : Type@{i}} {B : Type@{j}} {C : Type@{k}} {f : B -> C} {g g' : A -> B}
   (pgg' : Path@{mij} g g') (x : A)
@@ -1439,8 +1439,8 @@ Proof.
   exact idpath.
 Defined.
 
-(** ap1D0_ap_lam_g_compD_f_g_p_x です。 *)
-Definition ap1D0_ap_lam_g_comp_f_g_p_x
+(** ap1D0_ap_lam_g_compND_f_g_p_x です。 *)
+Definition ap1D0_ap_lam_g_compND_f_g_p_x
   @{i j k mij mik | i <= mij, j <= mij, i <= mik, k <= mik}
   {A : Type@{i}} {B : A -> Type@{j}} {C : Type@{k}}
   {f : forall x : A, B x -> C} {g g' : forall x : A, B x}
