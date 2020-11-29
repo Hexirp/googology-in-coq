@@ -1686,7 +1686,15 @@ Definition _'trpt_vp_trpt_p_u'_P_p_trpt_vp_u@{i j | }
     (ap (trpt (inv p)) (trpt_p_trpt_vp_u P p u)).
 Proof.
   refine (let t := _ in t u).
-  refine (match p with idpath => _ end).
+  refine (match p
+    as p'
+    in Path _ y'
+    return forall u' : P y',
+      Path
+        (trpt_vp_trpt_p_u P p' (trpt (inv p') u'))
+        (ap (trpt (inv p')) (trpt_p_trpt_vp_u P p' u'))
+    with idpath => _
+  end).
   move=> u'.
   cbv.
   refine idpath.
