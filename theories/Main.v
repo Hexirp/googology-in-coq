@@ -1564,3 +1564,33 @@ Section trpt_conc_p_conc_q_r_u_Path_L_R.
     exact idpath.
   Defined.
 End trpt_conc_p_conc_q_r_u_Path_L_R.
+
+(** 'trpt_p_trpt_vp_u'_P_p_trpt_p_u です。 *)
+(* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L679 *)
+Definition _'trpt_p_trpt_vp_u'_P_p_trpt_p_u@{i j | }
+  {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
+  (p : Path@{i} x y) (u : P x)
+  : Path@{j}
+    (trpt_p_trpt_vp_u P p (trpt p u))
+    (ap (trpt p) (trpt_vp_trpt_p_u P p u)).
+Proof.
+  refine (match p with idpath => _ end).
+  cbv.
+  refine idpath.
+Defined.
+
+(** 'trpt_vp_trpt_p_u'_P_p_trpt_vp_u です。 *)
+(* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L679 *)
+Definition _'trpt_vp_trpt_p_u'_P_p_trpt_vp_u@{i j | }
+  {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
+  (p : Path@{i} x y) (u : P y)
+  : Path@{j}
+    (trpt_vp_trpt_p_u P p (trpt (inv p) u))
+    (ap (trpt (inv p)) (trpt_p_trpt_vp_u P p u)).
+Proof.
+  refine (let t := _ in t u).
+  refine (match p with idpath => _ end).
+  move=> u'.
+  cbv.
+  refine idpath.
+Defined.
