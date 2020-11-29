@@ -1068,7 +1068,7 @@ Proof.
     exact (inv (conc_p_1 (p x))).
 Defined.
 
-(** Path_ap_f_q_conc_conc_p_x_ap_g_q_inv_p_y です。 Path_conc_ap_f_q_p_y_conc_p_x_ap_g_q を移項したものです。 *)
+(** Path_ap_f_q_conc_conc_p_x_ap_g_q_inv_p_y です。 Path_conc_ap_f_q_p_y_conc_p_x_ap_g_q を移項したものと解釈できます。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L444 *)
 Definition path_afq_conc_conc_px_agq_inv_py@{i j | }
   {A : Type@{i}} {B : Type@{j}} {f g : A -> B}
@@ -1099,7 +1099,7 @@ Proof.
     exact (inv (conc_p_1 (p x))).
 Defined.
 
-(** Path_ap_f_q_conc_inv_p_x_conc_ap_g_q_p_y です。 Path_conc_p_x_ap_f_q_conc_ap_g_q_p_y を移項したものです。 *)
+(** Path_ap_f_q_conc_inv_p_x_conc_ap_g_q_p_y です。 Path_conc_p_x_ap_f_q_conc_ap_g_q_p_y を移項したものと解釈できます。 *)
 (* from: originally defined by Hexirp *)
 Definition path_afq_conc_inv_px_conc_agq_py@{i j | }
   {A : Type@{i}} {B : Type@{j}} {f g : A -> B}
@@ -1107,12 +1107,12 @@ Definition path_afq_conc_inv_px_conc_agq_py@{i j | }
   : forall q : Path@{i} x y,
     Path@{j} (ap f q) (conc (inv (p x)) (conc (ap g q) (p y))).
 Proof.
-  move=> q. Search (Path _ (conc (inv _) _)).
+  move=> q.
   refine (path_q_cvrp (conc (ap g q) (p y)) (ap f q) (p x) _).
   exact (path_conc_px_afq_conc_agq_py p q).
 Defined.
 
-(** Path_conc_ap_f_q_p_y_conc_p_x_q です。 *)
+(** Path_conc_ap_f_q_p_y_conc_p_x_q です。 Path_conc_ap_f_q_p_y_conc_p_x_ap_g_q の g を idmap としたものと解釈できます。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L452 *)
 Definition path_conc_afq_py_conc_px_q@{i | }
   {A : Type@{i}} {f : A -> A} (p : forall x : A, Path@{i} (f x) x) {x y : A}
@@ -1128,7 +1128,7 @@ Proof.
     exact (inv (conc_p_1 (p x))).
 Defined.
 
-(** Path_conc_ap_f_q_p_y_conc_p_x_q です。 *)
+(** Path_conc_ap_f_q_p_y_conc_p_x_q です。 Path_ap_f_q_conc_conc_p_x_ap_g_q_inv_p_y の g を idmap としたものと解釈できます。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L460 *)
 Definition path_afq_conc_conc_px_q_inv_py@{i | }
   {A : Type@{i}} {f : A -> A} (p : forall x : A, Path@{i} (f x) x) {x y : A}
@@ -1139,7 +1139,7 @@ Proof.
   exact (path_conc_afq_py_conc_px_q p q).
 Defined.
 
-(** Path_conc_p_x_ap_f_q_conc_q_p_y です。 *)
+(** Path_conc_p_x_ap_f_q_conc_q_p_y です。 Path_conc_p_x_ap_f_q_conc_ap_g_q_p_y の g を idmap としたものと解釈できます。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L467 *)
 Definition path_conc_px_afq_conc_q_py@{i | }
   {A : Type@{i}} {f : A -> A} (p : forall x : A, Path@{i} x (f x)) {x y : A}
@@ -1153,6 +1153,17 @@ Proof.
     exact (conc_p_1 (p x)).
   -
     exact (inv (conc_1_p (p x))).
+Defined.
+
+(** Path_ap_f_q_conc_inv_p_x_conc_q_p_y です。 Path_ap_f_q_conc_inv_p_x_conc_ap_g_q_p_y の g を idmap としたものと解釈できます。 *)
+(* from: originally defined by Hexirp *)
+Definition path_afq_conc_inv_px_conc_q_py@{i | }
+  {A : Type@{i}} {f : A -> A} (p : forall x : A, Path@{i} x (f x)) {x y : A}
+  : forall q : Path@{i} x y, Path@{i} (ap f q) (conc (inv (p x)) (conc q (p y))).
+Proof.
+  move=> q.
+  refine (path_q_cvrp (conc q (p y)) (ap f q) (p x) _).
+  exact (path_conc_px_afq_conc_q_py p q).
 Defined.
 
 (** Path_conc_conc_r_ap_f_q_conc_p_y_s_conc_conc_r_p_x_conc_ap_g_q_s です。 *)
