@@ -50,6 +50,7 @@ Definition compDD@{i j k | }
   := fun f g x => f x (g x).
 
 (** 依存型に対応する trpt です。 *)
+(* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L741 *)
 Definition trptD@{i j k | }
   {A : Type@{i}} {B : A -> Type@{j}} {C : forall a : A, B a -> Type@{k}}
   {x x' : A} (p : Path@{i} x x') (y : B x) (z : C x y)
@@ -57,6 +58,7 @@ Definition trptD@{i j k | }
   := match p with idpath => z end.
 
 (** 一変数の依存型に対応する trptD です。 *)
+(* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L747 *)
 Definition trptD1@{i j k | }
   {A : Type@{i}} {B : A -> Type@{j}} {C : forall a : A, B a -> Type@{k}}
   {x x' : A} (p : Path@{i} x x') (y : B x) (z : C x y)
