@@ -49,6 +49,28 @@ Definition compDD@{i j k | }
     forall (g : forall a : A, B a) (a : A), C a (g a)
   := fun f g x => f x (g x).
 
+(** 依存型に対応する trpt です。 *)
+Definition trptD@{i j k | }
+  {A : Type@{i}} {B : A -> Type@{j}} {C : forall a : A, B a -> Type@{k}}
+  {x x' : A} (p : Path@{i} x x') (y : B x) (z : C x y)
+  : C x' (trpt p y)
+  := match p with idpath => z end.
+
+(** 一変数の依存型に対応する trptD です。 *)
+Definition trptD1@{i j k | }
+  {A : Type@{i}} {B : A -> Type@{j}} {C : forall a : A, B a -> Type@{k}}
+  {x x' : A} (p : Path@{i} x x') (y : B x) (z : C x y)
+  : C x' (trpt p y)
+  := trptD p y z.
+
+(** 二変数の依存型に対応する trptD です。 *)
+Definition trptD2@{i j k | }
+  {A : Type@{i}} {B0 B1 : A -> Type@{j}}
+  {C : forall a : A, B0 a -> B1 a -> Type@{k}}
+  {x x' : A} (p : Path@{i} x x') (y0 : B0 x) (y1 : B1 x) (z : C x y0 y1)
+  : C x' (trpt p y0) (trpt p y1)
+  := match p with idpath => z end.
+
 (** 依存型に対応する ap です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/Overture.v#L439 *)
 Definition apD@{i j | }
