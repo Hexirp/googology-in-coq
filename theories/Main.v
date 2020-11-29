@@ -1191,7 +1191,7 @@ Proof.
     exact (inv (conc_p_1 (conc r (p x)))).
 Defined.
 
-(** Path_conc_conc_r_ap_f_q_p_y_conc_conc_r_p_x_ap_g_q です。 *)
+(** Path_conc_conc_r_ap_f_q_p_y_conc_conc_r_p_x_ap_g_q です。 Path_conc_conc_r_ap_f_q_conc_p_y_s_conc_conc_r_p_x_conc_ap_g_q_s の s を idpath としたものと解釈できます。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L486 *)
 Definition path_conc_crA_P_conc_crP_A@{i j | }
   {A : Type@{i}} {B : Type@{j}} {f g : A -> B}
@@ -1211,7 +1211,7 @@ Proof.
     exact (inv (conc_p_1 (conc r (p x)))).
 Defined.
 
-(** Path_conc_ap_f_q_conc_p_y_s_conc_p_x_conc_ap_g_q_s です。 *)
+(** Path_conc_ap_f_q_conc_p_y_s_conc_p_x_conc_ap_g_q_s です。 Path_conc_conc_r_ap_f_q_conc_p_y_s_conc_conc_r_p_x_conc_ap_g_q_s の r を idpath としたものと解釈できます。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L497 *)
 Definition path_conc_A_cPs_conc_P_cAs@{i j | }
   {A : Type@{i}} {B : Type@{j}} {f g : A -> B}
@@ -1236,7 +1236,7 @@ Proof.
     exact (inv (conc_p_1 (p x))).
 Defined.
 
-(** Path_conc_conc_r_ap_f_q_conc_p_y_s_conc_conc_r_p_x_conc_q_s です。 *)
+(** Path_conc_conc_r_ap_f_q_conc_p_y_s_conc_conc_r_p_x_conc_q_s です。 Path_conc_conc_r_ap_f_q_conc_p_y_s_conc_conc_r_p_x_conc_ap_g_q_s の g を idmap としたものと解釈できます。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L508 *)
 Definition path_conc_crA_cPs_conc_crP_cqs@{i | }
   {A : Type@{i}} {f : A -> A}
@@ -1261,7 +1261,7 @@ Proof.
     exact (inv (conc_p_1 (conc r (p x)))).
 Defined.
 
-(** Path_conc_conc_r_q_conc_p_y_s_conc_conc_r_p_x_conc_ap_g_q_s です。 *)
+(** Path_conc_conc_r_q_conc_p_y_s_conc_conc_r_p_x_conc_ap_g_q_s です。 Path_conc_conc_r_ap_f_q_conc_p_y_s_conc_conc_r_p_x_conc_ap_g_q_s の f を idmap としたものと解釈できます。 *)
 (* from: invert https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L519 *)
 Definition path_conc_crq_cPs_conc_crP_cAs@{i | }
   {A : Type@{i}} {g : A -> A}
@@ -1286,7 +1286,7 @@ Proof.
     exact (inv (conc_p_1 (conc r (p x)))).
 Defined.
 
-(** Path_conc_conc_r_ap_f_q_p_y_conc_conc_r_p_x_q です。 *)
+(** Path_conc_conc_r_ap_f_q_p_y_conc_conc_r_p_x_q です。 Path_conc_conc_r_ap_f_q_p_y_conc_conc_r_p_x_ap_g_q の g を idmap としたものと解釈できます。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L530 *)
 Definition path_conc_crA_P_conc_crP_q@{i | }
   {A : Type@{i}} {f : A -> A}
@@ -1306,7 +1306,7 @@ Proof.
     exact (inv (conc_p_1 (conc r (p x)))).
 Defined.
 
-(** Path_conc_conc_r_q_p_y_conc_conc_r_p_x_ap_g_q です。 *)
+(** Path_conc_conc_r_q_p_y_conc_conc_r_p_x_ap_g_q です。 Path_conc_conc_r_ap_f_q_p_y_conc_conc_r_p_x_ap_g_q の f を idmap としたものと解釈できます。 *)
 (* from: invert https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L552 *)
 Definition path_conc_crq_P_conc_crP_A@{i | }
   {A : Type@{i}} {g : A -> A}
@@ -1326,7 +1326,7 @@ Proof.
     exact (inv (conc_p_1 (conc r (p x)))).
 Defined.
 
-(** Path_conc_ap_f_q_conc_p_y_s_conc_p_x_conc_q_s です。 *)
+(** Path_conc_ap_f_q_conc_p_y_s_conc_p_x_conc_q_s です。 Path_conc_ap_f_q_conc_p_y_s_conc_p_x_conc_ap_g_q_s の g を idmap としたものと解釈できます。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L541 *)
 Definition path_conc_A_cPs_conc_P_cqs@{i | }
   {A : Type@{i}} {f : A -> A}
@@ -1351,7 +1351,7 @@ Proof.
     exact (inv (conc_p_1 (p x))).
 Defined.
 
-(** Path_conc_q_conc_p_y_s_conc_p_x_conc_ap_g_q_s です。 *)
+(** Path_conc_q_conc_p_y_s_conc_p_x_conc_ap_g_q_s です。 Path_conc_ap_f_q_conc_p_y_s_conc_p_x_conc_ap_g_q_s の f を idmap としたものと解釈できます。 *)
 (* from: invert https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L563 *)
 Definition path_conc_q_cPs_conc_P_cAs@{i | }
   {A : Type@{i}} {g : A -> A}
