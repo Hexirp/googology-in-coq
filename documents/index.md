@@ -55,10 +55,14 @@ Set Default Proof Mode "Classic".
   * `conc p q` は `cpq` と略せる。
   * `inv p` は `vp` と略せる。
   * `trpt p u` は `T` と略せる。
+  * `ap f p` は `afp` と略せる。
   * `ap f p` は `A` と略せる。
+  * `p x` は `px` と略せる。
   * `p x` は `p` が点ごとの道であれば `P` と略せる。
   * ポーランド記法が入れ子になった時は `path_'conc_p_1'_p_q` という風にする。
   * 区別が付かないときは `_L` と `_R` を付けたりする。
+  * `R foo_L foo_R` というときは `foo_R_L_R` としたりする。
+  * 先頭に `'` が来たときは `_` を先頭に付けたりする。
 
 宇宙のレベルの名前については、その役割が `i` より真に大きい値であるということである時は `si` と、その役割が `i` と `j` の最大値であるということである時は `mij` と、それぞれそのようにしてください。
 
@@ -165,6 +169,9 @@ Gallina の項をコントロールできるとして許容されているタク
 
 * `refine` タクティック
 * `exact` タクティック（ただし、 Coq に組み込みの "ltac\_plugin" で定義されるタクティックのこと）
+* `simpl` タクティック
+* `cbv` タクティック
+* `change` タクティック
 * `move` タクティック
 * `=>` タクティカル
 
@@ -183,6 +190,8 @@ refine _.
 ```
 
 `refine` でゴールが解消される時は、代わりに `exact` を使ってください。
+
+ゴールを最後まで評価して、 `Path idpath idpath` というような項まで落とす時は、 `cbv` を使ってください。ゴールの一部分だけを単純にしたい場合は `simpl` を使ってください。この二つでどうにもならないときは `change` を使ってください。
 
 ## ビルド
 
@@ -296,6 +305,8 @@ refine (conc _ (_ : Path@{i} y _)).
 
 等式の補題について、両辺が余りにも巨大で理解しづらい時は、 Section 機能を使って、定義の分割をします。まず、引数を `Universe` と `Constriant` と `Context` を使って文脈に加えます。次に、両辺をそれぞれ一つの定義として記述します。この場合、普通は両方とも同じ型なので `foo_L` と `foo_R` という名前を付けることになります。最後に、この等式として `Path foo_L foo_R` という定理を証明します。ここで、この定理の名前は `L` と `R` の等式なので `foo_Path_L_R` という名前を付けます。
 
+他のライブラリから引っ張ってきたかどうかを区別するために `(* from: ... *)` というコメントを付けます。
+
 ## 歴史
 
 歴史を簡単にまとめます。
@@ -320,3 +331,4 @@ refine (conc _ (_ : Path@{i} y _)).
 * https://github.com/Hexirp/googology-in-coq/commit/9e0be8dde2927104fc51a0be805be1ba0fb42a61 - shell ファイルが整理され、それぞれの役割が明確になった。
 * https://github.com/Hexirp/googology-in-coq/commit/3d7f2c0d0417f0bd9a7c7376c42e13e575034ff1 - ドキュメントに詳細な節が導入されて構造が分かりやすくなった。
 * https://github.com/Hexirp/googology-in-coq/commit/abcb0ac369875055c50748796e8a973d162caaf5 - 型を単純化して理解を容易にするために Section 機能の使用が開始される。
+* https://github.com/Hexirp/googology-in-coq/commit/ddf470fbd874d386d86ff2e79c9a4145bc1ce3ab - 別のライブラリを参考にした定理が分かるように、定理の由来をコメントに書くようになる。
