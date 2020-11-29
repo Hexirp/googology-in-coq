@@ -20,24 +20,28 @@ Set Default Proof Mode "Classic".
 (** ** 汎用的な関数の定義 *)
 
 (** 関数と関数の合成です。 *)
+(* from: originally defined by Hexirp *)
 Definition compNN@{i j k | }
   {A : Type@{i}} {B : Type@{j}} {C : Type@{k}}
   : (B -> C) -> (A -> B) -> A -> C
   := comp.
 
 (** 関数と依存関数の合成です。 *)
+(* from: originally defined by Hexirp *)
 Definition compND@{i j k | }
   {A : Type@{i}} {B : A -> Type@{j}} {C : Type@{k}}
   : (forall a : A, B a -> C) -> (forall a : A, B a) -> A -> C
   := fun f g x => f x (g x).
 
 (** 依存関数と関数の合成です。 *)
+(* from: originally defined by Hexirp *)
 Definition compDN@{i j k | }
   {A : Type@{i}} {B : Type@{j}} {C : B -> Type@{k}}
   : (forall b : B, C b) -> forall (g : A -> B) (a : A), C (g a)
   := compD.
 
 (** 依存関数と依存関数の合成です。 *)
+(* from: originally defined by Hexirp *)
 Definition compDD@{i j k | }
   {A : Type@{i}} {B : A -> Type@{j}} {C : forall a : A, B a -> Type@{k}}
   : (forall (a : A) (b : B a), C a b) ->
@@ -45,6 +49,7 @@ Definition compDD@{i j k | }
   := fun f g x => f x (g x).
 
 (** 依存型に対応する ap です。 *)
+(* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/Overture.v#L439 *)
 Definition apD@{i j | }
   {A : Type@{i}} {B : A -> Type@{j}} (f : forall x : A, B x)
   {x y : A} (p : Path@{i} x y)
@@ -52,12 +57,14 @@ Definition apD@{i j | }
   := match p with idpath => idpath end.
 
 (** 一変数関数に対する ap です。 *)
+(* from: originally defined by Hexirp *)
 Definition ap1@{i j | }
   {A : Type@{i}} {B : Type@{j}} (f : A -> B) {x x' : A} (p : Path@{i} x x')
   : Path@{j} (f x) (f x')
   := ap f p.
 
 (** 二変数関数に対する ap です。 *)
+(* from: originally defined by Hexirp *)
 Definition ap2@{i j k | }
   {A : Type@{i}} {B : Type@{j}} {C : Type@{k}} (f : A -> B -> C)
   {x x' : A} (p : Path@{i} x x') {y y' : B} (q : Path@{j} y y')
@@ -65,6 +72,7 @@ Definition ap2@{i j k | }
   := match p with idpath => ap1 (f x) q end.
 
 (** 三変数関数に対する ap です。 *)
+(* from: originally defined by Hexirp *)
 Definition ap3@{i j k l | }
   {A : Type@{i}} {B : Type@{j}} {C : Type@{k}} {D : Type@{l}}
   (f : A -> B -> C -> D)
@@ -75,16 +83,19 @@ Definition ap3@{i j k l | }
   := match p with idpath => ap2 (f x) q r end.
 
 (** 関数の 0-道を値の 1-道に適用する関数です。 *)
+(* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/Overture.v#L374 *)
 Definition ap01@{i j | } {A : Type@{i}} {B : Type@{j}}
   (f : A -> B) {x x' : A} (pxx' : Path@{i} x x') : Path@{j} (f x) (f x')
   := ap f pxx'.
 
 (** 関数の 1-道を値の 0-道に適用する関数です。 *)
+(* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/Overture.v#L417 *)
 Definition ap10@{i j mij | i <= mij, j <= mij} {A : Type@{i}} {B : Type@{j}}
   {f f' : A -> B} (pff' : Path@{mij} f f') (x : A) : Path@{j} (f x) (f' x)
   := match pff' with idpath => idpath end.
 
 (** 依存関数の 1-道を値の 0-道に適用する関数です。 *)
+(* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/Overture.v#L411 *)
 Definition ap1D0@{i j mij | i <= mij, j <= mij}
   {A : Type@{i}} {B : A -> Type@{j}}
   {f f' : forall x : A, B x} (pff' : Path@{mij} f f') (x : A)
@@ -92,6 +103,7 @@ Definition ap1D0@{i j mij | i <= mij, j <= mij}
   := match pff' with idpath => idpath end.
 
 (** 関数の 1-道を値の 1-道に適用する関数です。 *)
+(* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/Overture.v#L425 *)
 Definition ap11@{i j k | i <= k, j <= k} {A : Type@{i}} {B : Type@{j}}
   {f f' : A -> B} (pff' : Path@{k} f f') {x x' : A} (pxx' : Path@{i} x x')
   : Path@{j} (f x) (f' x)
