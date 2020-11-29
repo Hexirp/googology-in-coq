@@ -1657,7 +1657,7 @@ Section trpt_conc_p_conc_q_r_u_Path_L_R.
     refine (match r with idpath => _ end).
     refine (match q with idpath => _ end).
     refine (match p with idpath => _ end).
-    simpl conc.
+    cbv.
     exact idpath.
   Defined.
 End trpt_conc_p_conc_q_r_u_Path_L_R.
@@ -1673,7 +1673,7 @@ Definition _'trpt_p_trpt_vp_u'_P_p_trpt_p_u@{i j | }
 Proof.
   refine (match p with idpath => _ end).
   cbv.
-  refine idpath.
+  exact idpath.
 Defined.
 
 (** 'trpt_vp_trpt_p_u'_P_p_trpt_vp_u です。 *)
@@ -1690,14 +1690,14 @@ Proof.
     as p'
     in Path _ y'
     return forall u' : P y',
-      Path
+      Path@{j}
         (trpt_vp_trpt_p_u P p' (trpt (inv p') u'))
         (ap (trpt (inv p')) (trpt_p_trpt_vp_u P p' u'))
     with idpath => _
   end).
   move=> u'.
   cbv.
-  refine idpath.
+  exact idpath.
 Defined.
 
 (** conc_ap_trpt_p_'path_u_trpt_vp_v'_P_p_u_v_e_'trpt_p_trpt_vp_u'_P_p_v です。 *)
@@ -1714,4 +1714,18 @@ Proof.
   refine (match p with idpath => _ end).
   cbv.
   refine idpath.
+Defined. (* path_u_trpt_vp_v でぐおーって裏返して trpt_p_trpt_vp_u で裏返したやつを相殺して蓋をする。 *)
+
+(** 'path_u_trpt_vp_v'_P_p_u_trpt_p_u_1 です。 *)
+(* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L701 *)
+Definition _'path_u_trpt_vp_v'_P_p_u_trpt_p_u_1@{i j | }
+  {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
+  (p : Path@{i} x y) (u : P x)
+  : Path@{j}
+    (path_u_trpt_vp_v P p u (trpt p u) idpath)
+    (inv (trpt_vp_trpt_p_u P p u)).
+Proof.
+  refine (match p with idpath => _ end).
+  cbv.
+  exact idpath.
 Defined.
