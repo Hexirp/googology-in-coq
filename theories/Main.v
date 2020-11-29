@@ -693,7 +693,7 @@ Proof.
   end).
 
   move=> v'.
-  simpl trpt.
+  cbv.
   exact idmap.
 Defined.
 
@@ -714,7 +714,7 @@ Proof.
   end).
 
   move=> u'.
-  simpl trpt.
+  cbv.
   exact idmap.
 Defined.
 
@@ -735,7 +735,7 @@ Proof.
   end).
 
   move=> v'.
-  simpl trpt.
+  cbv.
   exact idmap.
 Defined.
 
@@ -756,7 +756,7 @@ Proof.
   end).
 
   move=> u'.
-  simpl trpt.
+  cbv.
   exact idmap.
 Defined.
 
@@ -887,7 +887,7 @@ Defined.
 Definition ap_f_1@{i j | } {A : Type@{i}} {B : Type@{j}} (f : A -> B) (x : A)
   : Path@{j} (ap f (idpath x)) (idpath (f x)).
 Proof.
-  simpl ap.
+  cbv.
   exact idpath.
 Defined.
 
@@ -897,7 +897,7 @@ Definition apD_f_1@{i j | }
   {A : Type@{i}} {B : A -> Type@{j}} (f : forall x : A, B x) (x : A)
   : Path@{j} (apD f (idpath x)) (idpath (f x)).
 Proof.
-  simpl apD.
+  cbv.
   exact idpath.
 Defined.
 
@@ -911,8 +911,7 @@ Proof.
   move=> p q.
   refine (match q with idpath => _ end).
   refine (match p with idpath => _ end).
-  simpl ap.
-  simpl conc.
+  cbv.
   exact idpath.
 Defined.
 
@@ -926,7 +925,6 @@ Proof.
   move=> r p q.
   refine (match q with idpath => _ end).
   refine (match p with idpath => _ end).
-  simpl ap.
   change (Path@{j} (conc r (conc idpath idpath)) (conc (conc r idpath) idpath)).
   exact (conc_p_cqr r idpath idpath).
 Defined.
@@ -957,7 +955,6 @@ Proof.
     with idpath => _
   end).
   move=> r'.
-  simpl ap.
   change (Path@{j} (conc (conc idpath idpath) r') (conc idpath (conc idpath r'))).
   exact (conc_cpq_r idpath idpath r').
 Defined.
@@ -970,8 +967,7 @@ Definition inv_ap_f_p@{i j | }
 Proof.
   move=> p.
   refine (match p with idpath => _ end).
-  simpl ap.
-  simpl inv.
+  cbv.
   exact idpath.
 Defined.
 
@@ -983,8 +979,7 @@ Definition ap_f_vp@{i j | }
 Proof.
   move=> p.
   refine (match p with idpath => _ end).
-  simpl ap.
-  simpl inv.
+  cbv.
   exact idpath.
 Defined.
 
@@ -996,7 +991,7 @@ Definition ap_idmap_p@{i | }
 Proof.
   move=> p.
   refine (match p with idpath => _ end).
-  simpl ap.
+  cbv.
   exact idpath.
 Defined.
 
@@ -1009,7 +1004,7 @@ Definition ap_cfg_p@{i j k | }
 Proof.
   move=> p.
   refine (match p with idpath => _ end).
-  simpl ap.
+  cbv.
   exact idpath.
 Defined.
 
@@ -1023,7 +1018,7 @@ Definition ap_lam_x_f_g_x_p@{i j k | }
 Proof.
   move=> p.
   refine (match p with idpath => _ end).
-  simpl ap.
+  cbv.
   exact idpath.
 Defined.
 
@@ -1035,7 +1030,7 @@ Definition ap_const_z_p@{i j | }
 Proof.
   move=> p.
   refine (match p with idpath => _ end).
-  simpl ap.
+  cbv.
   exact idpath.
 Defined.
 
@@ -1047,7 +1042,7 @@ Definition ap_lam_a_z_p@{i j | }
 Proof.
   move=> p.
   refine (match p with idpath => _ end).
-  simpl ap.
+  cbv.
   exact idpath.
 Defined.
 
@@ -1397,8 +1392,7 @@ Proof.
       (ap (fun r => conc idpath r) (inv vq'))
     with idpath => _
   end).
-  simpl ap.
-  simpl conc.
+  cbv.
   exact idpath.
 Defined.
 
@@ -1422,8 +1416,7 @@ Proof.
       (ap (fun r => conc r idpath) (inv vq'))
     with idpath => _
   end).
-  simpl ap.
-  simpl conc.
+  cbv.
   exact idpath.
 Defined.
 
@@ -1450,8 +1443,7 @@ Definition ap10_cpq_x@{i j mij | i <= mij, j <= mij}
 Proof.
   refine (match pf'f'' with idpath => _ end).
   refine (match pff' with idpath => _ end).
-  simpl ap10.
-  simpl conc.
+  cbv.
   exact idpath.
 Defined.
 
@@ -1463,8 +1455,7 @@ Definition ap10_vp_x@{i j mij | i <= mij, j <= mij}
   : Path@{j} (ap10 (inv pff') x) (inv (ap10 pff' x)).
 Proof.
   refine (match pff' with idpath => _ end).
-  simpl ap10.
-  simpl inv.
+  cbv.
   exact idpath.
 Defined.
 
@@ -1474,7 +1465,7 @@ Definition ap1D0_1_x@{i j mij | i <= mij, j <= mij}
   {A : Type@{i}} {B : A -> Type@{j}} (f : forall x : A, B x) (x : A)
   : Path@{j} (ap1D0 (idpath@{mij} f) x) (idpath (f x)).
 Proof.
-  simpl ap1D0.
+  cbv.
   exact idpath.
 Defined.
 
@@ -1489,8 +1480,7 @@ Definition ap1D0_cpq_x@{i j mij | i <= mij, j <= mij}
 Proof.
   refine (match pf'f'' with idpath => _ end).
   refine (match pff' with idpath => _ end).
-  simpl ap1D0.
-  simpl conc.
+  cbv.
   exact idpath.
 Defined.
 
@@ -1502,8 +1492,7 @@ Definition ap1D0_vp_x@{i j mij | i <= mij, j <= mij}
   : Path@{j} (ap1D0 (inv pff') x) (inv (ap1D0 pff' x)).
 Proof.
   refine (match pff' with idpath => _ end).
-  simpl ap1D0.
-  simpl inv.
+  cbv.
   exact idpath.
 Defined.
 
@@ -1518,7 +1507,7 @@ Definition ap10_ap_lam_f_compNN_f_g_p_x
     (ap10@{j k mjk} pff' (g x)).
 Proof.
   refine (match pff' with idpath => _ end).
-  simpl ap10.
+  cbv.
   exact idpath.
 Defined.
 
@@ -1534,7 +1523,7 @@ Definition ap1D0_ap_lam_f_compDN_f_g_p_x
     (ap1D0@{j k mjk} pff' (g x)).
 Proof.
   refine (match pff' with idpath => _ end).
-  simpl ap1D0.
+  cbv.
   exact idpath.
 Defined.
 
@@ -1549,7 +1538,7 @@ Definition ap10_ap_lam_g_compNN_f_g_p_x
     (ap f (ap10@{i j mij} pgg' x)).
 Proof.
   refine (match pgg' with idpath => _ end).
-  simpl ap10.
+  cbv.
   exact idpath.
 Defined.
 
@@ -1565,8 +1554,7 @@ Definition ap1D0_ap_lam_g_compND_f_g_p_x
     (ap (f x) (ap1D0@{i j mij} pgg' x)).
 Proof.
   refine (match pgg' with idpath => _ end).
-  simpl ap1D0.
-  simpl ap.
+  cbv.
   exact idpath.
 Defined.
 
@@ -1578,7 +1566,7 @@ Definition trpt_1_u@{i j | }
   {A : Type@{i}} (P : A -> Type@{j}) {x : A} (u : P x)
   : Path@{j} (trpt idpath u) u.
 Proof.
-  simpl trpt.
+  cbv.
   exact idpath.
 Defined.
 
@@ -1591,7 +1579,7 @@ Definition trpt_cpq_u@{i j | }
 Proof.
   refine (match q with idpath => _ end).
   refine (match p with idpath => _ end).
-  simpl trpt.
+  cbv.
   exact idpath.
 Defined.
 
@@ -1610,7 +1598,7 @@ Proof.
   +
     exact (ap (fun p => trpt p u) (conc_vp_p p)).
   +
-  simpl trpt.
+  cbv.
   exact idpath.
 Defined.
 
@@ -1629,7 +1617,7 @@ Proof.
   +
     exact (ap (fun p => trpt p u) (conc_p_vp p)).
   +
-  simpl trpt.
+  cbv.
   exact idpath.
 Defined.
 
