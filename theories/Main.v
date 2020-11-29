@@ -1,7 +1,8 @@
 (* Run with -nois. *)
 
-(** * 道についてのモジュール *)
+(** * 開発中のライブラリ *)
 
+(** 必要なライブラリをインポートします。 *)
 Require Import GiC.Base.
 
 (** 帰納原理 (induction principle) を生成しないように設定します。 *)
@@ -879,7 +880,7 @@ Proof.
   exact idpath.
 Defined.
 
-(** *** 関手としての関数 *)
+(** *** 関手 *)
 
 (** ap_f_idpath です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L367 *)
@@ -1569,7 +1570,7 @@ Proof.
   exact idpath.
 Defined.
 
-(** *** 輸送と、道の亜群構造 *)
+(** *** 道による輸送と道の亜群構造 *)
 
 (** trpt_idpath_u です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L645 *)
