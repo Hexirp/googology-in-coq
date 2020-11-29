@@ -107,7 +107,7 @@ Definition ap1D0@{i j mij | i <= mij, j <= mij}
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/Overture.v#L425 *)
 Definition ap11@{i j k | i <= k, j <= k} {A : Type@{i}} {B : Type@{j}}
   {f f' : A -> B} (pff' : Path@{k} f f') {x x' : A} (pxx' : Path@{i} x x')
-  : Path@{j} (f x) (f' x)
+  : Path@{j} (f x) (f' x')
   := match pxx' with idpath => match pff' with idpath => idpath end end.
 
 (** ** 1-次元の亜群構造 *)
@@ -1760,3 +1760,12 @@ Defined.
 (* memo: paths_ind_transport *)
 
 (* memo: paths_ind_r_transport *)
+
+(** *** [ap11] についての定理 *)
+
+(** ap11_h_p です。 *)
+(* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L733 *)
+Definition ap11_h_p@{i j mij | i <= mij, j <= mij}
+  {A : Type@{i}} {B : Type@{j}}
+  {f f' : A -> B} (pff' : Path@{mij} f f')
+  {x x' : A} (pxx' : Path@{i} x x')
