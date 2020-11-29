@@ -1691,3 +1691,19 @@ Proof.
   cbv.
   refine idpath.
 Defined.
+
+(** conc_ap_trpt_p_'path_u_trpt_vp_v'_P_p_u_v_e_'trpt_p_trpt_vp_u'_P_p_v です。 *)
+(* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L693 *)
+Definition conc_ap_trpt_p_'path_u_trpt_vp_v'_P_p_u_v_e_'trpt_p_trpt_vp_u'_P_p_v
+  @{i j | }
+  {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
+  (p : Path@{i} x y) (u : P x) (v : P y) (e : Path@{j} (trpt p u) v)
+  : Path@{j}
+    (conc (ap (trpt p) (path_u_trpt_vp_v P p u v e)) (trpt_p_trpt_vp_u P p v))
+    e.
+Proof.
+  refine (match e with idpath => _ end).
+  refine (match p with idpath => _ end).
+  cbv.
+  refine idpath.
+Defined.
