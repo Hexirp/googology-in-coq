@@ -153,6 +153,16 @@ Definition ap11@{i j k | i <= k, j <= k} {A : Type@{i}} {B : Type@{j}}
   : Path@{j} (f x) (f' x')
   := match pxx' with idpath => match pff' with idpath => idpath end end.
 
+(** 二変数関数の 0-道を値の 1-道と 1-道に適用する関数です。 *)
+(* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L755 *)
+Definition ap011@{i i' j | }
+  {A : Type@{i}} {A' : Type@{i'}} {B : Type@{j}}
+  (f : A -> A' -> B)
+  {x x' : A} (pxx' : Path@{i} x x')
+  {y y' : A'} (pyy' : Path@{i'} y y')
+  : Path@{j} (f x y) (f x' y')
+  := match pyy' with idpath => match pxx' with idpath => idpath end end.
+
 (** ** 1-次元の亜群構造 *)
 
 (** conc_p_idpath です。 *)
