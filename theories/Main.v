@@ -49,13 +49,31 @@ Definition compDD@{i j k | }
     forall (g : forall a : A, B a) (a : A), C a (g a)
   := fun f g x => f x (g x).
 
-(** 依存型に対応する trpt です。 *)
+(** 道を使って輸送する対象の依存型が一重になっている trpt です。 *)
+(* from: originally defined by Hexirp *)
+Definition trptN@{i j | }
+  (A : Type@{i}) (B : A -> Type@{j})
+  {x x' : A} (p : Path@{i} x x') (y : B x)
+  : B x'
+  := match p with idpath => y end.
+
+(** 道を使って輸送する対象の依存型が二重になっている trpt です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L741 *)
 Definition trptD@{i j k | }
-  {A : Type@{i}} {B : A -> Type@{j}} {C : forall a : A, B a -> Type@{k}}
+  (A : Type@{i}) (B : A -> Type@{j}) (C : forall a : A, B a -> Type@{k})
   {x x' : A} (p : Path@{i} x x') (y : B x) (z : C x y)
-  : C x' (trpt p y)
+  : C x' (trptN A B p y)
   := match p with idpath => z end.
+
+(** 道を使って輸送する対象の依存型が三重になっている trpt です。 *)
+(* from: originally defined by Hexirp *)
+Definition trptDD@{i j k l | }
+  (A : Type@{i}) (B : A -> Type@{j})
+  (C : forall a : A, B a -> Type@{k})
+  (D : forall (a : A) (b : B a), C a b -> Type@{l})
+  {x x' : A} (p : Path@{i} x x') (y : B x) (z : C x y) (w : D x y z)
+  : D x' (trptN A B p y) (trptD A B C p y z)
+  := match p with idpath => w end.
 
 (** 一変数の依存型に対応する trptD です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L747 *)
