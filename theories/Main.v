@@ -55,7 +55,7 @@ Definition trptN@{i j | }
   (A : Type@{i}) (B : A -> Type@{j})
   {x x' : A} (p : Path@{i} x x') (y : B x)
   : B x'
-  := match p with idpath => y end.
+  := trpt p y.
 
 (** 道を使って輸送する対象の依存型が二重になっている trpt です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L741 *)
