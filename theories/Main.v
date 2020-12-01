@@ -148,8 +148,8 @@ Definition ap1D0@{i j mij | i <= mij, j <= mij}
 
 (** 関数の 1-道を値の 1-道に適用する関数です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/Overture.v#L425 *)
-Definition ap11@{i j k | i <= k, j <= k} {A : Type@{i}} {B : Type@{j}}
-  {f f' : A -> B} (pff' : Path@{k} f f') {x x' : A} (pxx' : Path@{i} x x')
+Definition ap11@{i j mij | i <= mij, j <= mij} {A : Type@{i}} {B : Type@{j}}
+  {f f' : A -> B} (pff' : Path@{mij} f f') {x x' : A} (pxx' : Path@{i} x x')
   : Path@{j} (f x) (f' x')
   := match pxx' with idpath => match pff' with idpath => idpath end end.
 
