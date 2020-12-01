@@ -166,7 +166,7 @@ Definition conv@{i | } {A : Type@{i}} {x y z : A}
   : Path@{i} x y -> Path@{i} x z -> Path@{i} y z
   := fun p q => conc@{i} (inv@{i} p) q.
 
-(** 道の輸送です。 *)
+(** 道による輸送です。 *)
 (* from: originally defined by Hexirp *)
 Definition trpt@{i j | } {A : Type@{i}} {B : A -> Type@{j}} {x y : A}
   : Path@{i} x y -> B x -> B y
