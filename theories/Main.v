@@ -85,8 +85,8 @@ Definition trptD1@{i j k | }
 
 (** 二段階目の依存型が二変数になっている trptD です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L747 *)
-Definition trptD2@{i j k | }
-  {A : Type@{i}} {B0 B1 : A -> Type@{j}}
+Definition trptD2@{i j0 j1 k | }
+  {A : Type@{i}} {B0 : A -> Type@{j0}} {B1 : A -> Type@{j1}}
   {C : forall a : A, B0 a -> B1 a -> Type@{k}}
   {x x' : A} (p : Path@{i} x x') (y0 : B0 x) (y1 : B1 x) (z : C x y0 y1)
   : C x' (trptN A B0 p y0) (trptN A B1 p y1)
