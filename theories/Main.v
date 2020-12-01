@@ -76,7 +76,7 @@ Definition trptDD@{i j k l | }
   := match p with idpath => w end.
 
 (** 二段階目の依存型が一変数になっている trptD です。 *)
-(* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L747 *)
+(* from: originally defined by Hexirp *)
 Definition trptD1@{i j k | }
   {A : Type@{i}} {B : A -> Type@{j}} {C : forall a : A, B a -> Type@{k}}
   {x x' : A} (p : Path@{i} x x') (y : B x) (z : C x y)
@@ -84,6 +84,7 @@ Definition trptD1@{i j k | }
   := trptD A B C p y z.
 
 (** 二段階目の依存型が二変数になっている trptD です。 *)
+(* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L747 *)
 Definition trptD2@{i j k | }
   {A : Type@{i}} {B0 B1 : A -> Type@{j}}
   {C : forall a : A, B0 a -> B1 a -> Type@{k}}
