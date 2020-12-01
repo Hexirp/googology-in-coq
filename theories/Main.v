@@ -84,6 +84,8 @@ Definition trptD1@{i j k | }
   := trptD A B C p y z.
 
 (** 二段階目の依存型が二変数になっている trptD です。 *)
+(* i j k l や A B C D という風に連番として書かない理由は、 trptN, trptD, trptDD, ... という系列の型を表記する際に連番が既に使われているからです。 *)
+(* j と j' や B と B' という風にアポストロフィを加えて書かない理由は、 x と x' をという風に書く時は x と x' の間に道があるということを暗示しているため、この場合は使えないからです。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L747 *)
 Definition trptD2@{i j0 j1 k | }
   {A : Type@{i}} {B0 : A -> Type@{j0}} {B1 : A -> Type@{j1}}
