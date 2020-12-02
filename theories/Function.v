@@ -31,3 +31,32 @@ Definition compD@{i j k | } {A : Type@{i}} {B : Type@{j}} {C : B -> Type@{k}}
 Definition applyD@{i j | } {A : Type@{i}} {B : A -> Type@{j}}
   : (forall a : A, B a) -> forall (a : A), B a
   := fun f x => f x.
+
+(** 関数と関数の合成です。 *)
+(* from: originally defined by Hexirp *)
+Definition compNN@{i j k | }
+  {A : Type@{i}} {B : Type@{j}} {C : Type@{k}}
+  : (B -> C) -> (A -> B) -> A -> C
+  := comp.
+
+(** 関数と依存関数の合成です。 *)
+(* from: originally defined by Hexirp *)
+Definition compND@{i j k | }
+  {A : Type@{i}} {B : A -> Type@{j}} {C : Type@{k}}
+  : (forall a : A, B a -> C) -> (forall a : A, B a) -> A -> C
+  := fun f g x => f x (g x).
+
+(** 依存関数と関数の合成です。 *)
+(* from: originally defined by Hexirp *)
+Definition compDN@{i j k | }
+  {A : Type@{i}} {B : Type@{j}} {C : B -> Type@{k}}
+  : (forall b : B, C b) -> forall (g : A -> B) (a : A), C (g a)
+  := compD.
+
+(** 依存関数と依存関数の合成です。 *)
+(* from: originally defined by Hexirp *)
+Definition compDD@{i j k | }
+  {A : Type@{i}} {B : A -> Type@{j}} {C : forall a : A, B a -> Type@{k}}
+  : (forall (a : A) (b : B a), C a b) ->
+    forall (g : forall a : A, B a) (a : A), C a (g a)
+  := fun f g x => f x (g x).
