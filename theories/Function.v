@@ -20,6 +20,12 @@ Set Polymorphic Inductive Cumulativity.
 (** 宇宙 (universe) について表示するように設定します。 *)
 Set Printing Universes.
 
+(** 二変数関数の引数を入れ替えます。 *)
+(* from: originally defined by Hexirp *)
+Definition flip@{i j k | } {A : Type@{i}} {B : Type@{j}} {C : Type@{k}}
+  : (A -> B -> C) -> B -> A -> C
+  := fun f x y => f y x.
+
 (** 依存関数に対応する [comp] です。 *)
 (* from: originally defined by Hexirp *)
 Definition compD@{i j k | } {A : Type@{i}} {B : Type@{j}} {C : B -> Type@{k}}
