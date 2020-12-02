@@ -26,6 +26,12 @@ Definition flip@{i j k | } {A : Type@{i}} {B : Type@{j}} {C : Type@{k}}
   : (A -> B -> C) -> B -> A -> C
   := fun f x y => f y x.
 
+(** 第二変数を第一変数に適用します。 *)
+(* from: originally defined by Hexirp *)
+Definition dot@{i j | } {A : Type@{i}} {B : Type@{j}}
+  : A -> (A -> B) -> B
+  := fun x f => f x.
+
 (** 依存関数に対応する [comp] です。 *)
 (* from: originally defined by Hexirp *)
 Definition compD@{i j k | } {A : Type@{i}} {B : Type@{j}} {C : B -> Type@{k}}
