@@ -112,22 +112,10 @@ Definition comp@{i j k | } {A : Type@{i}} {B : Type@{j}} {C : Type@{k}}
   : (B -> C) -> (A -> B) -> A -> C
   := fun f g x => f (g x).
 
-(** 依存型に対応する関数の合成です。 *)
-(* from: originally defined by Hexirp *)
-Definition compD@{i j k | } {A : Type@{i}} {B : Type@{j}} {C : B -> Type@{k}}
-  : (forall b : B, C b) -> forall (g : A -> B) (a : A), C (g a)
-  := fun f g x => f (g x).
-
 (** 関数の適用です。 *)
 (* from: originally defined by Hexirp *)
 Definition apply@{i j | } {A : Type@{i}} {B : Type@{j}}
   : (A -> B) -> A -> B
-  := fun f x => f x.
-
-(** 依存型に対応する関数の適用です。 *)
-(* from: originally defined by Hexirp *)
-Definition applyD@{i j | } {A : Type@{i}} {B : A -> Type@{j}}
-  : (forall a : A, B a) -> forall (a : A), B a
   := fun f x => f x.
 
 (** 矛盾による証明です。 *)

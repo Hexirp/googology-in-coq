@@ -3,7 +3,7 @@
 (** * 開発中のライブラリ *)
 
 (** 必要なライブラリをインポートします。 *)
-Require Import GiC.Base.
+Require Import GiC.Base GiC.Function.
 
 (** 帰納原理 (induction principle) を生成しないように設定します。 *)
 Unset Elimination Schemes.
