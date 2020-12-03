@@ -266,6 +266,8 @@ Coq では Makefile を使うのがスタンダードのようなのですが、
 * index.html
 * theories/Base.v から生成される物
   * docs/GiC.Base.html
+* theories/Function.v から生成される物
+  * docs/GiC.Function.html
 * theories/Main.v から生成される物
   * docs/GiC.Main.html
 
