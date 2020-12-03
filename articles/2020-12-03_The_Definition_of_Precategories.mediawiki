@@ -43,7 +43,7 @@ precategory と strict category と category の性質を纏めてみます。
 | \( -1 \)
 | \( -1 \)
 |-
-! \( 3 \)-射は \( 3 \)-truncated であるか？
+! \( 3 \)-射は \( n \)-truncated であるか？
 | \( -2 \)
 | \( -2 \)
 | \( -2 \)
