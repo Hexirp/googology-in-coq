@@ -87,7 +87,7 @@ precategory と strict category と category の性質を纏めてみます。
 | Yes
 | Yes
 |-
-! \( 2 \)-射は自明であるか？
+! \( 3 \)-射は自明であるか？
 | Yes
 | Yes
 | Yes
