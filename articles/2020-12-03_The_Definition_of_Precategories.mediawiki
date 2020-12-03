@@ -16,7 +16,7 @@ precategory において、 \( A \) が \( 0 \)-truncated であるとき、 str
 
 precategory において、 \( x \) と \( y \) が isomorphism であるという型を \( \mathsf{iso} ( x, y ) \) と書き、自明に得ることが出来る \( x = _ { A _ 0 } y \to \mathsf{iso} ( x, y ) \) という関数が equivalence になる時に、 category と呼びます。
 
-The n-Category Cafe の Category Theory in Homotopy Type Theory という記事では、同じ概念が saturated category か univalent category と呼ばれており、 precategory という名前は strict category と saturated category の元になるという意味の名前であることが書かれています。
+The n-Category Cafe の Category Theory in Homotopy Type Theory という記事では、同じ概念が saturated category または univalent category と呼ばれており、 precategory という名前は strict category と saturated category の元になるという意味の名前であることが書かれています。
 
 == まとめ ==
 
