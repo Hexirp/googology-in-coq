@@ -220,6 +220,12 @@ Coq では Makefile を使うのがスタンダードのようなのですが、
   * theories/Base.vo
   * theories/Base.vok
   * theories/Base.vos
+* theories/Function.v から生成される物
+  * theories/.Function.aux
+  * theories/Function.glob
+  * theories/Function.vo
+  * theories/Function.vok
+  * theories/Function.vos
 * theories/Main.v から生成される物
   * theories/.Main.aux
   * theories/Main.glob
