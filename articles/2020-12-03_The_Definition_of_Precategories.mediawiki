@@ -1,0 +1,82 @@
+Homotopy Type Theory には precategory という概念があります。
+
+== precategory の定義 ==
+
+Homotopy Type Theory: Univalent Foundations of Mathematics の 307 ページ目には次のように書かれています。
+
+<blockquote><p>Ignoring size issues, in set-based mathematics a category consists of a ''set'' \( A _ 0 \) of objects and, for each \( x, y \in A _ 0 \), a ''set'' \( \mathrm{hom} _ A ( x, y ) \) of morphisms. Under univalent foundations, a “naive” definition of category would simply mimic this with a ''type'' of objects and ''types'' of morphisms. If we allowed these types to contain arbitary higher homotopy, then wee ought to impose higher coherence conditions, leading to some notion of \( ( \infty, 1 ) \)-category, but at preset our goal is more modest. We consider only 1-categories, and therefore we restrict the types \( \mathrm{hom} _ A ( x, y ) \) to be sets, i.e. \( 0 \)-types. If we impose no futher conditions, we will call this notion a ''precategory''.</p></blockquote>
+
+これで終わり……という訳にはいきませんよね。 precategory が何であるかというと、対象の型 \( A \) があり、 \( x, y : A \) に対する射の型 \( \mathrm{hom} _ A ( x, y ) \) があり、 \( A \) が \( 0 \)-truncated である構造です。
+
+== strict category の定義 ==
+
+precategory において、 \( A \) が \( 0 \)-truncated であるとき、 strict category と呼びます。 Homotopy Type Theory では集合が \( 0 \)-truncated である型になぞらえられますが、その考え方に従って通常の圏の定義を翻訳したものであるため strict と呼ばれるのだと思います。
+
+== category の定義 ==
+
+precategory において、 \( x \) と \( y \) が isomorphism であるという型を \( \mathsf{iso} ( x, y ) \) と書き、自明に得ることが出来る \( x = _ { A _ 0 } y \to \mathsf{iso} ( x, y ) \) という関数が equivalence になる時に、 category と呼びます。
+
+The n-Category Cafe の Category Theory in Homotopy Type Theory という記事では、同じ概念が saturated category か univalent category と呼ばれており、 precategory という名前は strict category と saturated category の元になるという意味の名前であることが書かれています。
+
+== まとめ ==
+
+precategory と strict category と category の性質を纏めてみます。
+
+{|
+!
+! precategory
+! strict category
+! category
+|-
+! \( 0 \)-射は \( n \)-truncated であるか？
+| \( \infty \)
+| \( 0 \)
+| \( 1 \)
+|-
+! \( 1 \)-射は \( n \)-truncated であるか？
+| \( 0 \)
+| \( 0 \)
+| \( 0 \)
+|-
+! \( 1 \)-射は可逆であるか？
+| No
+| No
+| No
+|-
+! \( 1 \)-射は自明であるか？
+| No
+| No
+| No
+|-
+! \( 2 \)-射は \( n \)-truncated であるか？
+| \( -1 \)
+| \( -1 \)
+| \( -1 \)
+|-
+! \( 2 \)-射は可逆であるか？
+| Yes
+| Yes
+| Yes
+|-
+! \( 2 \)-射は自明であるか？
+| Yes
+| Yes
+| Yes
+|-
+! \( 3 \)-射は \( 3 \)-truncated であるか？
+| \( -2 \)
+| \( -2 \)
+| \( -2 \)
+|-
+! \( 3 \)-射は可逆であるか？
+| Yes
+| Yes
+| Yes
+|-
+! \( 2 \)-射は自明であるか？
+| Yes
+| Yes
+| Yes
+|}
+
+ありがとうございました。
