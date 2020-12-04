@@ -1,4 +1,6 @@
-Homotopy Type Theory には precategory という概念があります。
+Homotopy Type Theory には precategory という概念があります。この用語の使い方は一般的な数学での使い方と異なる<ref>とある人の言葉を借りれば「ラディカル」である。</ref>ので、しばしば混乱してしまいます。自分用も兼ねて、まとめておきます。
+
+この記事は [https://adventar.org/calendars/5002 Mathematical Logic Advent Calendar 2020] の 5 日目の記事です。
 
 == precategory の定義 ==
 
@@ -93,4 +95,10 @@ precategory と strict category と category の性質を纏めてみます。
 | Yes
 |}
 
-ありがとうございました。
+== 最後に ==
+
+「調べただけの記事」という点で他の記事よりも劣ってしまっている本記事ですが、最後まで読んでいただいてありがとうございます。
+
+== 注釈 ==
+
+<references />
