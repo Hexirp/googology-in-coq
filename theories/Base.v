@@ -160,7 +160,7 @@ Definition trpt@{i j | } {A : Type@{i}} {B : A -> Type@{j}} {x y : A}
   : Path@{i} x y -> B x -> B y
   := fun p u => match p with idpath => u end.
 
-(** 道の輸送と逆です。 *)
+(** 道による輸送と逆です。 *)
 (* from: originally defined by Hexirp *)
 Definition trpv@{i j | } {A : Type@{i}} {B : A -> Type@{j}} {x y : A}
   : Path@{i} x y -> B y -> B x
