@@ -6,7 +6,7 @@ Homotopy Type Theory: Univalent Foundations of Mathematics の 307 ページ目�
 
 <blockquote><p>Ignoring size issues, in set-based mathematics a category consists of a ''set'' \( A _ 0 \) of objects and, for each \( x, y \in A _ 0 \), a ''set'' \( \mathrm{hom} _ A ( x, y ) \) of morphisms. Under univalent foundations, a “naive” definition of category would simply mimic this with a ''type'' of objects and ''types'' of morphisms. If we allowed these types to contain arbitary higher homotopy, then wee ought to impose higher coherence conditions, leading to some notion of \( ( \infty, 1 ) \)-category, but at preset our goal is more modest. We consider only 1-categories, and therefore we restrict the types \( \mathrm{hom} _ A ( x, y ) \) to be sets, i.e. \( 0 \)-types. If we impose no futher conditions, we will call this notion a ''precategory''.</p></blockquote>
 
-これで終わり……という訳にはいきませんよね。 precategory が何であるかというと、対象の型 \( A \) があり、 \( x, y : A \) に対する射の型 \( \mathrm{hom} _ A ( x, y ) \) があり、 \( A \) が \( 0 \)-truncated である構造です。
+これで終わり……という訳にはいきませんよね。 precategory が何であるかというと、対象の型 \( A \) があり、 \( x, y : A \) に対する射の型 \( \mathrm{hom} _ A ( x, y ) \) があり、恒等射があり、射の合成があり、それらが圏としての通常の法則を満たし、 \( A \) が \( 0 \)-truncated である構造です。
 
 == strict category の定義 ==
 
