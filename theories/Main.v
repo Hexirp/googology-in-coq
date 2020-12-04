@@ -20,49 +20,57 @@ Set Default Proof Mode "Classic".
 
 (** ** 汎用的な関数の定義 *)
 
-(** 道を使って輸送する対象の依存型が一重になっている trpt です。 *)
+(** [A] の道で、一重の依存型 [B x] を輸送する [trpt] です。 *)
 (* from: originally defined by Hexirp *)
-Definition trptN@{i j | }
+Definition trptD@{i j | }
   (A : Type@{i}) (B : A -> Type@{j})
   {x x' : A} (p : Path@{i} x x') (y : B x)
   : B x'
   := trpt p y.
 
-(** 道を使って輸送する対象の依存型が二重になっている trpt です。 *)
+(** [A] の道で、一重の依存型 [B x] と、二重の依存型 [C x y] を輸送する [trpt] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L741 *)
-Definition trptD@{i j k | }
+Definition trptDD@{i j k | }
   (A : Type@{i}) (B : A -> Type@{j}) (C : forall a : A, B a -> Type@{k})
   {x x' : A} (p : Path@{i} x x') (y : B x) (z : C x y)
-  : C x' (trptN A B p y)
+  : C x' (trptD A B p y)
   := match p with idpath => z end.
 
-(** 道を使って輸送する対象の依存型が三重になっている trpt です。 *)
+(** [A] の道で、一重の依存型 [B x] と、二重の依存型 [C x y] と、三重の依存型 [D x y z] を輸送する [trpt] です。 *)
 (* from: originally defined by Hexirp *)
-Definition trptDD@{i j k l | }
+Definition trptDDD@{i j k l | }
   (A : Type@{i}) (B : A -> Type@{j})
   (C : forall a : A, B a -> Type@{k})
   (D : forall (a : A) (b : B a), C a b -> Type@{l})
   {x x' : A} (p : Path@{i} x x') (y : B x) (z : C x y) (w : D x y z)
-  : D x' (trptN A B p y) (trptD A B C p y z)
+  : D x' (trptD A B p y) (trptDD A B C p y z)
   := match p with idpath => w end.
 
-(** 二段階目の依存型が一変数になっている trptD です。 *)
+(** [A] の道で、一重の依存型 [B x] を輸送する [trpt] です。 *)
 (* from: originally defined by Hexirp *)
-Definition trptD1@{i j k | }
+Definition trpt_N_D@{i j | }
+  (A : Type@{i}) (B : A -> Type@{j})
+  {x x' : A} (p : Path@{i} x x') (y : B x)
+  : B x'
+  := trptD A B p y.
+
+(** [A] の道で、一重の依存型 [B x] と、二重の依存型 [C x y] を輸送する [trpt] です。 *)
+(* from: originally defined by Hexirp *)
+Definition trpt_N_D_DD@{i j k | }
   {A : Type@{i}} {B : A -> Type@{j}} {C : forall a : A, B a -> Type@{k}}
   {x x' : A} (p : Path@{i} x x') (y : B x) (z : C x y)
-  : C x' (trptN A B p y)
-  := trptD A B C p y z.
+  : C x' (trptD A B p y)
+  := trptDD A B C p y z.
 
-(** 二段階目の依存型が二変数になっている trptD です。 *)
+(** [A] の道で、一重の依存型 [B0 x] と、一重の依存型 [B0 x] と、二重の依存型 [C x y0 y1] を輸送する [trpt] です。 *)
 (* i j k l や A B C D という風に連番として書かない理由は、 trptN, trptD, trptDD, ... という系列の型を表記する際に連番が既に使われているからです。 *)
 (* j と j' や B と B' という風にアポストロフィを加えて書かない理由は、 x と x' をという風に書く時は x と x' の間に道があるということを暗示しているため、この場合は使えないからです。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L747 *)
-Definition trptD2@{i j0 j1 k | }
+Definition trpt_N_D_D_DD@{i j0 j1 k | }
   {A : Type@{i}} {B0 : A -> Type@{j0}} {B1 : A -> Type@{j1}}
   {C : forall a : A, B0 a -> B1 a -> Type@{k}}
   {x x' : A} (p : Path@{i} x x') (y0 : B0 x) (y1 : B1 x) (z : C x y0 y1)
-  : C x' (trptN A B0 p y0) (trptN A B1 p y1)
+  : C x' (trptD A B0 p y0) (trptD A B1 p y1)
   := match p with idpath => z end.
 
 (** 依存型に対応する ap です。 *)
@@ -107,7 +115,7 @@ Definition ap00@{i j | } {A : Type@{i}} {B : Type@{j}}
 
 (** 依存関数の 0-道を値の 0-道に適用する関数です。 *)
 (* from: originally defined by Hexirp *)
-Definition ap0D0@{i j | } {A : Type@{i}} {B : A -> Type@{j}}
+Definition ap00_AN_BDA@{i j | } {A : Type@{i}} {B : A -> Type@{j}}
   (f : forall x : A, B x) (x : A) : B x
   := applyD f x.
 
@@ -125,7 +133,7 @@ Definition ap10@{i j mij | i <= mij, j <= mij} {A : Type@{i}} {B : Type@{j}}
 
 (** 依存関数の 1-道を値の 0-道に適用する関数です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/Overture.v#L411 *)
-Definition ap1D0@{i j mij | i <= mij, j <= mij}
+Definition ap10_AN_BDA@{i j mij | i <= mij, j <= mij}
   {A : Type@{i}} {B : A -> Type@{j}}
   {f f' : forall x : A, B x} (pff' : Path@{mij} f f') (x : A)
   : Path@{j} (f x) (f' x)
@@ -1497,24 +1505,24 @@ Proof.
   exact idpath.
 Defined.
 
-(** ap1D0_idpath_x です。 *)
+(** 'ap10_AN_BDA'_idpath_x です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L596 *)
-Definition ap1D0_1_x@{i j mij | i <= mij, j <= mij}
+Definition _'ap10_AN_BDA'_1_x@{i j mij | i <= mij, j <= mij}
   {A : Type@{i}} {B : A -> Type@{j}} (f : forall x : A, B x) (x : A)
-  : Path@{j} (ap1D0 (idpath@{mij} f) x) (idpath (f x)).
+  : Path@{j} (ap10_AN_BDA (idpath@{mij} f) x) (idpath (f x)).
 Proof.
   cbv.
   exact idpath.
 Defined.
 
-(** ap1D0_conc_p_q_x です。 *)
+(** 'ap10_AN_BDA'_conc_p_q_x です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L600 *)
-Definition ap1D0_cpq_x@{i j mij | i <= mij, j <= mij}
+Definition _'ap10_AN_BDA'_cpq_x@{i j mij | i <= mij, j <= mij}
   {A : Type@{i}} {B : A -> Type@{j}} {f f' f'' : forall x : A, B x}
   (pff' : Path@{mij} f f') (pf'f'' : Path@{mij} f' f'') (x : A)
   : Path@{j}
-    (ap1D0 (conc pff' pf'f'') x)
-    (conc (ap1D0 pff' x) (ap1D0 pf'f'' x)).
+    (ap10_AN_BDA (conc pff' pf'f'') x)
+    (conc (ap10_AN_BDA pff' x) (ap10_AN_BDA pf'f'' x)).
 Proof.
   refine (match pf'f'' with idpath => _ end).
   refine (match pff' with idpath => _ end).
@@ -1522,26 +1530,26 @@ Proof.
   exact idpath.
 Defined.
 
-(** ap1D0_inv_p_x です。 *)
+(** 'ap10_AN_BDA'_inv_p_x です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L607 *)
-Definition ap1D0_vp_x@{i j mij | i <= mij, j <= mij}
+Definition _'ap10_AN_BDA'_vp_x@{i j mij | i <= mij, j <= mij}
   {A : Type@{i}} {B : A -> Type@{j}} {f f' : forall x : A, B x}
   (pff' : Path@{mij} f f') (x : A)
-  : Path@{j} (ap1D0 (inv pff') x) (inv (ap1D0 pff' x)).
+  : Path@{j} (ap10_AN_BDA (inv pff') x) (inv (ap10_AN_BDA pff' x)).
 Proof.
   refine (match pff' with idpath => _ end).
   cbv.
   exact idpath.
 Defined.
 
-(** ap10_ap_lam_f_compNN_f_g_p_x です。 *)
+(** ap10_ap_lam_f_compNNN_f_g_p_x です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L629 *)
-Definition ap10_ap_lam_f_compNN_f_g_p_x
+Definition ap10_ap_lam_f_compNNN_f_g_p_x
   @{i j k mjk mik | j <= mjk, k <= mjk, i <= mik, k <= mik}
   {A : Type@{i}} {B : Type@{j}} {C : Type@{k}} {f f' : B -> C} {g : A -> B}
   (pff' : Path@{mjk} f f') (x : A)
   : Path@{k}
-    (ap10@{i k mik} (ap (fun f => compNN f g) pff') x)
+    (ap10@{i k mik} (ap (fun f => compNNN f g) pff') x)
     (ap10@{j k mjk} pff' (g x)).
 Proof.
   refine (match pff' with idpath => _ end).
@@ -1549,30 +1557,30 @@ Proof.
   exact idpath.
 Defined.
 
-(** ap1D0_ap_lam_f_compDN_f_g_p_x です。 *)
+(** 'ap10_AN_BDA'_ap_lam_f_compNND_f_g_p_x です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L623 *)
-Definition ap1D0_ap_lam_f_compDN_f_g_p_x
+Definition _'ap10_AN_BDA'_ap_lam_f_compNND_f_g_p_x
   @{i j k mjk mik | j <= mjk, k <= mjk, i <= mik, k <= mik}
   {A : Type@{i}} {B : Type@{j}} {C : B -> Type@{k}}
   {f f' : forall x : B, C x} {g : A -> B}
   (pff' : Path@{mjk} f f') (x : A)
   : Path@{k}
-    (ap1D0@{i k mik} (ap (fun f => compDN f g) pff') x)
-    (ap1D0@{j k mjk} pff' (g x)).
+    (ap10_AN_BDA@{i k mik} (ap (fun f => compNND f g) pff') x)
+    (ap10_AN_BDA@{j k mjk} pff' (g x)).
 Proof.
   refine (match pff' with idpath => _ end).
   cbv.
   exact idpath.
 Defined.
 
-(** ap10_ap_lam_g_compNN_f_g_p_x です。 *)
+(** ap10_ap_lam_g_compNNN_f_g_p_x です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L639 *)
 Definition ap10_ap_lam_g_compNN_f_g_p_x
   @{i j k mij mik | i <= mij, j <= mij, i <= mik, k <= mik}
   {A : Type@{i}} {B : Type@{j}} {C : Type@{k}} {f : B -> C} {g g' : A -> B}
   (pgg' : Path@{mij} g g') (x : A)
   : Path@{k}
-    (ap10@{i k mik} (ap (fun g => compNN f g) pgg') x)
+    (ap10@{i k mik} (ap (fun g => compNNN f g) pgg') x)
     (ap f (ap10@{i j mij} pgg' x)).
 Proof.
   refine (match pgg' with idpath => _ end).
@@ -1580,16 +1588,16 @@ Proof.
   exact idpath.
 Defined.
 
-(** ap1D0_ap_lam_g_compND_f_g_p_x です。 *)
+(** 'ap10_AN_BDA'_ap_lam_g_compNDN_f_g_p_x です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L633 *)
-Definition ap1D0_ap_lam_g_compND_f_g_p_x
+Definition _'ap10_AN_BDA'_ap_lam_g_compND_f_g_p_x
   @{i j k mij mik | i <= mij, j <= mij, i <= mik, k <= mik}
   {A : Type@{i}} {B : A -> Type@{j}} {C : Type@{k}}
   {f : forall x : A, B x -> C} {g g' : forall x : A, B x}
   (pgg' : Path@{mij} g g') (x : A)
   : Path@{k}
-    (ap1D0@{i k mik} (ap (fun g => compND f g) pgg') x)
-    (ap (f x) (ap1D0@{i j mij} pgg' x)).
+    (ap10_AN_BDA@{i k mik} (ap (fun g => compNDN f g) pgg') x)
+    (ap (f x) (ap10_AN_BDA@{i j mij} pgg' x)).
 Proof.
   refine (match pgg' with idpath => _ end).
   cbv.
