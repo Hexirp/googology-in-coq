@@ -978,7 +978,7 @@ Proof.
   exact idpath.
 Defined.
 
-(** *** 関手 *)
+(** *** 道の亜群での関数の関手性 *)
 
 (** ap_f_idpath です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L367 *)
