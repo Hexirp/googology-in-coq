@@ -188,6 +188,16 @@ Definition ap011_AN_BDA_CN@{i j k | }
   : Path@{k} (f x y) (f x' y')
   := match pyy' with idpath => match pxx' with idpath => idpath end end.
 
+(** 非依存型 [A] と依存型 [B a] から依存型 [C a] への関数の 0-道を、非依存型 [A] の値の 1-道と依存型 [B a] の値の 1-道に適用する関数です。 *)
+(* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L771 *)
+Definition ap011_AN_BDA_CDA@{i j k | }
+  {A : Type@{i}} {B : A -> Type@{j}} {C : A -> Type@{k}}
+  (f : forall a : A, B a -> C a)
+  {x x' : A} (pxx' : Path@{i} x x')
+  {y : B x} {y' : B x'} (pyy' : Path@{j} (trpt pxx' y) y')
+  : Path@{k} (trptD A C pxx' (f x y)) (f x' y')
+  := match pyy' with idpath => match pxx' with idpath => idpath end end.
+
 (** ** 1-次元の亜群構造 *)
 
 (** conc_p_idpath です。 *)
