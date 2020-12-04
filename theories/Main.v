@@ -1719,6 +1719,7 @@ Proof.
   exact idpath.
 Defined.
 
+(** trpt_conc_p_conc_q_r_u_Path_L_R を定義するためのセクションです。 *)
 Section trpt_conc_p_conc_q_r_u_Path_L_R.
   Universe i j.
 
