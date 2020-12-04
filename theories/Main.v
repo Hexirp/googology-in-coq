@@ -134,12 +134,12 @@ Definition ap11@{i j mij | i <= mij, j <= mij} {A : Type@{i}} {B : Type@{j}}
 
 (** 二変数関数の 0-道を値の 1-道と 1-道に適用する関数です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L755 *)
-Definition ap011@{i i' j | }
-  {A : Type@{i}} {A' : Type@{i'}} {B : Type@{j}}
-  (f : A -> A' -> B)
+Definition ap011@{i j k | }
+  {A : Type@{i}} {B : Type@{j}} {C : Type@{k}}
+  (f : A -> B -> C)
   {x x' : A} (pxx' : Path@{i} x x')
-  {y y' : A'} (pyy' : Path@{i'} y y')
-  : Path@{j} (f x y) (f x' y')
+  {y y' : B} (pyy' : Path@{j} y y')
+  : Path@{k} (f x y) (f x' y')
   := match pyy' with idpath => match pxx' with idpath => idpath end end.
 
 (** 非依存型 [A] から非依存型 [B] への関数の 0-道を、非依存型 [A] の値の 0-道に適用する関数です。 *)
