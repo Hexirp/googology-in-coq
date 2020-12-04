@@ -168,6 +168,16 @@ Definition ap10_AN_BDA@{i j mij | i <= mij, j <= mij}
   : Path@{j} (f x) (f' x)
   := match pff' with idpath => idpath end.
 
+(** 非依存型 [A] と非依存型 [B] から非依存型 [C] への関数の 0-道を、非依存型 [A] の値の 0-道と非依存型 [B] の値の 0-道に適用する関数です。 *)
+(* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L755 *)
+Definition ap011_AN_BN_CN@{i j k | }
+  {A : Type@{i}} {B : Type@{j}} {C : Type@{k}}
+  (f : A -> B -> C)
+  {x x' : A} (pxx' : Path@{i} x x')
+  {y y' : B} (pyy' : Path@{j} y y')
+  : Path@{k} (f x y) (f x' y')
+  := match pyy' with idpath => match pxx' with idpath => idpath end end.
+
 (** ** 1-次元の亜群構造 *)
 
 (** conc_p_idpath です。 *)
