@@ -33,7 +33,7 @@ precategory と strict category と category の性質を纏めてみます。
 ! \( 0 \)-射は \( n \)-truncated であるか？
 | \( \infty \)
 | \( 0 \)
-| \( 1 \)
+| \( 1 \)<ref>Homotopy Type Theory: Univalent Foundations of Mathematics の Lemma 9.1.8 より。</ref>
 |-
 ! \( 1 \)-射は \( n \)-truncated であるか？
 | \( 0 \)
