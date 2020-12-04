@@ -99,6 +99,18 @@ Definition ap3@{i j k l | }
   : Path@{l} (f x y z) (f x' y' z')
   := match p with idpath => ap2 (f x) q r end.
 
+(** 関数の 0-道を値の 0-道に適用する関数です。 *)
+(* from: originally defined by Hexirp *)
+Definition ap00@{i j | } {A : Type@{i}} {B : Type@{j}}
+  (f : A -> B) (x : A) : B
+  := apply f x.
+
+(** 依存関数の 0-道を値の 0-道に適用する関数です。 *)
+(* from: originally defined by Hexirp *)
+Definition ap0D0@{i j | } {A : Type@{i}} {B : A -> Type@{j}}
+  (f : forall x : A, B x) (x : A) : B x
+  := applyD f x.
+
 (** 関数の 0-道を値の 1-道に適用する関数です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/Overture.v#L374 *)
 Definition ap01@{i j | } {A : Type@{i}} {B : Type@{j}}
