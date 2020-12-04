@@ -130,7 +130,7 @@ Definition curry@{i j k | } {A : Type@{i}} {B : Type@{j}} {C : Type@{k}}
   : (Prod@{i j} A B -> C) -> A -> B -> C
   := fun f x y => f (pair x y).
 
-(** 関数の逆カリー化です。 *)
+(** 関数の非カリー化です。 *)
 (* from: originally defined by Hexirp *)
 Definition uncurry@{i j k | } {A : Type@{i}} {B : Type@{j}} {C : Type@{k}}
   : (A -> B -> C) -> Prod@{i j} A B -> C
