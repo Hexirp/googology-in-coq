@@ -51,19 +51,19 @@ Definition compNNN@{i j k | }
   : (B -> C) -> (A -> B) -> A -> C
   := comp.
 
-(** 依存型 [B a] から非依存型 [C] への関数と、非依存型 [A] から依存型 [B a] への関数の合成です。 *)
-(* from: originally defined by Hexirp *)
-Definition compNDN@{i j k | }
-  {A : Type@{i}} {B : A -> Type@{j}} {C : Type@{k}}
-  : (forall a : A, B a -> C) -> (forall a : A, B a) -> A -> C
-  := fun f g x => f x (g x).
-
 (** 非依存型 [B] から依存型 [C b] への関数と、非依存型 [A] から非依存型 [B] への関数の合成です。 *)
 (* from: originally defined by Hexirp *)
 Definition compNND@{i j k | }
   {A : Type@{i}} {B : Type@{j}} {C : B -> Type@{k}}
   : (forall b : B, C b) -> forall (g : A -> B) (a : A), C (g a)
   := compD.
+
+(** 依存型 [B a] から非依存型 [C] への関数と、非依存型 [A] から依存型 [B a] への関数の合成です。 *)
+(* from: originally defined by Hexirp *)
+Definition compNDN@{i j k | }
+  {A : Type@{i}} {B : A -> Type@{j}} {C : Type@{k}}
+  : (forall a : A, B a -> C) -> (forall a : A, B a) -> A -> C
+  := fun f g x => f x (g x).
 
 (** 依存型 [B a] から依存型 [C a b] への関数と、非依存型 [A] から依存型 [B a] への関数の合成です。 *)
 (* from: originally defined by Hexirp *)
