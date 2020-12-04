@@ -142,13 +142,25 @@ Definition ap011@{i i' j | }
   : Path@{j} (f x y) (f x' y')
   := match pyy' with idpath => match pxx' with idpath => idpath end end.
 
-(** 依存関数の 0-道を値の 0-道に適用する関数です。 *)
+(** 非依存型 [A] から非依存型 [B] への関数の 0-道を、非依存型 [A] の値の 0-道に適用する関数です。 *)
+(* from: originally defined by Hexirp *)
+Definition ap00_AN_BN@{i j | } {A : Type@{i}} {B : Type@{j}}
+  (f : A -> B) (x : A) : B
+  := ap00 f x.
+
+(** 非依存型 [A] から依存型 [B a] への関数の 0-道を、非依存型 [A] の値の 0-道に適用する関数です。 *)
 (* from: originally defined by Hexirp *)
 Definition ap00_AN_BDA@{i j | } {A : Type@{i}} {B : A -> Type@{j}}
   (f : forall x : A, B x) (x : A) : B x
   := applyD f x.
 
-(** 依存関数の 1-道を値の 0-道に適用する関数です。 *)
+(** 非依存型 [A] から非依存型 [B] への関数の 1-道を、非依存型 [A] の値の 0-道に適用する関数です。 *)
+(* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/Overture.v#L417 *)
+Definition ap10_AN_BN@{i j mij | i <= mij, j <= mij} {A : Type@{i}} {B : Type@{j}}
+  {f f' : A -> B} (pff' : Path@{mij} f f') (x : A) : Path@{j} (f x) (f' x)
+  := match pff' with idpath => idpath end.
+
+(** 非依存型 [A] から依存型 [B a] への関数の 1-道を、非依存型 [A] の値の 0-道に適用する関数です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/Overture.v#L411 *)
 Definition ap10_AN_BDA@{i j mij | i <= mij, j <= mij}
   {A : Type@{i}} {B : A -> Type@{j}}
