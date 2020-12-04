@@ -73,6 +73,32 @@ Definition trpt_N_D_D_DD@{i j0 j1 k | }
   : C x' (trptD A B0 p y0) (trptD A B1 p y1)
   := match p with idpath => z end.
 
+(** [A] の 1-道で、依存型 [B x] を輸送する [trpt] です。 *)
+(* from: originally defined by Hexirp *)
+Definition trpt1@{i j | }
+  (A : Type@{i}) (B : A -> Type@{j})
+  {x x' : A} (p : Path@{i} x x') (y : B x)
+  : B x'
+  := trpt p y.
+
+(** [A] の 2-道で、依存型 [B x] を輸送する [trpt] です。 *)
+(* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L787 *)
+Definition trpt2@{i j | }
+  (A : Type@{i}) (B : A -> Type@{j})
+  {x x' : A} {p p' : Path@{i} x x'} (q : Path@{i} p p')
+  (y : B x)
+  : Path@{j} (trpt1 A B p y) (trpt1 A B p' y)
+  := ap (fun p => trpt1 A B p y) q.
+
+(** [A] の 3-道で、依存型 [B x] を輸送する [trpt] です。 *)
+(* from: originally defined by Hexirp *)
+Definition trpt3@{i j | }
+  (A : Type@{i}) (B : A -> Type@{j})
+  {x x' : A} {p p' : Path@{i} x x'} {q q' : Path@{i} p p'} (r : Path@{i} q q')
+  (y : B x)
+  : Path@{j} (trpt2 A B q y) (trpt2 A B q' y)
+  := ap (fun p => trpt2 A B p y) r.
+
 (** 依存型に対応する ap です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/Overture.v#L439 *)
 Definition apD@{i j | }
