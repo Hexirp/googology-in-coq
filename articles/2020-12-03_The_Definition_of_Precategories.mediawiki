@@ -20,7 +20,7 @@ precategory において、 \( x \) と \( y \) が isomorphism であるとい�
 
 The n-Category Cafe の Category Theory in Homotopy Type Theory という記事では、同じ概念が saturated category または univalent category と呼ばれており、 precategory という名前は strict category と saturated category の元になるという意味の名前であることが書かれています。
 
-== まとめ ==
+== 性質 ==
 
 precategory と strict category と category の性質を纏めてみます。
 
@@ -94,6 +94,103 @@ precategory と strict category と category の性質を纏めてみます。
 | Yes
 | Yes
 |}
+
+== 具体的な例 ==
+
+例えば、自然数の型 \( \mathrm{Nat} \) と、その上の等しさ \( \_ = _ \mathrm{Nat} \_ \) を考えてみましょう。この時、次の事実が成り立ちます。
+
+# \( \mathrm{Nat} \) は \( 0 \)-truncated である。
+# 任意の \( x, y : \mathrm{Nat} \) に対して \( x = _ \mathrm{Nat} y \) は \( ( - 1 ) \)-truncated である。
+
+これは、任意の \( p, q : x = _ \mathrm{Nat} y \) に対して \( p = _ { x = _ \mathrm{Nat} y } q \) であることを導きます。そのため、射の合成に関する条件は自明に成り立ちます。
+
+よって、 \( ( \mathrm{Nat}, \_ = _ \mathrm{Nat} \_ ) \) は precategory と strict category です。さらに、 \( \mathsf{iso} ( x, y ) \to x = _ \mathrm{Nat} y \) であることが容易に分かり、両方の型が \( ( -1 ) \)-truncated となることから、これは equivalence となり、件の圏は saturated category でもあります。
+
+{|
+!
+! precategory
+! strict category
+! category
+! \( ( \mathrm{Nat}, \_ = _ \mathrm{Nat} \_ ) \)
+|-
+! \( 0 \)-射は \( n \)-truncated であるか？
+| \( \infty \)
+| \( 0 \)
+| \( 1 \)
+| \( 0 \)
+|-
+! \( 1 \)-射は \( n \)-truncated であるか？
+| \( 0 \)
+| \( 0 \)
+| \( 0 \)
+| \( -1 \)
+|-
+! \( 2 \)-射は \( n \)-truncated であるか？
+| \( -1 \)
+| \( -1 \)
+| \( -1 \)
+| \( -2 \)
+|-
+! \( 3 \)-射は \( n \)-truncated であるか？
+| \( -2 \)
+| \( -2 \)
+| \( -2 \)
+| \( -2 \)
+|}
+
+{|
+!
+! precategory
+! strict category
+! category
+! \( ( \mathrm{Nat}, \_ = _ \mathrm{Nat} \_ ) \)
+|-
+! \( 1 \)-射は可逆であるか？
+| No
+| No
+| No
+| Yes
+|-
+! \( 2 \)-射は可逆であるか？
+| Yes
+| Yes
+| Yes
+| Yes
+|-
+! \( 3 \)-射は可逆であるか？
+| Yes
+| Yes
+| Yes
+| Yes
+|}
+
+{|
+!
+! precategory
+! strict category
+! category
+! \( ( \mathrm{Nat}, \_ = _ \mathrm{Nat} \_ ) \)
+|-
+! \( 1 \)-射は自明であるか？
+| No
+| No
+| No
+| Yes
+|-
+! \( 2 \)-射は自明であるか？
+| Yes
+| Yes
+| Yes
+| Yes
+|-
+! \( 3 \)-射は自明であるか？
+| Yes
+| Yes
+| Yes
+| Yes
+|}
+
+このことから、 \( \mathrm{Hom} ( x, y ) \) が \( ( -1 ) \)-truncated であると、とても都合が良いことが分かります。そのような射の一例として、ある関数 \( f : A \to A \to \mathrm{Bool} \) が存在して、射の定義が \( \mathrm{Hom} ( x, y ) = ( f ( x, y ) = \mathrm{true} ) \) となるようなものがあります。これは SSReflect の Homotopy Type Theory から見た有用性の一つになるでしょう。
 
 == 最後に ==
 
