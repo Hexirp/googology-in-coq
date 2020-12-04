@@ -164,7 +164,7 @@ Definition ap10_AN_BN@{i j mij | i <= mij, j <= mij} {A : Type@{i}} {B : Type@{j
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/Overture.v#L411 *)
 Definition ap10_AN_BDA@{i j mij | i <= mij, j <= mij}
   {A : Type@{i}} {B : A -> Type@{j}}
-  {f f' : forall x : A, B x} (pff' : Path@{mij} f f') (x : A)
+  {f f' : forall a : A, B a} (pff' : Path@{mij} f f') (x : A)
   : Path@{j} (f x) (f' x)
   := match pff' with idpath => idpath end.
 
