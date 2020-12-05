@@ -8,7 +8,11 @@
  *)
 
 (** 必要なライブラリをインポートします。 *)
-Require Import GiC.Base GiC.Path.Base GiC.Path.OneDim GiC.Path.Transposition.
+Require Import GiC.Base.
+Require Import GiC.Path.Base.
+Require Import GiC.Path.Function.
+Require Import GiC.Path.OneDim.
+Require Import GiC.Path.Transposition.
 
 (** 帰納原理 (induction principle) を生成しないように設定します。 *)
 Unset Elimination Schemes.
