@@ -1,14 +1,37 @@
-# 左に行くほど単純な内容であり、
-# 右に行くほど複雑な内容である。
-# 下に行くほど基本的なテーマを取り扱っていて、
-# 上に行くほど応用的なテーマを取り扱っている。
-# neato を使用する。そうしないと pos と pin 属性が上手く働かない。
-
 digraph G {
   # GiC.Base
-  "GiC.Base" [pos = "0,0", pin = true];
 
   # GiC.Function
   "GiC.Function" -> "GiC.Base";
-  "GiC.Function" [pos = "2,2", pin = true];
+
+  # GiC.Path.Base
+  "GiC.Path.Base" -> "GiC.Base";
+
+  # GiC.Path.Function
+  "GiC.Path.Function" -> "GiC.Base";
+  "GiC.Path.Function" -> "GiC.Function";
+  "GiC.Path.Function" -> "GiC.Path.Base";
+
+  # GiC.Path.OneDim
+  "GiC.Path.OneDim" -> "GiC.Base";
+
+  # GiC.Path.Transposition
+  "GiC.Path.Transposition" -> "GiC.Base";
+  "GiC.Path.Transposition" -> "GiC.Path.Base";
+  "GiC.Path.Transposition" -> "GiC.Path.OneDim";
+
+  # GiC.Path.Functoriality
+  "GiC.Path.Functoriality" -> "GiC.Base";
+  "GiC.Path.Functoriality" -> "GiC.Path.Base";
+  "GiC.Path.Functoriality" -> "GiC.Path.OneDim";
+  "GiC.Path.Functoriality" -> "GiC.Path.Transposition";
+
+  # GiC.Path.Application_1_0
+  "GiC.Path.Application_1_0" -> "GiC.Base";
+  "GiC.Path.Application_1_0" -> "GiC.Function";
+  "GiC.Path.Application_1_0" -> "GiC.Path.Base";
+
+  # GiC.Path.Application_1_1
+  "GiC.Path.Application_1_1" -> "GiC.Base";
+  "GiC.Path.Application_1_1" -> "GiC.Path.Base";
 }
