@@ -9,4 +9,5 @@
   theories/Path/OneDim.v \
   theories/Path/Transposition.v \
   theories/Path/Functoriality.v \
+  theories/Path/Application_1_0.v \
   theories/Main.v

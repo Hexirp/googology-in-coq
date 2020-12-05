@@ -13,4 +13,6 @@
 ./coqc.sh -nois -verbose -R theories/ GiC \
   theories/Path/Functoriality.v
 ./coqc.sh -nois -verbose -R theories/ GiC \
+  theories/Path/Application_1_0.v
+./coqc.sh -nois -verbose -R theories/ GiC \
   theories/Main.v
