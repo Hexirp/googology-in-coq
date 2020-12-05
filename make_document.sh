@@ -5,4 +5,5 @@
   theories/Base.v \
   theories/Function.v \
   theories/Path/Base.v \
+  theories/Path/OneDim.v \
   theories/Main.v
