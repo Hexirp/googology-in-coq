@@ -354,24 +354,24 @@ Proof.
   exact idpath.
 Defined.
 
-(** 'ap10_AN_BDA'_idpath_x です。 *)
+(** ap10D_idpath_x です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L596 *)
-Definition _'ap10_AN_BDA'_1_x@{i j mij | i <= mij, j <= mij}
+Definition ap10D_1_x@{i j mij | i <= mij, j <= mij}
   {A : Type@{i}} {B : A -> Type@{j}} (f : forall x : A, B x) (x : A)
-  : Path@{j} (ap10_AN_BDA (idpath@{mij} f) x) (idpath (f x)).
+  : Path@{j} (ap10D (idpath@{mij} f) x) (idpath (f x)).
 Proof.
   cbv.
   exact idpath.
 Defined.
 
-(** 'ap10_AN_BDA'_conc_p_q_x です。 *)
+(** ap10D_conc_p_q_x です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L600 *)
-Definition _'ap10_AN_BDA'_cpq_x@{i j mij | i <= mij, j <= mij}
+Definition ap10D_cpq_x@{i j mij | i <= mij, j <= mij}
   {A : Type@{i}} {B : A -> Type@{j}} {f f' f'' : forall x : A, B x}
   (pff' : Path@{mij} f f') (pf'f'' : Path@{mij} f' f'') (x : A)
   : Path@{j}
-    (ap10_AN_BDA (conc pff' pf'f'') x)
-    (conc (ap10_AN_BDA pff' x) (ap10_AN_BDA pf'f'' x)).
+    (ap10D (conc pff' pf'f'') x)
+    (conc (ap10D pff' x) (ap10D pf'f'' x)).
 Proof.
   refine (match pf'f'' with idpath => _ end).
   refine (match pff' with idpath => _ end).
@@ -379,12 +379,12 @@ Proof.
   exact idpath.
 Defined.
 
-(** 'ap10_AN_BDA'_inv_p_x です。 *)
+(** ap10D_inv_p_x です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L607 *)
-Definition _'ap10_AN_BDA'_vp_x@{i j mij | i <= mij, j <= mij}
+Definition _ap10D_vp_x@{i j mij | i <= mij, j <= mij}
   {A : Type@{i}} {B : A -> Type@{j}} {f f' : forall x : A, B x}
   (pff' : Path@{mij} f f') (x : A)
-  : Path@{j} (ap10_AN_BDA (inv pff') x) (inv (ap10_AN_BDA pff' x)).
+  : Path@{j} (ap10D (inv pff') x) (inv (ap10D pff' x)).
 Proof.
   refine (match pff' with idpath => _ end).
   cbv.
@@ -406,16 +406,16 @@ Proof.
   exact idpath.
 Defined.
 
-(** 'ap10_AN_BDA'_ap_lam_f_compNND_f_g_p_x です。 *)
+(** ap10D_ap_lam_f_compNND_f_g_p_x です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L623 *)
-Definition _'ap10_AN_BDA'_ap_lam_f_compNND_f_g_p_x
+Definition ap10D_ap_lam_f_compNND_f_g_p_x
   @{i j k mjk mik | j <= mjk, k <= mjk, i <= mik, k <= mik}
   {A : Type@{i}} {B : Type@{j}} {C : B -> Type@{k}}
   {f f' : forall x : B, C x} {g : A -> B}
   (pff' : Path@{mjk} f f') (x : A)
   : Path@{k}
-    (ap10_AN_BDA@{i k mik} (ap (fun f => compNND f g) pff') x)
-    (ap10_AN_BDA@{j k mjk} pff' (g x)).
+    (ap10D@{i k mik} (ap (fun f => compNND f g) pff') x)
+    (ap10D@{j k mjk} pff' (g x)).
 Proof.
   refine (match pff' with idpath => _ end).
   cbv.
@@ -437,16 +437,16 @@ Proof.
   exact idpath.
 Defined.
 
-(** 'ap10_AN_BDA'_ap_lam_g_compNDN_f_g_p_x です。 *)
+(** ap10D_ap_lam_g_compNDN_f_g_p_x です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L633 *)
-Definition _'ap10_AN_BDA'_ap_lam_g_compND_f_g_p_x
+Definition ap10D_ap_lam_g_compND_f_g_p_x
   @{i j k mij mik | i <= mij, j <= mij, i <= mik, k <= mik}
   {A : Type@{i}} {B : A -> Type@{j}} {C : Type@{k}}
   {f : forall x : A, B x -> C} {g g' : forall x : A, B x}
   (pgg' : Path@{mij} g g') (x : A)
   : Path@{k}
-    (ap10_AN_BDA@{i k mik} (ap (fun g => compNDN f g) pgg') x)
-    (ap (f x) (ap10_AN_BDA@{i j mij} pgg' x)).
+    (ap10D@{i k mik} (ap (fun g => compNDN f g) pgg') x)
+    (ap (f x) (ap10D@{i j mij} pgg' x)).
 Proof.
   refine (match pgg' with idpath => _ end).
   cbv.
