@@ -15,4 +15,6 @@
 ./coqc.sh -nois -verbose -R theories/ GiC \
   theories/Path/Application_1_0.v
 ./coqc.sh -nois -verbose -R theories/ GiC \
+  theories/Path/Application_1_1.v
+./coqc.sh -nois -verbose -R theories/ GiC \
   theories/Main.v
