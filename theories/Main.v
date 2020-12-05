@@ -1766,6 +1766,19 @@ Proof.
   exact idpath.
 Defined.
 
+(** trpt2_A_B_inv_q_y です。 *)
+(* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L805 *)
+Definition trpt2_A_B_vq_y@{i j | }
+  {A : Type@{i}} (B : A -> Type@{j})
+  {x x' : A} {p p' : Path@{i} x x'} (q : Path@{i} p p')
+  (y : B x)
+  : Path@{j} (trpt2 A B (inv q) y) (inv (trpt2 A B q y)).
+Proof.
+  refine (match q with idpath => _ end).
+  cbv.
+  exact idpath.
+Defined.
+
 (** *** [ap10] についての定理 *)
 
 (** ap10_idpath_x です。 *)
