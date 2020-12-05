@@ -1815,6 +1815,22 @@ Proof.
   exact idpath.
 Defined.
 
+(** f_x'_trptD_A_B_p_y_trptDD_A_B_C0_p_y_z です。 *)
+(* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L823 *)
+Definition f_x'_trptD_A_B_p_y_trptDD_A_B_C0_p_y_z@{i j k0 k1 | }
+  (A : Type@{i}) (B : A -> Type@{j})
+  (C0 : forall a : A, B a -> Type@{k0}) (C1 : forall a : A, B a -> Type@{k1})
+  (f : forall (a : A) (b : B a), C0 a b -> C1 a b)
+  {x x' : A} (p : Path@{i} x x') (y : B x) (z : C0 x y)
+  : Path@{k1}
+    (f x' (trptD A B p y) (trptDD A B C0 p y z))
+    (trptDD A B C1 p y (f x y z)).
+Proof.
+  refine (match p with idpath => _ end).
+  cbv.
+  exact idpath.
+Defined.
+
 (** *** [ap10] についての定理 *)
 
 (** ap10_idpath_x です。 *)
