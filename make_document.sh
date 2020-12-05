@@ -7,4 +7,5 @@
   theories/Path/Base.v \
   theories/Path/OneDim.v \
   theories/Path/Transposition.v \
+  theories/Path/Functoriality.v \
   theories/Main.v
