@@ -18,6 +18,11 @@ Set Printing Universes.
 (** タクティックが使用できるように設定します。 *)
 Set Default Proof Mode "Classic".
 
+(** ** 汎用的なタクティックの定義 *)
+
+(** refine_conc t は Path x y -| Path x t, Path t y です。 *)
+Ltac refine_conc t := refine (@GiC.Base.conc@{_} _ _ t _ _ _).
+
 (** ** 汎用的な関数の定義 *)
 
 (** [A] の道で、一重の依存型 [B x] を輸送する [trpt] です。 *)
@@ -385,11 +390,11 @@ Proof.
   end).
 
   move=> p' path_p'_cv1q.
-  refine (conc _ (_ : Path@{i} p' _)).
+  refine_conc p'.
   -
     exact (conc_1_p p').
   -
-  refine (conc _ (_ : Path@{i} (conc (inv idpath) q) _)).
+  refine_conc (conc (inv idpath) q).
   +
     exact path_p'_cv1q.
   +
@@ -414,11 +419,11 @@ Proof.
   end).
 
   move=> q' path_r_cq'v1.
-  refine (conc _ (_ : Path@{i} r _)).
+  refine_conc r.
   -
     exact (conc_p_1 r).
   -
-  refine (conc _ (_ : Path@{i} (conc q' (inv idpath)) _)).
+  refine_conc (conc q' (inv idpath)).
   +
     exact path_r_cq'v1.
   +
@@ -443,12 +448,12 @@ Proof.
   end).
 
   move=> q' path_p_c1q'.
-  refine (conc _ (_ : Path@{i} p _)).
+  refine_conc p.
   -
     simpl inv.
     exact (conc_1_p p).
   -
-  refine (conc _ (_ : Path@{i} (conc idpath q') _)).
+  refine_conc (conc idpath q').
   +
     exact path_p_c1q'.
   +
@@ -472,12 +477,12 @@ Proof.
   end).
 
   move=> r' path_r'_cq1.
-  refine (conc _ (_ : Path@{i} r' _)).
+  refine_conc r'.
   -
     simpl inv.
     exact (conc_p_1 r').
   -
-  refine (conc _ (_ : Path@{i} (conc q idpath) _)).
+  refine_conc (conc q idpath).
   +
     exact path_r'_cq1.
   +
@@ -501,12 +506,12 @@ Proof.
   end).
 
   move=> p' path_cv1q_p'.
-  refine (conc _ (_ : Path@{i} (conc (inv idpath) q) _)).
+  refine_conc (conc (inv idpath) q).
   -
     simpl inv.
     exact (inv (conc_1_p q)).
   -
-  refine (conc _ (_ : Path@{i} p' _)).
+  refine_conc p'.
   +
     exact path_cv1q_p'.
   +
@@ -530,12 +535,12 @@ Proof.
   end).
 
   move=> q' path_cq'v1_r.
-  refine (conc _ (_ : Path@{i} (conc q' (inv idpath)) _)).
+  refine_conc (conc q' (inv idpath)).
   -
     simpl inv.
     exact (inv (conc_1_p q')).
   -
-  refine (conc _ (_ : Path@{i} r _)).
+  refine_conc r.
   +
     exact path_cq'v1_r.
   +
@@ -559,11 +564,11 @@ Proof.
   end).
 
   move=> q' path_c1q'_p.
-  refine (conc _ (_ : Path@{i} (conc idpath q') _)).
+  refine_conc (conc idpath q').
   -
     exact (inv (conc_1_p q')).
   -
-  refine (conc _ (_ : Path@{i} p _)).
+  refine_conc p.
   +
     exact path_c1q'_p.
   +
@@ -588,11 +593,11 @@ Proof.
   end).
 
   move=> r' path_cq1_r'.
-  refine (conc _ (_ : Path@{i} (conc q idpath) _)).
+  refine_conc (conc q idpath).
   -
     exact (inv (conc_p_1 q)).
   -
-  refine (conc _ (_ : Path@{i} r' _)).
+  refine_conc r'.
   +
     exact path_cq1_r'.
   +
@@ -617,7 +622,7 @@ Proof.
   end).
 
   move=> p' path_cp'v1_1.
-  refine (conc _ (_ : Path@{i} (conc p' (inv idpath)) _)).
+  refine_conc (conc p' (inv idpath)).
   -
     simpl inv.
     exact (inv (conc_p_1 p')).
@@ -642,7 +647,7 @@ Proof.
   end).
 
   move=> p' path_cv1p'_1.
-  refine (conc _ (_ : Path@{i} (conc (inv idpath) p') _)).
+  refine_conc (conc (inv idpath) p').
   -
     simpl inv.
     exact (inv (conc_1_p p')).
@@ -667,7 +672,7 @@ Proof.
   end).
 
   move=> p' path_cp'1_1.
-  refine (conc _ (_ : Path@{i} (conc p' idpath) _)).
+  refine_conc (conc p' idpath).
   -
     exact (inv (conc_p_1 p')).
   -
@@ -692,7 +697,7 @@ Proof.
   end).
 
   move=> p' path_c1p'_1.
-  refine (conc _ (_ : Path@{i} (conc idpath p') _)).
+  refine_conc (conc idpath p').
   -
     exact (inv (conc_1_p p')).
   -
@@ -717,7 +722,7 @@ Proof.
   end).
 
   move=> q' path_1_cv1q'.
-  refine (conc _ (_ : Path@{i} (conc (inv idpath) q') _)).
+  refine_conc (conc (inv idpath) q').
   -
     exact path_1_cv1q'.
   -
@@ -742,7 +747,7 @@ Proof.
   end).
 
   move=> q' path_1_cq'v1.
-  refine (conc _ (_ : Path@{i} (conc q' (inv idpath)) _)).
+  refine_conc (conc q' (inv idpath)).
   -
     exact path_1_cq'v1.
   -
@@ -767,7 +772,7 @@ Proof.
   end).
 
   move=> q' path_1_cq'1.
-  refine (conc _ (_ : Path@{i} (conc q' idpath) _)).
+  refine_conc (conc q' idpath).
   -
     simpl inv.
     exact path_1_cq'1.
@@ -792,7 +797,7 @@ Proof.
   end).
 
   move=> q' path_1_c1q'.
-  refine (conc _ (_ : Path@{i} (conc idpath q') _)).
+  refine_conc (conc idpath q').
   -
     simpl inv.
     exact path_1_c1q'.
@@ -1181,7 +1186,7 @@ Proof.
   move=> q.
   refine (match q with idpath => _ end).
   simpl ap.
-  refine (conc _ (_ : Path@{j} (p x) _)).
+  refine_conc (p x).
   -
     exact (conc_1_p (p x)).
   -
@@ -1212,7 +1217,7 @@ Proof.
   move=> q.
   refine (match q with idpath => _ end).
   simpl ap.
-  refine (conc _ (_ : Path@{j} (p x) _)).
+  refine_conc (p x).
   -
     exact (conc_1_p (p x)).
   -
@@ -1241,7 +1246,7 @@ Proof.
   move=> q.
   refine (match q with idpath => _ end).
   simpl ap.
-  refine (conc _ (_ : Path@{i} (p x) _)).
+  refine_conc (p x).
   -
     exact (conc_1_p (p x)).
   -
@@ -1268,7 +1273,7 @@ Proof.
   move=> q.
   refine (match q with idpath => _ end).
   simpl ap.
-  refine (conc _ (_ : Path@{i} (p x) _)).
+  refine_conc (p x).
   -
     exact (conc_p_1 (p x)).
   -
@@ -1299,7 +1304,7 @@ Proof.
   refine (match s with idpath => _ end).
   refine (match q with idpath => _ end).
   simpl ap.
-  refine (conc _ (_ : Path@{j} (conc r (p x)) _)).
+  refine_conc (conc r (p x)).
   -
     refine (ap2 conc _ _).
     +
@@ -1323,7 +1328,7 @@ Definition path_conc_crA_P_conc_crP_A@{i j | }
 Proof.
   refine (match q with idpath => _ end).
   simpl ap.
-  refine (conc _ (_ : Path@{j} (conc r (p x)) _)).
+  refine_conc (conc r (p x)).
   -
     refine (ap (fun pzfx => conc pzfx (p x)) _).
     exact (conc_p_1 r).
@@ -1344,9 +1349,9 @@ Proof.
   refine (match s with idpath => _ end).
   refine (match q with idpath => _ end).
   simpl ap.
-  refine (conc _ (_ : Path@{j} (p x) _)).
+  refine_conc (p x).
   -
-    refine (conc _ (_ : Path@{j} (conc (p x) idpath) _)).
+    refine_conc (conc (p x) idpath).
     +
       exact (conc_1_p (conc (p x) idpath)).
     +
@@ -1369,7 +1374,7 @@ Proof.
   refine (match s with idpath => _ end).
   refine (match q with idpath => _ end).
   simpl ap.
-  refine (conc _ (_ : Path@{i} (conc r (p x)) _)).
+  refine_conc (conc r (p x)).
   -
     refine (ap2 conc _ _).
     +
@@ -1394,7 +1399,7 @@ Proof.
   refine (match s with idpath => _ end).
   refine (match q with idpath => _ end).
   simpl ap.
-  refine (conc _ (_ : Path@{i} (conc r (p x)) _)).
+  refine_conc (conc r (p x)).
   -
     refine (ap2 conc _ _).
     +
@@ -1418,7 +1423,7 @@ Definition path_conc_crA_P_conc_crP_q@{i | }
 Proof.
   refine (match q with idpath => _ end).
   simpl ap.
-  refine (conc _ (_ : Path@{i} (conc r (p x)) _)).
+  refine_conc (conc r (p x)).
   -
     refine (ap (fun pzfx => conc pzfx (p x)) _).
     exact (conc_p_1 r).
@@ -1438,7 +1443,7 @@ Definition path_conc_crq_P_conc_crP_A@{i | }
 Proof.
   refine (match q with idpath => _ end).
   simpl ap.
-  refine (conc _ (_ : Path@{i} (conc r (p x)) _)).
+  refine_conc (conc r (p x)).
   -
     refine (ap (fun pzfx => conc pzfx (p x)) _).
     exact (conc_p_1 r).
@@ -1459,9 +1464,9 @@ Proof.
   refine (match s with idpath => _ end).
   refine (match q with idpath => _ end).
   simpl ap.
-  refine (conc _ (_ : Path@{i} (p x) _)).
+  refine_conc (p x).
   -
-    refine (conc _ (_ : Path@{i} (conc (p x) idpath) _)).
+    refine_conc (conc (p x) idpath).
     +
       exact (conc_1_p (conc (p x) idpath)).
     +
@@ -1484,9 +1489,9 @@ Proof.
   refine (match s with idpath => _ end).
   refine (match q with idpath => _ end).
   simpl ap.
-  refine (conc _ (_ : Path@{i} (p x) _)).
+  refine_conc (p x).
   -
-    refine (conc _ (_ : Path@{i} (conc (p x) idpath) _)).
+    refine_conc (conc (p x) idpath).
     +
       exact (conc_1_p (conc (p x) idpath)).
     +
@@ -1576,11 +1581,11 @@ Definition trpt_p_trpt_vp_u@{i j | }
   (p : Path@{i} x y) (u : P y)
   : Path@{j} (trpt p (trpt (inv p) u)) u.
 Proof.
-  refine (conc _ (_ : Path@{j} (trpt (conc (inv p) p) u) _)).
+  refine_conc (trpt (conc (inv p) p) u).
   -
     exact (inv (trpt_cpq_u P (inv p) p u)).
   -
-  refine (conc _ (_ : Path@{j} (trpt idpath u) _)).
+  refine_conc (trpt idpath u).
   +
     exact (ap (fun p => trpt p u) (conc_vp_p p)).
   +
@@ -1595,11 +1600,11 @@ Definition trpt_vp_trpt_p_u@{i j | }
   (p : Path@{i} x y) (u : P x)
   : Path@{j} (trpt (inv p) (trpt p u)) u.
 Proof.
-  refine (conc _ (_ : Path@{j} (trpt (conc p (inv p)) u) _)).
+  refine_conc (trpt (conc p (inv p)) u).
   -
     exact (inv (trpt_cpq_u P p (inv p) u)).
   -
-  refine (conc _ (_ : Path@{j} (trpt idpath u) _)).
+  refine_conc (trpt idpath u).
   +
     exact (ap (fun p => trpt p u) (conc_p_vp p)).
   +
@@ -1624,9 +1629,9 @@ Section trpt_conc_p_conc_q_r_u_Path_L_R.
   Definition trpt_conc_p_conc_q_r_u_L
     : Path@{j} (trpt (conc p (conc q r)) u) (trpt r (trpt q (trpt p u))).
   Proof.
-    refine (conc _ (_ : Path@{j} (trpt r (trpt (conc p q) u)) _)).
+    refine_conc (trpt r (trpt (conc p q) u)).
     -
-      refine (conc _ (_ : Path@{j} (trpt (conc (conc p q) r) u) _)).
+      refine_conc (trpt (conc (conc p q) r) u).
       +
         exact (ap (fun s => trpt s u) (conc_p_cqr p q r)).
       +
@@ -1640,7 +1645,7 @@ Section trpt_conc_p_conc_q_r_u_Path_L_R.
   Definition trpt_conc_p_conc_q_r_u_R
     : Path@{j} (trpt (conc p (conc q r)) u) (trpt r (trpt q (trpt p u))).
   Proof.
-    refine (conc _ (_ : Path@{j} (trpt (conc q r) (trpt p u)) _)).
+    refine_conc (trpt (conc q r) (trpt p u)).
     -
       exact (trpt_cpq_u P p (conc q r) u).
     -
@@ -1791,7 +1796,7 @@ Definition conc_ap_trpt1_A_B_p_r_trpt2_A_B_q_y'@{i j | }
 Proof.
   refine (match q with idpath => _ end).
   simpl trpt2.
-  refine (conc _ (_ : Path@{j} (ap (trpt1 A B p) r) _)).
+  refine_conc (ap (trpt1 A B p) r).
   -
     exact (conc_p_1 (ap (trpt1 A B p) r)).
   -
