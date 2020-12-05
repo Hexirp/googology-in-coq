@@ -23,7 +23,7 @@ Set Printing Universes.
 (** タクティックが使用できるように設定します。 *)
 Set Default Proof Mode "Classic".
 
-(** ** 1-次元の亜群構造 *)
+(** ** [idpath] の [conc] においての単位元性 *)
 
 (** conc_p_idpath です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L70 *)
@@ -36,6 +36,8 @@ Definition conc_p_1@{i | } {A : Type@{i}} {x y : A}
 Definition conc_1_p@{i | } {A : Type@{i}} {x y : A}
   : forall p : Path@{i} x y, Path@{i} (conc idpath p) p
   := fun p => match p with idpath => idpath end.
+
+(** ** [conc] の結合法則 *)
 
 (** conc_p_conc_q_r です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L82 *)
@@ -63,6 +65,8 @@ Definition conc_cpq_r@{i | } {A : Type@{i}} {x y z w : A}
     end
   end.
 
+(** ** [inv] の [conc] においての逆元性 *)
+
 (** conc_p_inv_p です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L97 *)
 Definition conc_p_vp@{i | } {A : Type@{i}} {x y : A}
@@ -74,6 +78,8 @@ Definition conc_p_vp@{i | } {A : Type@{i}} {x y : A}
 Definition conc_vp_p@{i | } {A : Type@{i}} {x y : A}
   : forall p : Path@{i} x y, Path@{i} (conc (inv p) p) idpath
   := fun p => match p with idpath => idpath end.
+
+(** ** 結合法則と逆元 *)
 
 (** conc_inv_p_conc_p_q です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L110 *)
@@ -112,6 +118,8 @@ Definition conc_cpvq_q@{i | } {A : Type@{i}} {x y z : A}
   in
     t p.
 
+(** ** 逆元の分配法則 *)
+
 (** inv_conc_p_q です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L141 *)
 Definition inv_cpq@{i | } {A : Type@{i}} {x y z : A}
@@ -148,6 +156,8 @@ Definition inv_cvpvq@{i | } {A : Type@{i}} {x y z : A}
   : forall (p : Path@{i} y x) (q : Path@{i} z y),
     Path@{i} (inv (conc (inv p) (inv q))) (conc q p)
   := fun p q => match p with idpath => match q with idpath => idpath end end.
+
+(** ** 逆元の逆元 *)
 
 (** inv_inv_p です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L168 *)
