@@ -10,7 +10,6 @@
 (** 必要なライブラリをインポートします。 *)
 Require Import GiC.Base.
 Require Import GiC.Path.Base.
-Require Import GiC.Path.Function.
 Require Import GiC.Path.OneDim.
 Require Import GiC.Path.Transposition.
 

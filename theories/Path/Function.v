@@ -112,32 +112,6 @@ Definition apD@{i j | }
   : Path@{j} (trpt p (f x)) (f y)
   := match p with idpath => idpath end.
 
-(** 一変数関数に対する ap です。 *)
-(* from: originally defined by Hexirp *)
-Definition ap1@{i j | }
-  {A : Type@{i}} {B : Type@{j}} (f : A -> B) {x x' : A} (p : Path@{i} x x')
-  : Path@{j} (f x) (f x')
-  := ap f p.
-
-(** 二変数関数に対する ap です。 *)
-(* from: originally defined by Hexirp *)
-Definition ap2@{i j k | }
-  {A : Type@{i}} {B : Type@{j}} {C : Type@{k}} (f : A -> B -> C)
-  {x x' : A} (p : Path@{i} x x') {y y' : B} (q : Path@{j} y y')
-  : Path@{k} (f x y) (f x' y')
-  := match p with idpath => ap1 (f x) q end.
-
-(** 三変数関数に対する ap です。 *)
-(* from: originally defined by Hexirp *)
-Definition ap3@{i j k l | }
-  {A : Type@{i}} {B : Type@{j}} {C : Type@{k}} {D : Type@{l}}
-  (f : A -> B -> C -> D)
-  {x x' : A} (p : Path@{i} x x')
-  {y y' : B} (q : Path@{j} y y')
-  {z z' : C} (r : Path@{k} z z')
-  : Path@{l} (f x y z) (f x' y' z')
-  := match p with idpath => ap2 (f x) q r end.
-
 (** 関数の 0-道を値の 0-道に適用する関数です。 *)
 (* from: originally defined by Hexirp *)
 Definition ap00@{i j | } {A : Type@{i}} {B : Type@{j}}
