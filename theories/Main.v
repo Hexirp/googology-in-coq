@@ -22,6 +22,16 @@ Set Printing Universes.
 (** タクティックが使用できるように設定します。 *)
 Set Default Proof Mode "Classic".
 
+(** apD_f_idpath です。 *)
+(* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L372 *)
+Definition apD_f_1@{i j | }
+  {A : Type@{i}} {B : A -> Type@{j}} (f : forall x : A, B x) (x : A)
+  : Path@{j} (apD f (idpath x)) (idpath (f x)).
+Proof.
+  cbv.
+  exact idpath.
+Defined.
+
 (** ** 道による輸送と道の亜群構造 *)
 
 (** trpt_idpath_u です。 *)

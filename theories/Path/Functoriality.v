@@ -34,16 +34,6 @@ Proof.
   exact idpath.
 Defined.
 
-(** apD_f_idpath です。 *)
-(* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L372 *)
-Definition apD_f_1@{i j | }
-  {A : Type@{i}} {B : A -> Type@{j}} (f : forall x : A, B x) (x : A)
-  : Path@{j} (apD f (idpath x)) (idpath (f x)).
-Proof.
-  cbv.
-  exact idpath.
-Defined.
-
 (** ap_f_conc_p_q です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L378 *)
 Definition ap_f_cpq@{i j | }
