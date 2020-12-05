@@ -1803,6 +1803,18 @@ Proof.
     exact (inv (conc_1_p (ap (trpt1 A B p) r))).
 Defined.
 
+(** f_y_trpt_p_u です。 *)
+(* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L817 *)
+Definition f_y_trpt_p_u@{i j k | }
+  {A : Type@{i}} {P : A -> Type@{j}} {Q : A -> Type@{k}}
+  {x y : A} (p : Path@{i} x y) (f : forall x : A, P x -> Q x) (u : P x)
+  : Path@{k} (f y (trpt p u)) (trpt p (f x u)).
+Proof.
+  refine (match p with idpath => _ end).
+  cbv.
+  exact idpath.
+Defined.
+
 (** *** [ap10] についての定理 *)
 
 (** ap10_idpath_x です。 *)
