@@ -150,7 +150,7 @@ Definition inv_vp@{i | } {A : Type@{i}} {x y : A}
   : forall p : Path@{i} x y, Path@{i} (inv (inv p)) p
   := fun p => match p with idpath => idpath end.
 
-(** *** 移項のための補題 *)
+(** ** 移項のための補題 *)
 
 (** Path_conc_r_p_q です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L176 *)
@@ -788,7 +788,7 @@ Proof.
   exact idpath.
 Defined.
 
-(** *** 道の亜群での関数の関手性 *)
+(** ** 道の亜群での関数の関手性 *)
 
 (** ap_f_idpath です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L367 *)
@@ -1328,7 +1328,7 @@ Proof.
   exact idpath.
 Defined.
 
-(** *** 道による輸送と道の亜群構造 *)
+(** ** 道による輸送と道の亜群構造 *)
 
 (** trpt_idpath_u です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L645 *)
@@ -1610,7 +1610,7 @@ Proof.
   exact idpath.
 Defined.
 
-(** *** [ap10] についての定理 *)
+(** ** [ap10] についての定理 *)
 
 (** ap10_idpath_x です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L611 *)
@@ -1748,7 +1748,7 @@ Proof.
   exact idpath.
 Defined.
 
-(** *** [ap11] についての定理 *)
+(** ** [ap11] についての定理 *)
 
 (** ap11_h_p です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L733 *)
