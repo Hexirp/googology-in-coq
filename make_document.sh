@@ -6,4 +6,5 @@
   theories/Function.v \
   theories/Path/Base.v \
   theories/Path/OneDim.v \
+  theories/Path/Transposition.v \
   theories/Main.v

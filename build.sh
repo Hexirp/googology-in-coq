@@ -7,4 +7,6 @@
 ./coqc.sh -nois -verbose -R theories/ GiC \
   theories/Path/OneDim.v
 ./coqc.sh -nois -verbose -R theories/ GiC \
+  theories/Path/Transposition.v
+./coqc.sh -nois -verbose -R theories/ GiC \
   theories/Main.v
