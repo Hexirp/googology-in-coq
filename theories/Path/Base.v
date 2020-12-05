@@ -55,3 +55,46 @@ Definition ap3@{i j k l | }
   {z z' : C} (r : Path@{k} z z')
   : Path@{l} (f x y z) (f x' y' z')
   := match p with idpath => ap2 (f x) q r end.
+
+(** 依存型に対応する ap です。 *)
+(* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/Overture.v#L439 *)
+Definition apD@{i j | }
+  {A : Type@{i}} {B : A -> Type@{j}} (f : forall x : A, B x)
+  {x y : A} (p : Path@{i} x y)
+  : Path@{j} (trpt p (f x)) (f y)
+  := match p with idpath => idpath end.
+
+(** 関数の 0-道を値の 0-道に適用する関数です。 *)
+(* from: originally defined by Hexirp *)
+Definition ap00@{i j | } {A : Type@{i}} {B : Type@{j}}
+  (f : A -> B) (x : A) : B
+  := apply f x.
+
+(** 関数の 0-道を値の 1-道に適用する関数です。 *)
+(* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/Overture.v#L374 *)
+Definition ap01@{i j | } {A : Type@{i}} {B : Type@{j}}
+  (f : A -> B) {x x' : A} (pxx' : Path@{i} x x') : Path@{j} (f x) (f x')
+  := ap f pxx'.
+
+(** 関数の 1-道を値の 0-道に適用する関数です。 *)
+(* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/Overture.v#L417 *)
+Definition ap10@{i j mij | i <= mij, j <= mij} {A : Type@{i}} {B : Type@{j}}
+  {f f' : A -> B} (pff' : Path@{mij} f f') (x : A) : Path@{j} (f x) (f' x)
+  := match pff' with idpath => idpath end.
+
+(** 関数の 1-道を値の 1-道に適用する関数です。 *)
+(* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/Overture.v#L425 *)
+Definition ap11@{i j mij | i <= mij, j <= mij} {A : Type@{i}} {B : Type@{j}}
+  {f f' : A -> B} (pff' : Path@{mij} f f') {x x' : A} (pxx' : Path@{i} x x')
+  : Path@{j} (f x) (f' x')
+  := match pxx' with idpath => match pff' with idpath => idpath end end.
+
+(** 二変数関数の 0-道を値の 1-道と 1-道に適用する関数です。 *)
+(* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L755 *)
+Definition ap011@{i j k | }
+  {A : Type@{i}} {B : Type@{j}} {C : Type@{k}}
+  (f : A -> B -> C)
+  {x x' : A} (pxx' : Path@{i} x x')
+  {y y' : B} (pyy' : Path@{j} y y')
+  : Path@{k} (f x y) (f x' y')
+  := match pyy' with idpath => match pxx' with idpath => idpath end end.
