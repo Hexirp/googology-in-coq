@@ -87,7 +87,7 @@ Defined.
 
 (** ap10D_inv_p_x です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L607 *)
-Definition _ap10D_vp_x@{i j mij | i <= mij, j <= mij}
+Definition ap10D_vp_x@{i j mij | i <= mij, j <= mij}
   {A : Type@{i}} {B : A -> Type@{j}} {f f' : forall x : A, B x}
   (pff' : Path@{mij} f f') (x : A)
   : Path@{j} (ap10D (inv pff') x) (inv (ap10D pff' x)).
