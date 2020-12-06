@@ -1,4 +1,4 @@
-digraph G {
+digraph dependency_graph {
   compound = true;
 
   # GiC.Base
