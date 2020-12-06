@@ -199,6 +199,10 @@ Gallina の項をコントロールできるとして許容されているタク
 * `move` タクティック
 * `=>` タクティカル
 
+さらに、新しく定義したタクティックも許されます。例えば、次のような例があります。
+
+* `refine_conc` タクティック
+
 ゴールが複数に増えたときはビュレットを使います。ビュレットは字下げせず、単独の行に置いてください。その後に続くコマンドは字下げしますが、一番後ろのゴールだけは字下げしなくともよいです。例として、次のようにします。
 
 ```
@@ -323,6 +327,8 @@ Path@{i} y z
 refine (conc _ (_ : Path@{i} y _)).
 ```
 
+これは `GiC.Path.Base` で `refine_conc y` としてタクティック化されています。
+
 ### GiC.Path
 
 `ap10` と `ap1D0` などには、宇宙多相において `max` を取るパターンを含みます。これに関して宇宙制約の書き方を間違えると `Universe constraints are not implied by the ones declared.` とだけの分かりづらいエラーメッセージが出ます。そのため、原因が分かりづらく、注意が必要です。実際に、私は `GiC.Path` の `ap10` と `ap1D0` を扱う部分において苦労しました。
@@ -331,9 +337,7 @@ refine (conc _ (_ : Path@{i} y _)).
 
 現在の内容は https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v をベースにしています。
 
-頻出するパターンとして `refine (conc _ (_ : Path@{i} y _)).` があります。これは形に遊びが少ないのでタクティック化を検討しています。
-
-頻出するパターンとして `refine (match p with idpath => _ end).` があります。これは as や return などを付けたりという場合があるので、タクティック化は検討していません。
+頻出するパターンとして `refine (match p with idpath => _ end).` があります。これは as や return などを付けたりというオプションがあるので、タクティック化は検討していません。
 
 ### Main
 
