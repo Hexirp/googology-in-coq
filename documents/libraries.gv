@@ -1,14 +1,6 @@
-# 左に行くほど単純な内容であり、
-# 右に行くほど複雑な内容である。
-# 下に行くほど基本的なテーマを取り扱っていて、
-# 上に行くほど応用的なテーマを取り扱っている。
-# neato を使用する。そうしないと pos と pin 属性が上手く働かない。
-
 digraph G {
   # GiC.Base
-  "GiC.Base" [pos = "0,0", pin = true];
 
   # GiC.Function
   "GiC.Function" -> "GiC.Base";
-  "GiC.Function" [pos = "2,2", pin = true];
 }
