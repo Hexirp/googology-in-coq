@@ -1,4 +1,6 @@
 digraph G {
+  compound = true;
+
   # GiC.Base
 
   # GiC.Function
@@ -34,4 +36,17 @@ digraph G {
   # GiC.Path.Application_1_1
   "GiC.Path.Application_1_1" -> "GiC.Base";
   "GiC.Path.Application_1_1" -> "GiC.Path.Base";
+
+  # GiC.Path
+  subgraph cluster_GiC_Path {
+    "GiC.Path.Base";
+    "GiC.Path.Function";
+    "GiC.Path.OneDim";
+    "GiC.Path.Transposition";
+    "GiC.Path.Functoriality";
+    "GiC.Path.Application_1_0";
+    "GiC.Path.Application_1_1";
+  }
+
+  "GiC.Path" -> "GiC.Path.Base" [lhead = cluster_GiC_Path];
 }

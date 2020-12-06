@@ -242,6 +242,7 @@ Coq では Makefile を使うのがスタンダードのようなのですが、
 * `theories/Path/Functoriality.v`
 * `theories/Path/Application_1_0.v`
 * `theories/Path/Application_1_1.v`
+* `theories/Path.v`
 * `theories/Main.v`
 
 生成する物は次の通りです。
@@ -286,6 +287,7 @@ Coq では Makefile を使うのがスタンダードのようなのですが、
 * `theories/Path/Functoriality.v`
 * `theories/Path/Application_1_0.v`
 * `theories/Path/Application_1_1.v`
+* `theories/Path.v`
 * `theories/Main.v`
 
 生成する物は次の通りです。
