@@ -233,29 +233,25 @@ Coq では Makefile を使うのがスタンダードのようなのですが、
 
 対象は次の通りです。
 
-* theories/Base.v
-* theories/Main.v
+* `theories/Base.v`
+* `theories/Function.v`
+* `theories/Path/Base.v`
+* `theories/Path/Function.v`
+* `theories/Path/OneDim.v`
+* `theories/Path/Transposition.v`
+* `theories/Path/Functoriality.v`
+* `theories/Path/Application_1_0.v`
+* `theories/Path/Application_1_1.v`
+* `theories/Main.v`
 
 生成する物は次の通りです。
 
-* theories/Base.v から生成される物
-  * theories/.Base.aux
-  * theories/Base.glob
-  * theories/Base.vo
-  * theories/Base.vok
-  * theories/Base.vos
-* theories/Function.v から生成される物
-  * theories/.Function.aux
-  * theories/Function.glob
-  * theories/Function.vo
-  * theories/Function.vok
-  * theories/Function.vos
-* theories/Main.v から生成される物
-  * theories/.Main.aux
-  * theories/Main.glob
-  * theories/Main.vo
-  * theories/Main.vok
-  * theories/Main.vos
+* `theories/[x0]/[x1]/.../[xn].v` から生成される物
+  * `theories/[x0]/[x1]/.../.[xn].aux`
+  * `theories/[x0]/[x1]/.../[xn].glob`
+  * `theories/[x0]/[x1]/.../[xn].vo`
+  * `theories/[x0]/[x1]/.../[xn].vok`
+  * `theories/[x0]/[x1]/.../[xn].vos`
 
 ### coqc.sh
 
@@ -281,19 +277,23 @@ Coq では Makefile を使うのがスタンダードのようなのですが、
 
 対象は次の通りです。
 
-* theories/Base.v
-* theories/Main.v
+* `theories/Base.v`
+* `theories/Function.v`
+* `theories/Path/Base.v`
+* `theories/Path/Function.v`
+* `theories/Path/OneDim.v`
+* `theories/Path/Transposition.v`
+* `theories/Path/Functoriality.v`
+* `theories/Path/Application_1_0.v`
+* `theories/Path/Application_1_1.v`
+* `theories/Main.v`
 
 生成する物は次の通りです。
 
-* coqdoc.css
-* index.html
-* theories/Base.v から生成される物
-  * docs/GiC.Base.html
-* theories/Function.v から生成される物
-  * docs/GiC.Function.html
-* theories/Main.v から生成される物
-  * docs/GiC.Main.html
+* `coqdoc.css`
+* `index.html`
+* `theories/[x0]/[x1]/.../[xn].v` から生成される物
+  * `docs/[x0].[x1].....[xn].html`
 
 ## デバッグ
 
