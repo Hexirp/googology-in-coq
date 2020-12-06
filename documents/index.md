@@ -54,10 +54,20 @@ Set Default Proof Mode "Classic".
 関数や定理などの名前はポーランド記法を基本にしますが、良い名前があるときはそれを使って構いません。次に細かい慣習を示します。
 
 * 関数が返すのが `Type` 型の値の時は先頭を大文字にする。
-* そうではないときは先頭を小文字にする。
+  * そうではないときは先頭を小文字にする。
 * ポーランド記法を使わない時は camel case を使う。
 * 依存型に対応したバージョンの関数は `D` を付けて表す。
   * 依存型に対応しないバージョンの関数は `N` を付けて表す。
+  * これで表しきれない時は、その関数が受け取る型のそれぞれについて依存型かどうか調べて、適切な記号を付ける。
+    * 依存型か非依存型の二分法。例は `compNND` など。
+    * 二重の依存型が現れる時は `DD` とする。例は `trpt_D_DD_DD_DDD` など。
+    * 依存関係をエンコードする。例は `ap011_AN_BDA_CN` など。
+      * `A` が依存型ではない時は `_AN`
+      * `B` が `A` に依存しているときは `_BDA`
+      * `C` が `A` に依存しているときは `_CDA`
+      * `C` が `B` に依存しているときは `_CDB`
+      * `C` が `A` と `B` に依存しているときは `_CDAB`
+* n 変数版とか n-道版というときには n を付ける。
 * ポーランド記法を使う時は、
   * 区切り文字は `_` を使う。
   * `A -> B` は `fun_A_B` と書く。
@@ -189,6 +199,10 @@ Gallina の項をコントロールできるとして許容されているタク
 * `move` タクティック
 * `=>` タクティカル
 
+さらに、新しく定義したタクティックも許されます。例えば、次のような例があります。
+
+* `refine_conc` タクティック
+
 ゴールが複数に増えたときはビュレットを使います。ビュレットは字下げせず、単独の行に置いてください。その後に続くコマンドは字下げしますが、一番後ろのゴールだけは字下げしなくともよいです。例として、次のようにします。
 
 ```
@@ -219,29 +233,26 @@ Coq では Makefile を使うのがスタンダードのようなのですが、
 
 対象は次の通りです。
 
-* theories/Base.v
-* theories/Main.v
+* `theories/Base.v`
+* `theories/Function.v`
+* `theories/Path/Base.v`
+* `theories/Path/Function.v`
+* `theories/Path/OneDim.v`
+* `theories/Path/Transposition.v`
+* `theories/Path/Functoriality.v`
+* `theories/Path/Application_1_0.v`
+* `theories/Path/Application_1_1.v`
+* `theories/Path.v`
+* `theories/Main.v`
 
 生成する物は次の通りです。
 
-* theories/Base.v から生成される物
-  * theories/.Base.aux
-  * theories/Base.glob
-  * theories/Base.vo
-  * theories/Base.vok
-  * theories/Base.vos
-* theories/Function.v から生成される物
-  * theories/.Function.aux
-  * theories/Function.glob
-  * theories/Function.vo
-  * theories/Function.vok
-  * theories/Function.vos
-* theories/Main.v から生成される物
-  * theories/.Main.aux
-  * theories/Main.glob
-  * theories/Main.vo
-  * theories/Main.vok
-  * theories/Main.vos
+* `theories/[x0]/[x1]/.../[xn].v` から生成される物
+  * `theories/[x0]/[x1]/.../.[xn].aux`
+  * `theories/[x0]/[x1]/.../[xn].glob`
+  * `theories/[x0]/[x1]/.../[xn].vo`
+  * `theories/[x0]/[x1]/.../[xn].vok`
+  * `theories/[x0]/[x1]/.../[xn].vos`
 
 ### coqc.sh
 
@@ -249,11 +260,11 @@ Coq では Makefile を使うのがスタンダードのようなのですが、
 
 ### coqdoc.sh
 
-`coqdoc` のラッパーです。これを参照することで、別の環境でも、このファイルを書き換>えるだけで対応できるようになっています。
+`coqdoc` のラッパーです。これを参照することで、別の環境でも、このファイルを書き換えるだけで対応できるようになっています。
 
 ### coqide.sh
 
-`coqide` のラッパーです。これを参照することで、別の環境でも、このファイルを書き>換>えるだけで対応できるようになっています。
+`coqide` のラッパーです。これを参照することで、別の環境でも、このファイルを書き換えるだけで対応できるようになっています。
 
 ### edit.sh
 
@@ -267,19 +278,24 @@ Coq では Makefile を使うのがスタンダードのようなのですが、
 
 対象は次の通りです。
 
-* theories/Base.v
-* theories/Main.v
+* `theories/Base.v`
+* `theories/Function.v`
+* `theories/Path/Base.v`
+* `theories/Path/Function.v`
+* `theories/Path/OneDim.v`
+* `theories/Path/Transposition.v`
+* `theories/Path/Functoriality.v`
+* `theories/Path/Application_1_0.v`
+* `theories/Path/Application_1_1.v`
+* `theories/Path.v`
+* `theories/Main.v`
 
 生成する物は次の通りです。
 
-* coqdoc.css
-* index.html
-* theories/Base.v から生成される物
-  * docs/GiC.Base.html
-* theories/Function.v から生成される物
-  * docs/GiC.Function.html
-* theories/Main.v から生成される物
-  * docs/GiC.Main.html
+* `coqdoc.css`
+* `index.html`
+* `theories/[x0]/[x1]/.../[xn].v` から生成される物
+  * `docs/[x0].[x1].....[xn].html`
 
 ## デバッグ
 
@@ -313,6 +329,8 @@ Path@{i} y z
 refine (conc _ (_ : Path@{i} y _)).
 ```
 
+これは `GiC.Path.Base` で `refine_conc y` としてタクティック化されています。
+
 ### GiC.Path
 
 `ap10` と `ap1D0` などには、宇宙多相において `max` を取るパターンを含みます。これに関して宇宙制約の書き方を間違えると `Universe constraints are not implied by the ones declared.` とだけの分かりづらいエラーメッセージが出ます。そのため、原因が分かりづらく、注意が必要です。実際に、私は `GiC.Path` の `ap10` と `ap1D0` を扱う部分において苦労しました。
@@ -321,9 +339,7 @@ refine (conc _ (_ : Path@{i} y _)).
 
 現在の内容は https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v をベースにしています。
 
-頻出するパターンとして `refine (conc _ (_ : Path@{i} y _)).` があります。これは形に遊びが少ないのでタクティック化を検討しています。
-
-頻出するパターンとして `refine (match p with idpath => _ end).` があります。これは as や return などを付けたりという場合があるので、タクティック化は検討していません。
+頻出するパターンとして `refine (match p with idpath => _ end).` があります。これは as や return などを付けたりというオプションがあるので、タクティック化は検討していません。
 
 ### Main
 
