@@ -26,7 +26,7 @@ Set Printing Universes.
 (** タクティックが使用できるように設定します。 *)
 Set Default Proof Mode "Classic".
 
-(** ** 道の亜群での関数の関手性 *)
+(** ** 関数の関手性 *)
 
 (** ap_f_idpath です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L367 *)
@@ -119,6 +119,8 @@ Proof.
   exact idpath.
 Defined.
 
+(** ** [ap] の関手性 *)
+
 (** ap_idmap_p です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L413 *)
 Definition ap_idmap_p@{i | }
@@ -181,6 +183,8 @@ Proof.
   cbv.
   exact idpath.
 Defined.
+
+(** [ap] の自然性 *)
 
 (** Path_conc_ap_f_q_p_y_conc_p_x_ap_g_q です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L436 *)
@@ -297,6 +301,8 @@ Proof.
   refine (path_q_cvrp (conc q (p y)) (ap f q) (p x) _).
   exact (path_conc_px_afq_conc_q_py p q).
 Defined.
+
+(** ** [ap] の自然性の定理に道がくっついた変種 *)
 
 (** Path_conc_conc_r_ap_f_q_conc_p_y_s_conc_conc_r_p_x_conc_ap_g_q_s です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L475 *)
@@ -507,6 +513,8 @@ Proof.
     change (Path@{i} (p x) (conc (p x) idpath)).
     exact (inv (conc_p_1 (p x))).
 Defined.
+
+(** ** 関手性の一貫性 (coherence) についての補題 *)
 
 (** path_conc_'conc_1_p'_p_q_ap_lam_r_conc_1_r_q です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L576 *)

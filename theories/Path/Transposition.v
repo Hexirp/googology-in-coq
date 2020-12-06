@@ -23,7 +23,7 @@ Set Printing Universes.
 (** タクティックが使用できるように設定します。 *)
 Set Default Proof Mode "Classic".
 
-(** ** 移項のための補題 *)
+(** ** 三つの道が絡む移項に関する補題 *)
 
 (** Path_conc_r_p_q です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L176 *)
@@ -256,6 +256,8 @@ Proof.
   simpl inv.
   exact (inv (conc_p_1 r')).
 Defined.
+
+(** ** 二つの道が絡む移項に関する補題 *)
 
 (** Path_p_q です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L232 *)
@@ -540,6 +542,8 @@ Proof.
   cbv.
   exact idmap.
 Defined.
+
+(** ** 補題の証明の間の一貫性 (coherence) についての補題 *)
 
 (** inv_'path_trpt_p_u_v'_P_p_u_v_q です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L333 *)

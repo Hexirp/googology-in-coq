@@ -2,9 +2,9 @@
 
 (** * GiC.Path.Function *)
 
-(** [GiC.Path.Function] は道に関する基本的な関数を提供します。
+(** [GiC.Path.Function] は道に関する関数を提供します。
 
-    具体的には、 [GiC.Base] にある道の関数のバリエーションを提供します。
+    具体的には、 [GiC.Base] にある道の関数のバリエーションを提供します。それには [GiC.Path.Base] よりも複雑な関数を含みます。
  *)
 
 (** 必要なライブラリをインポートします。 *)
@@ -23,7 +23,7 @@ Set Printing Universes.
 (** タクティックが使用できるように設定します。 *)
 Set Default Proof Mode "Classic".
 
-(** ** 汎用的な関数の定義 *)
+(** ** [trpt] の変種 *)
 
 (** [A] の道で、一重の依存型 [B x] を輸送する [trpt] です。 *)
 (* from: originally defined by Hexirp *)
@@ -103,6 +103,8 @@ Definition trpt3@{i j | }
   (y : B x)
   : Path@{j} (trpt2 A B q y) (trpt2 A B q' y)
   := ap (fun p => trpt2 A B p y) r.
+
+(** ** [ap] の変種 *)
 
 (** 非依存型 [A] から非依存型 [B] への関数の 0-道を、非依存型 [A] の値の 0-道に適用する関数です。 *)
 (* from: originally defined by Hexirp *)
