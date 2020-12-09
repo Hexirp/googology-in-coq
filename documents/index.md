@@ -368,6 +368,8 @@ rebase は、なるべく使わないでください。ただし、 git pull で
 `B` から `A` への merge request を自動的にマージ出来るときは、次の場合です。
 
 * fast-forward である。
+* approved である。
+* CI が通っている。
 
 ## 歴史
 
