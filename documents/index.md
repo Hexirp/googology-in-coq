@@ -365,6 +365,11 @@ merge する時は no fast forward としてください。ただし、 git pull
 
 rebase は、なるべく使わないでください。ただし、 git pull で変更が少ない時は例外です。
 
+`B` から `A` への merge request を自動的にマージ出来るときは、次の二つの場合です。
+
+* fast-forward である。
+* `B^2` が `A` と等しい。
+
 ## 歴史
 
 歴史を簡単にまとめます。
