@@ -32,5 +32,5 @@ nia.cache
 nlia.cache
 nra.cache
 
-# for documentation in code
-/docs/
+# for coqdoc
+/libraries/docs/
