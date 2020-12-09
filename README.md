@@ -17,6 +17,6 @@ googology-in-coq は、いくつかの特徴を持ちます。
 
 プロジェクトは、いくつかの部分に分かれています。
 
-* articles/ - プロジェクトに関する記事です。
-* documents/ - プロジェクトのドキュメントです。
-* theories/ - プロジェクトのソースコードです。
+* [articles/](./articles/README.md) - プロジェクトに関する記事です。
+* [documents/](./documents/README.md) - プロジェクトのドキュメントです。
+* [libraries/](./libraries/README.md) - プロジェクトのソースコードです。
