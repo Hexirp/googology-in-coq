@@ -19,4 +19,4 @@ googology-in-coq は、いくつかの特徴を持ちます。
 
 * [articles/](./articles/README.md) - プロジェクトに関する記事です。
 * [documents/](./documents/README.md) - プロジェクトのドキュメントです。
-* [theories/](./theories/README.md) - プロジェクトのソースコードです。
+* [libraries/](./libraries/README.md) - プロジェクトのソースコードです。
