@@ -394,3 +394,17 @@ Proof.
   cbv.
   exact idpath.
 Defined.
+
+(** apD_f_inv_p です。 *)
+(* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L868 *)
+Definition apD_f_vp@{i j | }
+  {A : Type@{i}} {B : A -> Type@{j}} (f : forall x : A, B x)
+  {x y : A} (p : Path@{i} x y)
+  : Path@{j}
+    (apD f (inv p))
+    (path_trpt_vp_u_v B p (f y) (f x) (inv (apD f p))).
+Proof.
+  refine (match p with idpath => _ end).
+  cbv.
+  exact idpath.
+Defined.
