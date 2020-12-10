@@ -271,6 +271,24 @@ Proof.
   exact idpath.
 Defined.
 
+Definition ap_transport_pV@{i j | }
+  (A : Type@{i}) (B : A -> Type@{j})
+  {x x' : A} (p : Path@{i} x x') {y y' : B x'} (q : Path@{j} y y')
+  : Path@{j}
+    (ap (trpt p) (ap (trpt (inv p)) q))
+    (conc (conc (trpt_p_trpt_vp_u B p y) q) (inv (trpt_p_trpt_vp_u B p y'))).
+Proof.
+  refine (match q with idpath => _ end).
+  Fail refine (match p
+    as p'
+    in Path _ x'
+    return Path@{j}
+      (ap (trpt p') (ap (trpt (inv p')) idpath))
+      (conc (conc (trpt_p_trpt_vp_u B p' y) idpath) (inv (trpt_p_trpt_vp_u B p' y)))
+    with idpath => _
+  end).
+Admitted.
+
 (** ** [trpt2] に関する定理 *)
 
 (** trpt2_A_B_q_y です。 *)
