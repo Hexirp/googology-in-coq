@@ -250,6 +250,8 @@ Proof.
   exact idpath.
 Defined.
 
+(** ** [trpt2] に関する定理 *)
+
 (** trpt2_A_B_q_y です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L793 *)
 Definition trpt2_A_B_q_y@{i j | }
