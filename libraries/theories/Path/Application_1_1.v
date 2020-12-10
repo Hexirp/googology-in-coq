@@ -23,6 +23,9 @@ Set Printing Universes.
 (** タクティックが使用できるように設定します。 *)
 Set Default Proof Mode "Classic".
 
+(** ビュレットを使用しないときにエラーになるように設定します。 *)
+Set Default Goal Selector "!".
+
 (** ap11_h_p です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L733 *)
 Definition ap11_h_p@{i j mij | i <= mij, j <= mij}

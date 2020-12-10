@@ -23,6 +23,9 @@ Set Printing Universes.
 (** タクティックが使用できるように設定します。 *)
 Set Default Proof Mode "Classic".
 
+(** ビュレットを使用しないときにエラーになるように設定します。 *)
+Set Default Goal Selector "!".
+
 (** ** 三つの道が絡む移項に関する補題 *)
 
 (** Path_conc_r_p_q です。 *)

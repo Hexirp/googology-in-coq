@@ -31,6 +31,9 @@ Set Printing Universes.
 ```
 (** タクティックが使用できるように設定します。 *)
 Set Default Proof Mode "Classic".
+
+(** ビュレットを使用しないときにエラーになるように設定します。 *)
+Set Default Goal Selector "!".
 ```
 
 カスタム表記 (notation) や暗黙引数 (implicit argument) や暗黙変換 (coercion) や型クラス (typeclass) などの機能は、項をコントロールすることを困難にするため、なるべく使いません。

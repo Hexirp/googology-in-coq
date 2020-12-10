@@ -26,6 +26,9 @@ Set Printing Universes.
 (** タクティックが使用できるように設定します。 *)
 Set Default Proof Mode "Classic".
 
+(** ビュレットを使用しないときにエラーになるように設定します。 *)
+Set Default Goal Selector "!".
+
 (** ** 関数の関手性 *)
 
 (** ap_f_idpath です。 *)

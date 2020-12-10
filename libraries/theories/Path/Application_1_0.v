@@ -23,6 +23,9 @@ Set Printing Universes.
 (** タクティックが使用できるように設定します。 *)
 Set Default Proof Mode "Classic".
 
+(** ビュレットを使用しないときにエラーになるように設定します。 *)
+Set Default Goal Selector "!".
+
 (** ap10_idpath_x です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L611 *)
 Definition ap10_1_x@{i j mij | i <= mij, j <= mij}
