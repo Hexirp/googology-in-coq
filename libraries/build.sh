@@ -7,6 +7,7 @@ for file in \
   Path/Function.v \
   Path/OneDim.v \
   Path/Transposition.v \
+  Path/Functoriality.v \
   Path/Application_1_0.v \
   Path/Application_1_1.v \
   Path.v \
