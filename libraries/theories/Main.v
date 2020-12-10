@@ -222,6 +222,34 @@ Proof.
   exact idpath.
 Defined.
 
+(** f_y_trptD_A_B0_p_u です。 *)
+(* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L817 *)
+Definition f_x'_trptD_A_B0_p_y@{i j0 j1 | }
+  (A : Type@{i}) (B0 : A -> Type@{j0}) (B1 : A -> Type@{j1})
+  (f : forall a : A, B0 a -> B1 a) {x x' : A} (p : Path@{i} x x') (y : B0 x)
+  : Path@{j1} (f x' (trptD A B0 p y)) (trptD A B1 p (f x y)).
+Proof.
+  refine (match p with idpath => _ end).
+  cbv.
+  exact idpath.
+Defined.
+
+(** f_x'_trptD_A_B_p_y_trptDD_A_B_C0_p_y_z です。 *)
+(* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L823 *)
+Definition f_x'_trptD_A_B_p_y_trptDD_A_B_C0_p_y_z@{i j k0 k1 | }
+  (A : Type@{i}) (B : A -> Type@{j})
+  (C0 : forall a : A, B a -> Type@{k0}) (C1 : forall a : A, B a -> Type@{k1})
+  (f : forall (a : A) (b : B a), C0 a b -> C1 a b)
+  {x x' : A} (p : Path@{i} x x') (y : B x) (z : C0 x y)
+  : Path@{k1}
+    (f x' (trptD A B p y) (trptDD A B C0 p y z))
+    (trptDD A B C1 p y (f x y z)).
+Proof.
+  refine (match p with idpath => _ end).
+  cbv.
+  exact idpath.
+Defined.
+
 (** trpt2_A_B_q_y です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L793 *)
 Definition trpt2_A_B_q_y@{i j | }
@@ -282,32 +310,4 @@ Proof.
     exact (conc_p_1 (ap (trpt1 A B p) r)).
   -
     exact (inv (conc_1_p (ap (trpt1 A B p) r))).
-Defined.
-
-(** f_y_trptD_A_B0_p_u です。 *)
-(* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L817 *)
-Definition f_x'_trptD_A_B0_p_y@{i j0 j1 | }
-  (A : Type@{i}) (B0 : A -> Type@{j0}) (B1 : A -> Type@{j1})
-  (f : forall a : A, B0 a -> B1 a) {x x' : A} (p : Path@{i} x x') (y : B0 x)
-  : Path@{j1} (f x' (trptD A B0 p y)) (trptD A B1 p (f x y)).
-Proof.
-  refine (match p with idpath => _ end).
-  cbv.
-  exact idpath.
-Defined.
-
-(** f_x'_trptD_A_B_p_y_trptDD_A_B_C0_p_y_z です。 *)
-(* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L823 *)
-Definition f_x'_trptD_A_B_p_y_trptDD_A_B_C0_p_y_z@{i j k0 k1 | }
-  (A : Type@{i}) (B : A -> Type@{j})
-  (C0 : forall a : A, B a -> Type@{k0}) (C1 : forall a : A, B a -> Type@{k1})
-  (f : forall (a : A) (b : B a), C0 a b -> C1 a b)
-  {x x' : A} (p : Path@{i} x x') (y : B x) (z : C0 x y)
-  : Path@{k1}
-    (f x' (trptD A B p y) (trptDD A B C0 p y z))
-    (trptDD A B C1 p y (f x y z)).
-Proof.
-  refine (match p with idpath => _ end).
-  cbv.
-  exact idpath.
 Defined.
