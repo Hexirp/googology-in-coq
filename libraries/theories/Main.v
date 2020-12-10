@@ -274,11 +274,11 @@ Defined.
 (* ap_trpt_p_ap_trpt_vp_q です。 *)
 (** from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L844 *)
 Definition ap_trpt_p_ap_trpt_vp_q@{i j | }
-  (A : Type@{i}) (B : A -> Type@{j})
-  {x x' : A} (p : Path@{i} x x') {y y' : B x'} (q : Path@{j} y y')
+  (A : Type@{i}) (P : A -> Type@{j})
+  {x x' : A} (p : Path@{i} x x') {y y' : P x'} (q : Path@{j} y y')
   : Path@{j}
     (ap (trpt p) (ap (trpt (inv p)) q))
-    (conc (conc (trpt_p_trpt_vp_u B p y) q) (inv (trpt_p_trpt_vp_u B p y'))).
+    (conc (conc (trpt_p_trpt_vp_u P p y) q) (inv (trpt_p_trpt_vp_u P p y'))).
 Proof.
   refine (match q with idpath => _ end).
   refine (let t := _ in t y).
@@ -286,12 +286,12 @@ Proof.
     as p_
     in Path _ x'_
     return
-      forall y_ : B x'_,
+      forall y_ : P x'_,
         Path@{j}
           (ap (trpt p_) (ap (trpt (inv p_)) idpath))
           (conc
-            (conc (trpt_p_trpt_vp_u B p_ y_) idpath)
-            (inv (trpt_p_trpt_vp_u B p_ y_)))
+            (conc (trpt_p_trpt_vp_u P p_ y_) idpath)
+            (inv (trpt_p_trpt_vp_u P p_ y_)))
     with idpath => _
   end).
 
