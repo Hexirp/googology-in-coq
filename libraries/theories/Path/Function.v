@@ -62,7 +62,7 @@ Definition trpt_N_D@{i j | }
 (** [A] の道で、一重の依存型 [B x] と、二重の依存型 [C x y] を輸送する [trpt] です。 *)
 (* from: originally defined by Hexirp *)
 Definition trpt_N_D_DD@{i j k | }
-  {A : Type@{i}} {B : A -> Type@{j}} {C : forall a : A, B a -> Type@{k}}
+  (A : Type@{i}) (B : A -> Type@{j}) (C : forall a : A, B a -> Type@{k})
   {x x' : A} (p : Path@{i} x x') (y : B x) (z : C x y)
   : C x' (trptD A B p y)
   := trptDD A B C p y z.
@@ -72,8 +72,8 @@ Definition trpt_N_D_DD@{i j k | }
 (* j と j' や B と B' という風にアポストロフィを加えて書かない理由は、 x と x' をという風に書く時は x と x' の間に道があるということを暗示しているため、この場合は使えないからです。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L747 *)
 Definition trpt_N_D_D_DD@{i j0 j1 k | }
-  {A : Type@{i}} {B0 : A -> Type@{j0}} {B1 : A -> Type@{j1}}
-  {C : forall a : A, B0 a -> B1 a -> Type@{k}}
+  (A : Type@{i}) (B0 : A -> Type@{j0}) (B1 : A -> Type@{j1})
+  (C : forall a : A, B0 a -> B1 a -> Type@{k})
   {x x' : A} (p : Path@{i} x x') (y0 : B0 x) (y1 : B1 x) (z : C x y0 y1)
   : C x' (trptD A B0 p y0) (trptD A B1 p y1)
   := match p with idpath => z end.
