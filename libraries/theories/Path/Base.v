@@ -20,9 +20,6 @@ Set Polymorphic Inductive Cumulativity.
 (** 宇宙 (universe) について表示するように設定します。 *)
 Set Printing Universes.
 
-(** タクティックが使用できるように設定します。 *)
-Set Default Proof Mode "Classic".
-
 (** ** 汎用的なタクティックの定義 *)
 
 (** [refine_conc t] は [Path x y -| Path x t, Path t y] です。 *)
