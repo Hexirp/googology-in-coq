@@ -36,6 +36,13 @@ Proof.
   exact idpath.
 Defined.
 
+Fail Definition apD_cpq@{i j | }
+  {A : Type@{i}} {B : A -> Type@{j}} (f : forall x : A, B x)
+  {x y z : A} (p : Path@{i} x y) (q : Path@{i} y z)
+  : Path@{j}
+    (apD f (conc p q))
+    (conc (conc (trpt_cpq_u P p q (f x)) (ap (trpt q) (apD f p))) (apD f q)).
+
 (** ** 道による輸送と道の亜群構造 *)
 
 (** trpt_idpath_u です。 *)
