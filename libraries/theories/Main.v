@@ -26,23 +26,6 @@ Set Default Proof Mode "Classic".
 (** ビュレットを使用しないときにエラーになるように設定します。 *)
 Set Default Goal Selector "!".
 
-(** apD_f_idpath です。 *)
-(* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L372 *)
-Definition apD_f_1@{i j | }
-  {A : Type@{i}} {B : A -> Type@{j}} (f : forall x : A, B x) (x : A)
-  : Path@{j} (apD f (idpath x)) (idpath (f x)).
-Proof.
-  cbv.
-  exact idpath.
-Defined.
-
-Fail Definition apD_cpq@{i j | }
-  {A : Type@{i}} {B : A -> Type@{j}} (f : forall x : A, B x)
-  {x y z : A} (p : Path@{i} x y) (q : Path@{i} y z)
-  : Path@{j}
-    (apD f (conc p q))
-    (conc (conc (trpt_cpq_u P p q (f x)) (ap (trpt q) (apD f p))) (apD f q)).
-
 (** ** 道による輸送と道の亜群構造 *)
 
 (** trpt_idpath_u です。 *)
@@ -384,3 +367,22 @@ Proof.
   -
     exact (inv (conc_1_p (ap (trpt1 A B p) r))).
 Defined.
+
+(** ** [apD] に関する定理 *)
+
+(** apD_f_idpath です。 *)
+(* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L372 *)
+Definition apD_f_1@{i j | }
+  {A : Type@{i}} {B : A -> Type@{j}} (f : forall x : A, B x) (x : A)
+  : Path@{j} (apD f (idpath x)) (idpath (f x)).
+Proof.
+  cbv.
+  exact idpath.
+Defined.
+
+Fail Definition apD_cpq@{i j | }
+  {A : Type@{i}} {B : A -> Type@{j}} (f : forall x : A, B x)
+  {x y z : A} (p : Path@{i} x y) (q : Path@{i} y z)
+  : Path@{j}
+    (apD f (conc p q))
+    (conc (conc (trpt_cpq_u P p q (f x)) (ap (trpt q) (apD f p))) (apD f q)).
