@@ -380,9 +380,18 @@ Proof.
   exact idpath.
 Defined.
 
-Fail Definition apD_cpq@{i j | }
+
+(** apD_conc_p_q です。 *)
+(* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L860 *)
+Definition apD_cpq@{i j | }
   {A : Type@{i}} {B : A -> Type@{j}} (f : forall x : A, B x)
   {x y z : A} (p : Path@{i} x y) (q : Path@{i} y z)
   : Path@{j}
     (apD f (conc p q))
-    (conc (conc (trpt_cpq_u P p q (f x)) (ap (trpt q) (apD f p))) (apD f q)).
+    (conc (conc (trpt_cpq_u B p q (f x)) (ap (trpt q) (apD f p))) (apD f q)).
+Proof.
+  refine (match q with idpath => _ end).
+  refine (match p with idpath => _ end).
+  cbv.
+  exact idpath.
+Defined.
