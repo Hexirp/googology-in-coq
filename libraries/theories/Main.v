@@ -252,14 +252,18 @@ Defined.
 
 (** f_x'_trptD_A_B0_p_y0_trptD_A_B1_p_y1_'trpt_N_D_D_DD'_A_B0_B1_C0_p_y0_y1_z です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L833 *)
-Definition f_x'_trptD_A_B0_p_y0_trptD_A_B1_p_y1_'trpt_N_D_D_DD'_A_B0_B1_C0_p_y0_y1_z@{i j0 j1 k0 k1 | }
+Definition f_x'_T_T_'trpt_N_D_D_DD'_A_B0_B1_C0_p_y0_y1_z@{i j0 j1 k0 k1 | }
   (A : Type@{i}) (B0 : A -> Type@{j0}) (B1 : A -> Type@{j1})
   (C0 : forall a : A, B0 a -> B1 a -> Type@{k0})
   (C1 : forall a : A, B0 a -> B1 a -> Type@{k1})
   (f : forall (a : A) (b0 : B0 a) (b1 : B1 a), C0 a b0 b1 -> C1 a b0 b1)
   {x x' : A} (p : Path@{i} x x') (y0 : B0 x) (y1 : B1 x) (z : C0 x y0 y1)
   : Path@{k1}
-    (f x' (trptD A B0 p y0) (trptD A B1 p y1) (trpt_N_D_D_DD A B0 B1 C0 p y0 y1 z))
+    (f
+      x'
+      (trptD A B0 p y0)
+      (trptD A B1 p y1)
+      (trpt_N_D_D_DD A B0 B1 C0 p y0 y1 z))
     (trpt_N_D_D_DD A B0 B1 C1 p y0 y1 (f x y0 y1 z)).
 Proof.
   refine (match p with idpath => _ end).
