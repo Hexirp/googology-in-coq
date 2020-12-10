@@ -300,6 +300,20 @@ Proof.
   exact idpath.
 Defined.
 
+(** conc_ap_trpt_p_apD_f_vp_apD_f_p です。 *)
+(* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L853 *)
+Definition conc_ap_trpt_p_apD_f_vp_apD_f_p@{i j | }
+  {A : Type@{i}} (P : A -> Type@{j}) (f : forall x : A, P x)
+  {x x' : A} (p : Path@{i} x x')
+  : Path@{j}
+    (conc (ap (trpt p) (apD f (inv p))) (apD f p))
+    (trpt_p_trpt_vp_u P p (f x')).
+Proof.
+  refine (match p with idpath => _ end).
+  cbv.
+  exact idpath.
+Defined.
+
 (** ** [trpt2] に関する定理 *)
 
 (** trpt2_A_B_q_y です。 *)
