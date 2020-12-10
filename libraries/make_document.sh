@@ -1,3 +1,5 @@
+#!/bin/bash
+
 ./coqdoc.sh \
   -utf8 \
   -d docs \

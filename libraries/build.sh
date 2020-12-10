@@ -1,3 +1,5 @@
+#!/bin/bash
+
 ./coqc.sh -nois -verbose -R theories/ GiC \
   theories/Base.v
 ./coqc.sh -nois -verbose -R theories/ GiC \
