@@ -279,15 +279,24 @@ Definition ap_transport_pV@{i j | }
     (conc (conc (trpt_p_trpt_vp_u B p y) q) (inv (trpt_p_trpt_vp_u B p y'))).
 Proof.
   refine (match q with idpath => _ end).
-  Fail refine (match p
-    as p'
-    in Path _ x'
-    return Path@{j}
-      (ap (trpt p') (ap (trpt (inv p')) idpath))
-      (conc (conc (trpt_p_trpt_vp_u B p' y) idpath) (inv (trpt_p_trpt_vp_u B p' y)))
+  refine (let t := _ in t y).
+  refine (match p
+    as p_
+    in Path _ x'_
+    return
+      forall y_ : B x'_,
+        Path@{j}
+          (ap (trpt p_) (ap (trpt (inv p_)) idpath))
+          (conc
+            (conc (trpt_p_trpt_vp_u B p_ y_) idpath)
+            (inv (trpt_p_trpt_vp_u B p_ y_)))
     with idpath => _
   end).
-Admitted.
+
+  move=> y_.
+  cbv.
+  exact idpath.
+Defined.
 
 (** ** [trpt2] に関する定理 *)
 
