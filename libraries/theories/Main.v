@@ -206,7 +206,7 @@ Proof.
   refine (match p with idpath => _ end).
   cbv.
   refine idpath.
-Defined. (* path_u_trpt_vp_v でぐおーって裏返して trpt_p_trpt_vp_u で裏返したやつを相殺して蓋をする。 *)
+Defined.
 
 (** 'path_u_trpt_vp_v'_P_p_u_trpt_p_u_1 です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L701 *)
