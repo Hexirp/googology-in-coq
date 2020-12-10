@@ -271,7 +271,9 @@ Proof.
   exact idpath.
 Defined.
 
-Definition ap_transport_pV@{i j | }
+(* ap_trpt_p_ap_trpt_vp_q です。 *)
+(** from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L844 *)
+Definition ap_trpt_p_ap_trpt_vp_q@{i j | }
   (A : Type@{i}) (B : A -> Type@{j})
   {x x' : A} (p : Path@{i} x x') {y y' : B x'} (q : Path@{j} y y')
   : Path@{j}
