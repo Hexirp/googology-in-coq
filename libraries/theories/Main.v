@@ -202,3 +202,18 @@ Proof.
   cbv.
   exact idpath.
 Defined.
+
+(** trptD_B_x'_C_x'_apD_f_p_trptDD_A_B_C_p_f_x_y です。 *)
+(* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L909 *)
+Definition trptD_B_x'_C_x'_apD_f_p_trptDD_A_B_C_p_f_x_y@{i j k | }
+  (A : Type@{i}) (B : A -> Type@{j})
+  (C : forall x : A, B x -> Type@{k}) (f : forall x : A, B x)
+  {x x' : A} (p : Path@{i} x x') (y : C x (f x))
+  : Path@{k}
+    (trptD (B x') (C x') (apD f p) (trptDD A B C p (f x) y))
+    (trptD A (fun x : A => C x (f x)) p y).
+Proof.
+  refine (match p with idpath => _ end).
+  cbv.
+  exact idpath.
+Defined.
