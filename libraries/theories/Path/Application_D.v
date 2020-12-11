@@ -2,7 +2,7 @@
 
 (** * GiC.Path.Application_D *)
 
-(** [apD] に関する定理を提供します。
+(** [GiC.Path.Application_D] は、 [apD] に関する定理を提供します。
 
     具体的には、 [GiC.Path.Functoriality] にある定理の [apD] 版などを定義しています。 *)
 
