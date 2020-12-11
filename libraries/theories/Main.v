@@ -250,3 +250,19 @@ Proof.
   cbv.
   exact idpath.
 Defined.
+
+(** trpt1_A1_B_x0'_p1_trpt1_A0_lam_'x0_'_B_'x0_'_x1_p0_y です。 *)
+(* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L941 *)
+Definition trpt1_A1_B_x0'_p1_trpt1_A0_lam_'x0_'_B_'x0_'_x1_p0_y@{i0 i1 j | }
+  (A0 : Type@{i0}) (A1 : Type@{i1}) (B : A0 -> A1 -> Type@{j})
+  {x0 x0' : A0} (p0 : Path@{i0} x0 x0') {x1 x1' : A1} (p1 : Path@{i1} x1 x1')
+  (y : B x0 x1)
+  : Path@{j}
+    (trpt1 A1 (B x0') p1 (trpt1 A0 (fun x0_ : A0 => B x0_ x1) p0 y))
+    (trpt1 A0 (fun x0_ : A0 => B x0_ x1') p0 (trpt1 A1 (B x0) p1 y)).
+Proof.
+  refine (match p1 with idpath => _ end).
+  refine (match p0 with idpath => _ end).
+  cbv.
+  exact idpath.
+Defined.
