@@ -144,3 +144,18 @@ Proof.
   cbv.
   exact idpath.
 Defined.
+
+(** conc_trpt2_A_lam_x_B_q_u_'trpt1_A_lam_x_B_p_u'_p'_u です。 *)
+(* from: invert https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L881 *)
+Definition conc_trpt2_A_lam_x_B_q_u_'trpt1_A_lam_x_B_p_u'_p'_u@{i j | }
+  {A : Type@{i}} {B : Type@{j}}
+  {x x' : A} (p p' : Path@{i} x x') (q : Path@{i} p p') (u : B)
+  : Path@{j}
+    (conc (trpt2 A (fun x : A => B) q u) (trpt1_A_lam_x_B_p_u p' u))
+    (trpt1_A_lam_x_B_p_u p u).
+Proof.
+  refine (match q with idpath => _ end).
+  refine (match p with idpath => _ end).
+  cbv.
+  exact idpath.
+Defined.
