@@ -236,3 +236,17 @@ Proof.
   cbv.
   exact idpath.
 Defined.
+
+(** trpt1_A_lam_x_B_idmap_x_p_y です。 trpt1_A0_lam_x_B_f_x_p_y の [f] を [idmap] としたものと解釈できます。 *)
+(* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L925 *)
+Definition trpt1_A_lam_x_B_idmap_x_p_y@{i j sj | j < sj}
+  (A : Type@{i}) (B : A -> Type@{j})
+  {x x' : A} (p : Path@{i} x x') (y : B x)
+  : Path@{j}
+    (trpt1 A (fun x : A => B (idmap x)) p y)
+    (trpt1 Type@{j} idmap@{sj} (ap B p) y).
+Proof.
+  refine (match p with idpath => _ end).
+  cbv.
+  exact idpath.
+Defined.
