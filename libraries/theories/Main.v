@@ -160,14 +160,14 @@ Proof.
   exact idpath.
 Defined.
 
-(** trptD_A_lam_x_C_f_x_p_y です。 *)
+(** trptD_A0_lam_x_C_f_x_p_y です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L893 *)
-Definition trptD_A_lam_x_C_f_x_p_y@{i j k | }
-  (A : Type@{i}) (B : Type@{j}) (C : B -> Type@{k}) (f : A -> B)
-  {x x' : A} (p : Path@{i} x x') (y : C (f x))
-  : Path@{k}
-    (trptD A (fun x : A => C (f x)) p y)
-    (trptD B C (ap f p) y).
+Definition trptD_A0_lam_x_B_f_x_p_y@{i0 i1 j | }
+  (A0 : Type@{i0}) (A1 : Type@{i1}) (B : A1 -> Type@{j}) (f : A0 -> A1)
+  {x x' : A0} (p : Path@{i0} x x') (y : B (f x))
+  : Path@{j}
+    (trptD A0 (fun x : A0 => B (f x)) p y)
+    (trptD A1 B (ap f p) y).
 Proof.
   refine (match p with idpath => _ end).
   cbv.
