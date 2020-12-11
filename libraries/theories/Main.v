@@ -131,3 +131,16 @@ Proof.
   cbv.
   exact idpath.
 Defined.
+
+(** ** 特殊な fibration の上での輸送 *)
+
+(** trptD_A_lam_x_B_p_u です。 *)
+(* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L881 *)
+Definition trptD_A_lam_x_B_p_u@{i j | }
+  {A : Type@{i}} {B : Type@{j}} {x x' : A} (p : Path@{i} x x') (u : B)
+  : Path@{j} (trptD A (fun x : A => B) p u) u.
+Proof.
+  refine (match p with idpath => _ end).
+  cbv.
+  exact idpath.
+Defined.
