@@ -15,3 +15,4 @@ Require Export GiC.Path.Transposition.
 Require Export GiC.Path.Functoriality.
 Require Export GiC.Path.Application_1_0.
 Require Export GiC.Path.Application_1_1.
+Require Export GiC.Path.Transport.

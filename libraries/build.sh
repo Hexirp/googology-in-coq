@@ -10,6 +10,7 @@ for file in \
   Path/Functoriality.v \
   Path/Application_1_0.v \
   Path/Application_1_1.v \
+  Path/Transport.v \
   Path.v \
   Main.v
 do

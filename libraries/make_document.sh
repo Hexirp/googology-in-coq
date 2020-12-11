@@ -13,5 +13,6 @@
   theories/Path/Functoriality.v \
   theories/Path/Application_1_0.v \
   theories/Path/Application_1_1.v \
+  theories/Path/Transport.v \
   theories/Path.v \
   theories/Main.v
