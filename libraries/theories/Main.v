@@ -160,6 +160,20 @@ Proof.
   exact idpath.
 Defined.
 
+(** trpt1_A0_lam_x_C_f_x_p_y です。 *)
+(* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L893 *)
+Definition trpt1_A0_lam_x_B_f_x_p_y@{i0 i1 j | }
+  (A0 : Type@{i0}) (A1 : Type@{i1}) (B : A1 -> Type@{j}) (f : A0 -> A1)
+  {x x' : A0} (p : Path@{i0} x x') (y : B (f x))
+  : Path@{j}
+    (trpt1 A0 (fun x : A0 => B (f x)) p y)
+    (trpt1 A1 B (ap f p) y).
+Proof.
+  refine (match p with idpath => _ end).
+  cbv.
+  exact idpath.
+Defined.
+
 (** trptD_A0_lam_x_C_f_x_p_y です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L893 *)
 Definition trptD_A0_lam_x_B_f_x_p_y@{i0 i1 j | }
@@ -167,12 +181,8 @@ Definition trptD_A0_lam_x_B_f_x_p_y@{i0 i1 j | }
   {x x' : A0} (p : Path@{i0} x x') (y : B (f x))
   : Path@{j}
     (trptD A0 (fun x : A0 => B (f x)) p y)
-    (trptD A1 B (ap f p) y).
-Proof.
-  refine (match p with idpath => _ end).
-  cbv.
-  exact idpath.
-Defined.
+    (trptD A1 B (ap f p) y)
+  := trpt1_A0_lam_x_B_f_x_p_y A0 A1 B f p y.
 
 (** trptDD_A0_lam_x_B_f_x_lam_x_C_f_x_p_y_z です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L900 *)
