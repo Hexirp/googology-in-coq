@@ -1,0 +1,63 @@
+digraph dependency_graph_tred {
+  compound = true;
+
+  # GiC.Base
+
+  # GiC.Function
+  "GiC.Function" -> "GiC.Base";
+
+  # GiC.Path.Base
+  "GiC.Path.Base" -> "GiC.Base";
+
+  # GiC.Path.Function
+  "GiC.Path.Function" -> "GiC.Function";
+  "GiC.Path.Function" -> "GiC.Path.Base";
+
+  # GiC.Path.OneDim
+  "GiC.Path.OneDim" -> "GiC.Base";
+
+  # GiC.Path.Transposition
+  "GiC.Path.Transposition" -> "GiC.Path.Base";
+  "GiC.Path.Transposition" -> "GiC.Path.OneDim";
+
+  # GiC.Path.Functoriality
+  "GiC.Path.Functoriality" -> "GiC.Path.Transposition";
+
+  # GiC.Path.Application_1_0
+  "GiC.Path.Application_1_0" -> "GiC.Function";
+  "GiC.Path.Application_1_0" -> "GiC.Path.Base";
+
+  # GiC.Path.Application_1_1
+  "GiC.Path.Application_1_1" -> "GiC.Path.Base";
+
+  # GiC.Path.Transport
+  "GiC.Path.Transport" -> "GiC.Path.Function";
+  "GiC.Path.Transport" -> "GiC.Path.Transposition";
+
+  # GiC.Path.Fibration
+  "GiC.Path.Fibration" -> "GiC.Path.Function";
+
+  # GiC.Path.Transport_2
+  "GiC.Path.Transport_2" -> "GiC.Path.Function";
+  "GiC.Path.Transport_2" -> "GiC.Path.OneDim";
+
+  # GiC.Path.Application_D
+  "GiC.Path.Application_D" -> "GiC.Path.Transport";
+
+  # GiC.Path
+  subgraph cluster_GiC_Path {
+    "GiC.Path.Base";
+    "GiC.Path.Function";
+    "GiC.Path.OneDim";
+    "GiC.Path.Transposition";
+    "GiC.Path.Functoriality";
+    "GiC.Path.Application_1_0";
+    "GiC.Path.Application_1_1";
+    "GiC.Path.Transport";
+    "GiC.Path.Fibration";
+    "GiC.Path.Transport_2";
+    "GiC.Path.Application_D";
+  }
+
+  "GiC.Path" -> "GiC.Path.Base" [lhead = cluster_GiC_Path];
+}
