@@ -44,6 +44,11 @@ digraph dependency_graph {
   "GiC.Path.Transport" -> "GiC.Path.OneDim";
   "GiC.Path.Transport" -> "GiC.Path.Transposition";
 
+  # GiC.Path.Fibration
+  "GiC.Path.Fibration" -> "GiC.Base";
+  "GiC.Path.Fibration" -> "GiC.Path.Base";
+  "GiC.Path.Fibration" -> "GiC.Path.Function";
+
   # GiC.Path.Application_D
   "GiC.Path.Application_D" -> "GiC.Base";
   "GiC.Path.Application_D" -> "GiC.Path.Base";
@@ -60,6 +65,7 @@ digraph dependency_graph {
     "GiC.Path.Application_1_0";
     "GiC.Path.Application_1_1";
     "GiC.Path.Transport";
+    "GiC.Path.Fibration";
     "GiC.Path.Application_D";
   }
 

@@ -14,6 +14,7 @@
   theories/Path/Application_1_0.v \
   theories/Path/Application_1_1.v \
   theories/Path/Transport.v \
+  theories/Path/Fibration.v \
   theories/Path/Application_D.v \
   theories/Path.v \
   theories/Main.v
