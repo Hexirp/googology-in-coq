@@ -44,6 +44,12 @@ digraph dependency_graph {
   "GiC.Path.Transport" -> "GiC.Path.OneDim";
   "GiC.Path.Transport" -> "GiC.Path.Transposition";
 
+  # GiC.Path.Application_D
+  "GiC.Path.Application_D" -> "GiC.Base";
+  "GiC.Path.Application_D" -> "GiC.Path.Base";
+  "GiC.Path.Application_D" -> "GiC.Path.Transposition";
+  "GiC.Path.Application_D" -> "GiC.Path.Transport";
+
   # GiC.Path
   subgraph cluster_GiC_Path {
     "GiC.Path.Base";
@@ -54,6 +60,7 @@ digraph dependency_graph {
     "GiC.Path.Application_1_0";
     "GiC.Path.Application_1_1";
     "GiC.Path.Transport";
+    "GiC.Path.Application_D";
   }
 
   "GiC.Path" -> "GiC.Path.Base" [lhead = cluster_GiC_Path];

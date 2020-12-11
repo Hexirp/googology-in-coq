@@ -91,47 +91,6 @@ Proof.
     exact (inv (conc_1_p (ap (trpt1 A B p) r))).
 Defined.
 
-(** ** [apD] に関する定理 *)
-
-(** apD_f_idpath です。 *)
-(* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L372 *)
-Definition apD_f_1@{i j | }
-  {A : Type@{i}} {B : A -> Type@{j}} (f : forall x : A, B x) (x : A)
-  : Path@{j} (apD f (idpath x)) (idpath (f x)).
-Proof.
-  cbv.
-  exact idpath.
-Defined.
-
-(** apD_f_conc_p_q です。 *)
-(* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L860 *)
-Definition apD_f_cpq@{i j | }
-  {A : Type@{i}} {B : A -> Type@{j}} (f : forall x : A, B x)
-  {x y z : A} (p : Path@{i} x y) (q : Path@{i} y z)
-  : Path@{j}
-    (apD f (conc p q))
-    (conc (conc (trpt_cpq_u B p q (f x)) (ap (trpt q) (apD f p))) (apD f q)).
-Proof.
-  refine (match q with idpath => _ end).
-  refine (match p with idpath => _ end).
-  cbv.
-  exact idpath.
-Defined.
-
-(** apD_f_inv_p です。 *)
-(* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L868 *)
-Definition apD_f_vp@{i j | }
-  {A : Type@{i}} {B : A -> Type@{j}} (f : forall x : A, B x)
-  {x y : A} (p : Path@{i} x y)
-  : Path@{j}
-    (apD f (inv p))
-    (path_trpt_vp_u_v B p (f y) (f x) (inv (apD f p))).
-Proof.
-  refine (match p with idpath => _ end).
-  cbv.
-  exact idpath.
-Defined.
-
 (** ** 特殊な fibration の上での輸送 *)
 
 (** trpt1_A_lam_x_B_p_u です。 *)
