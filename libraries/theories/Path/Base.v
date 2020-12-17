@@ -28,6 +28,7 @@ Ltac refine_conc t := refine (@GiC.Base.conc@{_} _ _ t _ _ _).
 (** ** 汎用的な関数の定義 *)
 
 (** 1-道の段階での [conc] です。 *)
+(* from: originally defined by Hexirp *)
 Definition conc1@{i | }
   {A : Type@{i}} {x y z : A}
   (p : Path@{i} x y) (q : Path@{i} y z)
@@ -35,6 +36,7 @@ Definition conc1@{i | }
   := conc p q.
 
 (** 2-道の段階での [conc] です。 *)
+(* from: https://github.com/HoTT/HoTT/blob/master/theories/Basics/PathGroupoids.v#L976 *)
 Definition conc2@{i | }
   {A : Type@{i}} {x y z : A}
   {p p' : Path@{i} x y} {q q' : Path@{i} y z}
@@ -43,6 +45,7 @@ Definition conc2@{i | }
   := match s with idpath => match r with idpath => idpath end end.
 
 (** 3-道の段階での [conc] です。 *)
+(* from: originally defined by Hexirp *)
 Definition conc3@{i | }
   {A : Type@{i}} {x y z : A}
   {p p' : Path@{i} x y} {q q' : Path@{i} y z}
