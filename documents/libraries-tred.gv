@@ -43,6 +43,7 @@ digraph dependency_graph_tred {
 
   # GiC.Path.Application_D
   "GiC.Path.Application_D" -> "GiC.Path.Transport";
+  "GiC.Path.Application_D" -> "GiC.Path.Fibration";
 
   # GiC.Path
   subgraph cluster_GiC_Path {
