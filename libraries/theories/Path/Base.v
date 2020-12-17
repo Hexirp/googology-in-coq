@@ -27,14 +27,14 @@ Ltac refine_conc t := refine (@GiC.Base.conc@{_} _ _ t _ _ _).
 
 (** ** 汎用的な関数の定義 *)
 
-(** 一変数関数に対する ap です。 *)
+(** 一変数関数に対する [ap] です。 *)
 (* from: originally defined by Hexirp *)
 Definition ap1@{i j | }
   {A : Type@{i}} {B : Type@{j}} (f : A -> B) {x x' : A} (p : Path@{i} x x')
   : Path@{j} (f x) (f x')
   := ap f p.
 
-(** 二変数関数に対する ap です。 *)
+(** 二変数関数に対する [ap] です。 *)
 (* from: originally defined by Hexirp *)
 Definition ap2@{i j k | }
   {A : Type@{i}} {B : Type@{j}} {C : Type@{k}} (f : A -> B -> C)
@@ -42,7 +42,7 @@ Definition ap2@{i j k | }
   : Path@{k} (f x y) (f x' y')
   := match p with idpath => ap1 (f x) q end.
 
-(** 三変数関数に対する ap です。 *)
+(** 三変数関数に対する [ap] です。 *)
 (* from: originally defined by Hexirp *)
 Definition ap3@{i j k l | }
   {A : Type@{i}} {B : Type@{j}} {C : Type@{k}} {D : Type@{l}}
@@ -53,7 +53,7 @@ Definition ap3@{i j k l | }
   : Path@{l} (f x y z) (f x' y' z')
   := match p with idpath => ap2 (f x) q r end.
 
-(** 依存型に対応する ap です。 *)
+(** 依存型に対応する [ap] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/Overture.v#L439 *)
 Definition apD@{i j | }
   {A : Type@{i}} {B : A -> Type@{j}} (f : forall x : A, B x)
