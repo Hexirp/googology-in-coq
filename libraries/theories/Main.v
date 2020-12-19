@@ -21,3 +21,16 @@ Set Default Proof Mode "Classic".
 
 (** ビュレットを使用しないときにエラーになるように設定します。 *)
 Set Default Goal Selector "!".
+
+(** conc2_ap_f_p_ap_g_p です。 *)
+(* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L984 *)
+Definition conc2_ap_f_p_ap_g_p@{i j | }
+  {A : Type@{i}} {B : Type@{j}}
+  {x' y' z' : B} (f : A -> Path@{j} x' y') (g : A -> Path@{j} y' z')
+  {x y : A} (p : Path@{i} x y)
+  : Path@{j} (conc2 (ap f p) (ap g p)) (ap (fun x : A => conc (f x) (g x)) p).
+Proof.
+  refine (match p with idpath => _ end).
+  cbv.
+  exact idpath.
+Defined.
