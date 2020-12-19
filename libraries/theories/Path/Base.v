@@ -54,6 +54,28 @@ Definition conc3@{i | }
   : Path@{i} (conc2 r s) (conc2 r' s')
   := match u with idpath => match t with idpath => idpath end end.
 
+(** 1-道の段階での [inv] です。 *)
+(* from: originally defined by Hexirp *)
+Definition inv1@{i | }
+  {A : Type@{i}} {x y : A} (p : Path@{i} x y)
+  : Path@{i} y x
+  := inv p.
+
+(** 2-道の段階での [inv] です。 *)
+(* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L993 *)
+Definition inv2@{i | }
+  {A : Type@{i}} {x y : A} {p q : Path@{i} x y} (r : Path@{i} p q)
+  : Path@{i} (inv1 p) (inv1 q)
+  := ap inv1 r.
+
+(** 3-道の段階での [inv] です。 *)
+(* from: originally defined by Hexirp *)
+Definition inv3@{i | }
+  {A : Type@{i}} {x y : A} {p q : Path@{i} x y}
+  {r s : Path@{i} p q} (t : Path@{i} r s)
+  : Path@{i} (inv2 r) (inv2 s)
+  := ap inv2 t.
+
 (** 一変数関数に対する [ap] です。 *)
 (* from: originally defined by Hexirp *)
 Definition ap1@{i j | }
