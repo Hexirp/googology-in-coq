@@ -27,6 +27,8 @@ Ltac refine_conc t := refine (@GiC.Base.conc@{_} _ _ t _ _ _).
 
 (** ** 汎用的な関数の定義 *)
 
+(** *** [conc] の変種 *)
+
 (** 1-道の段階での [conc] です。 *)
 (* from: originally defined by Hexirp *)
 Definition conc1@{i | }
@@ -54,6 +56,8 @@ Definition conc3@{i | }
   : Path@{i} (conc2 r s) (conc2 r' s')
   := match u with idpath => match t with idpath => idpath end end.
 
+(** *** [inv] の変種 *)
+
 (** 1-道の段階での [inv] です。 *)
 (* from: originally defined by Hexirp *)
 Definition inv1@{i | }
@@ -75,6 +79,8 @@ Definition inv3@{i | }
   {r s : Path@{i} p q} (t : Path@{i} r s)
   : Path@{i} (inv2 r) (inv2 s)
   := ap inv2 t.
+
+(** *** [ap] の変種 *)
 
 (** 一変数関数に対する [ap] です。 *)
 (* from: originally defined by Hexirp *)
