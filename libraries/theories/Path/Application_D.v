@@ -6,12 +6,19 @@
 
     具体的には、 [GiC.Path.Functoriality] にある定理の [apD] 版などを定義しています。 *)
 
+(** 必要なライブラリを要求します。 *)
+Require GiC.Base.
+Require GiC.Path.Base.
+Require GiC.Path.Transposition.
+Require GiC.Path.Transport.
+Require GiC.Path.Fibration.
+
 (** 必要なライブラリをインポートします。 *)
-Require Import GiC.Base.
-Require Import GiC.Path.Base.
-Require Import GiC.Path.Transposition.
-Require Import GiC.Path.Transport.
-Require Import GiC.Path.Fibration.
+Import GiC.Base.
+Import GiC.Path.Base.
+Import GiC.Path.Transposition.
+Import GiC.Path.Transport.
+Import GiC.Path.Fibration.
 
 (** 帰納原理 (induction principle) を生成しないように設定します。 *)
 Unset Elimination Schemes.
@@ -31,7 +38,7 @@ Set Default Goal Selector "!".
 
 (** ** 道にフォーカスした定理 *)
 
-(** apD_f_idpath です。 *)
+(** [apD f idpath] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L372 *)
 Definition apD_f_1@{i j | }
   {A : Type@{i}} {B : A -> Type@{j}} (f : forall x : A, B x) (x : A)
@@ -41,7 +48,7 @@ Proof.
   exact idpath.
 Defined.
 
-(** apD_f_conc_p_q です。 *)
+(** [apD f (conc p q)] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L860 *)
 Definition apD_f_cpq@{i j | }
   {A : Type@{i}} {B : A -> Type@{j}} (f : forall x : A, B x)
@@ -56,7 +63,7 @@ Proof.
   exact idpath.
 Defined.
 
-(** apD_f_inv_p です。 *)
+(** [apD f (inv p)] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L868 *)
 Definition apD_f_vp@{i j | }
   {A : Type@{i}} {B : A -> Type@{j}} (f : forall x : A, B x)
@@ -72,7 +79,7 @@ Defined.
 
 (** ** 関数にフォーカスした定理 *)
 
-(** apD_f_p です。 *)
+(** [apD f p] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L953 *)
 Definition apD_f_p@{i j | }
   {A : Type@{i}} {B : Type@{j}} {x y : A} (p: Path@{i} x y) (f : A -> B)
@@ -83,7 +90,7 @@ Proof.
   exact idpath.
 Defined.
 
-(** apD_comp_f_g_p です。 *)
+(** [apD (comp f g) p] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L959 *)
 Definition apD_comp_f_g_p@{i0 i1 j | }
   (A0 : Type@{i0}) (A1 : Type@{i1}) (B : A1 -> Type@{j})
@@ -97,7 +104,7 @@ Proof.
   exact idpath.
 Defined.
 
-(** apD_f_ap_g_p です。 *)
+(** [apD f (ap g p)] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L959 *)
 Definition apD_f_ap_g_p@{i0 i1 j | }
   (A0 : Type@{i0}) (A1 : Type@{i1}) (B : A1 -> Type@{j})
