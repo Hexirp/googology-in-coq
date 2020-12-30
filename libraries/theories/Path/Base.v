@@ -7,8 +7,11 @@
     具体的には、よく現れるパターンを一般化したタクティックや、 [GiC.Base] にある関数の単純なバリエーションなどを定義します。
  *)
 
+(** 必要なライブラリを要求します。 *)
+Require GiC.Base.
+
 (** 必要なライブラリをインポートします。 *)
-Require Import GiC.Base.
+Import GiC.Base.
 
 (** 帰納原理 (induction principle) を生成しないように設定します。 *)
 Unset Elimination Schemes.
