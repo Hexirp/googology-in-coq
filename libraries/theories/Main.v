@@ -80,3 +80,15 @@ Proof.
   cbv.
   exact idpath.
 Defined.
+
+(** conc_conc2_inv2_r_r_'conc_vp_p'_q です。 *)
+(* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L1019 *)
+Definition conc_conc2_inv2_r_r_'conc_vp_p'_q@{i | }
+  {A : Type@{i}} {x y : A} (p q : Path@{i} x y) (r : Path@{i} p q)
+  : Path@{i} (conc (conc2 (inv2 r) r) (conc_vp_p q)) (conc_vp_p p).
+Proof.
+  refine (match r with idpath => _ end).
+  refine (match p with idpath => _ end).
+  cbv.
+  exact idpath.
+Defined.
