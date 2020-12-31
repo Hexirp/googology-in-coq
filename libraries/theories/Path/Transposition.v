@@ -4,11 +4,18 @@
 
 (** [GiC.Path.Transposition] は、一次元の亜群の構造における等式について、その移項を行う補題を提供します。
 
-    具体的には、たとえば [p ∘ q = r] から [p = r ∘ q⁻¹] を導くという風な補題を組み合わせ的に網羅しています。
+    具体的には、たとえば [p • q = r] から [p = r • q⁻¹] を導くという風な補題を組み合わせ的に網羅しています。
  *)
 
+(** 必要なライブラリを要求します。 *)
+Require GiC.Base.
+Require GiC.Path.Base.
+Require GiC.Path.OneDim.
+
 (** 必要なライブラリをインポートします。 *)
-Require Import GiC.Base GiC.Path.Base GiC.Path.OneDim.
+Import GiC.Base.
+Import GiC.Path.Base.
+Import GiC.Path.OneDim.
 
 (** 帰納原理 (induction principle) を生成しないように設定します。 *)
 Unset Elimination Schemes.
@@ -28,13 +35,14 @@ Set Default Goal Selector "!".
 
 (** ** 三つの道が絡む移項に関する補題 *)
 
-(** Path_conc_r_p_q です。 *)
+(** [p = r⁻¹ • q -> r • p = q] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L176 *)
-Definition path_crp_q_L@{i | } {A : Type@{i}} {x y z : A}
+Definition fun_path_p_cvrq_path_crp_q@{i | } {A : Type@{i}} {x y z : A}
   : forall (p : Path@{i} x z) (q : Path@{i} y z) (r : Path@{i} y x),
     Path@{i} p (conc (inv r) q) -> Path@{i} (conc r p) q.
 Proof.
   move=> p q r.
+
   refine (let t := _ in t p).
   refine (match r
     as r'
@@ -57,13 +65,14 @@ Proof.
   exact (conc_1_p q).
 Defined.
 
-(** Path_conc_r_p_q です。 *)
+(** [r = q • p⁻¹ -> r • p = q] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L183 *)
-Definition path_crp_q_R@{i | } {A : Type@{i}} {x y z : A}
+Definition fun_path_r_cqvp_path_crp_q@{i | } {A : Type@{i}} {x y z : A}
   : forall (p : Path@{i} x z) (q : Path@{i} y z) (r : Path@{i} y x),
     Path@{i} r (conc q (inv p)) -> Path@{i} (conc r p) q.
 Proof.
   move=> p q r.
+
   refine (let t := _ in t q).
   refine (match p
     as p'
@@ -86,9 +95,9 @@ Proof.
   exact (conc_p_1 q').
 Defined.
 
-(** Path_conc_inv_r_p_q です。 *)
+(** [p = r • q -> r⁻¹ • p = q] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L190 *)
-Definition path_cvrp_q@{i | } {A : Type@{i}} {x y z : A}
+Definition fun_path_r_cqp_path_cvrp_q@{i | } {A : Type@{i}} {x y z : A}
   : forall (p : Path@{i} x z) (q : Path@{i} y z) (r : Path@{i} x y),
     Path@{i} p (conc r q) -> Path@{i} (conc (inv r) p) q.
 Proof.
@@ -115,9 +124,9 @@ Proof.
   exact (conc_1_p q').
 Defined.
 
-(** Path_conc_r_inv_p_q です。 *)
+(** [r = q • p -> r • p⁻¹ = q] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L197 *)
-Definition path_crvp_q@{i | } {A : Type@{i}} {x y z : A}
+Definition fun_path_r_cqp_path_crvp_q@{i | } {A : Type@{i}} {x y z : A}
   : forall (p : Path@{i} z x) (q : Path@{i} y z) (r : Path@{i} y x),
     Path@{i} r (conc q p) -> Path@{i} (conc r (inv p)) q.
 Proof.
