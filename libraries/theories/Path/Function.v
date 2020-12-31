@@ -7,8 +7,15 @@
     具体的には、 [GiC.Base] にある道の関数のバリエーションを提供します。それには [GiC.Path.Base] よりも複雑な関数を含みます。
  *)
 
+(** 必要なライブラリを要求します。 *)
+Require GiC.Base.
+Require GiC.Function.
+Require GiC.Path.Base.
+
 (** 必要なライブラリをインポートします。 *)
-Require Import GiC.Base GiC.Function GiC.Path.Base.
+Import GiC.Base.
+Import GiC.Function.
+Import GiC.Path.Base.
 
 (** 帰納原理 (induction principle) を生成しないように設定します。 *)
 Unset Elimination Schemes.
