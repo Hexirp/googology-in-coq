@@ -70,7 +70,7 @@ Definition apD_f_vp@{i j | }
   {x y : A} (p : Path@{i} x y)
   : Path@{j}
     (apD f (inv p))
-    (path_trpt_vp_u_v B p (f y) (f x) (inv (apD f p))).
+    (fun_Path_u_trpt_p_v_Path_trpt_vp_u_v B p (f y) (f x) (inv (apD f p))).
 Proof.
   refine (match p with idpath => _ end).
   cbv.
