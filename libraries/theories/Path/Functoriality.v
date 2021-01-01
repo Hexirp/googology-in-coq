@@ -224,7 +224,7 @@ Definition path_A_conc_cPA_vP@{i j | }
     Path@{j} (ap f q) (conc (conc (p x) (ap g q)) (inv (p y))).
 Proof.
   move=> q.
-  refine (path_q_crvp (p y) (ap f q) (conc (p x) (ap g q)) _).
+  refine (fun_Path_cqp_r_Path_q_crvp (p y) (ap f q) (conc (p x) (ap g q)) _).
   exact (path_cAP_cPA p q).
 Defined.
 
@@ -255,7 +255,7 @@ Definition path_A_conc_vP_cAP@{i j | }
     Path@{j} (ap f q) (conc (inv (p x)) (conc (ap g q) (p y))).
 Proof.
   move=> q.
-  refine (path_q_cvrp (conc (ap g q) (p y)) (ap f q) (p x) _).
+  refine (fun_Path_crq_p_Path_q_cvrp (conc (ap g q) (p y)) (ap f q) (p x) _).
   exact (path_cPA_cAP p q).
 Defined.
 
@@ -282,7 +282,7 @@ Definition path_A_conc_cPq_vP@{i | }
   : forall q : Path@{i} x y, Path@{i} (ap f q) (conc (conc (p x) q) (inv (p y))).
 Proof.
   move=> q.
-  refine (path_q_crvp (p y) (ap f q) (conc (p x) q) _).
+  refine (fun_Path_cqp_r_Path_q_crvp (p y) (ap f q) (conc (p x) q) _).
   exact (path_cAP_cPq p q).
 Defined.
 
@@ -309,7 +309,7 @@ Definition path_A_conc_vP_cqP@{i | }
   : forall q : Path@{i} x y, Path@{i} (ap f q) (conc (inv (p x)) (conc q (p y))).
 Proof.
   move=> q.
-  refine (path_q_cvrp (conc q (p y)) (ap f q) (p x) _).
+  refine (fun_Path_crq_p_Path_q_cvrp (conc q (p y)) (ap f q) (p x) _).
   exact (path_cPA_cqP p q).
 Defined.
 
