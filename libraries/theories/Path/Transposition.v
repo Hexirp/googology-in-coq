@@ -4,11 +4,18 @@
 
 (** [GiC.Path.Transposition] は、一次元の亜群の構造における等式について、その移項を行う補題を提供します。
 
-    具体的には、たとえば [p ∘ q = r] から [p = r ∘ q⁻¹] を導くという風な補題を組み合わせ的に網羅しています。
+    具体的には、たとえば [p • q = r] から [p = r • q⁻¹] を導くという風な補題を組み合わせ的に網羅しています。
  *)
 
+(** 必要なライブラリを要求します。 *)
+Require GiC.Base.
+Require GiC.Path.Base.
+Require GiC.Path.OneDim.
+
 (** 必要なライブラリをインポートします。 *)
-Require Import GiC.Base GiC.Path.Base GiC.Path.OneDim.
+Import GiC.Base.
+Import GiC.Path.Base.
+Import GiC.Path.OneDim.
 
 (** 帰納原理 (induction principle) を生成しないように設定します。 *)
 Unset Elimination Schemes.
@@ -28,13 +35,14 @@ Set Default Goal Selector "!".
 
 (** ** 三つの道が絡む移項に関する補題 *)
 
-(** Path_conc_r_p_q です。 *)
+(** [p = r⁻¹ • q -> r • p = q] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L176 *)
-Definition path_crp_q_L@{i | } {A : Type@{i}} {x y z : A}
+Definition fun_Path_p_cvrq_Path_crp_q@{i | } {A : Type@{i}} {x y z : A}
   : forall (p : Path@{i} x z) (q : Path@{i} y z) (r : Path@{i} y x),
     Path@{i} p (conc (inv r) q) -> Path@{i} (conc r p) q.
 Proof.
   move=> p q r.
+
   refine (let t := _ in t p).
   refine (match r
     as r'
@@ -57,13 +65,14 @@ Proof.
   exact (conc_1_p q).
 Defined.
 
-(** Path_conc_r_p_q です。 *)
+(** [r = q • p⁻¹ -> r • p = q] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L183 *)
-Definition path_crp_q_R@{i | } {A : Type@{i}} {x y z : A}
+Definition fun_Path_r_cqvp_Path_crp_q@{i | } {A : Type@{i}} {x y z : A}
   : forall (p : Path@{i} x z) (q : Path@{i} y z) (r : Path@{i} y x),
     Path@{i} r (conc q (inv p)) -> Path@{i} (conc r p) q.
 Proof.
   move=> p q r.
+
   refine (let t := _ in t q).
   refine (match p
     as p'
@@ -86,13 +95,14 @@ Proof.
   exact (conc_p_1 q').
 Defined.
 
-(** Path_conc_inv_r_p_q です。 *)
+(** [p = r • q -> r⁻¹ • p = q] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L190 *)
-Definition path_cvrp_q@{i | } {A : Type@{i}} {x y z : A}
+Definition fun_Path_r_cqp_Path_cvrp_q@{i | } {A : Type@{i}} {x y z : A}
   : forall (p : Path@{i} x z) (q : Path@{i} y z) (r : Path@{i} x y),
     Path@{i} p (conc r q) -> Path@{i} (conc (inv r) p) q.
 Proof.
   move=> p q r.
+
   refine (let t := _ in t q).
   refine (match r
     as r'
@@ -115,13 +125,14 @@ Proof.
   exact (conc_1_p q').
 Defined.
 
-(** Path_conc_r_inv_p_q です。 *)
+(** [r = q • p -> r • p⁻¹ = q] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L197 *)
-Definition path_crvp_q@{i | } {A : Type@{i}} {x y z : A}
+Definition fun_Path_r_cqp_Path_crvp_q@{i | } {A : Type@{i}} {x y z : A}
   : forall (p : Path@{i} z x) (q : Path@{i} y z) (r : Path@{i} y x),
     Path@{i} r (conc q p) -> Path@{i} (conc r (inv p)) q.
 Proof.
   move=> p q r.
+
   refine (let t := _ in t r).
   refine (match p
     as p'
@@ -144,13 +155,14 @@ Proof.
   exact (conc_p_1 q).
 Defined.
 
-(** Path_q_conc_r_p です。 *)
+(** [r⁻¹ • q = p -> q = r • p] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L204 *)
-Definition path_q_crp_L@{i | } {A : Type@{i}} {x y z : A}
+Definition fun_Path_cvrq_p_Path_q_crp@{i | } {A : Type@{i}} {x y z : A}
   : forall (p : Path@{i} x z) (q : Path@{i} y z) (r : Path@{i} y x),
     Path@{i} (conc (inv r) q) p -> Path@{i} q (conc r p).
 Proof.
   move=> p q r.
+
   refine (let t := _ in t p).
   refine (match r
     as r'
@@ -173,13 +185,14 @@ Proof.
   exact (inv (conc_1_p p')).
 Defined.
 
-(** Path_q_conc_r_p です。 *)
+(** [q • p⁻¹ = r -> q = r • p] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L211 *)
-Definition path_q_crp_R@{i | } {A : Type@{i}} {x y z : A}
+Definition fun_Path_cqvp_r_Path_q_crp@{i | } {A : Type@{i}} {x y z : A}
   : forall (p : Path@{i} x z) (q : Path@{i} y z) (r : Path@{i} y x),
     Path@{i} (conc q (inv p)) r -> Path@{i} q (conc r p).
 Proof.
   move=> p q r.
+
   refine (let t := _ in t q).
   refine (match p
     as p'
@@ -202,13 +215,14 @@ Proof.
   exact (inv (conc_p_1 r)).
 Defined.
 
-(** Path_q_conc_inv_r_p です。 *)
+(** [r • q = p -> q = r⁻¹ • p] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L218 *)
-Definition path_q_cvrp@{i | } {A : Type@{i}} {x y z : A}
+Definition fun_Path_crq_p_Path_q_cvrp@{i | } {A : Type@{i}} {x y z : A}
   : forall (p : Path@{i} x z) (q : Path@{i} y z) (r : Path@{i} x y),
     Path@{i} (conc r q) p -> Path@{i} q (conc (inv r) p).
 Proof.
   move=> p q r.
+
   refine (let t := _ in t q).
   refine (match r
     as r'
@@ -231,13 +245,14 @@ Proof.
   exact (inv (conc_p_1 p)).
 Defined.
 
-(** Path_q_conc_r_inv_p です。 *)
+(** [q • p = r -> q = r • p⁻¹] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L225 *)
-Definition path_q_crvp@{i | } {A : Type@{i}} {x y z : A}
+Definition fun_Path_cqp_r_Path_q_crvp@{i | } {A : Type@{i}} {x y z : A}
   : forall (p : Path@{i} z x) (q : Path@{i} y z) (r : Path@{i} y x),
     Path@{i} (conc q p) r -> Path@{i} q (conc r (inv p)).
 Proof.
   move=> p q r.
+
   refine (let t := _ in t r).
   refine (match p
     as p'
@@ -262,13 +277,14 @@ Defined.
 
 (** ** 二つの道が絡む移項に関する補題 *)
 
-(** Path_p_q です。 *)
+(** [p • q⁻¹ = 1 -> p = q] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L232 *)
-Definition path_p_q_L_L@{i | } {A : Type@{i}} {x y : A}
+Definition fun_Path_cpvq_1_Path_p_q@{i | } {A : Type@{i}} {x y : A}
   : forall (p : Path@{i} x y) (q : Path@{i} x y),
     Path@{i} (conc p (inv q)) idpath -> Path@{i} p q.
 Proof.
   move=> p q.
+
   refine (let t := _ in t p).
   refine (match q
     as q'
@@ -287,13 +303,14 @@ Proof.
   exact path_cp'v1_1.
 Defined.
 
-(** Path_p_q です。 *)
+(** [q⁻¹ • p = 1 -> p = q] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L239 *)
-Definition path_p_q_L_R@{i | } {A : Type@{i}} {x y : A}
+Definition fun_Path_cvqp_1_Path_p_q@{i | } {A : Type@{i}} {x y : A}
   : forall (p : Path@{i} x y) (q : Path@{i} x y),
     Path@{i} (conc (inv q) p) idpath -> Path@{i} p q.
 Proof.
   move=> p q.
+
   refine (let t := _ in t p).
   refine (match q
     as q'
@@ -312,13 +329,14 @@ Proof.
   exact path_cv1p'_1.
 Defined.
 
-(** Path_p_inv_q です。 *)
+(** [p • q = 1 -> p = q⁻¹] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L246 *)
-Definition path_p_vq_L@{i | } {A : Type@{i}} {x y : A}
+Definition fun_Path_cpq_1_Path_p_vq@{i | } {A : Type@{i}} {x y : A}
   : forall (p : Path@{i} x y) (q : Path@{i} y x),
     Path@{i} (conc p q) idpath -> Path@{i} p (inv q).
 Proof.
   move=> p q.
+
   refine (let t := _ in t p).
   refine (match q
     as q'
@@ -337,13 +355,14 @@ Proof.
   exact path_cp'1_1.
 Defined.
 
-(** Path_p_inv_q です。 *)
+(** [q • p = 1 -> p = q⁻¹] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L253 *)
-Definition path_p_vq_R@{i | } {A : Type@{i}} {x y : A}
+Definition fun_Path_cqp_1_Path_p_vq@{i | } {A : Type@{i}} {x y : A}
   : forall (p : Path@{i} x y) (q : Path@{i} y x),
     Path@{i} (conc q p) idpath -> Path@{i} p (inv q).
 Proof.
   move=> p q.
+
   refine (let t := _ in t p).
   refine (match q
     as q'
@@ -362,13 +381,14 @@ Proof.
   exact path_c1p'_1.
 Defined.
 
-(** Path_p_q です。 *)
+(** [1 = p⁻¹ • q -> p = q] です。 *)
 (* https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L260 *)
-Definition path_p_q_R_L@{i | } {A : Type@{i}} {x y : A}
+Definition fun_Path_1_cvpq_Path_p_q@{i | } {A : Type@{i}} {x y : A}
   : forall (p : Path@{i} x y) (q : Path@{i} x y),
     Path@{i} idpath (conc (inv p) q) -> Path@{i} p q.
 Proof.
   move=> p q.
+
   refine (let t := _ in t q).
   refine (match p
     as p'
@@ -387,13 +407,14 @@ Proof.
   exact (conc_1_p q').
 Defined.
 
-(** Path_p_q です。 *)
+(** [1 = q • p⁻¹ -> p = q] です。 *)
 (* https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L267 *)
-Definition path_p_q_R_R@{i | } {A : Type@{i}} {x y : A}
+Definition fun_Path_1_cqvp_Path_p_q@{i | } {A : Type@{i}} {x y : A}
   : forall (p : Path@{i} x y) (q : Path@{i} x y),
     Path@{i} idpath (conc q (inv p)) -> Path@{i} p q.
 Proof.
   move=> p q.
+
   refine (let t := _ in t q).
   refine (match p
     as p'
@@ -412,13 +433,14 @@ Proof.
   exact (conc_p_1 q').
 Defined.
 
-(** Path_inv_p_q です。 *)
+(** [1 = q • p -> p⁻¹ = q] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L274 *)
-Definition path_vp_q_L@{i | } {A : Type@{i}} {x y : A}
+Definition fun_Path_1_cqp_Path_vp_q@{i | } {A : Type@{i}} {x y : A}
   : forall (p : Path@{i} x y) (q : Path@{i} y x),
     Path@{i} idpath (conc q p) -> Path@{i} (inv p) q.
 Proof.
   move=> p q.
+
   refine (let t := _ in t q).
   refine (match p
     as p'
@@ -437,13 +459,14 @@ Proof.
   exact (conc_p_1 q').
 Defined.
 
-(** Path_inv_p_q です。 *)
+(** [1 = q • p -> p⁻¹ = q] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L281 *)
-Definition path_vp_q_R@{i | } {A : Type@{i}} {x y : A}
+Definition fun_Path_1_cpq_Path_vp_q@{i | } {A : Type@{i}} {x y : A}
   : forall (p : Path@{i} x y) (q : Path@{i} y x),
     Path@{i} idpath (conc p q) -> Path@{i} (inv p) q.
 Proof.
   move=> p q.
+
   refine (let t := _ in t q).
   refine (match p
     as p'
@@ -462,13 +485,17 @@ Proof.
   exact (conc_1_p q').
 Defined.
 
-(** Path_trpt_p_u_v です。 *)
+(** ** [trpt] での移項に関する補題 *)
+
+(** [Path u (trpt (inv p) v) -> Path (trpt p u) v] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L300 *)
-Definition path_trpt_p_u_v@{i j | } {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
+Definition fun_Path_u_trpt_vp_v_Path_trpt_p_u_v@{i j | }
+  {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
   : forall (p : Path@{i} x y) (u : P x) (v : P y),
     Path@{j} u (trpt (inv p) v) -> Path@{j} (trpt p u) v.
 Proof.
   move=> p u v.
+
   refine (let t := _ in t v).
   refine (match p
     as p'
@@ -483,13 +510,15 @@ Proof.
   exact idmap.
 Defined.
 
-(** Path_trpt_inv_p_u_v です。 *)
+(** [Path u (trpt p v) -> Path (trpt (inv p) u) v] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L308 *)
-Definition path_trpt_vp_u_v@{i j | } {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
+Definition fun_Path_u_trpt_p_v_Path_trpt_vp_u_v@{i j | }
+  {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
   : forall (p : Path@{i} y x) (u : P x) (v : P y),
     Path@{j} u (trpt p v) -> Path@{j} (trpt (inv p) u) v.
 Proof.
   move=> p u v.
+
   refine (let t := _ in t u).
   refine (match p
     as p'
@@ -504,13 +533,15 @@ Proof.
   exact idmap.
 Defined.
 
-(** Path_u_trpt_inv_p_v です。 *)
+(** [Path (trpt p u) v -> Path u (trpt (inv p) v)] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L316 *)
-Definition path_u_trpt_vp_v@{i j | } {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
+Definition fun_Path_trpt_p_u_v_Path_u_trpt_vp_v@{i j | }
+  {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
   : forall (p : Path@{i} x y) (u : P x) (v : P y),
     Path@{j} (trpt p u) v -> Path@{j} u (trpt (inv p) v).
 Proof.
   move=> p u v.
+
   refine (let t := _ in t v).
   refine (match p
     as p'
@@ -525,13 +556,15 @@ Proof.
   exact idmap.
 Defined.
 
-(** Path_u_trpt_p_v です。 *)
+(** [Path (trpt (inv p) u) v -> Path u (trpt p v)] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L324 *)
-Definition path_u_trpt_p_v@{i j | } {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
+Definition fun_Path_trpt_vp_u_v_Path_u_trpt_p_v@{i j | }
+  {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
   : forall (p : Path@{i} y x) (u : P x) (v : P y),
     Path@{j} (trpt (inv p) u) v -> Path@{j} u (trpt p v).
 Proof.
   move=> p u v.
+
   refine (let t := _ in t u).
   refine (match p
     as p'
@@ -548,122 +581,126 @@ Defined.
 
 (** ** 補題の証明の間の一貫性 (coherence) についての補題 *)
 
-(** inv_'path_trpt_p_u_v'_P_p_u_v_q です。 *)
+(** [inv (fun_Path_u_trpt_vp_v_Path_trpt_p_u_v P p u v q)] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L333 *)
-Definition inv_'path_trpt_p_u_v'_P_p_u_v_q@{i j | }
+Definition inv_'fun_Path_u_trpt_vp_v_Path_trpt_p_u_v'_P_p_u_v_q@{i j | }
   {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
   (p : Path@{i} x y) (u : P x) (v : P y)
   : forall q : Path@{j} u (trpt (inv p) v),
     Path@{j}
-      (inv (path_trpt_p_u_v P p u v q))
-      (path_u_trpt_p_v P p v u (inv q)).
+      (inv (fun_Path_u_trpt_vp_v_Path_trpt_p_u_v P p u v q))
+      (fun_Path_trpt_vp_u_v_Path_u_trpt_p_v P p v u (inv q)).
 Proof.
   move=> q.
+
   refine (let t := _ in t v q).
   refine (match p
     as p'
     in Path _ y'
     return forall (v' : P y') (q' : Path@{j} u (trpt (inv p') v')),
       Path@{j}
-        (inv (path_trpt_p_u_v P p' u v' q'))
-        (path_u_trpt_p_v P p' v' u (inv q'))
+        (inv (fun_Path_u_trpt_vp_v_Path_trpt_p_u_v P p' u v' q'))
+        (fun_Path_trpt_vp_u_v_Path_u_trpt_p_v P p' v' u (inv q'))
     with idpath => _
   end).
 
   simpl trpt.
   move=> v' q'.
-  simpl path_trpt_p_u_v.
-  simpl path_u_trpt_p_v.
+  simpl fun_Path_u_trpt_vp_v_Path_trpt_p_u_v.
+  simpl fun_Path_trpt_vp_u_v_Path_u_trpt_p_v.
   unfold idmap.
   exact idpath.
 Defined.
 
-(** inv_'path_trpt_vp_u_v'_P_p_u_v_q です。 *)
+(** [inv (fun_Path_u_trpt_p_v_Path_trpt_vp_u_v P p u v q)] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L340 *)
-Definition inv_'path_trpt_vp_u_v'_P_p_u_v_q@{i j | }
+Definition inv_'fun_Path_u_trpt_p_v_Path_trpt_vp_u_v'_P_p_u_v_q@{i j | }
   {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
   (p : Path@{i} y x) (u : P x) (v : P y)
   : forall q : Path@{j} u (trpt p v),
     Path@{j}
-      (inv (path_trpt_vp_u_v P p u v q))
-      (path_u_trpt_vp_v P p v u (inv q)).
+      (inv (fun_Path_u_trpt_p_v_Path_trpt_vp_u_v P p u v q))
+      (fun_Path_trpt_p_u_v_Path_u_trpt_vp_v P p v u (inv q)).
 Proof.
   move=> q.
+
   refine (let t := _ in t u q).
   refine (match p
     as p'
     in Path _ x'
     return forall (u' : P x') (q' : Path@{j} u' (trpt p' v)),
       Path@{j}
-        (inv (path_trpt_vp_u_v P p' u' v q'))
-        (path_u_trpt_vp_v P p' v u' (inv q'))
+        (inv (fun_Path_u_trpt_p_v_Path_trpt_vp_u_v P p' u' v q'))
+        (fun_Path_trpt_p_u_v_Path_u_trpt_vp_v P p' v u' (inv q'))
     with idpath => _
   end).
 
   simpl trpt.
   move=> u' q'.
-  simpl path_trpt_vp_u_v.
-  simpl path_u_trpt_vp_v.
+  simpl fun_Path_u_trpt_p_v_Path_trpt_vp_u_v.
+  simpl fun_Path_trpt_p_u_v_Path_u_trpt_vp_v.
   unfold idmap.
   exact idpath.
 Defined.
 
-(** inv_'path_u_trpt_vp_v'_P_p_u_v_q です。 *)
+(** [inv (fun_Path_trpt_p_u_v_Path_u_trpt_vp_v P p u v q)] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L347 *)
-Definition inv_'path_u_trpt_vp_v'_P_p_u_v_q@{i j | }
+Definition inv_'fun_Path_trpt_p_u_v_Path_u_trpt_vp_v'_P_p_u_v_q@{i j | }
   {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
   (p : Path@{i} x y) (u : P x) (v : P y)
   : forall q : Path@{j} (trpt p u) v,
     Path@{j}
-      (inv (path_u_trpt_vp_v P p u v q))
-      (path_trpt_vp_u_v P p v u (inv q)).
+      (inv (fun_Path_trpt_p_u_v_Path_u_trpt_vp_v P p u v q))
+      (fun_Path_u_trpt_p_v_Path_trpt_vp_u_v P p v u (inv q)).
 Proof.
   move=> q.
+
   refine (let t := _ in t v q).
   refine (match p
     as p'
     in Path _ y'
     return forall (v' : P y') (q' : Path@{j} (trpt p' u) v'),
       Path@{j}
-        (inv (path_u_trpt_vp_v P p' u v' q'))
-        (path_trpt_vp_u_v P p' v' u (inv q'))
+        (inv (fun_Path_trpt_p_u_v_Path_u_trpt_vp_v P p' u v' q'))
+        (fun_Path_u_trpt_p_v_Path_trpt_vp_u_v P p' v' u (inv q'))
     with idpath => _
   end).
 
   simpl trpt.
   move=> v' q'.
-  simpl path_u_trpt_vp_v.
-  simpl path_trpt_vp_u_v.
+  simpl fun_Path_trpt_p_u_v_Path_u_trpt_vp_v.
+  simpl fun_Path_u_trpt_p_v_Path_trpt_vp_u_v.
   unfold idmap.
   exact idpath.
 Defined.
 
-(** inv_'path_u_trpt_p_v'_P_p_u_v_q です。 *)
+(** [inv (fun_Path_trpt_vp_u_v_Path_u_trpt_p_v P p u v q)] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L354 *)
 Definition inv_'path_u_trpt_p_v'_P_p_u_v_q@{i j | }
   {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
   (p : Path@{i} y x) (u : P x) (v : P y)
   : forall q : Path@{j} (trpt (inv p) u) v,
     Path@{j}
-      (inv (path_u_trpt_p_v P p u v q))
-      (path_trpt_p_u_v P p v u (inv q)).
+      (inv (fun_Path_trpt_vp_u_v_Path_u_trpt_p_v P p u v q))
+      (fun_Path_u_trpt_vp_v_Path_trpt_p_u_v P p v u (inv q)).
 Proof.
   move=> q.
+
   refine (let t := _ in t u q).
   refine (match p
     as p'
     in Path _ x'
     return forall (u' : P x') (q' : Path@{j} (trpt (inv p') u') v),
       Path@{j}
-        (inv (path_u_trpt_p_v P p' u' v q'))
-        (path_trpt_p_u_v P p' v u' (inv q'))
+        (inv (fun_Path_trpt_vp_u_v_Path_u_trpt_p_v P p' u' v q'))
+        (fun_Path_u_trpt_vp_v_Path_trpt_p_u_v P p' v u' (inv q'))
     with idpath => _
   end).
 
   simpl trpt.
   move=> u' q'.
-  simpl path_u_trpt_p_v.
-  simpl path_trpt_p_u_v.
+  simpl fun_Path_trpt_vp_u_v_Path_u_trpt_p_v.
+  simpl fun_Path_u_trpt_vp_v_Path_trpt_p_u_v.
   unfold idmap.
   exact idpath.
 Defined.
