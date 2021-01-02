@@ -196,14 +196,16 @@ Proof.
   exact idpath.
 Defined.
 
-(** [conc (ap (trpt p) (path_u_trpt_vp_v P p u v e)) (trpt_p_trpt_vp_u P p v)] です。 *)
+(** [conc (ap (trpt p) (fun_Path_trpt_p_u_v_Path_u_trpt_vp_v P p u v e)) (trpt_p_trpt_vp_u P p v)] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L693 *)
-Definition conc_ap_trpt_p_'path_u_trpt_vp_v'_P_p_u_v_e_'trpt_p_trpt_vp_u'_P_p_v
+Definition conc_ap_trpt_p_'fun_Path_trpt_p_u_v_Path_u_trpt_vp_v'_P_p_u_v_e_'trpt_p_trpt_vp_u'_P_p_v
   @{i j | }
   {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
   (p : Path@{i} x y) (u : P x) (v : P y) (e : Path@{j} (trpt p u) v)
   : Path@{j}
-    (conc (ap (trpt p) (path_u_trpt_vp_v P p u v e)) (trpt_p_trpt_vp_u P p v))
+    (conc
+      (ap (trpt p) (fun_Path_trpt_p_u_v_Path_u_trpt_vp_v P p u v e))
+      (trpt_p_trpt_vp_u P p v))
     e.
 Proof.
   refine (match e with idpath => _ end).
@@ -212,13 +214,13 @@ Proof.
   refine idpath.
 Defined.
 
-(** [path_u_trpt_vp_v P p u (trpt p u) idpath] です。 *)
+(** [fun_Path_trpt_p_u_v_Path_u_trpt_vp_v P p u (trpt p u) idpath] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L701 *)
-Definition _'path_u_trpt_vp_v'_P_p_u_trpt_p_u_1@{i j | }
+Definition _'fun_Path_trpt_p_u_v_Path_u_trpt_vp_v'_P_p_u_trpt_p_u_1@{i j | }
   {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
   (p : Path@{i} x y) (u : P x)
   : Path@{j}
-    (path_u_trpt_vp_v P p u (trpt p u) idpath)
+    (fun_Path_trpt_p_u_v_Path_u_trpt_vp_v P p u (trpt p u) idpath)
     (inv (trpt_vp_trpt_p_u P p u)).
 Proof.
   refine (match p with idpath => _ end).

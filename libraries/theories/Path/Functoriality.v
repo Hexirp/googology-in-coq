@@ -224,7 +224,7 @@ Definition path_afq_conc_conc_px_agq_inv_py@{i j | }
     Path@{j} (ap f q) (conc (conc (p x) (ap g q)) (inv (p y))).
 Proof.
   move=> q.
-  refine (path_q_crvp (p y) (ap f q) (conc (p x) (ap g q)) _).
+  refine (fun_Path_cqp_r_Path_q_crvp (p y) (ap f q) (conc (p x) (ap g q)) _).
   exact (path_conc_afq_py_conc_px_agq p q).
 Defined.
 
@@ -255,7 +255,7 @@ Definition path_afq_conc_inv_px_conc_agq_py@{i j | }
     Path@{j} (ap f q) (conc (inv (p x)) (conc (ap g q) (p y))).
 Proof.
   move=> q.
-  refine (path_q_cvrp (conc (ap g q) (p y)) (ap f q) (p x) _).
+  refine (fun_Path_crq_p_Path_q_cvrp (conc (ap g q) (p y)) (ap f q) (p x) _).
   exact (path_conc_px_afq_conc_agq_py p q).
 Defined.
 
@@ -282,7 +282,7 @@ Definition path_afq_conc_conc_px_q_inv_py@{i | }
   : forall q : Path@{i} x y, Path@{i} (ap f q) (conc (conc (p x) q) (inv (p y))).
 Proof.
   move=> q.
-  refine (path_q_crvp (p y) (ap f q) (conc (p x) q) _).
+  refine (fun_Path_cqp_r_Path_q_crvp (p y) (ap f q) (conc (p x) q) _).
   exact (path_conc_afq_py_conc_px_q p q).
 Defined.
 
@@ -309,7 +309,7 @@ Definition path_afq_conc_inv_px_conc_q_py@{i | }
   : forall q : Path@{i} x y, Path@{i} (ap f q) (conc (inv (p x)) (conc q (p y))).
 Proof.
   move=> q.
-  refine (path_q_cvrp (conc q (p y)) (ap f q) (p x) _).
+  refine (fun_Path_crq_p_Path_q_cvrp (conc q (p y)) (ap f q) (p x) _).
   exact (path_conc_px_afq_conc_q_py p q).
 Defined.
 
