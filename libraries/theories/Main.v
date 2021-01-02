@@ -113,7 +113,7 @@ Definition fun_Path_p_q_Path_cpr_cqr@{i | }
 
 (** [Path (conc p q) (conc p r) -> Path q r] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L1037 *)
-Definition fun_Path_cpr_cqr_Path_p_q@{i | }
+Definition fun_Path_cpq_cpr_Path_q_r@{i | }
   {A : Type@{i}} {x y z : A} (p : Path@{i} x y) (q r : Path@{i} y z)
   : Path@{i} (conc p q) (conc p r) -> Path@{i} q r.
 Proof.
