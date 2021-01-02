@@ -7,8 +7,11 @@
     具体的には、任意の型 [A] と [Path A] が [idpath] と [conc] と [inv] によって亜群になることに由来する、ある二つの 1-道の間に道が存在するという形式の定理を示しています。
  *)
 
+(** 必要なライブラリを要求します。 *)
+Require GiC.Base.
+
 (** 必要なライブラリをインポートします。 *)
-Require Import GiC.Base.
+Import GiC.Base.
 
 (** 帰納原理 (induction principle) を生成しないように設定します。 *)
 Unset Elimination Schemes.
