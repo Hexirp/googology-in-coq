@@ -82,6 +82,7 @@ Definition conc_ap_f_cpq_r@{i j | }
     Path@{j} (conc (ap f (conc p q)) r) (conc (ap f p) (conc (ap f q) r)).
 Proof.
   move=> p q r.
+
   refine (let t := _ in t r).
   refine (match q
     as q'
@@ -99,6 +100,7 @@ Proof.
         (conc (ap f p') (conc (ap f idpath) r'))
     with idpath => _
   end).
+
   move=> r'.
   change (Path@{j} (conc (conc idpath idpath) r') (conc idpath (conc idpath r'))).
   exact (conc_cpq_r idpath idpath r').
