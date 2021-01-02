@@ -4,11 +4,17 @@
 
 (** [GiC.Path.Transport_2] は、 [trpt2] に関する定理を提供します。 *)
 
+(** 必要なライブラリを要求します。 *)
+Require GiC.Base.
+Require GiC.Path.Base.
+Require GiC.Path.Function.
+Require GiC.Path.OneDim.
+
 (** 必要なライブラリをインポートします。 *)
-Require Import GiC.Base.
-Require Import GiC.Path.Base.
-Require Import GiC.Path.Function.
-Require Import GiC.Path.OneDim.
+Import GiC.Base.
+Import GiC.Path.Base.
+Import GiC.Path.Function.
+Import GiC.Path.OneDim.
 
 (** 帰納原理 (induction principle) を生成しないように設定します。 *)
 Unset Elimination Schemes.
