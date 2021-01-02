@@ -190,6 +190,7 @@ Proof.
         (ap (trpt (inv p')) (trpt_p_trpt_vp_u P p' u'))
     with idpath => _
   end).
+
   move=> u'.
   cbv.
   exact idpath.
@@ -288,6 +289,7 @@ Definition ap_trpt_p_ap_trpt_vp_q@{i j | }
     (conc (conc (trpt_p_trpt_vp_u P p y) q) (inv (trpt_p_trpt_vp_u P p y'))).
 Proof.
   refine (match q with idpath => _ end).
+
   refine (let t := _ in t y).
   refine (match p
     as p_
