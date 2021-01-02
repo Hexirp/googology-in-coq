@@ -7,8 +7,15 @@
     具体的には、たとえば [p ∘ q = r] から [p = r ∘ q⁻¹] を導くという風な補題を組み合わせ的に網羅しています。
  *)
 
+(** 必要なライブラリを要求します。 *)
+Require GiC.Base.
+Require GiC.Path.Base.
+Require GiC.Path.OneDim.
+
 (** 必要なライブラリをインポートします。 *)
-Require Import GiC.Base GiC.Path.Base GiC.Path.OneDim.
+Import GiC.Base.
+Import GiC.Path.Base.
+Import GiC.Path.OneDim.
 
 (** 帰納原理 (induction principle) を生成しないように設定します。 *)
 Unset Elimination Schemes.
