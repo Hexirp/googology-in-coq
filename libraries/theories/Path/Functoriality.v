@@ -313,8 +313,6 @@ Proof.
   exact (path_cPA_cqP p q).
 Defined.
 
-(** ** [ap] の自然性の定理に道がくっついた変種 *)
-
 (** [Path (conc (conc r (ap f q)) (conc (p y) s)) (conc (conc r (p x)) (conc (ap g q) s))] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L475 *)
 Definition path_conc_crA_cPs_conc_crP_cAs@{i j | }
