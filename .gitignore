@@ -33,4 +33,7 @@ nlia.cache
 nra.cache
 
 # for coqdoc
-/libraries/docs/
+libraries/docs/
+
+# Prevents the inclusion of files licensed under the LGPL-2.1.
+libraries/coqdoc/default.css
