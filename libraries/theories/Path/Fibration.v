@@ -6,10 +6,15 @@
 
     具体的には、依存型が [const] だというような時の定理などを定義しています。ここで名前が fibration になっている理由は、依存型を homotopy type theory 的に考えると fibration に対応するためです。 *)
 
+(** 必要なライブラリを要求します。 *)
+Require GiC.Base.
+Require GiC.Path.Base.
+Require GiC.Path.Function.
+
 (** 必要なライブラリをインポートします。 *)
-Require Import GiC.Base.
-Require Import GiC.Path.Base.
-Require Import GiC.Path.Function.
+Import GiC.Base.
+Import GiC.Path.Base.
+Import GiC.Path.Function.
 
 (** 帰納原理 (induction principle) を生成しないように設定します。 *)
 Unset Elimination Schemes.
