@@ -7,8 +7,11 @@
     具体的には、変数の抽象化と適用だけで表現できるような様々な高階関数と、それらに関わる単純な等式を提供します。
  *)
 
+(** 必要なライブラリを要求します。 *)
+Require GiC.Base.
+
 (** 必要なライブラリをインポートします。 *)
-Require Import GiC.Base.
+Import GiC.Base.
 
 (** 帰納原理 (induction principle) を生成しないように設定します。 *)
 Unset Elimination Schemes.
