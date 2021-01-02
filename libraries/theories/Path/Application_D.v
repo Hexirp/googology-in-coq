@@ -6,12 +6,19 @@
 
     具体的には、 [GiC.Path.Functoriality] にある定理の [apD] 版などを定義しています。 *)
 
+(** 必要なライブラリを要求します。 *)
+Require GiC.Base.
+Require GiC.Path.Base.
+Require GiC.Path.Transposition.
+Require GiC.Path.Transport.
+Require GiC.Path.Fibration.
+
 (** 必要なライブラリをインポートします。 *)
-Require Import GiC.Base.
-Require Import GiC.Path.Base.
-Require Import GiC.Path.Transposition.
-Require Import GiC.Path.Transport.
-Require Import GiC.Path.Fibration.
+Import GiC.Base.
+Import GiC.Path.Base.
+Import GiC.Path.Transposition.
+Import GiC.Path.Transport.
+Import GiC.Path.Fibration.
 
 (** 帰納原理 (induction principle) を生成しないように設定します。 *)
 Unset Elimination Schemes.
