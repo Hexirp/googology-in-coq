@@ -128,3 +128,21 @@ Proof.
     +
       exact (conc_vp_cpq p r).
 Defined.
+
+(** [Path (conc p r) (conc q r) -> Path p q] です。 *)
+(* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L1041 *)
+Definition fun_Path_cpr_cqr_Path_p_q@{i | }
+  {A : Type@{i}} {x y z : A} (p q : Path@{i} x y) (r : Path@{i} y z)
+  : Path@{i} (conc p r) (conc q r) -> Path@{i} p q.
+Proof.
+  refine (fun h => _).
+  refine_conc (conc (conc p r) (inv r)).
+  -
+    exact (inv (conc_cpq_vq p r)).
+  -
+    refine_conc (conc (conc q r) (inv r)).
+    +
+      refine (fun_Path_p_q_Path_cpr_cqr (inv r) h).
+    +
+      exact (conc_cpq_vq q r).
+Defined.
