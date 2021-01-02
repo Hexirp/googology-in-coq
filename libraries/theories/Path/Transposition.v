@@ -4,7 +4,7 @@
 
 (** [GiC.Path.Transposition] は、一次元の亜群の構造における等式について、その移項を行う補題を提供します。
 
-    具体的には、たとえば [p ∘ q = r] から [p = r ∘ q⁻¹] を導くという風な補題を組み合わせ的に網羅しています。
+    具体的には、たとえば [p • q = r] から [p = r • q⁻¹] を導くという風な補題を組み合わせ的に網羅しています。
  *)
 
 (** 必要なライブラリを要求します。 *)
@@ -35,7 +35,7 @@ Set Default Goal Selector "!".
 
 (** ** 三つの道が絡む移項に関する補題 *)
 
-(** Path_conc_r_p_q です。 *)
+(** [p = r⁻¹ • q -> r • p = q] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L176 *)
 Definition path_crp_q_L@{i | } {A : Type@{i}} {x y z : A}
   : forall (p : Path@{i} x z) (q : Path@{i} y z) (r : Path@{i} y x),
@@ -64,7 +64,7 @@ Proof.
   exact (conc_1_p q).
 Defined.
 
-(** Path_conc_r_p_q です。 *)
+(** [r = q • p⁻¹ -> r • p = q] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L183 *)
 Definition path_crp_q_R@{i | } {A : Type@{i}} {x y z : A}
   : forall (p : Path@{i} x z) (q : Path@{i} y z) (r : Path@{i} y x),
@@ -93,7 +93,7 @@ Proof.
   exact (conc_p_1 q').
 Defined.
 
-(** Path_conc_inv_r_p_q です。 *)
+(** [p = r • q -> r⁻¹ • p = q] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L190 *)
 Definition path_cvrp_q@{i | } {A : Type@{i}} {x y z : A}
   : forall (p : Path@{i} x z) (q : Path@{i} y z) (r : Path@{i} x y),
@@ -122,7 +122,7 @@ Proof.
   exact (conc_1_p q').
 Defined.
 
-(** Path_conc_r_inv_p_q です。 *)
+(** [r = q • p -> r • p⁻¹ = q] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L197 *)
 Definition path_crvp_q@{i | } {A : Type@{i}} {x y z : A}
   : forall (p : Path@{i} z x) (q : Path@{i} y z) (r : Path@{i} y x),
@@ -151,7 +151,7 @@ Proof.
   exact (conc_p_1 q).
 Defined.
 
-(** Path_q_conc_r_p です。 *)
+(** [r⁻¹ • q = p -> q = r • p] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L204 *)
 Definition path_q_crp_L@{i | } {A : Type@{i}} {x y z : A}
   : forall (p : Path@{i} x z) (q : Path@{i} y z) (r : Path@{i} y x),
@@ -180,7 +180,7 @@ Proof.
   exact (inv (conc_1_p p')).
 Defined.
 
-(** Path_q_conc_r_p です。 *)
+(** [q • p⁻¹ = r -> q = r • p] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L211 *)
 Definition path_q_crp_R@{i | } {A : Type@{i}} {x y z : A}
   : forall (p : Path@{i} x z) (q : Path@{i} y z) (r : Path@{i} y x),
@@ -209,7 +209,7 @@ Proof.
   exact (inv (conc_p_1 r)).
 Defined.
 
-(** Path_q_conc_inv_r_p です。 *)
+(** [r • q = p -> q = r⁻¹ • p] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L218 *)
 Definition path_q_cvrp@{i | } {A : Type@{i}} {x y z : A}
   : forall (p : Path@{i} x z) (q : Path@{i} y z) (r : Path@{i} x y),
@@ -238,7 +238,7 @@ Proof.
   exact (inv (conc_p_1 p)).
 Defined.
 
-(** Path_q_conc_r_inv_p です。 *)
+(** [q • p = r -> q = r • p⁻¹] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L225 *)
 Definition path_q_crvp@{i | } {A : Type@{i}} {x y z : A}
   : forall (p : Path@{i} z x) (q : Path@{i} y z) (r : Path@{i} y x),
@@ -269,7 +269,7 @@ Defined.
 
 (** ** 二つの道が絡む移項に関する補題 *)
 
-(** Path_p_q です。 *)
+(** [p • q⁻¹ = 1 -> p = q] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L232 *)
 Definition path_p_q_L_L@{i | } {A : Type@{i}} {x y : A}
   : forall (p : Path@{i} x y) (q : Path@{i} x y),
@@ -294,7 +294,7 @@ Proof.
   exact path_cp'v1_1.
 Defined.
 
-(** Path_p_q です。 *)
+(** [q⁻¹ • p = 1 -> p = q] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L239 *)
 Definition path_p_q_L_R@{i | } {A : Type@{i}} {x y : A}
   : forall (p : Path@{i} x y) (q : Path@{i} x y),
@@ -319,7 +319,7 @@ Proof.
   exact path_cv1p'_1.
 Defined.
 
-(** Path_p_inv_q です。 *)
+(** [p • q = 1 -> p = q⁻¹] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L246 *)
 Definition path_p_vq_L@{i | } {A : Type@{i}} {x y : A}
   : forall (p : Path@{i} x y) (q : Path@{i} y x),
@@ -344,7 +344,7 @@ Proof.
   exact path_cp'1_1.
 Defined.
 
-(** Path_p_inv_q です。 *)
+(** [q • p = 1 -> p = q⁻¹] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L253 *)
 Definition path_p_vq_R@{i | } {A : Type@{i}} {x y : A}
   : forall (p : Path@{i} x y) (q : Path@{i} y x),
@@ -369,7 +369,7 @@ Proof.
   exact path_c1p'_1.
 Defined.
 
-(** Path_p_q です。 *)
+(** [1 = p⁻¹ • q -> p = q] です。 *)
 (* https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L260 *)
 Definition path_p_q_R_L@{i | } {A : Type@{i}} {x y : A}
   : forall (p : Path@{i} x y) (q : Path@{i} x y),
@@ -394,7 +394,7 @@ Proof.
   exact (conc_1_p q').
 Defined.
 
-(** Path_p_q です。 *)
+(** [1 = q • p⁻¹ -> p = q] です。 *)
 (* https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L267 *)
 Definition path_p_q_R_R@{i | } {A : Type@{i}} {x y : A}
   : forall (p : Path@{i} x y) (q : Path@{i} x y),
@@ -419,7 +419,7 @@ Proof.
   exact (conc_p_1 q').
 Defined.
 
-(** Path_inv_p_q です。 *)
+(** [1 = q • p -> p⁻¹ = q] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L274 *)
 Definition path_vp_q_L@{i | } {A : Type@{i}} {x y : A}
   : forall (p : Path@{i} x y) (q : Path@{i} y x),
@@ -444,7 +444,7 @@ Proof.
   exact (conc_p_1 q').
 Defined.
 
-(** Path_inv_p_q です。 *)
+(** [1 = q • p -> p⁻¹ = q] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L281 *)
 Definition path_vp_q_R@{i | } {A : Type@{i}} {x y : A}
   : forall (p : Path@{i} x y) (q : Path@{i} y x),
@@ -469,7 +469,9 @@ Proof.
   exact (conc_1_p q').
 Defined.
 
-(** Path_trpt_p_u_v です。 *)
+(** ** [trpt] での移項に関する補題 *)
+
+(** [Path u (trpt (inv p) v) -> Path (trpt p u) v] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L300 *)
 Definition path_trpt_p_u_v@{i j | } {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
   : forall (p : Path@{i} x y) (u : P x) (v : P y),
@@ -490,7 +492,7 @@ Proof.
   exact idmap.
 Defined.
 
-(** Path_trpt_inv_p_u_v です。 *)
+(** [Path u (trpt p v) -> Path (trpt (inv p) u) v] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L308 *)
 Definition path_trpt_vp_u_v@{i j | } {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
   : forall (p : Path@{i} y x) (u : P x) (v : P y),
@@ -511,7 +513,7 @@ Proof.
   exact idmap.
 Defined.
 
-(** Path_u_trpt_inv_p_v です。 *)
+(** [Path (trpt p u) v -> Path u (trpt (inv p) v)] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L316 *)
 Definition path_u_trpt_vp_v@{i j | } {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
   : forall (p : Path@{i} x y) (u : P x) (v : P y),
@@ -532,7 +534,7 @@ Proof.
   exact idmap.
 Defined.
 
-(** Path_u_trpt_p_v です。 *)
+(** [Path (trpt (inv p) u) v -> Path u (trpt p v)] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L324 *)
 Definition path_u_trpt_p_v@{i j | } {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
   : forall (p : Path@{i} y x) (u : P x) (v : P y),
@@ -555,7 +557,7 @@ Defined.
 
 (** ** 補題の証明の間の一貫性 (coherence) についての補題 *)
 
-(** inv_'path_trpt_p_u_v'_P_p_u_v_q です。 *)
+(** [inv (path_trpt_p_u_v P p u v q)] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L333 *)
 Definition inv_'path_trpt_p_u_v'_P_p_u_v_q@{i j | }
   {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
@@ -585,7 +587,7 @@ Proof.
   exact idpath.
 Defined.
 
-(** inv_'path_trpt_vp_u_v'_P_p_u_v_q です。 *)
+(** [inv (path_trpt_vp_u_v P p u v q)] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L340 *)
 Definition inv_'path_trpt_vp_u_v'_P_p_u_v_q@{i j | }
   {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
@@ -615,7 +617,7 @@ Proof.
   exact idpath.
 Defined.
 
-(** inv_'path_u_trpt_vp_v'_P_p_u_v_q です。 *)
+(** [inv (path_u_trpt_vp_v P p u v q)] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L347 *)
 Definition inv_'path_u_trpt_vp_v'_P_p_u_v_q@{i j | }
   {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
@@ -645,7 +647,7 @@ Proof.
   exact idpath.
 Defined.
 
-(** inv_'path_u_trpt_p_v'_P_p_u_v_q です。 *)
+(** [inv (path_u_trpt_p_v P p u v q)] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L354 *)
 Definition inv_'path_u_trpt_p_v'_P_p_u_v_q@{i j | }
   {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
