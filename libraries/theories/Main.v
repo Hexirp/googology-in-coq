@@ -24,6 +24,8 @@ Set Default Proof Mode "Classic".
 (** ビュレットを使用しないときにエラーになるように設定します。 *)
 Set Default Goal Selector "!".
 
+(** ** 高階での一貫性 (coherence) に関する定理 *)
+
 (** conc2_ap_f_p_ap_g_p です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L984 *)
 Definition conc2_ap_f_p_ap_g_p@{i j | }
@@ -92,3 +94,12 @@ Proof.
   cbv.
   exact idpath.
 Defined.
+
+(** ** 髭付け (wiskering) *)
+
+(** [Path (conc p q) (p r)] です。 *)
+(* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L1027 *)
+Definition path_cpq_cpr@{i | }
+  {A : Type@{i}} {x y z : A} (p : Path@{i} x y) {q r : Path@{i} y z}
+  : Path@{i} q r -> Path@{i} (conc p q) (conc p r)
+  := fun h => conc2 idpath h.
