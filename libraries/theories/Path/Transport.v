@@ -7,12 +7,19 @@
     具体的には、 [trpt] に関する基本的な定理や、高度な一貫性 (coherence) に関する定理、依存型を対象とする [trpt] の変種に関する定理などを含みます。
  *)
 
+(** 必要なライブラリを要求します。 *)
+Require GiC.Base.
+Require GiC.Path.Base.
+Require GiC.Path.Function.
+Require GiC.Path.OneDim.
+Require GiC.Path.Transposition.
+
 (** 必要なライブラリをインポートします。 *)
-Require Import GiC.Base.
-Require Import GiC.Path.Base.
-Require Import GiC.Path.Function.
-Require Import GiC.Path.OneDim.
-Require Import GiC.Path.Transposition.
+Import GiC.Base.
+Import GiC.Path.Base.
+Import GiC.Path.Function.
+Import GiC.Path.OneDim.
+Import GiC.Path.Transposition.
 
 (** 帰納原理 (induction principle) を生成しないように設定します。 *)
 Unset Elimination Schemes.
@@ -32,7 +39,7 @@ Set Default Goal Selector "!".
 
 (** ** 道による輸送の基本的な定理 *)
 
-(** trpt_idpath_u です。 *)
+(** [trpt idpath u] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L645 *)
 Definition trpt_1_u@{i j | }
   {A : Type@{i}} (P : A -> Type@{j}) {x : A} (u : P x)
@@ -42,7 +49,7 @@ Proof.
   exact idpath.
 Defined.
 
-(** trpt_conc_p_q_u です。 *)
+(** [trpt (conc p q) u] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L649 *)
 Definition trpt_cpq_u@{i j | }
   {A : Type@{i}} (P : A -> Type@{j}) {x y z : A}
@@ -55,7 +62,7 @@ Proof.
   exact idpath.
 Defined.
 
-(** trpt_p_trpt_inv_p_u です。 *)
+(** [trpt p (trpt (inv p) u)] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L655 *)
 Definition trpt_p_trpt_vp_u@{i j | }
   {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
@@ -74,7 +81,7 @@ Proof.
   exact idpath.
 Defined.
 
-(** trpt_inv_p_trpt_p_u です。 *)
+(** [trpt (inv p) (trpt p u)] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L660 *)
 Definition trpt_vp_trpt_p_u@{i j | }
   {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
@@ -95,7 +102,7 @@ Defined.
 
 (** ** 輸送についての一貫性 (coherence) に関する補題 *)
 
-(** trpt_conc_p_conc_q_r_u_Path_L_R を定義するためのセクションです。 *)
+(** [trpt_conc_p_conc_q_r_u_Path_L_R] を定義するためのセクションです。 *)
 Section trpt_conc_p_conc_q_r_u_Path_L_R.
   Universe i j.
 
@@ -107,7 +114,7 @@ Section trpt_conc_p_conc_q_r_u_Path_L_R.
   Context (r : Path@{i} z w).
   Context (u : P x).
 
-  (** trpt_conc_p_conc_q_r_u です。 *)
+  (** [trpt (conc p (conc q r)) u] です。 *)
   (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L667 *)
   Definition trpt_conc_p_conc_q_r_u_L
     : Path@{j} (trpt (conc p (conc q r)) u) (trpt r (trpt q (trpt p u))).
@@ -123,7 +130,7 @@ Section trpt_conc_p_conc_q_r_u_Path_L_R.
       exact (ap (trpt r) (trpt_cpq_u P p q u)).
   Defined.
 
-  (** trpt_conc_p_conc_q_r_u です。 *)
+  (** [trpt (conc p (conc q r)) u] です。 *)
   (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L667 *)
   Definition trpt_conc_p_conc_q_r_u_R
     : Path@{j} (trpt (conc p (conc q r)) u) (trpt r (trpt q (trpt p u))).
@@ -135,7 +142,7 @@ Section trpt_conc_p_conc_q_r_u_Path_L_R.
       exact (trpt_cpq_u P q r (trpt p u)).
   Defined.
 
-  (** Path_'trpt_conc_p_conc_q_r_u_L'_'trpt_conc_p_conc_q_r_u_R' です。 *)
+  (** [Path trpt_conc_p_conc_q_r_u_L trpt_conc_p_conc_q_r_u_R] です。 *)
   (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L667 *)
   Definition trpt_conc_p_conc_q_r_u_Path_L_R
     : Path@{j} trpt_conc_p_conc_q_r_u_L trpt_conc_p_conc_q_r_u_R.
@@ -150,7 +157,7 @@ Section trpt_conc_p_conc_q_r_u_Path_L_R.
   Defined.
 End trpt_conc_p_conc_q_r_u_Path_L_R.
 
-(** 'trpt_p_trpt_vp_u'_P_p_trpt_p_u です。 *)
+(** [trpt_p_trpt_vp_u P p (trpt p u)] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L679 *)
 Definition _'trpt_p_trpt_vp_u'_P_p_trpt_p_u@{i j | }
   {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
@@ -164,7 +171,7 @@ Proof.
   exact idpath.
 Defined.
 
-(** 'trpt_vp_trpt_p_u'_P_p_trpt_vp_u です。 *)
+(** [trpt_vp_trpt_p_u P p (trpt (inv p) u)] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L679 *)
 Definition _'trpt_vp_trpt_p_u'_P_p_trpt_vp_u@{i j | }
   {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
@@ -183,19 +190,22 @@ Proof.
         (ap (trpt (inv p')) (trpt_p_trpt_vp_u P p' u'))
     with idpath => _
   end).
+
   move=> u'.
   cbv.
   exact idpath.
 Defined.
 
-(** conc_ap_trpt_p_'path_u_trpt_vp_v'_P_p_u_v_e_'trpt_p_trpt_vp_u'_P_p_v です。 *)
+(** [conc (ap (trpt p) (fun_Path_trpt_p_u_v_Path_u_trpt_vp_v P p u v e)) (trpt_p_trpt_vp_u P p v)] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L693 *)
-Definition conc_ap_trpt_p_'path_u_trpt_vp_v'_P_p_u_v_e_'trpt_p_trpt_vp_u'_P_p_v
+Definition conc_ap_trpt_p_'fun_Path_trpt_p_u_v_Path_u_trpt_vp_v'_P_p_u_v_e_'trpt_p_trpt_vp_u'_P_p_v
   @{i j | }
   {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
   (p : Path@{i} x y) (u : P x) (v : P y) (e : Path@{j} (trpt p u) v)
   : Path@{j}
-    (conc (ap (trpt p) (path_u_trpt_vp_v P p u v e)) (trpt_p_trpt_vp_u P p v))
+    (conc
+      (ap (trpt p) (fun_Path_trpt_p_u_v_Path_u_trpt_vp_v P p u v e))
+      (trpt_p_trpt_vp_u P p v))
     e.
 Proof.
   refine (match e with idpath => _ end).
@@ -204,13 +214,13 @@ Proof.
   refine idpath.
 Defined.
 
-(** 'path_u_trpt_vp_v'_P_p_u_trpt_p_u_1 です。 *)
+(** [fun_Path_trpt_p_u_v_Path_u_trpt_vp_v P p u (trpt p u) idpath] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L701 *)
-Definition _'path_u_trpt_vp_v'_P_p_u_trpt_p_u_1@{i j | }
+Definition _'fun_Path_trpt_p_u_v_Path_u_trpt_vp_v'_P_p_u_trpt_p_u_1@{i j | }
   {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
   (p : Path@{i} x y) (u : P x)
   : Path@{j}
-    (path_u_trpt_vp_v P p u (trpt p u) idpath)
+    (fun_Path_trpt_p_u_v_Path_u_trpt_vp_v P p u (trpt p u) idpath)
     (inv (trpt_vp_trpt_p_u P p u)).
 Proof.
   refine (match p with idpath => _ end).
@@ -220,7 +230,7 @@ Defined.
 
 (** ** 依存型を対象とした変種についての定理 *)
 
-(** f_y_trptD_A_B0_p_u です。 *)
+(** [f x' (trptD A_ B0 p y)] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L817 *)
 Definition f_x'_trptD_A_B0_p_y@{i j0 j1 | }
   (A : Type@{i}) (B0 : A -> Type@{j0}) (B1 : A -> Type@{j1})
@@ -232,7 +242,7 @@ Proof.
   exact idpath.
 Defined.
 
-(** f_x'_trptD_A_B_p_y_trptDD_A_B_C0_p_y_z です。 *)
+(** [f x' (trptD A B p y) (trptDD A B C0 p y z)] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L823 *)
 Definition f_x'_trptD_A_B_p_y_trptDD_A_B_C0_p_y_z@{i j k0 k1 | }
   (A : Type@{i}) (B : A -> Type@{j})
@@ -248,7 +258,7 @@ Proof.
   exact idpath.
 Defined.
 
-(** f_x'_trptD_A_B0_p_y0_trptD_A_B1_p_y1_'trpt_N_D_D_DD'_A_B0_B1_C0_p_y0_y1_z です。 *)
+(** [f x' (trptD A B0 p y0) (trptD A B1 p y1) (trpt_N_D_D_DD A B0 B1 C0 p y0 y1 z)] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L833 *)
 Definition f_x'_T_T_'trpt_N_D_D_DD'_A_B0_B1_C0_p_y0_y1_z@{i j0 j1 k0 k1 | }
   (A : Type@{i}) (B0 : A -> Type@{j0}) (B1 : A -> Type@{j1})
@@ -271,7 +281,7 @@ Defined.
 
 (** ** [ap] が絡んだ補題 *)
 
-(** ap_trpt_p_ap_trpt_vp_q です。 *)
+(** [ap (trpt p) (ap (trpt (inv p)) q)] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L844 *)
 Definition ap_trpt_p_ap_trpt_vp_q@{i j | }
   (A : Type@{i}) (P : A -> Type@{j})
@@ -281,6 +291,7 @@ Definition ap_trpt_p_ap_trpt_vp_q@{i j | }
     (conc (conc (trpt_p_trpt_vp_u P p y) q) (inv (trpt_p_trpt_vp_u P p y'))).
 Proof.
   refine (match q with idpath => _ end).
+
   refine (let t := _ in t y).
   refine (match p
     as p_
@@ -300,7 +311,7 @@ Proof.
   exact idpath.
 Defined.
 
-(** conc_ap_trpt_p_apD_f_vp_apD_f_p です。 *)
+(** [conc (ap (trpt p) (apD f (inv p))) (apD f p)] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L853 *)
 Definition conc_ap_trpt_p_apD_f_vp_apD_f_p@{i j | }
   {A : Type@{i}} (P : A -> Type@{j}) (f : forall x : A, P x)

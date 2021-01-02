@@ -2,7 +2,7 @@
 
 (** * GiC.Base *)
 
-(** GiC.Base は、全ての基礎となる型や関数などを定義します。
+(** [GiC.Base] は、全ての基礎となる型や関数などを定義します。
 
     具体的には、一階述語論理に対応する型と、それに関する本当に単純な関数を提供しています。
  *)
@@ -89,7 +89,7 @@ Inductive Path@{i | } (A : Type@{i}) (a : A) : A -> Type@{i}
 
 (** 道型についての暗黙引数を設定します。
 
-    idpath と書いたときは idpath _ _ と補われます。 idpath a と書いたときは idpath _ a と補われます。
+    [idpath] と書いたときは [idpath _ _] と補われます。 [idpath a] と書いたときは [idpath _ a] と補われます。
  *)
 Arguments Path {A} a a'.
 Arguments idpath {A} {a}, [A] a.
@@ -172,11 +172,11 @@ Definition ap@{i j | } {A : Type@{i}} {B : Type@{j}} (f : A -> B) {x y : A}
   : Path@{i} x y -> Path@{j} (f x) (f y)
   := fun p => match p with idpath => idpath end.
 
-(** Path_Unit_Void です。
+(** [Path Unit Void -> Void] です。
 
     この関数は仲間外れですが、そこがいいのです。
  *)
 (* from: originally defined by Hexirp *)
-Definition p_U_V@{i si | i < si}
+Definition fun_Path_Unit_Void_Void@{i si | i < si}
   : Path@{si} Unit@{i} Void@{i} -> Void@{i}
   := fun p => match p with idpath => unit@{i} end.

@@ -6,10 +6,15 @@
 
     具体的には、依存型が [const] だというような時の定理などを定義しています。ここで名前が fibration になっている理由は、依存型を homotopy type theory 的に考えると fibration に対応するためです。 *)
 
+(** 必要なライブラリを要求します。 *)
+Require GiC.Base.
+Require GiC.Path.Base.
+Require GiC.Path.Function.
+
 (** 必要なライブラリをインポートします。 *)
-Require Import GiC.Base.
-Require Import GiC.Path.Base.
-Require Import GiC.Path.Function.
+Import GiC.Base.
+Import GiC.Path.Base.
+Import GiC.Path.Function.
 
 (** 帰納原理 (induction principle) を生成しないように設定します。 *)
 Unset Elimination Schemes.
@@ -29,7 +34,7 @@ Set Default Goal Selector "!".
 
 (** ** 特殊な fibration の上での輸送 *)
 
-(** trpt1_A_lam_x_B_p_u です。 *)
+(** [trpt1 A (fun x => B) p u] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L881 *)
 Definition trpt1_A_lam_x_B_p_u@{i j | }
   {A : Type@{i}} {B : Type@{j}} {x x' : A} (p : Path@{i} x x') (u : B)
@@ -40,7 +45,7 @@ Proof.
   exact idpath.
 Defined.
 
-(** conc_trpt2_A_lam_x_B_q_u_'trpt1_A_lam_x_B_p_u'_p'_u です。 *)
+(** [conc (trpt2 A (fun x => B) q u) (trpt1_A_lam_x_B_p_u p' u)] です。 *)
 (* from: invert https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L881 *)
 Definition conc_trpt2_A_lam_x_B_q_u_'trpt1_A_lam_x_B_p_u'_p'_u@{i j | }
   {A : Type@{i}} {B : Type@{j}}
@@ -55,7 +60,7 @@ Proof.
   exact idpath.
 Defined.
 
-(** trpt1_A0_lam_x_C_f_x_p_y です。 *)
+(** [trpt1 A0 (fun x => B (f x)) p y] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L893 *)
 Definition trpt1_A0_lam_x_B_f_x_p_y@{i0 i1 j | }
   (A0 : Type@{i0}) (A1 : Type@{i1}) (B : A1 -> Type@{j}) (f : A0 -> A1)
@@ -69,7 +74,7 @@ Proof.
   exact idpath.
 Defined.
 
-(** trptD_A0_lam_x_C_f_x_p_y です。 *)
+(** [trptD A0 (fun x => C (f x)) p y] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L893 *)
 Definition trptD_A0_lam_x_B_f_x_p_y@{i0 i1 j | }
   (A0 : Type@{i0}) (A1 : Type@{i1}) (B : A1 -> Type@{j}) (f : A0 -> A1)
@@ -79,7 +84,7 @@ Definition trptD_A0_lam_x_B_f_x_p_y@{i0 i1 j | }
     (trptD A1 B (ap f p) y)
   := trpt1_A0_lam_x_B_f_x_p_y A0 A1 B f p y.
 
-(** trptDD_A0_lam_x_B_f_x_lam_x_C_f_x_p_y_z です。 *)
+(** [trptDD A0 (fun x => B (f x)) (fun x => C (f x)) p y z] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L900 *)
 Definition trptDD_A0_lam_x_B_f_x_lam_x_C_f_x_p_y_z@{i0 i1 j k | }
   (A0 : Type@{i0}) (A1 : Type@{i1}) (B : A1 -> Type@{j})
@@ -98,7 +103,7 @@ Proof.
   exact idpath.
 Defined.
 
-(** trptD_B_x'_C_x'_apD_f_p_trptDD_A_B_C_p_f_x_y です。 *)
+(** [trptD (B x') (C x') (apD f p) (trptDD A B C p (f x) y)] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L909 *)
 Definition trptD_B_x'_C_x'_apD_f_p_trptDD_A_B_C_p_f_x_y@{i j k | }
   (A : Type@{i}) (B : A -> Type@{j})
@@ -113,7 +118,7 @@ Proof.
   exact idpath.
 Defined.
 
-(** trpt1_fun_B_C_lam_'f_'_Path_comp_f_g_'f_'_g_p_idpath です。 *)
+(** [trpt1 (B -> C) (fun f_ => Path (comp f g) (comp f_ g)) p idpath] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L917 *)
 Definition trpt1_fun_B_C_lam_'f_'_Path_comp_f_g_'f_'_g_p_1
   @{i j k mik mjk | j <= mjk, k <= mjk, i <= mik, k <= mik}
@@ -132,7 +137,7 @@ Proof.
   exact idpath.
 Defined.
 
-(** trpt1_A_lam_x_B_idmap_x_p_y です。 trpt1_A0_lam_x_B_f_x_p_y の [f] を [idmap] としたものと解釈できます。 *)
+(** [trpt1 A (fun x => B (idmap x)) p y] です。 [trptD A0 (fun x => C (f x)) p y] の [f] を [idmap] としたものと解釈できます。 *)
 (* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L925 *)
 Definition trpt1_A_lam_x_B_idmap_x_p_y@{i j sj | j < sj}
   (A : Type@{i}) (B : A -> Type@{j})
@@ -146,7 +151,7 @@ Proof.
   exact idpath.
 Defined.
 
-(** trpt1_A1_B_x0'_p1_trpt1_A0_lam_'x0_'_B_'x0_'_x1_p0_y です。 *)
+(** [trpt1 A1 (B x0') p1 (trpt1 A0 (fun x0_ => B x0_ x1) p0 y)] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L941 *)
 Definition trpt1_A1_B_x0'_p1_trpt1_A0_lam_'x0_'_B_'x0_'_x1_p0_y@{i0 i1 j | }
   (A0 : Type@{i0}) (A1 : Type@{i1}) (B : A0 -> A1 -> Type@{j})
