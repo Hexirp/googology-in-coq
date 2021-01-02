@@ -104,8 +104,8 @@ Proof.
   exact idpath.
 Defined.
 
-(* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L959 *)
 (** [apD f (ap g p)] です。 *)
+(* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L966 *)
 Definition apD_f_ap_g_p@{i0 i1 j | }
   (A0 : Type@{i0}) (A1 : Type@{i1}) (B : A1 -> Type@{j})
   (f : forall x : A1, B x) (g : A0 -> A1) {x x' : A0} (p : Path@{i0} x x')
