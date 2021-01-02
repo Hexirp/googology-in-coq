@@ -103,3 +103,10 @@ Definition path_cpq_cpr@{i | }
   {A : Type@{i}} {x y z : A} (p : Path@{i} x y) {q r : Path@{i} y z}
   : Path@{i} q r -> Path@{i} (conc p q) (conc p r)
   := fun h => conc2 idpath h.
+
+(** [Path (conc p r) (q r)] です。 *)
+(* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L1031 *)
+Definition path_cpr_cqr@{i | }
+  {A : Type@{i}} {x y z : A} {p q : Path@{i} x y} (r : Path@{i} y z)
+  : Path@{i} p q -> Path@{i} (conc p r) (conc q r)
+  := fun h => conc2 h idpath.
