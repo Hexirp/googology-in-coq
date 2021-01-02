@@ -120,13 +120,10 @@ Proof.
   refine (fun h => _).
   refine_conc (conc (inv p) (conc p q)).
   -
-    refine (inv _).
-    SearchPattern (Path (conc (inv _) (conc _ _)) _).
-    exact (conc_vp_cpq p q).
+    exact (inv (conc_vp_cpq p q)).
   -
     refine_conc (conc (inv p) (conc p r)).
     +
-      SearchPattern (Path (conc _ _) (conc _ _)).
       refine (fun_Path_q_r_Path_cpq_cpr (inv p) h).
     +
       exact (conc_vp_cpq p r).
