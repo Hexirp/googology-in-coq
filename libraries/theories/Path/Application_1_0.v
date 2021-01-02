@@ -33,7 +33,7 @@ Set Default Proof Mode "Classic".
 (** ビュレットを使用しないときにエラーになるように設定します。 *)
 Set Default Goal Selector "!".
 
-(** ap10_idpath_x です。 *)
+(** [ap10 idpath x] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L611 *)
 Definition ap10_1_x@{i j mij | i <= mij, j <= mij}
   {A : Type@{i}} {B : Type@{j}} (f : A -> B) (x : A)
@@ -43,7 +43,7 @@ Proof.
   exact idpath.
 Defined.
 
-(** ap10_conc_p_q_x です。 *)
+(** [ap10 (conc p q) x] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L614 *)
 Definition ap10_cpq_x@{i j mij | i <= mij, j <= mij}
   {A : Type@{i}} {B : Type@{j}} {f f' f'' : A -> B}
@@ -58,7 +58,7 @@ Proof.
   exact idpath.
 Defined.
 
-(** ap10_inv_p_x です。 *)
+(** [ap10 (inv p) x] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L618 *)
 Definition ap10_vp_x@{i j mij | i <= mij, j <= mij}
   {A : Type@{i}} {B : Type@{j}} {f f' : A -> B}
@@ -70,7 +70,7 @@ Proof.
   exact idpath.
 Defined.
 
-(** ap10D_idpath_x です。 *)
+(** [ap10D idpath x] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L596 *)
 Definition ap10D_1_x@{i j mij | i <= mij, j <= mij}
   {A : Type@{i}} {B : A -> Type@{j}} (f : forall x : A, B x) (x : A)
@@ -80,7 +80,7 @@ Proof.
   exact idpath.
 Defined.
 
-(** ap10D_conc_p_q_x です。 *)
+(** [ap10D (conc p q) x] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L600 *)
 Definition ap10D_cpq_x@{i j mij | i <= mij, j <= mij}
   {A : Type@{i}} {B : A -> Type@{j}} {f f' f'' : forall x : A, B x}
@@ -95,7 +95,7 @@ Proof.
   exact idpath.
 Defined.
 
-(** ap10D_inv_p_x です。 *)
+(** [ap10D (inv p) x] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L607 *)
 Definition ap10D_vp_x@{i j mij | i <= mij, j <= mij}
   {A : Type@{i}} {B : A -> Type@{j}} {f f' : forall x : A, B x}
@@ -107,7 +107,7 @@ Proof.
   exact idpath.
 Defined.
 
-(** ap10_ap_lam_f_compNNN_f_g_p_x です。 *)
+(** [ap10 (ap (fun f => compNNN f g) p) x] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L629 *)
 Definition ap10_ap_lam_f_compNNN_f_g_p_x
   @{i j k mjk mik | j <= mjk, k <= mjk, i <= mik, k <= mik}
@@ -122,7 +122,7 @@ Proof.
   exact idpath.
 Defined.
 
-(** ap10D_ap_lam_f_compNND_f_g_p_x です。 *)
+(** [ap10D (ap (fun f => compNND f g) p) x] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L623 *)
 Definition ap10D_ap_lam_f_compNND_f_g_p_x
   @{i j k mjk mik | j <= mjk, k <= mjk, i <= mik, k <= mik}
@@ -138,7 +138,7 @@ Proof.
   exact idpath.
 Defined.
 
-(** ap10_ap_lam_g_compNNN_f_g_p_x です。 *)
+(** [ap10 (ap (fun g => compNNN f g) p) x です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L639 *)
 Definition ap10_ap_lam_g_compNN_f_g_p_x
   @{i j k mij mik | i <= mij, j <= mij, i <= mik, k <= mik}
@@ -153,7 +153,7 @@ Proof.
   exact idpath.
 Defined.
 
-(** ap10D_ap_lam_g_compNDN_f_g_p_x です。 *)
+(** [ap10D (ap (fun g => compNDN f g) p) x] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L633 *)
 Definition ap10D_ap_lam_g_compND_f_g_p_x
   @{i j k mij mik | i <= mij, j <= mij, i <= mik, k <= mik}
