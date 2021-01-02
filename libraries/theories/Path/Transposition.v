@@ -42,6 +42,7 @@ Definition path_crp_q_L@{i | } {A : Type@{i}} {x y z : A}
     Path@{i} p (conc (inv r) q) -> Path@{i} (conc r p) q.
 Proof.
   move=> p q r.
+
   refine (let t := _ in t p).
   refine (match r
     as r'
@@ -71,6 +72,7 @@ Definition path_crp_q_R@{i | } {A : Type@{i}} {x y z : A}
     Path@{i} r (conc q (inv p)) -> Path@{i} (conc r p) q.
 Proof.
   move=> p q r.
+
   refine (let t := _ in t q).
   refine (match p
     as p'
@@ -100,6 +102,7 @@ Definition path_cvrp_q@{i | } {A : Type@{i}} {x y z : A}
     Path@{i} p (conc r q) -> Path@{i} (conc (inv r) p) q.
 Proof.
   move=> p q r.
+
   refine (let t := _ in t q).
   refine (match r
     as r'
@@ -129,6 +132,7 @@ Definition path_crvp_q@{i | } {A : Type@{i}} {x y z : A}
     Path@{i} r (conc q p) -> Path@{i} (conc r (inv p)) q.
 Proof.
   move=> p q r.
+
   refine (let t := _ in t r).
   refine (match p
     as p'
@@ -158,6 +162,7 @@ Definition path_q_crp_L@{i | } {A : Type@{i}} {x y z : A}
     Path@{i} (conc (inv r) q) p -> Path@{i} q (conc r p).
 Proof.
   move=> p q r.
+
   refine (let t := _ in t p).
   refine (match r
     as r'
@@ -187,6 +192,7 @@ Definition path_q_crp_R@{i | } {A : Type@{i}} {x y z : A}
     Path@{i} (conc q (inv p)) r -> Path@{i} q (conc r p).
 Proof.
   move=> p q r.
+
   refine (let t := _ in t q).
   refine (match p
     as p'
@@ -216,6 +222,7 @@ Definition path_q_cvrp@{i | } {A : Type@{i}} {x y z : A}
     Path@{i} (conc r q) p -> Path@{i} q (conc (inv r) p).
 Proof.
   move=> p q r.
+
   refine (let t := _ in t q).
   refine (match r
     as r'
@@ -245,6 +252,7 @@ Definition path_q_crvp@{i | } {A : Type@{i}} {x y z : A}
     Path@{i} (conc q p) r -> Path@{i} q (conc r (inv p)).
 Proof.
   move=> p q r.
+
   refine (let t := _ in t r).
   refine (match p
     as p'
@@ -276,6 +284,7 @@ Definition path_p_q_L_L@{i | } {A : Type@{i}} {x y : A}
     Path@{i} (conc p (inv q)) idpath -> Path@{i} p q.
 Proof.
   move=> p q.
+
   refine (let t := _ in t p).
   refine (match q
     as q'
@@ -301,6 +310,7 @@ Definition path_p_q_L_R@{i | } {A : Type@{i}} {x y : A}
     Path@{i} (conc (inv q) p) idpath -> Path@{i} p q.
 Proof.
   move=> p q.
+
   refine (let t := _ in t p).
   refine (match q
     as q'
@@ -326,6 +336,7 @@ Definition path_p_vq_L@{i | } {A : Type@{i}} {x y : A}
     Path@{i} (conc p q) idpath -> Path@{i} p (inv q).
 Proof.
   move=> p q.
+
   refine (let t := _ in t p).
   refine (match q
     as q'
@@ -351,6 +362,7 @@ Definition path_p_vq_R@{i | } {A : Type@{i}} {x y : A}
     Path@{i} (conc q p) idpath -> Path@{i} p (inv q).
 Proof.
   move=> p q.
+
   refine (let t := _ in t p).
   refine (match q
     as q'
@@ -376,6 +388,7 @@ Definition path_p_q_R_L@{i | } {A : Type@{i}} {x y : A}
     Path@{i} idpath (conc (inv p) q) -> Path@{i} p q.
 Proof.
   move=> p q.
+
   refine (let t := _ in t q).
   refine (match p
     as p'
@@ -401,6 +414,7 @@ Definition path_p_q_R_R@{i | } {A : Type@{i}} {x y : A}
     Path@{i} idpath (conc q (inv p)) -> Path@{i} p q.
 Proof.
   move=> p q.
+
   refine (let t := _ in t q).
   refine (match p
     as p'
@@ -426,6 +440,7 @@ Definition path_vp_q_L@{i | } {A : Type@{i}} {x y : A}
     Path@{i} idpath (conc q p) -> Path@{i} (inv p) q.
 Proof.
   move=> p q.
+
   refine (let t := _ in t q).
   refine (match p
     as p'
@@ -451,6 +466,7 @@ Definition path_vp_q_R@{i | } {A : Type@{i}} {x y : A}
     Path@{i} idpath (conc p q) -> Path@{i} (inv p) q.
 Proof.
   move=> p q.
+
   refine (let t := _ in t q).
   refine (match p
     as p'
@@ -478,6 +494,7 @@ Definition path_trpt_p_u_v@{i j | } {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
     Path@{j} u (trpt (inv p) v) -> Path@{j} (trpt p u) v.
 Proof.
   move=> p u v.
+
   refine (let t := _ in t v).
   refine (match p
     as p'
@@ -499,6 +516,7 @@ Definition path_trpt_vp_u_v@{i j | } {A : Type@{i}} (P : A -> Type@{j}) {x y : A
     Path@{j} u (trpt p v) -> Path@{j} (trpt (inv p) u) v.
 Proof.
   move=> p u v.
+
   refine (let t := _ in t u).
   refine (match p
     as p'
@@ -520,6 +538,7 @@ Definition path_u_trpt_vp_v@{i j | } {A : Type@{i}} (P : A -> Type@{j}) {x y : A
     Path@{j} (trpt p u) v -> Path@{j} u (trpt (inv p) v).
 Proof.
   move=> p u v.
+
   refine (let t := _ in t v).
   refine (match p
     as p'
@@ -541,6 +560,7 @@ Definition path_u_trpt_p_v@{i j | } {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
     Path@{j} (trpt (inv p) u) v -> Path@{j} u (trpt p v).
 Proof.
   move=> p u v.
+
   refine (let t := _ in t u).
   refine (match p
     as p'
@@ -568,6 +588,7 @@ Definition inv_'path_trpt_p_u_v'_P_p_u_v_q@{i j | }
       (path_u_trpt_p_v P p v u (inv q)).
 Proof.
   move=> q.
+
   refine (let t := _ in t v q).
   refine (match p
     as p'
@@ -598,6 +619,7 @@ Definition inv_'path_trpt_vp_u_v'_P_p_u_v_q@{i j | }
       (path_u_trpt_vp_v P p v u (inv q)).
 Proof.
   move=> q.
+
   refine (let t := _ in t u q).
   refine (match p
     as p'
@@ -628,6 +650,7 @@ Definition inv_'path_u_trpt_vp_v'_P_p_u_v_q@{i j | }
       (path_trpt_vp_u_v P p v u (inv q)).
 Proof.
   move=> q.
+
   refine (let t := _ in t v q).
   refine (match p
     as p'
@@ -658,6 +681,7 @@ Definition inv_'path_u_trpt_p_v'_P_p_u_v_q@{i j | }
       (path_trpt_p_u_v P p v u (inv q)).
 Proof.
   move=> q.
+
   refine (let t := _ in t u q).
   refine (match p
     as p'
