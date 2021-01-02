@@ -34,7 +34,7 @@ Set Default Goal Selector "!".
 
 (** ** [trpt2] に関する定理 *)
 
-(** trpt2_A_B_q_y です。 *)
+(** [trpt2 A B q y] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L793 *)
 Definition trpt2_A_B_q_y@{i j | }
   {A : Type@{i}} (B : A -> Type@{j})
@@ -47,7 +47,7 @@ Proof.
   exact idpath.
 Defined.
 
-(** trpt2_A_B_conc_q0_q1_y です。 *)
+(** [trpt2 A B (conc q0 q1) y] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L798 *)
 Definition trpt2_A_B_cq0q1_y@{i j | }
   {A : Type@{i}} (B : A -> Type@{j})
@@ -64,7 +64,7 @@ Proof.
   exact idpath.
 Defined.
 
-(** trpt2_A_B_inv_q_y です。 *)
+(** [trpt2 A B (inv q) y] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L805 *)
 Definition trpt2_A_B_vq_y@{i j | }
   {A : Type@{i}} (B : A -> Type@{j})
@@ -77,7 +77,7 @@ Proof.
   exact idpath.
 Defined.
 
-(** conc_ap_trpt1_A_B_p_r_trpt2_A_B_q_y' です。 *)
+(** [conc (ap (trpt1 A B p) r) (trpt2 A B q y')] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L810 *)
 Definition conc_ap_trpt1_A_B_p_r_trpt2_A_B_q_y'@{i j | }
   {A : Type@{i}} (B : A -> Type@{j})
