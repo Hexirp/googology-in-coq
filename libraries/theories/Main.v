@@ -97,19 +97,21 @@ Defined.
 
 (** ** 髭付け (wiskering) *)
 
-(** [Path q r -> Path (conc p q) (p r)] です。 *)
+(** 左からの髭付けです。 *)
 (* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L1027 *)
-Definition fun_Path_q_r_Path_cpq_cpr@{i | }
-  {A : Type@{i}} {x y z : A} (p : Path@{i} x y) {q r : Path@{i} y z}
-  : Path@{i} q r -> Path@{i} (conc p q) (conc p r)
-  := fun h => conc2 idpath h.
+Definition wiskerL@{i | }
+  {A : Type@{i}} {x y z : A}
+  (p : Path@{i} x y) {q r : Path@{i} y z} (h : Path@{i} q r)
+  : Path@{i} (conc p q) (conc p r)
+  := conc2 idpath h.
 
-(** [Path p q -> Path (conc p r) (q r)] です。 *)
+(** 右からの髭付けです。 *)
 (* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L1031 *)
-Definition fun_Path_p_q_Path_cpr_cqr@{i | }
-  {A : Type@{i}} {x y z : A} {p q : Path@{i} x y} (r : Path@{i} y z)
-  : Path@{i} p q -> Path@{i} (conc p r) (conc q r)
-  := fun h => conc2 h idpath.
+Definition wiskerR@{i | }
+  {A : Type@{i}} {x y z : A}
+  {p q : Path@{i} x y} (h : Path@{i} p q) (r : Path@{i} y z)
+  : Path@{i} (conc p r) (conc q r)
+  := conc2 h idpath.
 
 (** [Path (conc p q) (conc p r) -> Path q r] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L1037 *)
@@ -124,7 +126,7 @@ Proof.
   -
     refine_conc (conc (inv p) (conc p r)).
     +
-      refine (fun_Path_q_r_Path_cpq_cpr (inv p) h).
+      refine (wiskerL (inv p) h).
     +
       exact (conc_vp_cpq p r).
 Defined.
@@ -142,7 +144,7 @@ Proof.
   -
     refine_conc (conc (conc q r) (inv r)).
     +
-      refine (fun_Path_p_q_Path_cpr_cqr (inv r) h).
+      refine (wiskerR h (inv r)).
     +
       exact (conc_cpq_vq q r).
 Defined.
