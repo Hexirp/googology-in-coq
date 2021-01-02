@@ -7,12 +7,19 @@
     具体的には、 [trpt] に関する基本的な定理や、高度な一貫性 (coherence) に関する定理、依存型を対象とする [trpt] の変種に関する定理などを含みます。
  *)
 
+(** 必要なライブラリを要求します。 *)
+Require GiC.Base.
+Require GiC.Path.Base.
+Require GiC.Path.Function.
+Require GiC.Path.OneDim.
+Require GiC.Path.Transposition.
+
 (** 必要なライブラリをインポートします。 *)
-Require Import GiC.Base.
-Require Import GiC.Path.Base.
-Require Import GiC.Path.Function.
-Require Import GiC.Path.OneDim.
-Require Import GiC.Path.Transposition.
+Import GiC.Base.
+Import GiC.Path.Base.
+Import GiC.Path.Function.
+Import GiC.Path.OneDim.
+Import GiC.Path.Transposition.
 
 (** 帰納原理 (induction principle) を生成しないように設定します。 *)
 Unset Elimination Schemes.
