@@ -7,8 +7,13 @@
     具体的には、 [ap11] に関する定理を定義しています。
  *)
 
+(** 必要なライブラリを要求します。 *)
+Require GiC.Base.
+Require GiC.Path.Base.
+
 (** 必要なライブラリをインポートします。 *)
-Require Import GiC.Base GiC.Path.Base.
+Import GiC.Base.
+Import GiC.Path.Base.
 
 (** 帰納原理 (induction principle) を生成しないように設定します。 *)
 Unset Elimination Schemes.
