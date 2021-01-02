@@ -7,11 +7,17 @@
     具体的には、関手が [idpath] と [conc] を保存することや、 [ap] の自然性についての定理を証明しています。
  *)
 
+(** 必要なライブラリを要求します。 *)
+Require GiC.Base.
+Require GiC.Path.Base.
+Require GiC.Path.OneDim.
+Require GiC.Path.Transposition.
+
 (** 必要なライブラリをインポートします。 *)
-Require Import GiC.Base.
-Require Import GiC.Path.Base.
-Require Import GiC.Path.OneDim.
-Require Import GiC.Path.Transposition.
+Import GiC.Base.
+Import GiC.Path.Base.
+Import GiC.Path.OneDim.
+Import GiC.Path.Transposition.
 
 (** 帰納原理 (induction principle) を生成しないように設定します。 *)
 Unset Elimination Schemes.
