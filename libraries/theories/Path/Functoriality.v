@@ -195,7 +195,7 @@ Proof.
   exact idpath.
 Defined.
 
-(** [ap] の自然性 *)
+(** ** [ap] の自然性 *)
 
 (** [Path (conc (ap f q) (p y)) (conc (p x) (ap g q))] です。 *)
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L436 *)
