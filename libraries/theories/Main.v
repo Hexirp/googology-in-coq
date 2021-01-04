@@ -148,3 +148,17 @@ Proof.
     +
       exact (conc_cpq_vq q r).
 Defined.
+
+(** [conc (conc (inv (conc_p_1 p)) (wiskerR h idpath)) (conc_p_1 q)] です。 *)
+(* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L1047 *)
+Definition conc_conc_inv_'conc_p_1'_p_wiskerR_h_1_'conc_p_1'_q@{i | }
+  {A : Type@{i}} {x y : A} {p q : Path@{i} x y} (h : Path@{i} p q)
+  : Path@{i}
+    (conc (conc (inv (conc_p_1 p)) (wiskerR h idpath)) (conc_p_1 q))
+    h.
+Proof.
+  refine (match h with idpath => _ end).
+  refine (match p with idpath => _ end).
+  cbv.
+  exact idpath.
+Defined.
