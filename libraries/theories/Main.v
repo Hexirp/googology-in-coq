@@ -124,11 +124,11 @@ Proof.
   -
     exact (inv (conc_vp_cpq p q)).
   -
-    refine_conc (conc (inv p) (conc p r)).
-    +
-      refine (wiskerL (inv p) h).
-    +
-      exact (conc_vp_cpq p r).
+  refine_conc (conc (inv p) (conc p r)).
+  +
+    refine (wiskerL (inv p) h).
+  +
+    exact (conc_vp_cpq p r).
 Defined.
 
 (** [Path (conc p r) (conc q r) -> Path p q] です。 *)
@@ -142,11 +142,11 @@ Proof.
   -
     exact (inv (conc_cpq_vq p r)).
   -
-    refine_conc (conc (conc q r) (inv r)).
-    +
-      refine (wiskerR h (inv r)).
-    +
-      exact (conc_cpq_vq q r).
+  refine_conc (conc (conc q r) (inv r)).
+  +
+    refine (wiskerR h (inv r)).
+  +
+    exact (conc_cpq_vq q r).
 Defined.
 
 (** [conc (conc (inv (conc_p_1 p)) (wiskerR h idpath)) (conc_p_1 q)] です。 *)
