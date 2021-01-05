@@ -198,3 +198,21 @@ Proof.
   cbv.
   exact idpath.
 Defined.
+
+(** [wiskerR h (idpath x)] です。 *)
+(* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L1073 *)
+Definition wiskerR_h_idpath_x@{i | }
+  {A : Type@{i}} (x : A) (h : Path@{i} (idpath x) (idpath x))
+  : Path@{i} (wiskerR h (idpath x)) h.
+Proof.
+  refine_conc (conc (conc (inv (conc_p_1 idpath)) (wiskerR h idpath)) (conc_p_1 idpath)).
+  -
+    change (Path (wiskerR h idpath) (conc (conc idpath (wiskerR h idpath)) idpath)).
+    refine_conc (conc idpath (wiskerR h idpath)).
+    +
+      exact (inv (conc_1_p (wiskerR h idpath))).
+    +
+      exact (inv (conc_p_1 (conc idpath (wiskerR h idpath)))).
+  -
+    exact (conc_conc_inv_'conc_p_1'_p_wiskerR_h_1_'conc_p_1'_q h).
+Defined.
