@@ -216,3 +216,21 @@ Proof.
   -
     exact (conc_conc_inv_'conc_p_1'_p_wiskerR_h_1_'conc_p_1'_q h).
 Defined.
+
+(** [wiskerL (idpath x) h] です。 *)
+(* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L1080 *)
+Definition wiskerL_idpath_x_h@{i | }
+  {A : Type@{i}} (x : A) (h : Path@{i} (idpath x) (idpath x))
+  : Path@{i} (wiskerL (idpath x) h) h.
+Proof.
+  refine_conc (conc (conc (inv (conc_1_p idpath)) (wiskerL idpath h)) (conc_1_p idpath)).
+  -
+    change (Path@{i} (wiskerL idpath h) (conc (conc idpath (wiskerL idpath h)) idpath)).
+    refine_conc (conc idpath (wiskerL idpath h)).
+    +
+      exact (inv (conc_1_p (wiskerL idpath h))).
+    +
+      exact (inv (conc_p_1 (conc idpath (wiskerL idpath h)))).
+  -
+    exact (conc_conc_inv_'conc_1_p'_p_wiskerL_1_h_'conc_1_p'_q h).
+Defined.
