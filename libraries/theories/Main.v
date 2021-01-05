@@ -207,7 +207,7 @@ Definition wiskerR_h_idpath_x@{i | }
 Proof.
   refine_conc (conc (conc (inv (conc_p_1 idpath)) (wiskerR h idpath)) (conc_p_1 idpath)).
   -
-    change (Path (wiskerR h idpath) (conc (conc idpath (wiskerR h idpath)) idpath)).
+    change (Path@{i} (wiskerR h idpath) (conc (conc idpath (wiskerR h idpath)) idpath)).
     refine_conc (conc idpath (wiskerR h idpath)).
     +
       exact (inv (conc_1_p (wiskerR h idpath))).
