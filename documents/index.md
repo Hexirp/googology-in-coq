@@ -12,6 +12,7 @@ googology-in-coq は、プログラム的に証明を書くことを目標とし
 
 ```
 (** 帰納原理 (induction principle) を生成しないように設定します。 *)
+
 Unset Elimination Schemes.
 ```
 
@@ -19,10 +20,12 @@ Unset Elimination Schemes.
 
 ```
 (** 宇宙多相 (universe polymorphism) について設定します。 *)
+
 Set Universe Polymorphism.
 Set Polymorphic Inductive Cumulativity.
 
 (** 宇宙 (universe) について表示するように設定します。 *)
+
 Set Printing Universes.
 ```
 
@@ -30,9 +33,11 @@ Set Printing Universes.
 
 ```
 (** タクティックが使用できるように設定します。 *)
+
 Set Default Proof Mode "Classic".
 
 (** ビュレットを使用しないときにエラーになるように設定します。 *)
+
 Set Default Goal Selector "!".
 ```
 
