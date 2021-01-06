@@ -1,39 +1,44 @@
 (* Run with -nois. *)
-
-(** * GiC.Path.Application_1_0 *)
-
 (** [GiC.Path.Application_1_0] は [ap10] に関する定理を提供します。
 
     具体的には、 [ap10] と [ap10D] に関する定理を定義しています。
  *)
 
 (** 必要なライブラリを要求します。 *)
+
 Require GiC.Base.
 Require GiC.Function.
 Require GiC.Path.Base.
 
 (** 必要なライブラリをインポートします。 *)
+
 Import GiC.Base.
 Import GiC.Function.
 Import GiC.Path.Base.
 
 (** 帰納原理 (induction principle) を生成しないように設定します。 *)
+
 Unset Elimination Schemes.
 
 (** 宇宙多相 (universe polymorphism) について設定します。 *)
+
 Set Universe Polymorphism.
 Set Polymorphic Inductive Cumulativity.
 
 (** 宇宙 (universe) について表示するように設定します。 *)
+
 Set Printing Universes.
 
 (** タクティックが使用できるように設定します。 *)
+
 Set Default Proof Mode "Classic".
 
 (** ビュレットを使用しないときにエラーになるように設定します。 *)
+
 Set Default Goal Selector "!".
 
 (** [ap10 idpath x] です。 *)
+
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L611 *)
 Definition ap10_1_x@{i j mij | i <= mij, j <= mij}
   {A : Type@{i}} {B : Type@{j}} (f : A -> B) (x : A)
@@ -44,6 +49,7 @@ Proof.
 Defined.
 
 (** [ap10 (conc p q) x] です。 *)
+
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L614 *)
 Definition ap10_cpq_x@{i j mij | i <= mij, j <= mij}
   {A : Type@{i}} {B : Type@{j}} {f f' f'' : A -> B}
@@ -59,6 +65,7 @@ Proof.
 Defined.
 
 (** [ap10 (inv p) x] です。 *)
+
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L618 *)
 Definition ap10_vp_x@{i j mij | i <= mij, j <= mij}
   {A : Type@{i}} {B : Type@{j}} {f f' : A -> B}
@@ -71,6 +78,7 @@ Proof.
 Defined.
 
 (** [ap10D idpath x] です。 *)
+
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L596 *)
 Definition ap10D_1_x@{i j mij | i <= mij, j <= mij}
   {A : Type@{i}} {B : A -> Type@{j}} (f : forall x : A, B x) (x : A)
@@ -81,6 +89,7 @@ Proof.
 Defined.
 
 (** [ap10D (conc p q) x] です。 *)
+
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L600 *)
 Definition ap10D_cpq_x@{i j mij | i <= mij, j <= mij}
   {A : Type@{i}} {B : A -> Type@{j}} {f f' f'' : forall x : A, B x}
@@ -96,6 +105,7 @@ Proof.
 Defined.
 
 (** [ap10D (inv p) x] です。 *)
+
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L607 *)
 Definition ap10D_vp_x@{i j mij | i <= mij, j <= mij}
   {A : Type@{i}} {B : A -> Type@{j}} {f f' : forall x : A, B x}
@@ -108,6 +118,7 @@ Proof.
 Defined.
 
 (** [ap10 (ap (fun f => compNNN f g) p) x] です。 *)
+
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L629 *)
 Definition ap10_ap_lam_f_compNNN_f_g_p_x
   @{i j k mjk mik | j <= mjk, k <= mjk, i <= mik, k <= mik}
@@ -123,6 +134,7 @@ Proof.
 Defined.
 
 (** [ap10D (ap (fun f => compNND f g) p) x] です。 *)
+
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L623 *)
 Definition ap10D_ap_lam_f_compNND_f_g_p_x
   @{i j k mjk mik | j <= mjk, k <= mjk, i <= mik, k <= mik}
@@ -139,6 +151,7 @@ Proof.
 Defined.
 
 (** [ap10 (ap (fun g => compNNN f g) p) x です。 *)
+
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L639 *)
 Definition ap10_ap_lam_g_compNN_f_g_p_x
   @{i j k mij mik | i <= mij, j <= mij, i <= mik, k <= mik}
@@ -154,6 +167,7 @@ Proof.
 Defined.
 
 (** [ap10D (ap (fun g => compNDN f g) p) x] です。 *)
+
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L633 *)
 Definition ap10D_ap_lam_g_compND_f_g_p_x
   @{i j k mij mik | i <= mij, j <= mij, i <= mik, k <= mik}
