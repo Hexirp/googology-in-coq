@@ -144,6 +144,12 @@ body > div#page > div#main > div.code > a.idref:target {
     background-color: lightyellow;
 }
 
+/* 1.1.2.4 The Navigation Table of The Index Page */
+
+body > div#page > div#main > table > tbody > tr > td {
+  padding: 0em 0.25em;
+}
+
 /* 1.1.3 The Footer */
 
 body > div#page > div#footer {
