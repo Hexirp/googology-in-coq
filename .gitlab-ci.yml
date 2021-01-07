@@ -5,7 +5,6 @@ build-job:
   script:
     - cd libraries/
     # coq_path.sh の内容の変更は、 Docker Image を使うことにより、既に coq の実行ファイルがパスに含まれているので、不要である。
-    - chmod +x build.sh
     - ./build.sh
 
 test-job1:
