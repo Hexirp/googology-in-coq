@@ -1,3 +1,5 @@
+image: coqorg/coq:8.12.2
+
 build-job:
   stage: build
   script:
