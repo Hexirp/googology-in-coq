@@ -12,7 +12,7 @@ test-job:
   script:
     - echo "The test has not been implemented yet."
 
-gitlab-pages:
+pages:
   stage: deploy
   script:
     - cd libraries/
