@@ -12,6 +12,7 @@ googology-in-coq は、プログラム的に証明を書くことを目標とし
 
 ```
 (** 帰納原理 (induction principle) を生成しないように設定します。 *)
+
 Unset Elimination Schemes.
 ```
 
@@ -19,10 +20,12 @@ Unset Elimination Schemes.
 
 ```
 (** 宇宙多相 (universe polymorphism) について設定します。 *)
+
 Set Universe Polymorphism.
 Set Polymorphic Inductive Cumulativity.
 
 (** 宇宙 (universe) について表示するように設定します。 *)
+
 Set Printing Universes.
 ```
 
@@ -30,9 +33,11 @@ Set Printing Universes.
 
 ```
 (** タクティックが使用できるように設定します。 *)
+
 Set Default Proof Mode "Classic".
 
 (** ビュレットを使用しないときにエラーになるように設定します。 *)
+
 Set Default Goal Selector "!".
 ```
 
@@ -49,6 +54,22 @@ Set Default Goal Selector "!".
 ### コメント
 
 定義の前には、それを簡単に説明するドキュメントとしてのコメントを付けます。定義を上手く分けられる時は coqdoc の見出し機能を使ってください。その直後には節の意味を説明するコメントをつける方がいいです。
+
+```coq
+(** ... *)
+
+Definition foo a b c.
+
+(** ... *)
+
+Definition baa a b c.
+```
+
+ドキュメントとしてのコメントは、上記のように記述してください。 coqdoc が使う文芸的プログラミングの考え方に従って、ソースコードとドキュメントが対等になるように記述します。
+
+coqdoc には見出し機能があり `(** * ... *)` は `h1` 要素に変換されますが、これは使わないでください。 `h1` 要素が coqdoc によりページの冒頭に追加されるので、 `h1` 要素が重複してしまうことになります。
+
+定義の前には、それを説明する文章を書いてください。「……というようなものを定義する」という意味で「……です」だけ書いても構いません。
 
 見やすくするため、ドキュメントの中にあるソースコードについては出来るだけ `[ ... ]` でソースコードとしての表示が行われるようにします。
 
@@ -384,3 +405,4 @@ rebase は、なるべく使わないでください。ただし、 git pull で
 * https://github.com/Hexirp/googology-in-coq/commit/abcb0ac369875055c50748796e8a973d162caaf5 - 型を単純化して理解を容易にするために Section 機能の使用が開始される。
 * https://github.com/Hexirp/googology-in-coq/commit/ddf470fbd874d386d86ff2e79c9a4145bc1ce3ab - 別のライブラリを参考にした定理が分かるように、定理の由来をコメントに書くようになる。
 * https://gitlab.com/Hexirp/googology-in-coq/-/commit/2e052992be3144af771d464988196a2bcedde48c - Git のリポジトリのホスティングに使うサービスを GitHub から GitLab へ変更しました。
+* https://gitlab.com/Hexirp/googology-in-coq/-/commit/afad3b7afbe7309dafc6c7cf903567bc5c3f1dff - ドキュメントの書き方について、より読みやすくなるように規約を定めなおした。
