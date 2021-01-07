@@ -1,41 +1,46 @@
 (* Run with -nois. *)
-
-(** * GiC.Path.Transposition *)
-
 (** [GiC.Path.Transposition] は、一次元の亜群の構造における等式について、その移項を行う補題を提供します。
 
     具体的には、たとえば [p • q = r] から [p = r • q⁻¹] を導くという風な補題を組み合わせ的に網羅しています。
  *)
 
 (** 必要なライブラリを要求します。 *)
+
 Require GiC.Base.
 Require GiC.Path.Base.
 Require GiC.Path.OneDim.
 
 (** 必要なライブラリをインポートします。 *)
+
 Import GiC.Base.
 Import GiC.Path.Base.
 Import GiC.Path.OneDim.
 
 (** 帰納原理 (induction principle) を生成しないように設定します。 *)
+
 Unset Elimination Schemes.
 
 (** 宇宙多相 (universe polymorphism) について設定します。 *)
+
 Set Universe Polymorphism.
 Set Polymorphic Inductive Cumulativity.
 
 (** 宇宙 (universe) について表示するように設定します。 *)
+
 Set Printing Universes.
 
 (** タクティックが使用できるように設定します。 *)
+
 Set Default Proof Mode "Classic".
 
 (** ビュレットを使用しないときにエラーになるように設定します。 *)
+
 Set Default Goal Selector "!".
 
 (** ** 三つの道が絡む移項に関する補題 *)
 
 (** [p = r⁻¹ • q -> r • p = q] です。 *)
+
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L176 *)
 Definition fun_Path_p_cvrq_Path_crp_q@{i | } {A : Type@{i}} {x y z : A}
   : forall (p : Path@{i} x z) (q : Path@{i} y z) (r : Path@{i} y x),
@@ -66,6 +71,7 @@ Proof.
 Defined.
 
 (** [r = q • p⁻¹ -> r • p = q] です。 *)
+
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L183 *)
 Definition fun_Path_r_cqvp_Path_crp_q@{i | } {A : Type@{i}} {x y z : A}
   : forall (p : Path@{i} x z) (q : Path@{i} y z) (r : Path@{i} y x),
@@ -96,6 +102,7 @@ Proof.
 Defined.
 
 (** [p = r • q -> r⁻¹ • p = q] です。 *)
+
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L190 *)
 Definition fun_Path_r_cqp_Path_cvrp_q@{i | } {A : Type@{i}} {x y z : A}
   : forall (p : Path@{i} x z) (q : Path@{i} y z) (r : Path@{i} x y),
@@ -126,6 +133,7 @@ Proof.
 Defined.
 
 (** [r = q • p -> r • p⁻¹ = q] です。 *)
+
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L197 *)
 Definition fun_Path_r_cqp_Path_crvp_q@{i | } {A : Type@{i}} {x y z : A}
   : forall (p : Path@{i} z x) (q : Path@{i} y z) (r : Path@{i} y x),
@@ -156,6 +164,7 @@ Proof.
 Defined.
 
 (** [r⁻¹ • q = p -> q = r • p] です。 *)
+
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L204 *)
 Definition fun_Path_cvrq_p_Path_q_crp@{i | } {A : Type@{i}} {x y z : A}
   : forall (p : Path@{i} x z) (q : Path@{i} y z) (r : Path@{i} y x),
@@ -186,6 +195,7 @@ Proof.
 Defined.
 
 (** [q • p⁻¹ = r -> q = r • p] です。 *)
+
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L211 *)
 Definition fun_Path_cqvp_r_Path_q_crp@{i | } {A : Type@{i}} {x y z : A}
   : forall (p : Path@{i} x z) (q : Path@{i} y z) (r : Path@{i} y x),
@@ -216,6 +226,7 @@ Proof.
 Defined.
 
 (** [r • q = p -> q = r⁻¹ • p] です。 *)
+
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L218 *)
 Definition fun_Path_crq_p_Path_q_cvrp@{i | } {A : Type@{i}} {x y z : A}
   : forall (p : Path@{i} x z) (q : Path@{i} y z) (r : Path@{i} x y),
@@ -246,6 +257,7 @@ Proof.
 Defined.
 
 (** [q • p = r -> q = r • p⁻¹] です。 *)
+
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L225 *)
 Definition fun_Path_cqp_r_Path_q_crvp@{i | } {A : Type@{i}} {x y z : A}
   : forall (p : Path@{i} z x) (q : Path@{i} y z) (r : Path@{i} y x),
@@ -278,6 +290,7 @@ Defined.
 (** ** 二つの道が絡む移項に関する補題 *)
 
 (** [p • q⁻¹ = 1 -> p = q] です。 *)
+
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L232 *)
 Definition fun_Path_cpvq_1_Path_p_q@{i | } {A : Type@{i}} {x y : A}
   : forall (p : Path@{i} x y) (q : Path@{i} x y),
@@ -304,6 +317,7 @@ Proof.
 Defined.
 
 (** [q⁻¹ • p = 1 -> p = q] です。 *)
+
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L239 *)
 Definition fun_Path_cvqp_1_Path_p_q@{i | } {A : Type@{i}} {x y : A}
   : forall (p : Path@{i} x y) (q : Path@{i} x y),
@@ -330,6 +344,7 @@ Proof.
 Defined.
 
 (** [p • q = 1 -> p = q⁻¹] です。 *)
+
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L246 *)
 Definition fun_Path_cpq_1_Path_p_vq@{i | } {A : Type@{i}} {x y : A}
   : forall (p : Path@{i} x y) (q : Path@{i} y x),
@@ -356,6 +371,7 @@ Proof.
 Defined.
 
 (** [q • p = 1 -> p = q⁻¹] です。 *)
+
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L253 *)
 Definition fun_Path_cqp_1_Path_p_vq@{i | } {A : Type@{i}} {x y : A}
   : forall (p : Path@{i} x y) (q : Path@{i} y x),
@@ -382,6 +398,7 @@ Proof.
 Defined.
 
 (** [1 = p⁻¹ • q -> p = q] です。 *)
+
 (* https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L260 *)
 Definition fun_Path_1_cvpq_Path_p_q@{i | } {A : Type@{i}} {x y : A}
   : forall (p : Path@{i} x y) (q : Path@{i} x y),
@@ -408,6 +425,7 @@ Proof.
 Defined.
 
 (** [1 = q • p⁻¹ -> p = q] です。 *)
+
 (* https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L267 *)
 Definition fun_Path_1_cqvp_Path_p_q@{i | } {A : Type@{i}} {x y : A}
   : forall (p : Path@{i} x y) (q : Path@{i} x y),
@@ -434,6 +452,7 @@ Proof.
 Defined.
 
 (** [1 = q • p -> p⁻¹ = q] です。 *)
+
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L274 *)
 Definition fun_Path_1_cqp_Path_vp_q@{i | } {A : Type@{i}} {x y : A}
   : forall (p : Path@{i} x y) (q : Path@{i} y x),
@@ -460,6 +479,7 @@ Proof.
 Defined.
 
 (** [1 = q • p -> p⁻¹ = q] です。 *)
+
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L281 *)
 Definition fun_Path_1_cpq_Path_vp_q@{i | } {A : Type@{i}} {x y : A}
   : forall (p : Path@{i} x y) (q : Path@{i} y x),
@@ -488,6 +508,7 @@ Defined.
 (** ** [trpt] での移項に関する補題 *)
 
 (** [Path u (trpt (inv p) v) -> Path (trpt p u) v] です。 *)
+
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L300 *)
 Definition fun_Path_u_trpt_vp_v_Path_trpt_p_u_v@{i j | }
   {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
@@ -511,6 +532,7 @@ Proof.
 Defined.
 
 (** [Path u (trpt p v) -> Path (trpt (inv p) u) v] です。 *)
+
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L308 *)
 Definition fun_Path_u_trpt_p_v_Path_trpt_vp_u_v@{i j | }
   {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
@@ -534,6 +556,7 @@ Proof.
 Defined.
 
 (** [Path (trpt p u) v -> Path u (trpt (inv p) v)] です。 *)
+
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L316 *)
 Definition fun_Path_trpt_p_u_v_Path_u_trpt_vp_v@{i j | }
   {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
@@ -557,6 +580,7 @@ Proof.
 Defined.
 
 (** [Path (trpt (inv p) u) v -> Path u (trpt p v)] です。 *)
+
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L324 *)
 Definition fun_Path_trpt_vp_u_v_Path_u_trpt_p_v@{i j | }
   {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
@@ -582,6 +606,7 @@ Defined.
 (** ** 補題の証明の間の一貫性 (coherence) についての補題 *)
 
 (** [inv (fun_Path_u_trpt_vp_v_Path_trpt_p_u_v P p u v q)] です。 *)
+
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L333 *)
 Definition inv_'fun_Path_u_trpt_vp_v_Path_trpt_p_u_v'_P_p_u_v_q@{i j | }
   {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
@@ -613,6 +638,7 @@ Proof.
 Defined.
 
 (** [inv (fun_Path_u_trpt_p_v_Path_trpt_vp_u_v P p u v q)] です。 *)
+
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L340 *)
 Definition inv_'fun_Path_u_trpt_p_v_Path_trpt_vp_u_v'_P_p_u_v_q@{i j | }
   {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
@@ -644,6 +670,7 @@ Proof.
 Defined.
 
 (** [inv (fun_Path_trpt_p_u_v_Path_u_trpt_vp_v P p u v q)] です。 *)
+
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L347 *)
 Definition inv_'fun_Path_trpt_p_u_v_Path_u_trpt_vp_v'_P_p_u_v_q@{i j | }
   {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
@@ -675,6 +702,7 @@ Proof.
 Defined.
 
 (** [inv (fun_Path_trpt_vp_u_v_Path_u_trpt_p_v P p u v q)] です。 *)
+
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L354 *)
 Definition inv_'path_u_trpt_p_v'_P_p_u_v_q@{i j | }
   {A : Type@{i}} (P : A -> Type@{j}) {x y : A}
