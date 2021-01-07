@@ -18,3 +18,7 @@ googology-in-coq は、他のプロジェクトにはない独自の方針を持
 * [articles/](./articles/README.md) - プロジェクトに関する記事です。
 * [documents/](./documents/README.md) - プロジェクトのドキュメントです。
 * [libraries/](./libraries/README.md) - プロジェクトのソースコードです。
+
+## ドキュメント
+
+coqdoc により自動生成されたドキュメントが [GitLab Pages](https://hexirp.gitlab.io/googology-in-coq) にて利用できます。
