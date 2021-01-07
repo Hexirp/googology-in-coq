@@ -12,7 +12,16 @@ test-job:
   script:
     - echo "The test has not been implemented yet."
 
-deploy-gitlab-pages:
+gitlab-pages:
   stage: deploy
   script:
-    - echo "This job has not been implemented yet."
+    - cd libraries/
+    # coq_path.sh の内容の変更は、 Docker Image を使うことにより、既に coq の実行ファイルがパスに含まれているので、不要である。
+    - ./make_document.sh
+    - cd -
+    - cp libraries/docs/ public/
+  artifacts:
+    paths:
+      - public
+  only:
+    - master
