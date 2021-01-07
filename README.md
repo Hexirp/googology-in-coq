@@ -21,4 +21,4 @@ googology-in-coq は、他のプロジェクトにはない独自の方針を持
 
 ## ドキュメント
 
-coqdoc により自動生成されたドキュメントが [GitLab Pages](https://hexirp.gitlab.io/googology-in-coq) にて利用できます。
+coqdoc により自動生成されたドキュメントが [GitLab Pages](https://hexirp.gitlab.io/googology-in-coq/) にて利用できます。
