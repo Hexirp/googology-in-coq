@@ -3,7 +3,9 @@ image: coqorg/coq:8.12.2
 build-job:
   stage: build
   script:
-    - echo "Hello, $GITLAB_USER_LOGIN!"
+    - cd libraries/
+    # coq_path.sh の変更は、 Docker Image を使うことにより、既に coq の実行ファイルがパスに含まれているので、不要である。
+    - ./build.sh
 
 test-job1:
   stage: test
