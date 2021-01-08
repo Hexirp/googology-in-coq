@@ -1,7 +1,7 @@
 (* Run with -nois. *)
 (** [GiC.Path.OneDim] は、ある型とその上の道が一次元の亜群の構造として見做せることに関する定理を提供します。
 
-    具体的には、任意の型 [A] と [Path A] が [idpath] と [conc] と [inv] によって亜群になることに由来する、ある二つの 1-道の間に道が存在するという形式の定理を示しています。
+    具体的には、任意の型 [A] と [Path A _ _] が [idpath] と [conc] と [inv] によって亜群になることに由来する様々な定理を示しています。
  *)
 
 (** 必要なライブラリを要求します。 *)
@@ -180,4 +180,32 @@ Definition inv_cvpvq@{i | } {A : Type@{i}} {x y z : A}
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L168 *)
 Definition inv_vp@{i | } {A : Type@{i}} {x y : A}
   : forall p : Path@{i} x y, Path@{i} (inv (inv p)) p
+  := fun p => match p with idpath => idpath end.
+
+(** ** 関手 *)
+
+(** [A] と [Path A _ _] による亜群から [B] と [Path B _ _] による亜群への関手は、 [f : A -> B] と [ap f : Path A _ _ -> Path B (f _) (f _)] により与えられます。 *)
+
+(** [ap f idpath] です。 *)
+
+(* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L367 *)
+Definition ap_f_1@{i j | } {A : Type@{i}} {B : Type@{j}} (f : A -> B) (x : A)
+  : Path@{j} (ap f (idpath x)) (idpath (f x))
+  := idpath.
+
+(** [ap f (conc p q)] です。 *)
+
+(* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L378 *)
+Definition ap_f_cpq@{i j | }
+  {A : Type@{i}} {B : Type@{j}} (f : A -> B) {x y z : A}
+  : forall (p : Path@{i} x y) (q : Path@{i} y z),
+    Path@{j} (ap f (conc p q)) (conc (ap f p) (ap f q))
+  := fun p q => match q with idpath => match p with idpath => idpath end end.
+
+(** [ap f (inv p)] です。 *)
+
+(* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L406 *)
+Definition ap_f_vp@{i j | }
+  {A : Type@{i}} {B : Type@{j}} (f : A -> B) {x y : A}
+  : forall p : Path@{i} x y, Path@{j} (ap f (inv p)) (inv (ap f p))
   := fun p => match p with idpath => idpath end.

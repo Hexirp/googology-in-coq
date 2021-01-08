@@ -9,9 +9,9 @@
 Require GiC.Path.Base.
 Require GiC.Path.Function.
 Require GiC.Path.OneDim.
+Require GiC.Path.TwoDim.
 Require GiC.Path.Transposition.
 Require GiC.Path.Functoriality.
-Require GiC.Path.TwoDim.
 Require GiC.Path.Application_1_0.
 Require GiC.Path.Application_1_1.
 Require GiC.Path.Transport.
@@ -23,6 +23,5 @@ Require GiC.Path.Application_D.
 
 Export GiC.Path.Base.
 Export GiC.Path.OneDim.
-Export GiC.Path.Transposition.
-Export GiC.Path.Functoriality.
 Export GiC.Path.TwoDim.
+Export GiC.Path.Transposition.

@@ -6,9 +6,9 @@ for file in \
   Path/Base.v \
   Path/Function.v \
   Path/OneDim.v \
+  Path/TwoDim.v \
   Path/Transposition.v \
   Path/Functoriality.v \
-  Path/TwoDim.v \
   Path/Application_1_0.v \
   Path/Application_1_1.v \
   Path/Transport.v \

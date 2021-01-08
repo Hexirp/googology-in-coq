@@ -41,31 +41,6 @@ Set Default Goal Selector "!".
 
 (** ** 関数の関手性 *)
 
-(** [ap f idpath] です。 *)
-
-(* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L367 *)
-Definition ap_f_1@{i j | } {A : Type@{i}} {B : Type@{j}} (f : A -> B) (x : A)
-  : Path@{j} (ap f (idpath x)) (idpath (f x)).
-Proof.
-  cbv.
-  exact idpath.
-Defined.
-
-(** [ap f (conc p q)] です。 *)
-
-(* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L378 *)
-Definition ap_f_cpq@{i j | }
-  {A : Type@{i}} {B : Type@{j}} (f : A -> B) {x y z : A}
-  : forall (p : Path@{i} x y) (q : Path@{i} y z),
-    Path@{j} (ap f (conc p q)) (conc (ap f p) (ap f q)).
-Proof.
-  move=> p q.
-  refine (match q with idpath => _ end).
-  refine (match p with idpath => _ end).
-  cbv.
-  exact idpath.
-Defined.
-
 (** [conc r (ap f (conc p q))] です。 *)
 
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L386 *)
@@ -120,19 +95,6 @@ Defined.
 Definition inv_ap_f_p@{i j | }
   {A : Type@{i}} {B : Type@{j}} (f : A -> B) {x y : A}
   : forall p : Path@{i} x y, Path@{j} (inv (ap f p)) (ap f (inv p)).
-Proof.
-  move=> p.
-  refine (match p with idpath => _ end).
-  cbv.
-  exact idpath.
-Defined.
-
-(** [ap f (inv p)] です。 *)
-
-(* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L406 *)
-Definition ap_f_vp@{i j | }
-  {A : Type@{i}} {B : Type@{j}} (f : A -> B) {x y : A}
-  : forall p : Path@{i} x y, Path@{j} (ap f (inv p)) (inv (ap f p)).
 Proof.
   move=> p.
   refine (match p with idpath => _ end).

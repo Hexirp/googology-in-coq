@@ -9,14 +9,12 @@
 Require GiC.Base.
 Require GiC.Path.Base.
 Require GiC.Path.OneDim.
-Require GiC.Path.Functoriality.
 
 (** 必要なライブラリをインポートします。 *)
 
 Import GiC.Base.
 Import GiC.Path.Base.
 Import GiC.Path.OneDim.
-Import GiC.Path.Functoriality.
 
 (** 帰納原理 (induction principle) を生成しないように設定します。 *)
 

@@ -17,6 +17,11 @@ digraph dependency_graph {
   # GiC.Path.OneDim
   "GiC.Path.OneDim" -> "GiC.Base";
 
+  # GiC.Path.TwoDim
+  "GiC.Path.TwoDim" -> "GiC.Base";
+  "GiC.Path.TwoDim" -> "GiC.Path.Base";
+  "GiC.Path.TwoDim" -> "GiC.Path.OneDim";
+
   # GiC.Path.Transposition
   "GiC.Path.Transposition" -> "GiC.Base";
   "GiC.Path.Transposition" -> "GiC.Path.Base";
@@ -27,12 +32,6 @@ digraph dependency_graph {
   "GiC.Path.Functoriality" -> "GiC.Path.Base";
   "GiC.Path.Functoriality" -> "GiC.Path.OneDim";
   "GiC.Path.Functoriality" -> "GiC.Path.Transposition";
-
-  # GiC.Path.TwoDim
-  "GiC.Path.TwoDim" -> "GiC.Base";
-  "GiC.Path.TwoDim" -> "GiC.Path.Base";
-  "GiC.Path.TwoDim" -> "GiC.Path.OneDim";
-  "GiC.Path.TwoDim" -> "GiC.Path.Functoriality";
 
   # GiC.Path.Application_1_0
   "GiC.Path.Application_1_0" -> "GiC.Base";
