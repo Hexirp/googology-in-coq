@@ -1,12 +1,22 @@
 (* Run with -nois. *)
-(** 開発中のライブラリです。 *)
+(** [GiC.Path.TwoDim] は、ある型とその上の道とその上の道が二次元の亜群の構造として見做せることに関する定理を提供します。
+
+    具体的には、 [(A, Path A x y, Path (Path A x y) p q)] が二次元の亜群になることに由来する定理を定義します。
+ *)
+
+(** 必要なライブラリを要求します。 *)
+
+Require GiC.Base.
+Require GiC.Path.Base.
+Require GiC.Path.OneDim.
+Require GiC.Path.Functoriality.
 
 (** 必要なライブラリをインポートします。 *)
 
-Require Import GiC.Base.
-Require Import GiC.Path.Base.
-Require Import GiC.Path.OneDim.
-Require Import GiC.Path.Functoriality.
+Import GiC.Base.
+Import GiC.Path.Base.
+Import GiC.Path.OneDim.
+Import GiC.Path.Functoriality.
 
 (** 帰納原理 (induction principle) を生成しないように設定します。 *)
 
