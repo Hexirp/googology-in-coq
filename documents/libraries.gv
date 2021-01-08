@@ -78,4 +78,7 @@ digraph dependency_graph {
   "GiC.Path" -> "GiC.Path.Fibration";
   "GiC.Path" -> "GiC.Path.Transport_2";
   "GiC.Path" -> "GiC.Path.Application_D";
+
+  # GiC.Type.Base
+  "GiC.Type.Base" -> "GiC.Base";
 }

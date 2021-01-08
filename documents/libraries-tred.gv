@@ -54,4 +54,7 @@ digraph dependency_graph_tred {
   "GiC.Path" -> "GiC.Path.Application_1_1";
   "GiC.Path" -> "GiC.Path.Transport_2";
   "GiC.Path" -> "GiC.Path.Application_D";
+
+  # GiC.Type.Base
+  "GiC.Type.Base" -> "GiC.Base";
 }
