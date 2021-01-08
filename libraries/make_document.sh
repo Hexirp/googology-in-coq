@@ -2,7 +2,7 @@
 
 ./build.sh
 
-mkdir docs/
+mkdir -p docs/
 
 ./coqdoc.sh -utf8 -d docs -R theories/ GiC $(./files.sh)
 
