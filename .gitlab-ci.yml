@@ -7,10 +7,10 @@ build-job:
     # coq_path.sh の内容の変更は、 Docker Image を使うことにより、既に coq の実行ファイルがパスに含まれているので、不要である。
     - ./build.sh
 
-test-job:
-  stage: test
-  script:
-    - echo "The test has not been implemented yet."
+# test-job:
+#   stage: test
+#   script:
+#     - echo "The test has not been implemented yet."
 
 pages:
   stage: deploy
