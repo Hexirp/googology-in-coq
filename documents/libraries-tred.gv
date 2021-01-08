@@ -1,6 +1,4 @@
 digraph dependency_graph_tred {
-  compound = true;
-
   # GiC.Base
 
   # GiC.Function
@@ -50,20 +48,10 @@ digraph dependency_graph_tred {
   "GiC.Path.Application_D" -> "GiC.Path.Fibration";
 
   # GiC.Path
-  subgraph cluster_GiC_Path {
-    "GiC.Path.Base";
-    "GiC.Path.Function";
-    "GiC.Path.OneDim";
-    "GiC.Path.TwoDim";
-    "GiC.Path.Transposition";
-    "GiC.Path.Functoriality";
-    "GiC.Path.Application_1_0";
-    "GiC.Path.Application_1_1";
-    "GiC.Path.Transport";
-    "GiC.Path.Fibration";
-    "GiC.Path.Transport_2";
-    "GiC.Path.Application_D";
-  }
-
-  "GiC.Path" -> "GiC.Path.Base" [lhead = cluster_GiC_Path];
+  "GiC.Path" -> "GiC.Path.TwoDim";
+  "GiC.Path" -> "GiC.Path.Functoriality";
+  "GiC.Path" -> "GiC.Path.Application_1_0";
+  "GiC.Path" -> "GiC.Path.Application_1_1";
+  "GiC.Path" -> "GiC.Path.Transport_2";
+  "GiC.Path" -> "GiC.Path.Application_D";
 }
