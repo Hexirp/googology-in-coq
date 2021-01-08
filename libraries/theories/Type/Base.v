@@ -1,5 +1,5 @@
 (* Run with -nois. *)
-(** [GiC.Type.Base] は単純な型の定義を提供します。
+(** [GiC.Type.Base] は基本的な型の定義を提供します。
 
     具体的には、 [Bool] や [Nat] などを定義します。
  *)
