@@ -73,6 +73,7 @@ digraph dependency_graph {
     "GiC.Path.Base";
     "GiC.Path.Function";
     "GiC.Path.OneDim";
+    "GiC.Patt.TwoDim";
     "GiC.Path.Transposition";
     "GiC.Path.Functoriality";
     "GiC.Path.Application_1_0";

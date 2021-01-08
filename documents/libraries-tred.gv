@@ -53,6 +53,7 @@ digraph dependency_graph_tred {
     "GiC.Path.Base";
     "GiC.Path.Function";
     "GiC.Path.OneDim";
+    "GiC.Path.TwoDim";
     "GiC.Path.Transposition";
     "GiC.Path.Functoriality";
     "GiC.Path.Application_1_0";
