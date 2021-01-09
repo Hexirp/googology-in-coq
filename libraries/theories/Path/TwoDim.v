@@ -262,3 +262,24 @@ Proof.
   -
     exact (conc_conc_inv_'conc_1_p'_p_wiskerL_1_h_'conc_1_p'_q h).
 Defined.
+
+(** [conc2 h idpath] です。 *)
+
+(* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L1087 *)
+Definition conc2_h_1@{i | }
+  {A : Type@{i}} {x y : A} {p q : Path@{i} x y} (h : Path@{i} p q)
+  : Path@{i} (conc2 h idpath) (wiskerR h idpath).
+Proof.
+  unfold wiskerR.
+  exact idpath.
+Defined.
+
+(** [conc2 idpath h] です。 *)
+(* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L1092 *)
+Definition conc2_1_h@{i | }
+  {A : Type@{i}} {x y : A} {p q : Path@{i} x y} (h : Path@{i} p q)
+  : Path@{i} (conc2 idpath h) (wiskerL idpath h).
+Proof.
+  unfold wiskerL.
+  exact idpath.
+Defined.
