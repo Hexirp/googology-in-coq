@@ -275,6 +275,7 @@ Proof.
 Defined.
 
 (** [conc2 idpath h] です。 *)
+
 (* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L1092 *)
 Definition conc2_1_h@{i | }
   {A : Type@{i}} {x y : A} {p q : Path@{i} x y} (h : Path@{i} p q)
@@ -283,3 +284,43 @@ Proof.
   unfold wiskerL.
   exact idpath.
 Defined.
+
+(** [Path (conc2 g h) (conc2 g k) -> Path h k] です。 *)
+
+(* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L1097 *)
+Definition fun_Path_conc2_g_h_conc2_g_k_Path_h_k@{i | }
+  {A : Type@{i}} {x y z : A} {p p' : Path@{i} x y} {q q' : Path@{i} y z}
+  (g : Path@{i} p p') (h k : Path@{i} q q')
+  : Path@{i} (conc2 g h) (conc2 g k) -> Path h k.
+Proof.
+(*   refine (let t := _ in t h k).
+  refine (match g with idpath => _ end).
+  refine (let t := _ in t q q').
+  refine (match p with idpath => _ end).
+  refine (fun q_ q'_ h_ k_ r => _).
+  refine (match q_ with idpath => _ end).
+
+  refine_conc (conc2 (idpath q_) h_). *)
+(*   refine (let t := _ in t h k).
+  refine (match g with idpath => _ end).
+  refine (fun h_ k_ r => _).
+
+  refine_conc (conc2 idpath h_). *)
+(*   refine (let t := _ in t h k).
+  refine (match g with idpath => _ end).
+  refine (fun h_ => _).
+  refine (match h_ with idpath => _ end).
+  refine (fun k_ r => _).
+
+  refine_conc (conc2 idpath idpath). *)
+(*   refine (let t := _ in t k).
+  refine (match h with idpath => _ end).
+  refine (fun k_ => _).
+  refine (match g with idpath => _ end).
+  refine (let t := _ in t k_).
+  refine (match q with idpath => _ end).
+  refine (match p with idpath => _ end).
+  refine (fun k__ r => _).
+
+  refine_conc (conc2 (idpath x) (idpath x)). *)
+Admitted.
