@@ -291,36 +291,55 @@ Defined.
 Definition fun_Path_conc2_g_h_conc2_g_k_Path_h_k@{i | }
   {A : Type@{i}} {x y z : A} {p p' : Path@{i} x y} {q q' : Path@{i} y z}
   (g : Path@{i} p p') (h k : Path@{i} q q')
-  : Path@{i} (conc2 g h) (conc2 g k) -> Path h k.
+  : Path@{i} (conc2 g h) (conc2 g k) -> Path@{i} h k.
 Proof.
-(*   refine (let t := _ in t h k).
-  refine (match g with idpath => _ end).
-  refine (let t := _ in t q q').
-  refine (match p with idpath => _ end).
-  refine (fun q_ q'_ h_ k_ r => _).
-  refine (match q_ with idpath => _ end).
+(*   intro r. destruct g, p, q. Show Proof.
+(*
+         end q'0 h0 k0 r1
+     end q q' h k r0
+ end r)
+*) *)
+  refine (match g
+    as g_
+    in Path _ p'_
+    return Path@{i} (conc2 g_ h) (conc2 g_ k) -> Path@{i} h k
+    with idpath => _
+  end).
+  refine (let t := _ in t q q' h k).
+  refine (match p
+    as p_
+    in Path _ y_
+    return
+      forall (q_ q'_ : Path@{i} y_ z) (h_ k_ : @Path@{i} (Path@{i} y_ z) q_ q'_),
+        forall _
+          : @Path@{i}
+            (Path@{i} (@conc1 A x y_ z p_ q_) (@conc1 A x y_ z p_ q'_))
+            (@conc2 A x y_ z p_ p_ q_ q'_ (@idpath (Path@{i} x y_) p_) h_)
+            (@conc2 A x y_ z p_ p_ q_ q'_ (@idpath (Path@{i} x y_) p_) k_),
+          @Path@{i} (@Path@{i} (Path@{i} y_ z) q_ q'_) h_ k_
+    with idpath => _
+  end).
+  refine (fun q_ => _).
+  refine (match q_
+    as q__
+    in Path _ z_
+    return
+      forall (q'__ : Path@{i} x z_) (h__ k__ : @Path@{i} (Path@{i} x z_) q__ q'__),
+        forall _
+          : @Path@{i}
+            (@Path@{i}
+              (Path@{i} x z_)
+              (@conc1 A x x z_ idpath q__)
+              (@conc1 A x x z_ idpath q'__))
+            (@conc2 A x x z_ idpath idpath q__ q'__ idpath h__)
+            (@conc2 A x x z_ idpath idpath q__ q'__ idpath k__),
+          @Path@{i} (@Path@{i} (Path@{i} x z_) q__ q'__) h__ k__
+    with idpath => _
+  end).
+  refine (fun q'__ h__ k__ r__ => _).
 
-  refine_conc (conc2 (idpath q_) h_). *)
-(*   refine (let t := _ in t h k).
-  refine (match g with idpath => _ end).
-  refine (fun h_ k_ r => _).
-
-  refine_conc (conc2 idpath h_). *)
-(*   refine (let t := _ in t h k).
-  refine (match g with idpath => _ end).
-  refine (fun h_ => _).
-  refine (match h_ with idpath => _ end).
-  refine (fun k_ r => _).
-
-  refine_conc (conc2 idpath idpath). *)
-(*   refine (let t := _ in t k).
-  refine (match h with idpath => _ end).
-  refine (fun k_ => _).
-  refine (match g with idpath => _ end).
-  refine (let t := _ in t k_).
-  refine (match q with idpath => _ end).
-  refine (match p with idpath => _ end).
-  refine (fun k__ r => _).
-
-  refine_conc (conc2 (idpath x) (idpath x)). *)
+(*   refine (match inv (conc_1_p (@idpath A x))
+    in Path _ pR
+    return @Path@{i} (@Path@{i} (@Path@{i} A x x) pR q'__) h__ k__
+    with idpath => _ end). *)
 Admitted.
