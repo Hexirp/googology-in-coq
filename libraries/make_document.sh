@@ -2,7 +2,7 @@
 
 set -e
 
-./build.sh
+./compile.sh
 
 mkdir -p docs/
 
