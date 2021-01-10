@@ -25,10 +25,6 @@ Unset Elimination Schemes.
 Set Universe Polymorphism.
 Set Polymorphic Inductive Cumulativity.
 
-(** 宇宙 (universe) について表示するように設定します。 *)
-
-Set Printing Universes.
-
 (** タクティックが使用できるように設定します。 *)
 
 Set Default Proof Mode "Classic".

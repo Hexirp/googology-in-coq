@@ -23,10 +23,6 @@ Unset Elimination Schemes.
 
 Set Universe Polymorphism.
 Set Polymorphic Inductive Cumulativity.
-
-(** 宇宙 (universe) について表示するように設定します。 *)
-
-Set Printing Universes.
 ```
 
 タクティックは項のコントロールを困難にすることもありますが、有用であるため、限定的に使用します。詳細はタクティックの節を見てください。使用するときは、次のような指定を Vernacular ファイルの最初で行ってください。

@@ -21,10 +21,6 @@ Unset Elimination Schemes.
 Set Universe Polymorphism.
 Set Polymorphic Inductive Cumulativity.
 
-(** 宇宙 (universe) について表示するように設定します。 *)
-
-Set Printing Universes.
-
 (** ** 汎用的なタクティックの定義 *)
 
 (** [refine_conc t] は [Path x y -| Path x t, Path t y] です。 *)

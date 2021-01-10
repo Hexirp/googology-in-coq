@@ -19,10 +19,6 @@ Unset Elimination Schemes.
 Set Universe Polymorphism.
 Set Polymorphic Inductive Cumulativity.
 
-(** 宇宙 (universe) について表示するように設定します。 *)
-
-Set Printing Universes.
-
 (** 関数の型を記号で書けるようにします。 *)
 
 Notation "x -> y" := (forall (_ : x), y) (at level 99, right associativity, y at level 200).
