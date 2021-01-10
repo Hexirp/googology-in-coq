@@ -71,6 +71,19 @@ Inductive Comparison@{i | } : Type@{i} :=
   | lt : Comparison
   | gt : Comparison.
 
+(** ** 反射 (reflection) *)
+
+Inductive IsTrue@{i | } (x : Bool@{i}) : Type@{i} :=
+  | make_IsTrue : Path@{i} x true -> IsTrue x.
+
+Inductive IsDecidable@{i | } (A : Type@{i}) : Type@{i} :=
+  | pos_IsDecidable : A -> IsDecidable A
+  | neg_IsDecidable : (A -> Void@{i}) -> IsDecidable A.
+
+Inductive Reflect@{i | } (A : Type@{i}) (x : Bool@{i}) : Type@{i} :=
+  | pos_Reflect : A -> Path@{i} x true -> Reflect A x
+  | neg_Reflect : (A -> Void@{i}) -> Path@{i} x false -> Reflect A x.
+
 (** ** 切り捨て (truncation) *)
 
 Inductive IsContr@{i} (A : Type@{i}) : Type@{i} :=
