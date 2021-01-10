@@ -94,9 +94,13 @@ Definition pUV@{i si | i < si}
 
 (** ** 切り捨て (truncation) *)
 
+(** [A] が可縮 (contractible) であることです。 *)
+
 (* from: originally defined by Hexirp *)
 Inductive IsContr@{i | } (A : Type@{i}) : Type@{i} :=
   | make_IsContr : forall x : A, (forall y : A, Path@{i} x y) -> IsContr A.
+
+(** [A] が (n-2)-切り捨て (truncated) であることです。 *)
 
 (* from: originally defined by Hexirp *)
 Definition IsTrunc@{i | } (n : Nat@{i}) (A : Type@{i}) : Type@{i}
@@ -114,24 +118,34 @@ Definition IsTrunc@{i | } (n : Nat@{i}) (A : Type@{i}) : Type@{i}
 
 (** ** 反射 (reflection) *)
 
+(** [x] が [true] であることです。 *)
+
 (* from: originally defined by Hexirp *)
 Inductive IsTrue@{i | } (x : Bool@{i}) : Type@{i} :=
   | make_IsTrue : Path@{i} x true -> IsTrue x.
+
+(** [A] が決定可能であることです。 *)
 
 (* from: originally defined by Hexirp *)
 Inductive IsDecidable@{i | } (A : Type@{i}) : Type@{i} :=
   | pos_IsDecidable : A -> IsDecidable A
   | neg_IsDecidable : (A -> Void@{i}) -> IsDecidable A.
 
+(** [A] が [x] に反射していることです。 *)
+
 (* from: originally defined by Hexirp *)
 Inductive Reflect@{i | } (A : Type@{i}) (x : Bool@{i}) : Type@{i} :=
   | pos_Reflect : A -> Path@{i} x true -> Reflect A x
   | neg_Reflect : (A -> Void@{i}) -> Path@{i} x false -> Reflect A x.
 
+(** [A] が強く決定可能であることです。 *)
+
 (* from: originally defined by Hexirp *)
 Inductive IsStronglyDecidable@{i | } (A : Type@{i}) : Type@{i} :=
   | pos_IsStronglyDecidable : IsContr A -> IsStronglyDecidable A
   | neg_IsStronglyDecidable : (A -> Void@{i}) -> IsStronglyDecidable A.
+
+(** [A] が [x] に強く反射していることです。 *)
 
 (* from: originally defined by Hexirp *)
 Inductive StronglyReflect@{i | } (A : Type@{i}) (x : Bool@{i}) : Type@{i} :=
