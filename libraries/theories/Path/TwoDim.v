@@ -293,7 +293,61 @@ Definition fun_Path_conc2_g_h_conc2_g_k_Path_h_k@{i | }
   (g : Path@{i} p p') (h k : Path@{i} q q')
   : Path@{i} (conc2 g h) (conc2 g k) -> Path@{i} h k.
 Proof.
-Admitted.
+  refine
+    (match g
+      as g_
+      in Path _ p'_
+      return Path@{i} (conc2 g_ h) (conc2 g_ k) -> Path@{i} h k
+      with idpath => _
+    end).
+  refine (let t := _ in t q q' h k).
+  refine
+    (match p
+      as p_
+      in Path _ y_
+      return
+        forall
+          (q_ q'_ : Path@{i} y_ z)
+          (h_ k_ : @Path@{i} (Path@{i} y_ z) q_ q'_),
+          forall _
+            : @Path@{i}
+              (Path@{i} (@conc1 A x y_ z p_ q_) (@conc1 A x y_ z p_ q'_))
+              (@conc2 A x y_ z p_ p_ q_ q'_ (@idpath (Path@{i} x y_) p_) h_)
+              (@conc2 A x y_ z p_ p_ q_ q'_ (@idpath (Path@{i} x y_) p_) k_),
+            @Path@{i} (@Path@{i} (Path@{i} y_ z) q_ q'_) h_ k_
+      with idpath => _
+    end).
+  refine (fun q_ => _).
+  refine
+    (match q_
+      as q__
+      in Path _ z_
+      return
+        forall
+          (q'__ : Path@{i} x z_)
+          (h__ k__ : @Path@{i} (Path@{i} x z_) q__ q'__),
+          forall _
+            : @Path@{i}
+              (@Path@{i}
+                (Path@{i} x z_)
+                (@conc1 A x x z_ idpath q__)
+                (@conc1 A x x z_ idpath q'__))
+              (@conc2 A x x z_ idpath idpath q__ q'__ idpath h__)
+              (@conc2 A x x z_ idpath idpath q__ q'__ idpath k__),
+            @Path@{i} (@Path@{i} (Path@{i} x z_) q__ q'__) h__ k__
+      with idpath => _
+    end).
+  refine (fun q'__ h__ k__ r__ => _).
+
+  Check conc_conc_inv_'conc_1_p'_p_wiskerL_1_h_'conc_1_p'_q h__.
+  refine
+    (conc (inv (conc_conc_inv_'conc_1_p'_p_wiskerL_1_h_'conc_1_p'_q h__)) _).
+  refine
+    (conc _ (conc_conc_inv_'conc_p_1'_p_wiskerR_h_1_'conc_p_1'_q k__)).
+  refine (wiskerR _ _).
+  refine (wiskerL _ _).
+  exact r__.
+Defined.
 
 (** [Path (conc2 g k) (conc2 h k) -> Path g h] です。 *)
 
