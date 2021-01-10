@@ -45,13 +45,17 @@ Definition conc_1_p@{i | } {A : Type@{i}} {x y : A}
 Definition conc_p_cqr@{i | } {A : Type@{i}} {x y z w : A}
   : forall (p : Path@{i} x y) (q : Path@{i} y z) (r : Path@{i} z w),
     Path@{i} (conc p (conc q r)) (conc (conc p q) r)
-  := fun p q r => match r
-    with idpath => match q
-      with idpath => match p
-        with idpath => idpath
-      end
-    end
-  end.
+  :=
+    fun p q r =>
+      match r
+        with idpath =>
+          match q
+            with idpath =>
+              match p with
+                idpath => idpath
+              end
+          end
+      end.
 
 (** [conc (conc p q) r] です。 *)
 
@@ -59,13 +63,18 @@ Definition conc_p_cqr@{i | } {A : Type@{i}} {x y z w : A}
 Definition conc_cpq_r@{i | } {A : Type@{i}} {x y z w : A}
   : forall (p : Path@{i} x y) (q : Path@{i} y z) (r : Path@{i} z w),
     Path@{i} (conc (conc p q) r) (conc p (conc q r))
-  := fun p q r => match r
-    with idpath => match q
-      with idpath => match p
-        with idpath => idpath
-      end
-    end
-  end.
+  :=
+    fun p q r =>
+      match r
+        with idpath =>
+          match q
+            with idpath =>
+              match p
+                with idpath =>
+                  idpath
+              end
+          end
+      end.
 
 (** ** [inv] の [conc] においての逆元性 *)
 
@@ -115,16 +124,20 @@ Definition conc_cpq_vq@{i | } {A : Type@{i}} {x y z : A}
 Definition conc_cpvq_q@{i | } {A : Type@{i}} {x y z : A}
   : forall (p : Path@{i} x z) (q : Path@{i} y z),
     Path@{i} (conc (conc p (inv q)) q) p
-  := fun p q => let
-    t := match q
-      as q'
-      in Path _ z'
-      return forall p' : Path@{i} x z',
-        Path@{i} (conc (conc p' (inv q')) q') p'
-      with idpath => fun p' => match p' with idpath => idpath end
-    end
-  in
-    t p.
+  :=
+    fun p q =>
+      let
+        t :=
+          match q
+            as q'
+            in Path _ z'
+            return
+              forall p' : Path@{i} x z',
+                Path@{i} (conc (conc p' (inv q')) q') p'
+            with idpath => fun p' => match p' with idpath => idpath end
+          end
+      in
+        t p.
 
 (** ** 逆元の分配法則 *)
 
@@ -150,16 +163,20 @@ Definition inv_cvpq@{i | } {A : Type@{i}} {x y z : A}
 Definition inv_cpvq@{i | } {A : Type@{i}} {x y z : A}
   : forall (p : Path@{i} x z) (q : Path@{i} y z),
     Path@{i} (inv (conc p (inv q))) (conc q (inv p))
-  := fun p q => let
-    t := match q
-      as q'
-      in Path _ z'
-      return forall p' : Path@{i} x z',
-        Path@{i} (inv (conc p' (inv q'))) (conc q' (inv p'))
-      with idpath => fun p' => match p' with idpath => idpath end
-    end
-  in
-    t p.
+  :=
+    fun p q =>
+      let
+        t :=
+          match q
+            as q'
+            in Path _ z'
+            return
+              forall p' : Path@{i} x z',
+                Path@{i} (inv (conc p' (inv q'))) (conc q' (inv p'))
+            with idpath => fun p' => match p' with idpath => idpath end
+          end
+      in
+        t p.
 
 (** [inv (conc (inv p) (inv q))] です。 *)
 

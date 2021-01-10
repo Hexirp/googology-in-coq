@@ -21,7 +21,8 @@ Set Polymorphic Inductive Cumulativity.
 
 (** 関数の型を記号で書けるようにします。 *)
 
-Notation "x -> y" := (forall (_ : x), y) (at level 99, right associativity, y at level 200).
+Notation "x -> y" := (forall (_ : x), y)
+  (at level 99, right associativity, y at level 200).
 
 (** ユニット型です。 *)
 

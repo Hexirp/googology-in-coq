@@ -130,22 +130,28 @@ Definition apD@{i j | }
 
 (** 関数の 0-道を値の 0-道に適用する関数です。 *)
 (* from: originally defined by Hexirp *)
-Definition ap00@{i j | } {A : Type@{i}} {B : Type@{j}}
-  (f : A -> B) (x : A) : B
+Definition ap00@{i j | }
+  {A : Type@{i}} {B : Type@{j}}
+  (f : A -> B) (x : A)
+  : B
   := apply f x.
 
 (** 関数の 0-道を値の 1-道に適用する関数です。 *)
 
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/Overture.v#L374 *)
-Definition ap01@{i j | } {A : Type@{i}} {B : Type@{j}}
-  (f : A -> B) {x x' : A} (pxx' : Path@{i} x x') : Path@{j} (f x) (f x')
+Definition ap01@{i j | }
+  {A : Type@{i}} {B : Type@{j}}
+  (f : A -> B) {x x' : A} (pxx' : Path@{i} x x')
+  : Path@{j} (f x) (f x')
   := ap f pxx'.
 
 (** 関数の 1-道を値の 0-道に適用する関数です。 *)
 
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/Overture.v#L417 *)
-Definition ap10@{i j mij | i <= mij, j <= mij} {A : Type@{i}} {B : Type@{j}}
-  {f f' : A -> B} (pff' : Path@{mij} f f') (x : A) : Path@{j} (f x) (f' x)
+Definition ap10@{i j mij | i <= mij, j <= mij}
+  {A : Type@{i}} {B : Type@{j}}
+  {f f' : A -> B} (pff' : Path@{mij} f f') (x : A)
+  : Path@{j} (f x) (f' x)
   := match pff' with idpath => idpath end.
 
 (** 依存関数の 1-道を値の 0-道に適用する関数です。 *)
@@ -160,7 +166,8 @@ Definition ap10D@{i j mij | i <= mij, j <= mij}
 (** 関数の 1-道を値の 1-道に適用する関数です。 *)
 
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/Overture.v#L425 *)
-Definition ap11@{i j mij | i <= mij, j <= mij} {A : Type@{i}} {B : Type@{j}}
+Definition ap11@{i j mij | i <= mij, j <= mij}
+  {A : Type@{i}} {B : Type@{j}}
   {f f' : A -> B} (pff' : Path@{mij} f f') {x x' : A} (pxx' : Path@{i} x x')
   : Path@{j} (f x) (f' x')
   := match pxx' with idpath => match pff' with idpath => idpath end end.

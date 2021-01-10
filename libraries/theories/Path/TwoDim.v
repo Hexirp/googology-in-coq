@@ -228,9 +228,15 @@ Definition wiskerR_h_idpath_x@{i | }
   {A : Type@{i}} (x : A) (h : Path@{i} (idpath x) (idpath x))
   : Path@{i} (wiskerR h (idpath x)) h.
 Proof.
-  refine_conc (conc (conc (inv (conc_p_1 idpath)) (wiskerR h idpath)) (conc_p_1 idpath)).
+  refine_conc
+    (conc
+      (conc (inv (conc_p_1 idpath)) (wiskerR h idpath))
+      (conc_p_1 idpath)).
   -
-    change (Path@{i} (wiskerR h idpath) (conc (conc idpath (wiskerR h idpath)) idpath)).
+    change
+      (Path@{i}
+        (wiskerR h idpath)
+        (conc (conc idpath (wiskerR h idpath)) idpath)).
     refine_conc (conc idpath (wiskerR h idpath)).
     +
       exact (inv (conc_1_p (wiskerR h idpath))).
@@ -247,9 +253,13 @@ Definition wiskerL_idpath_x_h@{i | }
   {A : Type@{i}} (x : A) (h : Path@{i} (idpath x) (idpath x))
   : Path@{i} (wiskerL (idpath x) h) h.
 Proof.
-  refine_conc (conc (conc (inv (conc_1_p idpath)) (wiskerL idpath h)) (conc_1_p idpath)).
+  refine_conc
+    (conc (conc (inv (conc_1_p idpath)) (wiskerL idpath h)) (conc_1_p idpath)).
   -
-    change (Path@{i} (wiskerL idpath h) (conc (conc idpath (wiskerL idpath h)) idpath)).
+    change
+      (Path@{i}
+        (wiskerL idpath h)
+        (conc (conc idpath (wiskerL idpath h)) idpath)).
     refine_conc (conc idpath (wiskerL idpath h)).
     +
       exact (inv (conc_1_p (wiskerL idpath h))).

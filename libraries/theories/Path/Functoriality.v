@@ -63,25 +63,32 @@ Proof.
   move=> p q r.
 
   refine (let t := _ in t r).
-  refine (match q
-    as q'
-    in Path _ z'
-    return forall r' : Path@{j} (f z') w,
-      Path@{j} (conc (ap f (conc p q')) r') (conc (ap f p) (conc (ap f q') r'))
-    with idpath => _
-  end).
-  refine (match p
-    as p'
-    in Path _ y'
-    return forall r' : Path@{j} (f y') w,
-      Path@{j}
-        (conc (ap f (conc p' idpath)) r')
-        (conc (ap f p') (conc (ap f idpath) r'))
-    with idpath => _
-  end).
+  refine
+    (match q
+      as q'
+      in Path _ z'
+      return
+        forall r' : Path@{j} (f z') w,
+          Path@{j}
+            (conc (ap f (conc p q')) r')
+            (conc (ap f p) (conc (ap f q') r'))
+      with idpath => _
+    end).
+  refine
+    (match p
+      as p'
+      in Path _ y'
+      return
+        forall r' : Path@{j} (f y') w,
+          Path@{j}
+            (conc (ap f (conc p' idpath)) r')
+            (conc (ap f p') (conc (ap f idpath) r'))
+      with idpath => _
+    end).
 
   move=> r'.
-  change (Path@{j} (conc (conc idpath idpath) r') (conc idpath (conc idpath r'))).
+  change
+    (Path@{j} (conc (conc idpath idpath) r') (conc idpath (conc idpath r'))).
   exact (conc_cpq_r idpath idpath r').
 Defined.
 
@@ -522,20 +529,23 @@ Definition path_conc_'conc_1_p'_p_q_ap_lam_r_conc_1_r_q@{i | }
   {A : Type@{i}} {x : A} (p : Path@{i} x x) (q : Path@{i} p idpath)
   : Path@{i} (conc (conc_1_p p) q) (ap (fun r => conc idpath r) q).
 Proof.
-  refine (match inv_vp q
-    as _
-    in Path _ q'
-    return Path@{i} (conc (conc_1_p p) q') (ap (fun r => conc idpath r) q')
-    with idpath => _
-  end).
-  refine (match inv q
-    as vq'
-    in Path _ p'
-    return Path@{i}
-      (conc (conc_1_p p') (inv vq'))
-      (ap (fun r => conc idpath r) (inv vq'))
-    with idpath => _
-  end).
+  refine
+    (match inv_vp q
+      as _
+      in Path _ q'
+      return Path@{i} (conc (conc_1_p p) q') (ap (fun r => conc idpath r) q')
+      with idpath => _
+    end).
+  refine
+    (match inv q
+      as vq'
+      in Path _ p'
+      return
+        Path@{i}
+          (conc (conc_1_p p') (inv vq'))
+          (ap (fun r => conc idpath r) (inv vq'))
+      with idpath => _
+    end).
   cbv.
   exact idpath.
 Defined.
@@ -547,20 +557,23 @@ Definition path_conc_'conc_p_1'_p_q_ap_lam_r_conc_r_1_q@{i | }
   {A : Type@{i}} {x : A} (p : Path@{i} x x) (q : Path@{i} p idpath)
   : Path@{i} (conc (conc_p_1 p) q) (ap (fun r => conc r idpath) q).
 Proof.
-  refine (match inv_vp q
-    as _
-    in Path _ q'
-    return Path@{i} (conc (conc_p_1 p) q') (ap (fun r => conc r idpath) q')
-    with idpath => _
-  end).
-  refine (match inv q
-    as vq'
-    in Path _ p'
-    return Path@{i}
-      (conc (conc_p_1 p') (inv vq'))
-      (ap (fun r => conc r idpath) (inv vq'))
-    with idpath => _
-  end).
+  refine
+    (match inv_vp q
+      as _
+      in Path _ q'
+      return Path@{i} (conc (conc_p_1 p) q') (ap (fun r => conc r idpath) q')
+      with idpath => _
+    end).
+  refine
+    (match inv q
+      as vq'
+      in Path _ p'
+      return
+      Path@{i}
+        (conc (conc_p_1 p') (inv vq'))
+        (ap (fun r => conc r idpath) (inv vq'))
+      with idpath => _
+    end).
   cbv.
   exact idpath.
 Defined.

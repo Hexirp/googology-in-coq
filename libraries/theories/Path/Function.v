@@ -138,7 +138,8 @@ Definition ap00_AN_BDA@{i j | } {A : Type@{i}} {B : A -> Type@{j}}
 (** 非依存型 [A] から非依存型 [B] への関数の 1-道を、非依存型 [A] の値の 0-道に適用する関数です。 *)
 
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/Overture.v#L417 *)
-Definition ap10_AN_BN@{i j mij | i <= mij, j <= mij} {A : Type@{i}} {B : Type@{j}}
+Definition ap10_AN_BN@{i j mij | i <= mij, j <= mij}
+  {A : Type@{i}} {B : Type@{j}}
   {f f' : A -> B} (pff' : Path@{mij} f f') (x : A) : Path@{j} (f x) (f' x)
   := ap10 pff' x.
 
