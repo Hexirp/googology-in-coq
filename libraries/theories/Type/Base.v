@@ -70,3 +70,21 @@ Inductive Comparison@{i | } : Type@{i} :=
   | eq : Comparison
   | lt : Comparison
   | gt : Comparison.
+
+(** ** 切り捨て (truncation) *)
+
+Inductive IsContr@{i} (A : Type@{i}) : Type@{i} :=
+  | make_IsContr : forall x : A, (forall y : A, Path@{i} x y) -> IsContr A.
+
+Definition IsTrunc@{i} (n : Nat@{i}) (A : Type@{i}) : Type@{i}
+  :=
+    let
+      t0 :=
+        fix t1 (n : Nat@{i}) (A : Type@{i}) {struct n} :=
+          match n
+            with
+              | zero => IsContr@{i} A
+              | succ np => forall (x y : A), t1 np (Path@{i} x y)
+          end
+    in
+      t0 n A.
