@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 ./build.sh
 
 mkdir -p docs/
@@ -8,3 +10,5 @@ mkdir -p docs/
 
 rm docs/coqdoc.css
 cp coqdoc/default.css docs/coqdoc.css
+
+set +e
