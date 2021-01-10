@@ -101,3 +101,13 @@ Inductive IsDecidable@{i | } (A : Type@{i}) : Type@{i} :=
 Inductive Reflect@{i | } (A : Type@{i}) (x : Bool@{i}) : Type@{i} :=
   | pos_Reflect : A -> Path@{i} x true -> Reflect A x
   | neg_Reflect : (A -> Void@{i}) -> Path@{i} x false -> Reflect A x.
+
+Inductive IsStronglyDecidable@{i | } (A : Type@{i}) : Type@{i} :=
+  | pos_IsStronglyDecidable : IsContr A -> IsStronglyDecidable A
+  | neg_IsStronglyDecidable : (A -> Void@{i}) -> IsStronglyDecidable A.
+
+Inductive StronglyReflect@{i | } (A : Type@{i}) (x : Bool@{i}) : Type@{i} :=
+  | pos_StronglyReflect
+    : IsContr A -> Path@{i} x true -> StronglyReflect A x
+  | neg_StronglyReflect
+    : (A -> Void@{i}) -> Path@{i} x false -> StronglyReflect A x.
