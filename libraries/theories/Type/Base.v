@@ -76,6 +76,15 @@ Inductive Comparison@{i | } : Type@{i} :=
   | lt : Comparison
   | gt : Comparison.
 
+(** ** 基本的な汎用関数 *)
+
+(** [Path Unit Void -> Void] です。 *)
+
+(* from: originally defined by Hexirp *)
+Definition fun_Path_Unit_Void_Void@{i si | i < si}
+  : Path@{si} Unit@{i} Void@{i} -> Void@{i}
+  := fun p => match p with idpath => unit@{i} end.
+
 (** ** 切り捨て (truncation) *)
 
 (* from: originally defined by Hexirp *)

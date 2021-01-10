@@ -197,13 +197,3 @@ Definition trpv@{i j | } {A : Type@{i}} {B : A -> Type@{j}} {x y : A}
 Definition ap@{i j | } {A : Type@{i}} {B : Type@{j}} (f : A -> B) {x y : A}
   : Path@{i} x y -> Path@{j} (f x) (f y)
   := fun p => match p with idpath => idpath end.
-
-(** [Path Unit Void -> Void] です。
-
-    この関数は仲間外れですが、そこがいいのです。
- *)
-
-(* from: originally defined by Hexirp *)
-Definition fun_Path_Unit_Void_Void@{i si | i < si}
-  : Path@{si} Unit@{i} Void@{i} -> Void@{i}
-  := fun p => match p with idpath => unit@{i} end.
