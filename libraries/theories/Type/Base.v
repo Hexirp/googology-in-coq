@@ -86,10 +86,10 @@ Inductive Reflect@{i | } (A : Type@{i}) (x : Bool@{i}) : Type@{i} :=
 
 (** ** 切り捨て (truncation) *)
 
-Inductive IsContr@{i} (A : Type@{i}) : Type@{i} :=
+Inductive IsContr@{i | } (A : Type@{i}) : Type@{i} :=
   | make_IsContr : forall x : A, (forall y : A, Path@{i} x y) -> IsContr A.
 
-Definition IsTrunc@{i} (n : Nat@{i}) (A : Type@{i}) : Type@{i}
+Definition IsTrunc@{i | } (n : Nat@{i}) (A : Type@{i}) : Type@{i}
   :=
     let
       t0 :=
