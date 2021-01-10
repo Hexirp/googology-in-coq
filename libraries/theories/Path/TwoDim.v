@@ -340,13 +340,25 @@ Proof.
   refine (fun q'__ h__ k__ r__ => _).
 
   Check conc_conc_inv_'conc_1_p'_p_wiskerL_1_h_'conc_1_p'_q h__.
-  refine
-    (conc (inv (conc_conc_inv_'conc_1_p'_p_wiskerL_1_h_'conc_1_p'_q h__)) _).
-  refine
-    (conc _ (conc_conc_inv_'conc_p_1'_p_wiskerR_h_1_'conc_p_1'_q k__)).
-  refine (wiskerR _ _).
-  refine (wiskerL _ _).
-  exact r__.
+  refine_conc
+    (conc
+      (conc (inv (conc_1_p idpath)) (wiskerL idpath h__))
+      (conc_1_p q'__)).
+  -
+    exact
+      (inv (conc_conc_inv_'conc_1_p'_p_wiskerL_1_h_'conc_1_p'_q h__)).
+  -
+  Check conc_conc_inv_'conc_p_1'_p_wiskerR_h_1_'conc_p_1'_q k__.
+  refine_conc
+    (conc
+      (conc (inv (conc_p_1 idpath)) (wiskerR k__ idpath))
+      (conc_p_1 q'__)).
+  +
+    refine (wiskerR _ (conc_1_p q'__)).
+    refine (wiskerL (inv (conc_1_p idpath)) _).
+    exact r__.
+  +
+    exact (conc_conc_inv_'conc_p_1'_p_wiskerR_h_1_'conc_p_1'_q k__).
 Defined.
 
 (** [Path (conc2 g k) (conc2 h k) -> Path g h] です。 *)
