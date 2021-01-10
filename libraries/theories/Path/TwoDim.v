@@ -35,7 +35,7 @@ Set Default Goal Selector "!".
 
 (** ** 高階での一貫性 (coherence) に関する定理 *)
 
-(** conc2_ap_f_p_ap_g_p です。 *)
+(** [conc2 (ap f p) (ap g p)] です。 *)
 
 (* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L984 *)
 Definition conc2_ap_f_p_ap_g_p@{i j | }
@@ -49,7 +49,7 @@ Proof.
   exact idpath.
 Defined.
 
-(** conc_'ap_f_cpq'_f_p_inv_p_conc_conc2_idpath_'ap_f_vp'_f_p_'conc_p_vp'_ap_f_p です。 *)
+(** [conc (ap_f_cpq f p (inv p)) (conc (conc2 idpath (ap_f_vp f p)) (conc_p_vp (ap f p)))] です。 *)
 
 (* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L999 *)
 Definition
@@ -66,7 +66,7 @@ Proof.
   exact idpath.
 Defined.
 
-(** conc_'ap_f_cpq'_f_inv_p_p_conc_conc2_'ap_f_vp'_f_p_idpath_'conc_vp_p'_ap_f_p です。 *)
+(** [conc (ap_f_cpq f (inv p) p) (conc (conc2 (ap_f_vp f p idpath) (conc_vp_p (ap f p))))] です。 *)
 
 (* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L1006 *)
 Definition
@@ -83,7 +83,7 @@ Proof.
   exact idpath.
 Defined.
 
-(** conc_conc2_r_inv2_r_'conc_p_vp'_q です。 *)
+(** [conc (conc2 r (inv2 r)) (conc_p_vp q)] です。 *)
 
 (* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L1013 *)
 Definition conc_conc2_r_inv2_r_'conc_p_vp'_q@{i | }
@@ -96,7 +96,7 @@ Proof.
   exact idpath.
 Defined.
 
-(** conc_conc2_inv2_r_r_'conc_vp_p'_q です。 *)
+(** [conc (conc2 (inv2 r) r) (conc_vp_p q)] です。 *)
 
 (* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L1019 *)
 Definition conc_conc2_inv2_r_r_'conc_vp_p'_q@{i | }
