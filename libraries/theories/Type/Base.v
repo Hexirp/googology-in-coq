@@ -81,7 +81,7 @@ Inductive Comparison@{i | } : Type@{i} :=
 (** [Path Unit Void -> Void] です。 *)
 
 (* from: originally defined by Hexirp *)
-Definition fun_Path_Unit_Void_Void@{i si | i < si}
+Definition pUV@{i si | i < si}
   : Path@{si} Unit@{i} Void@{i} -> Void@{i}
   := fun p => match p with idpath => unit@{i} end.
 
