@@ -422,3 +422,21 @@ Proof.
   +
     exact (conc_conc_inv_'conc_1_p'_p_whiskerL_1_h_'conc_1_p'_q h__).
 Defined.
+
+(** ** 髭付けと道の結合 *)
+
+(** [wiskerL p (conc r s)] です。 *)
+
+(* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L1121 *)
+Definition whiskerL_p_conc_r_s@{i | }
+  {A : Type@{i}} {x y z : A} (p : Path@{i} x y) {q q' q'' : Path@{i} y z}
+  (r : Path@{i} q q') (s : Path@{i} q' q'')
+  : Path@{i} (whiskerL p (conc r s)) (conc (whiskerL p r) (whiskerL p s)).
+Proof.
+  refine (match s with idpath => _ end).
+  refine (match r with idpath => _ end).
+  refine (match q with idpath => _ end).
+  refine (match p with idpath => _ end).
+  cbv.
+  exact idpath.
+Defined.
