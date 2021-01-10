@@ -294,3 +294,13 @@ Definition fun_Path_conc2_g_h_conc2_g_k_Path_h_k@{i | }
   : Path@{i} (conc2 g h) (conc2 g k) -> Path@{i} h k.
 Proof.
 Admitted.
+
+(** [Path (conc2 g k) (conc2 h k) -> Path g h] です。 *)
+
+(* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L1107 *)
+Definition fun_Path_conc2_g_k_conc2_h_k_Path_g_h@{i | }
+  {A : Type@{i}} {x y z : A} {p p' : Path@{i} x y} {q q' : Path@{i} y z}
+  (g h : Path@{i} p p') (k : Path@{i} q q')
+  : Path@{i} (conc2 g k) (conc2 h k) -> Path@{i} g h.
+Proof.
+Admitted.
