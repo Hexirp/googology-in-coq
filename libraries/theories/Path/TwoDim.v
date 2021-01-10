@@ -398,7 +398,6 @@ Proof.
     end).
   refine (fun p'__ g__ h__ r__ => _).
 
-  Check conc_conc_inv_'conc_p_1'_p_wiskerR_h_1_'conc_p_1'_q g__.
   refine_conc
     (conc
       (conc (inv (conc_p_1 idpath)) (wiskerR g__ idpath))
@@ -406,7 +405,6 @@ Proof.
   -
     exact (inv (conc_conc_inv_'conc_p_1'_p_wiskerR_h_1_'conc_p_1'_q g__)).
   -
-  Check conc_conc_inv_'conc_1_p'_p_wiskerL_1_h_'conc_1_p'_q h__.
   refine_conc
     (conc
       (conc (inv (conc_1_p idpath)) (wiskerL idpath h__))
