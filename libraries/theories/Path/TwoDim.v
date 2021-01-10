@@ -367,4 +367,54 @@ Definition fun_Path_conc2_g_k_conc2_h_k_Path_g_h@{i | }
   (g h : Path@{i} p p') (k : Path@{i} q q')
   : Path@{i} (conc2 g k) (conc2 h k) -> Path@{i} g h.
 Proof.
-Admitted.
+  refine
+    (match k
+      as k_
+      in Path _ q'_
+      return Path@{i} (conc2 g k_) (conc2 h k_) -> Path@{i} g h
+      with idpath => _
+    end).
+  refine (let t := _ in t p' q g h).
+  refine
+    (match p
+      as p_
+      in Path _ y_
+      return
+        forall
+          (p'_ : Path@{i} x y_) (q_ : Path@{i} y_ z)
+          (g_ h_ : Path@{i} p_ p'_),
+        Path@{i} (conc2 g_ idpath) (conc2 h_ idpath) -> Path@{i} g_ h_
+      with idpath => _
+    end).
+  refine (fun p'_ q_ => _ p'_).
+  refine
+    (match q_
+      as q_
+      in Path _ z_
+      return
+        forall (p'__ : Path@{i} x x) (g__ h__ : Path@{i} idpath p'__),
+          Path@{i} (conc2 g__ idpath) (conc2 h__ idpath) -> Path@{i} g__ h__
+      with idpath => _
+    end).
+  refine (fun p'__ g__ h__ r__ => _).
+
+  Check conc_conc_inv_'conc_p_1'_p_wiskerR_h_1_'conc_p_1'_q g__.
+  refine_conc
+    (conc
+      (conc (inv (conc_p_1 idpath)) (wiskerR g__ idpath))
+      (conc_p_1 p'__)).
+  -
+    exact (inv (conc_conc_inv_'conc_p_1'_p_wiskerR_h_1_'conc_p_1'_q g__)).
+  -
+  Check conc_conc_inv_'conc_1_p'_p_wiskerL_1_h_'conc_1_p'_q h__.
+  refine_conc
+    (conc
+      (conc (inv (conc_1_p idpath)) (wiskerL idpath h__))
+      (conc_1_p p'__)).
+  +
+    refine (wiskerR _ (conc_p_1 p'__)).
+    refine (wiskerL (inv (conc_p_1 idpath)) _).
+    exact r__.
+  +
+    exact (conc_conc_inv_'conc_1_p'_p_wiskerL_1_h_'conc_1_p'_q h__).
+Defined.
