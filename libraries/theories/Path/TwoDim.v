@@ -109,12 +109,12 @@ Proof.
   exact idpath.
 Defined.
 
-(** ** 髭付け (wiskering) *)
+(** ** 髭付け (whiskering) *)
 
 (** 左からの髭付けです。 *)
 
 (* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L1027 *)
-Definition wiskerL@{i | }
+Definition whiskerL@{i | }
   {A : Type@{i}} {x y z : A}
   (p : Path@{i} x y) {q r : Path@{i} y z} (h : Path@{i} q r)
   : Path@{i} (conc p q) (conc p r)
@@ -123,7 +123,7 @@ Definition wiskerL@{i | }
 (** 右からの髭付けです。 *)
 
 (* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L1031 *)
-Definition wiskerR@{i | }
+Definition whiskerR@{i | }
   {A : Type@{i}} {x y z : A}
   {p q : Path@{i} x y} (h : Path@{i} p q) (r : Path@{i} y z)
   : Path@{i} (conc p r) (conc q r)
@@ -143,7 +143,7 @@ Proof.
   -
   refine_conc (conc (inv p) (conc p r)).
   +
-    refine (wiskerL (inv p) h).
+    refine (whiskerL (inv p) h).
   +
     exact (conc_vp_cpq p r).
 Defined.
@@ -162,18 +162,18 @@ Proof.
   -
   refine_conc (conc (conc q r) (inv r)).
   +
-    refine (wiskerR h (inv r)).
+    refine (whiskerR h (inv r)).
   +
     exact (conc_cpq_vq q r).
 Defined.
 
-(** [conc (conc (inv (conc_p_1 p)) (wiskerR h idpath)) (conc_p_1 q)] です。 *)
+(** [conc (conc (inv (conc_p_1 p)) (whiskerR h idpath)) (conc_p_1 q)] です。 *)
 
 (* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L1047 *)
-Definition conc_conc_inv_'conc_p_1'_p_wiskerR_h_1_'conc_p_1'_q@{i | }
+Definition conc_conc_inv_'conc_p_1'_p_whiskerR_h_1_'conc_p_1'_q@{i | }
   {A : Type@{i}} {x y : A} {p q : Path@{i} x y} (h : Path@{i} p q)
   : Path@{i}
-    (conc (conc (inv (conc_p_1 p)) (wiskerR h idpath)) (conc_p_1 q))
+    (conc (conc (inv (conc_p_1 p)) (whiskerR h idpath)) (conc_p_1 q))
     h.
 Proof.
   refine (match h with idpath => _ end).
@@ -182,37 +182,37 @@ Proof.
   exact idpath.
 Defined.
 
-(** [wiskerR (idpath p) q] です。 *)
+(** [whiskerR (idpath p) q] です。 *)
 
 (* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L1055 *)
-Definition wiskerR_idpath_p_q@{i | }
+Definition whiskerR_idpath_p_q@{i | }
   {A : Type@{i}} {x y z : A} (p : Path@{i} x y) (q : Path@{i} y z)
-  : Path@{i} (wiskerR (idpath p) q) (idpath (conc p q)).
+  : Path@{i} (whiskerR (idpath p) q) (idpath (conc p q)).
 Proof.
   refine (match q with idpath => _ end).
   cbv.
   exact idpath.
 Defined.
 
-(** [wiskerL p (idpath q)] です。 *)
+(** [whiskerL p (idpath q)] です。 *)
 
 (* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L1060 *)
-Definition wiskerL_p_idpath_q@{i | }
+Definition whiskerL_p_idpath_q@{i | }
   {A : Type@{i}} {x y z : A} (p : Path@{i} x y) (q : Path@{i} y z)
-  : Path@{i} (wiskerL p (idpath q)) (idpath (conc p q)).
+  : Path@{i} (whiskerL p (idpath q)) (idpath (conc p q)).
 Proof.
   refine (match p with idpath => _ end).
   cbv.
   exact idpath.
 Defined.
 
-(** [conc (conc (inv (conc_1_p p)) (wiskerL idpath h)) (conc_1_p q)] です。 *)
+(** [conc (conc (inv (conc_1_p p)) (whiskerL idpath h)) (conc_1_p q)] です。 *)
 
 (* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L1065 *)
-Definition conc_conc_inv_'conc_1_p'_p_wiskerL_1_h_'conc_1_p'_q@{i | }
+Definition conc_conc_inv_'conc_1_p'_p_whiskerL_1_h_'conc_1_p'_q@{i | }
   {A : Type@{i}} {x y : A} {p q : Path@{i} x y} (h : Path@{i} p q)
   : Path@{i}
-    (conc (conc (inv (conc_1_p p)) (wiskerL idpath h)) (conc_1_p q))
+    (conc (conc (inv (conc_1_p p)) (whiskerL idpath h)) (conc_1_p q))
     h.
 Proof.
   refine (match h with idpath => _ end).
@@ -221,52 +221,52 @@ Proof.
   exact idpath.
 Defined.
 
-(** [wiskerR h (idpath x)] です。 *)
+(** [whiskerR h (idpath x)] です。 *)
 
 (* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L1073 *)
-Definition wiskerR_h_idpath_x@{i | }
+Definition whiskerR_h_idpath_x@{i | }
   {A : Type@{i}} (x : A) (h : Path@{i} (idpath x) (idpath x))
-  : Path@{i} (wiskerR h (idpath x)) h.
+  : Path@{i} (whiskerR h (idpath x)) h.
 Proof.
   refine_conc
     (conc
-      (conc (inv (conc_p_1 idpath)) (wiskerR h idpath))
+      (conc (inv (conc_p_1 idpath)) (whiskerR h idpath))
       (conc_p_1 idpath)).
   -
     change
       (Path@{i}
-        (wiskerR h idpath)
-        (conc (conc idpath (wiskerR h idpath)) idpath)).
-    refine_conc (conc idpath (wiskerR h idpath)).
+        (whiskerR h idpath)
+        (conc (conc idpath (whiskerR h idpath)) idpath)).
+    refine_conc (conc idpath (whiskerR h idpath)).
     +
-      exact (inv (conc_1_p (wiskerR h idpath))).
+      exact (inv (conc_1_p (whiskerR h idpath))).
     +
-      exact (inv (conc_p_1 (conc idpath (wiskerR h idpath)))).
+      exact (inv (conc_p_1 (conc idpath (whiskerR h idpath)))).
   -
-    exact (conc_conc_inv_'conc_p_1'_p_wiskerR_h_1_'conc_p_1'_q h).
+    exact (conc_conc_inv_'conc_p_1'_p_whiskerR_h_1_'conc_p_1'_q h).
 Defined.
 
-(** [wiskerL (idpath x) h] です。 *)
+(** [whiskerL (idpath x) h] です。 *)
 
 (* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L1080 *)
-Definition wiskerL_idpath_x_h@{i | }
+Definition whiskerL_idpath_x_h@{i | }
   {A : Type@{i}} (x : A) (h : Path@{i} (idpath x) (idpath x))
-  : Path@{i} (wiskerL (idpath x) h) h.
+  : Path@{i} (whiskerL (idpath x) h) h.
 Proof.
   refine_conc
-    (conc (conc (inv (conc_1_p idpath)) (wiskerL idpath h)) (conc_1_p idpath)).
+    (conc (conc (inv (conc_1_p idpath)) (whiskerL idpath h)) (conc_1_p idpath)).
   -
     change
       (Path@{i}
-        (wiskerL idpath h)
-        (conc (conc idpath (wiskerL idpath h)) idpath)).
-    refine_conc (conc idpath (wiskerL idpath h)).
+        (whiskerL idpath h)
+        (conc (conc idpath (whiskerL idpath h)) idpath)).
+    refine_conc (conc idpath (whiskerL idpath h)).
     +
-      exact (inv (conc_1_p (wiskerL idpath h))).
+      exact (inv (conc_1_p (whiskerL idpath h))).
     +
-      exact (inv (conc_p_1 (conc idpath (wiskerL idpath h)))).
+      exact (inv (conc_p_1 (conc idpath (whiskerL idpath h)))).
   -
-    exact (conc_conc_inv_'conc_1_p'_p_wiskerL_1_h_'conc_1_p'_q h).
+    exact (conc_conc_inv_'conc_1_p'_p_whiskerL_1_h_'conc_1_p'_q h).
 Defined.
 
 (** [conc2 h idpath] です。 *)
@@ -274,9 +274,9 @@ Defined.
 (* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L1087 *)
 Definition conc2_h_1@{i | }
   {A : Type@{i}} {x y : A} {p q : Path@{i} x y} (h : Path@{i} p q)
-  : Path@{i} (conc2 h idpath) (wiskerR h idpath).
+  : Path@{i} (conc2 h idpath) (whiskerR h idpath).
 Proof.
-  unfold wiskerR.
+  unfold whiskerR.
   exact idpath.
 Defined.
 
@@ -285,9 +285,9 @@ Defined.
 (* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L1092 *)
 Definition conc2_1_h@{i | }
   {A : Type@{i}} {x y : A} {p q : Path@{i} x y} (h : Path@{i} p q)
-  : Path@{i} (conc2 idpath h) (wiskerL idpath h).
+  : Path@{i} (conc2 idpath h) (whiskerL idpath h).
 Proof.
-  unfold wiskerL.
+  unfold whiskerL.
   exact idpath.
 Defined.
 
@@ -347,22 +347,22 @@ Proof.
 
   refine_conc
     (conc
-      (conc (inv (conc_1_p idpath)) (wiskerL idpath h__))
+      (conc (inv (conc_1_p idpath)) (whiskerL idpath h__))
       (conc_1_p q'__)).
   -
     exact
-      (inv (conc_conc_inv_'conc_1_p'_p_wiskerL_1_h_'conc_1_p'_q h__)).
+      (inv (conc_conc_inv_'conc_1_p'_p_whiskerL_1_h_'conc_1_p'_q h__)).
   -
   refine_conc
     (conc
-      (conc (inv (conc_p_1 idpath)) (wiskerR k__ idpath))
+      (conc (inv (conc_p_1 idpath)) (whiskerR k__ idpath))
       (conc_p_1 q'__)).
   +
-    refine (wiskerR _ (conc_1_p q'__)).
-    refine (wiskerL (inv (conc_1_p idpath)) _).
+    refine (whiskerR _ (conc_1_p q'__)).
+    refine (whiskerL (inv (conc_1_p idpath)) _).
     exact r__.
   +
-    exact (conc_conc_inv_'conc_p_1'_p_wiskerR_h_1_'conc_p_1'_q k__).
+    exact (conc_conc_inv_'conc_p_1'_p_whiskerR_h_1_'conc_p_1'_q k__).
 Defined.
 
 (** [Path (conc2 g k) (conc2 h k) -> Path g h] です。 *)
@@ -406,19 +406,19 @@ Proof.
 
   refine_conc
     (conc
-      (conc (inv (conc_p_1 idpath)) (wiskerR g__ idpath))
+      (conc (inv (conc_p_1 idpath)) (whiskerR g__ idpath))
       (conc_p_1 p'__)).
   -
-    exact (inv (conc_conc_inv_'conc_p_1'_p_wiskerR_h_1_'conc_p_1'_q g__)).
+    exact (inv (conc_conc_inv_'conc_p_1'_p_whiskerR_h_1_'conc_p_1'_q g__)).
   -
   refine_conc
     (conc
-      (conc (inv (conc_1_p idpath)) (wiskerL idpath h__))
+      (conc (inv (conc_1_p idpath)) (whiskerL idpath h__))
       (conc_1_p p'__)).
   +
-    refine (wiskerR _ (conc_p_1 p'__)).
-    refine (wiskerL (inv (conc_p_1 idpath)) _).
+    refine (whiskerR _ (conc_p_1 p'__)).
+    refine (whiskerL (inv (conc_p_1 idpath)) _).
     exact r__.
   +
-    exact (conc_conc_inv_'conc_1_p'_p_wiskerL_1_h_'conc_1_p'_q h__).
+    exact (conc_conc_inv_'conc_1_p'_p_whiskerL_1_h_'conc_1_p'_q h__).
 Defined.
