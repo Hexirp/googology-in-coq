@@ -25,3 +25,24 @@ Export GiC.Path.Base.
 Export GiC.Path.OneDim.
 Export GiC.Path.TwoDim.
 Export GiC.Path.Transposition.
+
+(** 全てのライブラリをエクスポートするモジュールを定義します。 *)
+
+Module Everything.
+
+  (** ライブラリをエクスポートします。 *)
+
+  Export GiC.Path.Base.
+  Export GiC.Path.Function.
+  Export GiC.Path.OneDim.
+  Export GiC.Path.TwoDim.
+  Export GiC.Path.Transposition.
+  Export GiC.Path.Functoriality.
+  Export GiC.Path.Application_1_0.
+  Export GiC.Path.Application_1_1.
+  Export GiC.Path.Transport.
+  Export GiC.Path.Fibration.
+  Export GiC.Path.Transport_2.
+  Export GiC.Path.Application_D.
+
+End Everything.
