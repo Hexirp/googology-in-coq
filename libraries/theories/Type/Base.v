@@ -33,18 +33,21 @@ Set Default Goal Selector "!".
 
 (** ブーリアン型です。 *)
 
+(* from: originally defined by Hexirp *)
 Inductive Bool@{i | } : Type@{i} :=
   | true : Bool
   | false : Bool.
 
 (** ペアノの公理式の自然数の型です。 *)
 
+(* from: originally defined by Hexirp *)
 Inductive Nat@{i | } : Type@{i} :=
   | zero : Nat
   | succ : Nat -> Nat.
 
 (** 存在しないかもしれない値の型です。 *)
 
+(* from: originally defined by Hexirp *)
 Inductive Option@{i | } (A : Type@{i}) : Type@{i} :=
   | none : Option A
   | some : A -> Option A.
@@ -55,6 +58,7 @@ Arguments some {A} _.
 
 (** リストの型です。 *)
 
+(* from: originally defined by Hexirp *)
 Inductive List@{i | } (A : Type@{i}) : Type@{i} :=
   | nil : List A
   | cons : A -> List A -> List A.
@@ -66,6 +70,7 @@ Arguments cons {A} _ _.
 
 (** 比較の結果を表す型です。 *)
 
+(* from: originally defined by Hexirp *)
 Inductive Comparison@{i | } : Type@{i} :=
   | eq : Comparison
   | lt : Comparison
@@ -73,9 +78,11 @@ Inductive Comparison@{i | } : Type@{i} :=
 
 (** ** 切り捨て (truncation) *)
 
+(* from: originally defined by Hexirp *)
 Inductive IsContr@{i | } (A : Type@{i}) : Type@{i} :=
   | make_IsContr : forall x : A, (forall y : A, Path@{i} x y) -> IsContr A.
 
+(* from: originally defined by Hexirp *)
 Definition IsTrunc@{i | } (n : Nat@{i}) (A : Type@{i}) : Type@{i}
   :=
     let
@@ -91,21 +98,26 @@ Definition IsTrunc@{i | } (n : Nat@{i}) (A : Type@{i}) : Type@{i}
 
 (** ** 反射 (reflection) *)
 
+(* from: originally defined by Hexirp *)
 Inductive IsTrue@{i | } (x : Bool@{i}) : Type@{i} :=
   | make_IsTrue : Path@{i} x true -> IsTrue x.
 
+(* from: originally defined by Hexirp *)
 Inductive IsDecidable@{i | } (A : Type@{i}) : Type@{i} :=
   | pos_IsDecidable : A -> IsDecidable A
   | neg_IsDecidable : (A -> Void@{i}) -> IsDecidable A.
 
+(* from: originally defined by Hexirp *)
 Inductive Reflect@{i | } (A : Type@{i}) (x : Bool@{i}) : Type@{i} :=
   | pos_Reflect : A -> Path@{i} x true -> Reflect A x
   | neg_Reflect : (A -> Void@{i}) -> Path@{i} x false -> Reflect A x.
 
+(* from: originally defined by Hexirp *)
 Inductive IsStronglyDecidable@{i | } (A : Type@{i}) : Type@{i} :=
   | pos_IsStronglyDecidable : IsContr A -> IsStronglyDecidable A
   | neg_IsStronglyDecidable : (A -> Void@{i}) -> IsStronglyDecidable A.
 
+(* from: originally defined by Hexirp *)
 Inductive StronglyReflect@{i | } (A : Type@{i}) (x : Bool@{i}) : Type@{i} :=
   | pos_StronglyReflect
     : IsContr A -> Path@{i} x true -> StronglyReflect A x
