@@ -310,7 +310,9 @@ Proof.
     as p_
     in Path _ y_
     return
-      forall (q_ q'_ : Path@{i} y_ z) (h_ k_ : @Path@{i} (Path@{i} y_ z) q_ q'_),
+      forall
+        (q_ q'_ : Path@{i} y_ z)
+        (h_ k_ : @Path@{i} (Path@{i} y_ z) q_ q'_),
         forall _
           : @Path@{i}
             (Path@{i} (@conc1 A x y_ z p_ q_) (@conc1 A x y_ z p_ q'_))
@@ -324,7 +326,9 @@ Proof.
     as q__
     in Path _ z_
     return
-      forall (q'__ : Path@{i} x z_) (h__ k__ : @Path@{i} (Path@{i} x z_) q__ q'__),
+      forall
+        (q'__ : Path@{i} x z_)
+        (h__ k__ : @Path@{i} (Path@{i} x z_) q__ q'__),
         forall _
           : @Path@{i}
             (@Path@{i}
@@ -338,8 +342,24 @@ Proof.
   end).
   refine (fun q'__ h__ k__ r__ => _).
 
-(*   refine (match inv (conc_1_p (@idpath A x))
-    in Path _ pR
-    return @Path@{i} (@Path@{i} (@Path@{i} A x x) pR q'__) h__ k__
-    with idpath => _ end). *)
+  change
+    (@Path@{i}
+      (@Path@{i}
+        (@Path@{i} A x x) (conc (@idpath A x) (@idpath A x)) q'__)
+      h__
+      k__).
+  refine (let t := _ in t h__ k__).
+  refine
+    (match conc_1_p q'__
+      in Path _ q'___
+      return
+        forall (h___ k___ : @Path@{i} (@Path@{i} A x x) (@idpath A x) q'___),
+          @Path@{i}
+            (@Path@{i}
+              (@Path@{i} A x x) (conc (@idpath A x) (@idpath A x)) q'___)
+            h___
+            k___
+      with idpath => _
+    end).
+  refine (fun h___ k___ => _).
 Admitted.
