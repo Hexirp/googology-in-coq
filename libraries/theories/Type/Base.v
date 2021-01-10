@@ -93,7 +93,7 @@ Definition IsTrunc@{i | } (n : Nat@{i}) (A : Type@{i}) : Type@{i}
   :=
     let
       t0 :=
-        fix t1 (n : Nat@{i}) (A : Type@{i}) {struct n} :=
+        fix t1 (n : Nat@{i}) (A : Type@{i}) {struct n} : Type@{i} :=
           match n
             with
               | zero => IsContr@{i} A
