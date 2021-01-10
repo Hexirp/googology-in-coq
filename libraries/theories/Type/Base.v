@@ -78,6 +78,13 @@ Inductive Comparison@{i | } : Type@{i} :=
 
 (** ** 基本的な汎用関数 *)
 
+(** [Path A B -> A -> B] です。 *)
+
+(* from: originally defined by Hexirp *)
+Definition cast@{i si | i < si} (A : Type@{i}) (B : Type@{i})
+  : Path@{si} A B -> A -> B
+  := fun p x => match p in Path _ B_ return B_ with idpath => x end.
+
 (** [Path Unit Void -> Void] です。 *)
 
 (* from: originally defined by Hexirp *)
