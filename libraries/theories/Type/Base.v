@@ -29,7 +29,7 @@ Set Default Proof Mode "Classic".
 
 Set Default Goal Selector "!".
 
-(** ** 単純な型 *)
+(** ** 基本的な型 *)
 
 (** ブーリアン型です。 *)
 
