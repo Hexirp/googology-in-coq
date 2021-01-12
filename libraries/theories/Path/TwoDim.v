@@ -478,3 +478,23 @@ Proof.
   cbv.
   exact idpath.
 Defined.
+
+(** [conc (conc (inv (conc_p_cvpq p q)) (whiskerL p (whiskerL (inv p) r))) (conc_p_cvpq p q')] です。 *)
+
+(* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L1144 *)
+Definition conc_conc_inv_'conc_p_cvpq'_p_q_whiskerL_p_whiskerL_inv_p_r_'conc_p_cvpq'_p_q'
+  @{i | }
+  {A : Type@{i}} {x y z : A} (p : Path@{i} y x)
+  {q q' : Path@{i} y z} (r : Path@{i} q q')
+  : Path@{i}
+    (conc
+      (conc (inv (conc_p_cvpq p q)) (whiskerL p (whiskerL (inv p) r)))
+      (conc_p_cvpq p q'))
+    r.
+Proof.
+  refine (match r with idpath => _ end).
+  refine (match q with idpath => _ end).
+  refine (match p with idpath => _ end).
+  cbv.
+  exact idpath.
+Defined.
