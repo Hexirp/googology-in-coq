@@ -510,3 +510,29 @@ Proof.
   cbv.
   exact idpath.
 Defined.
+
+(** ** 2-圏における一貫性 (coherence) に関する定理 *)
+
+(** [(A, Path A _ _, Path (Path A _ _) _ _)] による 2-圏における五角形恒等式 (pentagon identity) です。これは identity ではなく 3-圏以上の構造による isomorphism であるため、正確には pentagonator です。 *)
+
+(* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L1194 *)
+Definition pentagonatorPathPath@{i | }
+  {A : Type@{i}} {v w x y z : A}
+  (p : Path@{i} v w) (q : Path@{i} w x) (r : Path@{i} x y) (s : Path@{i} y z)
+  : Path@{i}
+    (conc
+      (conc
+        (whiskerL p (conc_p_cqr q r s))
+        (conc_p_cqr p (conc q r) s))
+      (whiskerR (conc_p_cqr p q r) s))
+    (conc
+      (conc_p_cqr p q (conc r s))
+      (conc_p_cqr (conc p q) r s)).
+Proof.
+  refine (match s with idpath => _ end).
+  refine (match r with idpath => _ end).
+  refine (match q with idpath => _ end).
+  refine (match p with idpath => _ end).
+  cbv.
+  exact idpath.
+Defined.
