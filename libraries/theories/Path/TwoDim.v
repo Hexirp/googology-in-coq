@@ -551,3 +551,12 @@ Proof.
   cbv.
   exact idpath.
 Defined.
+
+(** the Eckmann-Hilton argument による交換法則の証明です。 *)
+
+(* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L1212 *)
+Definition theEckmannHiltonArgumentPathPath@{i | }
+  {A : Type@{i}} {x : A} (p q : Path@{i} (idpath x) (idpath x))
+  : Path@{i} (conc p q) (conc q p).
+Proof.
+Admitted.
