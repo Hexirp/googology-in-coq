@@ -300,10 +300,9 @@ Definition fun_Path_conc2_g_h_conc2_g_k_Path_h_k@{i | }
   : Path@{i} (conc2 g h) (conc2 g k) -> Path@{i} h k.
 Proof.
   refine (match g with idpath => _ end).
-  refine (let t := _ in t q q' h k).
+  refine (let t := _ in t q' h k).
+  refine (match q with idpath => _ end).
   refine (match p with idpath => _ end).
-  refine (fun q_ => _).
-  refine (match q_ with idpath => _ end).
   refine (fun q'_ h_ k_ r_ => _).
 
   refine_conc
