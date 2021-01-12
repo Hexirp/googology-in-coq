@@ -425,7 +425,7 @@ Defined.
 
 (** ** 髭付けと道の結合 *)
 
-(** [wiskerL p (conc r s)] です。 *)
+(** [whiskerL p (conc r s)] です。 *)
 
 (* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L1121 *)
 Definition whiskerL_p_conc_r_s@{i | }
