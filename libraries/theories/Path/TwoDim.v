@@ -473,3 +473,23 @@ Proof.
   cbv.
   exact idpath.
 Defined.
+
+(** ** 交支法則 (interchange law) *)
+
+(** [conc (conc2 a c) (conc2 b d)] です。 *)
+
+(* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L1169 *)
+Definition conc_conc2_a_c_conc2_b_d@{i | }
+  {A : Type@{i}} {x y z : A}
+  {p p' p'' : Path@{i} x y} {q q' q'' : Path@{i} y z}
+  (a : Path@{i} p p') (b : Path@{i} p' p'')
+  (c : Path@{i} q q') (d : Path@{i} q' q'')
+  : Path@{i} (conc (conc2 a c) (conc2 b d)) (conc2 (conc a b) (conc c d)).
+Proof.
+  refine (match d with idpath => _ end).
+  refine (match c with idpath => _ end).
+  refine (match b with idpath => _ end).
+  refine (match a with idpath => _ end).
+  cbv.
+  exact idpath.
+Defined.
