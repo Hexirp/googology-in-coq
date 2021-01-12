@@ -502,7 +502,7 @@ Defined.
 (** [conc (conc (inv (conc_cpq_vq p q)) (whiskerR (whiskerR r q) (inv q))) (conc_cpq_vq p' q)] です。 *)
 
 (* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L1152 *)
-Definition conc_conc_inv_'conc_cpq_vp'_p_q_whiskerR_whiskerR_r_q_inv_q_'conc_cpq_vq'_p_q
+Definition conc_conc_inv_'conc_cpq_vp'_p_q_whiskerR_whiskerR_r_q_inv_q_'conc_cpq_vq'_p'_q
   @{i | }
   {A : Type@{i}} {x y z : A} {p p' : Path@{i} x y}
   (r : Path@{i} p p') (q : Path@{i} y z)
