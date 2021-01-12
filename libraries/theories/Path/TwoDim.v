@@ -299,6 +299,7 @@ Definition fun_Path_conc2_g_h_conc2_g_k_Path_h_k@{i | }
   (g : Path@{i} p p') (h k : Path@{i} q q')
   : Path@{i} (conc2 g h) (conc2 g k) -> Path@{i} h k.
 Proof.
+(* 本来ならば記述をもっと短くして return 節を使うことなく証明したいのだが、 Hexirp の能力の限界によってそのままになっている。 *)
   refine
     (match g
       as g_
@@ -373,6 +374,7 @@ Definition fun_Path_conc2_g_k_conc2_h_k_Path_g_h@{i | }
   (g h : Path@{i} p p') (k : Path@{i} q q')
   : Path@{i} (conc2 g k) (conc2 h k) -> Path@{i} g h.
 Proof.
+(* 本来ならば記述をもっと短くして return 節を使うことなく証明したいのだが、 Hexirp の能力の限界によってそのままになっている。 *)
   refine
     (match k
       as k_
