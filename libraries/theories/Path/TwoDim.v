@@ -299,71 +299,31 @@ Definition fun_Path_conc2_g_h_conc2_g_k_Path_h_k@{i | }
   (g : Path@{i} p p') (h k : Path@{i} q q')
   : Path@{i} (conc2 g h) (conc2 g k) -> Path@{i} h k.
 Proof.
-(* 本来ならば記述をもっと短くして return 節を使うことなく証明したいのだが、 Hexirp の能力の限界によってそのままになっている。 *)
-  refine
-    (match g
-      as g_
-      in Path _ p'_
-      return Path@{i} (conc2 g_ h) (conc2 g_ k) -> Path@{i} h k
-      with idpath => _
-    end).
+  refine (match g with idpath => _ end).
   refine (let t := _ in t q q' h k).
-  refine
-    (match p
-      as p_
-      in Path _ y_
-      return
-        forall
-          (q_ q'_ : Path@{i} y_ z)
-          (h_ k_ : @Path@{i} (Path@{i} y_ z) q_ q'_),
-          forall _
-            : @Path@{i}
-              (Path@{i} (@conc1 A x y_ z p_ q_) (@conc1 A x y_ z p_ q'_))
-              (@conc2 A x y_ z p_ p_ q_ q'_ (@idpath (Path@{i} x y_) p_) h_)
-              (@conc2 A x y_ z p_ p_ q_ q'_ (@idpath (Path@{i} x y_) p_) k_),
-            @Path@{i} (@Path@{i} (Path@{i} y_ z) q_ q'_) h_ k_
-      with idpath => _
-    end).
+  refine (match p with idpath => _ end).
   refine (fun q_ => _).
-  refine
-    (match q_
-      as q__
-      in Path _ z_
-      return
-        forall
-          (q'__ : Path@{i} x z_)
-          (h__ k__ : @Path@{i} (Path@{i} x z_) q__ q'__),
-          forall _
-            : @Path@{i}
-              (@Path@{i}
-                (Path@{i} x z_)
-                (@conc1 A x x z_ idpath q__)
-                (@conc1 A x x z_ idpath q'__))
-              (@conc2 A x x z_ idpath idpath q__ q'__ idpath h__)
-              (@conc2 A x x z_ idpath idpath q__ q'__ idpath k__),
-            @Path@{i} (@Path@{i} (Path@{i} x z_) q__ q'__) h__ k__
-      with idpath => _
-    end).
-  refine (fun q'__ h__ k__ r__ => _).
+  refine (match q_ with idpath => _ end).
+  refine (fun q'_ h_ k_ r_ => _).
 
   refine_conc
     (conc
-      (conc (inv (conc_1_p idpath)) (whiskerL idpath h__))
-      (conc_1_p q'__)).
+      (conc (inv (conc_1_p idpath)) (whiskerL idpath h_))
+      (conc_1_p q'_)).
   -
     exact
-      (inv (conc_conc_inv_'conc_1_p'_p_whiskerL_1_h_'conc_1_p'_q h__)).
+      (inv (conc_conc_inv_'conc_1_p'_p_whiskerL_1_h_'conc_1_p'_q h_)).
   -
   refine_conc
     (conc
-      (conc (inv (conc_p_1 idpath)) (whiskerR k__ idpath))
-      (conc_p_1 q'__)).
+      (conc (inv (conc_p_1 idpath)) (whiskerR k_ idpath))
+      (conc_p_1 q'_)).
   +
-    refine (whiskerR _ (conc_1_p q'__)).
+    refine (whiskerR _ (conc_1_p q'_)).
     refine (whiskerL (inv (conc_1_p idpath)) _).
-    exact r__.
+    exact r_.
   +
-    exact (conc_conc_inv_'conc_p_1'_p_whiskerR_h_1_'conc_p_1'_q k__).
+    exact (conc_conc_inv_'conc_p_1'_p_whiskerR_h_1_'conc_p_1'_q k_).
 Defined.
 
 (** [Path (conc2 g k) (conc2 h k) -> Path g h] です。 *)
@@ -374,55 +334,29 @@ Definition fun_Path_conc2_g_k_conc2_h_k_Path_g_h@{i | }
   (g h : Path@{i} p p') (k : Path@{i} q q')
   : Path@{i} (conc2 g k) (conc2 h k) -> Path@{i} g h.
 Proof.
-(* 本来ならば記述をもっと短くして return 節を使うことなく証明したいのだが、 Hexirp の能力の限界によってそのままになっている。 *)
-  refine
-    (match k
-      as k_
-      in Path _ q'_
-      return Path@{i} (conc2 g k_) (conc2 h k_) -> Path@{i} g h
-      with idpath => _
-    end).
-  refine (let t := _ in t p' q g h).
-  refine
-    (match p
-      as p_
-      in Path _ y_
-      return
-        forall
-          (p'_ : Path@{i} x y_) (q_ : Path@{i} y_ z)
-          (g_ h_ : Path@{i} p_ p'_),
-        Path@{i} (conc2 g_ idpath) (conc2 h_ idpath) -> Path@{i} g_ h_
-      with idpath => _
-    end).
-  refine (fun p'_ q_ => _ p'_).
-  refine
-    (match q_
-      as q_
-      in Path _ z_
-      return
-        forall (p'__ : Path@{i} x x) (g__ h__ : Path@{i} idpath p'__),
-          Path@{i} (conc2 g__ idpath) (conc2 h__ idpath) -> Path@{i} g__ h__
-      with idpath => _
-    end).
-  refine (fun p'__ g__ h__ r__ => _).
+  refine (match k with idpath => _ end).
+  refine (match q with idpath => _ end).
+  refine (let t := _ in t p' g h).
+  refine (match p with idpath => _ end).
+  refine (fun p'_ g_ h_ r_ => _).
 
   refine_conc
     (conc
-      (conc (inv (conc_p_1 idpath)) (whiskerR g__ idpath))
-      (conc_p_1 p'__)).
+      (conc (inv (conc_p_1 idpath)) (whiskerR g_ idpath))
+      (conc_p_1 p'_)).
   -
-    exact (inv (conc_conc_inv_'conc_p_1'_p_whiskerR_h_1_'conc_p_1'_q g__)).
+    exact (inv (conc_conc_inv_'conc_p_1'_p_whiskerR_h_1_'conc_p_1'_q g_)).
   -
   refine_conc
     (conc
-      (conc (inv (conc_1_p idpath)) (whiskerL idpath h__))
-      (conc_1_p p'__)).
+      (conc (inv (conc_1_p idpath)) (whiskerL idpath h_))
+      (conc_1_p p'_)).
   +
-    refine (whiskerR _ (conc_p_1 p'__)).
+    refine (whiskerR _ (conc_p_1 p'_)).
     refine (whiskerL (inv (conc_p_1 idpath)) _).
-    exact r__.
+    exact r_.
   +
-    exact (conc_conc_inv_'conc_1_p'_p_whiskerL_1_h_'conc_1_p'_q h__).
+    exact (conc_conc_inv_'conc_1_p'_p_whiskerL_1_h_'conc_1_p'_q h_).
 Defined.
 
 (** ** 髭付けと道の結合 *)
