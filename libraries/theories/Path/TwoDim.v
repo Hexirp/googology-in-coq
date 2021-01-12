@@ -536,3 +536,18 @@ Proof.
   cbv.
   exact idpath.
 Defined.
+
+(** [(A, Path A _ _, Path (Path A _ _) _ _)] による 2-圏における三角形恒等式 (triangle identity) です。これは identity ではなく 3-圏以上の構造による isomorphism であるため、正確には triangulator です。 *)
+
+(* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L1204 *)
+Definition triangulatorPathPath@{i | }
+  {A : Type@{i}} {x y z : A} (p : Path@{i} x y) (q : Path@{i} y z)
+  : Path@{i}
+    (conc (conc_p_cqr p idpath q) (whiskerR (conc_p_1 p) q))
+    (whiskerL p (conc_1_p q)).
+Proof.
+  refine (match q with idpath => _ end).
+  refine (match p with idpath => _ end).
+  cbv.
+  exact idpath.
+Defined.
