@@ -559,4 +559,98 @@ Definition theEckmannHiltonArgumentPathPath@{i | }
   {A : Type@{i}} {x : A} (p q : Path@{i} (idpath x) (idpath x))
   : Path@{i} (conc p q) (conc q p).
 Proof.
-Admitted.
+  refine_conc
+    (conc
+      (conc
+        (conc
+          (inv (conc_p_1 idpath))
+          (whiskerR p idpath))
+        (conc_p_1 idpath))
+      (conc
+        (conc
+          (inv (conc_1_p idpath))
+          (whiskerL idpath q))
+        (conc_1_p idpath))).
+  -
+    refine (inv _).
+    refine (conc2 _ _).
+    +
+      exact (conc_conc_inv_'conc_p_1'_p_whiskerR_h_1_'conc_p_1'_q p).
+    +
+      exact (conc_conc_inv_'conc_1_p'_p_whiskerL_1_h_'conc_1_p'_q q).
+  -
+  refine_conc
+    (conc
+      (conc
+        (inv (conc_p_1 idpath))
+        (whiskerR p idpath))
+      (conc
+        (inv (conc_1_p idpath))
+        (whiskerL idpath q))).
+  +
+    refine (conc2 _ _).
+    *
+      exact (conc_p_1 (conc (inv (conc_p_1 idpath)) (whiskerR p idpath))).
+    *
+      exact (conc_1_p (conc (inv (conc_1_p idpath)) (whiskerL idpath q))).
+  +
+  refine_conc
+    (conc
+      (whiskerR p idpath)
+      (whiskerL idpath q)).
+  *
+    refine (conc2 _ _).
+    --
+      exact (conc_1_p (whiskerR p idpath)).
+    --
+      exact (conc_1_p (whiskerL idpath q)).
+  *
+  refine_conc
+    (conc
+      (whiskerL idpath q)
+      (whiskerR p idpath)).
+  --
+    exact (conc_whiskerR_a_q_whiskerL_p'_b p q).
+  --
+  refine_conc
+    (conc
+      (conc
+        (inv (conc_1_p idpath))
+        (whiskerL idpath q))
+      (conc
+        (inv (conc_1_p idpath))
+        (whiskerR p idpath))).
+  ++
+    refine (inv _).
+    refine (conc2 _ _).
+    **
+      exact (conc_1_p (whiskerL idpath q)).
+    **
+      exact (conc_1_p (whiskerR p idpath)).
+  ++
+  refine_conc
+    (conc
+      (conc
+        (conc
+          (inv (conc_1_p idpath))
+          (whiskerL idpath q))
+        (conc_1_p idpath))
+      (conc
+        (conc
+          (inv (conc_1_p idpath))
+          (whiskerR p idpath))
+        (conc_p_1 idpath))).
+  **
+    refine (inv _).
+    refine (conc2 _ _).
+    ---
+      exact (conc_p_1 (conc (inv (conc_1_p idpath)) (whiskerL idpath q))).
+    ---
+      exact (conc_p_1 (conc (inv (conc_1_p idpath)) (whiskerR p idpath))).
+  **
+    refine (conc2 _ _).
+    ---
+      exact (conc_conc_inv_'conc_1_p'_p_whiskerL_1_h_'conc_1_p'_q q).
+    ---
+      exact (conc_conc_inv_'conc_p_1'_p_whiskerR_h_1_'conc_p_1'_q p).
+Defined.
