@@ -552,7 +552,7 @@ Proof.
   exact idpath.
 Defined.
 
-(** the Eckmann-Hilton argument による交換法則の証明です。 *)
+(** the Eckmann–Hilton argument による交換法則の証明です。 *)
 
 (* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L1212 *)
 Definition theEckmannHiltonArgumentPathPath@{i | }
