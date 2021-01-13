@@ -23,6 +23,24 @@ body > div#page > div#main {
     padding: 0% 3.125%;
 }
 
+@media (80em <= width) {
+  body > div#page > div#main {
+    column-count: 1;
+  }
+}
+
+@media (160em <= width) {
+  body > div#page > div#main {
+    column-count: 2;
+  }
+}
+
+@media (240em <= width) {
+  body > div#page > div#main {
+    column-count: 3;
+  }
+}
+
 /* 1.1.2.1 The Headline of Library Pages */
 
 body > div#page > div#main > h1.libtitle {
