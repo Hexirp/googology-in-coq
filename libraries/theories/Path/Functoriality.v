@@ -11,7 +11,7 @@ Require GiC.Path.Base.
 Require GiC.Path.OneDim.
 Require GiC.Path.Transposition.
 
-(** 必要なライブラリをインポートします。 *)
+(** 必要なモジュールをインポートします。 *)
 
 Import GiC.Base.
 Import GiC.Path.Base.

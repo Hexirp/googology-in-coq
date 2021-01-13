@@ -10,7 +10,7 @@ Require GiC.Base.
 Require GiC.Function.
 Require GiC.Path.Base.
 
-(** 必要なライブラリをインポートします。 *)
+(** 必要なモジュールをインポートします。 *)
 
 Import GiC.Base.
 Import GiC.Function.

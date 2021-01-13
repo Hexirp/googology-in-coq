@@ -19,18 +19,18 @@ Require GiC.Path.Fibration.
 Require GiC.Path.Transport_2.
 Require GiC.Path.Application_D.
 
-(** ライブラリをエクスポートします。 *)
+(** モジュールをエクスポートします。 *)
 
 Export GiC.Path.Base.
 Export GiC.Path.OneDim.
 Export GiC.Path.TwoDim.
 Export GiC.Path.Transposition.
 
-(** 全てのライブラリをエクスポートするモジュールを定義します。 *)
+(** 全てのモジュールをエクスポートするモジュールを定義します。 *)
 
 Module Everything.
 
-  (** ライブラリをエクスポートします。 *)
+  (** モジュールをエクスポートします。 *)
 
   Export GiC.Path.Base.
   Export GiC.Path.Function.

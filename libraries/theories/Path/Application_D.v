@@ -11,7 +11,7 @@ Require GiC.Path.Transposition.
 Require GiC.Path.Transport.
 Require GiC.Path.Fibration.
 
-(** 必要なライブラリをインポートします。 *)
+(** 必要なモジュールをインポートします。 *)
 
 Import GiC.Base.
 Import GiC.Path.Base.
