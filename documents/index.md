@@ -419,3 +419,5 @@ rebase は、なるべく使わないでください。ただし、 git pull で
 * https://github.com/Hexirp/googology-in-coq/commit/ddf470fbd874d386d86ff2e79c9a4145bc1ce3ab - 別のライブラリを参考にした定理が分かるように、定理の由来をコメントに書くようになる。
 * https://gitlab.com/Hexirp/googology-in-coq/-/commit/2e052992be3144af771d464988196a2bcedde48c - Git のリポジトリのホスティングに使うサービスを GitHub から GitLab へ変更しました。
 * https://gitlab.com/Hexirp/googology-in-coq/-/commit/afad3b7afbe7309dafc6c7cf903567bc5c3f1dff - ドキュメントの書き方について、より読みやすくなるように規約を定めなおした。
+* https://gitlab.com/Hexirp/googology-in-coq/-/commit/740c03e0aae782b176dacb8cb4d3dff4488acc34 - Everything モジュールのパターンを使い始めた。
+* https://gitlab.com/Hexirp/googology-in-coq/-/commit/c3a7bef293e0920453e20c45c3e45cf63301c0bd - インデントについてのコーディングスタイルを厳密にした。
