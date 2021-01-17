@@ -159,3 +159,48 @@ Proof.
   cbv.
   exact idpath.
 Defined.
+
+(** [conc (conc (ap (trpt1 Type@{i} idmap@{si} q) (ap (fun s => trpt1 Type@{i} idmap@{si} (inv s) z) r)) (ap (fun s => trpt1 Type@{i} idmap@{si} s (trpt (inv p) z)) r)) (trpt_p_trpt_vp_u idmap p z)] です。 *)
+
+(* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L1277 *)
+Definition conc_conc_ap_trpt1_Type_idmap_q_ap_lam_s_trpt1_Type_idmap_inv_s_z_r_ap_lam_s_trpt1_Type_idmap_s_trpt_inv_p_z_r_'trpt_p_trpt_vp_u'_idmap_p_z
+  @{i si | i < si}
+  {A B : Type@{i}} (p q : Path@{si} A B) (r : Path@{si} q p) (z : B)
+  : Path@{si}
+    (conc
+      (conc
+        (ap
+          (trpt1 Type@{i} idmap@{si} q)
+          (ap (fun s => trpt1 Type@{i} idmap@{si} (inv s) z) r))
+        (ap (fun s => trpt1 Type@{i} idmap@{si} s (trpt (inv p) z)) r))
+      (trpt_p_trpt_vp_u idmap p z))
+    (trpt_p_trpt_vp_u idmap q z).
+Proof.
+  refine (match r with idpath => _ end).
+  Fail refine
+    (match q
+      as q'
+      in Path _ B'
+      return
+        Path@{si}
+          (conc
+            (conc
+              (ap
+                (trpt1 Type@{i} idmap@{si} q')
+                (ap
+                  (fun s : Path@{si} A B' =>
+                    trpt1 Type@{i} idmap@{si} (inv s) z)
+                  idpath))
+              (ap
+                (fun s : Path@{si} A B' =>
+                  trpt1 Type@{i} idmap@{si} s (trpt (inv q') z)) idpath))
+            (trpt_p_trpt_vp_u idmap q' z))
+          (trpt_p_trpt_vp_u idmap q' z)
+      with idpath => _
+    end).
+  refine (let t := _ in t z).
+  refine (match q with idpath => _ end).
+  refine (fun z_ => _).
+  cbv.
+  exact idpath.
+Defined.
