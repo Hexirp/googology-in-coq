@@ -9,6 +9,7 @@ Require GiC.Path.OneDim.
 Require GiC.Path.Function.
 Require GiC.Path.TwoDim.
 Require GiC.Path.Fibration.
+Require GiC.Path.Transport.
 Require GiC.Path.Transport_2.
 Require GiC.Path.Application_D.
 
@@ -20,6 +21,7 @@ Import GiC.Path.OneDim.
 Import GiC.Path.Function.
 Import GiC.Path.TwoDim.
 Import GiC.Path.Fibration.
+Import GiC.Path.Transport.
 Import GiC.Path.Transport_2.
 Import GiC.Path.Application_D.
 
@@ -132,6 +134,28 @@ Proof.
   refine (match r1 with idpath => _ end).
   refine (match r0 with idpath => _ end).
   refine (match p with idpath => _ end).
+  cbv.
+  exact idpath.
+Defined.
+
+(** [conc (conc (ap (trpt1 Type@{i} idmap@{si} (inv q)) (ap (fun s => trpt1 Type@{i} idmap@{si} s z) r)) (ap (fun s => trpt1 Type@{i} idmap@{si} s (trpt p z)) (inv2 r))) (trpt_vp_trpt_p_u idmap p z)] です。 *)
+
+(* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L1268 *)
+Definition conc_conc_ap_trpt1_Type_idmap_inv_q_ap_lam_s_trpt1_Type_idmap_s_z_r_ap_lam_s_trpt1_Type_idmap_s_trpt_p_z_inv2_r_'trpt_vp_trpt_p_u'_idmap_p_z
+  @{i si | i < si}
+  {A B : Type@{i}} (p q : Path@{si} A B) (r : Path@{si} q p) (z : A)
+  : Path@{si}
+    (conc
+      (conc
+        (ap
+          (trpt1 Type@{i} idmap@{si} (inv q))
+          (ap (fun s => trpt1 Type@{i} idmap@{si} s z) r))
+        (ap (fun s => trpt1 Type@{i} idmap@{si} s (trpt p z)) (inv2 r)))
+      (trpt_vp_trpt_p_u idmap p z))
+    (trpt_vp_trpt_p_u idmap q z).
+Proof.
+  refine (match r with idpath => _ end).
+  refine (match q with idpath => _ end).
   cbv.
   exact idpath.
 Defined.
