@@ -6,12 +6,14 @@
 Require GiC.Base.
 Require GiC.Path.Base.
 Require GiC.Path.Function.
+Require GiC.Path.OneDim.
 
 (** 必要なモジュールをインポートします。 *)
 
 Import GiC.Base.
 Import GiC.Path.Base.
 Import GiC.Path.Function.
+Import GiC.Path.OneDim.
 
 (** 帰納原理 (induction principle) を生成しないように設定します。 *)
 
@@ -43,6 +45,29 @@ Definition ap02_f_crr'@{i j | }
 Proof.
   refine (match r' with idpath => _ end).
   refine (match r with idpath => _ end).
+  cbv.
+  exact idpath.
+Defined.
+
+(** [ap02 f (conc2 r s)] です。 *)
+
+(* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L1232 *)
+Definition ap02_f_conc2_r_s@{i j | }
+  {A : Type@{i}} {B : Type@{j}} (f : A -> B)
+  {x y z : A} {p p' : Path@{i} x y} {q q' : Path@{i} y z}
+  (r : Path@{i} p p') (s : Path@{i} q q')
+  : Path@{j}
+    (ap02 f (conc2 r s))
+    (conc
+      (conc
+        (ap_f_cpq f p q)
+        (conc2 (ap02 f r) (ap02 f s)))
+      (inv (ap_f_cpq f p' q'))).
+Proof.
+  refine (match s with idpath => _ end).
+  refine (match r with idpath => _ end).
+  refine (match q with idpath => _ end).
+  refine (match p with idpath => _ end).
   cbv.
   exact idpath.
 Defined.
