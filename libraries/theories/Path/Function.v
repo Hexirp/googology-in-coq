@@ -121,6 +121,15 @@ Definition trpt3@{i j | }
 
 (** ** [ap] の変種 *)
 
+(** 関数の 0-道を値の 2-道に適用する関数です。 *)
+
+(* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L1223 *)
+Definition ap02@{i j | }
+  {A : Type@{i}} {B : Type@{j}}
+  (f : A -> B) {x x' : A} {p p' : Path@{i} x x'} (q : Path@{i} p p')
+  : Path@{j} (ap01 f p) (ap01 f p')
+  := match q with idpath => idpath end.
+
 (** 非依存型 [A] から非依存型 [B] への関数の 0-道を、非依存型 [A] の値の 0-道に適用する関数です。 *)
 
 (* from: originally defined by Hexirp *)
