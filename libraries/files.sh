@@ -4,8 +4,8 @@ for file in \
   Base.v \
   Function.v \
   Path/Base.v \
-  Path/Function.v \
   Path/OneDim.v \
+  Path/Function.v \
   Path/TwoDim.v \
   Path/Transposition.v \
   Path/Functoriality.v \

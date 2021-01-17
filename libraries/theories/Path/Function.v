@@ -9,12 +9,14 @@
 Require GiC.Base.
 Require GiC.Function.
 Require GiC.Path.Base.
+Require GiC.Path.OneDim.
 
 (** 必要なモジュールをインポートします。 *)
 
 Import GiC.Base.
 Import GiC.Function.
 Import GiC.Path.Base.
+Import GiC.Path.OneDim.
 
 (** 帰納原理 (induction principle) を生成しないように設定します。 *)
 
@@ -125,6 +127,15 @@ Definition ap02@{i j | }
   (f : A -> B) {x x' : A} {p p' : Path@{i} x x'} (q : Path@{i} p p')
   : Path@{j} (ap01 f p) (ap01 f p')
   := match q with idpath => idpath end.
+
+(** 依存関数の 0-道を値の 2-道に適用する関数です。 *)
+
+(* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L1240 *)
+Definition apD02@{i j | }
+  {A : Type@{i}} {B : A -> Type@{j}} {x y : A} {p q : Path@{i} x y}
+  (f : forall x : A, B x) (r : Path@{i} p q)
+  : Path@{j} (apD f p) (conc (trpt2 A B r (f x)) (apD f q))
+  := match r with idpath => inv (conc_1_p (apD f p)) end.
 
 (** 非依存型 [A] から非依存型 [B] への関数の 0-道を、非依存型 [A] の値の 0-道に適用する関数です。 *)
 

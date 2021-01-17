@@ -7,12 +7,13 @@ digraph dependency_graph_tred {
   # GiC.Path.Base
   "GiC.Path.Base" -> "GiC.Base";
 
+  # GiC.Path.OneDim
+  "GiC.Path.OneDim" -> "GiC.Base";
+
   # GiC.Path.Function
   "GiC.Path.Function" -> "GiC.Function";
   "GiC.Path.Function" -> "GiC.Path.Base";
-
-  # GiC.Path.OneDim
-  "GiC.Path.OneDim" -> "GiC.Base";
+  "GiC.Path.Function" -> "GiC.Path.OneDim";
 
   # GiC.Path.TwoDim
   "GiC.Path.TwoDim" -> "GiC.Path.Base";
@@ -41,7 +42,6 @@ digraph dependency_graph_tred {
 
   # GiC.Path.Transport_2
   "GiC.Path.Transport_2" -> "GiC.Path.Function";
-  "GiC.Path.Transport_2" -> "GiC.Path.OneDim";
 
   # GiC.Path.Application_D
   "GiC.Path.Application_D" -> "GiC.Path.Transport";
