@@ -146,7 +146,7 @@ Proof.
   exact idpath.
 Defined.
 
-(** [ap10 (ap (fun g => compNNN f g) p) x です。 *)
+(** [ap10 (ap (fun g => compNNN f g) p) x] です。 *)
 
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L639 *)
 Definition ap10_ap_lam_g_compNN_f_g_p_x

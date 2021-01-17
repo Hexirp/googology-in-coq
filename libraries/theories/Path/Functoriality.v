@@ -550,7 +550,7 @@ Proof.
   exact idpath.
 Defined.
 
-(** [Path (conc (conc_p_1 p) q) (ap (fun r => conc r idpath) q) です。 *)
+(** [Path (conc (conc_p_1 p) q) (ap (fun r => conc r idpath) q)] です。 *)
 
 (* from: https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v#L584 *)
 Definition path_conc_'conc_p_1'_p_q_ap_lam_r_conc_r_1_q@{i | }
