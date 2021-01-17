@@ -9,6 +9,7 @@ Require GiC.Path.OneDim.
 Require GiC.Path.Function.
 Require GiC.Path.TwoDim.
 Require GiC.Path.Fibration.
+Require GiC.Path.Transport_2.
 Require GiC.Path.Application_D.
 
 (** 必要なモジュールをインポートします。 *)
@@ -19,6 +20,7 @@ Import GiC.Path.OneDim.
 Import GiC.Path.Function.
 Import GiC.Path.TwoDim.
 Import GiC.Path.Fibration.
+Import GiC.Path.Transport_2.
 Import GiC.Path.Application_D.
 
 (** 帰納原理 (induction principle) を生成しないように設定します。 *)
@@ -106,6 +108,29 @@ Definition apD02_f_r@{i j | }
       (whiskerL (trpt2 A (fun _ : A => B) r (f x)) (inv (apD_f_p f q)))).
 Proof.
   refine (match r with idpath => _ end).
+  refine (match p with idpath => _ end).
+  cbv.
+  exact idpath.
+Defined.
+
+(** [apD02 f (conc r0 r1)] です。 *)
+
+(* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L1256 *)
+Definition apD02_f_cr0r1@{i j | }
+  (A : Type@{i}) (B : A -> Type@{j}) (f : forall x : A, B x) {x y : A}
+  {p p' p'' : Path@{i} x y} (r0 : Path@{i} p p') (r1 : Path@{i} p' p'')
+  : Path@{j}
+    (apD02 f (conc r0 r1))
+    (conc
+      (conc
+        (conc
+          (apD02 f r0)
+          (whiskerL (trpt2 A B r0 (f x)) (apD02 f r1)))
+        (conc_p_cqr _ _ _))
+      (whiskerR (inv (trpt2_A_B_cq0q1_y B r0 r1 (f x))) (apD f p''))).
+Proof.
+  refine (match r1 with idpath => _ end).
+  refine (match r0 with idpath => _ end).
   refine (match p with idpath => _ end).
   cbv.
   exact idpath.
