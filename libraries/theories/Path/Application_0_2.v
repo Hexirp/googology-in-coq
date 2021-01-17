@@ -177,27 +177,6 @@ Definition conc_conc_ap_trpt1_Type_idmap_q_ap_lam_s_trpt1_Type_idmap_inv_s_z_r_a
     (trpt_p_trpt_vp_u idmap q z).
 Proof.
   refine (match r with idpath => _ end).
-  Fail refine
-    (match q
-      as q'
-      in Path _ B'
-      return
-        Path@{si}
-          (conc
-            (conc
-              (ap
-                (trpt1 Type@{i} idmap@{si} q')
-                (ap
-                  (fun s : Path@{si} A B' =>
-                    trpt1 Type@{i} idmap@{si} (inv s) z)
-                  idpath))
-              (ap
-                (fun s : Path@{si} A B' =>
-                  trpt1 Type@{i} idmap@{si} s (trpt (inv q') z)) idpath))
-            (trpt_p_trpt_vp_u idmap q' z))
-          (trpt_p_trpt_vp_u idmap q' z)
-      with idpath => _
-    end).
   refine (let t := _ in t z).
   refine (match q with idpath => _ end).
   refine (fun z_ => _).
