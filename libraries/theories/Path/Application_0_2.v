@@ -128,7 +128,10 @@ Definition apD02_f_cr0r1@{i j | }
         (conc
           (apD02 f r0)
           (whiskerL (trpt2 A B r0 (f x)) (apD02 f r1)))
-        (conc_p_cqr _ _ _))
+        (conc_p_cqr
+          (trpt2 A B r0 (f x))
+          (trpt2 A B r1 (f x))
+          (apD f p'')))
       (whiskerR (inv (trpt2_A_B_cq0q1_y B r0 r1 (f x))) (apD f p''))).
 Proof.
   refine (match r1 with idpath => _ end).
