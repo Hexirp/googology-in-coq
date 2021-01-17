@@ -86,7 +86,7 @@ Defined.
 
 (* from: https://github.com/HoTT/HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v#L953 *)
 Definition apD_f_p@{i j | }
-  {A : Type@{i}} {B : Type@{j}} {x y : A} (p: Path@{i} x y) (f : A -> B)
+  {A : Type@{i}} {B : Type@{j}} (f : A -> B) {x y : A} (p : Path@{i} x y)
   : Path@{j} (apD f p) (conc (trpt1_A_lam_x_B_p_u p (f x)) (ap f p)).
 Proof.
   refine (match p with idpath => _ end).
