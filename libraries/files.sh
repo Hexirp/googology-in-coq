@@ -15,6 +15,7 @@ for file in \
   Path/Fibration.v \
   Path/Transport_2.v \
   Path/Application_D.v \
+  Path/Application_0_2.v \
   Path.v \
   Type/Base.v
 do
