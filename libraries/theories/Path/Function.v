@@ -25,10 +25,6 @@ Unset Elimination Schemes.
 Set Universe Polymorphism.
 Set Polymorphic Inductive Cumulativity.
 
-(** タクティックが使用できるように設定します。 *)
-
-Set Default Proof Mode "Classic".
-
 (** ** [trpt] の変種 *)
 
 (** [A] の道で、一重の依存型 [B x] を輸送する [trpt] です。 *)
