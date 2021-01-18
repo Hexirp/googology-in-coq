@@ -362,7 +362,7 @@ refine (conc _ (_ : Path@{i} y _)).
 
 現在の内容は https://github.com/HoTT/HoTT/blob/756ff79da22d0804194145db775865c11c14aa48/theories/Basics/PathGroupoids.v をベースにしています。
 
-頻出するパターンとして `refine (match p with idpath => _ end).` があります。これは as や return などを付けたりというオプションがあるので、タクティック化は検討していません。
+頻出するパターンとして `refine (match p with idpath => _ end).` があります。
 
 ## 開発
 
@@ -421,3 +421,4 @@ rebase は、なるべく使わないでください。ただし、 git pull で
 * https://gitlab.com/Hexirp/googology-in-coq/-/commit/afad3b7afbe7309dafc6c7cf903567bc5c3f1dff - ドキュメントの書き方について、より読みやすくなるように規約を定めなおした。
 * https://gitlab.com/Hexirp/googology-in-coq/-/commit/740c03e0aae782b176dacb8cb4d3dff4488acc34 - Everything モジュールのパターンを使い始めた。
 * https://gitlab.com/Hexirp/googology-in-coq/-/commit/c3a7bef293e0920453e20c45c3e45cf63301c0bd - インデントについてのコーディングスタイルを厳密にした。
+* https://gitlab.com/Hexirp/googology-in-coq/-/commit/0a9c0be392a5eb26377c244ec9bce44b31157a13 - HoTT.Basics.PathGroupoids の移植を完了させた。
