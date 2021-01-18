@@ -18,6 +18,7 @@ Require GiC.Path.Transport.
 Require GiC.Path.Fibration.
 Require GiC.Path.Transport_2.
 Require GiC.Path.Application_D.
+Require GiC.Path.Application_0_2.
 
 (** モジュールをエクスポートします。 *)
 
@@ -44,5 +45,6 @@ Module Everything.
   Export GiC.Path.Fibration.
   Export GiC.Path.Transport_2.
   Export GiC.Path.Application_D.
+  Export GiC.Path.Application_0_2.
 
 End Everything.
