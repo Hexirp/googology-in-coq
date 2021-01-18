@@ -21,12 +21,6 @@ Unset Elimination Schemes.
 Set Universe Polymorphism.
 Set Polymorphic Inductive Cumulativity.
 
-(** ** 汎用的なタクティックの定義 *)
-
-(** [refine_conc t] は [Path x y -| Path x t, Path t y] です。 *)
-
-Ltac refine_conc t := refine (@GiC.Base.conc@{_} _ _ t _ _ _).
-
 (** ** 汎用的な関数の定義 *)
 
 (** *** [conc] の変種 *)

@@ -197,3 +197,24 @@ Definition trpv@{i j | } {A : Type@{i}} {B : A -> Type@{j}} {x y : A}
 Definition ap@{i j | } {A : Type@{i}} {B : Type@{j}} (f : A -> B) {x y : A}
   : Path@{i} x y -> Path@{j} (f x) (f y)
   := fun p => match p with idpath => idpath end.
+
+(** タクティックのためのモジュールです。 *)
+
+Module Tactic.
+
+  (** [x = z] というゴールを [refine_by_conc y] として [x = y] と [y = z] に分解するためのタクティックです。 *)
+
+  (** このタクティックの名前は長いが、他の代替を考えると、短縮されたものになっている。
+
+<<
+refine_by_conc t.
+refine (@conc@{_} _ _ t _ _ _).
+refine (conc (_ : Path@{_} _ t) _).
+>>
+
+    *)
+
+  (* from: originally defined by Hexirp *)
+  Ltac refine_by_conc t := refine (@conc@{_} _ _ t _ _ _).
+
+End Tactic.
