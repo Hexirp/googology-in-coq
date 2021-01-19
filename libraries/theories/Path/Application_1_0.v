@@ -54,8 +54,8 @@ Definition ap10_cpq_x@{i j mij | i <= mij, j <= mij}
     (ap10 (conc pff' pf'f'') x)
     (conc (ap10 pff' x) (ap10 pf'f'' x)).
 Proof.
-  refine (match pf'f'' with idpath => _ end).
-  refine (match pff' with idpath => _ end).
+  path_elim pf'f''.
+  path_elim pff'.
   cbv.
   exact idpath.
 Defined.
@@ -68,7 +68,7 @@ Definition ap10_vp_x@{i j mij | i <= mij, j <= mij}
   (pff' : Path@{mij} f f') (x : A)
   : Path@{j} (ap10 (inv pff') x) (inv (ap10 pff' x)).
 Proof.
-  refine (match pff' with idpath => _ end).
+  path_elim pff'.
   cbv.
   exact idpath.
 Defined.
@@ -94,8 +94,8 @@ Definition ap10D_cpq_x@{i j mij | i <= mij, j <= mij}
     (ap10D (conc pff' pf'f'') x)
     (conc (ap10D pff' x) (ap10D pf'f'' x)).
 Proof.
-  refine (match pf'f'' with idpath => _ end).
-  refine (match pff' with idpath => _ end).
+  path_elim pf'f''.
+  path_elim pff'.
   cbv.
   exact idpath.
 Defined.
@@ -108,7 +108,7 @@ Definition ap10D_vp_x@{i j mij | i <= mij, j <= mij}
   (pff' : Path@{mij} f f') (x : A)
   : Path@{j} (ap10D (inv pff') x) (inv (ap10D pff' x)).
 Proof.
-  refine (match pff' with idpath => _ end).
+  path_elim pff'.
   cbv.
   exact idpath.
 Defined.
@@ -124,7 +124,7 @@ Definition ap10_ap_lam_f_compNNN_f_g_p_x
     (ap10@{i k mik} (ap (fun f => compNNN f g) pff') x)
     (ap10@{j k mjk} pff' (g x)).
 Proof.
-  refine (match pff' with idpath => _ end).
+  path_elim pff'.
   cbv.
   exact idpath.
 Defined.
@@ -141,7 +141,7 @@ Definition ap10D_ap_lam_f_compNND_f_g_p_x
     (ap10D@{i k mik} (ap (fun f => compNND f g) pff') x)
     (ap10D@{j k mjk} pff' (g x)).
 Proof.
-  refine (match pff' with idpath => _ end).
+  path_elim pff'.
   cbv.
   exact idpath.
 Defined.
@@ -157,7 +157,7 @@ Definition ap10_ap_lam_g_compNN_f_g_p_x
     (ap10@{i k mik} (ap (fun g => compNNN f g) pgg') x)
     (ap f (ap10@{i j mij} pgg' x)).
 Proof.
-  refine (match pgg' with idpath => _ end).
+  path_elim pgg'.
   cbv.
   exact idpath.
 Defined.
@@ -174,7 +174,7 @@ Definition ap10D_ap_lam_g_compND_f_g_p_x
     (ap10D@{i k mik} (ap (fun g => compNDN f g) pgg') x)
     (ap (f x) (ap10D@{i j mij} pgg' x)).
 Proof.
-  refine (match pgg' with idpath => _ end).
+  path_elim pgg'.
   cbv.
   exact idpath.
 Defined.
