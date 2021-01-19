@@ -45,7 +45,7 @@ Proof.
   move=> p q r.
 
   refine (let t := _ in t p).
-  refine (match r with idpath => _ end).
+  path_elim r.
 
   move=> p' path_p'_cv1q.
   refine_conc p'.
@@ -70,7 +70,7 @@ Proof.
   move=> p q r.
 
   refine (let t := _ in t q).
-  refine (match p with idpath => _ end).
+  path_elim p.
 
   move=> q' path_r_cq'v1.
   refine_conc r.
@@ -95,7 +95,7 @@ Proof.
   move=> p q r.
 
   refine (let t := _ in t q).
-  refine (match r with idpath => _ end).
+  path_elim r.
 
   move=> q' path_p_c1q'.
   refine_conc p.
@@ -120,7 +120,7 @@ Proof.
   move=> p q r.
 
   refine (let t := _ in t r).
-  refine (match p with idpath => _ end).
+  path_elim p.
 
   move=> r' path_r'_cq1.
   refine_conc r'.
@@ -145,7 +145,7 @@ Proof.
   move=> p q r.
 
   refine (let t := _ in t p).
-  refine (match r with idpath => _ end).
+  path_elim r.
 
   move=> p' path_cv1q_p'.
   refine_conc (conc (inv idpath) q).
@@ -170,7 +170,7 @@ Proof.
   move=> p q r.
 
   refine (let t := _ in t q).
-  refine (match p with idpath => _ end).
+  path_elim p.
 
   move=> q' path_cq'v1_r.
   refine_conc (conc q' (inv idpath)).
@@ -195,7 +195,7 @@ Proof.
   move=> p q r.
 
   refine (let t := _ in t q).
-  refine (match r with idpath => _ end).
+  path_elim r.
 
   move=> q' path_c1q'_p.
   refine_conc (conc idpath q').
@@ -220,7 +220,7 @@ Proof.
   move=> p q r.
 
   refine (let t := _ in t r).
-  refine (match p with idpath => _ end).
+  path_elim p.
 
   move=> r' path_cq1_r'.
   refine_conc (conc q idpath).
@@ -247,7 +247,7 @@ Proof.
   move=> p q.
 
   refine (let t := _ in t p).
-  refine (match q with idpath => _ end).
+  path_elim q.
 
   move=> p' path_cp'v1_1.
   refine_conc (conc p' (inv idpath)).
@@ -268,7 +268,7 @@ Proof.
   move=> p q.
 
   refine (let t := _ in t p).
-  refine (match q with idpath => _ end).
+  path_elim q.
 
   move=> p' path_cv1p'_1.
   refine_conc (conc (inv idpath) p').
@@ -289,7 +289,7 @@ Proof.
   move=> p q.
 
   refine (let t := _ in t p).
-  refine (match q with idpath => _ end).
+  path_elim q.
 
   move=> p' path_cp'1_1.
   refine_conc (conc p' idpath).
@@ -310,7 +310,7 @@ Proof.
   move=> p q.
 
   refine (let t := _ in t p).
-  refine (match q with idpath => _ end).
+  path_elim q.
 
   move=> p' path_c1p'_1.
   refine_conc (conc idpath p').
@@ -331,7 +331,7 @@ Proof.
   move=> p q.
 
   refine (let t := _ in t q).
-  refine (match p with idpath => _ end).
+  path_elim p.
 
   move=> q' path_1_cv1q'.
   refine_conc (conc (inv idpath) q').
@@ -352,7 +352,7 @@ Proof.
   move=> p q.
 
   refine (let t := _ in t q).
-  refine (match p with idpath => _ end).
+  path_elim p.
 
   move=> q' path_1_cq'v1.
   refine_conc (conc q' (inv idpath)).
@@ -373,7 +373,7 @@ Proof.
   move=> p q.
 
   refine (let t := _ in t q).
-  refine (match p with idpath => _ end).
+  path_elim p.
 
   move=> q' path_1_cq'1.
   refine_conc (conc q' idpath).
@@ -394,7 +394,7 @@ Proof.
   move=> p q.
 
   refine (let t := _ in t q).
-  refine (match p with idpath => _ end).
+  path_elim p.
 
   move=> q' path_1_c1q'.
   refine_conc (conc idpath q').
@@ -418,7 +418,7 @@ Proof.
   move=> p u v.
 
   refine (let t := _ in t v).
-  refine (match p with idpath => _ end).
+  path_elim p.
 
   move=> v'.
   cbv.
@@ -436,7 +436,7 @@ Proof.
   move=> p u v.
 
   refine (let t := _ in t u).
-  refine (match p with idpath => _ end).
+  path_elim p.
 
   move=> u'.
   cbv.
@@ -454,7 +454,7 @@ Proof.
   move=> p u v.
 
   refine (let t := _ in t v).
-  refine (match p with idpath => _ end).
+  path_elim p.
 
   move=> v'.
   cbv.
@@ -472,7 +472,7 @@ Proof.
   move=> p u v.
 
   refine (let t := _ in t u).
-  refine (match p with idpath => _ end).
+  path_elim p.
 
   move=> u'.
   cbv.
@@ -495,7 +495,7 @@ Proof.
   move=> q.
 
   refine (let t := _ in t v q).
-  refine (match p with idpath => _ end).
+  path_elim p.
 
   simpl trpt.
   move=> v' q'.
@@ -519,7 +519,7 @@ Proof.
   move=> q.
 
   refine (let t := _ in t u q).
-  refine (match p with idpath => _ end).
+  path_elim p.
 
   simpl trpt.
   move=> u' q'.
@@ -543,7 +543,7 @@ Proof.
   move=> q.
 
   refine (let t := _ in t v q).
-  refine (match p with idpath => _ end).
+  path_elim p.
 
   simpl trpt.
   move=> v' q'.
@@ -567,7 +567,7 @@ Proof.
   move=> q.
 
   refine (let t := _ in t u q).
-  refine (match p with idpath => _ end).
+  path_elim p.
 
   simpl trpt.
   move=> u' q'.
