@@ -58,8 +58,8 @@ Definition trpt_cpq_u@{i j | }
   (p : Path@{i} x y) (q : Path@{i} y z) (u : P x)
   : Path@{j} (trpt (conc p q) u) (trpt q (trpt p u)).
 Proof.
-  refine (match q with idpath => _ end).
-  refine (match p with idpath => _ end).
+  path_elim q.
+  path_elim p.
   cbv.
   exact idpath.
 Defined.
@@ -160,9 +160,9 @@ Section trpt_conc_p_conc_q_r_u_Path_L_R.
   Proof.
     unfold trpt_conc_p_conc_q_r_u_L.
     unfold trpt_conc_p_conc_q_r_u_R.
-    refine (match r with idpath => _ end).
-    refine (match q with idpath => _ end).
-    refine (match p with idpath => _ end).
+    path_elim r.
+    path_elim q.
+    path_elim p.
     cbv.
     exact idpath.
   Defined.
@@ -178,7 +178,7 @@ Definition _'trpt_p_trpt_vp_u'_P_p_trpt_p_u@{i j | }
     (trpt_p_trpt_vp_u P p (trpt p u))
     (ap (trpt p) (trpt_vp_trpt_p_u P p u)).
 Proof.
-  refine (match p with idpath => _ end).
+  path_elim p.
   cbv.
   exact idpath.
 Defined.
@@ -194,7 +194,7 @@ Definition _'trpt_vp_trpt_p_u'_P_p_trpt_vp_u@{i j | }
     (ap (trpt (inv p)) (trpt_p_trpt_vp_u P p u)).
 Proof.
   refine (let t := _ in t u).
-  refine (match p with idpath => _ end).
+  path_elim p.
 
   move=> u'.
   cbv.
@@ -214,8 +214,8 @@ Definition conc_ap_trpt_p_'fun_Path_trpt_p_u_v_Path_u_trpt_vp_v'_P_p_u_v_e_'trpt
       (trpt_p_trpt_vp_u P p v))
     e.
 Proof.
-  refine (match e with idpath => _ end).
-  refine (match p with idpath => _ end).
+  path_elim e.
+  path_elim p.
   cbv.
   refine idpath.
 Defined.
@@ -230,7 +230,7 @@ Definition _'fun_Path_trpt_p_u_v_Path_u_trpt_vp_v'_P_p_u_trpt_p_u_1@{i j | }
     (fun_Path_trpt_p_u_v_Path_u_trpt_vp_v P p u (trpt p u) idpath)
     (inv (trpt_vp_trpt_p_u P p u)).
 Proof.
-  refine (match p with idpath => _ end).
+  path_elim p.
   cbv.
   exact idpath.
 Defined.
@@ -245,7 +245,7 @@ Definition f_x'_trptD_A_B0_p_y@{i j0 j1 | }
   (f : forall a : A, B0 a -> B1 a) {x x' : A} (p : Path@{i} x x') (y : B0 x)
   : Path@{j1} (f x' (trptD A B0 p y)) (trptD A B1 p (f x y)).
 Proof.
-  refine (match p with idpath => _ end).
+  path_elim p.
   cbv.
   exact idpath.
 Defined.
@@ -262,7 +262,7 @@ Definition f_x'_trptD_A_B_p_y_trptDD_A_B_C0_p_y_z@{i j k0 k1 | }
     (f x' (trptD A B p y) (trptDD A B C0 p y z))
     (trptDD A B C1 p y (f x y z)).
 Proof.
-  refine (match p with idpath => _ end).
+  path_elim p.
   cbv.
   exact idpath.
 Defined.
@@ -284,7 +284,7 @@ Definition f_x'_T_T_'trpt_N_D_D_DD'_A_B0_B1_C0_p_y0_y1_z@{i j0 j1 k0 k1 | }
       (trpt_N_D_D_DD A B0 B1 C0 p y0 y1 z))
     (trpt_N_D_D_DD A B0 B1 C1 p y0 y1 (f x y0 y1 z)).
 Proof.
-  refine (match p with idpath => _ end).
+  path_elim p.
   cbv.
   exact idpath.
 Defined.
@@ -301,10 +301,10 @@ Definition ap_trpt_p_ap_trpt_vp_q@{i j | }
     (ap (trpt p) (ap (trpt (inv p)) q))
     (conc (conc (trpt_p_trpt_vp_u P p y) q) (inv (trpt_p_trpt_vp_u P p y'))).
 Proof.
-  refine (match q with idpath => _ end).
+  path_elim q.
 
   refine (let t := _ in t y).
-  refine (match p with idpath => _ end).
+  path_elim p.
 
   move=> y_.
   cbv.
@@ -321,7 +321,7 @@ Definition conc_ap_trpt_p_apD_f_vp_apD_f_p@{i j | }
     (conc (ap (trpt p) (apD f (inv p))) (apD f p))
     (trpt_p_trpt_vp_u P p (f x')).
 Proof.
-  refine (match p with idpath => _ end).
+  path_elim p.
   cbv.
   exact idpath.
 Defined.
