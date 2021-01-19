@@ -2,6 +2,8 @@
 
 ## まだリリースされていない変更
 
+`refine_conc` を `refine_by_conc` に名前変更しました。タクティックが何をするのか分かりやすくなりました。
+
 ## 0.1.1
 
 `path_elim` というタクティックを追加しました。これは `refine (match p with idpath _ end)` を `path_elim p` という形で短縮するものです。
