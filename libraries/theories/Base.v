@@ -181,7 +181,7 @@ Definition uncurry@{i j k | } {A : Type@{i}} {B : Type@{j}} {C : Type@{k}}
 (* from: originally defined by Hexirp *)
 Definition inv@{i | } {A : Type@{i}} {x y : A}
   : Path@{i} x y -> Path@{i} y x
-  := fun p => match p with idpath => idpath end.
+  := fun p => j_rule p idpath.
 
 (** 道の結合です。 *)
 
