@@ -14,6 +14,7 @@ Require GiC.Path.Transposition.
 (** 必要なモジュールをインポートします。 *)
 
 Import GiC.Base.
+Import GiC.Base.Tactic.
 Import GiC.Path.Base.
 Import GiC.Path.OneDim.
 Import GiC.Path.Transposition.
@@ -189,7 +190,7 @@ Proof.
   move=> q.
   refine (match q with idpath => _ end).
   simpl ap.
-  refine_conc (p x).
+  refine_by_conc (p x).
   -
     exact (conc_1_p (p x)).
   -
@@ -222,7 +223,7 @@ Proof.
   move=> q.
   refine (match q with idpath => _ end).
   simpl ap.
-  refine_conc (p x).
+  refine_by_conc (p x).
   -
     exact (conc_1_p (p x)).
   -
@@ -253,7 +254,7 @@ Proof.
   move=> q.
   refine (match q with idpath => _ end).
   simpl ap.
-  refine_conc (p x).
+  refine_by_conc (p x).
   -
     exact (conc_1_p (p x)).
   -
@@ -282,7 +283,7 @@ Proof.
   move=> q.
   refine (match q with idpath => _ end).
   simpl ap.
-  refine_conc (p x).
+  refine_by_conc (p x).
   -
     exact (conc_p_1 (p x)).
   -
@@ -315,7 +316,7 @@ Proof.
   refine (match s with idpath => _ end).
   refine (match q with idpath => _ end).
   simpl ap.
-  refine_conc (conc r (p x)).
+  refine_by_conc (conc r (p x)).
   -
     refine (ap2 conc _ _).
     +
@@ -340,7 +341,7 @@ Definition path_conc_crA_P_conc_crP_A@{i j | }
 Proof.
   refine (match q with idpath => _ end).
   simpl ap.
-  refine_conc (conc r (p x)).
+  refine_by_conc (conc r (p x)).
   -
     refine (ap (fun pzfx => conc pzfx (p x)) _).
     exact (conc_p_1 r).
@@ -362,9 +363,9 @@ Proof.
   refine (match s with idpath => _ end).
   refine (match q with idpath => _ end).
   simpl ap.
-  refine_conc (p x).
+  refine_by_conc (p x).
   -
-    refine_conc (conc (p x) idpath).
+    refine_by_conc (conc (p x) idpath).
     +
       exact (conc_1_p (conc (p x) idpath)).
     +
@@ -388,7 +389,7 @@ Proof.
   refine (match s with idpath => _ end).
   refine (match q with idpath => _ end).
   simpl ap.
-  refine_conc (conc r (p x)).
+  refine_by_conc (conc r (p x)).
   -
     refine (ap2 conc _ _).
     +
@@ -414,7 +415,7 @@ Proof.
   refine (match s with idpath => _ end).
   refine (match q with idpath => _ end).
   simpl ap.
-  refine_conc (conc r (p x)).
+  refine_by_conc (conc r (p x)).
   -
     refine (ap2 conc _ _).
     +
@@ -439,7 +440,7 @@ Definition path_conc_crA_P_conc_crP_q@{i | }
 Proof.
   refine (match q with idpath => _ end).
   simpl ap.
-  refine_conc (conc r (p x)).
+  refine_by_conc (conc r (p x)).
   -
     refine (ap (fun pzfx => conc pzfx (p x)) _).
     exact (conc_p_1 r).
@@ -460,7 +461,7 @@ Definition path_conc_crq_P_conc_crP_A@{i | }
 Proof.
   refine (match q with idpath => _ end).
   simpl ap.
-  refine_conc (conc r (p x)).
+  refine_by_conc (conc r (p x)).
   -
     refine (ap (fun pzfx => conc pzfx (p x)) _).
     exact (conc_p_1 r).
@@ -482,9 +483,9 @@ Proof.
   refine (match s with idpath => _ end).
   refine (match q with idpath => _ end).
   simpl ap.
-  refine_conc (p x).
+  refine_by_conc (p x).
   -
-    refine_conc (conc (p x) idpath).
+    refine_by_conc (conc (p x) idpath).
     +
       exact (conc_1_p (conc (p x) idpath)).
     +
@@ -508,9 +509,9 @@ Proof.
   refine (match s with idpath => _ end).
   refine (match q with idpath => _ end).
   simpl ap.
-  refine_conc (p x).
+  refine_by_conc (p x).
   -
-    refine_conc (conc (p x) idpath).
+    refine_by_conc (conc (p x) idpath).
     +
       exact (conc_1_p (conc (p x) idpath)).
     +
