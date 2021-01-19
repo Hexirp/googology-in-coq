@@ -2,6 +2,18 @@
 
 ## まだリリースされていない変更
 
+## 0.1.1
+
+`path_elim` というタクティックを追加しました。これは `refine (match p with idpath _ end)` を `path_elim p` という形で短縮するものです。
+
+* [Commit ID][commit-0.1.1]
+* [Path に対するパターンマッチングをタクティックとして切り出す][issue-2]
+* [Path に対するパターンマッチングをタクティックとして切り出す][request-6]
+
+[commit-0.1.1]: https://gitlab.com/Hexirp/googology-in-coq/-/commit/a5a553353d0b5f9464a6966ccee4e99447dd2700
+[issue-2]: https://gitlab.com/Hexirp/googology-in-coq/-/issues/2
+[request-6]: https://gitlab.com/Hexirp/googology-in-coq/-/merge_requests/6
+
 ## 0.1.0
 
 確固としたコーディングスタイルに従って、ライブラリとドキュメントを作成しました。

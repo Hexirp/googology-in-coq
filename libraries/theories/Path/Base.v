@@ -27,6 +27,10 @@ Set Polymorphic Inductive Cumulativity.
 
 Ltac refine_by_conc t := refine (@GiC.Base.conc@{_} _ _ t _ _ _).
 
+(** [path_elim p] は [refine (match p with idpath => _ end)] です。 *)
+
+Ltac path_elim p := refine (match p with @GiC.Base.idpath _ _ => _ end).
+
 (** ** 汎用的な関数の定義 *)
 
 (** *** [conc] の変種 *)

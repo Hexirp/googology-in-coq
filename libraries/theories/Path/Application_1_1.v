@@ -40,8 +40,8 @@ Definition ap11_h_p@{i j mij | i <= mij, j <= mij}
   {x x' : A} (pxx' : Path@{i} x x')
   : Path@{j} (ap11 pff' pxx') (conc (ap10 pff' x) (ap01 f' pxx')).
 Proof.
-  refine (match pxx' with idpath => _ end).
-  refine (match pff' with idpath => _ end).
+  path_elim pxx'.
+  path_elim pff'.
   cbv.
   exact idpath.
 Defined.

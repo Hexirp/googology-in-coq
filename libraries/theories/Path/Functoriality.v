@@ -46,8 +46,8 @@ Definition conc_r_ap_f_cpq@{i j | }
     Path@{j} (conc r (ap f (conc p q))) (conc (conc r (ap f p)) (ap f q)).
 Proof.
   move=> r p q.
-  refine (match q with idpath => _ end).
-  refine (match p with idpath => _ end).
+  path_elim q.
+  path_elim p.
   change (Path@{j} (conc r (conc idpath idpath)) (conc (conc r idpath) idpath)).
   exact (conc_p_cqr r idpath idpath).
 Defined.
@@ -63,28 +63,8 @@ Proof.
   move=> p q r.
 
   refine (let t := _ in t r).
-  refine
-    (match q
-      as q'
-      in Path _ z'
-      return
-        forall r' : Path@{j} (f z') w,
-          Path@{j}
-            (conc (ap f (conc p q')) r')
-            (conc (ap f p) (conc (ap f q') r'))
-      with idpath => _
-    end).
-  refine
-    (match p
-      as p'
-      in Path _ y'
-      return
-        forall r' : Path@{j} (f y') w,
-          Path@{j}
-            (conc (ap f (conc p' idpath)) r')
-            (conc (ap f p') (conc (ap f idpath) r'))
-      with idpath => _
-    end).
+  path_elim q.
+  path_elim p.
 
   move=> r'.
   change
@@ -100,7 +80,7 @@ Definition inv_ap_f_p@{i j | }
   : forall p : Path@{i} x y, Path@{j} (inv (ap f p)) (ap f (inv p)).
 Proof.
   move=> p.
-  refine (match p with idpath => _ end).
+  path_elim p.
   cbv.
   exact idpath.
 Defined.
@@ -115,7 +95,7 @@ Definition ap_idmap_p@{i | }
   : forall p : Path@{i} x y, Path@{i} (ap idmap p) p.
 Proof.
   move=> p.
-  refine (match p with idpath => _ end).
+  path_elim p.
   cbv.
   exact idpath.
 Defined.
@@ -129,7 +109,7 @@ Definition ap_cfg_p@{i j k | }
   : forall p : Path@{i} x y, Path@{k} (ap (comp f g) p) (ap f (ap g p)).
 Proof.
   move=> p.
-  refine (match p with idpath => _ end).
+  path_elim p.
   cbv.
   exact idpath.
 Defined.
@@ -144,7 +124,7 @@ Definition ap_lam_x_f_g_x_p@{i j k | }
     Path@{k} (ap (fun x : A => f (g x)) p) (ap f (ap g p)).
 Proof.
   move=> p.
-  refine (match p with idpath => _ end).
+  path_elim p.
   cbv.
   exact idpath.
 Defined.
@@ -157,7 +137,7 @@ Definition ap_const_z_p@{i j | }
   : forall p : Path@{i} x y, Path@{j} (ap (const z) p) idpath.
 Proof.
   move=> p.
-  refine (match p with idpath => _ end).
+  path_elim p.
   cbv.
   exact idpath.
 Defined.
@@ -170,7 +150,7 @@ Definition ap_lam_a_z_p@{i j | }
   : forall p : Path@{i} x y, Path@{j} (ap (fun x : A => z) p) idpath.
 Proof.
   move=> p.
-  refine (match p with idpath => _ end).
+  path_elim p.
   cbv.
   exact idpath.
 Defined.
@@ -187,7 +167,7 @@ Definition path_cAP_cPA@{i j | }
     Path@{j} (conc (ap f q) (p y)) (conc (p x) (ap g q)).
 Proof.
   move=> q.
-  refine (match q with idpath => _ end).
+  path_elim q.
   simpl ap.
   refine_by_conc (p x).
   -
@@ -220,7 +200,7 @@ Definition path_cPA_cAP@{i j | }
     Path@{j} (conc (p x) (ap f q)) (conc (ap g q) (p y)).
 Proof.
   move=> q.
-  refine (match q with idpath => _ end).
+  path_elim q.
   simpl ap.
   refine_by_conc (p x).
   -
@@ -251,7 +231,7 @@ Definition path_cAP_cPq@{i | }
   : forall q : Path@{i} x y, Path@{i} (conc (ap f q) (p y)) (conc (p x) q).
 Proof.
   move=> q.
-  refine (match q with idpath => _ end).
+  path_elim q.
   simpl ap.
   refine_by_conc (p x).
   -
@@ -280,7 +260,7 @@ Definition path_cPA_cqP@{i | }
   : forall q : Path@{i} x y, Path@{i} (conc (p x) (ap f q)) (conc q (p y)).
 Proof.
   move=> q.
-  refine (match q with idpath => _ end).
+  path_elim q.
   simpl ap.
   refine_by_conc (p x).
   -
@@ -312,8 +292,8 @@ Definition path_conc_crA_cPs_conc_crP_cAs@{i j | }
     (conc (conc r (ap f q)) (conc (p y) s))
     (conc (conc r (p x)) (conc (ap g q) s)).
 Proof.
-  refine (match s with idpath => _ end).
-  refine (match q with idpath => _ end).
+  path_elim s.
+  path_elim q.
   simpl ap.
   refine_by_conc (conc r (p x)).
   -
@@ -338,7 +318,7 @@ Definition path_conc_crA_P_conc_crP_A@{i j | }
     (conc (conc r (ap f q)) (p y))
     (conc (conc r (p x)) (ap g q)).
 Proof.
-  refine (match q with idpath => _ end).
+  path_elim q.
   simpl ap.
   refine_by_conc (conc r (p x)).
   -
@@ -359,8 +339,8 @@ Definition path_conc_A_cPs_conc_P_cAs@{i j | }
     (conc (ap f q) (conc (p y) s))
     (conc (p x) (conc (ap g q) s)).
 Proof.
-  refine (match s with idpath => _ end).
-  refine (match q with idpath => _ end).
+  path_elim s.
+  path_elim q.
   simpl ap.
   refine_by_conc (p x).
   -
@@ -385,8 +365,8 @@ Definition path_conc_crA_cPs_conc_crP_cqs@{i | }
     (conc (conc r (ap f q)) (conc (p y) s))
     (conc (conc r (p x)) (conc q s)).
 Proof.
-  refine (match s with idpath => _ end).
-  refine (match q with idpath => _ end).
+  path_elim s.
+  path_elim q.
   simpl ap.
   refine_by_conc (conc r (p x)).
   -
@@ -411,8 +391,8 @@ Definition path_conc_crq_cPs_conc_crP_cAs@{i | }
     (conc (conc r q) (conc (p y) s))
     (conc (conc r (p x)) (conc (ap g q) s)).
 Proof.
-  refine (match s with idpath => _ end).
-  refine (match q with idpath => _ end).
+  path_elim s.
+  path_elim q.
   simpl ap.
   refine_by_conc (conc r (p x)).
   -
@@ -437,7 +417,7 @@ Definition path_conc_crA_P_conc_crP_q@{i | }
     (conc (conc r (ap f q)) (p y))
     (conc (conc r (p x)) q).
 Proof.
-  refine (match q with idpath => _ end).
+  path_elim q.
   simpl ap.
   refine_by_conc (conc r (p x)).
   -
@@ -458,7 +438,7 @@ Definition path_conc_crq_P_conc_crP_A@{i | }
     (conc (conc r q) (p y))
     (conc (conc r (p x)) (ap g q)).
 Proof.
-  refine (match q with idpath => _ end).
+  path_elim q.
   simpl ap.
   refine_by_conc (conc r (p x)).
   -
@@ -479,8 +459,8 @@ Definition path_conc_A_cPs_conc_P_cqs@{i | }
     (conc (ap f q) (conc (p y) s))
     (conc (p x) (conc q s)).
 Proof.
-  refine (match s with idpath => _ end).
-  refine (match q with idpath => _ end).
+  path_elim s.
+  path_elim q.
   simpl ap.
   refine_by_conc (p x).
   -
@@ -505,8 +485,8 @@ Definition path_conc_q_cPs_conc_P_cAs@{i | }
     (conc q (conc (p y) s))
     (conc (p x) (conc (ap g q) s)).
 Proof.
-  refine (match s with idpath => _ end).
-  refine (match q with idpath => _ end).
+  path_elim s.
+  path_elim q.
   simpl ap.
   refine_by_conc (p x).
   -
@@ -529,23 +509,8 @@ Definition path_conc_'conc_1_p'_p_q_ap_lam_r_conc_1_r_q@{i | }
   {A : Type@{i}} {x : A} (p : Path@{i} x x) (q : Path@{i} p idpath)
   : Path@{i} (conc (conc_1_p p) q) (ap (fun r => conc idpath r) q).
 Proof.
-  refine
-    (match inv_vp q
-      as _
-      in Path _ q'
-      return Path@{i} (conc (conc_1_p p) q') (ap (fun r => conc idpath r) q')
-      with idpath => _
-    end).
-  refine
-    (match inv q
-      as vq'
-      in Path _ p'
-      return
-        Path@{i}
-          (conc (conc_1_p p') (inv vq'))
-          (ap (fun r => conc idpath r) (inv vq'))
-      with idpath => _
-    end).
+  path_elim (inv_vp q).
+  path_elim (inv q).
   cbv.
   exact idpath.
 Defined.
@@ -557,23 +522,8 @@ Definition path_conc_'conc_p_1'_p_q_ap_lam_r_conc_r_1_q@{i | }
   {A : Type@{i}} {x : A} (p : Path@{i} x x) (q : Path@{i} p idpath)
   : Path@{i} (conc (conc_p_1 p) q) (ap (fun r => conc r idpath) q).
 Proof.
-  refine
-    (match inv_vp q
-      as _
-      in Path _ q'
-      return Path@{i} (conc (conc_p_1 p) q') (ap (fun r => conc r idpath) q')
-      with idpath => _
-    end).
-  refine
-    (match inv q
-      as vq'
-      in Path _ p'
-      return
-      Path@{i}
-        (conc (conc_p_1 p') (inv vq'))
-        (ap (fun r => conc r idpath) (inv vq'))
-      with idpath => _
-    end).
+  path_elim (inv_vp q).
+  path_elim (inv q).
   cbv.
   exact idpath.
 Defined.
