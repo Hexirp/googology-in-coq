@@ -13,6 +13,7 @@ Require GiC.Path.OneDim.
 (** 必要なモジュールをインポートします。 *)
 
 Import GiC.Base.
+Import GiC.Base.Tactic.
 Import GiC.Path.Base.
 Import GiC.Path.OneDim.
 
@@ -137,11 +138,11 @@ Definition fun_Path_cpq_cpr_Path_q_r@{i | }
   : Path@{i} (conc p q) (conc p r) -> Path@{i} q r.
 Proof.
   refine (fun h => _).
-  refine_conc (conc (inv p) (conc p q)).
+  refine_by_conc (conc (inv p) (conc p q)).
   -
     exact (inv (conc_vp_cpq p q)).
   -
-  refine_conc (conc (inv p) (conc p r)).
+  refine_by_conc (conc (inv p) (conc p r)).
   +
     refine (whiskerL (inv p) h).
   +
@@ -156,11 +157,11 @@ Definition fun_Path_cpr_cqr_Path_p_q@{i | }
   : Path@{i} (conc p r) (conc q r) -> Path@{i} p q.
 Proof.
   refine (fun h => _).
-  refine_conc (conc (conc p r) (inv r)).
+  refine_by_conc (conc (conc p r) (inv r)).
   -
     exact (inv (conc_cpq_vq p r)).
   -
-  refine_conc (conc (conc q r) (inv r)).
+  refine_by_conc (conc (conc q r) (inv r)).
   +
     refine (whiskerR h (inv r)).
   +
@@ -228,7 +229,7 @@ Definition whiskerR_h_idpath_x@{i | }
   {A : Type@{i}} (x : A) (h : Path@{i} (idpath x) (idpath x))
   : Path@{i} (whiskerR h (idpath x)) h.
 Proof.
-  refine_conc
+  refine_by_conc
     (conc
       (conc (inv (conc_p_1 idpath)) (whiskerR h idpath))
       (conc_p_1 idpath)).
@@ -237,7 +238,7 @@ Proof.
       (Path@{i}
         (whiskerR h idpath)
         (conc (conc idpath (whiskerR h idpath)) idpath)).
-    refine_conc (conc idpath (whiskerR h idpath)).
+    refine_by_conc (conc idpath (whiskerR h idpath)).
     +
       exact (inv (conc_1_p (whiskerR h idpath))).
     +
@@ -253,14 +254,14 @@ Definition whiskerL_idpath_x_h@{i | }
   {A : Type@{i}} (x : A) (h : Path@{i} (idpath x) (idpath x))
   : Path@{i} (whiskerL (idpath x) h) h.
 Proof.
-  refine_conc
+  refine_by_conc
     (conc (conc (inv (conc_1_p idpath)) (whiskerL idpath h)) (conc_1_p idpath)).
   -
     change
       (Path@{i}
         (whiskerL idpath h)
         (conc (conc idpath (whiskerL idpath h)) idpath)).
-    refine_conc (conc idpath (whiskerL idpath h)).
+    refine_by_conc (conc idpath (whiskerL idpath h)).
     +
       exact (inv (conc_1_p (whiskerL idpath h))).
     +
@@ -305,7 +306,7 @@ Proof.
   refine (match p with idpath => _ end).
   refine (fun q'_ h_ k_ r_ => _).
 
-  refine_conc
+  refine_by_conc
     (conc
       (conc (inv (conc_1_p idpath)) (whiskerL idpath h_))
       (conc_1_p q'_)).
@@ -313,7 +314,7 @@ Proof.
     exact
       (inv (conc_conc_inv_'conc_1_p'_p_whiskerL_1_h_'conc_1_p'_q h_)).
   -
-  refine_conc
+  refine_by_conc
     (conc
       (conc (inv (conc_p_1 idpath)) (whiskerR k_ idpath))
       (conc_p_1 q'_)).
@@ -339,14 +340,14 @@ Proof.
   refine (match p with idpath => _ end).
   refine (fun p'_ g_ h_ r_ => _).
 
-  refine_conc
+  refine_by_conc
     (conc
       (conc (inv (conc_p_1 idpath)) (whiskerR g_ idpath))
       (conc_p_1 p'_)).
   -
     exact (inv (conc_conc_inv_'conc_p_1'_p_whiskerR_h_1_'conc_p_1'_q g_)).
   -
-  refine_conc
+  refine_by_conc
     (conc
       (conc (inv (conc_1_p idpath)) (whiskerL idpath h_))
       (conc_1_p p'_)).
@@ -559,7 +560,7 @@ Definition theEckmannHiltonArgumentPathPath@{i | }
   {A : Type@{i}} {x : A} (p q : Path@{i} (idpath x) (idpath x))
   : Path@{i} (conc p q) (conc q p).
 Proof.
-  refine_conc
+  refine_by_conc
     (conc
       (conc
         (conc
@@ -579,7 +580,7 @@ Proof.
     +
       exact (conc_conc_inv_'conc_1_p'_p_whiskerL_1_h_'conc_1_p'_q q).
   -
-  refine_conc
+  refine_by_conc
     (conc
       (conc
         (inv (conc_p_1 idpath))
@@ -594,7 +595,7 @@ Proof.
     *
       exact (conc_1_p (conc (inv (conc_1_p idpath)) (whiskerL idpath q))).
   +
-  refine_conc
+  refine_by_conc
     (conc
       (whiskerR p idpath)
       (whiskerL idpath q)).
@@ -605,14 +606,14 @@ Proof.
     --
       exact (conc_1_p (whiskerL idpath q)).
   *
-  refine_conc
+  refine_by_conc
     (conc
       (whiskerL idpath q)
       (whiskerR p idpath)).
   --
     exact (conc_whiskerR_a_q_whiskerL_p'_b p q).
   --
-  refine_conc
+  refine_by_conc
     (conc
       (conc
         (inv (conc_1_p idpath))
@@ -628,7 +629,7 @@ Proof.
     **
       exact (conc_1_p (whiskerR p idpath)).
   ++
-  refine_conc
+  refine_by_conc
     (conc
       (conc
         (conc
