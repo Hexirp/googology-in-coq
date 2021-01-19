@@ -108,7 +108,7 @@ Module Path.
   (* from: originally defined by Hexirp *)
   Definition j_rule@{i | }
     (A : Type@{i}) (x : A) (P : forall y : A, Path@{i} A x y -> Type@{i})
-    (h : P x (idpath A x)) (y : A) (p : Path@{i} A x y)
+    (y : A) (p : Path@{i} A x y) (h : P x (idpath A x))
     : P y p
     := match p as p' in Path _ _ y' return P y' p' with idpath _ _ => h end.
 
@@ -119,7 +119,7 @@ Module Path.
 
   Arguments Path {A} a a'.
   Arguments idpath {A} {a}, [A] a.
-  Arguments j_rule {A x P} h {y} p.
+  Arguments j_rule {A x P y} p h.
 
 End Path.
 
