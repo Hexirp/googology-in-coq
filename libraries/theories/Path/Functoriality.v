@@ -169,7 +169,7 @@ Proof.
   move=> q.
   path_elim q.
   simpl ap.
-  refine_conc (p x).
+  refine_by_conc (p x).
   -
     exact (conc_1_p (p x)).
   -
@@ -202,7 +202,7 @@ Proof.
   move=> q.
   path_elim q.
   simpl ap.
-  refine_conc (p x).
+  refine_by_conc (p x).
   -
     exact (conc_1_p (p x)).
   -
@@ -233,7 +233,7 @@ Proof.
   move=> q.
   path_elim q.
   simpl ap.
-  refine_conc (p x).
+  refine_by_conc (p x).
   -
     exact (conc_1_p (p x)).
   -
@@ -262,7 +262,7 @@ Proof.
   move=> q.
   path_elim q.
   simpl ap.
-  refine_conc (p x).
+  refine_by_conc (p x).
   -
     exact (conc_p_1 (p x)).
   -
@@ -295,7 +295,7 @@ Proof.
   path_elim s.
   path_elim q.
   simpl ap.
-  refine_conc (conc r (p x)).
+  refine_by_conc (conc r (p x)).
   -
     refine (ap2 conc _ _).
     +
@@ -320,7 +320,7 @@ Definition path_conc_crA_P_conc_crP_A@{i j | }
 Proof.
   path_elim q.
   simpl ap.
-  refine_conc (conc r (p x)).
+  refine_by_conc (conc r (p x)).
   -
     refine (ap (fun pzfx => conc pzfx (p x)) _).
     exact (conc_p_1 r).
@@ -342,9 +342,9 @@ Proof.
   path_elim s.
   path_elim q.
   simpl ap.
-  refine_conc (p x).
+  refine_by_conc (p x).
   -
-    refine_conc (conc (p x) idpath).
+    refine_by_conc (conc (p x) idpath).
     +
       exact (conc_1_p (conc (p x) idpath)).
     +
@@ -368,7 +368,7 @@ Proof.
   path_elim s.
   path_elim q.
   simpl ap.
-  refine_conc (conc r (p x)).
+  refine_by_conc (conc r (p x)).
   -
     refine (ap2 conc _ _).
     +
@@ -394,7 +394,7 @@ Proof.
   path_elim s.
   path_elim q.
   simpl ap.
-  refine_conc (conc r (p x)).
+  refine_by_conc (conc r (p x)).
   -
     refine (ap2 conc _ _).
     +
@@ -419,7 +419,7 @@ Definition path_conc_crA_P_conc_crP_q@{i | }
 Proof.
   path_elim q.
   simpl ap.
-  refine_conc (conc r (p x)).
+  refine_by_conc (conc r (p x)).
   -
     refine (ap (fun pzfx => conc pzfx (p x)) _).
     exact (conc_p_1 r).
@@ -440,7 +440,7 @@ Definition path_conc_crq_P_conc_crP_A@{i | }
 Proof.
   path_elim q.
   simpl ap.
-  refine_conc (conc r (p x)).
+  refine_by_conc (conc r (p x)).
   -
     refine (ap (fun pzfx => conc pzfx (p x)) _).
     exact (conc_p_1 r).
@@ -462,9 +462,9 @@ Proof.
   path_elim s.
   path_elim q.
   simpl ap.
-  refine_conc (p x).
+  refine_by_conc (p x).
   -
-    refine_conc (conc (p x) idpath).
+    refine_by_conc (conc (p x) idpath).
     +
       exact (conc_1_p (conc (p x) idpath)).
     +
@@ -488,9 +488,9 @@ Proof.
   path_elim s.
   path_elim q.
   simpl ap.
-  refine_conc (p x).
+  refine_by_conc (p x).
   -
-    refine_conc (conc (p x) idpath).
+    refine_by_conc (conc (p x) idpath).
     +
       exact (conc_1_p (conc (p x) idpath)).
     +
