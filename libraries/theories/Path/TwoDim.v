@@ -45,7 +45,7 @@ Definition conc2_ap_f_p_ap_g_p@{i j | }
   {x y : A} (p : Path@{i} x y)
   : Path@{j} (conc2 (ap f p) (ap g p)) (ap (fun x : A => conc (f x) (g x)) p).
 Proof.
-  refine (match p with idpath => _ end).
+  path_elim p.
   cbv.
   exact idpath.
 Defined.
@@ -62,7 +62,7 @@ Definition
       (conc (conc2 idpath (ap_f_vp f p)) (conc_p_vp (ap f p))))
     (ap (ap f) (conc_p_vp p)).
 Proof.
-  refine (match p with idpath => _ end).
+  path_elim p.
   cbv.
   exact idpath.
 Defined.
@@ -79,7 +79,7 @@ Definition
       (conc (conc2 (ap_f_vp f p) idpath) (conc_vp_p (ap f p))))
     (ap (ap f) (conc_vp_p p)).
 Proof.
-  refine (match p with idpath => _ end).
+  path_elim p.
   cbv.
   exact idpath.
 Defined.
@@ -91,8 +91,8 @@ Definition conc_conc2_r_inv2_r_'conc_p_vp'_q@{i | }
   {A : Type@{i}} {x y : A} (p q : Path@{i} x y) (r : Path@{i} p q)
   : Path@{i} (conc (conc2 r (inv2 r)) (conc_p_vp q)) (conc_p_vp p).
 Proof.
-  refine (match r with idpath => _ end).
-  refine (match p with idpath => _ end).
+  path_elim r.
+  path_elim p.
   cbv.
   exact idpath.
 Defined.
@@ -104,8 +104,8 @@ Definition conc_conc2_inv2_r_r_'conc_vp_p'_q@{i | }
   {A : Type@{i}} {x y : A} (p q : Path@{i} x y) (r : Path@{i} p q)
   : Path@{i} (conc (conc2 (inv2 r) r) (conc_vp_p q)) (conc_vp_p p).
 Proof.
-  refine (match r with idpath => _ end).
-  refine (match p with idpath => _ end).
+  path_elim r.
+  path_elim p.
   cbv.
   exact idpath.
 Defined.
@@ -177,8 +177,8 @@ Definition conc_conc_inv_'conc_p_1'_p_whiskerR_h_1_'conc_p_1'_q@{i | }
     (conc (conc (inv (conc_p_1 p)) (whiskerR h idpath)) (conc_p_1 q))
     h.
 Proof.
-  refine (match h with idpath => _ end).
-  refine (match p with idpath => _ end).
+  path_elim h.
+  path_elim p.
   cbv.
   exact idpath.
 Defined.
@@ -190,7 +190,7 @@ Definition whiskerR_idpath_p_q@{i | }
   {A : Type@{i}} {x y z : A} (p : Path@{i} x y) (q : Path@{i} y z)
   : Path@{i} (whiskerR (idpath p) q) (idpath (conc p q)).
 Proof.
-  refine (match q with idpath => _ end).
+  path_elim q.
   cbv.
   exact idpath.
 Defined.
@@ -202,7 +202,7 @@ Definition whiskerL_p_idpath_q@{i | }
   {A : Type@{i}} {x y z : A} (p : Path@{i} x y) (q : Path@{i} y z)
   : Path@{i} (whiskerL p (idpath q)) (idpath (conc p q)).
 Proof.
-  refine (match p with idpath => _ end).
+  path_elim p.
   cbv.
   exact idpath.
 Defined.
@@ -216,8 +216,8 @@ Definition conc_conc_inv_'conc_1_p'_p_whiskerL_1_h_'conc_1_p'_q@{i | }
     (conc (conc (inv (conc_1_p p)) (whiskerL idpath h)) (conc_1_p q))
     h.
 Proof.
-  refine (match h with idpath => _ end).
-  refine (match p with idpath => _ end).
+  path_elim h.
+  path_elim p.
   cbv.
   exact idpath.
 Defined.
@@ -300,10 +300,10 @@ Definition fun_Path_conc2_g_h_conc2_g_k_Path_h_k@{i | }
   (g : Path@{i} p p') (h k : Path@{i} q q')
   : Path@{i} (conc2 g h) (conc2 g k) -> Path@{i} h k.
 Proof.
-  refine (match g with idpath => _ end).
+  path_elim g.
   refine (let t := _ in t q' h k).
-  refine (match q with idpath => _ end).
-  refine (match p with idpath => _ end).
+  path_elim q.
+  path_elim p.
   refine (fun q'_ h_ k_ r_ => _).
 
   refine_by_conc
@@ -334,10 +334,10 @@ Definition fun_Path_conc2_g_k_conc2_h_k_Path_g_h@{i | }
   (g h : Path@{i} p p') (k : Path@{i} q q')
   : Path@{i} (conc2 g k) (conc2 h k) -> Path@{i} g h.
 Proof.
-  refine (match k with idpath => _ end).
-  refine (match q with idpath => _ end).
+  path_elim k.
+  path_elim q.
   refine (let t := _ in t p' g h).
-  refine (match p with idpath => _ end).
+  path_elim p.
   refine (fun p'_ g_ h_ r_ => _).
 
   refine_by_conc
@@ -369,10 +369,10 @@ Definition whiskerL_p_conc_r_s@{i | }
   (r : Path@{i} q q') (s : Path@{i} q' q'')
   : Path@{i} (whiskerL p (conc r s)) (conc (whiskerL p r) (whiskerL p s)).
 Proof.
-  refine (match s with idpath => _ end).
-  refine (match r with idpath => _ end).
-  refine (match q with idpath => _ end).
-  refine (match p with idpath => _ end).
+  path_elim s.
+  path_elim r.
+  path_elim q.
+  path_elim p.
   cbv.
   exact idpath.
 Defined.
@@ -385,10 +385,10 @@ Definition whiskerR_conc_r_s_q@{i | }
   (r : Path@{i} p p') (s : Path@{i} p' p'')
   : Path@{i} (whiskerR (conc r s) q) (conc (whiskerR r q) (whiskerR s q)).
 Proof.
-  refine (match s with idpath => _ end).
-  refine (match r with idpath => _ end).
-  refine (match p with idpath => _ end).
-  refine (match q with idpath => _ end).
+  path_elim s.
+  path_elim r.
+  path_elim p.
+  path_elim q.
   cbv.
   exact idpath.
 Defined.
@@ -406,9 +406,9 @@ Definition conc_conc_inv_'conc_vp_cpq'_p_q_whiskerL_inv_p_whiskerL_p_r_'conc_vp_
       (conc_vp_cpq p q'))
     r.
 Proof.
-  refine (match r with idpath => _ end).
-  refine (match q with idpath => _ end).
-  refine (match p with idpath => _ end).
+  path_elim r.
+  path_elim q.
+  path_elim p.
   cbv.
   exact idpath.
 Defined.
@@ -426,9 +426,9 @@ Definition conc_conc_inv_'conc_p_cvpq'_p_q_whiskerL_p_whiskerL_inv_p_r_'conc_p_c
       (conc_p_cvpq p q'))
     r.
 Proof.
-  refine (match r with idpath => _ end).
-  refine (match q with idpath => _ end).
-  refine (match p with idpath => _ end).
+  path_elim r.
+  path_elim q.
+  path_elim p.
   cbv.
   exact idpath.
 Defined.
@@ -446,9 +446,9 @@ Definition conc_conc_inv_'conc_cpq_vp'_p_q_whiskerR_whiskerR_r_q_inv_q_'conc_cpq
       (conc_cpq_vq p' q))
     r.
 Proof.
-  refine (match r with idpath => _ end).
-  refine (match q with idpath => _ end).
-  refine (match p with idpath => _ end).
+  path_elim r.
+  path_elim q.
+  path_elim p.
   cbv.
   exact idpath.
 Defined.
@@ -466,11 +466,11 @@ Definition conc_conc_inv_'conc_cpvq_q'_p_q_whiskerR_whiskerR_r_inv_q_q_'conc_cpv
       (conc_cpvq_q p' q))
     r.
 Proof.
-  refine (match r with idpath => _ end).
+  path_elim r.
   refine (let t := _ in t p).
-  refine (match q with idpath => _ end).
+  path_elim q.
   refine (fun p_ => _).
-  refine (match p_ with idpath => _ end).
+  path_elim p_.
   cbv.
   exact idpath.
 Defined.
@@ -487,10 +487,10 @@ Definition conc_conc2_a_c_conc2_b_d@{i | }
   (c : Path@{i} q q') (d : Path@{i} q' q'')
   : Path@{i} (conc (conc2 a c) (conc2 b d)) (conc2 (conc a b) (conc c d)).
 Proof.
-  refine (match d with idpath => _ end).
-  refine (match c with idpath => _ end).
-  refine (match b with idpath => _ end).
-  refine (match a with idpath => _ end).
+  path_elim d.
+  path_elim c.
+  path_elim b.
+  path_elim a.
   cbv.
   exact idpath.
 Defined.
@@ -506,8 +506,8 @@ Definition conc_whiskerR_a_q_whiskerL_p'_b@{i | }
     (conc (whiskerR a q) (whiskerL p' b))
     (conc (whiskerL p b) (whiskerR a q')).
 Proof.
-  refine (match b with idpath => _ end).
-  refine (match a with idpath => _ end).
+  path_elim b.
+  path_elim a.
   cbv.
   exact idpath.
 Defined.
@@ -530,10 +530,10 @@ Definition pentagonatorPathPath@{i | }
       (conc_p_cqr p q (conc r s))
       (conc_p_cqr (conc p q) r s)).
 Proof.
-  refine (match s with idpath => _ end).
-  refine (match r with idpath => _ end).
-  refine (match q with idpath => _ end).
-  refine (match p with idpath => _ end).
+  path_elim s.
+  path_elim r.
+  path_elim q.
+  path_elim p.
   cbv.
   exact idpath.
 Defined.
@@ -547,8 +547,8 @@ Definition triangulatorPathPath@{i | }
     (conc (conc_p_cqr p idpath q) (whiskerR (conc_p_1 p) q))
     (whiskerL p (conc_1_p q)).
 Proof.
-  refine (match q with idpath => _ end).
-  refine (match p with idpath => _ end).
+  path_elim q.
+  path_elim p.
   cbv.
   exact idpath.
 Defined.

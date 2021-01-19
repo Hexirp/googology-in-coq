@@ -12,6 +12,7 @@ Require GiC.Path.Function.
 (** 必要なモジュールをインポートします。 *)
 
 Import GiC.Base.
+Import GiC.Base.Tactic.
 Import GiC.Path.Base.
 Import GiC.Path.Function.
 
@@ -41,7 +42,7 @@ Definition trpt1_A_lam_x_B_p_u@{i j | }
   {A : Type@{i}} {B : Type@{j}} {x x' : A} (p : Path@{i} x x') (u : B)
   : Path@{j} (trpt1 A (fun x : A => B) p u) u.
 Proof.
-  refine (match p with idpath => _ end).
+  path_elim p.
   cbv.
   exact idpath.
 Defined.
@@ -56,8 +57,8 @@ Definition conc_trpt2_A_lam_x_B_q_u_'trpt1_A_lam_x_B_p_u'_p'_u@{i j | }
     (conc (trpt2 A (fun x : A => B) q u) (trpt1_A_lam_x_B_p_u p' u))
     (trpt1_A_lam_x_B_p_u p u).
 Proof.
-  refine (match q with idpath => _ end).
-  refine (match p with idpath => _ end).
+  path_elim q.
+  path_elim p.
   cbv.
   exact idpath.
 Defined.
@@ -72,7 +73,7 @@ Definition trpt1_A0_lam_x_B_f_x_p_y@{i0 i1 j | }
     (trpt1 A0 (fun x : A0 => B (f x)) p y)
     (trpt1 A1 B (ap f p) y).
 Proof.
-  refine (match p with idpath => _ end).
+  path_elim p.
   cbv.
   exact idpath.
 Defined.
@@ -103,7 +104,7 @@ Definition trptDD_A0_lam_x_B_f_x_lam_x_C_f_x_p_y_z@{i0 i1 j k | }
       (inv (trptD_A0_lam_x_B_f_x_p_y A0 A1 B f p y))
       (trptDD A1 B C (ap f p) y z)).
 Proof.
-  refine (match p with idpath => _ end).
+  path_elim p.
   cbv.
   exact idpath.
 Defined.
@@ -119,7 +120,7 @@ Definition trptD_B_x'_C_x'_apD_f_p_trptDD_A_B_C_p_f_x_y@{i j k | }
     (trptD (B x') (C x') (apD f p) (trptDD A B C p (f x) y))
     (trptD A (fun x : A => C x (f x)) p y).
 Proof.
-  refine (match p with idpath => _ end).
+  path_elim p.
   cbv.
   exact idpath.
 Defined.
@@ -139,7 +140,7 @@ Definition trpt1_fun_B_C_lam_'f_'_Path_comp_f_g_'f_'_g_p_1
       (idpath (comp f g)))
     (ap (fun f_ => comp f_ g) p).
 Proof.
-  refine (match p with idpath => _ end).
+  path_elim p.
   cbv.
   exact idpath.
 Defined.
@@ -154,7 +155,7 @@ Definition trpt1_A_lam_x_B_idmap_x_p_y@{i j sj | j < sj}
     (trpt1 A (fun x : A => B (idmap x)) p y)
     (trpt1 Type@{j} idmap@{sj} (ap B p) y).
 Proof.
-  refine (match p with idpath => _ end).
+  path_elim p.
   cbv.
   exact idpath.
 Defined.
@@ -170,8 +171,8 @@ Definition trpt1_A1_B_x0'_p1_trpt1_A0_lam_'x0_'_B_'x0_'_x1_p0_y@{i0 i1 j | }
     (trpt1 A1 (B x0') p1 (trpt1 A0 (fun x0_ : A0 => B x0_ x1) p0 y))
     (trpt1 A0 (fun x0_ : A0 => B x0_ x1') p0 (trpt1 A1 (B x0) p1 y)).
 Proof.
-  refine (match p1 with idpath => _ end).
-  refine (match p0 with idpath => _ end).
+  path_elim p1.
+  path_elim p0.
   cbv.
   exact idpath.
 Defined.

@@ -16,6 +16,7 @@ Require GiC.Path.Application_D.
 (** 必要なモジュールをインポートします。 *)
 
 Import GiC.Base.
+Import GiC.Base.Tactic.
 Import GiC.Path.Base.
 Import GiC.Path.OneDim.
 Import GiC.Path.Function.
@@ -53,8 +54,8 @@ Definition ap02_f_crr'@{i j | }
   (r : Path@{i} p p') (r' : Path@{i} p' p'')
   : Path@{j} (ap02 f (conc r r')) (conc (ap02 f r) (ap02 f r')).
 Proof.
-  refine (match r' with idpath => _ end).
-  refine (match r with idpath => _ end).
+  path_elim r'.
+  path_elim r.
   cbv.
   exact idpath.
 Defined.
@@ -74,10 +75,10 @@ Definition ap02_f_conc2_r_s@{i j | }
         (conc2 (ap02 f r) (ap02 f s)))
       (inv (ap_f_cpq f p' q'))).
 Proof.
-  refine (match s with idpath => _ end).
-  refine (match r with idpath => _ end).
-  refine (match q with idpath => _ end).
-  refine (match p with idpath => _ end).
+  path_elim s.
+  path_elim r.
+  path_elim q.
+  path_elim p.
   cbv.
   exact idpath.
 Defined.
@@ -109,8 +110,8 @@ Definition apD02_f_r@{i j | }
             (ap01 f q))))
       (whiskerL (trpt2 A (fun _ : A => B) r (f x)) (inv (apD_f_p f q)))).
 Proof.
-  refine (match r with idpath => _ end).
-  refine (match p with idpath => _ end).
+  path_elim r.
+  path_elim p.
   cbv.
   exact idpath.
 Defined.
@@ -134,9 +135,9 @@ Definition apD02_f_cr0r1@{i j | }
           (apD f p'')))
       (whiskerR (inv (trpt2_A_B_cq0q1_y B r0 r1 (f x))) (apD f p''))).
 Proof.
-  refine (match r1 with idpath => _ end).
-  refine (match r0 with idpath => _ end).
-  refine (match p with idpath => _ end).
+  path_elim r1.
+  path_elim r0.
+  path_elim p.
   cbv.
   exact idpath.
 Defined.
@@ -157,8 +158,8 @@ Definition conc_conc_ap_trpt1_Type_idmap_inv_q_ap_lam_s_trpt1_Type_idmap_s_z_r_a
       (trpt_vp_trpt_p_u idmap p z))
     (trpt_vp_trpt_p_u idmap q z).
 Proof.
-  refine (match r with idpath => _ end).
-  refine (match q with idpath => _ end).
+  path_elim r.
+  path_elim q.
   cbv.
   exact idpath.
 Defined.
@@ -179,9 +180,9 @@ Definition conc_conc_ap_trpt1_Type_idmap_q_ap_lam_s_trpt1_Type_idmap_inv_s_z_r_a
       (trpt_p_trpt_vp_u idmap p z))
     (trpt_p_trpt_vp_u idmap q z).
 Proof.
-  refine (match r with idpath => _ end).
+  path_elim r.
   refine (let t := _ in t z).
-  refine (match q with idpath => _ end).
+  path_elim q.
   refine (fun z_ => _).
   cbv.
   exact idpath.

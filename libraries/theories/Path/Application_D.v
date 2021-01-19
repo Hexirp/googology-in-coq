@@ -14,6 +14,7 @@ Require GiC.Path.Fibration.
 (** 必要なモジュールをインポートします。 *)
 
 Import GiC.Base.
+Import GiC.Base.Tactic.
 Import GiC.Path.Base.
 Import GiC.Path.Transposition.
 Import GiC.Path.Transport.
@@ -59,8 +60,8 @@ Definition apD_f_cpq@{i j | }
     (apD f (conc p q))
     (conc (conc (trpt_cpq_u B p q (f x)) (ap (trpt q) (apD f p))) (apD f q)).
 Proof.
-  refine (match q with idpath => _ end).
-  refine (match p with idpath => _ end).
+  path_elim q.
+  path_elim p.
   cbv.
   exact idpath.
 Defined.
@@ -75,7 +76,7 @@ Definition apD_f_vp@{i j | }
     (apD f (inv p))
     (fun_Path_u_trpt_p_v_Path_trpt_vp_u_v B p (f y) (f x) (inv (apD f p))).
 Proof.
-  refine (match p with idpath => _ end).
+  path_elim p.
   cbv.
   exact idpath.
 Defined.
@@ -89,7 +90,7 @@ Definition apD_f_p@{i j | }
   {A : Type@{i}} {B : Type@{j}} (f : A -> B) {x y : A} (p : Path@{i} x y)
   : Path@{j} (apD f p) (conc (trpt1_A_lam_x_B_p_u p (f x)) (ap f p)).
 Proof.
-  refine (match p with idpath => _ end).
+  path_elim p.
   cbv.
   exact idpath.
 Defined.
@@ -104,7 +105,7 @@ Definition apD_comp_f_g_p@{i0 i1 j | }
     (apD (fun x_ : A0 => f (g x_)) p)
     (conc (trpt1_A0_lam_x_B_f_x_p_y A0 A1 B g p (f (g x))) (apD f (ap g p))).
 Proof.
-  refine (match p with idpath => _ end).
+  path_elim p.
   cbv.
   exact idpath.
 Defined.
@@ -121,7 +122,7 @@ Definition apD_f_ap_g_p@{i0 i1 j | }
       (inv (trpt1_A0_lam_x_B_f_x_p_y A0 A1 B g p (f (g x))))
       (apD (fun x_ : A0 => f (g x_)) p)).
 Proof.
-  refine (match p with idpath => _ end).
+  path_elim p.
   cbv.
   exact idpath.
 Defined.
