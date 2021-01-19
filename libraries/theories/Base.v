@@ -93,19 +93,39 @@ Definition dsnd@{i j | } {A : Type@{i}} {B : A -> Type@{j}}
   : forall x : DSum@{i j} A B, B (dfst@{i j} x)
   := fun x => match x with dpair a b => b end.
 
-(** 道型です。 *)
+(** 道型を定義する内部モジュールです。道型の詳細を隠蔽するためのものです。 *)
 
-(* from: originally defined by Hexirp *)
-Inductive Path@{i | } (A : Type@{i}) (a : A) : A -> Type@{i}
-  := idpath : Path A a a.
+Module Path.
 
-(** 道型についての暗黙引数を設定します。
+  (** 道型です。 *)
 
-    [idpath] と書いたときは [idpath _ _] と補われます。 [idpath a] と書いたときは [idpath _ a] と補われます。
- *)
+  (* from: originally defined by Hexirp *)
+  Private Inductive Path@{i | } (A : Type@{i}) (a : A) : A -> Type@{i}
+    := idpath : Path A a a.
 
-Arguments Path {A} a a'.
-Arguments idpath {A} {a}, [A] a.
+  (** J 規則です。道型の除去規則の内の一つであり、公理とする型理論もあれば定理である型理論もあります。 *)
+
+  (* from: originally defined by Hexirp *)
+  Definition j_rule@{i | }
+    (A : Type@{i}) (x : A) (P : forall y : A, Path@{i} A x y -> Type@{i})
+    (h : P x (idpath A x)) (y : A) (p : Path@{i} A x y)
+    : P y p
+    := match p as p' in Path _ _ y' return P y' p' with idpath _ _ => h end.
+
+  (** 道型についての暗黙引数を設定します。
+
+      [idpath] と書いたときは [idpath _ _] と補われます。 [idpath a] と書いたときは [idpath _ a] と補われます。
+   *)
+
+  Arguments Path {A} a a'.
+  Arguments idpath {A} {a}, [A] a.
+  Arguments j_rule {A x P} h {y} p.
+
+End Path.
+
+(** 内部モジュールでの定義を公開します。 *)
+
+Export Path.
 
 (** 恒等関数です。 *)
 
