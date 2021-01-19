@@ -121,6 +121,10 @@ Module Path.
   Arguments idpath {A} {a}, [A] a.
   Arguments j_rule {A x P y} p h.
 
+  (** [path_elim p] は [refine (match p with idpath => _ end)] です。 *)
+
+  Ltac path_elim p := refine (match p with @idpath _ _ => _ end).
+
 End Path.
 
 (** 内部モジュールでの定義を公開します。 *)
@@ -181,7 +185,7 @@ Definition uncurry@{i j k | } {A : Type@{i}} {B : Type@{j}} {C : Type@{k}}
 (* from: originally defined by Hexirp *)
 Definition inv@{i | } {A : Type@{i}} {x y : A}
   : Path@{i} x y -> Path@{i} y x
-  := fun p => j_rule p idpath.
+  := fun p => ltac:(path_elim p; exact idpath).
 
 (** 道の結合です。 *)
 
@@ -236,9 +240,5 @@ refine (conc (_ : Path@{_} _ t) _).
 
   (* from: originally defined by Hexirp *)
   Ltac refine_by_conc t := refine (@conc@{_} _ _ t _ _ _).
-
-  (** [path_elim p] は [refine (match p with idpath => _ end)] です。 *)
-
-  Ltac path_elim p := refine (match p with @GiC.Base.idpath _ _ => _ end).
 
 End Tactic.
