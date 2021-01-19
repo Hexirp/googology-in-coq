@@ -194,17 +194,7 @@ Definition _'trpt_vp_trpt_p_u'_P_p_trpt_vp_u@{i j | }
     (ap (trpt (inv p)) (trpt_p_trpt_vp_u P p u)).
 Proof.
   refine (let t := _ in t u).
-  refine
-    (match p
-      as p'
-      in Path _ y'
-      return
-        forall u' : P y',
-          Path@{j}
-            (trpt_vp_trpt_p_u P p' (trpt (inv p') u'))
-            (ap (trpt (inv p')) (trpt_p_trpt_vp_u P p' u'))
-      with idpath => _
-    end).
+  refine (match p with idpath => _ end).
 
   move=> u'.
   cbv.
@@ -314,19 +304,7 @@ Proof.
   refine (match q with idpath => _ end).
 
   refine (let t := _ in t y).
-  refine
-    (match p
-      as p_
-      in Path _ x'_
-      return
-        forall y_ : P x'_,
-          Path@{j}
-            (ap (trpt p_) (ap (trpt (inv p_)) idpath))
-            (conc
-              (conc (trpt_p_trpt_vp_u P p_ y_) idpath)
-              (inv (trpt_p_trpt_vp_u P p_ y_)))
-      with idpath => _
-    end).
+  refine (match p with idpath => _ end).
 
   move=> y_.
   cbv.
