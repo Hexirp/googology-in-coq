@@ -93,7 +93,7 @@ Definition conc_ap_trpt1_A_B_p_r_trpt2_A_B_q_y'@{i j | }
 Proof.
   refine (match q with idpath => _ end).
   simpl trpt2.
-  refine_conc (ap (trpt1 A B p) r).
+  refine_by_conc (ap (trpt1 A B p) r).
   -
     exact (conc_p_1 (ap (trpt1 A B p) r)).
   -

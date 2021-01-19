@@ -72,11 +72,11 @@ Definition trpt_p_trpt_vp_u@{i j | }
   (p : Path@{i} x y) (u : P y)
   : Path@{j} (trpt p (trpt (inv p) u)) u.
 Proof.
-  refine_conc (trpt (conc (inv p) p) u).
+  refine_by_conc (trpt (conc (inv p) p) u).
   -
     exact (inv (trpt_cpq_u P (inv p) p u)).
   -
-  refine_conc (trpt idpath u).
+  refine_by_conc (trpt idpath u).
   +
     exact (ap (fun p => trpt p u) (conc_vp_p p)).
   +
@@ -92,11 +92,11 @@ Definition trpt_vp_trpt_p_u@{i j | }
   (p : Path@{i} x y) (u : P x)
   : Path@{j} (trpt (inv p) (trpt p u)) u.
 Proof.
-  refine_conc (trpt (conc p (inv p)) u).
+  refine_by_conc (trpt (conc p (inv p)) u).
   -
     exact (inv (trpt_cpq_u P p (inv p) u)).
   -
-  refine_conc (trpt idpath u).
+  refine_by_conc (trpt idpath u).
   +
     exact (ap (fun p => trpt p u) (conc_p_vp p)).
   +
@@ -128,9 +128,9 @@ Section trpt_conc_p_conc_q_r_u_Path_L_R.
   Definition trpt_conc_p_conc_q_r_u_L
     : Path@{j} (trpt (conc p (conc q r)) u) (trpt r (trpt q (trpt p u))).
   Proof.
-    refine_conc (trpt r (trpt (conc p q) u)).
+    refine_by_conc (trpt r (trpt (conc p q) u)).
     -
-      refine_conc (trpt (conc (conc p q) r) u).
+      refine_by_conc (trpt (conc (conc p q) r) u).
       +
         exact (ap (fun s => trpt s u) (conc_p_cqr p q r)).
       +
@@ -145,7 +145,7 @@ Section trpt_conc_p_conc_q_r_u_Path_L_R.
   Definition trpt_conc_p_conc_q_r_u_R
     : Path@{j} (trpt (conc p (conc q r)) u) (trpt r (trpt q (trpt p u))).
   Proof.
-    refine_conc (trpt (conc q r) (trpt p u)).
+    refine_by_conc (trpt (conc q r) (trpt p u)).
     -
       exact (trpt_cpq_u P p (conc q r) u).
     -

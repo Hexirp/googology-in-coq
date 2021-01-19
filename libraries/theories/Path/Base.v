@@ -25,7 +25,7 @@ Set Polymorphic Inductive Cumulativity.
 
 (** [refine_conc t] は [Path x y -| Path x t, Path t y] です。 *)
 
-Ltac refine_conc t := refine (@GiC.Base.conc@{_} _ _ t _ _ _).
+Ltac refine_by_conc t := refine (@GiC.Base.conc@{_} _ _ t _ _ _).
 
 (** ** 汎用的な関数の定義 *)
 

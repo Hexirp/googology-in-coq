@@ -56,11 +56,11 @@ Proof.
     end).
 
   move=> p' path_p'_cv1q.
-  refine_conc p'.
+  refine_by_conc p'.
   -
     exact (conc_1_p p').
   -
-  refine_conc (conc (inv idpath) q).
+  refine_by_conc (conc (inv idpath) q).
   +
     exact path_p'_cv1q.
   +
@@ -89,11 +89,11 @@ Proof.
     end).
 
   move=> q' path_r_cq'v1.
-  refine_conc r.
+  refine_by_conc r.
   -
     exact (conc_p_1 r).
   -
-  refine_conc (conc q' (inv idpath)).
+  refine_by_conc (conc q' (inv idpath)).
   +
     exact path_r_cq'v1.
   +
@@ -122,12 +122,12 @@ Proof.
     end).
 
   move=> q' path_p_c1q'.
-  refine_conc p.
+  refine_by_conc p.
   -
     simpl inv.
     exact (conc_1_p p).
   -
-  refine_conc (conc idpath q').
+  refine_by_conc (conc idpath q').
   +
     exact path_p_c1q'.
   +
@@ -155,12 +155,12 @@ Proof.
     end).
 
   move=> r' path_r'_cq1.
-  refine_conc r'.
+  refine_by_conc r'.
   -
     simpl inv.
     exact (conc_p_1 r').
   -
-  refine_conc (conc q idpath).
+  refine_by_conc (conc q idpath).
   +
     exact path_r'_cq1.
   +
@@ -188,12 +188,12 @@ Proof.
     end).
 
   move=> p' path_cv1q_p'.
-  refine_conc (conc (inv idpath) q).
+  refine_by_conc (conc (inv idpath) q).
   -
     simpl inv.
     exact (inv (conc_1_p q)).
   -
-  refine_conc p'.
+  refine_by_conc p'.
   +
     exact path_cv1q_p'.
   +
@@ -221,12 +221,12 @@ Proof.
     end).
 
   move=> q' path_cq'v1_r.
-  refine_conc (conc q' (inv idpath)).
+  refine_by_conc (conc q' (inv idpath)).
   -
     simpl inv.
     exact (inv (conc_1_p q')).
   -
-  refine_conc r.
+  refine_by_conc r.
   +
     exact path_cq'v1_r.
   +
@@ -254,11 +254,11 @@ Proof.
     end).
 
   move=> q' path_c1q'_p.
-  refine_conc (conc idpath q').
+  refine_by_conc (conc idpath q').
   -
     exact (inv (conc_1_p q')).
   -
-  refine_conc p.
+  refine_by_conc p.
   +
     exact path_c1q'_p.
   +
@@ -287,11 +287,11 @@ Proof.
     end).
 
   move=> r' path_cq1_r'.
-  refine_conc (conc q idpath).
+  refine_by_conc (conc q idpath).
   -
     exact (inv (conc_p_1 q)).
   -
-  refine_conc r'.
+  refine_by_conc r'.
   +
     exact path_cq1_r'.
   +
@@ -322,7 +322,7 @@ Proof.
     end).
 
   move=> p' path_cp'v1_1.
-  refine_conc (conc p' (inv idpath)).
+  refine_by_conc (conc p' (inv idpath)).
   -
     simpl inv.
     exact (inv (conc_p_1 p')).
@@ -351,7 +351,7 @@ Proof.
     end).
 
   move=> p' path_cv1p'_1.
-  refine_conc (conc (inv idpath) p').
+  refine_by_conc (conc (inv idpath) p').
   -
     simpl inv.
     exact (inv (conc_1_p p')).
@@ -380,7 +380,7 @@ Proof.
     end).
 
   move=> p' path_cp'1_1.
-  refine_conc (conc p' idpath).
+  refine_by_conc (conc p' idpath).
   -
     exact (inv (conc_p_1 p')).
   -
@@ -409,7 +409,7 @@ Proof.
     end).
 
   move=> p' path_c1p'_1.
-  refine_conc (conc idpath p').
+  refine_by_conc (conc idpath p').
   -
     exact (inv (conc_1_p p')).
   -
@@ -438,7 +438,7 @@ Proof.
     end).
 
   move=> q' path_1_cv1q'.
-  refine_conc (conc (inv idpath) q').
+  refine_by_conc (conc (inv idpath) q').
   -
     exact path_1_cv1q'.
   -
@@ -467,7 +467,7 @@ Proof.
     end).
 
   move=> q' path_1_cq'v1.
-  refine_conc (conc q' (inv idpath)).
+  refine_by_conc (conc q' (inv idpath)).
   -
     exact path_1_cq'v1.
   -
@@ -496,7 +496,7 @@ Proof.
     end).
 
   move=> q' path_1_cq'1.
-  refine_conc (conc q' idpath).
+  refine_by_conc (conc q' idpath).
   -
     simpl inv.
     exact path_1_cq'1.
@@ -525,7 +525,7 @@ Proof.
     end).
 
   move=> q' path_1_c1q'.
-  refine_conc (conc idpath q').
+  refine_by_conc (conc idpath q').
   -
     simpl inv.
     exact path_1_c1q'.
