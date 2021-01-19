@@ -43,7 +43,7 @@ Definition trpt2_A_B_q_y@{i j | }
   (y : B x)
   : Path@{j} (trpt2 A B q y) (ap10 (ap (trpt1 A B) q) y).
 Proof.
-  refine (match q with idpath => _ end).
+  path_elim q.
   cbv.
   exact idpath.
 Defined.
@@ -60,8 +60,8 @@ Definition trpt2_A_B_cq0q1_y@{i j | }
     (trpt2 A B (conc q0 q1) y)
     (conc (trpt2 A B q0 y) (trpt2 A B q1 y)).
 Proof.
-  refine (match q1 with idpath => _ end).
-  refine (match q0 with idpath => _ end).
+  path_elim q1.
+  path_elim q0.
   cbv.
   exact idpath.
 Defined.
@@ -75,7 +75,7 @@ Definition trpt2_A_B_vq_y@{i j | }
   (y : B x)
   : Path@{j} (trpt2 A B (inv q) y) (inv (trpt2 A B q y)).
 Proof.
-  refine (match q with idpath => _ end).
+  path_elim q.
   cbv.
   exact idpath.
 Defined.
@@ -91,7 +91,7 @@ Definition conc_ap_trpt1_A_B_p_r_trpt2_A_B_q_y'@{i j | }
     (conc (ap (trpt1 A B p) r) (trpt2 A B q y'))
     (conc (trpt2 A B q y) (ap (trpt1 A B p') r)).
 Proof.
-  refine (match q with idpath => _ end).
+  path_elim q.
   simpl trpt2.
   refine_conc (ap (trpt1 A B p) r).
   -

@@ -45,15 +45,7 @@ Proof.
   move=> p q r.
 
   refine (let t := _ in t p).
-  refine
-    (match r
-      as r'
-      in Path _ x'
-      return
-        forall p' : Path@{i} x' z,
-          Path@{i} p' (conc (inv r') q) -> Path@{i} (conc r' p') q
-      with idpath => _
-    end).
+  path_elim r.
 
   move=> p' path_p'_cv1q.
   refine_conc p'.
@@ -78,15 +70,7 @@ Proof.
   move=> p q r.
 
   refine (let t := _ in t q).
-  refine
-    (match p
-      as p'
-      in Path _ z'
-      return
-        forall q' : Path@{i} y z',
-          Path@{i} r (conc q' (inv p')) -> Path@{i} (conc r p') q'
-      with idpath => _
-    end).
+  path_elim p.
 
   move=> q' path_r_cq'v1.
   refine_conc r.
@@ -111,15 +95,7 @@ Proof.
   move=> p q r.
 
   refine (let t := _ in t q).
-  refine
-    (match r
-      as r'
-      in Path _ y'
-      return
-        forall q' : Path@{i} y' z,
-          Path@{i} p (conc r' q') -> Path@{i} (conc (inv r') p) q'
-      with idpath => _
-    end).
+  path_elim r.
 
   move=> q' path_p_c1q'.
   refine_conc p.
@@ -144,15 +120,7 @@ Proof.
   move=> p q r.
 
   refine (let t := _ in t r).
-  refine
-    (match p
-      as p'
-      in Path _ x'
-      return
-        forall r' : Path@{i} y x',
-          Path@{i} r' (conc q p') -> Path@{i} (conc r' (inv p')) q
-      with idpath => _
-    end).
+  path_elim p.
 
   move=> r' path_r'_cq1.
   refine_conc r'.
@@ -177,15 +145,7 @@ Proof.
   move=> p q r.
 
   refine (let t := _ in t p).
-  refine
-    (match r
-      as r'
-      in Path _ x'
-      return
-        forall p' : Path@{i} x' z,
-          Path@{i} (conc (inv r') q) p' -> Path@{i} q (conc r' p')
-      with idpath => _
-    end).
+  path_elim r.
 
   move=> p' path_cv1q_p'.
   refine_conc (conc (inv idpath) q).
@@ -210,15 +170,7 @@ Proof.
   move=> p q r.
 
   refine (let t := _ in t q).
-  refine
-    (match p
-      as p'
-      in Path _ z'
-      return
-        forall q' : Path@{i} y z',
-          Path@{i} (conc q' (inv p')) r -> Path@{i} q' (conc r p')
-      with idpath => _
-    end).
+  path_elim p.
 
   move=> q' path_cq'v1_r.
   refine_conc (conc q' (inv idpath)).
@@ -243,15 +195,7 @@ Proof.
   move=> p q r.
 
   refine (let t := _ in t q).
-  refine
-    (match r
-      as r'
-      in Path _ y'
-      return
-        forall q' : Path@{i} y' z,
-          Path@{i} (conc r' q') p -> Path@{i} q' (conc (inv r') p)
-      with idpath => _
-    end).
+  path_elim r.
 
   move=> q' path_c1q'_p.
   refine_conc (conc idpath q').
@@ -276,15 +220,7 @@ Proof.
   move=> p q r.
 
   refine (let t := _ in t r).
-  refine
-    (match p
-      as p'
-      in Path _ x'
-      return
-        forall r' : Path@{i} y x',
-          Path@{i} (conc q p') r' -> Path@{i} q (conc r' (inv p'))
-      with idpath => _
-    end).
+  path_elim p.
 
   move=> r' path_cq1_r'.
   refine_conc (conc q idpath).
@@ -311,15 +247,7 @@ Proof.
   move=> p q.
 
   refine (let t := _ in t p).
-  refine
-    (match q
-      as q'
-      in Path _ y'
-      return
-        forall p' : Path@{i} x y',
-          Path (conc p' (inv q')) idpath -> Path p' q'
-      with idpath => _
-    end).
+  path_elim q.
 
   move=> p' path_cp'v1_1.
   refine_conc (conc p' (inv idpath)).
@@ -340,15 +268,7 @@ Proof.
   move=> p q.
 
   refine (let t := _ in t p).
-  refine
-    (match q
-      as q'
-      in Path _ y'
-      return
-        forall p' : Path@{i} x y',
-          Path (conc (inv q') p') idpath -> Path p' q'
-      with idpath => _
-    end).
+  path_elim q.
 
   move=> p' path_cv1p'_1.
   refine_conc (conc (inv idpath) p').
@@ -369,15 +289,7 @@ Proof.
   move=> p q.
 
   refine (let t := _ in t p).
-  refine
-    (match q
-      as q'
-      in Path _ x'
-      return
-        forall p' : Path@{i} x' y,
-          Path (conc p' q') idpath -> Path p' (inv q')
-      with idpath => _
-    end).
+  path_elim q.
 
   move=> p' path_cp'1_1.
   refine_conc (conc p' idpath).
@@ -398,15 +310,7 @@ Proof.
   move=> p q.
 
   refine (let t := _ in t p).
-  refine
-    (match q
-      as q'
-      in Path _ x'
-      return
-        forall p' : Path@{i} x' y,
-          Path (conc q' p') idpath -> Path p' (inv q')
-      with idpath => _
-    end).
+  path_elim q.
 
   move=> p' path_c1p'_1.
   refine_conc (conc idpath p').
@@ -427,15 +331,7 @@ Proof.
   move=> p q.
 
   refine (let t := _ in t q).
-  refine
-    (match p
-      as p'
-      in Path _ y'
-      return
-        forall q' : Path@{i} x y',
-          Path idpath (conc (inv p') q') -> Path p' q'
-      with idpath => _
-    end).
+  path_elim p.
 
   move=> q' path_1_cv1q'.
   refine_conc (conc (inv idpath) q').
@@ -456,15 +352,7 @@ Proof.
   move=> p q.
 
   refine (let t := _ in t q).
-  refine
-    (match p
-      as p'
-      in Path _ y'
-      return
-        forall q' : Path@{i} x y',
-          Path idpath (conc q' (inv p')) -> Path p' q'
-      with idpath => _
-    end).
+  path_elim p.
 
   move=> q' path_1_cq'v1.
   refine_conc (conc q' (inv idpath)).
@@ -485,15 +373,7 @@ Proof.
   move=> p q.
 
   refine (let t := _ in t q).
-  refine
-    (match p
-      as p'
-      in Path _ y'
-      return
-        forall q' : Path@{i} y' x,
-          Path idpath (conc q' p') -> Path (inv p') q'
-      with idpath => _
-    end).
+  path_elim p.
 
   move=> q' path_1_cq'1.
   refine_conc (conc q' idpath).
@@ -514,15 +394,7 @@ Proof.
   move=> p q.
 
   refine (let t := _ in t q).
-  refine
-    (match p
-      as p'
-      in Path _ y'
-      return
-        forall q' : Path@{i} y' x,
-          Path idpath (conc p' q') -> Path (inv p') q'
-      with idpath => _
-    end).
+  path_elim p.
 
   move=> q' path_1_c1q'.
   refine_conc (conc idpath q').
@@ -546,15 +418,7 @@ Proof.
   move=> p u v.
 
   refine (let t := _ in t v).
-  refine
-    (match p
-      as p'
-      in Path _ y'
-      return
-        forall v' : P y',
-          Path@{j} u (trpt (inv p') v') -> Path@{j} (trpt p' u) v'
-      with idpath => _
-    end).
+  path_elim p.
 
   move=> v'.
   cbv.
@@ -572,15 +436,7 @@ Proof.
   move=> p u v.
 
   refine (let t := _ in t u).
-  refine
-    (match p
-      as p'
-      in Path _ x'
-      return
-        forall u' : P x',
-          Path@{j} u' (trpt p' v) -> Path@{j} (trpt (inv p') u') v
-      with idpath => _
-    end).
+  path_elim p.
 
   move=> u'.
   cbv.
@@ -598,15 +454,7 @@ Proof.
   move=> p u v.
 
   refine (let t := _ in t v).
-  refine
-    (match p
-      as p'
-      in Path _ y'
-      return
-        forall v' : P y',
-          Path@{j} (trpt p' u) v' -> Path@{j} u (trpt (inv p') v')
-      with idpath => _
-    end).
+  path_elim p.
 
   move=> v'.
   cbv.
@@ -624,15 +472,7 @@ Proof.
   move=> p u v.
 
   refine (let t := _ in t u).
-  refine
-    (match p
-      as p'
-      in Path _ x'
-      return
-        forall u' : P x',
-          Path@{j} (trpt (inv p') u') v -> Path@{j} u' (trpt p' v)
-      with idpath => _
-    end).
+  path_elim p.
 
   move=> u'.
   cbv.
@@ -655,17 +495,7 @@ Proof.
   move=> q.
 
   refine (let t := _ in t v q).
-  refine
-    (match p
-      as p'
-      in Path _ y'
-      return
-        forall (v' : P y') (q' : Path@{j} u (trpt (inv p') v')),
-          Path@{j}
-            (inv (fun_Path_u_trpt_vp_v_Path_trpt_p_u_v P p' u v' q'))
-            (fun_Path_trpt_vp_u_v_Path_u_trpt_p_v P p' v' u (inv q'))
-      with idpath => _
-    end).
+  path_elim p.
 
   simpl trpt.
   move=> v' q'.
@@ -689,17 +519,7 @@ Proof.
   move=> q.
 
   refine (let t := _ in t u q).
-  refine
-    (match p
-      as p'
-      in Path _ x'
-      return
-        forall (u' : P x') (q' : Path@{j} u' (trpt p' v)),
-          Path@{j}
-            (inv (fun_Path_u_trpt_p_v_Path_trpt_vp_u_v P p' u' v q'))
-            (fun_Path_trpt_p_u_v_Path_u_trpt_vp_v P p' v u' (inv q'))
-      with idpath => _
-    end).
+  path_elim p.
 
   simpl trpt.
   move=> u' q'.
@@ -723,16 +543,7 @@ Proof.
   move=> q.
 
   refine (let t := _ in t v q).
-  refine (match p
-    as p'
-    in Path _ y'
-    return
-      forall (v' : P y') (q' : Path@{j} (trpt p' u) v'),
-        Path@{j}
-          (inv (fun_Path_trpt_p_u_v_Path_u_trpt_vp_v P p' u v' q'))
-          (fun_Path_u_trpt_p_v_Path_trpt_vp_u_v P p' v' u (inv q'))
-    with idpath => _
-  end).
+  path_elim p.
 
   simpl trpt.
   move=> v' q'.
@@ -756,17 +567,7 @@ Proof.
   move=> q.
 
   refine (let t := _ in t u q).
-  refine
-    (match p
-      as p'
-      in Path _ x'
-      return
-        forall (u' : P x') (q' : Path@{j} (trpt (inv p') u') v),
-          Path@{j}
-            (inv (fun_Path_trpt_vp_u_v_Path_u_trpt_p_v P p' u' v q'))
-            (fun_Path_u_trpt_vp_v_Path_trpt_p_u_v P p' v u' (inv q'))
-      with idpath => _
-    end).
+  path_elim p.
 
   simpl trpt.
   move=> u' q'.
