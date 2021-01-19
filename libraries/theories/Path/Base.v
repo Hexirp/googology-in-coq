@@ -23,7 +23,7 @@ Set Polymorphic Inductive Cumulativity.
 
 (** ** 汎用的なタクティックの定義 *)
 
-(** [refine_conc t] は [Path x y -| Path x t, Path t y] です。 *)
+(** [refine_conc t] は [Path x z] というゴールを [Path x t] と [Path t z] へ分解します。 *)
 
 Ltac refine_by_conc t := refine (@GiC.Base.conc@{_} _ _ t _ _ _).
 
