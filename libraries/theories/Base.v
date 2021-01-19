@@ -106,8 +106,8 @@ Module Path.
   (** J 規則です。道型の除去規則の内の一つであり、公理とする型理論もあれば定理である型理論もあります。 *)
 
   (* from: originally defined by Hexirp *)
-  Definition j_rule@{i | }
-    (A : Type@{i}) (x : A) (P : forall y : A, Path@{i} A x y -> Type@{i})
+  Definition j_rule@{i j | }
+    (A : Type@{i}) (x : A) (P : forall y : A, Path@{i} A x y -> Type@{j})
     (y : A) (p : Path@{i} A x y) (h : P x (idpath A x))
     : P y p
     := match p as p' in Path _ _ y' return P y' p' with idpath _ _ => h end.
@@ -119,11 +119,7 @@ Module Path.
 
   Arguments Path {A} a a'.
   Arguments idpath {A} {a}, [A] a.
-  Arguments j_rule {A x P y} p h.
-
-  (** [path_elim p] は [refine (match p with idpath => _ end)] です。 *)
-
-  Ltac path_elim p := refine (match p with @idpath _ _ => _ end).
+  Arguments j_rule {A} {x} P {y} p h.
 
 End Path.
 
@@ -185,14 +181,19 @@ Definition uncurry@{i j k | } {A : Type@{i}} {B : Type@{j}} {C : Type@{k}}
 (* from: originally defined by Hexirp *)
 Definition inv@{i | } {A : Type@{i}} {x y : A}
   : Path@{i} x y -> Path@{i} y x
-  := fun p => ltac:(path_elim p; exact idpath).
+  := fun p => j_rule (fun y_ _ => Path@{i} y_ x) p idpath.
 
 (** 道の結合です。 *)
 
 (* from: originally defined by Hexirp *)
 Definition conc@{i | } {A : Type@{i}} {x y z : A}
   : Path@{i} x y -> Path@{i} y z -> Path@{i} x z
-  := fun p q => match q with idpath => match p with idpath => idpath end end.
+  :=
+    fun p q =>
+      j_rule
+        (fun z_ _ => Path@{i} x z_)
+        q
+        (j_rule (fun y_ _ => Path@{i} x y_) p idpath).
 
 (** 道の結合と逆です。 *)
 
@@ -206,7 +207,7 @@ Definition conv@{i | } {A : Type@{i}} {x y z : A}
 (* from: originally defined by Hexirp *)
 Definition trpt@{i j | } {A : Type@{i}} {B : A -> Type@{j}} {x y : A}
   : Path@{i} x y -> B x -> B y
-  := fun p u => match p with idpath => u end.
+  := fun p u => j_rule (fun y_ _ => B y_) p u.
 
 (** 道による輸送と逆です。 *)
 
@@ -220,7 +221,7 @@ Definition trpv@{i j | } {A : Type@{i}} {B : A -> Type@{j}} {x y : A}
 (* from: originally defined by Hexirp *)
 Definition ap@{i j | } {A : Type@{i}} {B : Type@{j}} (f : A -> B) {x y : A}
   : Path@{i} x y -> Path@{j} (f x) (f y)
-  := fun p => match p with idpath => idpath end.
+  := fun p => j_rule (fun y_ _ => Path@{j} (f x) (f y_)) p idpath.
 
 (** タクティックのためのモジュールです。 *)
 
@@ -240,5 +241,9 @@ refine (conc (_ : Path@{_} _ t) _).
 
   (* from: originally defined by Hexirp *)
   Ltac refine_by_conc t := refine (@conc@{_} _ _ t _ _ _).
+
+  (** [path_elim p] は [refine (match p with idpath => _ end)] です。 *)
+
+  Ltac path_elim p := refine (match p with @idpath _ _ => _ end).
 
 End Tactic.
