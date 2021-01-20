@@ -116,6 +116,18 @@ Definition IsTrunc@{i | } (n : Nat@{i}) (A : Type@{i}) : Type@{i}
     in
       t0 n A.
 
+(** [A] が命題的であることです。 *)
+
+(* from: originally defined by Hexirp *)
+Definition IsProp@{i | } (A : Type@{i}) : Type@{i}
+  := IsTrunc (succ zero) A.
+
+(** [A] が集合的であることです。 *)
+
+(* from: originally defined by Hexirp *)
+Definition IsSet@{i | } (A : Type@{i}) : Type@{i}
+  := IsTrunc (succ (succ zero)) A.
+
 (** ** 反射 (reflection) *)
 
 (** [x] が [true] であることです。 *)
