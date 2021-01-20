@@ -396,6 +396,65 @@ rebase は、なるべく使わないでください。ただし、 git pull で
 
 Semantic Versioning を採用します。現在は基本的に `0.x.y` を付け、設計が確定するまで多くの変更を行う予定です。
 
+## 訳語
+
+紛らわしい単語たちの訳語を一つに定めます。
+
+[Is equality the same as identity?](https://math.stackexchange.com/questions/128778/is-equality-the-same-as-identity) を参考にする。
+
+* equation - 方程式 - 自由変数の値によっては両辺が等しくないかもしれず、自由変数の値に制約を掛ける等式である。
+* identity - 恒等式 - 自由変数の値に関わらず常に等しい等式である。
+
+[What is the difference between identity and equality in OOP](https://stackoverflow.com/questions/1692863/what-is-the-difference-between-identity-and-equality-in-oop) と [等価性の比較と同一性](https://developer.mozilla.org/ja/docs/Web/JavaScript/Equality_comparisons_and_sameness) を参考にする。
+
+* identity - 同一性 - 同じインスタンスであること。
+* equality - 等価性 - 値が等しいこと。
+
+[identity type](https://ncatlab.org/nlab/show/identity+type) を参考にする。
+
+* identity type - 等式型 - ある値とある値が等しいことを示す型。
+* equality type - 等式型 - ある値とある値が等しいことを示す型。
+
+HoTT Book を参考にする。
+
+* identity - equality とあまり区別はされない。 identity type と関連したところで多く使われる。 identity function で恒等関数を指すこともある。
+* equality - identity とあまり区別はされない。 等式そのものを指して equality と言ったり、 judgmental equality とか definitional equality とか propositional equality という風に、形容詞を付けて出てくることも多い。
+* equivalence - 二つの型の間に定義される等しさ。
+* homotopy - 連続的に移り合うものについてのいろいろ。
+
+一般的な訳を参考にする。
+
+* topology - 位相幾何学
+* homotopy - ホモトピー
+
+様々な熟語を並べてみる。
+
+* 同一
+* 同形
+* 同相
+* 同価
+* 同型
+* 同値
+* 相同
+* 相似
+* 等しさ
+* 等価
+* 等値
+
+homotopy は頻繁に出てくる単語であるにもかかわらず、翻訳がホモトピーしかないのはおさまりが悪い。
+
+[homotopy](https://en.wiktionary.org/wiki/homotopy) を参考にする。
+
+* homotopy - From Ancient Greek ὁμός (homós, “same, similar”) + τόπος (tópos, “place”); earliest known use in print in 1922, Oswald Veblen, Analysis Situs.
+
+homotopy の訳を定める。
+
+* homotopy - 類位
+
+equivalence は頻繁に出てくる単語であるにもかかわらず、訳語が equality と重複する「等価」しかない。
+
+equality は一般的な等しさを表し identity は homotopy type theory の中の概念である identity type と結びつくことが多い。
+
 ## 歴史
 
 歴史を簡単にまとめます。
