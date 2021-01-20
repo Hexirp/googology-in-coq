@@ -31,20 +31,20 @@ Export GiC.Path.Transposition.
 
 Module Everything.
 
-  (** モジュールをエクスポートします。 *)
+(** モジュールをエクスポートします。 *)
 
-  Export GiC.Path.Base.
-  Export GiC.Path.Function.
-  Export GiC.Path.OneDim.
-  Export GiC.Path.TwoDim.
-  Export GiC.Path.Transposition.
-  Export GiC.Path.Functoriality.
-  Export GiC.Path.Application_1_0.
-  Export GiC.Path.Application_1_1.
-  Export GiC.Path.Transport.
-  Export GiC.Path.Fibration.
-  Export GiC.Path.Transport_2.
-  Export GiC.Path.Application_D.
-  Export GiC.Path.Application_0_2.
+Export GiC.Path.Base.
+Export GiC.Path.Function.
+Export GiC.Path.OneDim.
+Export GiC.Path.TwoDim.
+Export GiC.Path.Transposition.
+Export GiC.Path.Functoriality.
+Export GiC.Path.Application_1_0.
+Export GiC.Path.Application_1_1.
+Export GiC.Path.Transport.
+Export GiC.Path.Fibration.
+Export GiC.Path.Transport_2.
+Export GiC.Path.Application_D.
+Export GiC.Path.Application_0_2.
 
 End Everything.
