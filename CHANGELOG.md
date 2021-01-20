@@ -2,6 +2,8 @@
 
 ## まだリリースされていない変更
 
+`IsProp` と `IsSet` を追加しました。 Homotopy Type Theory における重要な述語です。
+
 `refine_conc` を `refine_by_conc` に名前変更しました。タクティックが何をするのか分かりやすくなりました。
 
 ## 0.1.1
