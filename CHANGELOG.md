@@ -2,6 +2,8 @@
 
 ## まだリリースされていない変更
 
+`IsEquiv` と `Equiv` を追加しました。 Homotopy Type Theory における重要な概念です。
+
 `IsProp` と `IsSet` を追加しました。 Homotopy Type Theory における重要な概念です。
 
 `refine_conc` を `refine_by_conc` に名前変更しました。タクティックが何をするのか分かりやすくなりました。
