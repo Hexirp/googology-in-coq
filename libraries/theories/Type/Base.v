@@ -165,3 +165,22 @@ Inductive StronglyReflect@{i | } (A : Type@{i}) (x : Bool@{i}) : Type@{i} :=
     : IsContr A -> Path@{i} x true -> StronglyReflect A x
   | neg_StronglyReflect
     : (A -> Void@{i}) -> Path@{i} x false -> StronglyReflect A x.
+
+(** ** 等価性 (equivalence) *)
+
+(** [f] は等価写像である。 *)
+
+(* from: https://github.com/HoTT/HoTT/blob/46f10ef3c7218b912c6686ecec650e728c69085e/theories/Basics/Overture.v#L466 *)
+Inductive IsEquiv@{i | } {A B : Type@{i}} (f : A -> B) : Type@{i} :=
+  | make_IsEquiv
+    : forall
+      (g : B -> A)
+      (r : forall x : B, Path@{i} (f (g x)) x)
+      (s : forall x : A, Path@{i} (g (f x)) x),
+      (forall x : A, Path@{i} (r (f x)) (ap f (s x))) -> IsEquiv f.
+
+(** [A] と [B] は等価 (equivalence) である。 *)
+
+(* from: https://github.com/HoTT/HoTT/blob/46f10ef3c7218b912c6686ecec650e728c69085e/theories/Basics/Overture.v#L479 *)
+Inductive Equiv@{i | } (A B : Type@{i}) : Type@{i} :=
+  | make_Equiv : forall f : A -> B, IsEquiv f -> Equiv A B.
