@@ -203,7 +203,7 @@ Open Scope equational_reasoing_scope.
 
 Notation "[= x =]"
   := (@nil_PathStep x x (@GiC.Base.idpath _ x))
-  (at level 99, left associativity)
+  (at level 99, no associativity)
   : equational_reasoing_scope.
 
 Notation "p =[ q ] y"
