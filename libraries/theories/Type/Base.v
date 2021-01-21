@@ -166,6 +166,57 @@ Inductive StronglyReflect@{i | } (A : Type@{i}) (x : Bool@{i}) : Type@{i} :=
   | neg_StronglyReflect
     : (A -> Void@{i}) -> Path@{i} x false -> StronglyReflect A x.
 
+(** ** 方程式による推論 (equational reasoning) *)
+
+(** いくつかの等式を繋ぎ合わせた等式です。 *)
+
+(* from: originally defined by Hexirp *)
+Inductive PathStep@{i | } {A : Type@{i}} (x y : A) : Type@{i} :=
+  | nil_PathStep : Path@{i} x y -> PathStep x y
+  | cons_PathStep
+    : forall x' : A, PathStep x x' -> Path@{i} x' y -> PathStep x y.
+
+Arguments nil_PathStep {A x y} p.
+Arguments cons_PathStep {A x y} x' p q.
+
+(** [PathStep x y -> Path x y] です。 *)
+
+(* from: originally defined by Hexirp *)
+Definition fun_PathStep_x_y_Path_x_y@{i | } {A : Type@{i}} {x y : A}
+  : PathStep@{i} x y -> Path@{i} x y
+  :=
+    let
+      t0
+        :=
+          fix t1 (y : A) (p : PathStep@{i} x y) {struct p} : Path@{i} x y :=
+            match p
+              with
+                | nil_PathStep h => h
+                | @cons_PathStep _ _ _ y' p' h
+                  =>
+                    match h with idpath => t1 y' p' end
+            end
+    in
+      t0 y.
+
+Declare Scope equational_reasoing_scope.
+Delimit Scope equational_reasoing_scope with equational_reasoing.
+Open Scope equational_reasoing_scope.
+
+Notation "[= x =]"
+  := (@nil_PathStep x x (@GiC.Base.idpath _ x))
+  (at level 99, left associativity)
+  : equational_reasoing_scope.
+
+Notation "p =[ q ] y"
+  := (@cons_PathStep _ _ y _ p q)
+  (at level 100, right associativity)
+  : equational_reasoing_scope.
+
+(** 方程式による推論 (equational reasoning) を行うタクティックです。 *)
+
+Ltac step x := refine (fun_PathStep_x_y_Path_x_y x%equational_reasoing).
+
 (** ** 等価性 (equivalence) *)
 
 (** [f] は等価写像である。 *)
