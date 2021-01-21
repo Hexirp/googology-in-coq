@@ -202,19 +202,19 @@ Delimit Scope equational_reasoing_scope with equational_reasoing.
 Open Scope equational_reasoing_scope.
 
 Notation "[= x =]"
-  := (@nil_PathStep _ x x (@GiC.Base.idpath@{_} _ x))
+  := (@nil_PathStep@{_} _ x x (@GiC.Base.idpath@{_} _ x))
   (at level 99, no associativity)
   : equational_reasoing_scope.
 
 Notation "p =[ q ] y"
-  := (@cons_PathStep _ _ y _ p q)
+  := (@cons_PathStep@{_} _ _ y _ p q)
   (at level 100, right associativity)
   : equational_reasoing_scope.
 
 (** 方程式による推論 (equational reasoning) を行うタクティックです。 *)
 
 Ltac step x
-  := refine (@fun_PathStep_x_y_Path_x_y _ _ _ (x%equational_reasoing)).
+  := refine (@fun_PathStep_x_y_Path_x_y@{_} _ _ _ (x%equational_reasoing)).
 
 (** ** 等価性 (equivalence) *)
 
