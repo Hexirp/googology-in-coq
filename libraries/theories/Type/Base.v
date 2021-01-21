@@ -197,15 +197,23 @@ Definition fun_PathStep_x_y_Path_x_y@{i | } {A : Type@{i}} {x y : A}
     in
       t0 y.
 
+(** equational reasoning 専用の scope を定義します。 *)
+
 Declare Scope equational_reasoing_scope.
 Delimit Scope equational_reasoing_scope with equational_reasoing.
 Open Scope equational_reasoing_scope.
 
+(** equational reasoning を開始する notation を定義します。 *)
+
+(* from: originally defined by Hexirp *)
 Notation "[= x =]"
   := (@nil_PathStep@{_} _ x x (@GiC.Base.idpath@{_} _ x))
   (at level 99, no associativity)
   : equational_reasoing_scope.
 
+(** equational reasoning の notation を定義します。 *)
+
+(* from: originally defined by Hexirp *)
 Notation "p =[ q ] y"
   := (@cons_PathStep@{_} _ _ y _ p q)
   (at level 100, right associativity)
@@ -213,6 +221,7 @@ Notation "p =[ q ] y"
 
 (** 方程式による推論 (equational reasoning) を行うタクティックです。 *)
 
+(* from: originally defined by Hexirp *)
 Ltac step x
   := refine (@fun_PathStep_x_y_Path_x_y@{_} _ _ _ (x%equational_reasoing)).
 
