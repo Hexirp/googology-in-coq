@@ -213,7 +213,8 @@ Notation "p =[ q ] y"
 
 (** 方程式による推論 (equational reasoning) を行うタクティックです。 *)
 
-Ltac step x := refine (fun_PathStep_x_y_Path_x_y x%equational_reasoing).
+Ltac step x
+  := refine (@fun_PathStep_x_y_Path_x_y _ _ _ (x%equational_reasoing)).
 
 (** ** 等価性 (equivalence) *)
 
