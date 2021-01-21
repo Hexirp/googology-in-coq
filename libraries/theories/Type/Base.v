@@ -202,7 +202,7 @@ Delimit Scope equational_reasoing_scope with equational_reasoing.
 Open Scope equational_reasoing_scope.
 
 Notation "[= x =]"
-  := (@nil_PathStep x x (@GiC.Base.idpath _ x))
+  := (@nil_PathStep _ x x (@GiC.Base.idpath@{_} _ x))
   (at level 99, no associativity)
   : equational_reasoing_scope.
 
