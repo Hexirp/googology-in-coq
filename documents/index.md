@@ -455,6 +455,12 @@ equivalence は頻繁に出てくる単語であるにもかかわらず、訳�
 
 equality は一般的な等しさを表し identity は homotopy type theory の中の概念である identity type と結びつくことが多い。
 
+equivalence の訳を定める。
+
+* equivalence - 等価
+
+等価といったら equivalence であると定める。
+
 ## 歴史
 
 歴史を簡単にまとめます。
