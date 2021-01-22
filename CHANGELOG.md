@@ -2,7 +2,7 @@
 
 ## まだリリースされていない変更
 
-`PwPath` と `PwPathD` を追加しました。 Homotopy Type Theory における重要な概念です。
+`PwPath` と `PwPathN` を追加しました。 Homotopy Type Theory における重要な概念です。
 
 `IsEquiv` と `Equiv` を追加しました。 Homotopy Type Theory における重要な概念です。
 
