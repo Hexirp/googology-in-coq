@@ -80,17 +80,17 @@ Inductive Comparison@{i | } : Type@{i} :=
 
 (* from: originally defined by Hexirp *)
 Definition PwPath@{i j mij | i <= mij, j <= mij }
-  {A : Type@{i}} {B : Type@{j}} (f g : A -> B)
+  (A : Type@{i}) (B : A -> Type@{j}) (f g : forall x : A, B x)
   : Type@{mij}
   := forall x : A, Path@{j} (f x) (g x).
 
-(** 依存型に対応した点ごとの道 (pointwise path) です。 *)
+(** 依存関数に対応しない点ごとの道 (pointwise path) です。 *)
 
 (* from: originally defined by Hexirp *)
-Definition PwPathD@{i j mij | i <= mij, j <= mij }
-  {A : Type@{i}} {B : A -> Type@{j}} (f g : forall x : A, B x)
+Definition PwPathN@{i j mij | i <= mij, j <= mij }
+  {A : Type@{i}} {B : Type@{j}} (f g : A -> B)
   : Type@{mij}
-  := forall x : A, Path@{j} (f x) (g x).
+  := forall x : A, PwPath@{i j mij} A (fun _ => B) f g.
 
 (** ** 基本的な汎用関数 *)
 
