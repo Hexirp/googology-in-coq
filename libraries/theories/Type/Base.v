@@ -92,6 +92,14 @@ Definition PwPathN@{i j mij | i <= mij, j <= mij }
   : Type@{mij}
   := forall x : A, PwPath@{i j mij} A (fun _ => B) f g.
 
+(** 維 (fiber) です。 *)
+
+(* from: originally defined by Hexirp *)
+Definition Fiber@{i j mij | i <= mij, j <= mij}
+  {A : Type@{i}} {B : Type@{j}} (f : A -> B) (y : B)
+  : Type@{mij}
+  := DSum A (fun x => Path@{j} (f x) y).
+
 (** ** 基本的な汎用関数 *)
 
 (** [Path A B -> A -> B] です。 *)
