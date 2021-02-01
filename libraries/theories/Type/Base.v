@@ -108,42 +108,6 @@ Definition pUV@{i si | i < si}
   : Path@{si} Unit@{i} Void@{i} -> Void@{i}
   := fun p => match p with idpath => unit@{i} end.
 
-(** ** 切り捨て (truncation) *)
-
-(** [A] が可縮 (contractible) であることです。 *)
-
-(* from: originally defined by Hexirp *)
-Inductive IsContr@{i | } (A : Type@{i}) : Type@{i} :=
-  | make_IsContr : forall x : A, (forall y : A, Path@{i} x y) -> IsContr A.
-
-(** [A] が (n-2)-切り捨て (truncated) であることです。 *)
-
-(* from: originally defined by Hexirp *)
-Definition IsTrunc@{i | } (n : Nat@{i}) (A : Type@{i}) : Type@{i}
-  :=
-    let
-      t0 :=
-        fix t1 (n : Nat@{i}) (A : Type@{i}) {struct n} : Type@{i} :=
-          match n
-            with
-              | zero => IsContr@{i} A
-              | succ np => forall (x y : A), t1 np (Path@{i} x y)
-          end
-    in
-      t0 n A.
-
-(** [A] が命題的であることです。 *)
-
-(* from: originally defined by Hexirp *)
-Definition IsProp@{i | } (A : Type@{i}) : Type@{i}
-  := IsTrunc (succ zero) A.
-
-(** [A] が集合的であることです。 *)
-
-(* from: originally defined by Hexirp *)
-Definition IsSet@{i | } (A : Type@{i}) : Type@{i}
-  := IsTrunc (succ (succ zero)) A.
-
 (** ** 反射 (reflection) *)
 
 (** [x] が [true] であることです。 *)
@@ -242,6 +206,42 @@ Notation "p =[ q ] y"
 (* from: originally defined by Hexirp *)
 Ltac step x
   := refine (@fun_PathStep_x_y_Path_x_y@{_} _ _ _ (x%equational_reasoing)).
+
+(** ** 切り捨て (truncation) *)
+
+(** [A] が可縮 (contractible) であることです。 *)
+
+(* from: originally defined by Hexirp *)
+Inductive IsContr@{i | } (A : Type@{i}) : Type@{i} :=
+  | make_IsContr : forall x : A, (forall y : A, Path@{i} x y) -> IsContr A.
+
+(** [A] が (n-2)-切り捨て (truncated) であることです。 *)
+
+(* from: originally defined by Hexirp *)
+Definition IsTrunc@{i | } (n : Nat@{i}) (A : Type@{i}) : Type@{i}
+  :=
+    let
+      t0 :=
+        fix t1 (n : Nat@{i}) (A : Type@{i}) {struct n} : Type@{i} :=
+          match n
+            with
+              | zero => IsContr@{i} A
+              | succ np => forall (x y : A), t1 np (Path@{i} x y)
+          end
+    in
+      t0 n A.
+
+(** [A] が命題的であることです。 *)
+
+(* from: originally defined by Hexirp *)
+Definition IsProp@{i | } (A : Type@{i}) : Type@{i}
+  := IsTrunc (succ zero) A.
+
+(** [A] が集合的であることです。 *)
+
+(* from: originally defined by Hexirp *)
+Definition IsSet@{i | } (A : Type@{i}) : Type@{i}
+  := IsTrunc (succ (succ zero)) A.
 
 (** ** 等価性 (equivalence) *)
 
