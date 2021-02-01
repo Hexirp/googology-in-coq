@@ -210,7 +210,7 @@ Definition fun_PathStep_x_y_Path_x_y@{i | } {A : Type@{i}} {x y : A}
             match p
               with
                 | nil_PathStep h => h
-                | @cons_PathStep _ _ _ y' p' h => conc (t1 y' p') h
+                | cons_PathStep y' p' h => conc (t1 y' p') h
             end
     in
       t0 y.
