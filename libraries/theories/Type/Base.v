@@ -162,25 +162,27 @@ Inductive IsDecidable@{i | } (A : Type@{i}) : Type@{i} :=
 (** [A] が [x] に反射していることです。 *)
 
 (* from: originally defined by Hexirp *)
-Inductive Reflect@{i | } (A : Type@{i}) (x : Bool@{i}) : Type@{i} :=
-  | pos_Reflect : A -> Path@{i} x true -> Reflect A x
-  | neg_Reflect : (A -> Void@{i}) -> Path@{i} x false -> Reflect A x.
+Inductive Reflect@{i | } (A : Type@{i}) (b : Bool@{i}) : Type@{i} :=
+  | pos_Reflect : A -> Path@{i} b true -> Reflect A b
+  | neg_Reflect : (A -> Void@{i}) -> Path@{i} b false -> Reflect A b.
 
 (** [A] が強く決定可能であることです。 *)
 
 (* from: originally defined by Hexirp *)
 Inductive IsStronglyDecidable@{i | } (A : Type@{i}) : Type@{i} :=
-  | pos_IsStronglyDecidable : IsContr A -> IsStronglyDecidable A
+  | pos_IsStronglyDecidable
+    : forall x : A, (forall y : A, Path@{i} x y) -> IsStronglyDecidable A
   | neg_IsStronglyDecidable : (A -> Void@{i}) -> IsStronglyDecidable A.
 
 (** [A] が [x] に強く反射していることです。 *)
 
 (* from: originally defined by Hexirp *)
-Inductive StronglyReflect@{i | } (A : Type@{i}) (x : Bool@{i}) : Type@{i} :=
+Inductive StronglyReflect@{i | } (A : Type@{i}) (b : Bool@{i}) : Type@{i} :=
   | pos_StronglyReflect
-    : IsContr A -> Path@{i} x true -> StronglyReflect A x
+    : forall x : A,
+      (forall y : A, Path@{i} x y) -> Path@{i} b true -> StronglyReflect A b
   | neg_StronglyReflect
-    : (A -> Void@{i}) -> Path@{i} x false -> StronglyReflect A x.
+    : (A -> Void@{i}) -> Path@{i} b false -> StronglyReflect A b.
 
 (** ** 方程式による推論 (equational reasoning) *)
 
