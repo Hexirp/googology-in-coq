@@ -253,7 +253,7 @@ Definition IsSet@{i | } (A : Type@{i}) : Type@{i}
 
 (** ** 等価性 (equivalence) *)
 
-(** [f] は等価写像である。 *)
+(** [f] は等価写像であることです。 *)
 
 (* from: https://github.com/HoTT/HoTT/blob/46f10ef3c7218b912c6686ecec650e728c69085e/theories/Basics/Overture.v#L466 *)
 Inductive IsEquiv@{i | } {A B : Type@{i}} (f : A -> B) : Type@{i} :=
@@ -264,7 +264,7 @@ Inductive IsEquiv@{i | } {A B : Type@{i}} (f : A -> B) : Type@{i} :=
       (s : forall x : A, Path@{i} (g (f x)) x),
       (forall x : A, Path@{i} (r (f x)) (ap f (s x))) -> IsEquiv f.
 
-(** [A] と [B] は等価 (equivalence) である。 *)
+(** [A] と [B] は等価 (equivalence) であることです。 *)
 
 (* from: https://github.com/HoTT/HoTT/blob/46f10ef3c7218b912c6686ecec650e728c69085e/theories/Basics/Overture.v#L479 *)
 Inductive Equiv@{i | } (A B : Type@{i}) : Type@{i} :=
