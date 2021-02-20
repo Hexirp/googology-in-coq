@@ -37,3 +37,10 @@ Set Default Goal Selector "!".
 Definition pred@{i | } : Nat@{i} -> Nat@{i} :=
   fix t (x : Nat@{i}) {struct x} : Nat@{i} :=
     match x with zero => zero | succ xp => t xp end.
+
+(** 足し算です。 *)
+
+(* from: originally defined by Hexirp *)
+Definition add@{i | } : Nat@{i} -> Nat@{i} -> Nat@{i} :=
+  fix t (x : Nat@{i}) (y : Nat@{i}) {struct x} : Nat@{i} :=
+    match x with zero => y | succ xp => succ (t xp y) end.
