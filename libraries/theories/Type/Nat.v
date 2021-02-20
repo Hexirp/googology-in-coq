@@ -57,7 +57,7 @@ Definition mul@{i | } : Nat@{i} -> Nat@{i} -> Nat@{i} :=
 (** 引き算です。 [sub x y] は [x + n = y + m] を満たすペア [m, n] の中で [m] が最大であるものです。 *)
 
 (* from: originally defined by Hexirp *)
-Definition sub@{i } : Nat@{i} -> Nat@{i} -> Prod@{i i} Nat@{i} Nat@{i} :=
+Definition sub@{i | } : Nat@{i} -> Nat@{i} -> Prod@{i i} Nat@{i} Nat@{i} :=
   fix t (x : Nat@{i}) (y : Nat@{i}) {struct x} : Prod@{i i} Nat@{i} Nat@{i} :=
     match x
       with
@@ -69,3 +69,11 @@ Definition sub@{i } : Nat@{i} -> Nat@{i} -> Prod@{i i} Nat@{i} Nat@{i} :=
               | succ yp => t xp yp
           end
     end.
+
+Axiom lt@{i | } : Nat@{i} -> Nat@{i} -> Type@{i}.
+
+(** 割り算です。 [div x y] は [x = y * m + n] を満たすペア [m, n] の中で [m] が最大であるものです。 *)
+
+(* from: originally defined by Hexirp *)
+Axiom div@{i | }
+  : DSum Nat@{i} (fun x => lt zero x) -> Nat@{i} -> Prod@{i i} Nat@{i} Nat@{i}.
