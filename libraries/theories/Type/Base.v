@@ -21,14 +21,6 @@ Unset Elimination Schemes.
 Set Universe Polymorphism.
 Set Polymorphic Inductive Cumulativity.
 
-(** タクティックが使用できるように設定します。 *)
-
-Set Default Proof Mode "Classic".
-
-(** ビュレットを使用しないときにエラーになるように設定します。 *)
-
-Set Default Goal Selector "!".
-
 (** ** 基本的な型 *)
 
 (** ブーリアン型です。 *)

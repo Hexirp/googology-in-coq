@@ -60,4 +60,7 @@ digraph dependency_graph_tred {
 
   # GiC.Type.Base
   "GiC.Type.Base" -> "GiC.Base";
+
+  # GiC.Type.Nat
+  "GiC.Type.Nat" -> "GiC.Type.Base";
 }

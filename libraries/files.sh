@@ -17,7 +17,8 @@ for file in \
   Path/Application_D.v \
   Path/Application_0_2.v \
   Path.v \
-  Type/Base.v
+  Type/Base.v \
+  Type/Nat.v
 do
   echo -n "theories/${file} "
 done

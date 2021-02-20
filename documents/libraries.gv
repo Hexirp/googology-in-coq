@@ -94,4 +94,8 @@ digraph dependency_graph {
 
   # GiC.Type.Base
   "GiC.Type.Base" -> "GiC.Base";
+
+  # GiC.Type.Nat
+  "GiC.Type.Nat" -> "GiC.Base";
+  "GiC.Type.Nat" -> "GiC.Type.Base";
 }
