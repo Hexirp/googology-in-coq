@@ -31,6 +31,8 @@ Set Default Proof Mode "Classic".
 
 Set Default Goal Selector "!".
 
+(** ** 一般的な演算です。 *)
+
 (** 後者関数です。 *)
 
 (* from: originally defined by Hexirp *)
@@ -51,3 +53,19 @@ Definition add@{i | } : Nat@{i} -> Nat@{i} -> Nat@{i} :=
 Definition mul@{i | } : Nat@{i} -> Nat@{i} -> Nat@{i} :=
   fix t (x : Nat@{i}) (y : Nat@{i}) {struct x} : Nat@{i} :=
     match x with zero => y | succ xp => add y (t xp y) end.
+
+(** 引き算です。 [sub x y] は [x + n = y + m] を満たすペア [m, n] の中で [m] が最大であるものです。 *)
+
+(* from: originally defined by Hexirp *)
+Definition sub@{i } : Nat@{i} -> Nat@{i} -> Prod@{i i} Nat@{i} Nat@{i} :=
+  fix t (x : Nat@{i}) (y : Nat@{i}) {struct x} : Prod@{i i} Nat@{i} Nat@{i} :=
+    match x
+      with
+        | zero => pair zero@{i} y
+        | succ xp =>
+          match y
+            with
+              | zero => pair x zero@{i}
+              | succ yp => t xp yp
+          end
+    end.
