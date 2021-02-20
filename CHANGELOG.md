@@ -2,6 +2,12 @@
 
 ## まだリリースされていない変更
 
+## 0.1.2
+
+* [Commit ID][commit-v0.1.2]
+
+[commit-v0.1.2]: https://gitlab.com/Hexirp/googology-in-coq/-/commit/eddaf097c31849b6c4f4d9ce1da3704ff8290103
+
 `Fiber` を追加しました。 Homotopy Type Theory における重要な概念です。
 
 `PwPath` と `PwPathN` を追加しました。 Homotopy Type Theory における重要な概念です。
