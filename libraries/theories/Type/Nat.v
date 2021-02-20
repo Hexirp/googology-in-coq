@@ -30,3 +30,10 @@ Set Default Proof Mode "Classic".
 (** ビュレットを使用しないときにエラーになるように設定します。 *)
 
 Set Default Goal Selector "!".
+
+(** 後者関数です。 *)
+
+(* from: originally defined by Hexirp *)
+Definition pred@{i | } : Nat@{i} -> Nat@{i} :=
+  fix t (x : Nat@{i}) {struct x} : Nat@{i} :=
+    match x with zero => zero | succ xp => t xp end.
