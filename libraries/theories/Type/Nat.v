@@ -44,3 +44,10 @@ Definition pred@{i | } : Nat@{i} -> Nat@{i} :=
 Definition add@{i | } : Nat@{i} -> Nat@{i} -> Nat@{i} :=
   fix t (x : Nat@{i}) (y : Nat@{i}) {struct x} : Nat@{i} :=
     match x with zero => y | succ xp => succ (t xp y) end.
+
+(** 掛け算です。 *)
+
+(* from: originally defined by Hexirp *)
+Definition mul@{i | } : Nat@{i} -> Nat@{i} -> Nat@{i} :=
+  fix t (x : Nat@{i}) (y : Nat@{i}) {struct x} : Nat@{i} :=
+    match x with zero => y | succ xp => add y (t xp y) end.
