@@ -88,5 +88,7 @@ Definition sub@{i | } : Nat@{i} -> Nat@{i} -> Prod@{i i} Nat@{i} Nat@{i} :=
 (** 割り算です。 [div x y] は [x = y * m + n] を満たすペア [m, n] の中で [m] が最大であるものです。 *)
 
 (* from: originally defined by Hexirp *)
-Axiom div@{i | }
+Definition div@{i | }
   : DSum Nat@{i} (fun x => Lt zero x) -> Nat@{i} -> Prod@{i i} Nat@{i} Nat@{i}.
+Proof.
+Admitted.
