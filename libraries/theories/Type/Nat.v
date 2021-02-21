@@ -31,6 +31,23 @@ Set Default Proof Mode "Classic".
 
 Set Default Goal Selector "!".
 
+(** ** 一般的な述語です。 *)
+
+(** [y] は [x] 以上であることです。 *)
+
+(* from: originally defined by Hexirp *)
+Inductive Le0@{i | } (x : Nat@{i}) (y : Nat@{i}) : Type@{i} :=
+  | Le0_zero : Path@{i} x zero -> Le0 x y
+  | Le0_succ
+    : forall xp yp : Nat@{i},
+      Path@{i} x (succ xp) -> Path@{i} y (succ yp) -> Le0 xp yp -> Le0 x y.
+
+(* from: originally defined by Hexirp *)
+Inductive Le1@{i | } (x : Nat@{i}) (y : Nat@{i}) : Type@{i} :=
+  | Le1_zero : Path@{i} x y -> Le1 x y
+  | Le1_succ
+    : forall yp : Nat@{i}, Path@{i} y (succ yp) -> Le1 x yp -> Le1 x y.
+
 (** ** 一般的な演算です。 *)
 
 (** 後者関数です。 *)
