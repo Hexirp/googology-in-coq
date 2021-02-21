@@ -41,6 +41,11 @@ Inductive Le@{i | } (x : Nat@{i}) (y : Nat@{i}) : Type@{i} :=
   | le_succ
     : forall yp : Nat@{i}, Path@{i} y (succ yp) -> Le x yp -> Le x y.
 
+(** [y] は [x] より大きいことです。 *)
+
+(* from: originally defined by Hexirp *)
+Definition Lt@{i | } (x y : Nat@{i}) : Type@{i} := Le@{i} (succ x) y.
+
 (** ** 一般的な演算です。 *)
 
 (** 後者関数です。 *)
@@ -80,10 +85,8 @@ Definition sub@{i | } : Nat@{i} -> Nat@{i} -> Prod@{i i} Nat@{i} Nat@{i} :=
           end
     end.
 
-Axiom lt@{i | } : Nat@{i} -> Nat@{i} -> Type@{i}.
-
 (** 割り算です。 [div x y] は [x = y * m + n] を満たすペア [m, n] の中で [m] が最大であるものです。 *)
 
 (* from: originally defined by Hexirp *)
 Axiom div@{i | }
-  : DSum Nat@{i} (fun x => lt zero x) -> Nat@{i} -> Prod@{i i} Nat@{i} Nat@{i}.
+  : DSum Nat@{i} (fun x => Lt zero x) -> Nat@{i} -> Prod@{i i} Nat@{i} Nat@{i}.
