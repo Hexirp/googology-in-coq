@@ -36,17 +36,10 @@ Set Default Goal Selector "!".
 (** [y] は [x] 以上であることです。 *)
 
 (* from: originally defined by Hexirp *)
-Inductive Le0@{i | } (x : Nat@{i}) (y : Nat@{i}) : Type@{i} :=
-  | Le0_zero : Path@{i} x zero -> Le0 x y
-  | Le0_succ
-    : forall xp yp : Nat@{i},
-      Path@{i} x (succ xp) -> Path@{i} y (succ yp) -> Le0 xp yp -> Le0 x y.
-
-(* from: originally defined by Hexirp *)
-Inductive Le1@{i | } (x : Nat@{i}) (y : Nat@{i}) : Type@{i} :=
-  | Le1_zero : Path@{i} x y -> Le1 x y
-  | Le1_succ
-    : forall yp : Nat@{i}, Path@{i} y (succ yp) -> Le1 x yp -> Le1 x y.
+Inductive Le@{i | } (x : Nat@{i}) (y : Nat@{i}) : Type@{i} :=
+  | le_zero : Path@{i} x y -> Le x y
+  | le_succ
+    : forall yp : Nat@{i}, Path@{i} y (succ yp) -> Le x yp -> Le x y.
 
 (** ** 一般的な演算です。 *)
 
