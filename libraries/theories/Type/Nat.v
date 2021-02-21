@@ -36,7 +36,7 @@ Set Default Goal Selector "!".
 (** [y] が [x] 以上であることです。 *)
 
 (* from: originally defined by Hexirp *)
-Inductive Le@{i | } (x : Nat@{i}) (y : Nat@{i}) : Type@{i} :=
+Inductive Le@{i | } (x y : Nat@{i}) : Type@{i} :=
   | le_zero : Path@{i} x y -> Le x y
   | le_succ
     : forall yp : Nat@{i}, Path@{i} y (succ yp) -> Le x yp -> Le x y.
@@ -59,21 +59,21 @@ Definition pred@{i | } : Nat@{i} -> Nat@{i} :=
 
 (* from: originally defined by Hexirp *)
 Definition add@{i | } : Nat@{i} -> Nat@{i} -> Nat@{i} :=
-  fix t (x : Nat@{i}) (y : Nat@{i}) {struct x} : Nat@{i} :=
+  fix t (x y : Nat@{i}) {struct x} : Nat@{i} :=
     match x with zero => y | succ xp => succ (t xp y) end.
 
 (** 掛け算です。 *)
 
 (* from: originally defined by Hexirp *)
 Definition mul@{i | } : Nat@{i} -> Nat@{i} -> Nat@{i} :=
-  fix t (x : Nat@{i}) (y : Nat@{i}) {struct x} : Nat@{i} :=
+  fix t (x y : Nat@{i}) {struct x} : Nat@{i} :=
     match x with zero => y | succ xp => add y (t xp y) end.
 
 (** 引き算です。 [sub x y] は [x + n = y + m] を満たすペア [m, n] の中で [m] が最大であるものです。 *)
 
 (* from: originally defined by Hexirp *)
 Definition sub@{i | } : Nat@{i} -> Nat@{i} -> Prod@{i i} Nat@{i} Nat@{i} :=
-  fix t (x : Nat@{i}) (y : Nat@{i}) {struct x} : Prod@{i i} Nat@{i} Nat@{i} :=
+  fix t (x y : Nat@{i}) {struct x} : Prod@{i i} Nat@{i} Nat@{i} :=
     match x
       with
         | zero => pair zero@{i} y
