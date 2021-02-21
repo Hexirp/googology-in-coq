@@ -33,7 +33,7 @@ Set Default Goal Selector "!".
 
 (** ** 一般的な述語です。 *)
 
-(** [y] は [x] 以上であることです。 *)
+(** [y] が [x] 以上であることです。 *)
 
 (* from: originally defined by Hexirp *)
 Inductive Le@{i | } (x : Nat@{i}) (y : Nat@{i}) : Type@{i} :=
@@ -41,7 +41,7 @@ Inductive Le@{i | } (x : Nat@{i}) (y : Nat@{i}) : Type@{i} :=
   | le_succ
     : forall yp : Nat@{i}, Path@{i} y (succ yp) -> Le x yp -> Le x y.
 
-(** [y] は [x] より大きいことです。 *)
+(** [y] が [x] より大きいことです。 *)
 
 (* from: originally defined by Hexirp *)
 Definition Lt@{i | } (x y : Nat@{i}) : Type@{i} := Le@{i} (succ x) y.
