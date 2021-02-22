@@ -171,6 +171,7 @@ Definition sub@{i | } : Nat@{i} -> Nat@{i} -> Prod@{i i} Nat@{i} Nat@{i} :=
 
 (* from: originally defined by Hexirp *)
 Definition div@{i | }
-  : DSum Nat@{i} (fun x => Lt zero x) -> Nat@{i} -> Prod@{i i} Nat@{i} Nat@{i}.
+  : DSum Nat@{i} (fun x => IsTrue (lt zero x)) ->
+    Nat@{i} -> Prod@{i i} Nat@{i} Nat@{i}.
 Proof.
 Admitted.
