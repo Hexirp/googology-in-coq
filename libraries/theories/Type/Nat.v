@@ -83,6 +83,29 @@ Definition lt@{i | } : Nat@{i} -> Nat@{i} -> Bool@{i} :=
           end
     end.
 
+(** [le] が [Le] を反射していることです。 *)
+
+(* from: originally defined by Hexirp *)
+Definition reflect_Le_m_n_le_m_n@{i | }
+  : forall m n : Nat@{i}, Reflect@{i} (Le@{i} m n) (le m n).
+Proof.
+(*   refine
+    (fix t (m n : Nat@{i}) {struct m} : Reflect@{i} (Le@{i} m n) (le m n) := _).
+  refine (match m with zero => _ | succ mp => _ end).
+  -
+    refine (match n with zero => _ | succ np => _ end).
+    +
+      refine (pos_Reflect (Le@{i} zero zero) (le zero zero) _ _).
+      *
+        refine (zero_Le zero zero _).
+        exact idpath.
+      *
+        simpl.
+        exact idpath.
+    +
+      refine (pos_Reflect *)
+Admitted.
+
 (** ** 一般的な演算です。 *)
 
 (** 後者関数です。 *)
