@@ -62,6 +62,27 @@ Definition le@{i | } : Nat@{i} -> Nat@{i} -> Bool@{i} :=
           end
     end.
 
+(** [y] が [x] より大きいかどうかです。 *)
+
+(* from: originally defined by Hexirp *)
+Definition lt@{i | } : Nat@{i} -> Nat@{i} -> Bool@{i} :=
+  fix t (x y : Nat@{i}) {struct x} : Bool@{i} :=
+    match x
+      with
+        | zero =>
+          match y
+            with
+              | zero => false
+              | succ yp => true
+          end
+        | succ xp =>
+          match y
+            with
+              | zero => false
+              | succ yp => t xp yp
+          end
+    end.
+
 (** ** 一般的な演算です。 *)
 
 (** 後者関数です。 *)
