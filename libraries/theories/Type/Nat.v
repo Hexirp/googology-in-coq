@@ -89,21 +89,43 @@ Definition lt@{i | } : Nat@{i} -> Nat@{i} -> Bool@{i} :=
 Definition reflect_Le_m_n_le_m_n@{i | }
   : forall m n : Nat@{i}, Reflect@{i} (Le@{i} m n) (le m n).
 Proof.
-(*   refine
-    (fix t (m n : Nat@{i}) {struct m} : Reflect@{i} (Le@{i} m n) (le m n) := _).
+  refine
+    (fix t (m n : Nat@{i}) {struct m} : Reflect@{i} (Le@{i} m n) (le m n)
+      := _).
   refine (match m with zero => _ | succ mp => _ end).
+  -
+    refine (pos_Reflect (Le@{i} zero n) (le zero n) _ _).
+    +
+      admit.
+    +
+      admit.
   -
     refine (match n with zero => _ | succ np => _ end).
     +
-      refine (pos_Reflect (Le@{i} zero zero) (le zero zero) _ _).
+      refine (neg_Reflect (Le@{i} (succ mp) zero) (le (succ mp) zero) _ _).
       *
-        refine (zero_Le zero zero _).
-        exact idpath.
+        admit.
       *
-        simpl.
-        exact idpath.
+        admit.
     +
-      refine (pos_Reflect *)
+      refine
+        (match t mp np
+          with pos_Reflect _ _ pH ph => _ | neg_Reflect _ _ nH nh => _
+        end).
+      *
+        refine
+          (pos_Reflect (Le@{i} (succ mp) (succ np)) (le (succ mp) (succ np)) _ _).
+        --
+          admit.
+        --
+          admit.
+      *
+        refine
+          (neg_Reflect (Le@{i} (succ mp) (succ np)) (le (succ mp) (succ np)) _ _).
+        --
+          admit.
+        --
+          admit.
 Admitted.
 
 (** ** 一般的な演算です。 *)
