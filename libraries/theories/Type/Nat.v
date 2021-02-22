@@ -37,8 +37,8 @@ Set Default Goal Selector "!".
 
 (* from: originally defined by Hexirp *)
 Inductive Le@{i | } (x y : Nat@{i}) : Type@{i} :=
-  | le_zero : Path@{i} x y -> Le x y
-  | le_succ
+  | zero_Le : Path@{i} x y -> Le x y
+  | succ_Le
     : forall yp : Nat@{i}, Path@{i} y (succ yp) -> Le x yp -> Le x y.
 
 (** [y] が [x] より大きいことです。 *)
