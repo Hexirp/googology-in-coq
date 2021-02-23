@@ -31,6 +31,26 @@ Set Default Proof Mode "Classic".
 
 Set Default Goal Selector "!".
 
+(** ** 基本的な不平等の定理です。 *)
+
+(** [Path zero (succ n) -> Void] です。 *)
+
+(* from: originally defined by Hexirp *)
+Definition fun_Path_zero_succ_n_Void@{i si | i < si}
+  : forall n : Nat@{i}, Path@{i} zero@{i} (succ n) -> Void@{i}.
+Proof.
+  refine (fun n x => _).
+  refine (pUV@{i si} _).
+  refine
+    (ap
+      (fun x : Nat@{i} =>
+        match x with zero => Unit@{i} | succ _ => Void@{i} end)
+      (x := zero)
+      (y := succ n)
+      _).
+  exact x.
+Defined.
+
 (** ** 一般的な述語です。 *)
 
 (** [y] が [x] 以上であることです。 *)
@@ -81,16 +101,18 @@ Defined.
 (** [Le (succ m) zero -> Void] です。 *)
 
 (* from: originally defined by Hexirp *)
-Definition fun_Le_succ_m_zero_Void@{i | }
+Definition fun_Le_succ_m_zero_Void@{i si | i < si}
   : forall m : Nat@{i}, Le@{i} (succ m) zero -> Void@{i}.
 Proof.
   refine (fun m x => _).
   refine (match x with zero_Le _ _ h => _ | succ_Le _ _ np h xp => _ end).
   -
-    admit.
+    refine (fun_Path_zero_succ_n_Void@{i si} m _).
+    exact (inv h).
   -
-    admit.
-Admitted.
+    refine (fun_Path_zero_succ_n_Void@{i si} np _).
+    exact h.
+Defined.
 
 (** [y] が [x] より大きいことです。 *)
 
