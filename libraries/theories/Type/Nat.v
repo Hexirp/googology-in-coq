@@ -120,6 +120,17 @@ Definition le@{i | } : Nat@{i} -> Nat@{i} -> Bool@{i} :=
           end
     end.
 
+(** [Path (le zero n) true] です。 *)
+
+(* from: originally defined by Hexirp *)
+Definition path_le_zero_n_true@{i | }
+  : forall n : Nat@{i}, Path@{i} (le@{i} zero n) true.
+Proof.
+  refine (fun n => _).
+  simpl.
+  exact idpath.
+Defined.
+
 (** [y] が [x] より大きいかどうかです。 *)
 
 (* from: originally defined by Hexirp *)
@@ -156,7 +167,7 @@ Proof.
     +
       exact (le_zero_n n).
     +
-      admit.
+      exact (path_le_zero_n_true n).
   -
     refine (match n with zero => _ | succ np => _ end).
     +
