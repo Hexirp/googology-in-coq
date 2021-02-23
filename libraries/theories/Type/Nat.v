@@ -46,6 +46,27 @@ Inductive Le@{i | } (x y : Nat@{i}) : Type@{i} :=
 (* from: originally defined by Hexirp *)
 Definition Lt@{i | } (x y : Nat@{i}) : Type@{i} := Le@{i} (succ x) y.
 
+(** [x] と [y] が等しいかどうかです。 *)
+
+(* from: originally defined by Hexirp *)
+Definition eq@{i | } : Nat@{i} -> Nat@{i} -> Bool@{i} :=
+  fix t (x y : Nat@{i}) {struct x} : Bool@{i} :=
+    match x
+      with
+        | zero =>
+          match y
+            with
+              | zero => true
+              | succ yp => false
+          end
+        | succ xp =>
+          match y
+            with
+              | zero => false
+              | succ yp => t xp yp
+          end
+    end.
+
 (** [y] が [x] 以上であるかどうかです。 *)
 
 (* from: originally defined by Hexirp *)
