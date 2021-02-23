@@ -94,7 +94,7 @@ Proof.
       := _).
   refine (match m with zero => _ | succ mp => _ end).
   -
-    refine (pos_Reflect (Le@{i} zero n) (le zero n) _ _).
+    refine (pos_Reflect _ _).
     +
       admit.
     +
@@ -102,7 +102,7 @@ Proof.
   -
     refine (match n with zero => _ | succ np => _ end).
     +
-      refine (neg_Reflect (Le@{i} (succ mp) zero) (le (succ mp) zero) _ _).
+      refine (neg_Reflect _ _).
       *
         admit.
       *
@@ -110,18 +110,16 @@ Proof.
     +
       refine
         (match t mp np
-          with pos_Reflect _ _ pH ph => _ | neg_Reflect _ _ nH nh => _
+          with pos_Reflect pH ph => _ | neg_Reflect nH nh => _
         end).
       *
-        refine
-          (pos_Reflect (Le@{i} (succ mp) (succ np)) (le (succ mp) (succ np)) _ _).
+        refine (pos_Reflect _ _).
         --
           admit.
         --
           admit.
       *
-        refine
-          (neg_Reflect (Le@{i} (succ mp) (succ np)) (le (succ mp) (succ np)) _ _).
+        refine (neg_Reflect _ _).
         --
           admit.
         --

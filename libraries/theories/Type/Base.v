@@ -116,12 +116,21 @@ Definition pUV@{i si | i < si}
 Inductive IsTrue@{i | } (x : Bool@{i}) : Type@{i} :=
   | make_IsTrue : Path@{i} x true -> IsTrue x.
 
+(** [IsTrue] に関する暗黙引数を設定します。 *)
+
+Arguments make_IsTrue {x} _.
+
 (** [A] が決定可能であることです。 *)
 
 (* from: originally defined by Hexirp *)
 Inductive IsDecidable@{i | } (A : Type@{i}) : Type@{i} :=
   | pos_IsDecidable : A -> IsDecidable A
   | neg_IsDecidable : (A -> Void@{i}) -> IsDecidable A.
+
+(** [IsDecidable] に関する暗黙引数を設定します。 *)
+
+Arguments pos_IsDecidable {A} _.
+Arguments neg_IsDecidable {A} _.
 
 (** [A] が [x] に反射していることです。 *)
 
@@ -130,6 +139,11 @@ Inductive Reflect@{i | } (A : Type@{i}) (b : Bool@{i}) : Type@{i} :=
   | pos_Reflect : A -> Path@{i} b true -> Reflect A b
   | neg_Reflect : (A -> Void@{i}) -> Path@{i} b false -> Reflect A b.
 
+(** [Reflect] に関する暗黙引数を設定します。 *)
+
+Arguments pos_Reflect {A b} _ _.
+Arguments neg_Reflect {A b} _ _.
+
 (** [A] が強く決定可能であることです。 *)
 
 (* from: originally defined by Hexirp *)
@@ -137,6 +151,11 @@ Inductive IsStronglyDecidable@{i | } (A : Type@{i}) : Type@{i} :=
   | pos_IsStronglyDecidable
     : forall x : A, (forall y : A, Path@{i} x y) -> IsStronglyDecidable A
   | neg_IsStronglyDecidable : (A -> Void@{i}) -> IsStronglyDecidable A.
+
+(** [IsStronglyDecidable] に関する暗黙引数を設定します。 *)
+
+Arguments pos_IsStronglyDecidable {A} _ _.
+Arguments neg_IsStronglyDecidable {A} _.
 
 (** [A] が [x] に強く反射していることです。 *)
 
@@ -147,6 +166,11 @@ Inductive StronglyReflect@{i | } (A : Type@{i}) (b : Bool@{i}) : Type@{i} :=
       (forall y : A, Path@{i} x y) -> Path@{i} b true -> StronglyReflect A b
   | neg_StronglyReflect
     : (A -> Void@{i}) -> Path@{i} b false -> StronglyReflect A b.
+
+(** [StronglyReflect] に関する暗黙引数を設定します。 *)
+
+Arguments pos_StronglyReflect {A b} _ _ _.
+Arguments neg_StronglyReflect {A b} _ _.
 
 (** ** 方程式による推論 (equational reasoning) *)
 
