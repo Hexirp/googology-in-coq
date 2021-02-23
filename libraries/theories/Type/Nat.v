@@ -78,6 +78,20 @@ Proof.
     exact (t np).
 Defined.
 
+(** [Le (succ m) zero -> Void] です。 *)
+
+(* from: originally defined by Hexirp *)
+Definition fun_Le_succ_m_zero_Void@{i | }
+  : forall m : Nat@{i}, Le@{i} (succ m) zero -> Void@{i}.
+Proof.
+  refine (fun m x => _).
+  refine (match x with zero_Le _ _ h => _ | succ_Le _ _ np h xp => _ end).
+  -
+    admit.
+  -
+    admit.
+Admitted.
+
 (** [y] が [x] より大きいことです。 *)
 
 (* from: originally defined by Hexirp *)
@@ -173,7 +187,7 @@ Proof.
     +
       refine (neg_Reflect _ _).
       *
-        admit.
+        exact (fun_Le_succ_m_zero_Void mp).
       *
         admit.
     +
