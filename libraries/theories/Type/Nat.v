@@ -51,6 +51,19 @@ Proof.
   exact idpath.
 Defined.
 
+(** [Le m (succ n)] です。 *)
+
+(* from: originally defined by Hexirp *)
+Definition le_m_succ_n@{i | } (m n : Nat@{i}) : Le m n -> Le m (succ n).
+Proof.
+  refine (fun x => _).
+  refine (succ_Le m (succ n) n _ _).
+  -
+    exact idpath.
+  -
+    exact x.
+Defined.
+
 (** [Le zero n] です。 *)
 
 (* from: originally defined by Hexirp *)
@@ -61,8 +74,9 @@ Proof.
   -
     exact (le_n_n zero).
   -
-    admit.
-Admitted.
+    refine (le_m_succ_n zero np _).
+    exact (t np).
+Defined.
 
 (** [y] が [x] より大きいことです。 *)
 
