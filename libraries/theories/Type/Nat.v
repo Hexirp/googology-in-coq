@@ -41,6 +41,19 @@ Inductive Le@{i | } (x y : Nat@{i}) : Type@{i} :=
   | succ_Le
     : forall yp : Nat@{i}, Path@{i} y (succ yp) -> Le x yp -> Le x y.
 
+(** [Le zero n] です。 *)
+
+(* from: originally defined by Hexirp *)
+Definition le_zero_n@{i | } : forall n : Nat@{i}, Le@{i} zero n.
+Proof.
+  refine (fix t (n : Nat@{i}) {struct n} : Le@{i} zero n := _).
+  refine (match n with zero => _ | succ np => _ end).
+  -
+    admit.
+  -
+    admit.
+Admitted.
+
 (** [y] が [x] より大きいことです。 *)
 
 (* from: originally defined by Hexirp *)
@@ -117,7 +130,7 @@ Proof.
   -
     refine (pos_Reflect _ _).
     +
-      admit.
+      exact (le_zero_n n).
     +
       admit.
   -
