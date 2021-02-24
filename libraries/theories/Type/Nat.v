@@ -41,14 +41,16 @@ Definition fun_Path_zero_succ_n_Void@{i si | i < si}
 Proof.
   refine (fun n x => _).
   refine (pUV@{i si} _).
-  refine
-    (ap
-      (fun x : Nat@{i} =>
-        match x with zero => Unit@{i} | succ _ => Void@{i} end)
-      (x := zero)
-      (y := succ n)
-      _).
-  exact x.
+  refine (let d := ?[d] : Nat@{i} -> Type@{i} in _).
+  [d]: {
+    refine (fun x => _).
+    refine (match x with zero => _ | succ xp => _ end).
+    -
+      exact Unit@{i}.
+    -
+      exact Void@{i}.
+  }
+  exact (ap d x).
 Defined.
 
 (** ** 基本的な述語です。 *)
