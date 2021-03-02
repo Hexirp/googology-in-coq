@@ -116,6 +116,26 @@ Proof.
     exact h.
 Defined.
 
+(** [Le m n -> Le (succ m) (succ n)] です。 *)
+
+(* from: originally defined by Hexirp *)
+Definition fun_le_m_n_le_succ_m_succ_n@{i | }
+  : forall m n : Nat@{i}, Le m n -> Le (succ m) (succ n).
+Proof.
+  refine
+    (fix t (m n : Nat@{i}) (h : Le m n) {struct m} : Le (succ m) (succ n)
+      := _).
+  refine (match m with zero => _ | succ mp => _ end).
+  -
+    refine (match n with zero => _ | succ np => _ end).
+    +
+      admit.
+    +
+      admit.
+  -
+    admit.
+Admitted.
+
 (** [y] が [x] より大きいことです。 *)
 
 (* from: originally defined by Hexirp *)
@@ -233,7 +253,8 @@ Proof.
       *
         refine (pos_Reflect _ _).
         --
-          admit.
+          refine (fun_le_m_n_le_succ_m_succ_n mp np _).
+          exact pH.
         --
           admit.
       *
