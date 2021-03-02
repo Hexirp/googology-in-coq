@@ -169,6 +169,17 @@ Proof.
   exact idpath.
 Defined.
 
+(** [Path (le (succ m) zero) false] です。 *)
+
+(* from: originally defined by Hexirp *)
+Definition path_le_succ_m_zero_false@{i | }
+  : forall m : Nat@{i}, Path (le (succ m) zero) false.
+Proof.
+  refine (fun m => _).
+  simpl.
+  exact idpath.
+Defined.
+
 (** [y] が [x] より大きいかどうかです。 *)
 
 (* from: originally defined by Hexirp *)
@@ -213,7 +224,7 @@ Proof.
       *
         exact (fun_Le_succ_m_zero_Void mp).
       *
-        admit.
+        exact (path_le_succ_m_zero_false mp).
     +
       refine
         (match t mp np
