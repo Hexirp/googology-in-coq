@@ -76,7 +76,7 @@ Defined.
 (** [Le m (succ n)] です。 *)
 
 (* from: originally defined by Hexirp *)
-Definition le_m_succ_n@{i | } (m n : Nat@{i}) : Le m n -> Le m (succ n).
+Definition le_m_succ_n@{i | } (m n : Nat@{i}) : Le@{i} m n -> Le@{i} m (succ n).
 Proof.
   refine (fun x => _).
   refine (succ_Le m (succ n) n _ _).
