@@ -108,6 +108,13 @@ Definition pUV@{i si | i < si}
   : Path@{si} Unit@{i} Void@{i} -> Void@{i}
   := fun p => match p with idpath => unit@{i} end.
 
+(** [(A -> B) -> (B -> Void) -> (A -> Void)] です。 対偶 (contraposition) です。 *)
+
+(* from: originally defined by Hexirp *)
+Definition cntr@{i j k | } {A : Type@{i}} {B : Type@{j}}
+  : (A -> B) -> (B -> Void@{i}) -> (A -> Void@{i})
+  := fun f g x => g (f x).
+
 (** ** 反射 (reflection) *)
 
 (** [x] が [true] であることです。 *)

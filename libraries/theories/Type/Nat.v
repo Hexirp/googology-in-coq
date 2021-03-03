@@ -156,7 +156,8 @@ Definition fun_fun_Le_m_n_Void_fun_Le_succ_m_succ_n_Void@{i | }
   : forall m n : Nat@{i},
     (Le@{i} m n -> Void@{i}) -> Le@{i} (succ m) (succ n) -> Void@{i}.
 Proof.
-  admit.
+  refine (fun m n => _).
+  refine (cntr _).
 Admitted.
 
 (** [y] が [x] より大きいことです。 *)
