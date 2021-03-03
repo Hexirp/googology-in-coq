@@ -195,7 +195,7 @@ Definition le@{i | } : Nat@{i} -> Nat@{i} -> Bool@{i} :=
 
 (* from: originally defined by Hexirp *)
 Definition path_le_zero_n_true@{i | }
-  : forall n : Nat@{i}, Path@{i} (le@{i} zero n) true.
+  : forall n : Nat@{i}, Path (le zero n) true.
 Proof.
   refine (fun n => _).
   simpl.
