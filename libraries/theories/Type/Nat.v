@@ -39,7 +39,7 @@ Set Default Goal Selector "!".
 Definition fun_Path_zero_succ_n_Void@{i si | i < si}
   : forall n : Nat@{i}, Path@{i} zero@{i} (succ n) -> Void@{i}.
 Proof.
-  refine (fun n x => _).
+  refine (fun n h => _).
   refine (pUV@{i si} _).
   refine (let d := ?[d] : Nat@{i} -> Type@{i} in _).
   [d]: {
@@ -50,7 +50,7 @@ Proof.
     -
       exact Void@{i}.
   }
-  exact (ap d x).
+  exact (ap d h).
 Defined.
 
 (** ** 基本的な述語です。 *)
