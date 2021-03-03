@@ -116,6 +116,17 @@ Proof.
     exact h.
 Defined.
 
+(** [Le m n -> Le m (succ n)] です。 *)
+
+(* from: originally defined by Hexirp *)
+Definition fun_Le_m_n_Le_m_succ_n@{i}
+  : forall m n : Nat@{i}, Le@{i} m n -> Le@{i} m (succ n).
+Proof.
+  refine (fun m n h => _).
+  refine (succ_Le m (succ n) n idpath _).
+  exact h.
+Defined.
+
 (** [Le m n -> Le (succ m) (succ n)] です。 *)
 
 (* from: originally defined by Hexirp *)
@@ -132,7 +143,7 @@ Proof.
     refine (ap succ@{i} _).
     exact pO.
   -
-    refine (succ_Le@{i} (succ@{i} m) (succ@{i} n) n idpath@{i} _).
+    refine (fun_Le_m_n_Le_m_succ_n (succ@{i} m) n _).
     refine (trpt (inv pS) _).
     refine (t m np' _).
     exact hp.
