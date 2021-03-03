@@ -168,7 +168,7 @@ Defined.
 (** [Le (succ m) (succ n) -> Le m n] です。 *)
 
 (* from: originally defined by Hexirp *)
-Definition fun_Le_succ_m_succ_n_Le_m_n@{i | }
+Definition fun_Le_succ_m_succ_n_Le_m_n@{i si | i < si}
   : forall m n : Nat@{i}, Le@{i} (succ m) (succ n) -> Le@{i} m n.
 Proof.
   refine
@@ -181,8 +181,19 @@ Proof.
     refine (fun_Path_succ_m_succ_n_Path_m_n m n _).
     exact pO.
   -
-    admit.
-Admitted.
+    refine (trpt (inv (fun_Path_succ_m_succ_n_Path_m_n n n' pS)) _).
+    refine (let t0 := _ in t0 hp).
+    refine (match n' with zero => _ | succ np' => _ end).
+    +
+      refine (fun hp' => _).
+      refine (absurd _).
+      exact (fun_Le_succ_m_zero_Void m hp').
+    +
+      refine (fun hp' => _).
+      refine (fun_Le_m_n_Le_m_succ_n m np' _).
+      refine (t m np' _).
+      exact hp'.
+Defined.
 
 (** [(Le m n -> Void) -> Le (succ m) (succ n) -> Void] です。 *)
 
