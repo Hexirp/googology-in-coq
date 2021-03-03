@@ -119,8 +119,8 @@ Defined.
 (** [Le m n -> Le (succ m) (succ n)] です。 *)
 
 (* from: originally defined by Hexirp *)
-Definition fun_Le_m_n_Le_succ_m_succ_n@{i si | i < si}
-  : forall m n : Nat@{i}, Le@{i} m n -> Le@{i} (succ@{i} m) (succ@{i} n).
+Definition fun_Le_m_n_Le_succ_m_succ_n@{i | }
+  : forall m n : Nat@{i}, Le@{i} m n -> Le@{i} (succ m) (succ n).
 Proof.
   refine
     (fix t (m n : Nat@{i}) (h : Le@{i} m n) {struct h}
@@ -129,11 +129,11 @@ Proof.
   refine (match h with zero_Le _ _ pO => _ | succ_Le _ _ np' pS hp => _ end).
   -
     refine (zero_Le@{i} (succ@{i} m) (succ@{i} n) _).
-    refine (ap@{i i} succ@{i} _).
+    refine (ap succ@{i} _).
     exact pO.
   -
     refine (succ_Le@{i} (succ@{i} m) (succ@{i} n) n idpath@{i} _).
-    refine (trpt@{i i} (inv@{i} pS) _).
+    refine (trpt (inv pS) _).
     refine (t m np' _).
     exact hp.
 Defined.
