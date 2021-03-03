@@ -119,7 +119,7 @@ Defined.
 (** [Le m n -> Le (succ m) (succ n)] です。 *)
 
 (* from: originally defined by Hexirp *)
-Definition fun_le_m_n_le_succ_m_succ_n@{i si | i < si}
+Definition fun_Le_m_n_Le_succ_m_succ_n@{i si | i < si}
   : forall m n : Nat@{i}, Le@{i} m n -> Le@{i} (succ@{i} m) (succ@{i} n).
 Proof.
   refine
@@ -255,7 +255,7 @@ Proof.
       *
         refine (pos_Reflect _ _).
         --
-          refine (fun_le_m_n_le_succ_m_succ_n mp np _).
+          refine (fun_Le_m_n_Le_succ_m_succ_n mp np _).
           exact pH.
         --
           admit.
