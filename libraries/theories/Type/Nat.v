@@ -149,6 +149,16 @@ Proof.
     exact hp.
 Defined.
 
+(** [(Le m n -> Void) -> Le (succ m) (succ n) -> Void] です。 *)
+
+(* from: originally defined by Hexirp *)
+Definition fun_fun_Le_m_n_Void_fun_Le_succ_m_succ_n_Void@{i | }
+  : forall m n : Nat@{i},
+    (Le@{i} m n -> Void@{i}) -> Le@{i} (succ m) (succ n) -> Void@{i}.
+Proof.
+  admit.
+Admitted.
+
 (** [y] が [x] より大きいことです。 *)
 
 (* from: originally defined by Hexirp *)
@@ -281,11 +291,13 @@ Proof.
           refine (fun_Le_m_n_Le_succ_m_succ_n mp np _).
           exact pH.
         --
-          admit.
+          refine (fun_Path_le_m_n_true_Path_le_succ_m_succ_n_true mp np _).
+          exact ph.
       *
         refine (neg_Reflect _ _).
         --
-          admit.
+          refine (fun_fun_Le_m_n_Void_fun_Le_succ_m_succ_n_Void mp np _).
+          exact nH.
         --
           admit.
 Admitted.
