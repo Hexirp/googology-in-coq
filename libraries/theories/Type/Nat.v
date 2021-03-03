@@ -31,7 +31,23 @@ Set Default Proof Mode "Classic".
 
 Set Default Goal Selector "!".
 
-(** ** 基本的な不平等の定理です。 *)
+(** ** 基本的な定理です。 *)
+
+(** [Path (succ m) (succ n) -> Path m n] です。 *)
+
+(* from: originally defined by Hexirp *)
+Definition fun_Path_succ_m_succ_n_Path_m_n@{i | }
+  : forall m n : Nat@{i}, Path@{i} (succ@{i} m) (succ@{i} n) -> Path@{i} m n.
+Proof.
+  refine (fun m n h => _).
+  refine (let d := ?[d] : Nat@{i} -> Nat@{i} in _).
+  [d]: {
+    exact (fun n => match n with zero => zero | succ np => np end).
+  }
+  change (Path@{i} (d (succ@{i} m)) (d (succ@{i} n))).
+  refine (ap d _).
+  exact h.
+Defined.
 
 (** [Path zero (succ n) -> Void] です。 *)
 
@@ -161,7 +177,9 @@ Proof.
       := _).
   refine (match h with zero_Le _ _ pO => _ | succ_Le _ _ np' pS hp => _ end).
   -
-    admit.
+    refine (zero_Le m n _).
+    refine (fun_Path_succ_m_succ_n_Path_m_n m n _).
+    exact pO.
   -
     refine (t m n _).
     refine (trpt (inv pS) _).
