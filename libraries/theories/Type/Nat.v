@@ -175,16 +175,13 @@ Proof.
     (fix t (m n : Nat@{i}) (h : Le@{i} (succ@{i} m) (succ@{i} n)) {struct h}
       : Le@{i} m n
       := _).
-  refine (match h with zero_Le _ _ pO => _ | succ_Le _ _ np' pS hp => _ end).
+  refine (match h with zero_Le _ _ pO => _ | succ_Le _ _ n' pS hp => _ end).
   -
     refine (zero_Le m n _).
     refine (fun_Path_succ_m_succ_n_Path_m_n m n _).
     exact pO.
   -
-    refine (t m n _).
-    refine (trpt (inv pS) _).
-    refine (fun_Le_m_n_Le_m_succ_n (succ@{i} m) np' _).
-    exact hp.
+    admit.
 Admitted.
 
 (** [(Le m n -> Void) -> Le (succ m) (succ n) -> Void] です。 *)
