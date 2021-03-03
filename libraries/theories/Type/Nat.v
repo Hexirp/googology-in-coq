@@ -213,6 +213,18 @@ Proof.
   exact idpath.
 Defined.
 
+(** [Path (le m n) true -> Path (le (succ m) (succ n)) true] です。 *)
+
+(* from: originally defined by Hexirp *)
+Definition fun_Path_le_m_n_true_Path_le_succ_m_succ_n_true@{i | }
+  : forall m n : Nat@{i},
+    Path (le m n) true -> Path (le (succ m) (succ n)) true.
+Proof.
+  refine (fun m n h => _).
+  change (Path (le m n) true).
+  exact h.
+Defined.
+
 (** [y] が [x] より大きいかどうかです。 *)
 
 (* from: originally defined by Hexirp *)
