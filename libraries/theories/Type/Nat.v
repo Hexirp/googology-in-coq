@@ -120,30 +120,23 @@ Defined.
 
 (* from: originally defined by Hexirp *)
 Definition fun_le_m_n_le_succ_m_succ_n@{i si | i < si}
-  : forall m n : Nat@{i}, Le@{i} m n -> Le@{i} (succ m) (succ n).
+  : forall m n : Nat@{i}, Le@{i} m n -> Le@{i} (succ@{i} m) (succ@{i} n).
 Proof.
   refine
-    (fix t (m n : Nat@{i}) {struct m} : Le@{i} m n -> Le@{i} (succ m) (succ n)
+    (fix t (m n : Nat@{i}) (h : Le@{i} m n) {struct h}
+      : Le@{i} (succ@{i} m) (succ@{i} n)
       := _).
-  refine (match m with zero => _ | succ mp => _ end).
+  refine (match h with zero_Le _ _ pO => _ | succ_Le _ _ np' pS hp => _ end).
   -
-    refine (match n with zero => _ | succ np => _ end).
-    +
-      refine (fun h => _).
-      exact (le_n_n (succ zero)).
-    +
-      refine (fun h => _).
-      refine
-        (match h with zero_Le _ _ pO => _ | succ_Le _ _ np' pS hp => _ end).
-      *
-        refine (absurd _).
-        refine (fun_Path_zero_succ_n_Void@{i si} np _).
-        exact pO.
-      *
-        admit.
+    refine (zero_Le@{i} (succ@{i} m) (succ@{i} n) _).
+    refine (ap@{i i} succ@{i} _).
+    exact pO.
   -
-    admit.
-Admitted.
+    refine (succ_Le@{i} (succ@{i} m) (succ@{i} n) n idpath@{i} _).
+    refine (trpt@{i i} (inv@{i} pS) _).
+    refine (t m np' _).
+    exact hp.
+Defined.
 
 (** [y] が [x] より大きいことです。 *)
 
