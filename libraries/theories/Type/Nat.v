@@ -149,15 +149,36 @@ Proof.
     exact hp.
 Defined.
 
+(** [Le (succ m) (succ n) -> Le m n] です。 *)
+
+(* from: originally defined by Hexirp *)
+Definition fun_Le_succ_m_succ_n_Le_m_n@{i | }
+  : forall m n : Nat@{i}, Le@{i} (succ m) (succ n) -> Le@{i} m n.
+Proof.
+  refine
+    (fix t (m n : Nat@{i}) (h : Le@{i} (succ@{i} m) (succ@{i} n)) {struct h}
+      : Le@{i} m n
+      := _).
+  refine (match h with zero_Le _ _ pO => _ | succ_Le _ _ np' pS hp => _ end).
+  -
+    admit.
+  -
+    refine (t m n _).
+    refine (trpt (inv pS) _).
+    refine (fun_Le_m_n_Le_m_succ_n (succ@{i} m) np' _).
+    exact hp.
+Admitted.
+
 (** [(Le m n -> Void) -> Le (succ m) (succ n) -> Void] です。 *)
 
 (* from: originally defined by Hexirp *)
 Definition fun_fun_Le_m_n_Void_fun_Le_succ_m_succ_n_Void@{i | }
   : forall m n : Nat@{i},
-    (Le@{i} m n -> Void@{i}) -> Le@{i} (succ m) (succ n) -> Void@{i}.
+    (Le@{i} m n -> Void@{i}) -> Le@{i} (succ@{i} m) (succ@{i} n) -> Void@{i}.
 Proof.
   refine (fun m n => _).
   refine (cntr _).
+  exact (fun_Le_succ_m_succ_n_Le_m_n m n).
 Admitted.
 
 (** [y] が [x] より大きいことです。 *)
