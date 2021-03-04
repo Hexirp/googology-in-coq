@@ -198,14 +198,14 @@ Defined.
 (** [(Le m n -> Void) -> Le (succ m) (succ n) -> Void] です。 *)
 
 (* from: originally defined by Hexirp *)
-Definition fun_fun_Le_m_n_Void_fun_Le_succ_m_succ_n_Void@{i | }
+Definition fun_fun_Le_m_n_Void_fun_Le_succ_m_succ_n_Void@{i si | i < si}
   : forall m n : Nat@{i},
     (Le@{i} m n -> Void@{i}) -> Le@{i} (succ@{i} m) (succ@{i} n) -> Void@{i}.
 Proof.
   refine (fun m n => _).
-  refine (cntr _).
-  exact (fun_Le_succ_m_succ_n_Le_m_n m n).
-Admitted.
+  refine (cntr@{i i i} _).
+  exact (fun_Le_succ_m_succ_n_Le_m_n@{i si} m n).
+Defined.
 
 (** [y] が [x] より大きいことです。 *)
 
