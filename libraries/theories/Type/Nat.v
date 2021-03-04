@@ -319,7 +319,7 @@ Definition lt@{i | } : Nat@{i} -> Nat@{i} -> Bool@{i} :=
 (** [le] が [Le] を反射していることです。 *)
 
 (* from: originally defined by Hexirp *)
-Definition reflect_Le_m_n_le_m_n@{i | }
+Definition reflect_Le_m_n_le_m_n@{i si | i < si}
   : forall m n : Nat@{i}, Reflect@{i} (Le@{i} m n) (le m n).
 Proof.
   refine
@@ -359,9 +359,9 @@ Proof.
           refine (fun_fun_Le_m_n_Void_fun_Le_succ_m_succ_n_Void mp np _).
           exact nH.
         --
-Admitted.
           refine (fun_Path_le_m_n_false_Path_le_succ_m_succ_n_false mp np _).
           exact nh.
+Defined.
 
 (** ** 基本的な演算です。 *)
 
