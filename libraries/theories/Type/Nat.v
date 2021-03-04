@@ -283,6 +283,18 @@ Proof.
   exact h.
 Defined.
 
+(** [Path (le m n) false -> Path (le (succ m) (succ n)) false] です。 *)
+
+(* from: originally defined by Hexirp *)
+Definition fun_Path_le_m_n_false_Path_le_succ_m_succ_n_false@{i | }
+  : forall m n : Nat@{i},
+    Path (le m n) false -> Path (le (succ m) (succ n)) false.
+Proof.
+  refine (fun m n h => _).
+  change (Path (le m n) false).
+  exact h.
+Defined.
+
 (** [y] が [x] より大きいかどうかです。 *)
 
 (* from: originally defined by Hexirp *)
@@ -347,8 +359,9 @@ Proof.
           refine (fun_fun_Le_m_n_Void_fun_Le_succ_m_succ_n_Void mp np _).
           exact nH.
         --
-          admit.
 Admitted.
+          refine (fun_Path_le_m_n_false_Path_le_succ_m_succ_n_false mp np _).
+          exact nh.
 
 (** ** 基本的な演算です。 *)
 
