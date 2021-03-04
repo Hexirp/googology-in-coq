@@ -179,6 +179,12 @@ Inductive StronglyReflect@{i | } (A : Type@{i}) (b : Bool@{i}) : Type@{i} :=
 Arguments pos_StronglyReflect {A b} _ _ _.
 Arguments neg_StronglyReflect {A b} _ _.
 
+(** [x] が [p] を満たすことです。 *)
+
+(* from: originally defined by Hexirp *)
+Inductive Refinement@{i | } (A : Type@{i}) (p : A -> Bool@{i}) : Type@{i} :=
+  | make_Refinement : forall x : A, IsTrue (p x) -> Refinement A p.
+
 (** ** 方程式による推論 (equational reasoning) *)
 
 (** いくつかの等式を繋ぎ合わせた等式です。 *)
