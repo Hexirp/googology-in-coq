@@ -406,16 +406,21 @@ Definition sub@{i | } : Nat@{i} -> Nat@{i} -> Prod@{i i} Nat@{i} Nat@{i} :=
 
 (* from: originally defined by Hexirp *)
 Definition div@{i | }
-  : Refinement@{i} Nat@{i} (lt zero) -> Nat@{i} -> Prod@{i i} Nat@{i} Nat@{i}.
+  : Nat@{i} ->
+    Refinement@{i} Nat@{i} (lt@{i} zero@{i}) ->
+      Prod@{i i} Nat@{i} Nat@{i}.
 Proof.
-  refine (fun xr y => _).
-  refine (match xr with make_Refinement _ _ x xHT => _ end).
-  refine (match xHT with make_IsTrue xH => _ end).
-  refine (let t0 := _ in t0 xH).
-  refine (match x with zero => _ | succ xp => _ end).
+  refine (fun x yr => _).
+  refine (match yr with make_Refinement _ _ y yHT => _ end).
+  refine (match yHT with make_IsTrue tH => _ end).
+  refine (let t0 := _ in t0 tH).
+  refine (match y with zero => _ | succ yp => _ end).
   -
     admit.
   -
-    refine (fun xH' => _).
-    admit.
+    refine (fun yH' => _).
+    refine (let t1 := _ in t1 x yp zero@{i} yp).
+    refine
+      (fix t2 (x y q u : Nat@{i}) {struct x} : Prod@{i i} Nat@{i} Nat@{i}
+        := _).
 Admitted.
