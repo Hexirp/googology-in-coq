@@ -6,7 +6,7 @@ set -e
 
 mkdir -p docs/
 
-./coqdoc.sh -utf8 -d docs -R theories/ GiC $(./files.sh)
+./coqdoc.sh -utf8 -d docs -R theories/ Googology_In_Coq $(./files.sh)
 
 rm docs/coqdoc.css
 cp coqdoc/default.css docs/coqdoc.css
