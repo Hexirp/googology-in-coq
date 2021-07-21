@@ -30,6 +30,20 @@ Notation "x -> y"
 
 Module Function.
 
+(** 主型の等しさです。 *)
+
+Definition T_
+  (A : Type)
+  (A_ : A -> A -> Type)
+  (B : Type)
+  (B_ : B -> B -> Type)
+  : (A -> B) -> (A -> B) -> Type
+  :=
+    fun f : A -> B =>
+      fun g : A -> B =>
+        forall x : A, forall y : A, A_ x y -> B_ (f x) (g y)
+  .
+
 (** 恒等関数です。 *)
 
 (* from: originally defined by Hexirp *)
@@ -294,3 +308,65 @@ Definition ap {A : Type} {B : Type} (f : A -> B) {x y : A}
   .
 
 End Path.
+
+(** 点ごとの道です。 *)
+
+Module Pointwise_Path.
+
+(** 主型です。 *)
+
+(* from: originally defined by Hexirp *)
+Definition T (A : Type) (B : Type) : (A -> B) -> (A -> B) -> Type
+  :=
+    fun f : A -> B =>
+      fun g : A -> B =>
+        forall x : A, Path.T (f x) (g x)
+  .
+
+(** [Function.T_] への変換です。 *)
+
+(* from: originally defined by Hexirp *)
+Definition to_Function_1 (A : Type) (B : Type)
+  :
+    forall f : A -> B,
+      forall g : A -> B,
+        T A B f g -> Function.T_ A (@Path.T A) B (@Path.T B) f g
+  .
+Proof.
+  refine (fun f : A -> B => fun g : A -> B => _).
+  unfold T.
+  unfold Function.T_.
+  refine (fun h : forall x : A, Path.T (f x) (g x) => _).
+  refine (fun x : A => fun y : A => _).
+  refine (fun p : Path.T x y => _).
+  refine (match p with Path.id => _ end).
+  exact (h x).
+Defined.
+
+(** [Function.T_] からの変換です。 *)
+
+(* from: originally defined by Hexirp *)
+Definition from_Function_1 (A : Type) (B : Type)
+  :
+    forall f : A -> B,
+      forall g : A -> B,
+        Function.T_ A (@Path.T A) B (@Path.T B) f g -> T A B f g
+  .
+Proof.
+  refine (fun f : A -> B => fun g : A -> B => _).
+  unfold Function.T_.
+  unfold T.
+  refine
+    (
+      fun
+        h
+          :
+            forall x : A, forall y : A, Path.T x y -> Path.T (f x) (g y)
+      => _
+    )
+    .
+  refine (fun x : A => _).
+  exact (h x x Path.id).
+Defined.
+
+End Pointwise_Path.
