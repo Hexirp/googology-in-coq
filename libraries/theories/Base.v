@@ -21,179 +21,276 @@ Set Polymorphic Inductive Cumulativity.
 
 (** 関数の型を記号で書けるようにします。 *)
 
-Notation "x -> y" := (forall (_ : x), y)
-  (at level 99, right associativity, y at level 200).
+Notation "x -> y"
+  := (forall (_ : x), y)
+  (at level 99, right associativity, y at level 200)
+  .
+
+(** 関数型です。 *)
+
+Module Function.
+
+(** 恒等関数です。 *)
+
+(* from: originally defined by Hexirp *)
+Definition id {A : Type} : A -> A
+  := fun x : A => x
+  .
+
+(** 定数関数です。 *)
+
+(* from: originally defined by Hexirp *)
+Definition const {A : Type} {B : Type} : A -> B -> A
+  := fun x : A => fun y : B => x
+  .
+
+(** 関数の合成です。 *)
+
+(* from: originally defined by Hexirp *)
+Definition comp {A : Type} {B : Type} {C : Type}
+  : (B -> C) -> (A -> B) -> A -> C
+  := fun f : B -> C => fun g : A -> B => fun x : A => f (g x)
+  .
+
+(** 関数の適用です。 *)
+
+(* from: originally defined by Hexirp *)
+Definition apply {A : Type} {B : Type} : (A -> B) -> A -> B
+  := fun f : A -> B => fun x : A => f x
+  .
+
+End Function.
+
+(** 依存関数型です。 *)
+
+Module Dependent_Function.
+
+(** 関数の適用です。 *)
+
+(* from: originally defined by Hexirp *)
+Definition apply {A : Type} {B : A -> Type}
+  : (forall x : A, B x) -> forall x : A, B x
+  := fun f : forall x : A, B x => fun x : A => f x
+  .
+
+End Dependent_Function.
 
 (** ユニット型です。 *)
 
+Module Unit.
+
+(** 主型です。 *)
+
 (* from: originally defined by Hexirp *)
-Inductive Unit@{i | } : Type@{i} := unit : Unit.
+Inductive T : Type := unit : T.
+
+End Unit.
 
 (** ボトム型です。 *)
 
+Module Void.
+
+(** 主型です。 *)
+
 (* from: originally defined by Hexirp *)
-Inductive Void@{i | } : Type@{i} :=.
+Inductive T : Type :=.
+
+(** 矛盾による証明です。 *)
+
+(* from: originally defined by Hexirp *)
+Definition absurd {A : Type}
+  : T -> A
+  := fun x => match x with end
+  .
+
+End Void.
 
 (** 直積型です。 *)
 
-(* from: originally defined by Hexirp *)
-Inductive Prod@{i j | } (A : Type@{i}) (B : Type@{j}) : Type@{max(i,j)}
-  := pair : A -> B -> Prod A B.
+Module Product.
 
-(** 直積型についての暗黙引数を設定します。 *)
+(** 主型です。 *)
+
+(* from: originally defined by Hexirp *)
+Inductive T (A : Type) (B : Type) : Type := pair : A -> B -> T A B.
+
+(** [pair] についての暗黙引数を設定します。 *)
 
 Arguments pair {A} {B} a b.
 
 (** 直積型の第一射影関数です。 *)
 
 (* from: originally defined by Hexirp *)
-Definition fst@{i j | } {A : Type@{i}} {B : Type@{j}}
-  : Prod@{i j} A B -> A
-  := fun x => match x with pair a b => a end.
+Definition first {A : Type} {B : Type} : T A B -> A
+  := fun x => match x with pair a b => a end
+  .
 
 (** 直積型の第二射影関数です。 *)
 
 (* from: originally defined by Hexirp *)
-Definition snd@{i j | } {A : Type@{i}} {B : Type@{j}}
-  : Prod@{i j} A B -> B
-  := fun x => match x with pair a b => b end.
-
-(** 直和型です。 *)
-
-(* from: originally defined by Hexirp *)
-Inductive Sum@{i j | } (A : Type@{i}) (B : Type@{j}) : Type@{max(i,j)}
-  := left : A -> Sum A B | right : B -> Sum A B.
-
-(** 直和型についての暗黙引数を設定します。 *)
-
-Arguments left {A} {B} a.
-Arguments right {A} {B} b.
-
-(** 依存和型です。 *)
-
-(* from: originally defined by Hexirp *)
-Inductive DSum@{i j | } (A : Type@{i}) (B : A -> Type@{j}) : Type@{max(i,j)}
-  := dpair : forall a : A, B a -> DSum A B.
-
-(** 依存和型についての暗黙引数を設定します。 *)
-
-Arguments dpair {A} {B} a b.
-
-(** 依存和型の第一射影関数です。 *)
-
-(* from: originally defined by Hexirp *)
-Definition dfst@{i j | } {A : Type@{i}} {B : A -> Type@{j}}
-  : DSum@{i j} A B -> A
-  := fun x => match x with dpair a b => a end.
-
-(** 依存和型の第二射影関数です。 *)
-
-(* from: originally defined by Hexirp *)
-Definition dsnd@{i j | } {A : Type@{i}} {B : A -> Type@{j}}
-  : forall x : DSum@{i j} A B, B (dfst@{i j} x)
-  := fun x => match x with dpair a b => b end.
-
-(** 道型です。 *)
-
-(* from: originally defined by Hexirp *)
-Inductive Path@{i | } (A : Type@{i}) (a : A) : A -> Type@{i}
-  := idpath : Path A a a.
-
-(** 道型についての暗黙引数を設定します。
-
-    [idpath] と書いたときは [idpath _ _] と補われます。 [idpath a] と書いたときは [idpath _ a] と補われます。
- *)
-
-Arguments Path {A} a a'.
-Arguments idpath {A} {a}, [A] a.
-
-(** 恒等関数です。 *)
-
-(* from: originally defined by Hexirp *)
-Definition idmap@{i | } {A : Type@{i}}
-  : A -> A
-  := fun x => x.
-
-(** 定数関数です。 *)
-
-(* from: originally defined by Hexirp *)
-Definition const@{i j | } {A : Type@{i}} {B : Type@{j}}
-  : A -> B -> A
-  := fun x y => x.
-
-(** 関数の合成です。 *)
-
-(* from: originally defined by Hexirp *)
-Definition comp@{i j k | } {A : Type@{i}} {B : Type@{j}} {C : Type@{k}}
-  : (B -> C) -> (A -> B) -> A -> C
-  := fun f g x => f (g x).
-
-(** 関数の適用です。 *)
-
-(* from: originally defined by Hexirp *)
-Definition apply@{i j | } {A : Type@{i}} {B : Type@{j}}
-  : (A -> B) -> A -> B
-  := fun f x => f x.
-
-(** 矛盾による証明です。 *)
-
-(* from: originally defined by Hexirp *)
-Definition absurd@{i j | } {A : Type@{i}}
-  : Void@{j} -> A
-  := fun x => match x with end.
+Definition second {A : Type} {B : Type} : T A B -> B
+  := fun x => match x with pair a b => b end
+  .
 
 (** 関数のカリー化です。 *)
 
 (* from: originally defined by Hexirp *)
-Definition curry@{i j k | } {A : Type@{i}} {B : Type@{j}} {C : Type@{k}}
-  : (Prod@{i j} A B -> C) -> A -> B -> C
-  := fun f x y => f (pair x y).
+Definition curry {A : Type} {B : Type} {C : Type}
+  : (T A B -> C) -> A -> B -> C
+  := fun f : T A B -> C => fun x : A => fun y : B => f (pair x y)
+  .
 
 (** 関数の非カリー化です。 *)
 
 (* from: originally defined by Hexirp *)
-Definition uncurry@{i j k | } {A : Type@{i}} {B : Type@{j}} {C : Type@{k}}
-  : (A -> B -> C) -> Prod@{i j} A B -> C
-  := fun f x => match x with pair a b => f a b end.
+Definition uncurry {A : Type} {B : Type} {C : Type}
+  : (A -> B -> C) -> T A B -> C
+  :=
+    fun f : A -> B -> C =>
+      fun x : T A B =>
+        match x with pair a b => f a b end
+  .
+
+End Product.
+
+(** 直和型です。 *)
+
+Module Sum.
+
+(** 主型です。 *)
+
+(* from: originally defined by Hexirp *)
+Inductive T (A : Type) (B : Type) : Type
+  := left : A -> T A B | right : B -> T A B
+  .
+
+(** [left] についての暗黙引数を設定します。 *)
+
+Arguments left {A} {B} a.
+
+(** [right] についての暗黙引数を設定します。 *)
+
+Arguments right {A} {B} b.
+
+End Sum.
+
+(** 依存積型です。 *)
+
+Module Dependent_Product.
+
+(** 主型です。 *)
+
+(* from: originally defined by Hexirp *)
+Inductive T (A : Type) (B : A -> Type) : Type
+  := value : (forall a : A, B a) -> T A B
+  .
+
+(** [value] についての暗黙引数を設定します。 *)
+
+Arguments value {A} {B} _.
+
+End Dependent_Product.
+
+(** 依存和型です。 *)
+
+Module Dependent_Sum.
+
+(** 主型です。 *)
+
+(* from: originally defined by Hexirp *)
+Inductive T (A : Type) (B : A -> Type) : Type
+  := pair : forall a : A, B a -> T A B
+  .
+
+(** [pair] についての暗黙引数を設定します。 *)
+
+Arguments pair {A} {B} a b.
+
+(** 依存和型の第一射影関数です。 *)
+
+(* from: originally defined by Hexirp *)
+Definition first {A : Type} {B : A -> Type} : T A B -> A
+  := fun x => match x with pair a b => a end
+  .
+
+(** 依存和型の第二射影関数です。 *)
+
+(* from: originally defined by Hexirp *)
+Definition second {A : Type} {B : A -> Type} : forall x : T A B, B (first x)
+  := fun x => match x with pair a b => b end
+  .
+
+End Dependent_Sum.
+
+(** 道型です。 *)
+
+Module Path.
+
+(** 主型です。 *)
+
+(* from: originally defined by Hexirp *)
+Inductive T (A : Type) (a : A) : A -> Type
+  := id : T A a a
+  .
+
+(** 道型についての暗黙引数を設定します。 *)
+
+Arguments T {A} a a'.
+
+(** [id] についての暗黙引数を設定します。
+
+    [id] と書いたときは [id _ _] と補われます。 [id a] と書いたときは [idpath _ a] と補われます。
+ *)
+
+Arguments id {A} {a}, [A] a.
 
 (** 道の逆です。 *)
 
 (* from: originally defined by Hexirp *)
-Definition inv@{i | } {A : Type@{i}} {x y : A}
-  : Path@{i} x y -> Path@{i} y x
-  := fun p => match p with idpath => idpath end.
+Definition inv {A : Type} {x y : A} : T x y -> T y x
+  := fun p : T x y => match p with id => id end
+  .
 
 (** 道の結合です。 *)
 
 (* from: originally defined by Hexirp *)
-Definition conc@{i | } {A : Type@{i}} {x y z : A}
-  : Path@{i} x y -> Path@{i} y z -> Path@{i} x z
-  := fun p q => match q with idpath => match p with idpath => idpath end end.
+Definition conc {A : Type} {x y z : A} : T x y -> T y z -> T x z
+  :=
+    fun p : T x y =>
+      fun q : T y z =>
+        match q with id => match p with id => id end end
+  .
 
 (** 道の結合と逆です。 *)
 
 (* from: originally defined by Hexirp *)
-Definition conv@{i | } {A : Type@{i}} {x y z : A}
-  : Path@{i} x y -> Path@{i} x z -> Path@{i} y z
-  := fun p q => conc@{i} (inv@{i} p) q.
+Definition conv {A : Type} {x y z : A}
+  : T x y -> T x z -> T y z
+  := fun p : T x y => fun q : T x z => conc (inv p) q
+  .
 
 (** 道による輸送です。 *)
 
 (* from: originally defined by Hexirp *)
-Definition trpt@{i j | } {A : Type@{i}} {B : A -> Type@{j}} {x y : A}
-  : Path@{i} x y -> B x -> B y
-  := fun p u => match p with idpath => u end.
+Definition trpt {A : Type} {B : A -> Type} {x y : A}
+  : T x y -> B x -> B y
+  := fun p : T x y => fun u : B x => match p with id => u end
+  .
 
 (** 道による輸送と逆です。 *)
 
 (* from: originally defined by Hexirp *)
-Definition trpv@{i j | } {A : Type@{i}} {B : A -> Type@{j}} {x y : A}
-  : Path@{i} x y -> B y -> B x
-  := fun p u => trpt@{i j} (inv@{i} p) u.
+Definition trpv {A : Type} {B : A -> Type} {x y : A}
+  : T x y -> B y -> B x
+  := fun p : T x y => fun u : B y => trpt (inv p) u
+  .
 
 (** 道への適用です。 *)
 
 (* from: originally defined by Hexirp *)
-Definition ap@{i j | } {A : Type@{i}} {B : Type@{j}} (f : A -> B) {x y : A}
-  : Path@{i} x y -> Path@{j} (f x) (f y)
-  := fun p => match p with idpath => idpath end.
+Definition ap {A : Type} {B : Type} (f : A -> B) {x y : A}
+  : T x y -> T (f x) (f y)
+  := fun p : T x y => match p with id => id end
+  .
+
+End Path.
