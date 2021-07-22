@@ -159,6 +159,13 @@ Definition second {A : Type} {B : Type} : T A B -> B
   := fun x : T A B => match x with pair a b => b end
 .
 
+Definition map {A : Type} {B : Type} {C : Type} {D : Type}
+  : (A -> C) -> (B -> D) -> T A B -> T C D
+  :=
+    fun (f_a : A -> C) (f_b : B -> D) (x : T A B) =>
+      match x with pair a b => pair (f_a a) (f_b b) end
+.
+
 (** 関数のカリー化です。 *)
 
 (* from: originally defined by Hexirp *)
@@ -248,7 +255,7 @@ Arguments pair {A} {B} a b.
 (* from: originally defined by Hexirp *)
 Definition first {A : Type} {B : A -> Type}
   : T A B -> A
-  := fun x => match x with pair a b => a end
+  := fun x : T A B => match x with pair a b => a end
 .
 
 (** 依存和型の第二射影関数です。 *)
@@ -256,7 +263,14 @@ Definition first {A : Type} {B : A -> Type}
 (* from: originally defined by Hexirp *)
 Definition second {A : Type} {B : A -> Type}
   : forall x : T A B, B (first x)
-  := fun x => match x with pair a b => b end
+  := fun x : T A B => match x with pair a b => b end
+.
+
+Definition map {A : Type} {B : A -> Type} {C : A -> Type}
+  : (forall x : A, B x -> C x) -> T A B -> T A C
+  :=
+    fun (f : forall x : A, B x -> C x) (x : T A B) =>
+      match x with pair a b => pair a (f a b) end
 .
 
 End Dependent_Sum.
@@ -455,5 +469,23 @@ Definition T
     fun (A : Type) (B : Type) =>
       Dependent_Sum.T (A -> B) (fun f => Is_Equivalence A B f)
 .
+
+Definition to_TYPE_1
+  : forall (A : Type) (B : Type), T A B -> TYPE.T_ (@Path.T) A B.
+Proof.
+  move=> A B.
+  unfold T; unfold Is_Equivalence; unfold Has_Section; unfold Is_Section; unfold TYPE.T_.
+  refine (Dependent_Sum.map _).
+  move=> f.
+  refine (Product.map _ _).
+  -
+    refine (Dependent_Sum.map _).
+    move=> g.
+    exact (Pointwise_Path.to_Function_1 B B (Function.comp f g) Function.id).
+  -
+    refine (Dependent_Sum.map _).
+    move=> h.
+    exact (Pointwise_Path.to_Function_1 A A (Function.comp h f) Function.id).
+Defined.
 
 End Equivalence.
