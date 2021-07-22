@@ -45,7 +45,7 @@ Definition T_ (A : Type) (A_ : A -> A -> Type) (B : Type) (B_ : B -> B -> Type)
   : (A -> B) -> (A -> B) -> Type
   :=
     fun (f : A -> B) (g : A -> B) =>
-      forall x : A, forall y : A, A_ x y -> B_ (f x) (g y)
+      forall (x : A) (y : A), A_ x y -> B_ (f x) (g y)
 .
 
 (** 恒等関数です。 *)
@@ -260,6 +260,53 @@ Definition second {A : Type} {B : A -> Type}
 .
 
 End Dependent_Sum.
+
+(** 型の型です。 *)
+
+Module TYPE.
+
+Definition Has_Section (A : Type) (B : Type) (B_ : B -> B -> Type)
+  : (A -> B) -> Type
+  :=
+    fun r : A -> B =>
+      Dependent_Sum.T
+        (B -> A)
+        (fun s => Function.T_ B B_ B B_ (Function.comp r s) Function.id)
+.
+
+Definition Is_Section (A : Type) (A_ : A -> A -> Type) (B : Type)
+  : (A -> B) -> Type
+  :=
+    fun s : A -> B =>
+      Dependent_Sum.T
+        (B -> A)
+        (fun r => Function.T_ A A_ A A_ (Function.comp r s) Function.id)
+.
+
+Definition Is_Equivalence
+    (A : Type)
+    (A_ : A -> A -> Type)
+    (B : Type)
+    (B_ : B -> B -> Type)
+  : (A -> B) -> Type
+  :=
+    fun f : A -> B =>
+      Product.T (Has_Section A B B_ f) (Is_Section A A_ B f)
+.
+
+Definition Equivalence (R : forall X : Type, X -> X -> Type)
+  : Type -> Type -> Type
+  :=
+    fun (A : Type) (B : Type) =>
+      Dependent_Sum.T (A -> B) (fun f => Is_Equivalence A (R A) B (R B) f)
+.
+
+Definition T_ (R : forall X : Type, X -> X -> Type)
+  : Type -> Type -> Type
+  := Equivalence R
+.
+
+End TYPE.
 
 (** 道型です。 *)
 
