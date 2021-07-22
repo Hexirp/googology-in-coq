@@ -398,6 +398,11 @@ Definition T (A : Type) (B : Type)
       forall x : A, Path.T (f x) (g x)
 .
 
+Definition id {A : Type} {B : Type}{f : A -> B}
+  : T A B f f
+  := fun x : A => Path.id
+.
+
 Definition conc
     {A : Type}
     {B : Type}
@@ -664,6 +669,68 @@ Proof.
     [d]: {
       exact H_0_a_b.
     }
-Admitted.
+    exact Pointwise_Path.id.
+  -
+    refine (Dependent_Sum.pair (Function.comp h_1 h_0) _).
+    refine
+      (
+        let
+          d_0
+            :=
+              ?[d]
+                :
+                  Pointwise_Path.T
+                    A
+                    A
+                    (
+                      Function.comp
+                        (Function.comp h_1 h_0)
+                        (Function.comp f_0 f_1)
+                    )
+                    (Function.comp h_1 f_1)
+        in
+          Pointwise_Path.conc d_0 _
+      )
+    .
+    [d]: {
+      change
+        (
+          Pointwise_Path.T
+            A
+            A
+            (Function.comp h_1 (Function.comp h_0 (Function.comp f_0 f_1)))
+            (Function.comp h_1 f_1)
+        )
+      .
+      refine (Pointwise_Path.wiskerL h_1 _).
+      change
+        (
+          Pointwise_Path.T
+            A
+            B
+            (Function.comp (Function.comp h_0 f_0) f_1)
+            (Function.comp Function.id f_1)
+        )
+      .
+      refine (Pointwise_Path.wiskerR f_1 _).
+      exact H_0_b_b.
+    }
+    refine
+      (
+        let
+          d_1
+            :=
+              ?[d]
+                :
+                  Pointwise_Path.T A A (Function.comp h_1 f_1) Function.id
+        in
+          Pointwise_Path.conc d_1 _
+      )
+    .
+    [d]: {
+      exact H_1_b_b.
+    }
+    exact Pointwise_Path.id.
+Defined.
 
 End Equivalence.
