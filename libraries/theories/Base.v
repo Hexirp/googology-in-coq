@@ -597,25 +597,21 @@ Proof.
   move=> A B C f_0 f_1.
   unfold Is_Equivalence; unfold Has_Section; unfold Is_Section.
   move=> H_0 H_1.
+  refine (match H_0 with Product.pair H_0_a H_0_b => _ end).
+  refine (match H_0_a with Dependent_Sum.pair g_0 H_0_a_b => _ end).
+  refine (match H_0_b with Dependent_Sum.pair h_0 H_0_b_b => _ end).
+  refine (match H_1 with Product.pair H_1_a H_1_b => _ end).
+  refine (match H_1_a with Dependent_Sum.pair g_1 H_1_a_b => _ end).
+  refine (match H_1_b with Dependent_Sum.pair h_1 H_1_b_b => _ end).
   refine (Product.pair _ _).
   -
-    refine
-      (
-        Dependent_Sum.pair
-          (
-            Function.comp
-              (Dependent_Sum.first (Product.first H_1))
-              (Dependent_Sum.first (Product.first H_0))
-          )
-          _
-      )
-    .
+    refine (Dependent_Sum.pair (Function.comp g_1 g_0) _).
     refine
       (
         let
-          d
+          d_0
             :=
-              _
+              ?[d]
                 :
                   Pointwise_Path.T
                     C
@@ -623,21 +619,51 @@ Proof.
                     (
                       Function.comp
                         (Function.comp f_0 f_1)
-                        (
-                          Function.comp
-                            (Dependent_Sum.first (Product.first H_1))
-                            (Dependent_Sum.first (Product.first H_0))
-                        )
+                        (Function.comp g_1 g_0)
                     )
-                    (
-                      Function.comp
-                        f_0
-                        (Dependent_Sum.first (Product.first H_0))
-                    )
+                    (Function.comp f_0 g_0)
         in
-          Pointwise_Path.conc d _
+          Pointwise_Path.conc d_0 _
       )
     .
+    [d]: {
+      change
+        (
+          Pointwise_Path.T
+            C
+            C
+            (Function.comp f_0 (Function.comp f_1 (Function.comp g_1 g_0)))
+            (Function.comp f_0 g_0)
+        )
+      .
+      refine (Pointwise_Path.wiskerL f_0 _).
+      change
+        (
+          Pointwise_Path.T
+            C
+            B
+            (Function.comp (Function.comp f_1 g_1) g_0)
+            (Function.comp Function.id g_0)
+        )
+      .
+      refine (Pointwise_Path.wiskerR g_0 _).
+      exact H_1_a_b.
+    }
+    refine
+      (
+        let
+          d_1
+            :=
+              ?[d]
+                :
+                  Pointwise_Path.T C C (Function.comp f_0 g_0) Function.id
+        in
+          Pointwise_Path.conc d_1 _
+      )
+    .
+    [d]: {
+      exact H_0_a_b.
+    }
 Admitted.
 
 End Equivalence.
