@@ -398,6 +398,53 @@ Definition T (A : Type) (B : Type)
       forall x : A, Path.T (f x) (g x)
 .
 
+Definition conc
+    {A : Type}
+    {B : Type}
+    {f : A -> B}
+    {g : A -> B}
+    {h : A -> B}
+  : T A B f g -> T A B g h -> T A B f h
+.
+Proof.
+  unfold T.
+  move=> p q.
+  move=> x.
+  exact (Path.conc (p x) (q x)).
+Defined.
+
+Definition wiskerL
+    {A : Type}
+    {B : Type}
+    {C : Type}
+    (f : B -> C)
+    {g : A -> B}
+    {h : A -> B}
+  : T A B g h -> T A C (Function.comp f g) (Function.comp f h)
+.
+Proof.
+  unfold T.
+  move=> p.
+  move=> x.
+  exact (Path.ap f (p x)).
+Defined.
+
+Definition wiskerR
+    {A : Type}
+    {B : Type}
+    {C : Type}
+    {f : B -> C}
+    {g : B -> C}
+    (h : A -> B)
+  : T B C f g -> T A C (Function.comp f h) (Function.comp g h)
+.
+Proof.
+  unfold T.
+  move=> p.
+  move=> x.
+  exact (p (h x)).
+Defined.
+
 (** [Function.T_] への変換です。 *)
 
 (* from: originally defined by Hexirp *)
@@ -561,6 +608,34 @@ Proof.
               (Dependent_Sum.first (Product.first H_0))
           )
           _
+      )
+    .
+    refine
+      (
+        let
+          d
+            :=
+              _
+                :
+                  Pointwise_Path.T
+                    C
+                    C
+                    (
+                      Function.comp
+                        (Function.comp f_0 f_1)
+                        (
+                          Function.comp
+                            (Dependent_Sum.first (Product.first H_1))
+                            (Dependent_Sum.first (Product.first H_0))
+                        )
+                    )
+                    (
+                      Function.comp
+                        f_0
+                        (Dependent_Sum.first (Product.first H_0))
+                    )
+        in
+          Pointwise_Path.conc d _
       )
     .
 Admitted.
