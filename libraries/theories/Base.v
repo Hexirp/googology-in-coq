@@ -531,4 +531,38 @@ Definition refl
   : forall A : Type, T A A
   := fun A : Type => Dependent_Sum.pair Function.id (id_is_equivalence A).
 
+Definition comp_is_equivalence
+  :
+    forall
+      (A : Type)
+      (B : Type)
+      (C : Type)
+      (f_0 : B -> C)
+      (f_1 : A -> B)
+    ,
+        Is_Equivalence B C f_0
+      ->
+        Is_Equivalence A B f_1
+      ->
+        Is_Equivalence A C (Function.comp f_0 f_1)
+.
+Proof.
+  move=> A B C f_0 f_1.
+  unfold Is_Equivalence; unfold Has_Section; unfold Is_Section.
+  move=> H_0 H_1.
+  refine (Product.pair _ _).
+  -
+    refine
+      (
+        Dependent_Sum.pair
+          (
+            Function.comp
+              (Dependent_Sum.first (Product.first H_1))
+              (Dependent_Sum.first (Product.first H_0))
+          )
+          _
+      )
+    .
+Admitted.
+
 End Equivalence.
