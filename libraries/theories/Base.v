@@ -265,45 +265,32 @@ End Dependent_Sum.
 
 Module TYPE.
 
-Definition Has_Section (A : Type) (B : Type) (B_ : B -> B -> Type)
-  : (A -> B) -> Type
-  :=
-    fun r : A -> B =>
-      Dependent_Sum.T
-        (B -> A)
-        (fun s => Function.T_ B B_ B B_ (Function.comp r s) Function.id)
-.
-
-Definition Is_Section (A : Type) (A_ : A -> A -> Type) (B : Type)
-  : (A -> B) -> Type
-  :=
-    fun s : A -> B =>
-      Dependent_Sum.T
-        (B -> A)
-        (fun r => Function.T_ A A_ A A_ (Function.comp r s) Function.id)
-.
-
-Definition Is_Equivalence
-    (A : Type)
-    (A_ : A -> A -> Type)
-    (B : Type)
-    (B_ : B -> B -> Type)
-  : (A -> B) -> Type
-  :=
-    fun f : A -> B =>
-      Product.T (Has_Section A B B_ f) (Is_Section A A_ B f)
-.
-
-Definition Equivalence (R : forall X : Type, X -> X -> Type)
+Definition T_ (R : forall X : Type, X -> X -> Type)
   : Type -> Type -> Type
   :=
     fun (A : Type) (B : Type) =>
-      Dependent_Sum.T (A -> B) (fun f => Is_Equivalence A (R A) B (R B) f)
-.
-
-Definition T_ (R : forall X : Type, X -> X -> Type)
-  : Type -> Type -> Type
-  := Equivalence R
+      Dependent_Sum.T
+        (A -> B)
+        (
+          fun f =>
+            Product.T
+              (
+                Dependent_Sum.T
+                  (B -> A)
+                  (
+                    fun g =>
+                      Function.T_ B (R B) B (R B) (Function.comp f g) Function.id
+                  )
+              )
+              (
+                Dependent_Sum.T
+                  (B -> A)
+                  (
+                    fun h =>
+                      Function.T_ A (R A) A (R A) (Function.comp h f) Function.id
+                  )
+              )
+        )
 .
 
 End TYPE.
@@ -434,3 +421,39 @@ Proof.
 Defined.
 
 End Pointwise_Path.
+
+Module Equivalence.
+
+Definition Has_Section (A : Type) (B : Type)
+  : (A -> B) -> Type
+  :=
+    fun r : A -> B =>
+      Dependent_Sum.T
+        (B -> A)
+        (fun s => Pointwise_Path.T B B (Function.comp r s) Function.id)
+.
+
+Definition Is_Section (A : Type) (B : Type)
+  : (A -> B) -> Type
+  :=
+    fun s : A -> B =>
+      Dependent_Sum.T
+        (B -> A)
+        (fun r => Pointwise_Path.T A A (Function.comp r s) Function.id)
+.
+
+Definition Is_Equivalence (A : Type) (B : Type)
+  : (A -> B) -> Type
+  :=
+    fun f : A -> B =>
+      Product.T (Has_Section A B f) (Is_Section A B f)
+.
+
+Definition T
+  : Type -> Type -> Type
+  :=
+    fun (A : Type) (B : Type) =>
+      Dependent_Sum.T (A -> B) (fun f => Is_Equivalence A B f)
+.
+
+End Equivalence.
