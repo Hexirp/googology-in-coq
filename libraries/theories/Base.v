@@ -471,7 +471,8 @@ Definition T
 .
 
 Definition to_TYPE_1
-  : forall (A : Type) (B : Type), T A B -> TYPE.T_ (@Path.T) A B.
+  : forall (A : Type) (B : Type), T A B -> TYPE.T_ (@Path.T) A B
+.
 Proof.
   move=> A B.
   unfold T; unfold Is_Equivalence; unfold Has_Section; unfold Is_Section; unfold TYPE.T_.
@@ -489,7 +490,8 @@ Proof.
 Defined.
 
 Definition from_TYPE_1
-  : forall (A : Type) (B : Type), TYPE.T_ (@Path.T) A B -> T A B.
+  : forall (A : Type) (B : Type), TYPE.T_ (@Path.T) A B -> T A B
+.
 Proof.
   move=> A B.
   unfold TYPE.T_; unfold T; unfold Is_Equivalence; unfold Has_Section; unfold Is_Section.
@@ -505,5 +507,28 @@ Proof.
     move=> h.
     exact (Pointwise_Path.from_Function_1 A A (Function.comp h f) Function.id).
 Defined.
+
+Definition id_is_equivalence
+  : forall A : Type, Is_Equivalence A A Function.id
+.
+Proof.
+  move=> A.
+  unfold Is_Equivalence; unfold Has_Section; unfold Is_Section.
+  refine (Product.pair _ _).
+  -
+    refine (Dependent_Sum.pair Function.id _).
+    unfold Pointwise_Path.T.
+    move=> x.
+    exact Path.id.
+  -
+    refine (Dependent_Sum.pair Function.id _).
+    unfold Pointwise_Path.T.
+    move=> x.
+    exact Path.id.
+Defined.
+
+Definition refl
+  : forall A : Type, T A A
+  := fun A : Type => Dependent_Sum.pair Function.id (id_is_equivalence A).
 
 End Equivalence.
