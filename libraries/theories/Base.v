@@ -754,8 +754,7 @@ Definition Path
       match n with
           Natural_Number.Peano.zero
             =>
-              fun x : Argument Natural_Number.Peano.zero =>
-                match x with Unit.unit => Unit.T end
+              fun x : Argument Natural_Number.Peano.zero => x
         |
           Natural_Number.Peano.successor n_p
             =>
@@ -777,7 +776,7 @@ Definition Argument
   :=
     fun n : Natural_Number.Peano.T =>
       match n with
-          Natural_Number.Peano.zero => Unit.T
+          Natural_Number.Peano.zero => Type
         |
           Natural_Number.Peano.successor n_p
             =>
