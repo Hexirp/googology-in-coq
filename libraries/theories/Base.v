@@ -734,3 +734,73 @@ Proof.
 Defined.
 
 End Equivalence.
+
+Module Natural_Number.
+
+Module Peano.
+
+Inductive T : Type := zero : T | successor : T -> T.
+
+End Peano.
+
+End Natural_Number.
+
+Module Higher_Path.
+
+Module Tag.
+
+Inductive T : Type := path : T | argument : T.
+
+End Tag.
+
+Module Kind.
+
+Axiom T : Natural_Number.Peano.T -> Tag.T -> Type.
+
+Axiom wrap
+  :
+    forall (n : Natural_Number.Peano.T) (tag : Tag.T),
+        match tag with
+            Tag.path => T n Tag.argument -> Type
+          |
+            Tag.argument => Type
+        end
+      ->
+        T n tag
+.
+
+Axiom unwrap
+  :
+    forall (n : Natural_Number.Peano.T) (tag : Tag.T),
+        T n tag
+      ->
+        match tag with
+            Tag.path => T n Tag.argument -> Type
+          |
+            Tag.argument => Type
+        end
+.
+
+End Kind.
+
+Definition T
+  : forall (n : Natural_Number.Peano.T) (tag : Tag.T), Kind.T n tag.
+Proof.
+  refine
+    (
+      fix v (n : Natural_Number.Peano.T) : forall tag : Tag.T, Kind.T n tag
+        := _
+    )
+  .
+  refine
+    (
+      match n with
+      | Natural_Number.Peano.zero => _
+      | Natural_Number.Peano.successor np => _
+      end
+    )
+  .
+  -
+Admitted.
+
+End Higher_Path.
