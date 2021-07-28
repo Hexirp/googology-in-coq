@@ -757,6 +757,18 @@ Module Kind.
 
 Axiom T : Natural_Number.Peano.T -> Tag.T -> Type.
 
+Axiom unwrap
+  :
+    forall (n : Natural_Number.Peano.T) (tag : Tag.T),
+        T n tag
+      ->
+        match tag with
+            Tag.path => Argument n -> Type
+          |
+            Tag.argument => Type
+        end
+.
+
 Axiom wrap
   :
     forall (n : Natural_Number.Peano.T) (tag : Tag.T),
@@ -769,38 +781,26 @@ Axiom wrap
         T n tag
 .
 
-Axiom unwrap
-  :
-    forall (n : Natural_Number.Peano.T) (tag : Tag.T),
-        T n tag
-      ->
-        match tag with
-            Tag.path => T n Tag.argument -> Type
-          |
-            Tag.argument => Type
-        end
-.
-
 End Kind.
 
-Definition T
-  : forall (n : Natural_Number.Peano.T) (tag : Tag.T), Kind.T n tag.
-Proof.
-  refine
-    (
-      fix v (n : Natural_Number.Peano.T) : forall tag : Tag.T, Kind.T n tag
-        := _
-    )
-  .
-  refine
-    (
-      match n with
-      | Natural_Number.Peano.zero => _
-      | Natural_Number.Peano.successor np => _
-      end
-    )
-  .
-  -
-Admitted.
+Axiom Path : forall n : Natural_Number.Peano.T, Kind.T n Tag.path.
+
+Axiom Argument : forall n : Natural_Number.Peano.T, Kind.T n Tag.argument.
+
+Axiom Argument_unwrap
+  :
+    forall n : Natural_Number.Peano.T,
+        Kind.unwrap n Tag.argument (Argument n)
+      ->
+        match n with
+            Natural_Number.Peano.zero => Unit.T
+          |
+            Natural_Number.Peano.successor n_p
+              =>
+                Dependent_Sum.T
+                  (Kind.unwrap n Tag.argument (Argument n))
+                  (fun x => Product.T (Path n_p x) (Path n_p x))
+        end
+.
 
 End Higher_Path.
