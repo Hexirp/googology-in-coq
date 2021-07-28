@@ -747,60 +747,44 @@ End Natural_Number.
 
 Module Higher_Path.
 
-Module Tag.
-
-Inductive T : Type := path : T | argument : T.
-
-End Tag.
-
-Module Kind.
-
-Axiom T : Natural_Number.Peano.T -> Tag.T -> Type.
-
-Axiom unwrap
-  :
-    forall (n : Natural_Number.Peano.T) (tag : Tag.T),
-        T n tag
-      ->
-        match tag with
-            Tag.path => Argument n -> Type
-          |
-            Tag.argument => Type
-        end
+Definition Path
+  : forall n : Natural_Number.Peano.T, Argument n -> Type
+  :=
+    fun n : Natural_Number.Peano.T =>
+      match n with
+          Natural_Number.Peano.zero
+            =>
+              fun x : Argument Natural_Number.Peano.zero =>
+                match x with Unit.unit => Unit.T end
+        |
+          Natural_Number.Peano.successor n_p
+            =>
+              fun x : Argument (Natural_Number.Peano.successor n_p) =>
+                match x with
+                  Dependent_Sum.pair x_a x_b
+                    =>
+                      match x_b with
+                        Product.pair x_b_a x_b_b
+                          =>
+                            Path.T (Path n_p x_a) x_b_a x_b_b
+                      end
+                end
+      end
 .
 
-Axiom wrap
-  :
-    forall (n : Natural_Number.Peano.T) (tag : Tag.T),
-        match tag with
-            Tag.path => T n Tag.argument -> Type
-          |
-            Tag.argument => Type
-        end
-      ->
-        T n tag
-.
-
-End Kind.
-
-Axiom Path : forall n : Natural_Number.Peano.T, Kind.T n Tag.path.
-
-Axiom Argument : forall n : Natural_Number.Peano.T, Kind.T n Tag.argument.
-
-Axiom Argument_unwrap
-  :
-    forall n : Natural_Number.Peano.T,
-        Kind.unwrap n Tag.argument (Argument n)
-      ->
-        match n with
-            Natural_Number.Peano.zero => Unit.T
-          |
-            Natural_Number.Peano.successor n_p
-              =>
-                Dependent_Sum.T
-                  (Kind.unwrap n Tag.argument (Argument n))
-                  (fun x => Product.T (Path n_p x) (Path n_p x))
-        end
+Definition Argument
+  : Natural_Number.Peano.T -> Type
+  :=
+    fun n : Natural_Number.Peano.T =>
+      match n with
+          Natural_Number.Peano.zero => Unit.T
+        |
+          Natural_Number.Peano.successor n_p
+            =>
+              Dependent_Sum.T
+                (Argument n_p)
+                (fun x_p => Product.T (Path n_p x_p) (Path n_p x_p))
+      end
 .
 
 End Higher_Path.
