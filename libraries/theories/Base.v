@@ -1,8 +1,5 @@
 (* Run with -nois. *)
-(** [GiC.Base] は、全ての基礎となる型や関数などを定義します。
-
-    具体的には、一階述語論理に対応する型と、それに関する本当に単純な関数を提供しています。
- *)
+(** [Googology_In_Coq.Base] は全ての基本となります。 *)
 
 (** Coq と SSReflect のタクティックを使用するためにプラグインを読み込みます。 *)
 
@@ -382,6 +379,11 @@ Definition ap {A : Type} {B : Type} (f : A -> B) {x y : A}
   := fun p : T x y => match p with id => id end
 .
 
+Definition cast {A : Type} {B : Type}
+  : T A B -> A -> B
+  := fun (p : T A B) (u : A) => match p with id => u end
+.
+
 End Path.
 
 (** 点ごとの道です。 *)
@@ -747,43 +749,76 @@ End Natural_Number.
 
 Module Higher_Path.
 
-Definition Path
-  : forall n : Natural_Number.Peano.T, Argument n -> Type
-  :=
-    fun n : Natural_Number.Peano.T =>
-      match n with
-          Natural_Number.Peano.zero
-            =>
-              fun x : Argument Natural_Number.Peano.zero => x
-        |
-          Natural_Number.Peano.successor n_p
-            =>
-              fun x : Argument (Natural_Number.Peano.successor n_p) =>
-                match x with
-                  Dependent_Sum.pair x_a x_b
-                    =>
-                      match x_b with
-                        Product.pair x_b_a x_b_b
-                          =>
-                            Path.T (Path n_p x_a) x_b_a x_b_b
-                      end
-                end
-      end
+Axiom Argument : Natural_Number.Peano.T -> Type.
+
+Axiom Path
+  : forall n : Natural_Number.Peano.T, Argument n -> Type.
+
+Axiom Argument_beta
+  :
+    forall n : Natural_Number.Peano.T,
+      Path.T
+        (Argument n)
+        (
+          match n with
+              Natural_Number.Peano.zero => Type
+            |
+              Natural_Number.Peano.successor n_p
+                =>
+                  Dependent_Sum.T
+                    (Argument n_p)
+                    (
+                      fun x_p =>
+                        Product.T (Path n_p x_p) (Path n_p x_p)
+                    )
+          end
+        )
 .
 
-Definition Argument
-  : Natural_Number.Peano.T -> Type
-  :=
-    fun n : Natural_Number.Peano.T =>
-      match n with
-          Natural_Number.Peano.zero => Type
-        |
-          Natural_Number.Peano.successor n_p
-            =>
-              Dependent_Sum.T
-                (Argument n_p)
-                (fun x_p => Product.T (Path n_p x_p) (Path n_p x_p))
-      end
+Axiom Path_beta
+  :
+    forall (n : Natural_Number.Peano.T) (x : Argument n),
+      Path.T
+        (Path n x)
+        (
+          let
+            d
+              :=
+                match n as n_ return Argument n_ -> Type with
+                    Natural_Number.Peano.zero
+                      =>
+                        fun
+                          x : Argument Natural_Number.Peano.zero
+                        =>
+                          Path.cast
+                            (Argument_beta Natural_Number.Peano.zero)
+                            x
+                  |
+                    Natural_Number.Peano.successor n_p
+                      =>
+                        fun
+                          x : Argument (Natural_Number.Peano.successor n_p)
+                        =>
+                          match
+                            Path.cast
+                              (
+                                Argument_beta
+                                  (Natural_Number.Peano.successor n_p)
+                              )
+                              x
+                          with
+                            Dependent_Sum.pair x_a x_b
+                              =>
+                                match x_b with
+                                  Product.pair x_b_a x_b_b
+                                    =>
+                                      Path.T x_b_a x_b_b
+                                end
+                          end
+                end
+          in
+            d x
+        )
 .
 
 End Higher_Path.
