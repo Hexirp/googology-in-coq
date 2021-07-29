@@ -822,3 +822,129 @@ Axiom Path_beta
 .
 
 End Higher_Path.
+
+Module Interval.
+
+Axiom T : Type.
+
+Axiom zero : T.
+
+Axiom one : T.
+
+Axiom Path : forall A : T -> Type, A zero -> A one -> Type.
+
+Axiom abs
+  :
+    forall (A : T -> Type) (x : forall i : T, A i),
+      Path A (x zero) (x one).
+
+Axiom segment : Path (fun i : T => T) zero one.
+
+Axiom ind
+  :
+    forall (P : T -> Type),
+      forall
+        (case_zero : P zero)
+        (case_one : P one)
+        (case_segment : Path P case_zero case_one)
+      ,
+        forall x : T, P x
+.
+
+Axiom Path_ind
+  :
+    forall A : T -> Type,
+      forall
+        P : forall (t_0 : A zero) (t_1 : A one), Path A t_0 t_1 -> Type
+      ,
+        forall
+          case_abs
+            :
+              forall t : forall i : T, A i, P (t zero) (t one) (abs A t)
+        ,
+          forall
+            (t_0 : A zero)
+            (t_1 : A one)
+            (t : Path A t_0 t_1)
+          ,
+            P t_0 t_1 t
+.
+
+Axiom ind_beta_zero
+  :
+    forall (P : T -> Type),
+      forall
+        (case_zero : P zero)
+        (case_one : P one)
+        (case_segment : Path P case_zero case_one)
+      ,
+        Path.T
+          (ind P case_zero case_one case_segment zero)
+          case_zero
+.
+
+Axiom ind_beta_one
+  :
+    forall (P : T -> Type),
+      forall
+        (case_zero : P zero)
+        (case_one : P one)
+        (case_segment : Path P case_zero case_one)
+      ,
+        Path.T
+          (ind P case_zero case_one case_segment one)
+          case_one
+.
+
+Axiom ind_beta_segment
+  :
+    forall (P : T -> Type),
+      forall
+        (case_zero : P zero)
+        (case_one : P one)
+        (case_segment : Path P case_zero case_one)
+      ,
+        Path.T
+          (
+            let
+              d_0
+                :=
+                  abs
+                    P
+                    (
+                      fun i : T =>
+                        ind P case_zero case_one case_segment i
+                    )
+                :
+                  Path
+                    P
+                    (ind P case_zero case_one case_segment zero)
+                    (ind P case_zero case_one case_segment one)
+            in
+            let
+              d_1
+                :=
+                  Path.trpt
+                    (ind_beta_one P case_zero case_one case_segment)
+                    d_0
+                :
+                  Path
+                    P
+                    (ind P case_zero case_one case_segment zero)
+                    case_one
+            in
+            let
+              d_2
+                :=
+                  Path.trpt
+                    (B := fun d => Path P d case_one)
+                    (ind_beta_zero P case_zero case_one case_segment)
+                    d_1
+                : Path P case_zero case_one
+            in
+              d_2
+          )
+          case_segment
+.
+
+End Interval.
