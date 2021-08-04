@@ -560,7 +560,11 @@ Definition to_TYPE_1
 .
 Proof.
   move=> A B.
-  unfold T; unfold Is_Equivalence; unfold Has_Section; unfold Is_Section; unfold TYPE.T_.
+  unfold T.
+  unfold Is_Equivalence.
+  unfold Has_Section.
+  unfold Is_Section.
+  unfold TYPE.T_.
   refine (Dependent_Sum.map _).
   move=> f.
   refine (Product.map _ _).
@@ -582,7 +586,11 @@ Definition from_TYPE_1
 .
 Proof.
   move=> A B.
-  unfold TYPE.T_; unfold T; unfold Is_Equivalence; unfold Has_Section; unfold Is_Section.
+  unfold T.
+  unfold Is_Equivalence.
+  unfold Has_Section.
+  unfold Is_Section.
+  unfold TYPE.T_.
   refine (Dependent_Sum.map _).
   move=> f.
   refine (Product.map _ _).
@@ -603,7 +611,9 @@ Definition id_is_equivalence (A : Type)
   : Is_Equivalence A A Function.id
 .
 Proof.
-  unfold Is_Equivalence; unfold Has_Section; unfold Is_Section.
+  unfold Is_Equivalence.
+  unfold Has_Section.
+  unfold Is_Section.
   refine (Product.pair _ _).
   -
     refine (Dependent_Sum.pair Function.id _).
@@ -640,7 +650,9 @@ Definition comp_is_equivalence
       Is_Equivalence A C (Function.comp f_0 f_1)
 .
 Proof.
-  unfold Is_Equivalence; unfold Has_Section; unfold Is_Section.
+  unfold Is_Equivalence.
+  unfold Has_Section.
+  unfold Is_Section.
   move=> H_0 H_1.
   refine (match H_0 with Product.pair H_0_a H_0_b => _ end).
   refine (match H_0_a with Dependent_Sum.pair g_0 H_0_a_b => _ end).
