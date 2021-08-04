@@ -389,7 +389,7 @@ Definition ap {A : Type} {B : Type} (f : A -> B) {x y : A}
 (** 型の変換です。 *)
 
 (* from: originally defined by Hexirp *)
-Definition cast {A : Type} {B : Type}
+Definition coerce {A : Type} {B : Type}
   : T A B -> A -> B
   := fun (p : T A B) (u : A) => match p with id => u end
 .
