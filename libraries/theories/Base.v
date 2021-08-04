@@ -542,6 +542,29 @@ Proof.
   exact (p (f x)).
 Defined.
 
+(** 左右からの髭つけです。 *)
+
+(* from: originally defined by Hexirp *)
+Definition wiskerLR
+    {A : Type}
+    {B : Type}
+    {C : Type}
+    {D : Type}
+    (f_0 : C -> D)
+    (f_1 : A -> B)
+    {g : B -> C}
+    {h : B -> C}
+  :
+      T B C g h
+    ->
+      T
+        A
+        D
+        (Function.comp f_0 (Function.comp g f_1))
+        (Function.comp f_0 (Function.comp h f_1))
+  := fun p : T B C g h => wiskerL f_0 (wiskerR f_1 p)
+.
+
 (** 点ごとの道での等式推論です。 *)
 
 Module Reasoning.
@@ -738,21 +761,11 @@ Proof.
           Pointwise_Path.T
             C
             C
-            (Function.comp f_0 (Function.comp f_1 (Function.comp g_1 g_0)))
-            (Function.comp f_0 g_0)
+            (Function.comp f_0 (Function.comp (Function.comp f_1 g_1) g_0))
+            (Function.comp f_0 (Function.comp  Function.id            g_0))
         )
       .
-      refine (Pointwise_Path.wiskerL f_0 _).
-      change
-        (
-          Pointwise_Path.T
-            C
-            B
-            (Function.comp (Function.comp f_1 g_1) g_0)
-            (Function.comp Function.id g_0)
-        )
-      .
-      refine (Pointwise_Path.wiskerR g_0 _).
+      refine (Pointwise_Path.wiskerLR f_0 g_0 _).
       exact H_1_a_b.
     }
     refine
@@ -790,21 +803,11 @@ Proof.
           Pointwise_Path.T
             A
             A
-            (Function.comp h_1 (Function.comp h_0 (Function.comp f_0 f_1)))
-            (Function.comp h_1 f_1)
+            (Function.comp h_1 (Function.comp (Function.comp h_0 f_0) f_1))
+            (Function.comp h_1 (Function.comp  Function.id            f_1))
         )
       .
-      refine (Pointwise_Path.wiskerL h_1 _).
-      change
-        (
-          Pointwise_Path.T
-            A
-            B
-            (Function.comp (Function.comp h_0 f_0) f_1)
-            (Function.comp Function.id f_1)
-        )
-      .
-      refine (Pointwise_Path.wiskerR f_1 _).
+      refine (Pointwise_Path.wiskerLR h_1 f_1 _).
       exact H_0_b_b.
     }
     refine
