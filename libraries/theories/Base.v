@@ -38,6 +38,7 @@ Module Function.
 
 (** 主型の等しさです。 *)
 
+(* from: originally defined by Hexirp *)
 Definition T_ (A : Type) (A_ : A -> A -> Type) (B : Type) (B_ : B -> B -> Type)
   : (A -> B) -> (A -> B) -> Type
   :=
@@ -263,6 +264,9 @@ Definition second {A : Type} {B : A -> Type}
   := fun x : T A B => match x with pair a b => b end
 .
 
+(** 依存和型の写像です。 *)
+
+(* from: originally defined by Hexirp *)
 Definition map {A : Type} {B : A -> Type} {C : A -> Type}
   : (forall x : A, B x -> C x) -> T A B -> T A C
   :=
@@ -276,6 +280,9 @@ End Dependent_Sum.
 
 Module TYPE.
 
+(** 主型の等しさです。 *)
+
+(* from: originally defined by Hexirp *)
 Definition T_ (R : forall X : Type, X -> X -> Type)
   : Type -> Type -> Type
   :=
@@ -379,6 +386,9 @@ Definition ap {A : Type} {B : Type} (f : A -> B) {x y : A}
   := fun p : T x y => match p with id => id end
 .
 
+(** 型の変換です。 *)
+
+(* from: originally defined by Hexirp *)
 Definition cast {A : Type} {B : Type}
   : T A B -> A -> B
   := fun (p : T A B) (u : A) => match p with id => u end
@@ -400,11 +410,18 @@ Definition T (A : Type) (B : Type)
       forall x : A, Path.T (f x) (g x)
 .
 
+(** 点ごとの道の恒等道です。 *)
+
+(* from: originally defined by Hexirp *)
 Definition id {A : Type} {B : Type}{f : A -> B}
   : T A B f f
   := fun x : A => Path.id
 .
 
+
+(** 点ごとの道の合成です。 *)
+
+(* from: originally defined by Hexirp *)
 Definition conc
     {A : Type}
     {B : Type}
@@ -420,6 +437,9 @@ Proof.
   exact (Path.conc (p x) (q x)).
 Defined.
 
+(** 左からの髭つけです。 *)
+
+(* from: originally defined by Hexirp *)
 Definition wiskerL
     {A : Type}
     {B : Type}
@@ -436,6 +456,9 @@ Proof.
   exact (Path.ap f (p x)).
 Defined.
 
+(** 右からの髭つけです。 *)
+
+(* from: originally defined by Hexirp *)
 Definition wiskerR
     {A : Type}
     {B : Type}
@@ -490,8 +513,13 @@ Defined.
 
 End Pointwise_Path.
 
+(** 等価構造です。 *)
+
 Module Equivalence.
 
+(** 関数 [r] が切片を持つことです。あるいは、関数 [r] が引き込みであることです。 *)
+
+(* from: originally defined by Hexirp *)
 Definition Has_Section (A : Type) (B : Type)
   : (A -> B) -> Type
   :=
@@ -501,6 +529,9 @@ Definition Has_Section (A : Type) (B : Type)
         (fun s => Pointwise_Path.T B B (Function.comp r s) Function.id)
 .
 
+(** 関数 [s] が切片であることです。あるいは、関数 [s] が引き込みを持つことです。 *)
+
+(* from: originally defined by Hexirp *)
 Definition Is_Section (A : Type) (B : Type)
   : (A -> B) -> Type
   :=
@@ -510,6 +541,9 @@ Definition Is_Section (A : Type) (B : Type)
         (fun r => Pointwise_Path.T A A (Function.comp r s) Function.id)
 .
 
+(** 関数 [f] が等価関数であることです。 *)
+
+(* from: originally defined by Hexirp *)
 Definition Is_Equivalence (A : Type) (B : Type)
   : (A -> B) -> Type
   :=
@@ -517,6 +551,9 @@ Definition Is_Equivalence (A : Type) (B : Type)
       Product.T (Has_Section A B f) (Is_Section A B f)
 .
 
+(** 型 [A] と型 [B] の間の等価構造です。 *)
+
+(* from: originally defined by Hexirp *)
 Definition T
   : Type -> Type -> Type
   :=
@@ -524,6 +561,9 @@ Definition T
       Dependent_Sum.T (A -> B) (fun f => Is_Equivalence A B f)
 .
 
+(** [TYPE.T_] への変換です。 *)
+
+(* from: originally defined by Hexirp *)
 Definition to_TYPE_1
   : forall (A : Type) (B : Type), T A B -> TYPE.T_ (@Path.T) A B
 .
@@ -543,6 +583,9 @@ Proof.
     exact (Pointwise_Path.to_Function_1 A A (Function.comp h f) Function.id).
 Defined.
 
+(** [TYPE.T_] からの変換です。 *)
+
+(* from: originally defined by Hexirp *)
 Definition from_TYPE_1
   : forall (A : Type) (B : Type), TYPE.T_ (@Path.T) A B -> T A B
 .
@@ -562,6 +605,9 @@ Proof.
     exact (Pointwise_Path.from_Function_1 A A (Function.comp h f) Function.id).
 Defined.
 
+(** 関数 [Function.id] が等価関数であることです。 *)
+
+(* from: originally defined by Hexirp *)
 Definition id_is_equivalence
   : forall A : Type, Is_Equivalence A A Function.id
 .
@@ -581,10 +627,16 @@ Proof.
     exact Path.id.
 Defined.
 
+(** 等価構造が反射性を満たすことです。 *)
+
+(* from: originally defined by Hexirp *)
 Definition refl
   : forall A : Type, T A A
   := fun A : Type => Dependent_Sum.pair Function.id (id_is_equivalence A).
 
+(** 等価関数 [f] と等価関数 [g] から等価関数 [Function.comp f g] が得られることです。 *)
+
+(* from: originally defined by Hexirp *)
 Definition comp_is_equivalence
   :
     forall
