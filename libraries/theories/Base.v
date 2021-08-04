@@ -286,7 +286,13 @@ Definition T_ (R : forall X : Type, X -> X -> Type)
                   (B -> A)
                   (
                     fun g =>
-                      Function.T_ B (R B) B (R B) (Function.comp f g) Function.id
+                      Function.T_
+                        B
+                        (R B)
+                        B
+                        (R B)
+                        (Function.comp f g)
+                        Function.id
                   )
               )
               (
@@ -294,7 +300,13 @@ Definition T_ (R : forall X : Type, X -> X -> Type)
                   (B -> A)
                   (
                     fun h =>
-                      Function.T_ A (R A) A (R A) (Function.comp h f) Function.id
+                      Function.T_
+                        A
+                        (R A)
+                        A
+                        (R A)
+                        (Function.comp h f)
+                        Function.id
                   )
               )
         )
