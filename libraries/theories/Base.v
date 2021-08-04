@@ -599,11 +599,10 @@ Defined.
 (** 関数 [Function.id] が等価関数であることです。 *)
 
 (* from: originally defined by Hexirp *)
-Definition id_is_equivalence
-  : forall A : Type, Is_Equivalence A A Function.id
+Definition id_is_equivalence (A : Type)
+  : Is_Equivalence A A Function.id
 .
 Proof.
-  move=> A.
   unfold Is_Equivalence; unfold Has_Section; unfold Is_Section.
   refine (Product.pair _ _).
   -
