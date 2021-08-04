@@ -213,24 +213,13 @@ Module Dependent_Product.
 (** 主型です。 *)
 
 (* from: originally defined by Hexirp *)
-Inductive T (A : Type) (B : A -> Type)
-  : Type
-  := wrap : (forall a : A, B a) -> T A B
-.
-
-(** [value] についての暗黙引数を設定します。 *)
-
-Arguments wrap {A} {B} _.
-
-(** 包みを剥がす関数です。 *)
-
-(* from: originally defined by Hexirp *)
-Definition unwrap {A : Type} {B : A -> Type}
-  : T A B -> forall a : A, B a
-  := fun x : T A B => match x with wrap x_v => x_v end
+Definition T (A : Type) (B : A -> Type) : Type
+  := forall a : A, B a
 .
 
 End Dependent_Product.
+
+Print Dependent_Product.T.
 
 (** 依存和型です。 *)
 
