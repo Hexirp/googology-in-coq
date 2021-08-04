@@ -530,16 +530,16 @@ Definition wiskerR
     {A : Type}
     {B : Type}
     {C : Type}
-    {f : B -> C}
+    (f : A -> B)
     {g : B -> C}
-    (h : A -> B)
-  : T B C f g -> T A C (Function.comp f h) (Function.comp g h)
+    {h : B -> C}
+  : T B C g h -> T A C (Function.comp g f) (Function.comp h f)
 .
 Proof.
   unfold T.
   move=> p.
   move=> x.
-  exact (p (h x)).
+  exact (p (f x)).
 Defined.
 
 (** 点ごとの道での等式推論です。 *)
