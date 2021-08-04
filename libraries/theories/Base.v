@@ -521,45 +521,35 @@ Module Equivalence.
 (** 関数 [r] が切片を持つことです。あるいは、関数 [r] が引き込みであることです。 *)
 
 (* from: originally defined by Hexirp *)
-Definition Has_Section (A : Type) (B : Type)
-  : (A -> B) -> Type
+Definition Has_Section (A : Type) (B : Type) (r : A -> B) : Type
   :=
-    fun r : A -> B =>
-      Dependent_Sum.T
-        (B -> A)
-        (fun s => Pointwise_Path.T B B (Function.comp r s) Function.id)
+    Dependent_Sum.T
+      (B -> A)
+      (fun s => Pointwise_Path.T B B (Function.comp r s) Function.id)
 .
 
 (** 関数 [s] が切片であることです。あるいは、関数 [s] が引き込みを持つことです。 *)
 
 (* from: originally defined by Hexirp *)
-Definition Is_Section (A : Type) (B : Type)
-  : (A -> B) -> Type
+Definition Is_Section (A : Type) (B : Type) (s : A -> B) : Type
   :=
-    fun s : A -> B =>
-      Dependent_Sum.T
-        (B -> A)
-        (fun r => Pointwise_Path.T A A (Function.comp r s) Function.id)
+    Dependent_Sum.T
+      (B -> A)
+      (fun r => Pointwise_Path.T A A (Function.comp r s) Function.id)
 .
 
 (** 関数 [f] が等価関数であることです。 *)
 
 (* from: originally defined by Hexirp *)
-Definition Is_Equivalence (A : Type) (B : Type)
-  : (A -> B) -> Type
-  :=
-    fun f : A -> B =>
-      Product.T (Has_Section A B f) (Is_Section A B f)
+Definition Is_Equivalence (A : Type) (B : Type) (f : A -> B) : Type
+  := Product.T (Has_Section A B f) (Is_Section A B f)
 .
 
 (** 型 [A] と型 [B] の間の等価構造です。 *)
 
 (* from: originally defined by Hexirp *)
-Definition T
-  : Type -> Type -> Type
-  :=
-    fun (A : Type) (B : Type) =>
-      Dependent_Sum.T (A -> B) (fun f => Is_Equivalence A B f)
+Definition T (A : Type) (B : Type) : Type
+  := Dependent_Sum.T (A -> B) (fun f => Is_Equivalence A B f)
 .
 
 (** [TYPE.T_] への変換です。 *)
@@ -631,30 +621,26 @@ Defined.
 (** 等価構造が反射性を満たすことです。 *)
 
 (* from: originally defined by Hexirp *)
-Definition refl
-  : forall A : Type, T A A
-  := fun A : Type => Dependent_Sum.pair Function.id (id_is_equivalence A).
+Definition refl (A : Type) : T A A
+  := Dependent_Sum.pair Function.id (id_is_equivalence A).
 
 (** 等価関数 [f] と等価関数 [g] から等価関数 [Function.comp f g] が得られることです。 *)
 
 (* from: originally defined by Hexirp *)
 Definition comp_is_equivalence
+    (A : Type)
+    (B : Type)
+    (C : Type)
+    (f_0 : B -> C)
+    (f_1 : A -> B)
   :
-    forall
-      (A : Type)
-      (B : Type)
-      (C : Type)
-      (f_0 : B -> C)
-      (f_1 : A -> B)
-    ,
-        Is_Equivalence B C f_0
-      ->
-        Is_Equivalence A B f_1
-      ->
-        Is_Equivalence A C (Function.comp f_0 f_1)
+      Is_Equivalence B C f_0
+    ->
+      Is_Equivalence A B f_1
+    ->
+      Is_Equivalence A C (Function.comp f_0 f_1)
 .
 Proof.
-  move=> A B C f_0 f_1.
   unfold Is_Equivalence; unfold Has_Section; unfold Is_Section.
   move=> H_0 H_1.
   refine (match H_0 with Product.pair H_0_a H_0_b => _ end).
