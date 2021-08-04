@@ -395,6 +395,36 @@ Definition coerce {A : Type} {B : Type}
   := fun (p : T A B) (u : A) => match p with id => u end
 .
 
+(** 道での等式推論です。 *)
+
+Module Reasoning.
+
+(** 1 ステップ分先に進みます。 *)
+
+(* from: originally defined by Hexirp *)
+Definition walk
+    {A : Type}
+    (old_start_term : A)
+    (new_start_term : A)
+    {goal_term : A}
+    (step : T old_start_term new_start_term)
+    (rest : T new_start_term goal_term)
+  : T old_start_term goal_term
+  := conc step rest
+.
+
+(** 終了します。 *)
+
+(* from: originally defined by Hexirp *)
+Definition arrive
+  {A : Type}
+  (goal_term : A)
+  : T goal_term goal_term
+  := id
+.
+
+End Reasoning.
+
 End Path.
 
 (** 点ごとの道です。 *)
@@ -511,6 +541,36 @@ Proof.
   move=> x.
   exact (h x x Path.id).
 Defined.
+
+(** 点ごとの道での等式推論です。 *)
+
+Module Reasoning.
+
+(** 1 ステップ分先に進みます。 *)
+
+(* from: originally defined by Hexirp *)
+Definition walk
+    {A B : Type}
+    (old_start_term : A -> B)
+    (new_start_term : A -> B)
+    {goal_term : A -> B}
+    (step : T A B old_start_term new_start_term)
+    (rest : T A B new_start_term goal_term)
+  : T A B old_start_term goal_term
+  := conc step rest
+.
+
+(** 終了します。 *)
+
+(* from: originally defined by Hexirp *)
+Definition arrive
+  {A B : Type}
+  (goal_term : A -> B)
+  : T A B goal_term goal_term
+  := id
+.
+
+End Reasoning.
 
 End Pointwise_Path.
 
@@ -665,25 +725,14 @@ Proof.
     refine (Dependent_Sum.pair (Function.comp g_1 g_0) _).
     refine
       (
-        let
-          d_0
-            :=
-              ?[d]
-                :
-                  Pointwise_Path.T
-                    C
-                    C
-                    (
-                      Function.comp
-                        (Function.comp f_0 f_1)
-                        (Function.comp g_1 g_0)
-                    )
-                    (Function.comp f_0 g_0)
-        in
-          Pointwise_Path.conc d_0 _
+        Pointwise_Path.Reasoning.walk
+          (Function.comp (Function.comp f_0 f_1) (Function.comp g_1 g_0))
+          (Function.comp f_0 g_0)
+          ?[d_0]
+          _
       )
     .
-    [d]: {
+    [d_0]: {
       change
         (
           Pointwise_Path.T
@@ -708,43 +757,34 @@ Proof.
     }
     refine
       (
-        let
-          d_1
-            :=
-              ?[d]
-                :
-                  Pointwise_Path.T C C (Function.comp f_0 g_0) Function.id
-        in
-          Pointwise_Path.conc d_1 _
+        Pointwise_Path.Reasoning.walk
+          (Function.comp f_0 g_0)
+          Function.id
+          ?[d_1]
+          _
       )
     .
-    [d]: {
+    [d_1]: {
       exact H_0_a_b.
     }
-    exact Pointwise_Path.id.
+    exact
+      (
+        Pointwise_Path.Reasoning.arrive
+          Function.id
+      )
+    .
   -
     refine (Dependent_Sum.pair (Function.comp h_1 h_0) _).
     refine
       (
-        let
-          d_0
-            :=
-              ?[d]
-                :
-                  Pointwise_Path.T
-                    A
-                    A
-                    (
-                      Function.comp
-                        (Function.comp h_1 h_0)
-                        (Function.comp f_0 f_1)
-                    )
-                    (Function.comp h_1 f_1)
-        in
-          Pointwise_Path.conc d_0 _
+        Pointwise_Path.Reasoning.walk
+          (Function.comp (Function.comp h_1 h_0) (Function.comp f_0 f_1))
+          (Function.comp h_1 f_1)
+          ?[d_0]
+          _
       )
     .
-    [d]: {
+    [d_0]: {
       change
         (
           Pointwise_Path.T
@@ -769,20 +809,22 @@ Proof.
     }
     refine
       (
-        let
-          d_1
-            :=
-              ?[d]
-                :
-                  Pointwise_Path.T A A (Function.comp h_1 f_1) Function.id
-        in
-          Pointwise_Path.conc d_1 _
+        Pointwise_Path.Reasoning.walk
+          (Function.comp h_1 f_1)
+          Function.id
+          ?[d_1]
+          _
       )
     .
-    [d]: {
+    [d_1]: {
       exact H_1_b_b.
     }
-    exact Pointwise_Path.id.
+    exact
+      (
+        Pointwise_Path.Reasoning.arrive
+          Function.id
+      )
+    .
 Defined.
 
 End Equivalence.
