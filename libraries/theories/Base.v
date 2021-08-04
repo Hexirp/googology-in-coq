@@ -219,8 +219,6 @@ Definition T (A : Type) (B : A -> Type) : Type
 
 End Dependent_Product.
 
-Print Dependent_Product.T.
-
 (** 依存和型です。 *)
 
 Module Dependent_Sum.
