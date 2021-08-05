@@ -312,7 +312,7 @@ Definition T_ (R : forall X : Type, X -> X -> Type)
 
 End TYPE.
 
-(** 道型です。 *)
+(** 道の型です。 [match] 式をオープンにしない理由は道の型を定義する方法に複数の種類があるためです。具体的には、基点がある定義や基点がない定義や cubical 風に interval を使う定義などがあります。 *)
 
 Module Path.
 
@@ -324,24 +324,13 @@ Private Inductive T (A : Type) (a : A)
   := id : T A a a
 .
 
-(** 道型についての暗黙引数を設定します。 *)
+(** [Path] についての暗黙引数を設定します。 *)
 
 Arguments T {A} a a'.
 
-(** [id] についての暗黙引数を設定します。
-
-    [id] と書いたときは [id _ _] と補われます。 [id a] と書いたときは [idpath _ a] と補われます。
- *)
+(** [id] についての暗黙引数を設定します。 [id] と書いたときは [id _ _] と補われます。 [id a] と書いたときは [idpath _ a] と補われます。 *)
 
 Arguments id {A} {a}, [A] a.
-
-(** 道の逆です。 *)
-
-(* from: originally defined by Hexirp *)
-Definition inv {A : Type} {x y : A}
-  : T x y -> T y x
-  := fun p : T x y => match p with id => id end
-.
 
 (** 道の結合です。 *)
 
@@ -353,12 +342,12 @@ Definition conc {A : Type} {x y z : A}
       match q with id => match p with id => id end end
 .
 
-(** 道の結合と逆です。 *)
+(** 道の逆です。 *)
 
 (* from: originally defined by Hexirp *)
-Definition conv {A : Type} {x y z : A}
-  : T x y -> T x z -> T y z
-  := fun (p : T x y) (q : T x z) => conc (inv p) q
+Definition inv {A : Type} {x y : A}
+  : T x y -> T y x
+  := fun p : T x y => match p with id => id end
 .
 
 (** 道による輸送です。 *)
@@ -369,12 +358,12 @@ Definition trpt {A : Type} {B : A -> Type} {x y : A}
   := fun (p : T x y) (u : B x) => match p with id => u end
 .
 
-(** 道による輸送と逆です。 *)
+(** 道による依存型バージョンの輸送です。 *)
 
 (* from: originally defined by Hexirp *)
-Definition trpv {A : Type} {B : A -> Type} {x y : A}
-  : T x y -> B y -> B x
-  := fun (p : T x y) (u : B y) => trpt (inv p) u
+Definition trptD {A : Type} {x : A} (P : forall y : A, T x y -> Type) {y : A}
+  : forall p : T x y, P x id -> P y p
+  := fun (p : T x y) (u : P x id) => match p with id => u end
 .
 
 (** 道への適用です。 *)
@@ -385,12 +374,33 @@ Definition ap {A : Type} {B : Type} (f : A -> B) {x y : A}
   := fun p : T x y => match p with id => id end
 .
 
+(** 道の結合と逆です。 *)
+
+(* from: originally defined by Hexirp *)
+Definition conv {A : Type} {x y z : A}
+  : T x y -> T x z -> T y z
+  := fun (p : T x y) (q : T x z) => conc (inv p) q
+.
+
+(** 道による輸送と逆です。 *)
+
+(* from: originally defined by Hexirp *)
+Definition trpv {A : Type} {B : A -> Type} {x y : A}
+  : T x y -> B y -> B x
+  := fun (p : T x y) (u : B y) => trpt (inv p) u
+.
+
 (** 型の変換です。 *)
 
 (* from: originally defined by Hexirp *)
 Definition coerce {A : Type} {B : Type}
   : T A B -> A -> B
-  := fun (p : T A B) (u : A) => match p with id => u end
+  :=
+    fun (p : T A B) (u : A) =>
+      trptD
+        (fun (B_ : Type) (p_ : T A B_) => B_)
+        p
+        u
 .
 
 End Path.
