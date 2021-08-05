@@ -512,6 +512,23 @@ Proof.
   exact (Path.conc (p x) (q x)).
 Defined.
 
+(** 点ごとの道の逆です。 *)
+
+(* from: originally defined by Hexirp *)
+Definition inv
+    {A : Type}
+    {B : Type}
+    {f : A -> B}
+    {g : A -> B}
+  : T A B f g -> T A B g f
+.
+Proof.
+  unfold T.
+  move=> p.
+  move=> x.
+  exact (Path.inv (p x)).
+Defined.
+
 (** 左からの髭つけです。 *)
 
 (* from: originally defined by Hexirp *)
@@ -721,7 +738,7 @@ Defined.
 (** 等価構造が反射性を満たすことです。 *)
 
 (* from: originally defined by Hexirp *)
-Definition id (A : Type) : T A A
+Definition id {A : Type} : T A A
   := Dependent_Sum.pair Function.id (id_is_equivalence A).
 
 (** 等価関数 [f] と等価関数 [g] から等価関数 [Function.comp f g] が得られることです。 *)
@@ -851,6 +868,105 @@ Proof.
   refine (match H_1 with Dependent_Sum.pair f_1 H_1_b => _ end).
   refine (Dependent_Sum.pair (Function.comp f_1 f_0) _).
   exact (comp_is_equivalence A B C f_1 f_0 H_1_b H_0_b).
+Defined.
+
+(** 関数 [f] が擬逆関数を持つことです。 *)
+
+(* from: originally defined by Hexirp *)
+Definition Has_Quasi_Inverse (A : Type) (B : Type) (f : A -> B)
+  :=
+    Dependent_Sum.T
+      (B -> A)
+      (
+        fun g =>
+          Product.T
+            (Pointwise_Path.T B B (Function.comp f g) Function.id)
+            (Pointwise_Path.T A A (Function.comp g f) Function.id)
+      )
+.
+
+(** 関数 [f] が等価関数であるならば擬逆関数を持つことです。 *)
+
+(* from: originally defined by Hexirp *)
+Definition Equivs_Is_Quinvs_First {A : Type} {B : Type} {f : A -> B}
+  : Is_Equivalence A B f -> Has_Quasi_Inverse A B f
+.
+Proof.
+  unfold Is_Equivalence.
+  unfold Has_Section.
+  unfold Is_Section.
+  unfold Has_Quasi_Inverse.
+  move=> H.
+  refine (match H with Product.pair H_a H_b => _ end).
+  refine (match H_a with Dependent_Sum.pair s H_a_b => _ end).
+  refine (match H_b with Dependent_Sum.pair r H_b_b => _ end).
+  refine (Dependent_Sum.pair s _).
+  refine (Product.pair _ _).
+  -
+    exact H_a_b.
+  -
+    refine
+      (
+        Pointwise_Path_Reasoning.walk
+          (Function.comp s f)
+          (Function.comp r (Function.comp f (Function.comp s f)))
+          ?[d_0]
+          _
+      )
+    .
+    [d_0]: {
+      change
+        (
+          Pointwise_Path.T
+            A
+            A
+            (Function.comp  Function.id        (Function.comp s f))
+            (Function.comp (Function.comp r f) (Function.comp s f))
+        )
+      .
+      refine (Pointwise_Path.wiskerR (Function.comp s f) _).
+      exact (Pointwise_Path.inv H_b_b).
+    }
+    refine
+      (
+        Pointwise_Path_Reasoning.walk
+          (Function.comp r (Function.comp f (Function.comp s f)))
+          (Function.comp r f)
+          ?[d_1]
+          _
+      )
+    .
+    [d_1]: {
+      change
+        (
+          Pointwise_Path.T
+            A
+            A
+            (Function.comp r (Function.comp (Function.comp f s) f))
+            (Function.comp r (Function.comp  Function.id        f))
+        )
+      .
+      refine (Pointwise_Path.wiskerLR r f _).
+      exact H_a_b.
+    }
+    refine
+      (
+        Pointwise_Path_Reasoning.walk
+          (Function.comp r f)
+          Function.id
+          ?[d_2]
+          _
+      )
+    .
+    [d_2]: {
+      exact H_b_b.
+    }
+    exact
+      (
+        Pointwise_Path_Reasoning.arrive
+          Function.id
+      )
+    .
 Defined.
 
 End Equivalence.
