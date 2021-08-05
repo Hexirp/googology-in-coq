@@ -721,7 +721,7 @@ Defined.
 (** 等価構造が反射性を満たすことです。 *)
 
 (* from: originally defined by Hexirp *)
-Definition refl (A : Type) : T A A
+Definition id (A : Type) : T A A
   := Dependent_Sum.pair Function.id (id_is_equivalence A).
 
 (** 等価関数 [f] と等価関数 [g] から等価関数 [Function.comp f g] が得られることです。 *)
@@ -836,6 +836,21 @@ Proof.
           Function.id
       )
     .
+Defined.
+
+(** 等価構造が推移性を満たすことです。 *)
+
+(* from: originally defined by Hexirp *)
+Definition conc {A : Type} {B : Type} {C : Type}
+  : T A B -> T B C -> T A C
+.
+Proof.
+  unfold T.
+  move=> H_0 H_1.
+  refine (match H_0 with Dependent_Sum.pair f_0 H_0_b => _ end).
+  refine (match H_1 with Dependent_Sum.pair f_1 H_1_b => _ end).
+  refine (Dependent_Sum.pair (Function.comp f_1 f_0) _).
+  exact (comp_is_equivalence A B C f_1 f_0 H_1_b H_0_b).
 Defined.
 
 End Equivalence.
