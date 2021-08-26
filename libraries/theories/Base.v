@@ -1,60 +1,13 @@
 (** [Googology_In_Coq.Base] は基本的な定義を提供します。 *)
 
 Require Googology_In_Coq.Base.Base.
+Require Googology_In_Coq.Base.Function.
 
-(** [Googology_In_Coq.Base.Base] を要求します。 *)
+(** ライブラリを要求します。 *)
 
 Import Googology_In_Coq.Base.Base.
 
 (** [Googology_In_Coq.Base.Base] を開きます。 *)
-
-(** 関数型です。 *)
-
-Module Function.
-
-(** 主型の等しさです。 *)
-
-(* from: originally defined by Hexirp *)
-Definition T_ (A : Type) (A_ : A -> A -> Type) (B : Type) (B_ : B -> B -> Type)
-  : (A -> B) -> (A -> B) -> Type
-  :=
-    fun (f : A -> B) (g : A -> B) =>
-      forall (x : A) (y : A), A_ x y -> B_ (f x) (g y)
-.
-
-(** 恒等関数です。 *)
-
-(* from: originally defined by Hexirp *)
-Definition id {A : Type}
-  : A -> A
-  := fun x : A => x
-.
-
-(** 定数関数です。 *)
-
-(* from: originally defined by Hexirp *)
-Definition const {A : Type} {B : Type}
-  : A -> B -> A
-  := fun x : A => fun y : B => x
-.
-
-(** 関数の合成です。 *)
-
-(* from: originally defined by Hexirp *)
-Definition comp {A : Type} {B : Type} {C : Type}
-  : (B -> C) -> (A -> B) -> A -> C
-  := fun (f : B -> C) (g : A -> B) (x : A) => f (g x)
-.
-
-(** 関数の適用です。 *)
-
-(* from: originally defined by Hexirp *)
-Definition apply {A : Type} {B : Type}
-  : (A -> B) -> A -> B
-  := fun (f : A -> B) (x : A) => f x
-.
-
-End Function.
 
 (** 依存関数型です。 *)
 
