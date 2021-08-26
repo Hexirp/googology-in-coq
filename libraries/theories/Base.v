@@ -2,26 +2,13 @@
 
 Require Googology_In_Coq.Base.Base.
 Require Googology_In_Coq.Base.Function.
+Require Googology_In_Coq.Base.Dependent_Function.
 
 (** ライブラリを要求します。 *)
 
 Import Googology_In_Coq.Base.Base.
 
 (** [Googology_In_Coq.Base.Base] を開きます。 *)
-
-(** 依存関数型です。 *)
-
-Module Dependent_Function.
-
-(** 関数の適用です。 *)
-
-(* from: originally defined by Hexirp *)
-Definition apply {A : Type} {B : A -> Type}
-  : (forall x : A, B x) -> forall x : A, B x
-  := fun (f : forall x : A, B x) (x : A) => f x
-.
-
-End Dependent_Function.
 
 (** ユニット型です。 *)
 
