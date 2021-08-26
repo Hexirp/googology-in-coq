@@ -8,6 +8,7 @@ Base/Unit.v \
 Base/Void.v \
 Base/Product.v \
 Base/Sum.v \
+Base/Dependent_Product.v \
 Base.v \
 
 do

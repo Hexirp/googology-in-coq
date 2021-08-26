@@ -7,6 +7,7 @@ Require Googology_In_Coq.Base.Unit.
 Require Googology_In_Coq.Base.Void.
 Require Googology_In_Coq.Base.Product.
 Require Googology_In_Coq.Base.Sum.
+Require Googology_In_Coq.Base.Dependent_Product.
 
 (** ライブラリを要求します。 *)
 
@@ -20,18 +21,7 @@ Import Googology_In_Coq.Base.Base.
 
 
 
-(** 依存積型です。 *)
 
-Module Dependent_Product.
-
-(** 主型です。 *)
-
-(* from: originally defined by Hexirp *)
-Definition T (A : Type) (B : A -> Type) : Type
-  := forall a : A, B a
-.
-
-End Dependent_Product.
 
 (** 依存和型です。 *)
 
