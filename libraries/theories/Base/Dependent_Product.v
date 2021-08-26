@@ -1,4 +1,4 @@
-(** 依存積型です。 *)
+(** 依存積の型についてのモジュールです。 *)
 
 Require Googology_In_Coq.Base.Base.
 

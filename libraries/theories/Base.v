@@ -8,6 +8,7 @@ Require Googology_In_Coq.Base.Void.
 Require Googology_In_Coq.Base.Product.
 Require Googology_In_Coq.Base.Sum.
 Require Googology_In_Coq.Base.Dependent_Product.
+Require Googology_In_Coq.Base.Dependent_Sum.
 
 (** ライブラリを要求します。 *)
 
@@ -23,49 +24,7 @@ Import Googology_In_Coq.Base.Base.
 
 
 
-(** 依存和型です。 *)
 
-Module Dependent_Sum.
-
-(** 主型です。 *)
-
-(* from: originally defined by Hexirp *)
-Inductive T (A : Type) (B : A -> Type)
-  : Type
-  := pair : forall a : A, B a -> T A B
-.
-
-(** [pair] についての暗黙引数を設定します。 *)
-
-Arguments pair {A} {B} a b.
-
-(** 依存和型の第一射影関数です。 *)
-
-(* from: originally defined by Hexirp *)
-Definition first {A : Type} {B : A -> Type}
-  : T A B -> A
-  := fun x : T A B => match x with pair a b => a end
-.
-
-(** 依存和型の第二射影関数です。 *)
-
-(* from: originally defined by Hexirp *)
-Definition second {A : Type} {B : A -> Type}
-  : forall x : T A B, B (first x)
-  := fun x : T A B => match x with pair a b => b end
-.
-
-(** 依存和型の写像です。 *)
-
-(* from: originally defined by Hexirp *)
-Definition map {A : Type} {B : A -> Type} {C : A -> Type}
-  : (forall x : A, B x -> C x) -> T A B -> T A C
-  :=
-    fun (f : forall x : A, B x -> C x) (x : T A B) =>
-      match x with pair a b => pair a (f a b) end
-.
-
-End Dependent_Sum.
 
 (** 型の型です。 *)
 

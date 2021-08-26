@@ -9,6 +9,7 @@ Base/Void.v \
 Base/Product.v \
 Base/Sum.v \
 Base/Dependent_Product.v \
+Base/Dependent_Sum.v \
 Base.v \
 
 do
