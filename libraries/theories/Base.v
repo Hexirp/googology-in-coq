@@ -3,26 +3,13 @@
 Require Googology_In_Coq.Base.Base.
 Require Googology_In_Coq.Base.Function.
 Require Googology_In_Coq.Base.Dependent_Function.
+Require Googology_In_Coq.Base.Unit.
 
 (** ライブラリを要求します。 *)
 
 Import Googology_In_Coq.Base.Base.
 
 (** [Googology_In_Coq.Base.Base] を開きます。 *)
-
-(** ユニット型です。 *)
-
-Module Unit.
-
-(** 主型です。 *)
-
-(* from: originally defined by Hexirp *)
-Inductive T
-  : Type
-  := unit : T
-.
-
-End Unit.
 
 (** ボトム型です。 *)
 
