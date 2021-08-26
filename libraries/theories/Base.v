@@ -4,6 +4,8 @@ Require Googology_In_Coq.Base.Base.
 Require Googology_In_Coq.Base.Function.
 Require Googology_In_Coq.Base.Dependent_Function.
 Require Googology_In_Coq.Base.Unit.
+Require Googology_In_Coq.Base.Void.
+Require Googology_In_Coq.Base.Product.
 
 (** ライブラリを要求します。 *)
 
@@ -13,59 +15,7 @@ Import Googology_In_Coq.Base.Base.
 
 
 
-(** 直積型です。 *)
 
-Module Product.
-
-(** 主型です。 *)
-
-(* from: originally defined by Hexirp *)
-Inductive T (A : Type) (B : Type) : Type := pair : A -> B -> T A B.
-
-(** [pair] についての暗黙引数を設定します。 *)
-
-Arguments pair {A} {B} a b.
-
-(** 直積型の第一射影関数です。 *)
-
-(* from: originally defined by Hexirp *)
-Definition first {A : Type} {B : Type} : T A B -> A
-  := fun x : T A B => match x with pair a b => a end
-.
-
-(** 直積型の第二射影関数です。 *)
-
-(* from: originally defined by Hexirp *)
-Definition second {A : Type} {B : Type} : T A B -> B
-  := fun x : T A B => match x with pair a b => b end
-.
-
-Definition map {A : Type} {B : Type} {C : Type} {D : Type}
-  : (A -> C) -> (B -> D) -> T A B -> T C D
-  :=
-    fun (f_a : A -> C) (f_b : B -> D) (x : T A B) =>
-      match x with pair a b => pair (f_a a) (f_b b) end
-.
-
-(** 関数のカリー化です。 *)
-
-(* from: originally defined by Hexirp *)
-Definition curry {A : Type} {B : Type} {C : Type}
-  : (T A B -> C) -> A -> B -> C
-  := fun (f : T A B -> C) (x : A) (y : B) => f (pair x y)
-.
-
-(** 関数の非カリー化です。 *)
-
-(* from: originally defined by Hexirp *)
-Definition uncurry {A : Type} {B : Type} {C : Type}
-  : (A -> B -> C) -> T A B -> C
-  :=
-    fun (f : A -> B -> C) (x : T A B) =>
-      match x with pair a b => f a b end
-.
-
-End Product.
 
 (** 直和型です。 *)
 
