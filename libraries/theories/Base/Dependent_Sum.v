@@ -1,4 +1,4 @@
-(** 依存和型です。 *)
+(** 依存和の型に関するモジュールです。 *)
 
 Require Googology_In_Coq.Base.Base.
 

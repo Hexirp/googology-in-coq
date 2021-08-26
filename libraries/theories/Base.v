@@ -9,6 +9,7 @@ Require Googology_In_Coq.Base.Product.
 Require Googology_In_Coq.Base.Sum.
 Require Googology_In_Coq.Base.Dependent_Product.
 Require Googology_In_Coq.Base.Dependent_Sum.
+Require Googology_In_Coq.Base.TYPE.
 
 (** ライブラリを要求します。 *)
 
@@ -26,54 +27,7 @@ Import Googology_In_Coq.Base.Base.
 
 
 
-(** 型の型です。 *)
 
-Module TYPE.
-
-(** 主型の等しさです。 *)
-
-(* from: originally defined by Hexirp *)
-Definition T_ (R : forall X : Type, X -> X -> Type)
-  : Type -> Type -> Type
-  :=
-    fun (A : Type) (B : Type) =>
-      Dependent_Sum.T
-        (A -> B)
-        (
-          fun f =>
-            Product.T
-              (
-                Dependent_Sum.T
-                  (B -> A)
-                  (
-                    fun g =>
-                      Function.T_
-                        B
-                        (R B)
-                        B
-                        (R B)
-                        (Function.comp f g)
-                        Function.id
-                  )
-              )
-              (
-                Dependent_Sum.T
-                  (B -> A)
-                  (
-                    fun h =>
-                      Function.T_
-                        A
-                        (R A)
-                        A
-                        (R A)
-                        (Function.comp h f)
-                        Function.id
-                  )
-              )
-        )
-.
-
-End TYPE.
 
 (** 道の型です。 [match] 式をオープンにしない理由は道の型を定義する方法に複数の種類があるためです。具体的には、基点がある定義や基点がない定義や cubical 風に interval を使う定義などがあります。 *)
 
