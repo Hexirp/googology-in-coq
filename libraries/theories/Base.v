@@ -1,36 +1,12 @@
-(* Run with -nois. *)
-(** [Googology_In_Coq.Base] は全ての基本となります。 *)
+(** [Googology_In_Coq.Base] は基本的な定義を提供します。 *)
 
-(** Coq と SSReflect のタクティックを使用するためにプラグインを読み込みます。 *)
+Require Googology_In_Coq.Base.Base.
 
-Declare ML Module "ltac_plugin".
-Declare ML Module "ssrmatching_plugin".
-Declare ML Module "ssreflect_plugin".
+(** [Googology_In_Coq.Base.Base] を要求します。 *)
 
-(** タクティックが使用できるように設定します。 *)
+Import Googology_In_Coq.Base.Base.
 
-Set Default Proof Mode "Classic".
-
-(** ビュレットを使用しないときにエラーになるように設定します。 *)
-
-Set Default Goal Selector "!".
-
-(** 帰納原理 (induction principle) を生成しないように設定します。 *)
-
-Unset Elimination Schemes.
-
-(** 宇宙多相 (universe polymorphism) について設定します。 *)
-
-Set Universe Polymorphism.
-Set Polymorphic Inductive Cumulativity.
-
-(** 関数の型を記号で書けるようにします。 *)
-
-Notation
-  "x -> y"
-    := (forall (_ : x), y)
-  (at level 99, right associativity, y at level 200)
-.
+(** [Googology_In_Coq.Base.Base] を開きます。 *)
 
 (** 関数型です。 *)
 
