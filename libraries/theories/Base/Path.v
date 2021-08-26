@@ -26,11 +26,53 @@ Arguments id {A} {a}, [A] a.
 
 (** [id] についての暗黙引数を設定します。 [id] と書いたときは [id _ _] と補われます。 [id a] と書いたときは [idpath _ a] と補われます。 *)
 
+Definition induction
+    (A : Type)
+    (a : A)
+    (P : forall b : A, T a b -> Type)
+    (construct_id : P a id)
+  : forall (b : A) (x : T a b), P b x
+  :=
+    fun (b : A) (x : T a b) =>
+      match x as x_ in T _ b_ return P b_ x_ with id => construct_id end
+.
+(* from: originally defined by Hexirp *)
+
+(** 道の帰納法です。 J axiom や J rule などとも呼ばれます。 *)
+
+Definition trpt {A : Type} {B : A -> Type} {x y : A}
+  : T x y -> B x -> B y
+  :=
+    fun (p : T x y) (u : B x) =>
+      induction A x (fun (y_ : A) (_ : T x y_) => B y_) u y p
+.
+(* from: originally defined by Hexirp *)
+
+(** 道による輸送です。 *)
+
+Definition trptV {A : Type} (B : A -> Type) {x y : A}
+: T x y -> B x -> B y
+:=
+  fun (p : T x y) (u : B x) =>
+    induction A x (fun (y_ : A) (_ : T x y_) => B y_) u y p
+.
+(* from: originally defined by Hexirp *)
+
+(** 引数が明示的な [trpt] です。 *)
+
+Definition trptD {A : Type} {x : A} (B : forall y : A, T x y -> Type) {y : A}
+  : forall p : T x y, B x id -> B y p
+  :=
+    fun (p : T x y) (u : B x id) =>
+      induction A x (fun (y_ : A) (p_ : T x y_) => B y_ p_) u y p
+.
+(* from: originally defined by Hexirp *)
+
+(** 依存型に対応した [trpt] です。 *)
+
 Definition conc {A : Type} {x y z : A}
   : T x y -> T y z -> T x z
-  :=
-    fun (p : T x y) (q : T y z) =>
-      match q with id => match p with id => id end end
+  := fun (p : T x y) (q : T y z) => trpt q (trpt p id)
 .
 (* from: originally defined by Hexirp *)
 
@@ -38,31 +80,15 @@ Definition conc {A : Type} {x y z : A}
 
 Definition inv {A : Type} {x y : A}
   : T x y -> T y x
-  := fun p : T x y => match p with id => id end
+  := fun p : T x y => trptV (fun y_ : A => T y_ x) p id
 .
 (* from: originally defined by Hexirp *)
 
 (** 道の逆です。 *)
 
-Definition trpt {A : Type} {B : A -> Type} {x y : A}
-  : T x y -> B x -> B y
-  := fun (p : T x y) (u : B x) => match p with id => u end
-.
-(* from: originally defined by Hexirp *)
-
-(** 道による輸送です。 *)
-
-Definition trptD {A : Type} {x : A} (P : forall y : A, T x y -> Type) {y : A}
-  : forall p : T x y, P x id -> P y p
-  := fun (p : T x y) (u : P x id) => match p with id => u end
-.
-(* from: originally defined by Hexirp *)
-
-(** 道による依存型バージョンの輸送です。 *)
-
 Definition ap {A : Type} {B : Type} (f : A -> B) {x y : A}
   : T x y -> T (f x) (f y)
-  := fun p : T x y => match p with id => id end
+  := fun p : T x y => trptV (fun y_ : A => T (f x) (f y_)) p id
 .
 (* from: originally defined by Hexirp *)
 
@@ -86,12 +112,7 @@ Definition trpv {A : Type} {B : A -> Type} {x y : A}
 
 Definition coerce {A : Type} {B : Type}
   : T A B -> A -> B
-  :=
-    fun (p : T A B) (u : A) =>
-      trptD
-        (fun (B_ : Type) (p_ : T A B_) => B_)
-        p
-        u
+  := fun (p : T A B) (u : A) => trptV (fun B_ : Type => B_) p u
 .
 (* from: originally defined by Hexirp *)
 
