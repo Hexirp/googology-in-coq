@@ -6,6 +6,7 @@ Require Googology_In_Coq.Base.Dependent_Function.
 Require Googology_In_Coq.Base.Unit.
 Require Googology_In_Coq.Base.Void.
 Require Googology_In_Coq.Base.Product.
+Require Googology_In_Coq.Base.Sum.
 
 (** ライブラリを要求します。 *)
 
@@ -17,27 +18,7 @@ Import Googology_In_Coq.Base.Base.
 
 
 
-(** 直和型です。 *)
 
-Module Sum.
-
-(** 主型です。 *)
-
-(* from: originally defined by Hexirp *)
-Inductive T (A : Type) (B : Type)
-  : Type
-  := left : A -> T A B | right : B -> T A B
-.
-
-(** [left] についての暗黙引数を設定します。 *)
-
-Arguments left {A} {B} a.
-
-(** [right] についての暗黙引数を設定します。 *)
-
-Arguments right {A} {B} b.
-
-End Sum.
 
 (** 依存積型です。 *)
 

@@ -7,6 +7,7 @@ Base/Dependent_Function.v \
 Base/Unit.v \
 Base/Void.v \
 Base/Product.v \
+Base/Sum.v \
 Base.v \
 
 do
