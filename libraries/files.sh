@@ -10,6 +10,7 @@ Base/Product.v \
 Base/Sum.v \
 Base/Dependent_Product.v \
 Base/Dependent_Sum.v \
+Base/Path.v \
 Base/TYPE.v \
 Base.v \
 
