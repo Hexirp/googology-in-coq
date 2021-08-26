@@ -11,27 +11,7 @@ Import Googology_In_Coq.Base.Base.
 
 (** [Googology_In_Coq.Base.Base] を開きます。 *)
 
-(** ボトム型です。 *)
 
-Module Void.
-
-(** 主型です。 *)
-
-(* from: originally defined by Hexirp *)
-Inductive T
-  : Type
-  :=
-.
-
-(** 矛盾による証明です。 *)
-
-(* from: originally defined by Hexirp *)
-Definition absurd {A : Type}
-  : T -> A
-  := fun x => match x with end
-.
-
-End Void.
 
 (** 直積型です。 *)
 
