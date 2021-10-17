@@ -8,16 +8,6 @@ Import Googology_In_Coq.Base.Base.
 
 (** [Googology_In_Coq.Base.Base] を開きます。 *)
 
-Definition T_ (A : Type) (A_ : A -> A -> Type) (B : Type) (B_ : B -> B -> Type)
-  : (A -> B) -> (A -> B) -> Type
-  :=
-    fun (f : A -> B) (g : A -> B) =>
-      forall (x : A) (y : A), A_ x y -> B_ (f x) (g y)
-.
-(* from: originally defined by Hexirp *)
-
-(** 1-主型です。 *)
-
 Definition id {A : Type}
   : A -> A
   := fun x : A => x

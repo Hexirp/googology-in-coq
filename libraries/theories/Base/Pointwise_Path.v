@@ -20,42 +20,6 @@ Definition T (A : Type) (B : Type)
 
 (** 主型です。 *)
 
-Definition to_Function_1 (A : Type) (B : Type)
-  :
-    forall (f : A -> B) (g : A -> B),
-      T A B f g -> Function.T_ A (@Path.T A) B (@Path.T B) f g
-.
-Proof.
-  move=> f g.
-  unfold T; unfold Function.T_.
-  move=> h.
-  move=> x y.
-  move=> p.
-  refine (let D := fun y : A => Path.T (f x) (g y) in _).
-  change (D y).
-  refine (Path.trpt p _).
-  exact (h x).
-Defined.
-(* from: originally defined by Hexirp *)
-
-(** [Function.T_] への変換です。 *)
-
-Definition from_Function_1 (A : Type) (B : Type)
-  :
-    forall (f : A -> B) (g : A -> B),
-      Function.T_ A (@Path.T A) B (@Path.T B) f g -> T A B f g
-.
-Proof.
-  move=> f g.
-  unfold Function.T_; unfold T.
-  move=> h.
-  move=> x.
-  exact (h x x Path.id).
-Defined.
-(* from: originally defined by Hexirp *)
-
-(** [Function.T_] からの変換です。 *)
-
 Definition id {A : Type} {B : Type}{f : A -> B}
   : T A B f f
   := fun x : A => Path.id

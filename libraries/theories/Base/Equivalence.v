@@ -3,7 +3,6 @@
 Require Googology_In_Coq.Base.Base.
 Require Googology_In_Coq.Base.Product.
 Require Googology_In_Coq.Base.Dependent_Sum.
-Require Googology_In_Coq.Base.TYPE.
 Require Googology_In_Coq.Base.Pointwise_Path.
 Require Googology_In_Coq.Base.Pointwise_Path_Reasoning.
 
@@ -46,58 +45,6 @@ Definition T (A : Type) (B : Type) : Type
 (* from: originally defined by Hexirp *)
 
 (** 型 [A] と型 [B] の間の等価構造です。 *)
-
-Definition to_TYPE_1
-  : forall (A : Type) (B : Type), T A B -> TYPE.T_ (@Path.T) A B
-.
-Proof.
-  move=> A B.
-  unfold T.
-  unfold Is_Equivalence.
-  unfold Has_Section.
-  unfold Is_Section.
-  unfold TYPE.T_.
-  refine (Dependent_Sum.map _).
-  move=> f.
-  refine (Product.map _ _).
-  -
-    refine (Dependent_Sum.map _).
-    move=> g.
-    exact (Pointwise_Path.to_Function_1 B B (Function.comp f g) Function.id).
-  -
-    refine (Dependent_Sum.map _).
-    move=> h.
-    exact (Pointwise_Path.to_Function_1 A A (Function.comp h f) Function.id).
-Defined.
-(* from: originally defined by Hexirp *)
-
-(** [TYPE.T_] への変換です。 *)
-
-Definition from_TYPE_1
-  : forall (A : Type) (B : Type), TYPE.T_ (@Path.T) A B -> T A B
-.
-Proof.
-  move=> A B.
-  unfold T.
-  unfold Is_Equivalence.
-  unfold Has_Section.
-  unfold Is_Section.
-  unfold TYPE.T_.
-  refine (Dependent_Sum.map _).
-  move=> f.
-  refine (Product.map _ _).
-  -
-    refine (Dependent_Sum.map _).
-    move=> g.
-    exact (Pointwise_Path.from_Function_1 B B (Function.comp f g) Function.id).
-  -
-    refine (Dependent_Sum.map _).
-    move=> h.
-    exact (Pointwise_Path.from_Function_1 A A (Function.comp h f) Function.id).
-Defined.
-(* from: originally defined by Hexirp *)
-
-(** [TYPE.T_] からの変換です。 *)
 
 Definition id_is_equivalence (A : Type)
   : Is_Equivalence A A Function.id
