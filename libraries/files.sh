@@ -12,6 +12,10 @@ Base/Dependent_Product.v \
 Base/Dependent_Sum.v \
 Base/Path.v \
 Base/TYPE.v \
+Base/Path_Reasoning.v \
+Base/Pointwise_Path.v \
+Base/Pointwise_Path_Reasoning.v \
+Base/Equivalence.v \
 Base.v \
 
 do
