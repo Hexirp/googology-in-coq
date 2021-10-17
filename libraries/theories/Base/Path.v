@@ -10,6 +10,8 @@ Import Googology_In_Coq.Base.Base.
 
 (** [Googology_In_Coq.Base.Base] を開きます。 *)
 
+Module Internal.
+
 Private Inductive T (A : Type) (a : A) 
   : A -> Type
   := id : T A a a
@@ -18,9 +20,35 @@ Private Inductive T (A : Type) (a : A)
 
 (** 主型です。 *)
 
+Definition induction
+    (A : Type)
+    (a : A)
+    (P : forall b : A, T A a b -> Type)
+    (construct_id : P a (id A a))
+  : forall (b : A) (x : T A a b), P b x
+  :=
+    fun (b : A) (x : T A a b) =>
+      match x as x_ in T _ _ b_ return P b_ x_ with id _ _ => construct_id end
+.
+(* from: originally defined by Hexirp *)
+
+(** 道の帰納法です。 J axiom や J rule などとも呼ばれます。 *)
+
+End Internal.
+
+Definition T (A : Type) (a : A) (a' : A) : Type := Internal.T A a a'.
+(* from: originally defined by Hexirp *)
+
+(** 主型です。 *)
+
 Arguments T {A} a a'.
 
-(** [Path] についての暗黙引数を設定します。 *)
+(** [T] についての暗黙引数を設定します。 *)
+
+Definition id (A : Type) (a : A) : T a a := Internal.id A a.
+(* from: originally defined by Hexirp *)
+
+(** 恒等道です。 *)
 
 Arguments id {A} {a}, [A] a.
 
@@ -32,9 +60,7 @@ Definition induction
     (P : forall b : A, T a b -> Type)
     (construct_id : P a id)
   : forall (b : A) (x : T a b), P b x
-  :=
-    fun (b : A) (x : T a b) =>
-      match x as x_ in T _ b_ return P b_ x_ with id => construct_id end
+  := Internal.induction A a P construct_id
 .
 (* from: originally defined by Hexirp *)
 
