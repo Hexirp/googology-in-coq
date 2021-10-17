@@ -21,33 +21,3 @@ Require Googology_In_Coq.Base.Equivalence.
 Import Googology_In_Coq.Base.Base.
 
 (** [Googology_In_Coq.Base.Base] を開きます。 *)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Module Natural_Number.
-
-Module Peano.
-
-Inductive T : Type := zero : T | successor : T -> T.
-
-End Peano.
-
-End Natural_Number.
