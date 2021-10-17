@@ -15,7 +15,7 @@ Base/TYPE.v \
 Base/Path_Reasoning.v \
 Base/Pointwise_Path.v \
 Base/Pointwise_Path_Reasoning.v \
-Base/Equivalence.v \
+Base/Bi_invertible_Map.v \
 Base.v \
 
 do

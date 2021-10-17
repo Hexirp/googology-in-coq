@@ -39,7 +39,7 @@ Definition Is_Equivalence (A : Type) (B : Type) (f : A -> B) : Type
 
 (** 関数 [f] が等価関数であることです。 *)
 
-Definition T (A : Type) (B : Type) : Type
+Definition Equivalence (A : Type) (B : Type) : Type
   := Dependent_Sum.T (A -> B) (fun f => Is_Equivalence A B f)
 .
 (* from: originally defined by Hexirp *)
@@ -69,7 +69,7 @@ Defined.
 
 (** 関数 [Function.id] が等価関数であることです。 *)
 
-Definition id {A : Type} : T A A
+Definition id {A : Type} : Equivalence A A
   := Dependent_Sum.pair Function.id (id_is_equivalence A).
 (* from: originally defined by Hexirp *)
 
@@ -190,10 +190,10 @@ Defined.
 (** 等価関数 [f] と等価関数 [g] から等価関数 [Function.comp f g] が得られることです。 *)
 
 Definition conc {A : Type} {B : Type} {C : Type}
-  : T A B -> T B C -> T A C
+  : Equivalence A B -> Equivalence B C -> Equivalence A C
 .
 Proof.
-  unfold T.
+  unfold Equivalence.
   move=> H_0 H_1.
   refine (match H_0 with Dependent_Sum.pair f_0 H_0_b => _ end).
   refine (match H_1 with Dependent_Sum.pair f_1 H_1_b => _ end).
