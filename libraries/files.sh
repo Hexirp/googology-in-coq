@@ -16,6 +16,7 @@ Base/Path_Reasoning.v \
 Base/Pointwise_Path.v \
 Base/Pointwise_Path_Reasoning.v \
 Base/Bi_invertible_Map.v \
+Base/Half_Adjoint_Equivalence.v \
 Base.v \
 
 do
