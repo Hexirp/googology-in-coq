@@ -16,6 +16,7 @@ Require Googology_In_Coq.Base.Pointwise_Path.
 Require Googology_In_Coq.Base.Pointwise_Path_Reasoning.
 Require Googology_In_Coq.Base.Bi_invertible_Map.
 Require Googology_In_Coq.Base.Half_Adjoint_Equivalence.
+Require Googology_In_Coq.Base.Contractible_Function.
 
 (** ライブラリを要求します。 *)
 
