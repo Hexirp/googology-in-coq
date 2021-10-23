@@ -1,6 +1,8 @@
 (** 点ごとの道です。 *)
 
 Require Googology_In_Coq.Base.Base.
+Require Googology_In_Coq.Base.Unit.
+Require Googology_In_Coq.Base.Void.
 Require Googology_In_Coq.Base.Path.
 Require Googology_In_Coq.Base.Negation.
 
@@ -24,3 +26,10 @@ Definition symmetry {A : Type} {x : A} {y : A}
 (* from: originally defined by Hexirp *)
 
 (** 対称律です。 *)
+
+Definition neq_unit_void : T Unit.T Void.T
+  := fun p : Path.T Unit.T Void.T => Path.coerce p Unit.unit
+.
+(* from: originally defined by Hexirp *)
+
+(** [Unit] と [Void] が等しくないことです。 *)
