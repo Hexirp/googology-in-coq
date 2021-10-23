@@ -71,7 +71,7 @@ Defined.
 
 (** 点ごとの道の逆です。 *)
 
-Definition wiskerL
+Definition wisker_L
     {A : Type}
     {B : Type}
     {C : Type}
@@ -90,7 +90,7 @@ Defined.
 
 (** 左からの髭つけです。 *)
 
-Definition wiskerR
+Definition wisker_R
     {A : Type}
     {B : Type}
     {C : Type}
@@ -109,7 +109,7 @@ Defined.
 
 (** 右からの髭つけです。 *)
 
-Definition wiskerLR
+Definition wisker_L_R
     {A : Type}
     {B : Type}
     {C : Type}
@@ -124,7 +124,7 @@ Definition wiskerLR
       T
         (Function.comp f_0 (Function.comp g f_1))
         (Function.comp f_0 (Function.comp h f_1))
-  := fun p : T g h => wiskerL f_0 (wiskerR f_1 p)
+  := fun p : T g h => wisker_L f_0 (wisker_R f_1 p)
 .
 (* from: originally defined by Hexirp *)
 

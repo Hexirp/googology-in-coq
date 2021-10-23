@@ -119,7 +119,7 @@ Proof.
             (Function.comp f_0 (Function.comp  Function.id            g_0))
         )
       .
-      refine (Pointwise_Path.wiskerLR f_0 g_0 _).
+      refine (Pointwise_Path.wisker_L_R f_0 g_0 _).
       exact H_1_a_b.
     }
     refine
@@ -159,7 +159,7 @@ Proof.
             (Function.comp h_1 (Function.comp  Function.id            f_1))
         )
       .
-      refine (Pointwise_Path.wiskerLR h_1 f_1 _).
+      refine (Pointwise_Path.wisker_L_R h_1 f_1 _).
       exact H_0_b_b.
     }
     refine
@@ -249,7 +249,7 @@ Proof.
             (Function.comp (Function.comp r f) (Function.comp s f))
         )
       .
-      refine (Pointwise_Path.wiskerR (Function.comp s f) _).
+      refine (Pointwise_Path.wisker_R (Function.comp s f) _).
       exact (Pointwise_Path.inv H_b_b).
     }
     refine
@@ -269,7 +269,7 @@ Proof.
             (Function.comp r (Function.comp  Function.id        f))
         )
       .
-      refine (Pointwise_Path.wiskerLR r f _).
+      refine (Pointwise_Path.wisker_L_R r f _).
       exact H_a_b.
     }
     refine

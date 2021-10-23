@@ -30,8 +30,8 @@ Definition Is_Equivalence (A : Type) (B : Type) (f : A -> B) : Type
                 Product.pair s r =>
                   forall x : A,
                     Path.T
-                      (Pointwise_Path.apply (Pointwise_Path.wiskerL f s) x)
-                      (Pointwise_Path.apply (Pointwise_Path.wiskerR f r) x)
+                      (Pointwise_Path.apply (Pointwise_Path.wisker_L f s) x)
+                      (Pointwise_Path.apply (Pointwise_Path.wisker_R f r) x)
               end
           )
     )
