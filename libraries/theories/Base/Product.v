@@ -42,7 +42,7 @@ Definition map {A : Type} {B : Type} {C : Type} {D : Type}
 .
 (* from: originally defined by Hexirp *)
 
-(** 直積型への写像です。 *)
+(** 直積型での写像です。 *)
 
 Definition curry {A : Type} {B : Type} {C : Type}
   : (T A B -> C) -> A -> B -> C
