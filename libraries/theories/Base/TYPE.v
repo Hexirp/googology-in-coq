@@ -12,6 +12,6 @@ Definition of {A : Type}
   : A -> Type
   := fun x : A => A
 .
-(* from: originally defined by Hexirp *)
+(* from: https://www.cs.bham.ac.uk/~mhe/HoTT-UF-in-Agda-Lecture-Notes/ *)
 
 (** 値の型です。 *)
