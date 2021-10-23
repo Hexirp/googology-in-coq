@@ -1,4 +1,4 @@
-(** 依存関数の型に関するモジュールです。 *)
+(** 依存型に関するモジュールです。 *)
 
 Require Googology_In_Coq.Base.Base.
 

@@ -19,6 +19,7 @@ Base/Bi_invertible_Map.v \
 Base/Half_Adjoint_Equivalence.v \
 Base/Contractible_Function.v \
 Base/Peano_Number.v \
+Base/Logical_Equivalence.v \
 Base/Negation.v \
 Base/Dependent_Type.v \
 Base.v \
