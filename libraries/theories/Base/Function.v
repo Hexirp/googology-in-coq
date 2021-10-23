@@ -26,7 +26,7 @@ Definition id_visible (A : Type)
 
 Definition const {A : Type} {B : Type}
   : A -> B -> A
-  := fun x : A => fun y : B => x
+  := fun (x : A) (y : B) => x
 .
 (* from: originally defined by Hexirp *)
 

@@ -86,7 +86,7 @@ Definition trpt_visible {A : Type} (B : A -> Type) {x y : A}
 
 (** 引数が明示的な [trpt] です。 *)
 
-Definition trptD {A : Type} {x : A} (B : forall y : A, T x y -> Type) {y : A}
+Definition trpt_dependent {A : Type} {x : A} (B : forall y : A, T x y -> Type) {y : A}
   : forall p : T x y, B x id -> B y p
   :=
     fun (p : T x y) (u : B x id) =>
