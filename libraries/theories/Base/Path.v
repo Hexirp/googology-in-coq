@@ -64,7 +64,19 @@ Definition induction
 .
 (* from: originally defined by Hexirp *)
 
-(** 道の帰納法です。 J axiom や J rule などとも呼ばれます。 *)
+(** 道の帰納法です。 *)
+
+Definition induction_without_point
+    (A : Type)
+    (P : forall (a : A) (b : A), T a b -> Type)
+    (construct_id : forall a : A, P a a id)
+  : forall (a : A) (b : A) (x : T a b), P a b x
+  :=
+    fun a : A => induction A a (fun (b_ : A) (x_ : T a b_) => P a b_ x_) (construct_id a)
+.
+(* from: originally defined by Hexirp *)
+
+(** 点なしの道の帰納法です。 J axiom や J rule などとも呼ばれます。 *)
 
 Definition trpt {A : Type} {B : A -> Type} {x y : A}
   : T x y -> B x -> B y
