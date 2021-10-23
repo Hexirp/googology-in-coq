@@ -72,3 +72,14 @@ Definition recursion
 (* from: originally defined by Hexirp *)
 
 (** 再帰です。 *)
+
+Definition iteration
+    {P : Type}
+    (construct_zero : P)
+    (construct_succ : P -> P)
+  : T -> P
+  := recursion construct_zero (fun x_p : T => construct_succ)
+.
+(* from: originally defined by Hexirp *)
+
+(** 繰り返しです。 *)
