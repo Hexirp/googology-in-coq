@@ -22,6 +22,7 @@ Require Googology_In_Coq.Base.Logical_Equivalence.
 Require Googology_In_Coq.Base.Negation.
 Require Googology_In_Coq.Base.Dependent_Type.
 Require Googology_In_Coq.Base.Bool.
+Require Googology_In_Coq.Base.Non_equality.
 
 (** ライブラリを要求します。 *)
 

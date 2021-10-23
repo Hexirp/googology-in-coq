@@ -23,6 +23,7 @@ Base/Logical_Equivalence.v \
 Base/Negation.v \
 Base/Dependent_Type.v \
 Base/Bool.v \
+Base/Non_equality.v \
 Base.v \
 
 do
