@@ -18,6 +18,7 @@ Base/Pointwise_Path_Reasoning.v \
 Base/Bi_invertible_Map.v \
 Base/Half_Adjoint_Equivalence.v \
 Base/Contractible_Function.v \
+Base/Peano_Number.v \
 Base.v \
 
 do
