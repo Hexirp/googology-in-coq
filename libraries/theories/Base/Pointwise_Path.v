@@ -10,7 +10,7 @@ Import Googology_In_Coq.Base.Base.
 
 (** [Googology_In_Coq.Base.Base] を開きます。 *)
 
-Definition T (A : Type) (B : Type)
+Definition T {A : Type} {B : Type}
   : (A -> B) -> (A -> B) -> Type
   :=
     fun (f : A -> B) (g : A -> B) =>
@@ -20,8 +20,16 @@ Definition T (A : Type) (B : Type)
 
 (** 主型です。 *)
 
+Definition apply {A : Type} {B : Type} {f : A -> B} {g : A -> B}
+  : T f g -> forall x : A, Path.T (f x) (g x)
+  := fun (p : T f g) (x : A) => p x
+.
+(* from: originally defined by Hexirp *)
+
+(** 点ごとの道を一点で具体化します。 *)
+
 Definition id {A : Type} {B : Type} {f : A -> B}
-  : T A B f f
+  : T f f
   := fun x : A => Path.id
 .
 (* from: originally defined by Hexirp *)
@@ -34,7 +42,7 @@ Definition conc
     {f : A -> B}
     {g : A -> B}
     {h : A -> B}
-  : T A B f g -> T A B g h -> T A B f h
+  : T f g -> T g h -> T f h
 .
 Proof.
   unfold T.
@@ -51,7 +59,7 @@ Definition inv
     {B : Type}
     {f : A -> B}
     {g : A -> B}
-  : T A B f g -> T A B g f
+  : T f g -> T g f
 .
 Proof.
   unfold T.
@@ -70,7 +78,7 @@ Definition wiskerL
     (f : B -> C)
     {g : A -> B}
     {h : A -> B}
-  : T A B g h -> T A C (Function.comp f g) (Function.comp f h)
+  : T g h -> T (Function.comp f g) (Function.comp f h)
 .
 Proof.
   unfold T.
@@ -89,7 +97,7 @@ Definition wiskerR
     (f : A -> B)
     {g : B -> C}
     {h : B -> C}
-  : T B C g h -> T A C (Function.comp g f) (Function.comp h f)
+  : T g h -> T (Function.comp g f) (Function.comp h f)
 .
 Proof.
   unfold T.
@@ -111,14 +119,12 @@ Definition wiskerLR
     {g : B -> C}
     {h : B -> C}
   :
-      T B C g h
+      T g h
     ->
       T
-        A
-        D
         (Function.comp f_0 (Function.comp g f_1))
         (Function.comp f_0 (Function.comp h f_1))
-  := fun p : T B C g h => wiskerL f_0 (wiskerR f_1 p)
+  := fun p : T g h => wiskerL f_0 (wiskerR f_1 p)
 .
 (* from: originally defined by Hexirp *)
 

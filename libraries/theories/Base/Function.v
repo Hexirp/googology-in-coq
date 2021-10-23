@@ -16,6 +16,14 @@ Definition id {A : Type}
 
 (** 恒等関数です。 *)
 
+Definition id_visible (A : Type)
+  : A -> A
+  := fun x : A => x
+.
+(* from: originally defined by Hexirp *)
+
+(** 引数が明示的な [id] です。 *)
+
 Definition const {A : Type} {B : Type}
   : A -> B -> A
   := fun x : A => fun y : B => x

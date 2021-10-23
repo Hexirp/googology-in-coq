@@ -21,8 +21,8 @@ Definition Is_Equivalence (A : Type) (B : Type) (f : A -> B) : Type
         Dependent_Sum.T
           (
             Product.T
-              (Pointwise_Path.T A A (Function.comp g f) Function.id)
-              (Pointwise_Path.T B B (Function.comp f g) Function.id)
+              (Pointwise_Path.T (Function.comp g f) Function.id)
+              (Pointwise_Path.T (Function.comp f g) Function.id)
           )
           (
             fun psr =>
@@ -30,8 +30,8 @@ Definition Is_Equivalence (A : Type) (B : Type) (f : A -> B) : Type
                 Product.pair s r =>
                   forall x : A,
                     Path.T
-                      (Pointwise_Path.wiskerL f s x)
-                      (Pointwise_Path.wiskerR f r x)
+                      (Pointwise_Path.apply (Pointwise_Path.wiskerL f s) x)
+                      (Pointwise_Path.apply (Pointwise_Path.wiskerR f r) x)
               end
           )
     )

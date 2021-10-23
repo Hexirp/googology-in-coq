@@ -12,42 +12,42 @@ Import Googology_In_Coq.Base.Base.
 
 (** [Googology_In_Coq.Base.Base] を開きます。 *)
 
-Definition Has_Section (A : Type) (B : Type) (r : A -> B) : Type
+Definition Has_Section {A : Type} {B : Type} (r : A -> B) : Type
   :=
     Dependent_Sum.T
       (B -> A)
-      (fun s => Pointwise_Path.T B B (Function.comp r s) Function.id)
+      (fun s => Pointwise_Path.T (Function.comp r s) Function.id)
 .
 (* from: originally defined by Hexirp *)
 
 (** 関数 [r] が切片を持つことです。あるいは、関数 [r] が引き込みであることです。 *)
 
-Definition Is_Section (A : Type) (B : Type) (s : A -> B) : Type
+Definition Is_Section {A : Type} {B : Type} (s : A -> B) : Type
   :=
     Dependent_Sum.T
       (B -> A)
-      (fun r => Pointwise_Path.T A A (Function.comp r s) Function.id)
+      (fun r => Pointwise_Path.T (Function.comp r s) Function.id)
 .
 (* from: originally defined by Hexirp *)
 
 (** 関数 [s] が切片であることです。あるいは、関数 [s] が引き込みを持つことです。 *)
 
-Definition Is_Equivalence (A : Type) (B : Type) (f : A -> B) : Type
-  := Product.T (Has_Section A B f) (Is_Section A B f)
+Definition Is_Equivalence {A : Type} {B : Type} (f : A -> B) : Type
+  := Product.T (Has_Section f) (Is_Section f)
 .
 (* from: originally defined by Hexirp *)
 
 (** 関数 [f] が等価関数であることです。 *)
 
 Definition Equivalence (A : Type) (B : Type) : Type
-  := Dependent_Sum.T (A -> B) (fun f => Is_Equivalence A B f)
+  := Dependent_Sum.T (A -> B) (fun f => Is_Equivalence f)
 .
 (* from: originally defined by Hexirp *)
 
 (** 型 [A] と型 [B] の間の等価構造です。 *)
 
 Definition id_is_equivalence (A : Type)
-  : Is_Equivalence A A Function.id
+  : Is_Equivalence (Function.id_visible A)
 .
 Proof.
   unfold Is_Equivalence.
@@ -82,11 +82,11 @@ Definition comp_is_equivalence
     (f_0 : B -> C)
     (f_1 : A -> B)
   :
-      Is_Equivalence B C f_0
+      Is_Equivalence f_0
     ->
-      Is_Equivalence A B f_1
+      Is_Equivalence f_1
     ->
-      Is_Equivalence A C (Function.comp f_0 f_1)
+      Is_Equivalence (Function.comp f_0 f_1)
 .
 Proof.
   unfold Is_Equivalence.
@@ -115,8 +115,6 @@ Proof.
       change
         (
           Pointwise_Path.T
-            C
-            C
             (Function.comp f_0 (Function.comp (Function.comp f_1 g_1) g_0))
             (Function.comp f_0 (Function.comp  Function.id            g_0))
         )
@@ -157,8 +155,6 @@ Proof.
       change
         (
           Pointwise_Path.T
-            A
-            A
             (Function.comp h_1 (Function.comp (Function.comp h_0 f_0) f_1))
             (Function.comp h_1 (Function.comp  Function.id            f_1))
         )
@@ -204,15 +200,15 @@ Defined.
 
 (** 等価構造が推移性を満たすことです。 *)
 
-Definition Has_Quasi_Inverse (A : Type) (B : Type) (f : A -> B)
+Definition Has_Quasi_Inverse {A : Type} {B : Type} (f : A -> B)
   :=
     Dependent_Sum.T
       (B -> A)
       (
         fun g =>
           Product.T
-            (Pointwise_Path.T B B (Function.comp f g) Function.id)
-            (Pointwise_Path.T A A (Function.comp g f) Function.id)
+            (Pointwise_Path.T (Function.comp f g) Function.id)
+            (Pointwise_Path.T (Function.comp g f) Function.id)
       )
 .
 (* from: originally defined by Hexirp *)
@@ -220,7 +216,7 @@ Definition Has_Quasi_Inverse (A : Type) (B : Type) (f : A -> B)
 (** 関数 [f] が擬逆関数を持つことです。 *)
 
 Definition Equivs_Is_Quinvs_First {A : Type} {B : Type} {f : A -> B}
-  : Is_Equivalence A B f -> Has_Quasi_Inverse A B f
+  : Is_Equivalence f -> Has_Quasi_Inverse f
 .
 Proof.
   unfold Is_Equivalence.
@@ -249,8 +245,6 @@ Proof.
       change
         (
           Pointwise_Path.T
-            A
-            A
             (Function.comp  Function.id        (Function.comp s f))
             (Function.comp (Function.comp r f) (Function.comp s f))
         )
@@ -271,8 +265,6 @@ Proof.
       change
         (
           Pointwise_Path.T
-            A
-            A
             (Function.comp r (Function.comp (Function.comp f s) f))
             (Function.comp r (Function.comp  Function.id        f))
         )

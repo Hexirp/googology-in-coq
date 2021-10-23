@@ -52,7 +52,7 @@ Definition id (A : Type) (a : A) : T a a := Internal.id A a.
 
 Arguments id {A} {a}, [A] a.
 
-(** [id] についての暗黙引数を設定します。 [id] と書いたときは [id _ _] と補われます。 [id a] と書いたときは [idpath _ a] と補われます。 *)
+(** [id] についての暗黙引数を設定します。 [id] と書いたときは [@id _ _] と補われます。 [id a] と書いたときは [@id _ a] と補われます。 *)
 
 Definition induction
     (A : Type)
@@ -76,7 +76,7 @@ Definition trpt {A : Type} {B : A -> Type} {x y : A}
 
 (** 道による輸送です。 *)
 
-Definition trptV {A : Type} (B : A -> Type) {x y : A}
+Definition trpt_visible {A : Type} (B : A -> Type) {x y : A}
 : T x y -> B x -> B y
 :=
   fun (p : T x y) (u : B x) =>
@@ -106,7 +106,7 @@ Definition conc {A : Type} {x y z : A}
 
 Definition inv {A : Type} {x y : A}
   : T x y -> T y x
-  := fun p : T x y => trptV (fun y_ : A => T y_ x) p id
+  := fun p : T x y => trpt_visible (fun y_ : A => T y_ x) p id
 .
 (* from: originally defined by Hexirp *)
 
@@ -114,7 +114,7 @@ Definition inv {A : Type} {x y : A}
 
 Definition ap {A : Type} {B : Type} (f : A -> B) {x y : A}
   : T x y -> T (f x) (f y)
-  := fun p : T x y => trptV (fun y_ : A => T (f x) (f y_)) p id
+  := fun p : T x y => trpt_visible (fun y_ : A => T (f x) (f y_)) p id
 .
 (* from: originally defined by Hexirp *)
 
@@ -138,7 +138,7 @@ Definition trpv {A : Type} {B : A -> Type} {x y : A}
 
 Definition coerce {A : Type} {B : Type}
   : T A B -> A -> B
-  := fun (p : T A B) (u : A) => trptV (fun B_ : Type => B_) p u
+  := fun (p : T A B) (u : A) => trpt_visible (fun B_ : Type => B_) p u
 .
 (* from: originally defined by Hexirp *)
 
