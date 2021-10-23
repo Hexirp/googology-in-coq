@@ -39,3 +39,19 @@ Definition apply {A : Type} {B : Type}
 (* from: originally defined by Hexirp *)
 
 (** 関数の適用です。 *)
+
+Definition domain {A : Type} {B : Type}
+  : (A -> B) -> Type
+  := fun f : A -> B => A
+.
+(* from: originally defined by Hexirp *)
+
+(** 関数の定義域です。あるいは始域です。 *)
+
+Definition codomain {A : Type} {B : Type}
+  : (A -> B) -> Type
+  := fun f : A -> B => B
+.
+(* from: originally defined by Hexirp *)
+
+(** 関数の値域です。あるいは終域です。 *)
