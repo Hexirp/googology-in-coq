@@ -22,6 +22,7 @@ Base/Peano_Number.v \
 Base/Logical_Equivalence.v \
 Base/Negation.v \
 Base/Dependent_Type.v \
+Base/Bool.v \
 Base.v \
 
 do

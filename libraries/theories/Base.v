@@ -21,6 +21,7 @@ Require Googology_In_Coq.Base.Peano_Number.
 Require Googology_In_Coq.Base.Logical_Equivalence.
 Require Googology_In_Coq.Base.Negation.
 Require Googology_In_Coq.Base.Dependent_Type.
+Require Googology_In_Coq.Base.Bool.
 
 (** ライブラリを要求します。 *)
 
