@@ -20,7 +20,7 @@ Definition T (A : Type) (B : Type)
 
 (** 主型です。 *)
 
-Definition id {A : Type} {B : Type}{f : A -> B}
+Definition id {A : Type} {B : Type} {f : A -> B}
   : T A B f f
   := fun x : A => Path.id
 .
