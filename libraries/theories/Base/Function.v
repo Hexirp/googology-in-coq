@@ -8,6 +8,11 @@ Import Googology_In_Coq.Base.Base.
 
 (** [Googology_In_Coq.Base.Base] を開きます。 *)
 
+Definition T {A : Type} {B : Type} : Type := A -> B.
+(* from: originally defined by Hexirp *)
+
+(** 主型です。 *)
+
 Definition id {A : Type}
   : A -> A
   := fun x : A => x
