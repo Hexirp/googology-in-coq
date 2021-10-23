@@ -16,9 +16,25 @@ Inductive T
 
 (** 主型です。 *)
 
+Definition induction (P : T -> Type)
+  : forall x : T, P x
+  := fun x : T => match x with end
+.
+(* from: originally defined by Hexirp *)
+
+(** 帰納法です。 *)
+
+Definition recursion {P : Type}
+  : T -> P
+  := induction (fun x_ : T => P)
+.
+(* from: originally defined by Hexirp *)
+
+(** 帰納法です。 *)
+
 Definition absurd {A : Type}
   : T -> A
-  := fun x => match x with end
+  := recursion
 .
 (* from: originally defined by Hexirp *)
 
