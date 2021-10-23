@@ -19,7 +19,7 @@ Base/Bi_invertible_Map.v \
 Base/Half_Adjoint_Equivalence.v \
 Base/Contractible_Function.v \
 Base/Peano_Number.v \
-Base/Neg.v \
+Base/Negation.v \
 Base.v \
 
 do
