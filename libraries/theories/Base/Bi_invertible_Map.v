@@ -93,20 +93,40 @@ Proof.
   unfold Has_Section.
   unfold Is_Section.
   move=> H_0 H_1.
-  refine (match H_0 with Product.pair H_0_a H_0_b => _ end).
-  refine (match H_0_a with Dependent_Sum.pair g_0 H_0_a_b => _ end).
-  refine (match H_0_b with Dependent_Sum.pair h_0 H_0_b_b => _ end).
-  refine (match H_1 with Product.pair H_1_a H_1_b => _ end).
-  refine (match H_1_a with Dependent_Sum.pair g_1 H_1_a_b => _ end).
-  refine (match H_1_b with Dependent_Sum.pair h_1 H_1_b_b => _ end).
   refine (Product.pair _ _).
   -
-    refine (Dependent_Sum.pair (Function.comp g_1 g_0) _).
+    refine
+      (
+        Dependent_Sum.pair
+          (
+            Function.comp
+              (Dependent_Sum.first (Product.first H_1))
+              (Dependent_Sum.first (Product.first H_0))
+          )
+          _
+      )
+    .
     refine
       (
         Pointwise_Path_Reasoning.walk
-          (Function.comp (Function.comp f_0 f_1) (Function.comp g_1 g_0))
-          (Function.comp f_0 g_0)
+          (
+            Function.comp
+              (
+                Function.comp
+                  f_0
+                  f_1
+              )
+              (
+                Function.comp
+                  (Dependent_Sum.first (Product.first H_1))
+                  (Dependent_Sum.first (Product.first H_0))
+              )
+          )
+          (
+            Function.comp
+              f_0
+              (Dependent_Sum.first (Product.first H_0))
+          )
           ?[d_0]
           _
       )
@@ -115,24 +135,55 @@ Proof.
       change
         (
           Pointwise_Path.T
-            (Function.comp f_0 (Function.comp (Function.comp f_1 g_1) g_0))
-            (Function.comp f_0 (Function.comp  Function.id            g_0))
+            (
+              Function.comp
+                f_0
+                (
+                  Function.comp
+                    (
+                      Function.comp
+                        f_1
+                        (Dependent_Sum.first (Product.first H_1))
+                    )
+                    (Dependent_Sum.first (Product.first H_0))
+                )
+            )
+            (
+              Function.comp
+                f_0
+                (
+                  Function.comp
+                    Function.id
+                    (Dependent_Sum.first (Product.first H_0))
+                )
+            )
         )
       .
-      refine (Pointwise_Path.wisker_L_R f_0 g_0 _).
-      exact H_1_a_b.
+      refine
+        (
+          Pointwise_Path.wisker_L_R
+            f_0
+            (Dependent_Sum.first (Product.first H_0))
+            _
+        )
+      .
+      exact (Dependent_Sum.second (Product.first H_1)).
     }
     refine
       (
         Pointwise_Path_Reasoning.walk
-          (Function.comp f_0 g_0)
+          (
+            Function.comp
+              f_0
+              (Dependent_Sum.first (Product.first H_0))
+          )
           Function.id
           ?[d_1]
           _
       )
     .
     [d_1]: {
-      exact H_0_a_b.
+      exact (Dependent_Sum.second (Product.first H_0)).
     }
     exact
       (
@@ -141,12 +192,38 @@ Proof.
       )
     .
   -
-    refine (Dependent_Sum.pair (Function.comp h_1 h_0) _).
+    refine
+      (
+        Dependent_Sum.pair
+          (
+            Function.comp
+              (Dependent_Sum.first (Product.second H_1))
+              (Dependent_Sum.first (Product.second H_0))
+          )
+          _
+      )
+    .
     refine
       (
         Pointwise_Path_Reasoning.walk
-          (Function.comp (Function.comp h_1 h_0) (Function.comp f_0 f_1))
-          (Function.comp h_1 f_1)
+          (
+            Function.comp
+              (
+                Function.comp
+                  (Dependent_Sum.first (Product.second H_1))
+                  (Dependent_Sum.first (Product.second H_0))
+              )
+              (
+                Function.comp
+                  f_0
+                  f_1
+              )
+          )
+          (
+            Function.comp
+              (Dependent_Sum.first (Product.second H_1))
+              f_1
+          )
           ?[d_0]
           _
       )
@@ -155,24 +232,55 @@ Proof.
       change
         (
           Pointwise_Path.T
-            (Function.comp h_1 (Function.comp (Function.comp h_0 f_0) f_1))
-            (Function.comp h_1 (Function.comp  Function.id            f_1))
+            (
+              Function.comp
+                (Dependent_Sum.first (Product.second H_1))
+                (
+                  Function.comp
+                    (
+                      Function.comp
+                        (Dependent_Sum.first (Product.second H_0))
+                        f_0
+                    )
+                    f_1
+                )
+            )
+            (
+              Function.comp
+                (Dependent_Sum.first (Product.second H_1))
+                (
+                  Function.comp
+                    Function.id
+                    f_1
+                )
+            )
         )
       .
-      refine (Pointwise_Path.wisker_L_R h_1 f_1 _).
-      exact H_0_b_b.
+      refine
+        (
+          Pointwise_Path.wisker_L_R
+            (Dependent_Sum.first (Product.second H_1))
+            f_1
+            _
+        )
+      .
+      exact (Dependent_Sum.second (Product.second H_0)).
     }
     refine
       (
         Pointwise_Path_Reasoning.walk
-          (Function.comp h_1 f_1)
+          (
+            Function.comp
+              (Dependent_Sum.first (Product.second H_1))
+              f_1
+          )
           Function.id
           ?[d_1]
           _
       )
     .
     [d_1]: {
-      exact H_1_b_b.
+      exact (Dependent_Sum.second (Product.second H_1)).
     }
     exact
       (
@@ -191,10 +299,25 @@ Definition conc {A : Type} {B : Type} {C : Type}
 Proof.
   unfold Equivalence.
   move=> H_0 H_1.
-  refine (match H_0 with Dependent_Sum.pair f_0 H_0_b => _ end).
-  refine (match H_1 with Dependent_Sum.pair f_1 H_1_b => _ end).
-  refine (Dependent_Sum.pair (Function.comp f_1 f_0) _).
-  exact (comp_is_equivalence A B C f_1 f_0 H_1_b H_0_b).
+  refine
+    (
+      Dependent_Sum.pair
+        (Function.comp (Dependent_Sum.first H_1) (Dependent_Sum.first H_0))
+        _
+    )
+  .
+  exact
+    (
+      comp_is_equivalence
+        A
+        B
+        C
+        (Dependent_Sum.first H_1)
+        (Dependent_Sum.first H_0)
+        (Dependent_Sum.second H_1)
+        (Dependent_Sum.second H_0)
+    )
+  .
 Defined.
 (* from: originally defined by Hexirp *)
 
@@ -224,19 +347,38 @@ Proof.
   unfold Is_Section.
   unfold Has_Quasi_Inverse.
   move=> H.
-  refine (match H with Product.pair H_a H_b => _ end).
-  refine (match H_a with Dependent_Sum.pair s H_a_b => _ end).
-  refine (match H_b with Dependent_Sum.pair r H_b_b => _ end).
-  refine (Dependent_Sum.pair s _).
+  refine
+    (
+      Dependent_Sum.pair
+        (Dependent_Sum.first (Product.first H))
+        _
+    )
+  .
   refine (Product.pair _ _).
   -
-    exact H_a_b.
+    exact (Dependent_Sum.second (Product.first H)).
   -
     refine
       (
         Pointwise_Path_Reasoning.walk
-          (Function.comp s f)
-          (Function.comp r (Function.comp f (Function.comp s f)))
+          (
+            Function.comp
+              (Dependent_Sum.first (Product.first H))
+              f
+          )
+          (
+            Function.comp
+              (Dependent_Sum.first (Product.second H))
+              (
+                Function.comp
+                  f
+                  (
+                    Function.comp
+                      (Dependent_Sum.first (Product.first H))
+                      f
+                  )
+              )
+          )
           ?[d_0]
           _
       )
@@ -245,18 +387,68 @@ Proof.
       change
         (
           Pointwise_Path.T
-            (Function.comp  Function.id        (Function.comp s f))
-            (Function.comp (Function.comp r f) (Function.comp s f))
+            (
+              Function.comp
+                Function.id
+                (
+                  Function.comp
+                    (Dependent_Sum.first (Product.first H))
+                    f
+                )
+            )
+            (
+              Function.comp
+                (
+                  Function.comp
+                    (Dependent_Sum.first (Product.second H))
+                    f
+                )
+                (
+                  Function.comp
+                    (Dependent_Sum.first (Product.first H))
+                    f
+                )
+            )
         )
       .
-      refine (Pointwise_Path.wisker_R (Function.comp s f) _).
-      exact (Pointwise_Path.inv H_b_b).
+      refine
+        (
+          Pointwise_Path.wisker_R
+          (
+            Function.comp
+              (Dependent_Sum.first (Product.first H))
+              f
+          )
+          _
+        )
+      .
+      exact
+        (
+          Pointwise_Path.inv (Dependent_Sum.second (Product.second H))
+        )
+      .
     }
     refine
       (
         Pointwise_Path_Reasoning.walk
-          (Function.comp r (Function.comp f (Function.comp s f)))
-          (Function.comp r f)
+          (
+            Function.comp
+              (Dependent_Sum.first (Product.second H))
+              (
+                Function.comp
+                  f
+                  (
+                    Function.comp
+                      (Dependent_Sum.first (Product.first H))
+                      f
+                  )
+              )
+          )
+          (
+            Function.comp
+              (Dependent_Sum.first (Product.second H))
+              f
+          )
           ?[d_1]
           _
       )
@@ -265,24 +457,55 @@ Proof.
       change
         (
           Pointwise_Path.T
-            (Function.comp r (Function.comp (Function.comp f s) f))
-            (Function.comp r (Function.comp  Function.id        f))
+            (
+              Function.comp
+                (Dependent_Sum.first (Product.second H))
+                (
+                  Function.comp
+                    (
+                      Function.comp
+                        f
+                        (Dependent_Sum.first (Product.first H))
+                    )
+                    f
+                )
+            )
+            (
+              Function.comp
+                (Dependent_Sum.first (Product.second H))
+                (
+                  Function.comp
+                    Function.id
+                    f
+                )
+            )
         )
       .
-      refine (Pointwise_Path.wisker_L_R r f _).
-      exact H_a_b.
+      refine
+        (
+          Pointwise_Path.wisker_L_R
+            (Dependent_Sum.first (Product.second H))
+            f
+            _
+        )
+      .
+      exact (Dependent_Sum.second (Product.first H)).
     }
     refine
       (
         Pointwise_Path_Reasoning.walk
-          (Function.comp r f)
+          (
+            Function.comp
+              (Dependent_Sum.first (Product.second H))
+              f
+          )
           Function.id
           ?[d_2]
           _
       )
     .
     [d_2]: {
-      exact H_b_b.
+      exact (Dependent_Sum.second (Product.second H)).
     }
     exact
       (
