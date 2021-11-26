@@ -7,8 +7,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container:
-      image: coqorg/coq:8.13.2
     steps:
       - uses: actions/checkout@v2
+      - uses: coq-community/docker-coq-action@v1
       - run: cd libraries/ && ./compile.sh
