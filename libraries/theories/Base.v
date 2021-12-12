@@ -1,4 +1,4 @@
-(** [Googology_In_Coq.Base] は基本的な設定を与えます。 *)
+(** 基本的な設定のモジュールです。 *)
 
 Declare ML Module "ltac_plugin".
 
