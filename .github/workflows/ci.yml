@@ -9,6 +9,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - run: cd libraries/
       - uses: coq-community/docker-coq-action@v1
-        with:
-          opam_file: ./libraries/
+      - run: cd ../
