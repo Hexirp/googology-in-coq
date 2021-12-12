@@ -1,3 +1,3 @@
 #!/bin/bash
 
-echo "/c/coq"
+echo "/d/coq"
