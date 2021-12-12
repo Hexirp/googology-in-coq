@@ -22,16 +22,16 @@ Definition abstract@{i | }
     (A : Type@{i})
     (B : A -> Type@{i})
     (x : forall x : A, B x)
-  : Dependent_Function@{i j} A B
+  : Dependent_Function@{i} A B
   := x
 .
 
 (** 抽象です。ラムダ抽象です。 *)
 
-Definition apply@{i j | }
+Definition apply@{i | }
     (A : Type@{i})
     (B : A -> Type@{i})
-    (x : Dependent_Function@{i j} A B)
+    (x : Dependent_Function@{i} A B)
   : forall x : A, B x
   := x
 .
