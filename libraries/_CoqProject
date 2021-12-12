@@ -5,25 +5,3 @@
 -R theories/ Googology_In_Coq
 
 theories/Base/Base.v
-theories/Base/Function.v
-theories/Base/Dependent_Function.v
-theories/Base/Unit.v
-theories/Base/Void.v
-theories/Base/Product.v
-theories/Base/Sum.v
-theories/Base/Dependent_Product.v
-theories/Base/Dependent_Sum.v
-theories/Base/Path.v
-theories/Base/TYPE.v
-theories/Base/Path_Reasoning.v
-theories/Base/Pointwise_Path.v
-theories/Base/Pointwise_Path_Reasoning.v
-theories/Base/Bi_invertible_Map.v
-theories/Base/Half_Adjoint_Equivalence.v
-theories/Base/Contractible_Function.v
-theories/Base/Peano_Number.v
-theories/Base/Logical_Equivalence.v
-theories/Base/Negation.v
-theories/Base/Dependent_Type.v
-theories/Base/Bool.v
-theories/Base/Non_equality.v
