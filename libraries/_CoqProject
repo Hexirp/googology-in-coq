@@ -27,4 +27,3 @@ theories/Base/Negation.v
 theories/Base/Dependent_Type.v
 theories/Base/Bool.v
 theories/Base/Non_equality.v
-theories/Base.v
