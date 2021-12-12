@@ -20,7 +20,7 @@ Definition Dependent_Function@{i | }
 
 Definition abstract@{i | }
     (A : Type@{i})
-    (B : A -> Type@{j})
+    (B : A -> Type@{i})
     (x : forall x : A, B x)
   : Dependent_Function@{i j} A B
   := x
@@ -30,7 +30,7 @@ Definition abstract@{i | }
 
 Definition apply@{i j | }
     (A : Type@{i})
-    (B : A -> Type@{j})
+    (B : A -> Type@{i})
     (x : Dependent_Function@{i j} A B)
   : forall x : A, B x
   := x
