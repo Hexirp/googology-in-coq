@@ -1,24 +1,38 @@
-(** 依存関数の型に関するモジュールです。 *)
+(** 依存関数型のモジュールです。 *)
 
-Require Googology_In_Coq.Base.Base.
+Require Googology_In_Coq.Base.
 
-(** [Googology_In_Coq.Base.Base] を要求します。 *)
+(** [Googology_In_Coq.Base] を要求します。 *)
 
-Import Googology_In_Coq.Base.Base.
+Import Googology_In_Coq.Base.
 
-(** [Googology_In_Coq.Base.Base] を開きます。 *)
+(** [Googology_In_Coq.Base] を開きます。 *)
 
-Definition T (A : Type) (B : A -> Type) : Type
-  := forall a : A, B a
+Axiom Dependent_Function@{i j | }
+  :
+    forall A : Type@{i}, (A -> Type@{j}) -> Type@{j}
 .
 (* from: originally defined by Hexirp *)
 
-(** 主型です。 *)
+(** 依存関数型です。 *)
 
-Definition apply {A : Type} {B : A -> Type}
-  : (forall x : A, B x) -> forall x : A, B x
-  := fun (f : forall x : A, B x) (x : A) => f x
+Axiom abstract@{i j | }
+  :
+    forall
+      (A : Type@{i})
+      (B : A -> Type@{j})
+    ,
+      (forall x : A, B x) -> Dependent_Function@{i j} A B
 .
-(* from: originally defined by Hexirp *)
 
-(** 関数の適用です。 *)
+(** 抽象です。ラムダ抽象です。 *)
+
+Axiom apply@{i j | }
+  :
+    forall                                                                            (A : Type@{i})
+      (B : A -> Type@{j})
+    ,
+      Dependent_Function@{i j} A B -> forall x : A, B x
+.
+
+(** 適用です。 *)
