@@ -1,41 +1,37 @@
-(** ユニットの型に関するモジュールです。 *)
+(** 単一型に関するモジュールです。 *)
 
-Require Googology_In_Coq.Base.Base.
+Require Googology_In_Coq.Base.
 
-(** [Googology_In_Coq.Base.Base] を要求します。 *)
+(** ライブラリを要求します。 *)
 
-Import Googology_In_Coq.Base.Base.
+Import Googology_In_Coq.Base.
 
-(** [Googology_In_Coq.Base.Base] を開きます。 *)
+(** ライブラリを開きます。 *)
 
-Inductive T
-  : Type
-  := unit : T
+Inductive Unit@{i | } : Type@{i} := unit : Unit.
+(* from: originally defined by Hexirp *)
+
+(** 単一型です。 *)
+
+Definition matching@{i | }
+    (P : Unit@{i} -> Type@{i})
+    (construct_unit : P unit)
+  : forall x : Unit, P x
+  := fun x : Unit => match x with unit => construct_unit end
 .
 (* from: originally defined by Hexirp *)
 
-(** 主型です。 *)
+(** 場合分けです。 *)
 
-Definition induction (P : T -> Type) (construct_unit : P unit)
-  : forall x : T, P x
-  := fun x : T => match x with unit => construct_unit end
-.
-(* from: originally defined by Hexirp *)
-
-(** 帰納法です。 *)
-
-Definition recursion {P : Type} (construct_unit : P)
-  : T -> P
-  := induction (fun x_ => P) construct_unit
+Definition matching_nodep@{i | } {P : Type@{i}} (construct_unit : P)
+  : Unit@{i} -> P
+  := matching (fun x_ => P) construct_unit
 .
 (* from: originally defined by Hexirp *)
 
 (** 再帰です。 *)
 
-Definition const {A : Type}
-  : A -> T
-  := fun x : A => unit
-.
+Definition const@{i | } {A : Type@{i}} : A -> Unit@{i} := fun x : A => unit.
 (* from: originally defined by Hexirp *)
 
 (** 定数関数です。 *)
