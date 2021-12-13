@@ -9,5 +9,6 @@ theories/Dependent_Function.v
 theories/Function.v
 theories/Dependent_Product.v
 theories/Dependent_Sum.v
+theories/Product.v
 theories/Sum.v
 theories/Void.v
