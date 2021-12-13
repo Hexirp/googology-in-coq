@@ -1,0 +1,22 @@
+digraph Dependencies {
+  # Base
+  # Dependent_Function
+  "Base" -> "Dependent_Function";
+  # Function
+  "Base" -> "Function";
+  "Dependent_Function" -> "Function";
+  # Dependent_Product
+  "Base" -> "Dependent_Product";
+  "Dependent_Function" -> "Dependent_Product";
+  # Dependent_Sum
+  "Base" -> "Dependent_Sum";
+  # Product
+  "Base" -> "Product";
+  "Dependent_Sum" -> "Product";
+  # Sum
+  "Base" -> "Sum";
+  # Void
+  "Base" -> "Void";
+  # Unit
+  "Base" -> "Unit";
+}
