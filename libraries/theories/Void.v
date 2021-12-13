@@ -1,41 +1,38 @@
-(** ボトムの型に関するモジュールです。 *)
+(** 空型に関するモジュールです。 *)
 
-Require Googology_In_Coq.Base.Base.
+Require Googology_In_Coq.Base.
 
-(** [Googology_In_Coq.Base.Base] を要求します。 *)
+(** ライブラリを要求します。 *)
 
-Import Googology_In_Coq.Base.Base.
+Import Googology_In_Coq.Base.
 
-(** [Googology_In_Coq.Base.Base] を開きます。 *)
+(** ライブラリを開きます。 *)
 
-Inductive T
-  : Type
-  :=
+Inductive Void@{i | } : Type@{i} := .
+(* from: originally defined by Hexirp *)
+
+(** 空型です。 *)
+
+Definition matching@{i | } (P : Void@{i} -> Type@{i})
+  : forall x : Void, P x
+  := fun x : Void => match x with end
 .
 (* from: originally defined by Hexirp *)
 
-(** 主型です。 *)
+(** 場合分けです。 *)
 
-Definition induction (P : T -> Type)
-  : forall x : T, P x
-  := fun x : T => match x with end
+Definition matching_nodep@{i | } {P : Type@{i}}
+  : Void@{i} -> P
+  := matching (fun x_ : Void => P)
 .
 (* from: originally defined by Hexirp *)
 
-(** 帰納法です。 *)
+(** 場合分けです。 *)
 
-Definition recursion {P : Type}
-  : T -> P
-  := induction (fun x_ : T => P)
+Definition absurd@{i | } {A : Type@{i}}
+  : Void@{i} -> A
+  := matching_nodep
 .
 (* from: originally defined by Hexirp *)
 
-(** 帰納法です。 *)
-
-Definition absurd {A : Type}
-  : T -> A
-  := recursion
-.
-(* from: originally defined by Hexirp *)
-
-(** 矛盾による証明です。 *)
+(** 爆発律の関数です。 *)
