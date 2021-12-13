@@ -2,11 +2,11 @@
 
 Require Googology_In_Coq.Base.
 
-(** [Googology_In_Coq.Base] を要求します。 *)
+(** ライブラリを要求します。 *)
 
 Import Googology_In_Coq.Base.
 
-(** [Googology_In_Coq.Base] を開きます。 *)
+(** ライブラリを開きます。 *)
 
 Definition Dependent_Function@{i | }
     (A : Type@{i})
