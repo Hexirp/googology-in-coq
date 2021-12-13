@@ -1,86 +1,79 @@
-(** 直積の型に関するモジュールです。 *)
+(** 直積型に関するモジュールです。 *)
 
-Require Googology_In_Coq.Base.Base.
+Require Googology_In_Coq.Base.
+Require Googology_In_Coq.Dependent_Sum.
 
-(** [Googology_In_Coq.Base.Base] を要求します。 *)
+(** ライブラリを要求します。 *)
 
-Import Googology_In_Coq.Base.Base.
+Import Googology_In_Coq.Base.
+Import Googology_In_Coq.Dependent_Sum (Dependent_Sum).
 
-(** [Googology_In_Coq.Base.Base] を開きます。 *)
+(** ライブラリを開きます。 *)
 
-Inductive T (A : Type) (B : Type)
-  : Type
-  := pair : A -> B -> T A B
+Definition Product@{i | } (A : Type@{i}) (B : Type@{i}) : Type@{i}
+  := Dependent_Sum A (fun a : A => B)
 .
 (* from: originally defined by Hexirp *)
 
-(** 主型です。 *)
+(** 直積型です。 *)
 
-Arguments pair {A} {B} a b.
+Definition pair@{i | } {A : Type@{i}} {B : Type@{i}} : A -> B -> Product A B
+  := Dependent_Sum.pair
+.
 
-(** [pair] についての暗黙引数を設定します。 *)
+(** ペアリング関数です。 *)
 
-Definition induction
-    {A : Type}
-    {B : Type}
-    (P : T A B -> Type)
+Definition matching@{i | }
+    {A : Type@{i}}
+    {B : Type@{i}}
+    (P : Product A B -> Type@{i})
     (construct_pair : forall (x_1 : A) (x_2 : B), P (pair x_1 x_2))
-  : forall x : T A B, P x
-  := fun x : T A B => match x with pair a b => construct_pair a b end
+  : forall x : Product A B, P x
+  := Dependent_Sum.matching P construct_pair
 .
 (* from: originally defined by Hexirp *)
 
-(** 帰納法です。 *)
+(** 場合分けです。 *)
 
-Definition recursion
-    {A : Type}
-    {B : Type}
-    {P : Type}
+Definition matching_nodep@{i | }
+    {A : Type@{i}}
+    {B : Type@{i}}
+    {P : Type@{i}}
     (construct_pair : A -> B -> P)
-  : T A B -> P
-  := induction (fun x_ : T A B => P) construct_pair
+  : Product A B -> P
+  := matching (fun x_ : Product A B => P) construct_pair
 .
 (* from: originally defined by Hexirp *)
 
-(** 再帰です。 *)
+(** 場合分けです。 *)
 
-Definition first {A : Type} {B : Type} : T A B -> A
-  := recursion (fun (a : A) (b : B) => a)
+Definition first@{i | } {A : Type@{i}} {B : Type@{i}} : Product A B -> A
+  := matching_nodep (fun (a : A) (b : B) => a)
 .
 (* from: originally defined by Hexirp *)
 
 (** 直積型の第一射影関数です。 *)
 
-Definition second {A : Type} {B : Type} : T A B -> B
-  := recursion (fun (a : A) (b : B) => b)
+Definition second@{i | } {A : Type@{i}} {B : Type@{i}} : Product A B -> B
+  := matching_nodep (fun (a : A) (b : B) => b)
 .
 (* from: originally defined by Hexirp *)
 
 (** 直積型の第二射影関数です。 *)
 
-Definition map {A : Type} {B : Type} {C : Type} {D : Type}
-  : (A -> C) -> (B -> D) -> T A B -> T C D
-  :=
-    fun (f_a : A -> C) (f_b : B -> D) =>
-      recursion (fun (a : A) (b : B) => pair (f_a a) (f_b b))
-.
-(* from: originally defined by Hexirp *)
-
-(** 直積型での写像です。 *)
-
-Definition curry {A : Type} {B : Type} {C : Type}
-  : (T A B -> C) -> A -> B -> C
-  := fun (f : T A B -> C) (x : A) (y : B) => f (pair x y)
+Definition curry@{i | } {A : Type@{i}} {B : Type@{i}} {C : Type@{i}}
+  : (Product A B -> C) -> A -> B -> C
+  := fun (f : Product A B -> C) (x : A) (y : B) => f (pair x y)
 .
 (* from: originally defined by Hexirp *)
 
 (** 関数のカリー化です。 *)
 
-Definition uncurry {A : Type} {B : Type} {C : Type}
-  : (A -> B -> C) -> T A B -> C
+Definition uncurry@{i | } {A : Type@{i}} {B : Type@{i}} {C : Type@{i}}
+  : (A -> B -> C) -> Product A B -> C
   :=
     fun f : A -> B -> C =>
-      recursion (fun (a : A) (b : B) => f a b)
+      matching_nodep (fun (a : A) (b : B) => f a b)
 .
 (* from: originally defined by Hexirp *)
 
