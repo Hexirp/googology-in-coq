@@ -1,12 +1,14 @@
 (** 関数の型に関するモジュールです。 *)
 
-Require Googology_In_Coq.Base.Base.
+Require Googology_In_Coq.Base.
+Require Googology_In_Coq.Dependent_Function.
 
-(** [Googology_In_Coq.Base.Base] を要求します。 *)
+(** ライブラリを要求します。 *)
 
-Import Googology_In_Coq.Base.Base.
+Import Googology_In_Coq.Base.
+Import Googology_In_Coq.Dependent_Function (Dependent_Function).
 
-(** [Googology_In_Coq.Base.Base] を開きます。 *)
+(** ライブラリを開きます。 *)
 
 Definition T {A : Type} {B : Type} : Type := A -> B.
 (* from: originally defined by Hexirp *)
