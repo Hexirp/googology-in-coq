@@ -55,7 +55,10 @@ Definition first@{i | } {A : Type@{i}} {B : A -> Type@{i}}
 
 Definition second@{i | } {A : Type@{i}} {B : A -> Type@{i}}
   : forall x : Dependent_Sum A B, B (first x)
-  := matching (fun x_ : T A B => B (first x_)) (fun (a : A) (b : B a) => b)
+  :=
+    matching
+      (fun x_ : Dependent_Sum A B => B (first x_))
+      (fun (a : A) (b : B a) => b)
 .
 (* from: originally defined by Hexirp *)
 
