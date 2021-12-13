@@ -1,15 +1,18 @@
-(** 依存積の型についてのモジュールです。 *)
+(** 依存直積型についてのモジュールです。 *)
 
-Require Googology_In_Coq.Base.Base.
+Require Googology_In_Coq.Base.
+Require Googology_In_Coq.Dependent_Function.
 
-(** [Googology_In_Coq.Base.Base] を要求します。 *)
+(** ライブラリを要求します。 *)
 
-Import Googology_In_Coq.Base.Base.
+Import Googology_In_Coq.Base.
+Import Googology_In_Coq.Dependent_Function (Dependent_Function).
 
-(** [Googology_In_Coq.Base.Base] を開きます。 *)
+(** ライブラリを開きます。 *)
 
-Definition T (A : Type) (B : A -> Type) : Type
-  := forall a : A, B a
+Definition Dependent_Product@{i | } (A : Type@{i}) (B : A -> Type@{i})
+  : Type@{i}
+  := Dependent_Function A B
 .
 (* from: originally defined by Hexirp *)
 
