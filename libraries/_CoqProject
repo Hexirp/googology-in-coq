@@ -7,5 +7,6 @@
 theories/Base.v
 theories/Dependent_Function.v
 theories/Function.v
+theories/Dependent_Product.v
 theories/Dependent_Sum.v
 theories/Sum.v
