@@ -1,10 +1,10 @@
 (** 直和型に関するモジュールです。 *)
 
-Require Googology_In_Coq.Base.Base.
+Require Googology_In_Coq.Base.
 
 (** ライブラリを要求します。 *)
 
-Import Googology_In_Coq.Base.Base.
+Import Googology_In_Coq.Base.
 
 (** ライブラリを開きます。 *)
 
