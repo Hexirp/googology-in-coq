@@ -9,7 +9,7 @@ Import Googology_In_Coq.Base.
 (** ライブラリを開きます。 *)
 
 Inductive Sum@{i | } (A : Type@{i}) (B : Type@{i}) : Type@{i}
-  := left : A -> T A B | right : B -> T A B
+  := left : A -> Sum A B | right : B -> Sum A B
 .
 (* from: originally defined by Hexirp *)
 
