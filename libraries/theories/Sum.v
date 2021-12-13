@@ -1,38 +1,37 @@
-(** 直和の型に関するモジュールです。 *)
+(** 直和型に関するモジュールです。 *)
 
 Require Googology_In_Coq.Base.Base.
 
-(** [Googology_In_Coq.Base.Base] を要求します。 *)
+(** ライブラリを要求します。 *)
 
 Import Googology_In_Coq.Base.Base.
 
-(** [Googology_In_Coq.Base.Base] を開きます。 *)
+(** ライブラリを開きます。 *)
 
-Inductive T (A : Type) (B : Type)
-  : Type
+Inductive Sum@{i | } (A : Type@{i}) (B : Type@{i}) : Type@{i}
   := left : A -> T A B | right : B -> T A B
 .
 (* from: originally defined by Hexirp *)
 
-(** 主型です。 *)
+(** 直和型です。 *)
 
 Arguments left {A} {B} a.
 
-(** [left] についての暗黙引数を設定します。 *)
+(** [left] の暗黙引数を設定します。 *)
 
 Arguments right {A} {B} b.
 
-(** [right] についての暗黙引数を設定します。 *)
+(** [right] の暗黙引数を設定します。 *)
 
-Definition induction
-    {A : Type}
-    {B : Type}
-    (P : T A B -> Type)
+Definition matching@{i | }
+    {A : Type@{i}}
+    {B : Type@{i}}
+    (P : Sum A B -> Type@{i})
     (construct_left : forall x_L : A, P (left x_L))
     (construct_right : forall x_R : B, P (right x_R))
-  : forall x : T A B, P x
+  : forall x : Sum A B, P x
   :=
-    fun x : T A B =>
+    fun x : Sum A B =>
       match x with
           left x_L => construct_left x_L
         |
@@ -41,17 +40,17 @@ Definition induction
 .
 (* from: originally defined by Hexirp *)
 
-(** 帰納法です。 *)
+(** 場合分けです。 *)
 
-Definition recursion
-    {A : Type}
-    {B : Type}
-    {P : Type}
+Definition matching_nodep@{i | }
+    {A : Type@{i}}
+    {B : Type@{i}}
+    {P : Type@{i}}
     (construct_left : A -> P)
     (construct_right : B -> P)
-  : T A B -> P
-  := induction (fun x_ : T A B => P) construct_left construct_right
+  : Sum A B -> P
+  := matching (fun x_ : Sum A B => P) construct_left construct_right
 .
 (* from: originally defined by Hexirp *)
 
-(** 再帰です。 *)
+(** 場合分けです。 *)
