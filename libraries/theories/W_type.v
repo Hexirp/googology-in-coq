@@ -1,12 +1,14 @@
 (** ウ型に関するモジュールです。 *)
 
 Require Googology_In_Coq.Base.
+Require Googology_In_Coq.Dependent_Function.
 Require Googology_In_Coq.Function.
 Require Googology_In_Coq.Dependent_Sum.
 
 (** ライブラリを要求します。 *)
 
 Import Googology_In_Coq.Base.
+Import Googology_In_Coq.Dependent_Function (Dependent_Function)
 Import Googology_In_Coq.Function (Function).
 Import Googology_In_Coq.Dependent_Sum (Dependent_Sum).
 
@@ -81,15 +83,17 @@ Definition
             forall
               x_v : Dependent_Sum A (fun a : A => Function (B a) (W_type A B))
             ,
-                Dependent_Sum.matching_nodep@{s_i}
+                Dependent_Sum.matching_nodep_visible
+                  Type@{s_i}
                   (
                     fun
                       (x_v_1 : A)
-                      (fun x_v_2 : Function (B x_v_1) (W_type A B))
+                      (x_v_2 : Function (B x_v_1) (W_type A B))
                     =>
-                      Dependent_Function.abstract
+                      Dependent_Function
+                        (B x_v_1)
                         (
-                          forall x_v_2_x : B x_v_1,
+                          fun x_v_2_x : B X_v_1 =>
                             P (Function.apply x_v_2 x_v_2_x)
                         )
                   )
@@ -109,30 +113,47 @@ Definition
               construct_sup
                 x_v
                 (
-                  fun
-                    x_v_
-                      :
-                        Dependent_Sum
-                          A
-                          (fun a : A => Function (B a) (W_type A B))
-                  =>
-                    Dependent_Sum.matching
-                      (
-                        fun x_v
-                        Dependent_Sum.matching_nodep@{s_i}
+                  Dependent_Sum.matching
+                    (
+                      fun
+                        x_v_
+                          :
+                            Dependent_Sum
+                              A
+                              (fun a : A => Function (B a) (W_type A B))
+                      =>
+                        Dependent_Sum.matching_nodep_visible
+                          Type@{s_i}
                           (
                             fun
                               (x_v_1 : A)
-                              (fun x_v_2 : Function (B x_v_1) (W_type A B))
+                              (x_v_2 : Function (B x_v_1) (W_type A B))
                             =>
-                              Dependent_Function.abstract
+                              Dependent_Function
+                                (B x_v_1)
                                 (
                                   fun x_v_2_x : B x_v_1 =>
                                     P (Function.apply x_v_2 x_v_2_x)
                                 )
                           )
-                          x_v
-                      )
+                          x_v_
+                    )
+                    (
+                      fun
+                        (x_v_1 : A)
+                        (x_v_2 : Function (B x_v_1) (W_type A B))
+                      =>
+                        Dependent_Function.abstract
+                          (B x_v_1)
+                          (
+                            fun x_v_2_x : B x_v_1 =>
+                              P (Function.apply x_v_2 x_v_2_x)
+                          )
+                          (
+                            fun x_v_2_x : B x_v_1 =>
+                              induction (x_v_2 x_v_2_x)
+                          )
+                    )
                     x_v
                 )
           )
