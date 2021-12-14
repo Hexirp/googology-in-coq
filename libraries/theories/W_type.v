@@ -103,7 +103,7 @@ Definition
       )
     : forall x : W_type A B, P x
     :=
-      fix induction (x : W_type A B) {struct x} : P x =>
+      fix induction (x : W_type A B) {struct x} : P x :=
         matching
           P
           (
@@ -158,3 +158,4 @@ Definition
                 )
           )
           x
+.
