@@ -159,3 +159,35 @@ Definition
           )
           x
 .
+
+(** 帰納法の原理です。 *)
+
+Definition
+  recursion@{i s_i | i < s_i}
+      {A : Type@{i}}
+      {B : A -> Type@{i}}
+      {P : Type@{i}}
+      (
+        constructor_sup
+          :
+            forall
+              x_v : Dependent_Sum A (fun a : A => Function (B a) (W_type A B))
+            ,
+                Dependent_Sum.matching_nodep_visible@{s_i}
+                  Type@{i}
+                  (
+                    fun
+                      (x_v_1 : A)
+                      (x_v_2 : Function (B x_v_1) (W_type A B))
+                    =>
+                      Function (B x_v_1) P
+                  )
+                  x_v
+              ->
+                P
+      )
+    : W_type A B -> P
+    := induction (fun x_ => P) constructor_sup
+.
+
+(** 再帰です。 *)
