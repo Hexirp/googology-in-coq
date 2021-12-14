@@ -10,9 +10,9 @@ Import Googology_In_Coq.Dependent_Function (Dependent_Function).
 
 (** ライブラリを開きます。 *)
 
-Definition Dependent_Product@{i | } (A : Type@{i}) (B : A -> Type@{i})
-  : Type@{i}
-  := Dependent_Function A B
+Definition
+  Dependent_Product@{i | } (A : Type@{i}) (B : A -> Type@{i}) : Type@{i}
+    := Dependent_Function A B
 .
 (* from: originally defined by Hexirp *)
 

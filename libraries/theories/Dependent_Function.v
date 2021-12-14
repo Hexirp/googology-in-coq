@@ -8,32 +8,29 @@ Import Googology_In_Coq.Base.
 
 (** ライブラリを開きます。 *)
 
-Definition Dependent_Function@{i | }
-    (A : Type@{i})
-    (B : A -> Type@{i})
-  : Type@{i}
-  := forall x : A, B x
+Definition
+  Dependent_Function@{i | } (A : Type@{i}) (B : A -> Type@{i}) : Type@{i}
+    := forall x : A, B x
 .
 (* from: originally defined by Hexirp *)
 
 (** 依存関数型です。 *)
 
-Definition abstract@{i | }
-    (A : Type@{i})
-    (B : A -> Type@{i})
-    (x : forall x : A, B x)
-  : Dependent_Function@{i} A B
-  := x
+Definition
+  abstract@{i | } (A : Type@{i}) (B : A -> Type@{i}) (x : forall x : A, B x)
+    : Dependent_Function@{i} A B
+    := x
 .
 
 (** 抽象です。ラムダ抽象です。 *)
 
-Definition apply@{i | }
-    (A : Type@{i})
-    (B : A -> Type@{i})
-    (x : Dependent_Function@{i} A B)
-  : forall x : A, B x
-  := x
+Definition
+  apply@{i | }
+      (A : Type@{i})
+      (B : A -> Type@{i})
+      (x : Dependent_Function@{i} A B)
+    : forall x : A, B x
+    := x
 .
 
 (** 適用です。 *)

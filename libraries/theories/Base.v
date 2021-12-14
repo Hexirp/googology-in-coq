@@ -32,9 +32,9 @@ Global Set Polymorphic Inductive Cumulativity.
 
 (** [Polymorphic Inductive Cumulativity] をオンにします。 *)
 
-Notation "x -> y"
-  := (forall (_ : x), y)
-  (at level 99, right associativity, y at level 200)
+Notation
+  "x -> y" := (forall (_ : x), y)
+    (at level 99, right associativity, y at level 200)
 .
 
 (** [forall (_ : x), y] の糖衣構文として [x -> y] を定義します。 *)

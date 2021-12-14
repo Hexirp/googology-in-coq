@@ -13,25 +13,25 @@ Inductive Void@{i | } : Type@{i} := .
 
 (** 空型です。 *)
 
-Definition matching@{i | } (P : Void@{i} -> Type@{i})
-  : forall x : Void, P x
-  := fun x : Void => match x with end
+Definition
+  matching@{i | } (P : Void@{i} -> Type@{i}) : forall x : Void, P x
+    := fun x : Void => match x with end
 .
 (* from: originally defined by Hexirp *)
 
 (** 場合分けです。 *)
 
-Definition matching_nodep@{i | } {P : Type@{i}}
-  : Void@{i} -> P
-  := matching (fun x_ : Void => P)
+Definition
+  matching_nodep@{i | } {P : Type@{i}} : Void@{i} -> P
+    := matching (fun x_ : Void => P)
 .
 (* from: originally defined by Hexirp *)
 
 (** 場合分けです。 *)
 
-Definition absurd@{i | } {A : Type@{i}}
-  : Void@{i} -> A
-  := matching_nodep
+Definition
+  absurd@{i | } {A : Type@{i}} : Void@{i} -> A
+    := fun x : Void => matching_nodep x
 .
 (* from: originally defined by Hexirp *)
 
