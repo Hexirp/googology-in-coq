@@ -13,7 +13,7 @@ Import Googology_In_Coq.Base.
 Module Core.
 
 Private Inductive
-  Path@{i | } (A : Type@{i}) (a : A) : A -> Type@{i} := id : T A a a
+  Path@{i | } (A : Type@{i}) (a : A) : A -> Type@{i} := id : Path A a a
 .
 (* from: originally defined by Hexirp *)
 
@@ -25,8 +25,8 @@ Definition
       (construct_id : P a (id A a))
     : forall (a' : A) (x : Path A a a'), P a' x
     :=
-      fun (b : A) (x : T A a a') =>
-        match x as x_ in T _ _ a'_ return P a'_ x_ with
+      fun (b : A) (x : Path A a a') =>
+        match x as x_ in Path _ _ a'_ return P a'_ x_ with
           id _ _ => construct_id
         end
 .
@@ -137,7 +137,7 @@ Definition
 Definition
   ap@{i | } {A : Type@{i}} {B : Type@{i}} (f : A -> B) {x y : A}
     : Path x y -> Path (f x) (f y)
-    := fun p : Path x y => trpt_visible A (fun y_ => T (f x) (f y_)) p id
+    := fun p : Path x y => trpt_visible A (fun y_ => Path (f x) (f y_)) p id
 .
 (* from: originally defined by Hexirp *)
 
