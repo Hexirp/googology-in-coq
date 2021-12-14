@@ -1,31 +1,19 @@
 #!/bin/bash
 
 for file in \
-Base/Base.v \
-Base/Function.v \
-Base/Dependent_Function.v \
-Base/Unit.v \
-Base/Void.v \
-Base/Product.v \
-Base/Sum.v \
-Base/Dependent_Product.v \
-Base/Dependent_Sum.v \
-Base/Path.v \
-Base/TYPE.v \
-Base/Path_Reasoning.v \
-Base/Pointwise_Path.v \
-Base/Pointwise_Path_Reasoning.v \
-Base/Bi_invertible_Map.v \
-Base/Half_Adjoint_Equivalence.v \
-Base/Contractible_Function.v \
-Base/Peano_Number.v \
-Base/Logical_Equivalence.v \
-Base/Negation.v \
-Base/Dependent_Type.v \
-Base/Bool.v \
-Base/Non_equality.v \
-Base.v \
+theories/Base.v \
+theories/Dependent_Function.v \
+theories/Function.v \
+theories/Dependent_Product.v \
+theories/Dependent_Sum.v \
+theories/Product.v \
+theories/Sum.v \
+theories/Void.v \
+theories/Unit.v \
+theories/W_type.v \
+theories/Universe.v \
+theories/Path.v \
 
 do
-  echo -n " theories/${file}"
+  echo -n " ${file}"
 done
