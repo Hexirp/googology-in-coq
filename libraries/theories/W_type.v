@@ -8,7 +8,7 @@ Require Googology_In_Coq.Dependent_Sum.
 (** ライブラリを要求します。 *)
 
 Import Googology_In_Coq.Base.
-Import Googology_In_Coq.Dependent_Function (Dependent_Function)
+Import Googology_In_Coq.Dependent_Function (Dependent_Function).
 Import Googology_In_Coq.Function (Function).
 Import Googology_In_Coq.Dependent_Sum (Dependent_Sum).
 
