@@ -49,6 +49,19 @@ Definition
 (** 場合分けです。 *)
 
 Definition
+  matching_nodep_visible@{i | }
+      {A : Type@{i}}
+      {B : A -> Type@{i}}
+      (P : Type@{i})
+      (construct_pair : forall a : A, B a -> P)
+    : Dependent_Sum A B -> P
+    := matching (fun x_ : Dependent_Sum A B => P) construct_pair
+.
+(* from: originally defined by Hexirp *)
+
+(** 引数が明示的な [matching_nodep] です。 *)
+
+Definition
   first@{i | } {A : Type@{i}} {B : A -> Type@{i}} : Dependent_Sum A B -> A
     := matching_nodep (fun (a : A) (b : B a) => a)
 .

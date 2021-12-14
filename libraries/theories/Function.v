@@ -10,7 +10,7 @@ Import Googology_In_Coq.Dependent_Function (Dependent_Function).
 
 (** ライブラリを開きます。 *)
 
-Definition Function@{i | } {A : Type@{i}} {B : Type@{i}} : Type@{i} := A -> B.
+Definition Function@{i | } (A : Type@{i}) (B : Type@{i}) : Type@{i} := A -> B.
 (* from: originally defined by Hexirp *)
 
 (** 関数型です。 *)
