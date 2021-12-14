@@ -35,7 +35,7 @@ Definition
 End Core.
 
 Definition
-  Path@{i | } {A : Type@{i}} (a : A) (a' : A) : Type := Core.Path A a a'
+  Path@{i | } {A : Type@{i}} (a : A) (a' : A) : Type@{i} := Core.Path A a a'
 .
 (* from: originally defined by Hexirp *)
 
