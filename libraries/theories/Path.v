@@ -25,7 +25,7 @@ Definition
       (construct_id : P a (id A a))
     : forall (a' : A) (x : Path A a a'), P a' x
     :=
-      fun (b : A) (x : Path A a a') =>
+      fun (a' : A) (x : Path A a a') =>
         match x as x_ in Path _ _ a'_ return P a'_ x_ with
           id _ _ => construct_id
         end
