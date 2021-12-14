@@ -21,7 +21,7 @@ Definition
   induction@{i | }
       (A : Type@{i})
       (a : A)
-      (P : forall a' : A, Path A a a' -> Type)
+      (P : forall a' : A, Path A a a' -> Type@{i})
       (construct_id : P a (id A a))
     : forall (a' : A) (x : Path A a a'), P a' x
     :=
