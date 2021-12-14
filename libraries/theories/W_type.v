@@ -27,7 +27,7 @@ Inductive
 
 (** ウ型です。 W-types です。 *)
 
-Argument sup {A} {B} _.
+Arguments sup {A} {B} _.
 
 (** [sup] の暗黙引数を設定します。 *)
 
