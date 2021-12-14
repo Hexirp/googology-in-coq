@@ -37,7 +37,7 @@ Definition
       {B : A -> Type@{i}}
       (P : W_type A B -> Type@{i})
       (
-        construct_sup
+        constructor_sup
           :
             forall
               x_v : Dependent_Sum A (fun a : A => Function (B a) (W_type A B))
@@ -47,7 +47,7 @@ Definition
     : forall x : W_type A B, P x
     :=
       fun x : W_type A B =>
-        match x with sup x_v => construct_sup x_v end
+        match x with sup x_v => constructor_sup x_v end
 .
 (* from: originally defined by Hexirp *)
 
@@ -59,14 +59,14 @@ Definition
       {B : A -> Type@{i}}
       {P : Type@{i}}
       (
-        construct_sup
+        constructor_sup
           :
             Dependent_Sum A (fun a : A => Function (B a) (W_type A B)) -> P
     )
     : W_type A B -> P 
     :=
       fun x : W_type A B =>
-        match x with sup x_v => construct_sup x_v end
+        match x with sup x_v => constructor_sup x_v end
 .
 (* from: originally defined by Hexirp *)
 
@@ -78,7 +78,7 @@ Definition
       {B : A -> Type@{i}}
       (P : W_type A B -> Type@{i})
       (
-        construct_sup
+        constructor_sup
           :
             forall
               x_v : Dependent_Sum A (fun a : A => Function (B a) (W_type A B))
@@ -110,7 +110,7 @@ Definition
             fun
               x_v : Dependent_Sum A (fun a : A => Function (B a) (W_type A B))
             =>
-              construct_sup
+              constructor_sup
                 x_v
                 (
                   Dependent_Sum.matching

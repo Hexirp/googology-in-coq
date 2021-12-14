@@ -30,9 +30,9 @@ Definition
       {A : Type@{i}}
       {B : Type@{i}}
       (P : Product A B -> Type@{i})
-      (construct_pair : forall (x_1 : A) (x_2 : B), P (pair x_1 x_2))
+      (constructor_pair : forall (x_1 : A) (x_2 : B), P (pair x_1 x_2))
     : forall x : Product A B, P x
-    := Dependent_Sum.matching P construct_pair
+    := Dependent_Sum.matching P constructor_pair
 .
 (* from: originally defined by Hexirp *)
 
@@ -43,9 +43,9 @@ Definition
       {A : Type@{i}}
       {B : Type@{i}}
       {P : Type@{i}}
-      (construct_pair : A -> B -> P)
+      (constructor_pair : A -> B -> P)
     : Product A B -> P
-    := matching (fun x_ : Product A B => P) construct_pair
+    := matching (fun x_ : Product A B => P) constructor_pair
 .
 (* from: originally defined by Hexirp *)
 

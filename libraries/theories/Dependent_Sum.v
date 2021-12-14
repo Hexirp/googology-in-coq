@@ -25,11 +25,11 @@ Definition
       {A : Type@{i}}
       {B : A -> Type@{i}}
       (P : Dependent_Sum A B -> Type@{i})
-      (construct_pair : forall (a : A) (b : B a), P (pair a b))
+      (constructor_pair : forall (a : A) (b : B a), P (pair a b))
     : forall x : Dependent_Sum A B, P x
     :=
       fun x : Dependent_Sum A B =>
-        match x with pair a b => construct_pair a b end
+        match x with pair a b => constructor_pair a b end
 .
 (* from: originally defined by Hexirp *)
 
@@ -40,9 +40,9 @@ Definition
       {A : Type@{i}}
       {B : A -> Type@{i}}
       {P : Type@{i}}
-      (construct_pair : forall a : A, B a -> P)
+      (constructor_pair : forall a : A, B a -> P)
     : Dependent_Sum A B -> P
-    := matching (fun x_ : Dependent_Sum A B => P) construct_pair
+    := matching (fun x_ : Dependent_Sum A B => P) constructor_pair
 .
 (* from: originally defined by Hexirp *)
 
@@ -53,9 +53,9 @@ Definition
       {A : Type@{i}}
       {B : A -> Type@{i}}
       (P : Type@{i})
-      (construct_pair : forall a : A, B a -> P)
+      (constructor_pair : forall a : A, B a -> P)
     : Dependent_Sum A B -> P
-    := matching (fun x_ : Dependent_Sum A B => P) construct_pair
+    := matching (fun x_ : Dependent_Sum A B => P) constructor_pair
 .
 (* from: originally defined by Hexirp *)
 

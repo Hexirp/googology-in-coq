@@ -29,15 +29,15 @@ Definition
       {A : Type@{i}}
       {B : Type@{i}}
       (P : Sum A B -> Type@{i})
-      (construct_left : forall x_L : A, P (left x_L))
-      (construct_right : forall x_R : B, P (right x_R))
+      (constructor_left : forall x_L : A, P (left x_L))
+      (constructor_right : forall x_R : B, P (right x_R))
     : forall x : Sum A B, P x
     :=
       fun x : Sum A B =>
         match x with
-            left x_L => construct_left x_L
+            left x_L => constructor_left x_L
           |
-            right x_R => construct_right x_R
+            right x_R => constructor_right x_R
         end
 .
 (* from: originally defined by Hexirp *)
@@ -49,10 +49,10 @@ Definition
       {A : Type@{i}}
       {B : Type@{i}}
       {P : Type@{i}}
-      (construct_left : A -> P)
-      (construct_right : B -> P)
+      (constructor_left : A -> P)
+      (constructor_right : B -> P)
     : Sum A B -> P
-    := matching (fun x_ : Sum A B => P) construct_left construct_right
+    := matching (fun x_ : Sum A B => P) constructor_left constructor_right
 .
 (* from: originally defined by Hexirp *)
 

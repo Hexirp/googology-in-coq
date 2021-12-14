@@ -22,12 +22,12 @@ Definition
       (A : Type@{i})
       (a : A)
       (P : forall a' : A, Path A a a' -> Type@{i})
-      (construct_id : P a (id A a))
+      (constructor_id : P a (id A a))
     : forall (a' : A) (x : Path A a a'), P a' x
     :=
       fun (a' : A) (x : Path A a a') =>
         match x as x_ in Path _ _ a'_ return P a'_ x_ with
-          id _ _ => construct_id
+          id _ _ => constructor_id
         end
 .
 (* from: originally defined by Hexirp *)
@@ -55,9 +55,9 @@ Definition
       (A : Type@{i})
       (a : A)
       (P : forall a' : A, Path a a' -> Type@{i})
-      (construct_id : P a id)
+      (constructor_id : P a id)
     : forall (a' : A) (x : Path a a'), P a' x
-    := Core.induction A a P construct_id
+    := Core.induction A a P constructor_id
 .
 (* from: originally defined by Hexirp *)
 
@@ -67,7 +67,7 @@ Definition
   jay@{i | }
       (A : Type@{i})
       (P : forall (a : A) (a' : A), Path a a' -> Type@{i})
-      (construct_id : forall a : A, P a a id)
+      (constructor_id : forall a : A, P a a id)
     : forall (a : A) (a' : A) (x : Path a a'), P a a' x
     :=
       fun a : A =>
@@ -75,7 +75,7 @@ Definition
           A
           a
           (fun (a'_ : A) (x_ : Path a a'_) => P a a'_ x_)
-          (construct_id a)
+          (constructor_id a)
 .
 (* from: originally defined by Hexirp *)
 

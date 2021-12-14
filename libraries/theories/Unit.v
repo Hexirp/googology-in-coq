@@ -14,17 +14,17 @@ Inductive Unit@{i | } : Type@{i} := unit : Unit.
 (** 単一型です。 *)
 
 Definition
-  matching@{i | } (P : Unit@{i} -> Type@{i}) (construct_unit : P unit)
+  matching@{i | } (P : Unit@{i} -> Type@{i}) (constructor_unit : P unit)
     : forall x : Unit, P x
-    := fun x : Unit => match x with unit => construct_unit end
+    := fun x : Unit => match x with unit => constructor_unit end
 .
 (* from: originally defined by Hexirp *)
 
 (** 場合分けです。 *)
 
 Definition
-  matching_nodep@{i | } {P : Type@{i}} (construct_unit : P) : Unit@{i} -> P
-    := matching (fun x_ => P) construct_unit
+  matching_nodep@{i | } {P : Type@{i}} (constructor_unit : P) : Unit@{i} -> P
+    := matching (fun x_ => P) constructor_unit
 .
 (* from: originally defined by Hexirp *)
 
