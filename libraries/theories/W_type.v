@@ -83,8 +83,8 @@ Definition
             forall
               x_v : Dependent_Sum A (fun a : A => Function (B a) (W_type A B))
             ,
-                Dependent_Sum.matching_nodep_visible
-                  Type@{s_i}
+                Dependent_Sum.matching_nodep_visible@{s_i}
+                  Type@{i}
                   (
                     fun
                       (x_v_1 : A)
@@ -122,8 +122,8 @@ Definition
                               A
                               (fun a : A => Function (B a) (W_type A B))
                       =>
-                        Dependent_Sum.matching_nodep_visible
-                          Type@{s_i}
+                        Dependent_Sum.matching_nodep_visible@{s_i}
+                          Type@{i}
                           (
                             fun
                               (x_v_1 : A)
