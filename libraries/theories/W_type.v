@@ -93,7 +93,7 @@ Definition
                       Dependent_Function
                         (B x_v_1)
                         (
-                          fun x_v_2_x : B X_v_1 =>
+                          fun x_v_2_x : B x_v_1 =>
                             P (Function.apply x_v_2 x_v_2_x)
                         )
                   )
