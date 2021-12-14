@@ -19,4 +19,10 @@ digraph Dependencies {
   "Base" -> "Void";
   # Unit
   "Base" -> "Unit";
+  # W_type
+  "Base" -> "W_type";
+  # Universe
+  "Base" -> "Universe";
+  # Path
+  "Base" -> "Path";
 }
