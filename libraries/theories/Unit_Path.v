@@ -29,3 +29,15 @@ Definition
         constructor_unit
     := Path.id
 .
+(* from: originally defined by Hexirp *)
+
+(** 変換です。 *)
+
+Definition
+  coiota_unit@{i | } (P : Type@{i}) (x : P)
+    : Path (Unit.comatching x) Unit.unit
+    := Path.id
+.
+(* from: originally defined by Hexirp *)
+
+(** 変換です。 *)

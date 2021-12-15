@@ -28,7 +28,14 @@ Definition
 .
 (* from: originally defined by Hexirp *)
 
-(** 再帰です。 *)
+(** 場合分けです。 *)
+
+Definition
+  comatching_nodep@{i | } {P : Type@{i}} : P -> Unit@{i} := fun x : P => unit
+.
+(* from: originally defined by Hexirp *)
+
+(** 余場合分けです。 *)
 
 Definition const@{i | } {A : Type@{i}} : A -> Unit@{i} := fun x : A => unit.
 (* from: originally defined by Hexirp *)
