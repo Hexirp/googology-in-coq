@@ -17,5 +17,24 @@ Definition
     : Dependent_Function A B -> Dependent_Function A B -> Type@{i}
     := Path_Visible (Dependent_Function A B)
 .
+(* from: originally defined by Hexirp *)
 
 (** 依存関数型の道です。 *)
+
+Definition
+  beta@{i | } (A : Type@{i}) (B : A -> Type@{i}) (f : forall x : A, B x)
+    : Path (apply A B (abstract A B f)) f
+    := Path.id
+.
+(* from: originally defined by Hexirp *)
+
+(** ベータ変換です。 *)
+
+Definition
+  eta@{i | } (A : Type@{i}) (B : A -> Type@{i}) (f : forall x : A, B x)
+    : Path (abstract A B (apply A B f)) f
+    := Path.id
+.
+(* from: originally defined by Hexirp *)
+
+(** イータ変換です。 *)
