@@ -54,13 +54,13 @@ Set Default Goal Selector "!".
 定義の前には、それを簡単に説明するドキュメントとしてのコメントを付けます。定義を上手く分けられる時は coqdoc の見出し機能を使ってください。その直後には節の意味を説明するコメントをつける方がいいです。
 
 ```coq
-(** ... *)
-
 Definition foo a b c.
 
 (** ... *)
 
 Definition baa a b c.
+
+(** ... *)
 ```
 
 ドキュメントとしてのコメントは、上記のように記述してください。 coqdoc が使う文芸的プログラミングの考え方に従って、ソースコードとドキュメントが対等になるように記述します。
@@ -75,7 +75,7 @@ coqdoc には見出し機能があり `(** * ... *)` は `h1` 要素に変換さ
 
 ### 名前
 
-モジュールの名前は、先頭を大文字にし、 camel case を使ってください。今は、セクションの名前には制限はありません。
+モジュールの名前は、先頭を大文字にし、 snake case を使ってください。今は、セクションの名前には制限はありません。
 
 関数や定理などの名前はポーランド記法を基本にしますが、良い名前があるときはそれを使って構いません。次に細かい慣習を示します。
 
@@ -123,97 +123,6 @@ coqdoc には見出し機能があり `(** * ... *)` は `h1` 要素に変換さ
 改行と字下げについての慣習を次に示します。改行すべき要素が括弧の中に入っていたり、他の規則によって既に字下げされている場合でも、最終的な分かりやすさのために、機械的に慣習に従うことが多いです。これらの規約は、一番外側の文から順番に適用してください。
 
 ```coq
-(* Definition _ : _ := _. 0. *)
-Definition foo _ : _ := _.
-
-(* Definition _ : _ := _. 1. *)
-Definition foo _ : _
-  := _.
-
-(* Definition _ : _ := _. 2. *)
-Definition foo _
-  : _
-  := _.
-
-(* Definition _ : _ := _. 3. *)
-Definition foo
-  _
-  : _
-  := _.
-
-(* Definition _ : _ := _. 4. *)
-Definition foo
-  _ _ _
-  _ _ _
-  : _
-  := _.
-
-(* Definition _ : _ := _. 5. *)
-Definition
-  foo
-  _ _ _
-  _ _ _
-  : _
-  := _.
-
-(* Definition _ : _. 0. *)
-Definition foo _ : _.
-
-(* Definition _ : _. 1. *)
-Definition foo _
-  : _.
-
-(* Definition _ : _. 2. *)
-Definition foo
-  _
-  : _.
-
-(* Definition _ : _. 3. *)
-Definition foo
-  _ _ _
-  _ _ _
-  : _.
-
-(* Definition _ : _. 4. *)
-Definition
-  foo
-  _ _ _
-  _ _ _
-  : _.
-
-(* forall x : T, P. 0. *)
-forall x : T, P
-
-(* forall x : T, P. 1. *)
-forall x : T,
-  P
-
-(* forall x : T, P. 2. *)
-forall
-  _ _ _
-  _ _ _,
-  P
-
-(* match _ as _ in _ return _ with _ end. 0. *)
-match _ as _ in _ return _ with _ end
-
-(* match _ as _ in _ return _ with _ end. 1. *)
-match _
-  as _
-  in _
-  return _
-  with _
-end
-
-(* with _. 0. match 式の with 節に該当. *)
-with _
-
-(* with _. 1. match 式の with 節に該当. *)
-with
-  | _ => _
-  | _ => _
-  | _ => _
-
 (* let _ := _ in _. 0. *)
 let _ := _ in _
 
@@ -245,10 +154,6 @@ Gallina の項をコントロールできるとして許容されているタク
 * `change` タクティック
 * `move` タクティック
 * `=>` タクティカル
-
-さらに、新しく定義したタクティックも許されます。例えば、次のような例があります。
-
-* `refine_conc` タクティック
 
 ゴールが複数に増えたときはビュレットを使います。ビュレットは字下げせず、単独の行に置いてください。その後に続くコマンドは字下げしますが、一番後ろのゴールだけは字下げしなくともよいです。例として、次のようにします。
 
