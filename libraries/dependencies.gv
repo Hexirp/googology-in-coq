@@ -62,6 +62,8 @@ digraph Dependencies {
   "Path" -> "Void_Path";
   # W_type_Path
   "Base" -> "W_type_Path";
+  "Function" -> "W_type_Path";
+  "Dependent_Sum" -> "W_type_Path";
   "W_type" -> "W_type_Path";
   "Path" -> "W_type_Path";
   # Universe_Path
