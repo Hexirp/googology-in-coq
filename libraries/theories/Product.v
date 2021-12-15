@@ -68,6 +68,20 @@ Definition
 (** 直積型の第二射影関数です。 *)
 
 Definition
+  comatching_nodep@{i | }
+      {A : Type@{i}}
+      {B : Type@{i}}
+      {P : Type@{i}}
+      (destructor_first : P -> A)
+      (destructor_second : P -> B)
+    : P -> Product A B
+    := fun x : P => pair (destructor_first x) (destructor_second x)
+.
+(* from: originally defined by Hexirp *)
+
+(** 余場合分けです。 *)
+
+Definition
   curry@{i | } {A : Type@{i}} {B : Type@{i}} {C : Type@{i}}
     : (Product A B -> C) -> A -> B -> C
     := fun (f : Product A B -> C) (x : A) (y : B) => f (pair x y)
