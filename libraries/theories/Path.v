@@ -42,7 +42,8 @@ Definition
 (** 道です。 *)
 
 Definition
-  Path@{i | } (A : Type@{i}) (a : A) (a' : A) : Type@{i} := Core.Path A a a'
+  Path_Visible@{i | } (A : Type@{i}) (a : A) (a' : A) : Type@{i}
+    := Core.Path A a a'
 .
 (* from: originally defined by Hexirp *)
 
