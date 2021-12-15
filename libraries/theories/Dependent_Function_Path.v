@@ -8,7 +8,7 @@ Require Googology_In_Coq.Path.
 
 Import Googology_In_Coq.Base.
 Import Googology_In_Coq.Dependent_Function (Dependent_Function).
-Import Googology_In_Coq.Path (Path).
+Import Googology_In_Coq.Path (Path, Path_Visible).
 
 (** ライブラリを開きます。 *)
 
