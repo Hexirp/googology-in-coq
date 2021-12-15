@@ -17,3 +17,4 @@ theories/W_type.v
 theories/Universe.v
 theories/Path.v
 theories/Dependent_Function_Path.v
+theories/Function_Path.v
