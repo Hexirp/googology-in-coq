@@ -31,7 +31,7 @@ Definition
       (x_2 : B)
     :
       Path
-        (Product.matching P constructor_pair (pair x_1 x_2))
+        (Product.matching P constructor_pair (Product.pair x_1 x_2))
         (constructor_pair x_1 x_2)
     := Path.id
 .
