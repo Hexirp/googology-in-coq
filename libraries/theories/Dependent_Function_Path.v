@@ -23,7 +23,7 @@ Definition
 
 Definition
   beta@{i | } (A : Type@{i}) (B : A -> Type@{i}) (f : forall x : A, B x)
-    : Path (apply A B (abstract A B f)) f
+    : Path (Dependent_Function.apply A B (Dependent_Function.abstract A B f)) f
     := Path.id
 .
 (* from: originally defined by Hexirp *)
@@ -32,7 +32,7 @@ Definition
 
 Definition
   eta@{i | } (A : Type@{i}) (B : A -> Type@{i}) (f : forall x : A, B x)
-    : Path (abstract A B (apply A B f)) f
+    : Path (Dependent_Function.abstract A B (Dependent_Function.apply A B f)) f
     := Path.id
 .
 (* from: originally defined by Hexirp *)
