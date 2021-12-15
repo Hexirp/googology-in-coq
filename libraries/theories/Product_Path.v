@@ -26,7 +26,7 @@ Definition
       {A : Type@{i}}
       {B : Type@{i}}
       (P : Product A B -> Type@{i})
-      (constructor_pair : forall (x_1 : A) (x_2 : B), P (pair x_1 x_2))
+      (constructor_pair : forall (x_1 : A) (x_2 : B), P (Product.pair x_1 x_2))
       (x_1 : A)
       (x_2 : B)
     :
