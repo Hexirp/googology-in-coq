@@ -51,7 +51,7 @@ Definition
       Path
         (
           Product.first
-            (Product.comatching destructor_first destructor_second x)
+            (Product.comatching_nodep destructor_first destructor_second x)
         )
         (destructor_first x)
     := Path.id
@@ -72,7 +72,7 @@ Definition
       Path
         (
           Product.second
-            (Product.comatching destructor_first destructor_second x)
+            (Product.comatching_nodep destructor_first destructor_second x)
         )
         (destructor_second x)
     := Path.id
