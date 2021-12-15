@@ -41,6 +41,13 @@ Definition
 
 (** 道です。 *)
 
+Definition
+  Path@{i | } (A : Type@{i}) (a : A) (a' : A) : Type@{i} := Core.Path A a a'
+.
+(* from: originally defined by Hexirp *)
+
+(** 引数が明示的な [Path] です。 *)
+
 Definition id@{i | } (A : Type@{i}) (a : A) : Path a a := Core.id A a.
 (* from: originally defined by Hexirp *)
 
