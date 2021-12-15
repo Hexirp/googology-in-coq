@@ -46,7 +46,7 @@ Definition
       (P : Sum A B -> Type@{i})
       (constructor_left : forall x_L : A, P (Sum.left x_L))
       (constructor_right : forall x_R : B, P (Sum.right x_R))
-      (x_R : A)
+      (x_R : B)
     :
       Path
         (Sum.matching P constructor_left constructor_right (Sum.right x_R))
