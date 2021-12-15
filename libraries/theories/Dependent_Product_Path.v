@@ -13,7 +13,7 @@ Import Googology_In_Coq.Path (Path, Path_Visible).
 (** ライブラリを開きます。 *)
 
 Definition
-  Dependent_Product_Path@{i | } (A : Type@{i}) (B : Type@{i})
+  Dependent_Product_Path@{i | } (A : Type@{i}) (B : A -> Type@{i})
     : Dependent_Product A B -> Dependent_Product A B -> Type@{i}
     := Path_Visible (Dependent_Product A B)
 .
