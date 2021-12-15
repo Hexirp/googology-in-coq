@@ -15,10 +15,10 @@ digraph Dependencies {
   "Dependent_Sum" -> "Product";
   # Sum
   "Base" -> "Sum";
-  # Void
-  "Base" -> "Void";
   # Unit
   "Base" -> "Unit";
+  # Void
+  "Base" -> "Void";
   # W_type
   "Base" -> "W_type";
   "Dependent_Function" -> "W_type";
