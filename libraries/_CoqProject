@@ -22,3 +22,4 @@ theories/Dependent_Product_Path.v
 theories/Dependent_Sum_Path.v
 theories/Product_Path.v
 theories/Sum_Path.v
+theories/Unit_Path.v
