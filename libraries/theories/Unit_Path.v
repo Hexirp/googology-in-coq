@@ -34,7 +34,7 @@ Definition
 (** 変換です。 *)
 
 Definition
-  coiota_unit@{i | } (P : Type@{i}) (x : P)
+  coiota_unit_nodep@{i | } (P : Type@{i}) (x : P)
     : Path (Unit.comatching_nodep x) Unit.unit
     := Path.id
 .
