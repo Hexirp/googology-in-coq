@@ -37,4 +37,4 @@ Definition
 .
 (* from: originally defined by Hexirp *)
 
-(** イオタ変換です。 *)
+(** 変換です。 *)
