@@ -18,3 +18,4 @@ theories/Universe.v
 theories/Path.v
 theories/Dependent_Function_Path.v
 theories/Function_Path.v
+theories/Dependent_Product_Path.v
