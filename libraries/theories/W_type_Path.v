@@ -41,7 +41,7 @@ Definition
       (x_v : Dependent_Sum A (fun a : A => Function (B a) (W_type A B)))
     :
       Path
-        (W_type.matching P constructor_sup x_v)
+        (W_type.matching P constructor_sup (W_type.sup x_v))
         (constructor_sup x_v)
     := Path.id
 .
