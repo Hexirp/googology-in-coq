@@ -35,7 +35,7 @@ Definition
 
 Definition
   coiota_unit@{i | } (P : Type@{i}) (x : P)
-    : Path (Unit.comatching x) Unit.unit
+    : Path (Unit.comatching_nodep x) Unit.unit
     := Path.id
 .
 (* from: originally defined by Hexirp *)
