@@ -29,6 +29,7 @@ Definition
   iota_sup@{i | }
       {A : Type@{i}}
       {B : A -> Type@{i}}
+      (P : W_type A B -> Type@{i})
       (
         constructor_sup
           :
