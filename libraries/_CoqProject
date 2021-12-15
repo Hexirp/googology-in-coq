@@ -19,3 +19,5 @@ theories/Path.v
 theories/Dependent_Function_Path.v
 theories/Function_Path.v
 theories/Dependent_Product_Path.v
+theories/Dependent_Sum_Path.v
+theories/Product_Path.v
