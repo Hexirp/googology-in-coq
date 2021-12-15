@@ -14,8 +14,8 @@ Import Googology_In_Coq.Path (Path, Path_Visible).
 
 Definition
   Dependent_Product_Path@{i | } (A : Type@{i}) (B : Type@{i})
-    : Dependent_Product_Path A B -> Dependent_Product_Path A B -> Type@{i}
-    := Path_Visible (Dependent_Product_Path A B)
+    : Dependent_Product A B -> Dependent_Product A B -> Type@{i}
+    := Path_Visible (Dependent_Product A B)
 .
 (* from: originally defined by Hexirp *)
 
