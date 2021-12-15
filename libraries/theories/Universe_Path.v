@@ -13,8 +13,9 @@ Import Googology_In_Coq.Path (Path, Path_Visible).
 (** ライブラリを開きます。 *)
 
 Definition
-  Universe_Path@{i s_i | i < s_i} : Universe@{i} -> Universe@{i} -> Type@{s_i}
-    := Path_Visible@{s_i} Universe@{i}
+  Universe_Path@{i s_i | i < s_i}
+    : Universe@{i s_i} -> Universe@{i s_i} -> Type@{s_i}
+    := Path_Visible@{s_i} Universe@{i s_i}
 .
 (* from: originally defined by Hexirp *)
 
