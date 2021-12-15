@@ -43,7 +43,7 @@ Definition
               x_v : Dependent_Sum A (fun a : A => Function (B a) (W_type A B))
             ,
               P (sup x_v)
-    )
+      )
     : forall x : W_type A B, P x
     :=
       fun x : W_type A B =>
@@ -62,7 +62,7 @@ Definition
         constructor_sup
           :
             Dependent_Sum A (fun a : A => Function (B a) (W_type A B)) -> P
-    )
+      )
     : W_type A B -> P 
     :=
       fun x : W_type A B =>
