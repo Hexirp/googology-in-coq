@@ -26,3 +26,4 @@ theories/Unit_Path.v
 theories/W_type_Path.v
 theories/Universe_Path.v
 theories/Path_Path.v
+theories/Pointwise_Path.v
