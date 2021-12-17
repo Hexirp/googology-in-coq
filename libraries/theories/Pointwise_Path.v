@@ -1,55 +1,78 @@
-(** 点ごとの道です。 *)
+(** 点ごとの道のモジュールです。 *)
 
-Require Googology_In_Coq.Base.Base.
-Require Googology_In_Coq.Base.Function.
-Require Googology_In_Coq.Base.Path.
+Require Googology_In_Coq.Base.
+Require Googology_In_Coq.Dependent_Function.
+Require Googology_In_Coq.Path.
 
 (** ライブラリを要求します。 *)
 
-Import Googology_In_Coq.Base.Base.
+Import Googology_In_Coq.Base.
+Import Googology_In_Coq.Dependent_Function (Dependent_Function).
+Import Googology_In_Coq.Path (Path)
 
-(** [Googology_In_Coq.Base.Base] を開きます。 *)
+(** ライブラリを開きます。 *)
 
-Definition T {A : Type} {B : Type}
-  : (A -> B) -> (A -> B) -> Type
-  :=
-    fun (f : A -> B) (g : A -> B) =>
-      forall x : A, Path.T (f x) (g x)
+Definition
+  Pointwise_Path@{i | } (A : Type@{i}) (B : A -> Type@{i})
+    : Dependent_Function A B -> Dependent_Function A B -> Type
+    :=
+      fun (f : Dependent_Function A B) (g : Dependent_Function A B) =>
+        forall x : A, Path (f x) (g x)
 .
 (* from: originally defined by Hexirp *)
 
-(** 主型です。 *)
+(** 点ごとの道です。 *)
 
-Definition apply {A : Type} {B : Type} {f : A -> B} {g : A -> B}
-  : T f g -> forall x : A, Path.T (f x) (g x)
-  := fun (p : T f g) (x : A) => p x
+Definition
+  Pointwise_Path_Nodep@{i | } (A : Type@{i}) (B : Type@{i})
+    : Function A B -> Function A B -> Type
+    :=
+      fun (f : Function A B) (g : Function A B) =>
+        forall x : A, Path (f x) (g x)
+.
+(* from: originally defined by Hexirp *)
+
+(** 点ごとの道です。 *)
+
+Definition
+  apply@{i | }
+      {A : Type@{i}}
+      {B : A -> Type@{i}}
+      {f : Dependent_Function A B}
+      {g : Dependent_Function A B}
+    : Pointwise_Path A B f g -> forall x : A, Path (f x) (g x)
+    := fun (p : Pointwise_Path f g) (x : A) => p x
 .
 (* from: originally defined by Hexirp *)
 
 (** 点ごとの道を一点で具体化します。 *)
 
-Definition id {A : Type} {B : Type} {f : A -> B}
-  : T f f
-  := fun x : A => Path.id
+Definition
+  id@{i | } {A : Type@{i}} {B : Type@{i}} {f : Dependent_Function A B}
+    : Pointwise_Path A B f f
+    := fun x : A => Path.id (f x)
 .
 (* from: originally defined by Hexirp *)
 
-(** 点ごとの道の恒等道です。 *)
+(** 点ごとの恒等道です。 *)
 
-Definition conc
-    {A : Type}
-    {B : Type}
-    {f : A -> B}
-    {g : A -> B}
-    {h : A -> B}
-  : T f g -> T g h -> T f h
+Definition
+  conc@{i | }
+      {A : Type@{i}}
+      {B : Type@{i}}
+      {f : Dependent_Function A B}
+      {g : Dependent_Function A B}
+      {h : Dependent_Function A B}
+    :
+        Pointwise_Path A B f g
+      ->
+        Pointwise_Path A B g h
+      ->
+        Pointwise_Path A B f h
+    :=
+      fun (p : Pointwise_Path A B f g) (q : Pointwise_Path A B g h) =>
+        fun x : A => conc (p x) (q x)
 .
-Proof.
-  unfold T.
-  move=> p q.
-  move=> x.
-  exact (Path.conc (p x) (q x)).
-Defined.
 (* from: originally defined by Hexirp *)
 
 (** 点ごとの道の合成です。 *)
