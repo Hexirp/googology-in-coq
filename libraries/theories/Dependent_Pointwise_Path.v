@@ -22,8 +22,8 @@ Definition
           (
             fun x : A =>
               Path
-                (Dependent_Function.apply f x)
-                (Dependent_Function.apply g x)
+                (Dependent_Function.apply A B f x)
+                (Dependent_Function.apply A B g x)
           )
 .
 (* from: originally defined by Hexirp *)
@@ -39,7 +39,7 @@ Definition
     : Dependent_Pointwise_Path A B f g -> forall x : A, Path (f x) (g x)
     :=
       fun (p : Dependent_Pointwise_Path A B f g) (x : A) =>
-        Dependent_Function.apply p x
+        Dependent_Function.apply A B p x
 .
 (* from: originally defined by Hexirp *)
 
@@ -54,8 +54,8 @@ Definition
         (
           fun x : A =>
             Path
-              (Dependent_Function.apply f x)
-              (Dependent_Function.apply f x)
+              (Dependent_Function.apply A B f x)
+              (Dependent_Function.apply A B f x)
         )
         (fun x : A => Path.id)
 .
@@ -86,8 +86,8 @@ Definition
           (
             fun x : A =>
               Path
-                (Dependent_Function.apply f x)
-                (Dependent_Function.apply h x)
+                (Dependent_Function.apply A B f x)
+                (Dependent_Function.apply A B h x)
           )
           (fun x : A => Path.conc (apply p x) (apply q x))
 .
@@ -109,8 +109,8 @@ Definition
           (
             fun x : A =>
               Path
-                (Dependent_Function.apply g x)
-                (Dependent_Function.apply f x)
+                (Dependent_Function.apply A B g x)
+                (Dependent_Function.apply A B f x)
           )
           (fun x : A => Path.inv (apply p x))
 .
