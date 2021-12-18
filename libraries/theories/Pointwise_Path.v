@@ -2,12 +2,14 @@
 
 Require Googology_In_Coq.Base.
 Require Googology_In_Coq.Dependent_Function.
+Require Googology_In_Coq.Function.
 Require Googology_In_Coq.Path.
 
 (** ライブラリを要求します。 *)
 
 Import Googology_In_Coq.Base.
 Import Googology_In_Coq.Dependent_Function (Dependent_Function).
+Import Googology_In_Coq.Function (Function).
 Import Googology_In_Coq.Path (Path).
 
 (** ライブラリを開きます。 *)
