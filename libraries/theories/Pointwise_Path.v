@@ -1,6 +1,7 @@
 (** 点ごとの道のモジュールです。 *)
 
 Require Googology_In_Coq.Base.
+Require Googology_In_Coq.Dependent_Function.
 Require Googology_In_Coq.Function.
 Require Googology_In_Coq.Path.
 Require Googology_In_Coq.Dependent_Pointwise_Path.
@@ -8,6 +9,7 @@ Require Googology_In_Coq.Dependent_Pointwise_Path.
 (** ライブラリを要求します。 *)
 
 Import Googology_In_Coq.Base.
+Import Googology_In_Coq.Dependent_Function (Dependent_Function).
 Import Googology_In_Coq.Function (Function).
 Import Googology_In_Coq.Path (Path).
 Import Googology_In_Coq.Dependent_Pointwise_Path (Dependent_Pointwise_Path).
@@ -17,7 +19,10 @@ Import Googology_In_Coq.Dependent_Pointwise_Path (Dependent_Pointwise_Path).
 Definition
   Pointwise_Path@{i | } (A : Type@{i}) (B : Type@{i})
     : Function A B -> Function A B -> Type@{i}
-    := Dependent_Pointwise_Path A (fun a : A => B)
+    :=
+      Dependent_Function
+        A
+        (fun x : A => Path (Function.apply f x) (Function.apply g x))
 .
 (* from: originally defined by Hexirp *)
 
@@ -30,7 +35,13 @@ Definition
       {f : Function A B}
       {g : Function A B}
     : Pointwise_Path A B f g -> forall x : A, Path (f x) (g x)
-    := fun (p : Pointwise_Path A B f g) (x : A) => p x
+    :=
+      fun (p : Pointwise_Path A B f g) (x : A) =>
+        Dependent_Function.apply
+          A
+          (fun x : A => Path (Function.apply f x) (Function.apply g x))
+          p
+          x
 .
 (* from: originally defined by Hexirp *)
 
@@ -39,7 +50,7 @@ Definition
 Definition
   id@{i | } {A : Type@{i}} {B : Type@{i}} {f : Function A B}
     : Pointwise_Path A B f f
-    := Dependent_Pointwise_Path.id
+    := Dependent_Function.abstract (fun x : A => Path.id)
 .
 (* from: originally defined by Hexirp *)
 
@@ -58,7 +69,12 @@ Definition
         Pointwise_Path A B g h
       ->
         Pointwise_Path A B f h
-    := Dependent_Pointwise_Path.conc
+    :=
+      fun (p : Pointwise_Path A B f g) (q : Pointwise_Path A B g h) =>
+        Dependent_Function.abstract
+          A
+          (fun x : A => Path (Function.apply f x) (Function.apply h x))
+          (fun x : A => Path.conc (apply p x) (apply q x))
 .
 (* from: originally defined by Hexirp *)
 
@@ -71,7 +87,12 @@ Definition
       {f : Function A B}
       {g : Function A B}
     : Pointwise_Path A B f g -> Pointwise_Path A B g f
-    := Dependent_Pointwise_Path.inv
+    :=
+      fun p : Pointwise_Path A B f g =>
+        Dependent_Function.abstract
+          A
+          (fun x : A => Path (Function.apply g x) (Function.apply f x))
+          (fun x : A => Path.inv (apply p x))
 .
 (* from: originally defined by Hexirp *)
 
@@ -90,7 +111,11 @@ Definition
       ->
         Pointwise_Path A C (Function.comp f g) (Function.comp f h)
     :=
-      fun (p : Pointwise_Path A B g h) (x : A) => Path.ap f (apply p x)
+      fun p : Pointwise_Path A B g h =>
+        Dependent_Function
+          A
+          (fun x : A => Path (f (g x)) (f (h x)))
+          (fun x : A => Path.ap f (apply p x))
 .
 (* from: originally defined by Hexirp *)
 
@@ -109,7 +134,11 @@ Definition
       ->
         Pointwise_Path A C (Function.comp g f) (Function.comp h f)
     :=
-      fun (p : Pointwise_Path B C g h) (x : A) => apply p (Function.apply f x)
+      fun p : Pointwise_Path B C g h =>
+        Dependent_Function.abstract
+          A
+          (fun x : A => Path (g (f x)) (h (f x)))
+          (fun x : A => apply p (Function.apply f x))
 .
 (* from: originally defined by Hexirp *)
 
