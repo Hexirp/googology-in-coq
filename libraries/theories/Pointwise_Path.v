@@ -150,7 +150,7 @@ Definition
           D
           (Function.comp f (Function.comp g_L h))
           (Function.comp f (Function.comp g_R h))
-    := fun p : Pointwise_Path_Nodep B C g h => wisker_L f (wisker_R h p)
+    := fun p : Pointwise_Path_Nodep B C g_L g_R => wisker_L f (wisker_R h p)
 .
 (* from: originally defined by Hexirp *)
 
