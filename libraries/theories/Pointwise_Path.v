@@ -61,7 +61,7 @@ Definition
 Definition
   conc@{i | }
       {A : Type@{i}}
-      {B : Type@{i}}
+      {B : A -> Type@{i}}
       {f : Dependent_Function A B}
       {g : Dependent_Function A B}
       {h : Dependent_Function A B}
