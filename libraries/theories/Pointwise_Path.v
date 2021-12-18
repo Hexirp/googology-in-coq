@@ -20,9 +20,10 @@ Definition
   Pointwise_Path@{i | } (A : Type@{i}) (B : Type@{i})
     : Function A B -> Function A B -> Type@{i}
     :=
-      Dependent_Function
-        A
-        (fun x : A => Path (Function.apply f x) (Function.apply g x))
+      fun (f : Function A B) (g : Function A B) =>
+        Dependent_Function
+          A
+          (fun x : A => Path (Function.apply f x) (Function.apply g x))
 .
 (* from: originally defined by Hexirp *)
 
