@@ -72,84 +72,85 @@ Definition
       ->
         Pointwise_Path A B f h
     :=
-      fun (p : Pointwise_Path A B f g) (q : Pointwise_Path A B g h) =>
-        fun x : A => Path.conc (p x) (q x)
+      fun (p : Pointwise_Path A B f g) (q : Pointwise_Path A B g h) (x : A) =>
+        Path.conc (apply p x) (apply q x)
 .
 (* from: originally defined by Hexirp *)
 
 (** 点ごとの道の合成です。 *)
 
-Definition inv
-    {A : Type}
-    {B : Type}
-    {f : A -> B}
-    {g : A -> B}
-  : T f g -> T g f
+Definition
+  inv@{i | }
+      {A : Type@{i}}
+      {B : A -> Type@{i}}
+      {f : Dependent_Function A B}
+      {g : Dependent_Function A B}
+    : Pointwise_Path A B f g -> Pointwise_Path A B g f
+    :=
+      fun (p : Pointwise_Path A B f g) (x : A) => Path.inv (apply p x)
 .
-Proof.
-  unfold T.
-  move=> p.
-  move=> x.
-  exact (Path.inv (p x)).
-Defined.
 (* from: originally defined by Hexirp *)
 
 (** 点ごとの道の逆です。 *)
 
-Definition wisker_L
-    {A : Type}
-    {B : Type}
-    {C : Type}
-    (f : B -> C)
-    {g : A -> B}
-    {h : A -> B}
-  : T g h -> T (Function.comp f g) (Function.comp f h)
+Definition
+  wisker_L@{i | }
+      {A : Type@{i}}
+      {B : Type@{i}}
+      {C : Type@{i}}
+      (f : Function B C)
+      {g : Function A B}
+      {h : Function A B}
+    :
+        Pointwise_Path_Nodep A B g h
+      ->
+        Pointwise_Path_Nodep A C (Function.comp f g) (Function.comp f h)
+    :=
+      fun (p : Pointwise_Path_Nodep A B g h) (x : A) => Path.ap f (apply p x)
 .
-Proof.
-  unfold T.
-  move=> p.
-  move=> x.
-  exact (Path.ap f (p x)).
-Defined.
 (* from: originally defined by Hexirp *)
 
 (** 左からの髭つけです。 *)
 
-Definition wisker_R
-    {A : Type}
-    {B : Type}
-    {C : Type}
-    (f : A -> B)
-    {g : B -> C}
-    {h : B -> C}
-  : T g h -> T (Function.comp g f) (Function.comp h f)
+Definition
+  wisker_R@{i | }
+      {A : Type@{i}}
+      {B : Type@{i}}
+      {C : Type@{i}}
+      (f : Function A B)
+      {g : Function B C}
+      {h : Function B C}
+    :
+        Pointwise_Path_Nodep B C g h
+      ->
+        Pointwise_Path_Nodep A C (Function.comp g f) (Function.comp h f)
+    :=
+      fun (p : Pointwise_Path_Nodep B C g h) (x : A) =>
+        apply p (Function.apply f x)
 .
-Proof.
-  unfold T.
-  move=> p.
-  move=> x.
-  exact (p (f x)).
-Defined.
 (* from: originally defined by Hexirp *)
 
 (** 右からの髭つけです。 *)
 
-Definition wisker_L_R
-    {A : Type}
-    {B : Type}
-    {C : Type}
-    {D : Type}
-    (f_0 : C -> D)
-    (f_1 : A -> B)
-    {g : B -> C}
-    {h : B -> C}
-  :
-      T g h
-    ->
-      T
-        (Function.comp f_0 (Function.comp g f_1))
-        (Function.comp f_0 (Function.comp h f_1))
-  := fun p : T g h => wisker_L f_0 (wisker_R f_1 p)
+Definition
+  wisker_L_R@{i | }
+      {A : Type@{i}}
+      {B : Type@{i}}
+      {C : Type@{i}}
+      {D : Type@{i}}
+      (f : Function C D)
+      (h : Function A B)
+      {g_L : Function B C}
+      {g_R : Function B C}
+    :
+        Pointwise_Path B C g h
+      ->
+        Pointwise_Path
+          A
+          D
+          (Function.comp f (Function.comp g_L h))
+          (Function.comp f (Function.comp g_R h))
+    := fun p : Pointwise_Path B C g h => wisker_L f (wisker_R h p)
 .
 (* from: originally defined by Hexirp *)
 
