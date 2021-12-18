@@ -43,7 +43,7 @@ Definition
       {f : Dependent_Function A B}
       {g : Dependent_Function A B}
     : Pointwise_Path A B f g -> forall x : A, Path (f x) (g x)
-    := fun (p : Pointwise_Path f g) (x : A) => p x
+    := fun (p : Pointwise_Path A B f g) (x : A) => p x
 .
 (* from: originally defined by Hexirp *)
 
