@@ -50,7 +50,7 @@ Definition
 (** 点ごとの道を一点で具体化します。 *)
 
 Definition
-  id@{i | } {A : Type@{i}} {B : Type@{i}} {f : Dependent_Function A B}
+  id@{i | } {A : Type@{i}} {B : A -> Type@{i}} {f : Dependent_Function A B}
     : Pointwise_Path A B f f
     := fun x : A => Path.id (f x)
 .
