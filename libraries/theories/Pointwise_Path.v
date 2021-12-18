@@ -14,7 +14,7 @@ Import Googology_In_Coq.Path (Path).
 
 Definition
   Pointwise_Path@{i | } (A : Type@{i}) (B : A -> Type@{i})
-    : Dependent_Function A B -> Dependent_Function A B -> Type
+    : Dependent_Function A B -> Dependent_Function A B -> Type@{i}
     :=
       fun (f : Dependent_Function A B) (g : Dependent_Function A B) =>
         forall x : A, Path (f x) (g x)
@@ -25,7 +25,7 @@ Definition
 
 Definition
   Pointwise_Path_Nodep@{i | } (A : Type@{i}) (B : Type@{i})
-    : Function A B -> Function A B -> Type
+    : Function A B -> Function A B -> Type@{i}
     :=
       fun (f : Function A B) (g : Function A B) =>
         forall x : A, Path (f x) (g x)
