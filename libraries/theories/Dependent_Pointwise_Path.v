@@ -44,8 +44,8 @@ Definition
           (
             fun x : A =>
               Path
-                (Dependent_Function.apply f x)
-                (Dependent_Function.apply g x)
+                (Dependent_Function.apply A B f x)
+                (Dependent_Function.apply A B g x)
           )
           p
           x
