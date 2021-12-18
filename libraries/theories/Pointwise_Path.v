@@ -51,7 +51,11 @@ Definition
 Definition
   id@{i | } {A : Type@{i}} {B : Type@{i}} {f : Function A B}
     : Pointwise_Path A B f f
-    := Dependent_Function.abstract (fun x : A => Path.id)
+    :=
+      Dependent_Function.abstract
+        A
+        (fun x : A => Path (Function.apply f x) (Function.apply f x))
+        (fun x : A => Path.id)
 .
 (* from: originally defined by Hexirp *)
 
