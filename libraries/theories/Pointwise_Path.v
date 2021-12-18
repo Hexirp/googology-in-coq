@@ -143,14 +143,14 @@ Definition
       {g_L : Function B C}
       {g_R : Function B C}
     :
-        Pointwise_Path B C g_L g_R
+        Pointwise_Path_Nodep B C g_L g_R
       ->
-        Pointwise_Path
+        Pointwise_Path_Nodep
           A
           D
           (Function.comp f (Function.comp g_L h))
           (Function.comp f (Function.comp g_R h))
-    := fun p : Pointwise_Path B C g h => wisker_L f (wisker_R h p)
+    := fun p : Pointwise_Path_Nodep B C g h => wisker_L f (wisker_R h p)
 .
 (* from: originally defined by Hexirp *)
 
