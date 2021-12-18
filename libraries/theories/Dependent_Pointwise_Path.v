@@ -39,7 +39,16 @@ Definition
     : Dependent_Pointwise_Path A B f g -> forall x : A, Path (f x) (g x)
     :=
       fun (p : Dependent_Pointwise_Path A B f g) (x : A) =>
-        Dependent_Function.apply A B p x
+        Dependent_Function.apply
+          A
+          (
+            fun x : A =>
+              Path
+                (Dependent_Function.apply f x)
+                (Dependent_Function.apply g x)
+          )
+          p
+          x
 .
 (* from: originally defined by Hexirp *)
 
