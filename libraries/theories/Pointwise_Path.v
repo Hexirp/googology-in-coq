@@ -117,7 +117,7 @@ Definition
         Pointwise_Path A C (Function.comp f g) (Function.comp f h)
     :=
       fun p : Pointwise_Path A B g h =>
-        Dependent_Function
+        Dependent_Function.abstract
           A
           (fun x : A => Path (f (g x)) (f (h x)))
           (fun x : A => Path.ap f (apply p x))
