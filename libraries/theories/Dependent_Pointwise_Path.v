@@ -90,7 +90,7 @@ Definition
         (p : Dependent_Pointwise_Path A B f g)
         (q : Dependent_Pointwise_Path A B g h)
       =>
-        Path.abstract
+        Dependent_Function.abstract
           A
           (
             fun x : A =>
