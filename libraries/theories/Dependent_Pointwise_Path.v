@@ -38,7 +38,7 @@ Definition
 
 Definition
   id@{i | } {A : Type@{i}} {B : A -> Type@{i}} {f : Dependent_Function A B}
-    : Pointwise_Path A B f f
+    : Dependent_Pointwise_Path A B f f
     := fun x : A => Path.id
 .
 (* from: originally defined by Hexirp *)
