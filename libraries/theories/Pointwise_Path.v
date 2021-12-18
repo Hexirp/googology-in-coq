@@ -73,7 +73,7 @@ Definition
         Pointwise_Path A B f h
     :=
       fun (p : Pointwise_Path A B f g) (q : Pointwise_Path A B g h) =>
-        fun x : A => conc (p x) (q x)
+        fun x : A => Path.conc (p x) (q x)
 .
 (* from: originally defined by Hexirp *)
 
