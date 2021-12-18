@@ -143,7 +143,7 @@ Definition
       {g_L : Function B C}
       {g_R : Function B C}
     :
-        Pointwise_Path B C g h
+        Pointwise_Path B C g_L g_R
       ->
         Pointwise_Path
           A
