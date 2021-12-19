@@ -20,7 +20,7 @@ Definition
 (** 単一型の道です。 *)
 
 Definition
-  iota_unit@{i | } 
+  iota_unit@{i | }
       (P : Unit@{i} -> Type@{i})
       (constructor_unit : P Unit.unit)
     :

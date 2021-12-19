@@ -63,7 +63,7 @@ Definition
           :
             Dependent_Sum A (fun a : A => Function (B a) (W_type A B)) -> P
       )
-    : W_type A B -> P 
+    : W_type A B -> P
     :=
       fun x : W_type A B =>
         match x with sup x_v => constructor_sup x_v end
