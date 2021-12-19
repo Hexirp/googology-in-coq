@@ -78,7 +78,7 @@ Definition
                   )
                   x_v
               ->
-                P (sup x_v)
+                P (W_type.sup x_v)
       )
       (x_v : Dependent_Sum A (fun a : A => Function (B a) (W_type A B)))
     :
