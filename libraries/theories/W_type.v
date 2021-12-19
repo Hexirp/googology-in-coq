@@ -151,7 +151,7 @@ Definition
                           )
                           (
                             fun x_v_2_x : B x_v_1 =>
-                              induction (x_v_2 x_v_2_x)
+                              induction (Function.apply x_v_2 x_v_2_x)
                           )
                     )
                     x_v
