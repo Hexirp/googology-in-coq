@@ -86,7 +86,7 @@ Definition
               Dependent_Function
                 (B (Dependent_Sum.first x_v))
                 (
-                  fun x_v_2_x : B (Dependent_Sum_first x_v) =>
+                  fun x_v_2_x : B (Dependent_Sum.first x_v) =>
                     P (Function.apply (Dependent_Sum.second x_v) x_v_2_x)
                 )
             ->
