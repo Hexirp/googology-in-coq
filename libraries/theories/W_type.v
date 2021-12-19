@@ -83,23 +83,14 @@ Definition
             forall
               x_v : Dependent_Sum A (fun a : A => Function (B a) (W_type A B))
             ,
-                Dependent_Sum.matching_nodep_visible@{s_i}
-                  Type@{i}
-                  (
-                    fun
-                      (x_v_1 : A)
-                      (x_v_2 : Function (B x_v_1) (W_type A B))
-                    =>
-                      Dependent_Function
-                        (B x_v_1)
-                        (
-                          fun x_v_2_x : B x_v_1 =>
-                            P (Function.apply x_v_2 x_v_2_x)
-                        )
-                  )
-                  x_v
-              ->
-                P (sup x_v)
+              Dependent_Function
+                (B (Dependent_Sum.first x_v))
+                (
+                  fun x_v_2_x : B (Dependent_Sum.first x_v) =>
+                    P (Function.apply (Dependent_Sum.second x_v) x_v_2_x)
+                )
+            ->
+              P (sup x_v)
       )
     : forall x : W_type A B, P x
     :=
@@ -113,48 +104,17 @@ Definition
               constructor_sup
                 x_v
                 (
-                  Dependent_Sum.matching
+                  Dependent_Function.abstract
+                    (B (Dependent_Sum.first x_v))
                     (
-                      fun
-                        x_v_
-                          :
-                            Dependent_Sum
-                              A
-                              (fun a : A => Function (B a) (W_type A B))
-                      =>
-                        Dependent_Sum.matching_nodep_visible@{s_i}
-                          Type@{i}
-                          (
-                            fun
-                              (x_v_1 : A)
-                              (x_v_2 : Function (B x_v_1) (W_type A B))
-                            =>
-                              Dependent_Function
-                                (B x_v_1)
-                                (
-                                  fun x_v_2_x : B x_v_1 =>
-                                    P (Function.apply x_v_2 x_v_2_x)
-                                )
-                          )
-                          x_v_
+                      fun x_v_2_x : B (Dependent_Sum.first x_v) =>
+                        P (Function.apply (Dependent_Sum.second x_v) x_v_2_x)
                     )
                     (
-                      fun
-                        (x_v_1 : A)
-                        (x_v_2 : Function (B x_v_1) (W_type A B))
-                      =>
-                        Dependent_Function.abstract
-                          (B x_v_1)
-                          (
-                            fun x_v_2_x : B x_v_1 =>
-                              P (Function.apply x_v_2 x_v_2_x)
-                          )
-                          (
-                            fun x_v_2_x : B x_v_1 =>
-                              induction (Function.apply x_v_2 x_v_2_x)
-                          )
+                      fun x_v_2_x : B (Dependent_Sum.first x_v) =>
+                        induction
+                          (Function.apply (Dependent_Sum.second x_v) x_v_2_x)
                     )
-                    x_v
                 )
           )
           x
@@ -173,18 +133,9 @@ Definition
             forall
               x_v : Dependent_Sum A (fun a : A => Function (B a) (W_type A B))
             ,
-                Dependent_Sum.matching_nodep_visible@{s_i}
-                  Type@{i}
-                  (
-                    fun
-                      (x_v_1 : A)
-                      (x_v_2 : Function (B x_v_1) (W_type A B))
-                    =>
-                      Function (B x_v_1) P
-                  )
-                  x_v
-              ->
-                P
+              Function (B (Dependent_Sum.first x_v)) P
+            ->
+              P
       )
     : W_type A B -> P
     := induction (fun x_ => P) constructor_sup
