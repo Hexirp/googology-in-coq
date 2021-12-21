@@ -51,6 +51,14 @@ Definition
 (** 関数の適用です。 *)
 
 Definition
+  abstract@{i | } {A : Type@{i}} {B : Type@{i}} : (A -> B) -> A -> B
+    := fun (f : A -> B) (x : A) => f x
+.
+(* from: originally defined by Hexirp *)
+
+(** 関数の抽象です。 *)
+
+Definition
   domain@{i j | } {A : Type@{i}} {B : Type@{j}} : (A -> B) -> Type@{i}
     := fun f : A -> B => A
 .
