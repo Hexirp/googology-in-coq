@@ -90,11 +90,7 @@ Definition
       (f : A -> C)
       (g : forall x : A, B x -> D (f x))
     : Dependent_Sum A B -> Dependent_Sum C D
-    :=
-      fun x : Dependent_Sum A B =>
-        Dependent_Sum.pair
-          (f (Dependent_Sum.first x))
-          (g (Dependent_Sum.first x) (Dependent_Sum.second x))
+    := fun x : Dependent_Sum A B => pair (f (first x)) (g (first x) (second x))
 .
 (* from: originally defined by Hexirp *)
 
