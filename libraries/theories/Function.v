@@ -65,3 +65,18 @@ Definition
 (* from: https://www.cs.bham.ac.uk/~mhe/HoTT-UF-in-Agda-Lecture-Notes/ *)
 
 (** 関数の値域です。あるいは終域です。 *)
+
+Definition
+  map@{i | }
+      {A : Type@{i}}
+      {B : Type@{i}}
+      {C : Type@{i}}
+      {D : Type@{i}}
+      (f : Function C A)
+      (g : Function B D)
+    : (Function A B) -> (Function C D)
+    := fun (x : Function A B) (y : C) => apply g (apply x (apply f y))
+.
+(* from: originally defined by Hexirp *)
+
+(** 関数型の写像です。 *)
