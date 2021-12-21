@@ -80,3 +80,22 @@ Definition
 (* from: originally defined by Hexirp *)
 
 (** 依存直和型の第二射影関数です。 *)
+
+Definition
+  map@{i | }
+      {A : Type@{i}}
+      {B : A -> Type@{i}}
+      {C : Type@{i}}
+      {D : C -> Type@{i}}
+      (f : A -> C)
+      (g : forall x : A, B x -> D (f x))
+    : Dependent_Sum A B -> Dependent_Sum C D
+    :=
+      fun x : Dependent_Sum A B =>
+        Dependent_Sum.pair
+          (f (Dependent_Sum.first x))
+          (g (Dependent_Sum.first x) (Dependent_Sum.second x))
+.
+(* from: originally defined by Hexirp *)
+
+(** 依存直和型の写像です。 *)
