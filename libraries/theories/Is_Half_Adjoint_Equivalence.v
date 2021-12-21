@@ -35,11 +35,18 @@ Definition
                     (Pointwise_Path B B (Function.comp f g) Function.id)
                 )
                 (
-                  Pointwise_Path_Pointwise_Path
-                    (Function.comp f (Function.comp g f))
-                    (Function.comp f (Function.comp g f))
-                    (Pointwise_Path.wisker_L f (Product.first p))
-                    (Pointwise_Path.wisker_R f (Product.second p))
+                  fun
+                    p
+                      :
+                        Product
+                          (Pointwise_Path A A (Function.comp g f) Function.id)
+                          (Pointwise_Path B B (Function.comp f g) Function.id)
+                  =>
+                    Pointwise_Path_Pointwise_Path
+                      (Function.comp f (Function.comp g f))
+                      (Function.comp f (Function.comp g f))
+                      (Pointwise_Path.wisker_L f (Product.first p))
+                      (Pointwise_Path.wisker_R f (Product.second p))
                 )
           )
 .
