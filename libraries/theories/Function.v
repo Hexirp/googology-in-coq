@@ -72,10 +72,10 @@ Definition
       {B : Type@{i}}
       {C : Type@{i}}
       {D : Type@{i}}
-      (f : Function C A)
-      (g : Function B D)
-    : (Function A B) -> (Function C D)
-    := fun (x : Function A B) (y : C) => apply g (apply x (apply f y))
+      (f : C -> A)
+      (g : B -> D)
+    : (A -> B) -> (C -> D)
+    := fun (x : Function A B) (y : C) => g (x (f y))
 .
 (* from: originally defined by Hexirp *)
 

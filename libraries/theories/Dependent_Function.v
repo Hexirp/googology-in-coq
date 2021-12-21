@@ -49,8 +49,7 @@ Definition
       (g : forall x : C, B (f x) -> D x)
     : Dependent_Function A B -> Dependent_Function C D
     :=
-      fun x : Dependent_Function A B =>
-        abstract C D (fun y : C => g y (apply A B x (f y)))
+      fun (x : Dependent_Function A B) (y : C) => g y (x (f y))
 .
 (* from: originally defined by Hexirp *)
 
