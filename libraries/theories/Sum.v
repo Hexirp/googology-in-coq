@@ -67,9 +67,7 @@ Definition
       (f : A -> C)
       (g : B -> D)
     : Sum A B -> Sum C D
-    :=
-      fun x : Sum A B =>
-        matching_nodep (fun y : A => left (f y)) (fun y : B => right (g y))
+    := matching_nodep (fun y : A => left (f y)) (fun y : B => right (g y))
 .
 (* from: originally defined by Hexirp *)
 
