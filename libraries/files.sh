@@ -25,6 +25,7 @@ theories/Universe_Path.v \
 theories/Path_Path.v \
 theories/Dependent_Pointwise_Path.v \
 theories/Pointwise_Path.v \
+theories/Pointwise_Path_Pointwise_Path.v \
 
 do
   echo -n " ${file}"
