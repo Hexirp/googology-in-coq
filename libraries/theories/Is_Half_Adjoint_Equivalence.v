@@ -8,7 +8,7 @@ Require Googology_In_Coq.Pointwise_Path_Pointwise_Path.
 
 (** ライブラリを要求します。 *)
 
-Import Googology_In_Coq.Base.Base.
+Import Googology_In_Coq.Base.
 Import Googology_In_Coq.Dependent_Sum (Dependent_Sum).
 Import Googology_In_Coq.Product (Product).
 Import Googology_In_Coq.Pointwise_Path (Pointwise_Path).
