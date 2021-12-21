@@ -90,4 +90,10 @@ digraph Dependencies {
   "Function" -> "Pointwise_Path_Pointwise_Path";
   "Path" -> "Pointwise_Path_Pointwise_Path";
   "Pointwise_Path" -> "Pointwise_Path_Pointwise_Path";
+  # Is_Half_Adjoint_Equivalence
+  "Base" -> "Is_Half_Adjoint_Equivalence";
+  "Dependent_Sum" -> "Is_Half_Adjoint_Equivalence";
+  "Product" -> "Is_Half_Adjoint_Equivalence";
+  "Pointwise_Path" -> "Is_Half_Adjoint_Equivalence";
+  "Pointwise_Path_Pointwise_Path" -> "Is_Half_Adjoint_Equivalence";
 }

@@ -1,48 +1,48 @@
-(** 等価構造です。 *)
+(** 等価関数性です。 *)
 
-Require Googology_In_Coq.Base.Base.
-Require Googology_In_Coq.Base.Product.
-Require Googology_In_Coq.Base.Dependent_Sum.
-Require Googology_In_Coq.Base.Path.
-Require Googology_In_Coq.Base.Pointwise_Path.
+Require Googology_In_Coq.Base.
+Require Googology_In_Coq.Dependent_Sum.
+Require Googology_In_Coq.Product.
+Require Googology_In_Coq.Pointwise_Path.
+Require Googology_In_Coq.Pointwise_Path_Pointwise_Path.
 
 (** ライブラリを要求します。 *)
 
 Import Googology_In_Coq.Base.Base.
+Import Googology_In_Coq.Dependent_Sum (Dependent_Sum).
+Import Googology_In_Coq.Product (Product).
+Import Googology_In_Coq.Pointwise_Path (Pointwise_Path).
+Import
+  Googology_In_Coq.Pointwise_Path_Pointwise_Path
+    (Pointwise_Path_Pointwise_Path)
+.
 
-(** [Googology_In_Coq.Base.Base] を開きます。 *)
+(** ライブラリを開きます。 *)
 
-Definition Is_Equivalence (A : Type) (B : Type) (f : A -> B) : Type
-  :=
-    Dependent_Sum.T
-    (B -> A)
-    (
-      fun g =>
-        Dependent_Sum.T
+Definition
+  Is_Half_Adjoint_Equivalence@{i | } (A : Type@{i}) (B : Type@{i})
+    : (A -> B) -> Type@{i}
+    :=
+      fun f : A -> B =>
+        Dependent_Sum
+          (B -> A)
           (
-            Product.T
-              (Pointwise_Path.T (Function.comp g f) Function.id)
-              (Pointwise_Path.T (Function.comp f g) Function.id)
+            fun g : B -> A =>
+              Dependent_Sum
+                (
+                  Product
+                    (Pointwise_Path A A (Function.comp g f) Function.id)
+                    (Pointwise_Path B B (Function.comp f g) Function.id)
+                )
+                (
+                  Pointwise_Path_Pointwise_Path
+                    (Function.comp f (Function.comp g f))
+                    (Function.comp f (Function.comp g f))
+                    (Pointwise_Path.wisker_L f (Product.first p))
+                    (Pointwise_Path.wisker_R f (Product.second p))
+                )
           )
-          (
-            fun psr =>
-              match psr with
-                Product.pair s r =>
-                  forall x : A,
-                    Path.T
-                      (Pointwise_Path.apply (Pointwise_Path.wisker_L f s) x)
-                      (Pointwise_Path.apply (Pointwise_Path.wisker_R f r) x)
-              end
-          )
-    )
 .
 (* from: originally defined by Hexirp *)
 
 (** 関数 [f] が等価関数であることです。 *)
-
-Definition Equivalence (A : Type) (B : Type) : Type
-  := Dependent_Sum.T (A -> B) (fun f => Is_Equivalence A B f)
-.
-(* from: originally defined by Hexirp *)
-
-(** 型 [A] と型 [B] の間の等価構造です。 *)
