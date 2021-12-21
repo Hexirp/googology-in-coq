@@ -26,6 +26,7 @@ theories/Path_Path.v \
 theories/Dependent_Pointwise_Path.v \
 theories/Pointwise_Path.v \
 theories/Pointwise_Path_Pointwise_Path.v \
+theories/Is_Half_Adjoint_Equivalence.v \
 
 do
   echo -n " ${file}"
