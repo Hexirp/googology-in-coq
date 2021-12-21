@@ -73,7 +73,7 @@ Definition
 (** 場合分けです。 *)
 
 Definition
-  induction@{i s_i | i < s_i}
+  induction@{i | }
       {A : Type@{i}}
       {B : A -> Type@{i}}
       (P : W_type A B -> Type@{i})
@@ -119,11 +119,12 @@ Definition
           )
           x
 .
+(* from: originally defined by Hexirp *)
 
 (** 帰納法の原理です。 *)
 
 Definition
-  recursion@{i s_i | i < s_i}
+  recursion@{i | }
       {A : Type@{i}}
       {B : A -> Type@{i}}
       {P : Type@{i}}
@@ -140,5 +141,40 @@ Definition
     : W_type A B -> P
     := induction (fun x_ => P) constructor_sup
 .
+(* from: originally defined by Hexirp *)
 
 (** 再帰です。 *)
+
+Definition
+  map@{i | }
+      {A : Type@{i}}
+      {B : A -> Type@{i}}
+      {C : Type@{i}}
+      {D : C -> Type@{i}}
+      (f : A -> C)
+      (g : forall x : A, D (f x) -> B x)
+    : W_type A B -> W_type C D
+    :=
+      recursion
+        (
+          fun
+            (x_v : Dependent_Sum A (fun a : A => Function (B a) (W_type A B)))
+            (y : Function (B (Dependent_Sum.first x_v)) (W_type C D))
+          =>
+            sup
+              (
+                Dependent_Sum.pair
+                  (f (Dependent_Sum.first x_v))
+                  (
+                    Function.abstract
+                      (
+                        fun z : D (f (Dependent_Sum.first x_v)) =>
+                          Function.apply y (g (Dependent_Sum.first x_v) z)
+                      )
+                  )
+              )
+        )
+.
+(* from: originally defined by Hexirp *)
+
+(** ウ型の写像です。 *)
