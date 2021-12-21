@@ -44,7 +44,7 @@ Definition
                   =>
                     Pointwise_Path_Pointwise_Path
                       (Function.comp f (Function.comp g f))
-                      (Function.comp f (Function.comp g f))
+                      f
                       (Pointwise_Path.wisker_L f (Product.first p))
                       (Pointwise_Path.wisker_R f (Product.second p))
                 )
