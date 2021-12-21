@@ -57,3 +57,20 @@ Definition
 (* from: originally defined by Hexirp *)
 
 (** 場合分けです。 *)
+
+Definition
+  map@{i | }
+      {A : Type@{i}}
+      {B : Type@{i}}
+      {C : Type@{i}}
+      {D : Type@{i}}
+      (f : A -> C)
+      (g : B -> D)
+    : Sum A B -> Sum C D
+    :=
+      fun x : Sum A B =>
+        matching_nodep (fun y : A => left (f y)) (fun y : B = > right (g y))
+.
+(* from: originally defined by Hexirp *)
+
+(** 直和型の写像です。 *)
