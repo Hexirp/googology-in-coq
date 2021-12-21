@@ -100,3 +100,18 @@ Definition
 (* from: originally defined by Hexirp *)
 
 (** 関数の非カリー化です。 *)
+
+Definition
+  map@{i | }
+      {A : Type@{i}}
+      {B : Type@{i}}
+      {C : Type@{i}}
+      {D : Type@{i}}
+      (f : A -> C)
+      (g : B -> D)
+    : Product A B -> Product C D
+    := fun x : Product A B => pair (f (first x)) (g (second x))
+.
+(* from: originally defined by Hexirp *)
+
+(** 直積型の写像です。 *)
