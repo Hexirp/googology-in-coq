@@ -50,10 +50,7 @@ Definition
     : Dependent_Function A B -> Dependent_Function C D
     :=
       fun x : Dependent_Function A B =>
-        Dependent_Function.abstract
-          C
-          D
-          (fun y : C => g y (Depedent_Function.apply x (f y)))
+        abstract C D (fun y : C => g y (apply x (f y)))
 .
 (* from: originally defined by Hexirp *)
 
