@@ -44,7 +44,7 @@ Definition
 (** 帰納法の原理です。 *)
 
 Definition
-  matching_nodep
+  matching_nodep@{i | }
       {P : Type@{i}}
       (constructor_true : P)
       (constructor_false : P)
