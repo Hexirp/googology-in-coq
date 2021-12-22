@@ -7,8 +7,8 @@ Require Googology_In_Coq.Unit.
 (** ライブラリを要求します。 *)
 
 Import Googology_In_Coq.Base.
-Require Googology_In_Coq.Sum (Sum).
-Require Googology_In_Coq.Unit (Unit).
+Import Googology_In_Coq.Sum (Sum).
+Import Googology_In_Coq.Unit (Unit).
 
 (** ライブラリを開きます。 *)
 
