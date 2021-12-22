@@ -12,7 +12,7 @@ Import Googology_In_Coq.Unit (Unit).
 
 (** ライブラリを開きます。 *)
 
-Definition Bool@{i | } : Type@{i} := Sum Unit Unit.
+Definition Bool@{i | } : Type@{i} := Sum@{i} Unit@{i} Unit@{i}.
 (* from: originally defined by Hexirp *)
 
 (** ブーリアン型です。 *)
