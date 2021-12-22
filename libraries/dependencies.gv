@@ -96,4 +96,8 @@ digraph Dependencies {
   "Product" -> "Is_Half_Adjoint_Equivalence";
   "Pointwise_Path" -> "Is_Half_Adjoint_Equivalence";
   "Pointwise_Path_Pointwise_Path" -> "Is_Half_Adjoint_Equivalence";
+  # Bool
+  "Base" -> "Bool";
+  "Sum" -> "Bool";
+  "Unit" -> "Bool";
 }

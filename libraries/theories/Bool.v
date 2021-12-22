@@ -1,51 +1,55 @@
-(** ブール型に関するモジュールです。 *)
+(** ブーリアン型に関するモジュールです。 *)
 
-Require Googology_In_Coq.Base.Base.
-Require Googology_In_Coq.Base.Unit.
-Require Googology_In_Coq.Base.Sum.
+Require Googology_In_Coq.Base.
+Require Googology_In_Coq.Sum.
+Require Googology_In_Coq.Unit.
 
-(** [Googology_In_Coq.Base.Base] を要求します。 *)
+(** ライブラリを要求します。 *)
 
-Import Googology_In_Coq.Base.Base.
+Import Googology_In_Coq.Base.
+Require Googology_In_Coq.Sum (Sum).
+Require Googology_In_Coq.Unit (Unit).
 
-(** [Googology_In_Coq.Base.Base] を開きます。 *)
+(** ライブラリを開きます。 *)
 
-Definition T : Type := Sum.T Unit.T Unit.T.
-(* from: https://www.cs.bham.ac.uk/~mhe/HoTT-UF-in-Agda-Lecture-Notes/HoTT-UF-Agda.html *)
-
-(** 主型です。 *)
-
-Definition true : T := Sum.left Unit.unit.
+Definition Bool@{i | } : Type@{i} := Sum Unit Unit.
 (* from: originally defined by Hexirp *)
 
-(** 一つ目の構築子です。 *)
+(** ブーリアン型です。 *)
 
-Definition false : T := Sum.right Unit.unit.
+Definition true@{i | } : Bool@{i} := Sum.left Unit.unit.
 (* from: originally defined by Hexirp *)
 
-(** 二つ目の構築子です。 *)
+(** ブーリアン型の第一構築子です。 *)
 
-Definition induction
-    (P : T -> Type)
-    (construct_true : P true)
-    (construct_false : P false)
-  : forall x : T, P x
+Definition false@{i | } : Bool@{i} := Sum.right Unit.unit.
+(* from: originally defined by Hexirp *)
+
+(** ブーリアン型の第二構築子です。 *)
+
+Definition
+  induction@{i | }
+      (P : Bool@{i} -> Type@{i})
+      (constructor_true : P true)
+      (constructor_false : P false)
+  : forall x : Bool@{i}, P x
   :=
     Sum.induction
       P
-      (Unit.induction (fun x_ : Unit.T => P (Sum.left x_)) construct_true)
-      (Unit.induction (fun x_ : Unit.T => P (Sum.right x_)) construct_false)
+      (Unit.induction (fun x_ : Unit => P (Sum.left x_)) constructor_true)
+      (Unit.induction (fun x_ : Unit => P (Sum.right x_)) constructor_false)
 .
 (* from: originally defined by Hexirp *)
 
-(** 帰納法です。 *)
+(** 帰納法の原理です。 *)
 
-Definition recursion
-    {P : Type}
-    (construct_true : P)
-    (construct_false : P)
-  : T -> P
-  := induction (fun x_ : T => P) construct_true construct_false
+Definition
+  recursion
+      {P : Type@{i}}
+      (constructor_true : P)
+      (constructor_false : P)
+  : Bool@{i} -> P
+  := induction (fun x_ : Bool@{i} => P) constructor_true constructor_false
 .
 (* from: originally defined by Hexirp *)
 
