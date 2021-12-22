@@ -28,28 +28,28 @@ Definition false@{i | } : Bool@{i} := Sum.right Unit.unit.
 (** ブーリアン型の第二構築子です。 *)
 
 Definition
-  induction@{i | }
+  matching@{i | }
       (P : Bool@{i} -> Type@{i})
       (constructor_true : P true)
       (constructor_false : P false)
-  : forall x : Bool@{i}, P x
-  :=
-    Sum.induction
-      P
-      (Unit.induction (fun x_ : Unit => P (Sum.left x_)) constructor_true)
-      (Unit.induction (fun x_ : Unit => P (Sum.right x_)) constructor_false)
+    : forall x : Bool@{i}, P x
+    :=
+      Sum.matching
+        P
+        (Unit.matching (fun x_ : Unit => P (Sum.left x_)) constructor_true)
+        (Unit.matching (fun x_ : Unit => P (Sum.right x_)) constructor_false)
 .
 (* from: originally defined by Hexirp *)
 
 (** 帰納法の原理です。 *)
 
 Definition
-  recursion
+  matching_nodep
       {P : Type@{i}}
       (constructor_true : P)
       (constructor_false : P)
   : Bool@{i} -> P
-  := induction (fun x_ : Bool@{i} => P) constructor_true constructor_false
+  := matching (fun x_ : Bool@{i} => P) constructor_true constructor_false
 .
 (* from: originally defined by Hexirp *)
 
