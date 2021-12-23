@@ -54,3 +54,19 @@ Definition
 (* from: originally defined by Hexirp *)
 
 (** 再帰です。 *)
+
+Definition
+  and@{i | } : Bool@{i} -> Bool@{i} -> Bool@{i}
+    := recursion (Function.const false) Function.id
+.
+(* from: originally defined by Hexirp *)
+
+(** 論理積です。 *)
+
+Definition
+  or@{i | } : Bool@{i} -> Bool@{i} -> Bool@{i}
+    := recursion Function.id (Function.const true)
+.
+(* from: originally defined by Hexirp *)
+
+(** 論理和です。 *)
