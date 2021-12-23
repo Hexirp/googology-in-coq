@@ -17,47 +17,47 @@ Definition Bool@{i | } : Type@{i} := Sum@{i} Unit@{i} Unit@{i}.
 
 (** ブーリアン型です。 *)
 
-Definition true@{i | } : Bool@{i} := Sum.left Unit.unit.
-(* from: originally defined by Hexirp *)
-
-(** ブーリアン型の第一構築子です。 *)
-
-Definition false@{i | } : Bool@{i} := Sum.right Unit.unit.
+Definition false@{i | } : Bool@{i} := Sum.left Unit.unit.
 (* from: originally defined by Hexirp *)
 
 (** ブーリアン型の第二構築子です。 *)
 
+Definition true@{i | } : Bool@{i} := Sum.right Unit.unit.
+(* from: originally defined by Hexirp *)
+
+(** ブーリアン型の第一構築子です。 *)
+
 Definition
   matching@{i | }
       (P : Bool@{i} -> Type@{i})
-      (constructor_true : P true)
       (constructor_false : P false)
+      (constructor_true : P true)
     : forall x : Bool@{i}, P x
     :=
       Sum.matching
         P
-        (Unit.matching (fun x_ : Unit => P (Sum.left x_)) constructor_true)
-        (Unit.matching (fun x_ : Unit => P (Sum.right x_)) constructor_false)
+        (Unit.matching (fun x_ : Unit => P (Sum.left x_)) constructor_false)
+        (Unit.matching (fun x_ : Unit => P (Sum.right x_)) constructor_true)
 .
 (* from: originally defined by Hexirp *)
 
-(** 帰納法の原理です。 *)
+(** 場合分けです。 *)
 
 Definition
   matching_nodep@{i | }
       {P : Type@{i}}
-      (constructor_true : P)
       (constructor_false : P)
+      (constructor_true : P)
   : Bool@{i} -> P
-  := matching (fun x_ : Bool@{i} => P) constructor_true constructor_false
+  := matching (fun x_ : Bool@{i} => P) constructor_false constructor_true
 .
 (* from: originally defined by Hexirp *)
 
-(** 再帰です。 *)
+(** 場合分けです。 *)
 
 Definition
   and@{i | } : Bool@{i} -> Bool@{i} -> Bool@{i}
-    := recursion (Function.const false) Function.id
+    := matching_nodep (Function.const false) Function.id
 .
 (* from: originally defined by Hexirp *)
 
@@ -65,7 +65,7 @@ Definition
 
 Definition
   or@{i | } : Bool@{i} -> Bool@{i} -> Bool@{i}
-    := recursion Function.id (Function.const true)
+    := matching_nodep Function.id (Function.const true)
 .
 (* from: originally defined by Hexirp *)
 
