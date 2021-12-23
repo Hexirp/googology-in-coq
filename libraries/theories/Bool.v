@@ -70,3 +70,11 @@ Definition
 (* from: originally defined by Hexirp *)
 
 (** 論理和です。 *)
+
+Definition
+  not@{i | } : Bool@{i} -> Bool@{i}
+    := matching_nodep true false
+.
+(* from: originally defined by Hexirp *)
+
+(** 否定です。 *)
