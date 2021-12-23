@@ -1,12 +1,14 @@
 (** ブーリアン型に関するモジュールです。 *)
 
 Require Googology_In_Coq.Base.
+Require Googology_In_Coq.Function.
 Require Googology_In_Coq.Sum.
 Require Googology_In_Coq.Unit.
 
 (** ライブラリを要求します。 *)
 
 Import Googology_In_Coq.Base.
+Import Googology_In_Coq.Function (Function).
 Import Googology_In_Coq.Sum (Sum).
 Import Googology_In_Coq.Unit (Unit).
 
