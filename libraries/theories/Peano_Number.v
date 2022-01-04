@@ -15,7 +15,7 @@ Import Googology_In_Coq.Function (Function).
 Import Googology_In_Coq.Sum (Sum).
 Import Googology_In_Coq.Void (Void).
 Import Googology_In_Coq.Unit (Unit).
-Import Googology_In_Coq.W_type (W_type)
+Import Googology_In_Coq.W_type (W_type).
 Import Googology_In_Coq.Bool (Bool).
 
 (** ライブラリを開きます。 *)
