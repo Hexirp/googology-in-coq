@@ -83,7 +83,6 @@ digraph Dependencies {
   "Dependent_Function" -> "Pointwise_Path";
   "Function" -> "Pointwise_Path";
   "Path" -> "Pointwise_Path";
-  "Dependent_Pointwise_Path" -> "Pointwise_Path";
   # Pointwise_Path_Pointwise_Path
   "Base" -> "Pointwise_Path_Pointwise_Path";
   "Dependent_Function" -> "Pointwise_Path_Pointwise_Path";
