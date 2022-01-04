@@ -6,6 +6,7 @@ Require Googology_In_Coq.Sum.
 Require Googology_In_Coq.Void.
 Require Googology_In_Coq.Unit.
 Require Googology_In_Coq.W_type.
+Require Googology_In_Coq.Bool.
 
 (** ライブラリを要求します。 *)
 
@@ -15,6 +16,7 @@ Import Googology_In_Coq.Sum (Sum).
 Import Googology_In_Coq.Void (Void).
 Import Googology_In_Coq.Unit (Unit).
 Import Googology_In_Coq.W_type (W_type)
+Import Googology_In_Coq.Bool (Bool).
 
 (** ライブラリを開きます。 *)
 
@@ -23,7 +25,7 @@ Definition
     :=
       W_type@{i}
         Bool@{i}
-        (matching_nodep_visible@{s_i} Type@{i} Void@{i} Unit@{i})
+        (Bool.matching_nodep_visible@{s_i} Type@{i} Void@{i} Unit@{i})
 .
 (* from: originally defined by Hexirp *)
 

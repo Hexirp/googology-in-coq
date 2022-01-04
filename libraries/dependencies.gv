@@ -107,4 +107,5 @@ digraph Dependencies {
   "Void" -> "Peano_Number";
   "Unit" -> "Peano_Number";
   "W_type" -> "Peano_Number";
+  "Bool" -> "Peano_Number";
 }
