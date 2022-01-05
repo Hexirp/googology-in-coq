@@ -2,6 +2,7 @@
 
 Require Googology_In_Coq.Base.
 Require Googology_In_Coq.Function.
+Require Googology_In_Coq.Dependent_Sum.
 Require Googology_In_Coq.Sum.
 Require Googology_In_Coq.Void.
 Require Googology_In_Coq.Unit.
@@ -12,6 +13,7 @@ Require Googology_In_Coq.Bool.
 
 Import Googology_In_Coq.Base.
 Import Googology_In_Coq.Function (Function).
+Import Googology_In_Coq.Dependent_Sum (Dependent_Sum).
 Import Googology_In_Coq.Sum (Sum).
 Import Googology_In_Coq.Void (Void).
 Import Googology_In_Coq.Unit (Unit).
@@ -30,3 +32,19 @@ Definition
 (* from: originally defined by Hexirp *)
 
 (** 自然数の型です。 *)
+
+Definition
+  zero@{i s_i | i < s_i} : Peano_Number@{i s_i}
+    := W_type.sup (Dependent_Sum.pair Bool.false Void.matching_nodep)
+.
+(* from: originally defined by Hexirp *)
+
+(** 自然数の型の第一構築子です。 *)
+
+Definition
+  succ@{i s_i | i < s_i} (n_p : Peano_Number@{i s_i}) : Peano_Number@{i s_i}
+    := W_type.sup (Dependent_Sum.pair Bool.true (Unit.matching_nodep n_p))
+.
+(* from: originally defined by Hexirp *)
+
+(** 自然数の型の第二構築子です。 *)
