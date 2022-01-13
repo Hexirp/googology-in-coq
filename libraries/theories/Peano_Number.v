@@ -58,7 +58,28 @@ Definition
           : forall x_p : Peano_Number@{i s_i}, P (succ@{i s_i} x_p)
       )
     : forall x : Peano_Number@{i s_i}, P x
-    := W_type.matching P _
+    :=
+      W_type.matching
+        P
+        (
+          Dependent_Sum.matching
+            (
+              fun
+                x
+                  :
+                    Dependent_Sum@{i}
+                      Bool@{i}
+                      (
+                        Bool.matching_nodep_visible@{s_i}
+                          Type@{i}
+                          Void@{i}
+                          Unit@{i}
+                      )
+              =>
+                P (W_type.sup x)
+            )
+            _
+        )
 .
 (* from: originally defined by Hexirp *)
 
