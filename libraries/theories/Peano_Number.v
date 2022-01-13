@@ -50,6 +50,21 @@ Definition
 (** 自然数の型の第二構築子です。 *)
 
 Definition
+  matching@{i s_i | i < s_i}
+      (P : Peano_Number@{i s_i} -> Type@{i})
+      (constructor_zero : P zero@{i s_i})
+      (
+        constructor_succ
+          : forall x_p : Peano_Number@{i s_i}, P (succ@{i s_i} x_p)
+      )
+    : forall x : Peano_Number@{i s_i}, P x
+    := _
+.
+(* from: originally defined by Hexirp *)
+
+(** 場合分けです。 *)
+
+Definition
   induction@{i s_i | i < s_i}
       (P : Peano_Number@{i s_i} -> Type@{i})
       (constructor_zero : P zero@{i s_i})
