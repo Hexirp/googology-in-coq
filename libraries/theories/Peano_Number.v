@@ -62,6 +62,7 @@ Definition
 Proof.
   refine (W_type.matching P _).
   refine (Dependent_Sum.matching _ _).
+  exact _.
 Defined.
 (* from: originally defined by Hexirp *)
 
