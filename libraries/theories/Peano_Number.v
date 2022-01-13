@@ -60,3 +60,6 @@ Definition
     : forall x : Peano_Number@{i s_i}, P x
     := _
 .
+(* from: originally defined by Hexirp *)
+
+(** 帰納法の原理です。 *)
