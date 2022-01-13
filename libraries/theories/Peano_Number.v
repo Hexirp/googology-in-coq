@@ -65,18 +65,22 @@ Definition
           Dependent_Sum.matching
             (
               fun
-                x
+                x_v
                   :
-                    Dependent_Sum@{i}
-                      Bool@{i}
+                    Dependent_Sum
+                      Bool
                       (
-                        Bool.matching_nodep_visible@{s_i}
-                          Type@{i}
-                          Void@{i}
-                          Unit@{i}
+                        fun a : Bool =>
+                          Function
+                            (Bool.matching_nodep_visible@{s_i} Type@{i} Void@{i} Unit@{i} a)
+                            (
+                              W_type
+                                Bool
+                                (Bool.matching_nodep_visible@{s_i} Type@{i} Void@{i} Unit@{i})
+                            )
                       )
               =>
-                P (W_type.sup x)
+                P (W_type.sup x_v)
             )
             _
         )
