@@ -58,33 +58,11 @@ Definition
           : forall x_p : Peano_Number@{i s_i}, P (succ@{i s_i} x_p)
       )
     : forall x : Peano_Number@{i s_i}, P x
-    :=
-      W_type.matching
-        P
-        (
-          Dependent_Sum.matching
-            (
-              fun
-                x_v
-                  :
-                    Dependent_Sum
-                      Bool
-                      (
-                        fun a : Bool =>
-                          Function
-                            (Bool.matching_nodep_visible@{s_i} Type@{i} Void@{i} Unit@{i} a)
-                            (
-                              W_type
-                                Bool
-                                (Bool.matching_nodep_visible@{s_i} Type@{i} Void@{i} Unit@{i})
-                            )
-                      )
-              =>
-                P (W_type.sup x_v)
-            )
-            _
-        )
 .
+Proof.
+  refine (W_type.matching P _).
+  refine (Dependent_Sum.matching _ _).
+Defined.
 (* from: originally defined by Hexirp *)
 
 (** 場合分けです。 *)
