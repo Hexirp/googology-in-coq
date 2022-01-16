@@ -16,28 +16,20 @@ Inductive
 
 (** 直和型です。 *)
 
-Arguments left {A} {B} a.
-
-(** [left] の暗黙引数を設定します。 *)
-
-Arguments right {A} {B} b.
-
-(** [right] の暗黙引数を設定します。 *)
-
 Definition
   matching@{i | }
-      {A : Type@{i}}
-      {B : Type@{i}}
-      (P : Sum A B -> Type@{i})
-      (constructor_left : forall x_L : A, P (left x_L))
-      (constructor_right : forall x_R : B, P (right x_R))
+      (A : Type@{i})
+      (B : Type@{i})
+      (P : Sum@ A B -> Type@{i})
+      (constructor_left : forall x_L : A, P (left A B x_L))
+      (constructor_right : forall x_R : B, P (right A B x_R))
     : forall x : Sum A B, P x
     :=
       fun x : Sum A B =>
-        match x with
-            left x_L => constructor_left x_L
+        match x as x_ return P x_ with
+            left _ _ x_L => constructor_left x_L
           |
-            right x_R => constructor_right x_R
+            right _ _ x_R => constructor_right x_R
         end
 .
 (* from: originally defined by Hexirp *)
@@ -52,7 +44,7 @@ Definition
       (constructor_left : A -> P)
       (constructor_right : B -> P)
     : Sum A B -> P
-    := matching (fun x_ : Sum A B => P) constructor_left constructor_right
+    := matching A B (fun x_ : Sum A B => P) constructor_left constructor_right
 .
 (* from: originally defined by Hexirp *)
 
@@ -60,14 +52,20 @@ Definition
 
 Definition
   map@{i | }
-      {A : Type@{i}}
-      {B : Type@{i}}
-      {C : Type@{i}}
-      {D : Type@{i}}
+      (A : Type@{i})
+      (B : Type@{i})
+      (C : Type@{i})
+      (D : Type@{i})
       (f : A -> C)
       (g : B -> D)
-    : Sum A B -> Sum C D
-    := matching_nodep (fun y : A => left (f y)) (fun y : B => right (g y))
+    : Sum@{i} A B -> Sum@{i} C D
+    :=
+      matching_nodep
+        A
+        B
+        (Sum@{i} A B)
+        (fun x_L : A => left C D (f x_L))
+        (fun x_R : B => right C D (g x_R))
 .
 (* from: originally defined by Hexirp *)
 
