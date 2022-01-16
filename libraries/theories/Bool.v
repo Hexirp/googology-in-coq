@@ -58,6 +58,18 @@ Definition
 (** 場合分けです。 *)
 
 Definition
+  matching_nodep_visible@{i | }
+      (P : Type@{i})
+      (constructor_false : P)
+      (constructor_true : P)
+  : Bool@{i} -> P
+  := matching_nodep constructor_false constructor_true
+.
+(* from: originally defined by Hexirp *)
+
+(** 引数が明示的な [matching_nodep] です。 *)
+
+Definition
   and@{i | } : Bool@{i} -> Bool@{i} -> Bool@{i}
     := matching_nodep (Function.const false) Function.id
 .

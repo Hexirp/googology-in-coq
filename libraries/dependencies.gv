@@ -100,4 +100,12 @@ digraph Dependencies {
   "Function" -> "Bool";
   "Sum" -> "Bool";
   "Unit" -> "Bool";
+  # Peano_Number
+  "Base" -> "Peano_Number";
+  "Function" -> "Peano_Number";
+  "Sum" -> "Peano_Number";
+  "Void" -> "Peano_Number";
+  "Unit" -> "Peano_Number";
+  "W_type" -> "Peano_Number";
+  "Bool" -> "Peano_Number";
 }
