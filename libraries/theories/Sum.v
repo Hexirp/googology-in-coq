@@ -20,7 +20,7 @@ Definition
   matching@{i | }
       (A : Type@{i})
       (B : Type@{i})
-      (P : Sum@ A B -> Type@{i})
+      (P : Sum@{i} A B -> Type@{i})
       (constructor_left : forall x_L : A, P (left A B x_L))
       (constructor_right : forall x_R : B, P (right A B x_R))
     : forall x : Sum A B, P x
