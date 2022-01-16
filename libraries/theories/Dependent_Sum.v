@@ -21,11 +21,13 @@ Definition
       (A : Type@{i})
       (B : A -> Type@{i})
       (P : Dependent_Sum A B -> Type@{i})
-      (constructor_pair : forall (a : A) (b : B a), P (pair a b))
+      (constructor_pair : forall (a : A) (b : B a), P (pair A B a b))
     : forall x : Dependent_Sum A B, P x
     :=
       fun x : Dependent_Sum A B =>
-        match x with pair a b => constructor_pair a b end
+        match x as x_ return P x_ with
+          pair _ _ a b => constructor_pair a b
+        end
 .
 (* from: originally defined by Hexirp *)
 
@@ -38,7 +40,7 @@ Definition
       (P : Type@{i})
       (constructor_pair : forall a : A, B a -> P)
     : Dependent_Sum A B -> P
-    := matching (fun x_ : Dependent_Sum A B => P) constructor_pair
+    := matching A B (fun x_ : Dependent_Sum A B => P) constructor_pair
 .
 (* from: originally defined by Hexirp *)
 
@@ -46,7 +48,7 @@ Definition
 
 Definition
   first@{i | } (A : Type@{i}) (B : A -> Type@{i}) : Dependent_Sum A B -> A
-    := matching_nodep (fun (a : A) (b : B a) => a)
+    := matching_nodep A B A (fun (a : A) (b : B a) => a)
 .
 (* from: originally defined by Hexirp *)
 
@@ -57,6 +59,8 @@ Definition
     : forall x : Dependent_Sum A B, B (first x)
     :=
       matching
+        A
+        B
         (fun x_ : Dependent_Sum A B => B (first x_))
         (fun (a : A) (b : B a) => b)
 .
@@ -72,8 +76,10 @@ Definition
       (D : C -> Type@{i})
       (f : A -> C)
       (g : forall x : A, B x -> D (f x))
-    : Dependent_Sum A B -> Dependent_Sum C D
-    := fun x : Dependent_Sum A B => pair (f (first x)) (g (first x) (second x))
+    : Dependent_Sum@{i} A B -> Dependent_Sum@{i} C D
+    :=
+      fun x : Dependent_Sum@{i} A B =>
+        pair C D (f (first A B x)) (g (first A B x) (second A B x))
 .
 (* from: originally defined by Hexirp *)
 
