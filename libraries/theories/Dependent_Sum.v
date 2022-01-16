@@ -61,7 +61,7 @@ Definition
       matching
         A
         B
-        (fun x_ : Dependent_Sum A B => B (first x_))
+        (fun x_ : Dependent_Sum A B => B (first A B x_))
         (fun (a : A) (b : B a) => b)
 .
 (* from: originally defined by Hexirp *)
