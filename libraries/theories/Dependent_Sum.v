@@ -16,14 +16,10 @@ Inductive
 
 (** 依存直和型です。 *)
 
-Arguments pair {A} {B} a b.
-
-(** [pair] についての暗黙引数を設定します。 *)
-
 Definition
   matching@{i | }
-      {A : Type@{i}}
-      {B : A -> Type@{i}}
+      (A : Type@{i})
+      (B : A -> Type@{i})
       (P : Dependent_Sum A B -> Type@{i})
       (constructor_pair : forall (a : A) (b : B a), P (pair a b))
     : forall x : Dependent_Sum A B, P x
@@ -37,9 +33,9 @@ Definition
 
 Definition
   matching_nodep@{i | }
-      {A : Type@{i}}
-      {B : A -> Type@{i}}
-      {P : Type@{i}}
+      (A : Type@{i})
+      (B : A -> Type@{i})
+      (P : Type@{i})
       (constructor_pair : forall a : A, B a -> P)
     : Dependent_Sum A B -> P
     := matching (fun x_ : Dependent_Sum A B => P) constructor_pair
@@ -49,20 +45,7 @@ Definition
 (** 場合分けです。 *)
 
 Definition
-  matching_nodep_visible@{i | }
-      {A : Type@{i}}
-      {B : A -> Type@{i}}
-      (P : Type@{i})
-      (constructor_pair : forall a : A, B a -> P)
-    : Dependent_Sum A B -> P
-    := matching (fun x_ : Dependent_Sum A B => P) constructor_pair
-.
-(* from: originally defined by Hexirp *)
-
-(** 引数が明示的な [matching_nodep] です。 *)
-
-Definition
-  first@{i | } {A : Type@{i}} {B : A -> Type@{i}} : Dependent_Sum A B -> A
+  first@{i | } (A : Type@{i}) (B : A -> Type@{i}) : Dependent_Sum A B -> A
     := matching_nodep (fun (a : A) (b : B a) => a)
 .
 (* from: originally defined by Hexirp *)
@@ -70,7 +53,7 @@ Definition
 (** 依存直和型の第一射影関数です。 *)
 
 Definition
-  second@{i | } {A : Type@{i}} {B : A -> Type@{i}}
+  second@{i | } (A : Type@{i}) (B : A -> Type@{i})
     : forall x : Dependent_Sum A B, B (first x)
     :=
       matching
@@ -83,10 +66,10 @@ Definition
 
 Definition
   map@{i | }
-      {A : Type@{i}}
-      {B : A -> Type@{i}}
-      {C : Type@{i}}
-      {D : C -> Type@{i}}
+      (A : Type@{i})
+      (B : A -> Type@{i})
+      (C : Type@{i})
+      (D : C -> Type@{i})
       (f : A -> C)
       (g : forall x : A, B x -> D (f x))
     : Dependent_Sum A B -> Dependent_Sum C D
