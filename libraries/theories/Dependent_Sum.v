@@ -56,7 +56,7 @@ Definition
 
 Definition
   second@{i | } (A : Type@{i}) (B : A -> Type@{i})
-    : forall x : Dependent_Sum A B, B (first x)
+    : forall x : Dependent_Sum A B, B (first A B x)
     :=
       matching
         A
