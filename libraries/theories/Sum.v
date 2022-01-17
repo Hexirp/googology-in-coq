@@ -38,9 +38,9 @@ Definition
 
 Definition
   matching_nodep@{i | }
-      {A : Type@{i}}
-      {B : Type@{i}}
-      {P : Type@{i}}
+      (A : Type@{i})
+      (B : Type@{i})
+      (P : Type@{i})
       (constructor_left : A -> P)
       (constructor_right : B -> P)
     : Sum A B -> P
@@ -63,7 +63,7 @@ Definition
       matching_nodep
         A
         B
-        (Sum@{i} A B)
+        (Sum@{i} C D)
         (fun x_L : A => left C D (f x_L))
         (fun x_R : B => right C D (g x_R))
 .
