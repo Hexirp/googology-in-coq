@@ -28,8 +28,8 @@ digraph Dependencies {
   # W_type
   "Base" -> "W_type";
   "Dependent_Function" -> "W_type";
-  "Function" -> "W_type";
-  "Dependent_Sum" -> "W_type";
+  "W_type.Alpha" -> "W_type";
+  "W_type.Beta" -> "W_type";
   # Universe
   "Base" -> "Universe";
   # Path

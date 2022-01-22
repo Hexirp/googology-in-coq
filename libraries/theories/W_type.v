@@ -2,47 +2,17 @@
 
 Require Googology_In_Coq.Base.
 Require Googology_In_Coq.Dependent_Function.
-Require Googology_In_Coq.Function.
-Require Googology_In_Coq.Dependent_Sum.
+Require Googology_In_Coq.W_type.Alpha.
+Require Googology_In_Coq.W_type.Beta.
 
 (** ライブラリを要求します。 *)
 
 Import Googology_In_Coq.Base.
 Import Googology_In_Coq.Dependent_Function (Dependent_Function).
-Import Googology_In_Coq.Function (Function).
-Import Googology_In_Coq.Dependent_Sum (Dependent_Sum).
+Import Googology_In_Coq.W_type.Alpha (Alpha).
+Import Googology_In_Coq.W_type.Beta (Beta).
 
 (** ライブラリを開きます。 *)
-
-Definition
-  Alpha@{i | }
-      (
-        beta
-          :
-              (forall A : Type@{i}, (A -> Type@{i}) -> Type@{i})
-            ->
-            forall
-              A : Type@{i}
-            ,
-              (A -> Type@{i})
-            ->
-              (A -> Type@{i})
-      )
-      (t : forall A : Type@{i}, (A -> Type@{i}) -> Type@{i})
-      (A : Type@{i})
-      (B : A -> Type@{i})
-    : Type@{i}
-    := Dependent_Sum A (beta t A B)
-.
-
-Definition
-  Beta@{i | }
-      (t : forall A : Type@{i}, (A -> Type@{i}) -> Type@{i})
-      (A : Type@{i})
-      (B : A -> Type@{i})
-    : A -> Type@{i}
-    := fun a : A => Function (B a) (t A B)
-.
 
 Inductive
   W_type@{i | } (A : Type@{i}) (B : A -> Type@{i}) : Type@{i}
@@ -95,17 +65,19 @@ Definition
               x_v : Alpha Beta W_type A B
             ,
               Dependent_Function
-                (B (Dependent_Sum.first A (Beta W_type A B) x_v))
+                (B (Alpha.first Beta W_type A B x_v))
                 (
                   fun
-                    x_v_2_x : B (Dependent_Sum.first A (Beta W_type A B) x_v)
+                    x_v_2_x : B (Alpha.first Beta W_type A B x_v)
                   =>
                     P
                       (
-                        Function.apply
-                          (B (Dependent_Sum.first A (Beta W_type A B) x_v))
-                          (W_type A B)
-                          (Dependent_Sum.second A (Beta W_type A B) x_v)
+                        Beta.apply
+                          W_type
+                          A
+                          B
+                          (Alpha.first Beta W_type A B x_v)
+                          (Alpha.second Beta W_type A B x_v)
                           x_v_2_x
                       )
                 )
