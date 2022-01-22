@@ -31,7 +31,7 @@ Definition
 
 Definition
   absurd@{i | } (A : Type@{i}) : Void@{i} -> A
-    := fun x : Void => matching_nodep x
+    := fun x : Void => matching_nodep A x
 .
 (* from: originally defined by Hexirp *)
 
