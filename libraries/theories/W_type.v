@@ -19,13 +19,14 @@ Definition
       (
         beta
           :
-            forall
-              (A : Type@{i})
-              (B : A -> Type@{i})
-            ,
-              Type@{i}
+              (forall A : Type@{i}, (A -> Type@{i}) -> Type@{i})
             ->
-              A -> Type@{i}
+            forall
+              A : Type@{i}
+            ,
+              (A -> Type@{i})
+            ->
+              (A -> Type@{i})
       )
       (t : forall A : Type@{i}, (A -> Type@{i}) -> Type@{i})
       (A : Type@{i})
