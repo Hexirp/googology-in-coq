@@ -173,8 +173,8 @@ Definition
         Pointwise_Path
           A
           D
-          (Function.comp B C D f (Function.comp A B C g_L h))
-          (Function.comp B C D f (Function.comp A B C g_R h))
+          (Function.comp A C D f (Function.comp A B C g_L h))
+          (Function.comp A C D f (Function.comp A B C g_R h))
     := fun p : Pointwise_Path B C g_L g_R => wisker_L f (wisker_R h p)
 .
 (* from: originally defined by Hexirp *)
