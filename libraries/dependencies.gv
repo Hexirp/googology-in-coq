@@ -22,6 +22,9 @@ digraph Dependencies {
   # W_type.Alpha
   "Base" -> "W_type.Alpha";
   "Dependent_Sum" -> "W_type.Alpha";
+  # W_type.Beta
+  "Base" -> "W_type.Beta";
+  "Function" -> "W_type.Beta";
   # W_type
   "Base" -> "W_type";
   "Dependent_Function" -> "W_type";
