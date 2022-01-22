@@ -31,7 +31,7 @@ Definition
       (A : Type@{i})
       (B : A -> Type@{i})
     : Type@{i}
-    := Dependent_Sum A (beta A B t)
+    := Dependent_Sum A (beta t A B)
 .
 
 Definition
