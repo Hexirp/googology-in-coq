@@ -70,7 +70,7 @@ Definition
         induction
           A
           a
-          (fun (a'_ : A) (x_ : Path a a'_) => P a a'_ x_)
+          (fun (a'_ : A) (x_ : Path A a a'_) => P a a'_ x_)
           (constructor_id a)
 .
 (* from: originally defined by Hexirp *)
@@ -79,10 +79,10 @@ Definition
 
 Definition
   trpt@{i | } (A : Type@{i}) (x : A) (y : A) (B : A -> Type@{i})
-    : Path x y -> B x -> B y
+    : Path A x y -> B x -> B y
     :=
-      fun (p : Path x y) (u : B x) =>
-        induction A x (fun (y_ : A) (p_ : Path x y_) => B y_) u y p
+      fun (p : Path A x y) (u : B x) =>
+        induction A x (fun (y_ : A) (p_ : Path A x y_) => B y_) u y p
 .
 (* from: originally defined by Hexirp *)
 
@@ -93,11 +93,11 @@ Definition
       (A : Type@{i})
       (x : A)
       (y : A)
-      (B : forall y : A, Path x y -> Type@{i})
-    : forall p : Path x y, B x (id A x) -> B y p
+      (B : forall y : A, Path A x y -> Type@{i})
+    : forall p : Path A x y, B x (id A x) -> B y p
     :=
-      fun (p : Path x y) (u : B x (id A x)) =>
-        induction A x (fun (y_ : A) (p_ : Path x y_) => B y_ p_) u y p
+      fun (p : Path A x y) (u : B x (id A x)) =>
+        induction A x (fun (y_ : A) (p_ : Path A x y_) => B y_ p_) u y p
 .
 (* from: originally defined by Hexirp *)
 
@@ -105,7 +105,7 @@ Definition
 
 Definition
   conc@{i | } (A : Type@{i}) (x : A) (y : A) (z : A)
-    : Path x y -> Path y z -> Path x z
+    : Path A x y -> Path A y z -> Path A x z
     :=
       fun (p : Path A x y) (q : Path A y z) =>
         trpt A y z (Path A x) q (trpt A x y (Path A x) p (id A x))
@@ -115,7 +115,7 @@ Definition
 (** 道の結合です。 *)
 
 Definition
-  inv@{i | } {A : Type@{i}} (x : A) (y : A) : Path x y -> Path y x
+  inv@{i | } {A : Type@{i}} (x : A) (y : A) : Path A x y -> Path A y x
     := fun p : Path A x y => trpt A x y (fun y_ => Path A y_ x) p (id A x)
 .
 (* from: originally defined by Hexirp *)
@@ -127,7 +127,7 @@ Definition
     : Path A x y -> Path B (f x) (f y)
     :=
       fun p : Path A x y =>
-        trpt A x y (fun y_ => Path (f x) (f y_)) p (id B (f x))
+        trpt A x y (fun y_ => Path B (f x) (f y_)) p (id B (f x))
 .
 (* from: originally defined by Hexirp *)
 
