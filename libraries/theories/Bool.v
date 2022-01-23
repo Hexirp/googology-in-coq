@@ -37,6 +37,8 @@ Definition
     : forall x : Bool@{i}, P x
     :=
       Sum.matching
+        Unit@{i}
+        Unit@{i}
         P
         (Unit.matching (fun x_ : Unit => P (Sum.left Unit@{i} Unit@{i} x_)) constructor_false)
         (Unit.matching (fun x_ : Unit => P (Sum.right Unit@{i} Unit@{i} x_)) constructor_true)
