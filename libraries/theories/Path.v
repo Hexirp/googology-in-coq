@@ -62,9 +62,9 @@ Definition
 Definition
   jay@{i | }
       (A : Type@{i})
-      (P : forall (a : A) (a' : A), Path a a' -> Type@{i})
+      (P : forall (a : A) (a' : A), Path A a a' -> Type@{i})
       (constructor_id : forall a : A, P a a (id A a))
-    : forall (a : A) (a' : A) (x : Path a a'), P a a' x
+    : forall (a : A) (a' : A) (x : Path A a a'), P a a' x
     :=
       fun a : A =>
         induction
