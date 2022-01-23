@@ -2,6 +2,7 @@
 
 Require Googology_In_Coq.Base.
 Require Googology_In_Coq.Dependent_Function.
+Require Googology_In_Coq.Function.
 Require Googology_In_Coq.W_type.Alpha.
 Require Googology_In_Coq.W_type.Beta.
 
@@ -9,6 +10,7 @@ Require Googology_In_Coq.W_type.Beta.
 
 Import Googology_In_Coq.Base.
 Import Googology_In_Coq.Dependent_Function (Dependent_Function).
+Import Googology_In_Coq.Function (Function).
 Import Googology_In_Coq.W_type.Alpha (Alpha).
 Import Googology_In_Coq.W_type.Beta (Beta).
 
@@ -134,21 +136,21 @@ Definition
 
 Definition
   recursion@{i | }
-      {A : Type@{i}}
-      {B : A -> Type@{i}}
-      {P : Type@{i}}
+      (A : Type@{i})
+      (B : A -> Type@{i})
+      (P : Type@{i})
       (
         constructor_sup
           :
             forall
-              x_v : Dependent_Sum A (fun a : A => Function (B a) (W_type A B))
+              x_v : Alpha Beta W_type A B
             ,
-              Function (B (Dependent_Sum.first x_v)) P
+              Function (B (Alpha.first Beta W_type A B x_v)) P
             ->
               P
       )
     : W_type A B -> P
-    := induction (fun x_ => P) constructor_sup
+    := induction A B (fun x_ => P) constructor_sup
 .
 (* from: originally defined by Hexirp *)
 
