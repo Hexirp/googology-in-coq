@@ -67,9 +67,7 @@ Definition
               Dependent_Function
                 (B (Alpha.first Beta W_type A B x_v))
                 (
-                  fun
-                    x_v_2_x : B (Alpha.first Beta W_type A B x_v)
-                  =>
+                  fun x_v_2_x : B (Alpha.first Beta W_type A B x_v) =>
                     P
                       (
                         Beta.apply
@@ -88,24 +86,43 @@ Definition
     :=
       fix induction (x : W_type A B) {struct x} : P x :=
         matching
+          A
+          B
           P
           (
             fun
-              x_v : Dependent_Sum A (fun a : A => Function (B a) (W_type A B))
+              x_v : Alpha Beta W_type A B
             =>
               constructor_sup
                 x_v
                 (
                   Dependent_Function.abstract
-                    (B (Dependent_Sum.first x_v))
+                    (B (Alpha.first Beta W_type A B x_v))
                     (
-                      fun x_v_2_x : B (Dependent_Sum.first x_v) =>
-                        P (Function.apply (Dependent_Sum.second x_v) x_v_2_x)
+                      fun x_v_2_x : B (Alpha.first Beta W_type A B x_v) =>
+                        P
+                          (
+                            Beta.apply
+                              W_type
+                              A
+                              B
+                              (Alpha.first Beta W_type A B x_v)
+                              (Alpha.second Beta W_type A B x_v)
+                              x_v_2_x
+                          )
                     )
                     (
-                      fun x_v_2_x : B (Dependent_Sum.first x_v) =>
+                      fun x_v_2_x : B (Alpha.first Beta W_type A B x_v) =>
                         induction
-                          (Function.apply (Dependent_Sum.second x_v) x_v_2_x)
+                          (
+                            Beta.apply
+                              W_type
+                              A
+                              B
+                              (Alpha.first Beta W_type A B x_v)
+                              (Alpha.second Beta W_type A B x_v)
+                              x_v_2_x
+                          )
                     )
                 )
           )
