@@ -115,7 +115,7 @@ Definition
 (** 道の結合です。 *)
 
 Definition
-  inv@{i | } {A : Type@{i}} (x : A) (y : A) : Path A x y -> Path A y x
+  inv@{i | } (A : Type@{i}) (x : A) (y : A) : Path A x y -> Path A y x
     := fun p : Path A x y => trpt A x y (fun y_ => Path A y_ x) p (id A x)
 .
 (* from: originally defined by Hexirp *)
