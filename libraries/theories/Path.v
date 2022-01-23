@@ -51,7 +51,7 @@ Definition
       (A : Type@{i})
       (a : A)
       (P : forall a' : A, Path A a a' -> Type@{i})
-      (constructor_id : P a id)
+      (constructor_id : P a (id A a))
     : forall (a' : A) (x : Path A a a'), P a' x
     := Core.induction A a P constructor_id
 .
@@ -63,7 +63,7 @@ Definition
   jay@{i | }
       (A : Type@{i})
       (P : forall (a : A) (a' : A), Path a a' -> Type@{i})
-      (constructor_id : forall a : A, P a a id)
+      (constructor_id : forall a : A, P a a (id A a))
     : forall (a : A) (a' : A) (x : Path a a'), P a a' x
     :=
       fun a : A =>
