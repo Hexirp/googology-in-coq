@@ -73,7 +73,7 @@ Definition
 
 Definition
   and@{i | } : Bool@{i} -> Bool@{i} -> Bool@{i}
-    := matching_nodep (Function.const false) Function.id
+    := matching_nodep (Function.const Bool@{i} Bool@{i} false) (Function.id Bool@{i})
 .
 (* from: originally defined by Hexirp *)
 
