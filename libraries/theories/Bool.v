@@ -19,12 +19,12 @@ Definition Bool@{i | } : Type@{i} := Sum@{i} Unit@{i} Unit@{i}.
 
 (** ブーリアン型です。 *)
 
-Definition false@{i | } : Bool@{i} := Sum.left Unit Unit Unit.unit.
+Definition false@{i | } : Bool@{i} := Sum.left Unit@{i} Unit@{i} Unit.unit.
 (* from: originally defined by Hexirp *)
 
 (** ブーリアン型の第二構築子です。 *)
 
-Definition true@{i | } : Bool@{i} := Sum.right Unit Unit Unit.unit.
+Definition true@{i | } : Bool@{i} := Sum.right Unit@{i} Unit@{i} Unit.unit.
 (* from: originally defined by Hexirp *)
 
 (** ブーリアン型の第一構築子です。 *)
@@ -38,8 +38,8 @@ Definition
     :=
       Sum.matching
         P
-        (Unit.matching (fun x_ : Unit => P (Sum.left Unit Unit x_)) constructor_false)
-        (Unit.matching (fun x_ : Unit => P (Sum.right Unit Unit x_)) constructor_true)
+        (Unit.matching (fun x_ : Unit => P (Sum.left Unit@{i} Unit@{i} x_)) constructor_false)
+        (Unit.matching (fun x_ : Unit => P (Sum.right Unit@{i} Unit@{i} x_)) constructor_true)
 .
 (* from: originally defined by Hexirp *)
 
@@ -79,7 +79,7 @@ Definition
 
 Definition
   or@{i | } : Bool@{i} -> Bool@{i} -> Bool@{i}
-    := matching_nodep (Function.id Bool) (Function.const Bool Bool true)
+    := matching_nodep (Function.id Bool@{i}) (Function.const Bool@{i} Bool@{i} true)
 .
 (* from: originally defined by Hexirp *)
 
