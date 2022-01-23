@@ -163,8 +163,8 @@ Definition
                   D
                   (f (Alpha.first Beta W_type A B x_v))
                   (
-                    fun z : D (f (Alpha.first Beta W_type A B x_v x_v)) =>
-                      y (g (Alpha.first Beta W_type A B x_v x_v) z)
+                    fun z : D (f (Alpha.first Beta W_type A B x_v)) =>
+                      y (g (Alpha.first Beta W_type A B x_v) z)
                   )
               )
         )
