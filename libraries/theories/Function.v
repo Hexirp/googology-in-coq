@@ -54,22 +54,6 @@ Definition
 (** 関数の抽象です。 *)
 
 Definition
-  domain@{i j | } (A : Type@{i}) (B : Type@{j}) : (A -> B) -> Type@{i}
-    := fun f : A -> B => A
-.
-(* from: https://www.cs.bham.ac.uk/~mhe/HoTT-UF-in-Agda-Lecture-Notes/ *)
-
-(** 関数の定義域です。あるいは始域です。 *)
-
-Definition
-  codomain@{i j | } (A : Type@{i}) (B : Type@{j}) : (A -> B) -> Type@{j}
-    := fun f : A -> B => B
-.
-(* from: https://www.cs.bham.ac.uk/~mhe/HoTT-UF-in-Agda-Lecture-Notes/ *)
-
-(** 関数の値域です。あるいは終域です。 *)
-
-Definition
   map@{i | }
       (A : Type@{i})
       (B : Type@{i})
