@@ -1,16 +1,12 @@
 (** ウ型に関するモジュールです。 *)
 
 Require Googology_In_Coq.Base.
-Require Googology_In_Coq.Dependent_Function.
-Require Googology_In_Coq.Function.
 Require Googology_In_Coq.W_type.Alpha.
 Require Googology_In_Coq.W_type.Beta.
 
 (** ライブラリを要求します。 *)
 
 Import Googology_In_Coq.Base.
-Import Googology_In_Coq.Dependent_Function (Dependent_Function).
-Import Googology_In_Coq.Function (Function).
 Import Googology_In_Coq.W_type.Alpha (Alpha).
 Import Googology_In_Coq.W_type.Beta (Beta).
 
