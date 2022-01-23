@@ -50,9 +50,9 @@ Definition
   induction@{i | }
       (A : Type@{i})
       (a : A)
-      (P : forall a' : A, Path a a' -> Type@{i})
+      (P : forall a' : A, Path A a a' -> Type@{i})
       (constructor_id : P a id)
-    : forall (a' : A) (x : Path a a'), P a' x
+    : forall (a' : A) (x : Path A a a'), P a' x
     := Core.induction A a P constructor_id
 .
 (* from: originally defined by Hexirp *)
