@@ -35,6 +35,32 @@ Definition
 (** ウ型のアルファです。 *)
 
 Definition
+  pair@{i | }
+      (
+        beta
+          :
+            forall
+              t : forall A : Type@{i}, (A -> Type@{i}) -> Type@{i}
+            ,
+            forall
+              (A : Type@{i})
+              (B : A -> Type@{i})
+            ,
+              A -> Type@{i}
+      )
+      (t : forall (A : Type@{i}) (B : A -> Type@{i}), Type@{i})
+      (A : Type@{i})
+      (B : A -> Type@{i})
+      (a : A)
+      (b : beta t A B a)
+    : Alpha beta t A B
+    := Dependent_Sum.pair A (beta t A B) a b
+.
+(* from: originally defined by Hexirp *)
+
+(** ウ型のアルファの構築子です。 *)
+
+Definition
   first@{i | }
       (
         beta
