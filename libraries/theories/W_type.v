@@ -158,29 +158,36 @@ Definition
 
 Definition
   map@{i | }
-      {A : Type@{i}}
-      {B : A -> Type@{i}}
-      {C : Type@{i}}
-      {D : C -> Type@{i}}
+      (A : Type@{i})
+      (B : A -> Type@{i})
+      (C : Type@{i})
+      (D : C -> Type@{i})
       (f : A -> C)
       (g : forall x : A, D (f x) -> B x)
     : W_type A B -> W_type C D
     :=
       recursion
+        A
+        B
+        (W_type C D)
         (
           fun
-            (x_v : Dependent_Sum A (fun a : A => Function (B a) (W_type A B)))
-            (y : Function (B (Dependent_Sum.first x_v)) (W_type C D))
+            (x_v : Alpha Beta W_type A B)
+            (y : Function (B (Alpha.first Beta W_type A B x_v)) (W_type C D))
           =>
             sup
+              C
+              D
               (
-                Dependent_Sum.pair
-                  (f (Dependent_Sum.first x_v))
+                Alpha.pair
+                  (f (Alpha.first Beta W_type A B x_v x_v))
                   (
                     Function.abstract
                       (
-                        fun z : D (f (Dependent_Sum.first x_v)) =>
-                          Function.apply y (g (Dependent_Sum.first x_v) z)
+                        fun z : D (f (Alpha.first Beta W_type A B x_v x_v)) =>
+                          Function.apply
+                            y
+                            (g (Alpha.first Beta W_type A B x_v x_v) z)
                       )
                   )
               )
