@@ -180,6 +180,10 @@ Definition
               D
               (
                 Alpha.pair
+                  Beta
+                  W_type
+                  C
+                  D
                   (f (Alpha.first Beta W_type A B x_v x_v))
                   (
                     Function.abstract
