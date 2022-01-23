@@ -31,22 +31,22 @@ Definition
               Dependent_Sum
                 (
                   Product
-                    (Pointwise_Path A A (Function.comp g f) Function.id)
-                    (Pointwise_Path B B (Function.comp f g) Function.id)
+                    (Pointwise_Path A A (Function.comp A B A g f) (Function.id A))
+                    (Pointwise_Path B B (Function.comp B A B f g) (Function.id B))
                 )
                 (
                   fun
                     p
                       :
                         Product
-                          (Pointwise_Path A A (Function.comp g f) Function.id)
-                          (Pointwise_Path B B (Function.comp f g) Function.id)
+                          (Pointwise_Path A A (Function.comp A B A g f) (Function.id A))
+                          (Pointwise_Path B B (Function.comp B A B f g) (Function.id B))
                   =>
                     Pointwise_Path_Pointwise_Path
-                      (Function.comp f (Function.comp g f))
+                      (Function.comp A A B f (Function.comp A B A g f))
                       f
-                      (Pointwise_Path.wisker_L f (Product.first p))
-                      (Pointwise_Path.wisker_R f (Product.second p))
+                      (Pointwise_Path.wisker_L f (Product.first (Pointwise_Path A A (Function.comp A B A g f) (Function.id A)) (Pointwise_Path B B (Function.comp B A B f g) (Function.id B)) p))
+                      (Pointwise_Path.wisker_R f (Product.second (Pointwise_Path A A (Function.comp A B A g f) (Function.id A)) (Pointwise_Path B B (Function.comp B A B f g) (Function.id B)) p))
                 )
           )
 .
