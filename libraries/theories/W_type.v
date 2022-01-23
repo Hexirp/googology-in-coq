@@ -184,7 +184,7 @@ Definition
                   W_type
                   C
                   D
-                  (f (Alpha.first Beta W_type A B x_v x_v))
+                  (f (Alpha.first Beta W_type A B x_v))
                   (
                     Function.abstract
                       (
