@@ -66,21 +66,19 @@ Definition
             forall
               x_v : Alpha Beta W_type A B
             ,
-              Dependent_Function
-                (B (Alpha.first Beta W_type A B x_v))
-                (
-                  fun x_v_2_x : B (Alpha.first Beta W_type A B x_v) =>
-                    P
-                      (
-                        Beta.apply
-                          W_type
-                          A
-                          B
-                          (Alpha.first Beta W_type A B x_v)
-                          (Alpha.second Beta W_type A B x_v)
-                          x_v_2_x
-                      )
-                )
+              (
+                forall x_v_2_x : B (Alpha.first Beta W_type A B x_v),
+                  P
+                    (
+                      Beta.apply
+                        W_type
+                        A
+                        B
+                        (Alpha.first Beta W_type A B x_v)
+                        (Alpha.second Beta W_type A B x_v)
+                        x_v_2_x
+                    )
+              )
             ->
               P (sup A B x_v)
       )
@@ -98,34 +96,17 @@ Definition
               constructor_sup
                 x_v
                 (
-                  Dependent_Function.abstract
-                    (B (Alpha.first Beta W_type A B x_v))
-                    (
-                      fun x_v_2_x : B (Alpha.first Beta W_type A B x_v) =>
-                        P
-                          (
-                            Beta.apply
-                              W_type
-                              A
-                              B
-                              (Alpha.first Beta W_type A B x_v)
-                              (Alpha.second Beta W_type A B x_v)
-                              x_v_2_x
-                          )
-                    )
-                    (
-                      fun x_v_2_x : B (Alpha.first Beta W_type A B x_v) =>
-                        induction
-                          (
-                            Beta.apply
-                              W_type
-                              A
-                              B
-                              (Alpha.first Beta W_type A B x_v)
-                              (Alpha.second Beta W_type A B x_v)
-                              x_v_2_x
-                          )
-                    )
+                  fun x_v_2_x : B (Alpha.first Beta W_type A B x_v) =>
+                    induction
+                      (
+                        Beta.apply
+                          W_type
+                          A
+                          B
+                          (Alpha.first Beta W_type A B x_v)
+                          (Alpha.second Beta W_type A B x_v)
+                          x_v_2_x
+                      )
                 )
           )
           x
@@ -145,7 +126,7 @@ Definition
             forall
               x_v : Alpha Beta W_type A B
             ,
-              Function (B (Alpha.first Beta W_type A B x_v)) P
+              (B (Alpha.first Beta W_type A B x_v) -> P)
             ->
               P
       )
@@ -173,7 +154,7 @@ Definition
         (
           fun
             (x_v : Alpha Beta W_type A B)
-            (y : Function (B (Alpha.first Beta W_type A B x_v)) (W_type C D))
+            (y : B (Alpha.first Beta W_type A B x_v) -> W_type C D)
           =>
             sup
               C
@@ -186,13 +167,8 @@ Definition
                   D
                   (f (Alpha.first Beta W_type A B x_v))
                   (
-                    Function.abstract
-                      (
-                        fun z : D (f (Alpha.first Beta W_type A B x_v x_v)) =>
-                          Function.apply
-                            y
-                            (g (Alpha.first Beta W_type A B x_v x_v) z)
-                      )
+                    fun z : D (f (Alpha.first Beta W_type A B x_v x_v)) =>
+                      y (g (Alpha.first Beta W_type A B x_v x_v) z)
                   )
               )
         )
