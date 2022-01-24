@@ -110,7 +110,7 @@ Definition
                 (Dependent_Function.apply A B g x)
                 (Dependent_Function.apply A B h x)
                 (apply A B f g p x)
-                (apply A B f g q x)
+                (apply A B g h q x)
           )
 .
 (* from: originally defined by Hexirp *)
