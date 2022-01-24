@@ -69,7 +69,7 @@ Definition
               (Dependent_Function.apply A B f x)
               (Dependent_Function.apply A B f x)
         )
-        (fun x : A => (Path.id (B x) (Dependent_Function.apply A B f x))
+        (fun x : A => (Path.id (B x) (Dependent_Function.apply A B f x)))
 .
 (* from: originally defined by Hexirp *)
 
