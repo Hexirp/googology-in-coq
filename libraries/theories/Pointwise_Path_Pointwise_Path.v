@@ -29,7 +29,7 @@ Definition
           A
           (
             fun x : A =>
-              Path (Pointwise_Path.apply A B f g p x) (Pointwise_Path.apply A B f g q x)
+              Path (Path B (f x) (g x)) (Pointwise_Path.apply p x) (Pointwise_Path.apply q x)
           )
 .
 (* from: originally defined by Hexirp *)
