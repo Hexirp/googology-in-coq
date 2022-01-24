@@ -32,10 +32,10 @@ Definition
 
 Definition
   apply@{i | }
-      {A : Type@{i}}
-      {B : Type@{i}}
-      {f : Function A B}
-      {g : Function A B}
+      (A : Type@{i})
+      (B : Type@{i})
+      (f : Function A B)
+      (g : Function A B)
     : Pointwise_Path A B f g -> forall x : A, Path B (f x) (g x)
     :=
       fun (p : Pointwise_Path A B f g) (x : A) =>
@@ -53,13 +53,13 @@ Definition
 (** 点ごとの道を一点で具体化します。 *)
 
 Definition
-  id@{i | } {A : Type@{i}} {B : Type@{i}} {f : Function A B}
+  id@{i | } (A : Type@{i}) (B : Type@{i}) (f : Function A B)
     : Pointwise_Path A B f f
     :=
       Dependent_Function.abstract
         A
         (fun x : A => Path B (Function.apply A B f x) (Function.apply A B f x))
-        (fun x : A => (Path.id B (f x)))
+        (fun x : A => (Path.id B (Function.apply A B f x)))
 .
 (* from: originally defined by Hexirp *)
 
@@ -67,11 +67,11 @@ Definition
 
 Definition
   conc@{i | }
-      {A : Type@{i}}
-      {B : Type@{i}}
-      {f : Function A B}
-      {g : Function A B}
-      {h : Function A B}
+      (A : Type@{i})
+      (B : Type@{i})
+      (f : Function A B)
+      (g : Function A B)
+      (h : Function A B)
     :
         Pointwise_Path A B f g
       ->
@@ -86,7 +86,16 @@ Definition
             fun x : A =>
               Path B (Function.apply A B f x) (Function.apply A B h x)
           )
-          (fun x : A => Path.conc B (f x) (g x) (h x) (apply p x) (apply q x))
+          (
+            fun x : A =>
+              Path.conc
+                B
+                (Function.apply A B f x)
+                (Function.apply A B g x)
+                (Function.apply A B h x)
+                (apply A B f g p x)
+                (apply A B g h q x)
+          )
 .
 (* from: originally defined by Hexirp *)
 
@@ -94,10 +103,10 @@ Definition
 
 Definition
   inv@{i | }
-      {A : Type@{i}}
-      {B : Type@{i}}
-      {f : Function A B}
-      {g : Function A B}
+      (A : Type@{i})
+      (B : Type@{i})
+      (f : Function A B)
+      (g : Function A B)
     : Pointwise_Path A B f g -> Pointwise_Path A B g f
     :=
       fun p : Pointwise_Path A B f g =>
@@ -107,7 +116,14 @@ Definition
             fun x : A =>
               Path B (Function.apply A B g x) (Function.apply A B f x)
           )
-          (fun x : A => Path.inv B (f x) (g x) (apply p x))
+          (
+            fun x : A =>
+              Path.inv
+                B
+                (Function.apply A B f x)
+                (Function.apply A B g x)
+                (apply A B f g p x)
+          )
 .
 (* from: originally defined by Hexirp *)
 
@@ -115,12 +131,12 @@ Definition
 
 Definition
   wisker_L@{i | }
-      {A : Type@{i}}
-      {B : Type@{i}}
-      {C : Type@{i}}
+      (A : Type@{i})
+      (B : Type@{i})
+      (C : Type@{i})
       (f : Function B C)
-      {g : Function A B}
-      {h : Function A B}
+      (g : Function A B)
+      (h : Function A B)
     :
         Pointwise_Path A B g h
       ->
@@ -136,7 +152,16 @@ Definition
                 (Function.apply B C f (Function.apply A B g x))
                 (Function.apply B C f (Function.apply A B h x))
           )
-          (fun x : A => Path.ap B C f (g x) (h x) (apply p x))
+          (
+            fun x : A =>
+              Path.ap
+                B
+                C
+                (Function.apply B C f)
+                (Function.apply A B g x)
+                (Function.apply A B h x)
+                (apply A B g h p x)
+          )
 .
 (* from: originally defined by Hexirp *)
 
@@ -144,12 +169,12 @@ Definition
 
 Definition
   wisker_R@{i | }
-      {A : Type@{i}}
-      {B : Type@{i}}
-      {C : Type@{i}}
+      (A : Type@{i})
+      (B : Type@{i})
+      (C : Type@{i})
       (f : Function A B)
-      {g : Function B C}
-      {h : Function B C}
+      (g : Function B C)
+      (h : Function B C)
     :
         Pointwise_Path B C g h
       ->
@@ -165,7 +190,7 @@ Definition
                 (Function.apply B C g (Function.apply A B f x))
                 (Function.apply B C h (Function.apply A B f x))
           )
-          (fun x : A => apply p (Function.apply A B f x))
+          (fun x : A => apply B C g h p (Function.apply A B f x))
 .
 (* from: originally defined by Hexirp *)
 
@@ -173,14 +198,14 @@ Definition
 
 Definition
   wisker_L_R@{i | }
-      {A : Type@{i}}
-      {B : Type@{i}}
-      {C : Type@{i}}
-      {D : Type@{i}}
+      (A : Type@{i})
+      (B : Type@{i})
+      (C : Type@{i})
+      (D : Type@{i})
       (f : Function C D)
       (h : Function A B)
-      {g_L : Function B C}
-      {g_R : Function B C}
+      (g_L : Function B C)
+      (g_R : Function B C)
     :
         Pointwise_Path B C g_L g_R
       ->
@@ -189,7 +214,16 @@ Definition
           D
           (Function.comp A C D f (Function.comp A B C g_L h))
           (Function.comp A C D f (Function.comp A B C g_R h))
-    := fun p : Pointwise_Path B C g_L g_R => wisker_L f (wisker_R h p)
+    :=
+      fun p : Pointwise_Path B C g_L g_R =>
+        wisker_L
+          A
+          C
+          D
+          f
+          (Function.comp A B C g_L h)
+          (Function.comp A B C g_R h)
+          (wisker_R A B C h g_L g_R p)
 .
 (* from: originally defined by Hexirp *)
 
