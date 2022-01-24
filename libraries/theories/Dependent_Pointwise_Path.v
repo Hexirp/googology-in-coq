@@ -33,10 +33,10 @@ Definition
 
 Definition
   apply@{i | }
-      {A : Type@{i}}
-      {B : A -> Type@{i}}
-      {f : Dependent_Function A B}
-      {g : Dependent_Function A B}
+      (A : Type@{i})
+      (B : A -> Type@{i})
+      (f : Dependent_Function A B)
+      (g : Dependent_Function A B)
     : Dependent_Pointwise_Path A B f g -> forall x : A, Path (B x) (f x) (g x)
     :=
       fun (p : Dependent_Pointwise_Path A B f g) (x : A) =>
@@ -57,7 +57,7 @@ Definition
 (** 点ごとの道を一点で具体化します。 *)
 
 Definition
-  id@{i | } {A : Type@{i}} {B : A -> Type@{i}} {f : Dependent_Function A B}
+  id@{i | } (A : Type@{i}) (B : A -> Type@{i}) (f : Dependent_Function A B)
     : Dependent_Pointwise_Path A B f f
     :=
       Dependent_Function.abstract
@@ -77,11 +77,11 @@ Definition
 
 Definition
   conc@{i | }
-      {A : Type@{i}}
-      {B : A -> Type@{i}}
-      {f : Dependent_Function A B}
-      {g : Dependent_Function A B}
-      {h : Dependent_Function A B}
+      (A : Type@{i})
+      (B : A -> Type@{i})
+      (f : Dependent_Function A B)
+      (g : Dependent_Function A B)
+      (h : Dependent_Function A B)
     :
         Dependent_Pointwise_Path A B f g
       ->
@@ -102,7 +102,16 @@ Definition
                 (Dependent_Function.apply A B f x)
                 (Dependent_Function.apply A B h x)
           )
-          (fun x : A => Path.conc (B x) (f x) (g x) (h x) (apply p x) (apply q x))
+          (
+            fun x : A =>
+              Path.conc
+                (B x)
+                (Dependent_Function.apply A B f x)
+                (Dependent_Function.apply A B g x)
+                (Dependent_Function.apply A B h x)
+                (apply A B f g p x)
+                (apply A B f g q x)
+          )
 .
 (* from: originally defined by Hexirp *)
 
@@ -110,10 +119,10 @@ Definition
 
 Definition
   inv@{i | }
-      {A : Type@{i}}
-      {B : A -> Type@{i}}
-      {f : Dependent_Function A B}
-      {g : Dependent_Function A B}
+      (A : Type@{i})
+      (B : A -> Type@{i})
+      (f : Dependent_Function A B)
+      (g : Dependent_Function A B)
     : Dependent_Pointwise_Path A B f g -> Dependent_Pointwise_Path A B g f
     :=
       fun p : Dependent_Pointwise_Path A B f g =>
@@ -126,7 +135,14 @@ Definition
                 (Dependent_Function.apply A B g x)
                 (Dependent_Function.apply A B f x)
           )
-          (fun x : A => Path.inv (B x) (f x) (g x) (apply p x))
+          (
+            fun x : A =>
+              Path.inv
+                (B x)
+                (Dependent_Function.apply A B f x)
+                (Dependent_Function.apply A B g x)
+                (apply A B p x)
+          )
 .
 (* from: originally defined by Hexirp *)
 
