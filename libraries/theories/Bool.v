@@ -49,7 +49,7 @@ Definition
 
 Definition
   matching_nodep@{i | }
-      {P : Type@{i}}
+      (P : Type@{i})
       (constructor_false : P)
       (constructor_true : P)
   : Bool@{i} -> P
@@ -60,20 +60,8 @@ Definition
 (** 場合分けです。 *)
 
 Definition
-  matching_nodep_visible@{i | }
-      (P : Type@{i})
-      (constructor_false : P)
-      (constructor_true : P)
-  : Bool@{i} -> P
-  := matching_nodep constructor_false constructor_true
-.
-(* from: originally defined by Hexirp *)
-
-(** 引数が明示的な [matching_nodep] です。 *)
-
-Definition
   and@{i | } : Bool@{i} -> Bool@{i} -> Bool@{i}
-    := matching_nodep (Function.const Bool@{i} Bool@{i} false) (Function.id Bool@{i})
+    := matching_nodep (Bool@{i} -> Bool@{i}) (Function.const Bool@{i} Bool@{i} false) (Function.id Bool@{i})
 .
 (* from: originally defined by Hexirp *)
 
@@ -81,7 +69,7 @@ Definition
 
 Definition
   or@{i | } : Bool@{i} -> Bool@{i} -> Bool@{i}
-    := matching_nodep (Function.id Bool@{i}) (Function.const Bool@{i} Bool@{i} true)
+    := matching_nodep (Bool@{i} -> Bool@{i}) (Function.id Bool@{i}) (Function.const Bool@{i} Bool@{i} true)
 .
 (* from: originally defined by Hexirp *)
 
@@ -89,7 +77,7 @@ Definition
 
 Definition
   not@{i | } : Bool@{i} -> Bool@{i}
-    := matching_nodep true false
+    := matching_nodep Bool@{i} true false
 .
 (* from: originally defined by Hexirp *)
 
