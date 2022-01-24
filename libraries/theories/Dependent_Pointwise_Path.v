@@ -141,7 +141,7 @@ Definition
                 (B x)
                 (Dependent_Function.apply A B f x)
                 (Dependent_Function.apply A B g x)
-                (apply A B p x)
+                (apply A B f g p x)
           )
 .
 (* from: originally defined by Hexirp *)
