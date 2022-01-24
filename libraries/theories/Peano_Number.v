@@ -20,7 +20,7 @@ Import Googology_In_Coq.Unit (Unit).
 Import Googology_In_Coq.W_type (W_type).
 Import Googology_In_Coq.Bool (Bool).
 
-(** ライブラリを開きます。 *)(*
+(** ライブラリを開きます。 *)
 
 Definition
   Peano_Number@{i s_i | i < s_i} : Type@{i}
@@ -82,4 +82,4 @@ Definition
 .
 (* from: originally defined by Hexirp *)
 
-(** 帰納法の原理です。 *)*)
+(** 帰納法の原理です。 *)
