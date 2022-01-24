@@ -21,7 +21,10 @@ Definition
       fun (f : Function A B) (g : Function A B) =>
         Dependent_Function
           A
-          (fun x : A => Path (Function.apply A B f x) (Function.apply A B g x))
+          (
+            fun x : A =>
+              Path B (Function.apply A B f x) (Function.apply A B g x)
+          )
 .
 (* from: originally defined by Hexirp *)
 
@@ -33,12 +36,15 @@ Definition
       {B : Type@{i}}
       {f : Function A B}
       {g : Function A B}
-    : Pointwise_Path A B f g -> forall x : A, Path (f x) (g x)
+    : Pointwise_Path A B f g -> forall x : A, Path B (f x) (g x)
     :=
       fun (p : Pointwise_Path A B f g) (x : A) =>
         Dependent_Function.apply
           A
-          (fun x : A => Path (Function.apply A B f x) (Function.apply A B g x))
+          (
+            fun x : A =>
+              Path B (Function.apply A B f x) (Function.apply A B g x)
+          )
           p
           x
 .
@@ -52,8 +58,8 @@ Definition
     :=
       Dependent_Function.abstract
         A
-        (fun x : A => Path (Function.apply A B f x) (Function.apply A B f x))
-        (fun x : A => Path.id)
+        (fun x : A => Path B (Function.apply A B f x) (Function.apply A B f x))
+        (fun x : A => (Path.id B (f x)))
 .
 (* from: originally defined by Hexirp *)
 
@@ -76,8 +82,11 @@ Definition
       fun (p : Pointwise_Path A B f g) (q : Pointwise_Path A B g h) =>
         Dependent_Function.abstract
           A
-          (fun x : A => Path (Function.apply A B f x) (Function.apply A B h x))
-          (fun x : A => Path.conc (apply p x) (apply q x))
+          (
+            fun x : A =>
+              Path B (Function.apply A B f x) (Function.apply A B h x)
+          )
+          (fun x : A => Path.conc A (f x) (g x) (h x) (apply p x) (apply q x))
 .
 (* from: originally defined by Hexirp *)
 
@@ -94,8 +103,11 @@ Definition
       fun p : Pointwise_Path A B f g =>
         Dependent_Function.abstract
           A
-          (fun x : A => Path (Function.apply A B g x) (Function.apply A B f x))
-          (fun x : A => Path.inv (apply p x))
+          (
+            fun x : A =>
+              Path B (Function.apply A B g x) (Function.apply A B f x)
+          )
+          (fun x : A => Path.inv A (f x) (g x) (apply p x))
 .
 (* from: originally defined by Hexirp *)
 
@@ -120,10 +132,11 @@ Definition
           (
             fun x : A =>
               Path
+                C
                 (Function.apply B C f (Function.apply A B g x))
                 (Function.apply B C f (Function.apply A B h x))
           )
-          (fun x : A => Path.ap f (apply p x))
+          (fun x : A => Path.ap B C f (g x) (h x) (apply p x))
 .
 (* from: originally defined by Hexirp *)
 
@@ -148,6 +161,7 @@ Definition
           (
             fun x : A =>
               Path
+                C
                 (Function.apply B C g (Function.apply A B f x))
                 (Function.apply B C h (Function.apply A B f x))
           )
