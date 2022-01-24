@@ -22,7 +22,7 @@ Definition
 (** 場合分けです。 *)
 
 Definition
-  matching_nodep@{i | } {P : Type@{i}} : Void@{i} -> P
+  matching_nodep@{i | } (P : Type@{i}) : Void@{i} -> P
     := matching (fun x_ : Void => P)
 .
 (* from: originally defined by Hexirp *)
@@ -30,8 +30,8 @@ Definition
 (** 場合分けです。 *)
 
 Definition
-  absurd@{i | } {A : Type@{i}} : Void@{i} -> A
-    := fun x : Void => matching_nodep x
+  absurd@{i | } (A : Type@{i}) : Void@{i} -> A
+    := fun x : Void => matching_nodep A x
 .
 (* from: originally defined by Hexirp *)
 

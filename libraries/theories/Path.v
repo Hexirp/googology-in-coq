@@ -34,37 +34,25 @@ Definition
 
 End Core.
 
+(** 道の定義を隠蔽します。 *)
+
 Definition
-  Path@{i | } {A : Type@{i}} (a : A) (a' : A) : Type@{i} := Core.Path A a a'
+  Path@{i | } (A : Type@{i}) (a : A) (a' : A) : Type@{i} := Core.Path A a a'
 .
 (* from: originally defined by Hexirp *)
 
 (** 道です。 *)
 
-Definition
-  Path_Visible@{i | } (A : Type@{i}) (a : A) (a' : A) : Type@{i}
-    := Core.Path A a a'
-.
+Definition id@{i | } (A : Type@{i}) (a : A) : Path A a a := Core.id A a.
 (* from: originally defined by Hexirp *)
-
-(** 引数が明示的な [Path] です。 *)
-
-Definition id@{i | } (A : Type@{i}) (a : A) : Path a a := Core.id A a.
-(* from: originally defined by Hexirp *)
-
-(** 恒等道です。 *)
-
-Arguments id {A} {a}, [A] a.
-
-(** [id] についての暗黙引数を設定します。 [id] と書いたときは [@id _ _] と補われます。 [id a] と書いたときは [@id _ a] と補われます。 *)
 
 Definition
   induction@{i | }
       (A : Type@{i})
       (a : A)
-      (P : forall a' : A, Path a a' -> Type@{i})
-      (constructor_id : P a id)
-    : forall (a' : A) (x : Path a a'), P a' x
+      (P : forall a' : A, Path A a a' -> Type@{i})
+      (constructor_id : P a (id A a))
+    : forall (a' : A) (x : Path A a a'), P a' x
     := Core.induction A a P constructor_id
 .
 (* from: originally defined by Hexirp *)
@@ -74,15 +62,15 @@ Definition
 Definition
   jay@{i | }
       (A : Type@{i})
-      (P : forall (a : A) (a' : A), Path a a' -> Type@{i})
-      (constructor_id : forall a : A, P a a id)
-    : forall (a : A) (a' : A) (x : Path a a'), P a a' x
+      (P : forall (a : A) (a' : A), Path A a a' -> Type@{i})
+      (constructor_id : forall a : A, P a a (id A a))
+    : forall (a : A) (a' : A) (x : Path A a a'), P a a' x
     :=
       fun a : A =>
         induction
           A
           a
-          (fun (a'_ : A) (x_ : Path a a'_) => P a a'_ x_)
+          (fun (a'_ : A) (x_ : Path A a a'_) => P a a'_ x_)
           (constructor_id a)
 .
 (* from: originally defined by Hexirp *)
@@ -90,79 +78,74 @@ Definition
 (** マーティン・レーフの J 規則です。 *)
 
 Definition
-  trpt@{i | } {A : Type@{i}} {B : A -> Type@{i}} {x y : A}
-    : Path x y -> B x -> B y
+  trpt@{i | } (A : Type@{i}) (x : A) (y : A) (B : A -> Type@{i})
+    : Path A x y -> B x -> B y
     :=
-      fun (p : Path x y) (u : B x) =>
-        induction A x (fun (y_ : A) (_ : Path x y_) => B y_) u y p
+      fun (p : Path A x y) (u : B x) =>
+        induction A x (fun (y_ : A) (p_ : Path A x y_) => B y_) u y p
 .
 (* from: originally defined by Hexirp *)
 
 (** 輸送です。 *)
 
 Definition
-  trpt_visible@{i | } (A : Type@{i}) (B : A -> Type@{i}) {x y : A}
-    : Path x y -> B x -> B y
+  trpt_dep@{i | }
+      (A : Type@{i})
+      (x : A)
+      (y : A)
+      (B : forall y : A, Path A x y -> Type@{i})
+    : forall p : Path A x y, B x (id A x) -> B y p
     :=
-      fun (p : Path x y) (u : B x) =>
-        induction A x (fun (y_ : A) (_ : Path x y_) => B y_) u y p
-.
-(* from: originally defined by Hexirp *)
-
-(** 引数が明示的な [trpt] です。 *)
-
-Definition
-  trpt_dependent@{i | }
-      {A : Type@{i}}
-      {x : A}
-      (B : forall y : A, Path x y -> Type@{i})
-      {y : A}
-    : forall p : Path x y, B x id -> B y p
-    :=
-      fun (p : Path x y) (u : B x id) =>
-        induction A x (fun (y_ : A) (p_ : Path x y_) => B y_ p_) u y p
+      fun (p : Path A x y) (u : B x (id A x)) =>
+        induction A x (fun (y_ : A) (p_ : Path A x y_) => B y_ p_) u y p
 .
 (* from: originally defined by Hexirp *)
 
 (** 依存型に対応した [trpt] です。 *)
 
 Definition
-  conc@{i | } {A : Type@{i}} {x y z : A} : Path x y -> Path y z -> Path x z
-    := fun (p : Path x y) (q : Path y z) => trpt q (trpt p id)
+  conc@{i | } (A : Type@{i}) (x : A) (y : A) (z : A)
+    : Path A x y -> Path A y z -> Path A x z
+    :=
+      fun (p : Path A x y) (q : Path A y z) =>
+        trpt A y z (Path A x) q (trpt A x y (Path A x) p (id A x))
 .
 (* from: originally defined by Hexirp *)
 
 (** 道の結合です。 *)
 
 Definition
-  inv@{i | } {A : Type@{i}} {x y : A} : Path x y -> Path y x
-    := fun p : Path x y => trpt_visible A (fun y_ => Path y_ x) p id
+  inv@{i | } (A : Type@{i}) (x : A) (y : A) : Path A x y -> Path A y x
+    := fun p : Path A x y => trpt A x y (fun y_ => Path A y_ x) p (id A x)
 .
 (* from: originally defined by Hexirp *)
 
 (** 道の逆です。 *)
 
 Definition
-  ap@{i | } {A : Type@{i}} {B : Type@{i}} (f : A -> B) {x y : A}
-    : Path x y -> Path (f x) (f y)
-    := fun p : Path x y => trpt_visible A (fun y_ => Path (f x) (f y_)) p id
+  ap@{i | } (A : Type@{i}) (B : Type@{i}) (f : A -> B) (x : A) (y : A)
+    : Path A x y -> Path B (f x) (f y)
+    :=
+      fun p : Path A x y =>
+        trpt A x y (fun y_ => Path B (f x) (f y_)) p (id B (f x))
 .
 (* from: originally defined by Hexirp *)
 
 (** 道への適用です。 *)
 
 Definition
-  conv@{i | } {A : Type@{i}} {x y z : A} : Path x y -> Path x z -> Path y z
-    := fun (p : Path x y) (q : Path x z) => conc (inv p) q
+  conv@{i | } (A : Type@{i}) (x : A) (y : A) (z : A)
+    : Path A x y -> Path A x z -> Path A y z
+    := fun (p : Path A x y) (q : Path A x z) => conc A y x z (inv A x y p) q
 .
 (* from: originally defined by Hexirp *)
 
 (** 道の結合と逆です。 *)
 
 Definition
-  trpv@{i | } {A : Type@{i}} {B : A -> Type@{i}} {x y : A}
-    : Path x y -> B y -> B x
-    := fun (p : Path x y) (u : B y) => trpt (inv p) u
+  trpv@{i | } (A : Type@{i}) (x : A) (y : A) (B : A -> Type@{i})
+    : Path A x y -> B y -> B x
+    := fun (p : Path A x y) (u : B y) => trpt A y x B (inv A x y p) u
 .
 (* from: originally defined by Hexirp *)
 
