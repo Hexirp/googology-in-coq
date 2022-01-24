@@ -43,6 +43,8 @@ Definition
                           (Pointwise_Path B B (Function.comp B A B f g) (Function.id B))
                   =>
                     Pointwise_Path_Pointwise_Path
+                      A
+                      B
                       (Function.comp A A B f (Function.comp A B A g f))
                       f
                       (Pointwise_Path.wisker_L A A B f (Function.comp A B A g f) (Function.id A) (Product.first (Pointwise_Path A A (Function.comp A B A g f) (Function.id A)) (Pointwise_Path B B (Function.comp B A B f g) (Function.id B)) p))

@@ -18,8 +18,8 @@ Import Googology_In_Coq.Pointwise_Path (Pointwise_Path).
 
 Definition
   Pointwise_Path_Pointwise_Path@{i | }
-      {A : Type@{i}}
-      {B : Type@{i}}
+      (A : Type@{i})
+      (B : Type@{i})
       (f : Function A B)
       (g : Function A B)
     : Pointwise_Path A B f g -> Pointwise_Path A B f g -> Type@{i}
