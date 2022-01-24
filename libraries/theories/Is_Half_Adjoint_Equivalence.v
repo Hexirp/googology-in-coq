@@ -46,7 +46,7 @@ Definition
                       (Function.comp A A B f (Function.comp A B A g f))
                       f
                       (Pointwise_Path.wisker_L A A B f (Function.comp A B A g f) (Function.id A) (Product.first (Pointwise_Path A A (Function.comp A B A g f) (Function.id A)) (Pointwise_Path B B (Function.comp B A B f g) (Function.id B)) p))
-                      (Pointwise_Path.wisker_R A B B f (Function.comp B A B f g) (Function.id B) (Product.second (Pointwise_Path A A (Function.comp A B A g f) (Function.id A)) (Pointwise_Path B B (Function.comp B A B f g) (Function.id B)) p))
+                      (Pointwise_Path.wisker_R A B B (Function.comp B A B f g) (Function.id B) f (Product.second (Pointwise_Path A A (Function.comp A B A g f) (Function.id A)) (Pointwise_Path B B (Function.comp B A B f g) (Function.id B)) p))
                 )
           )
 .
