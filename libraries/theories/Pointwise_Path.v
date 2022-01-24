@@ -86,7 +86,7 @@ Definition
             fun x : A =>
               Path B (Function.apply A B f x) (Function.apply A B h x)
           )
-          (fun x : A => Path.conc A (f x) (g x) (h x) (apply p x) (apply q x))
+          (fun x : A => Path.conc B (f x) (g x) (h x) (apply p x) (apply q x))
 .
 (* from: originally defined by Hexirp *)
 
@@ -107,7 +107,7 @@ Definition
             fun x : A =>
               Path B (Function.apply A B g x) (Function.apply A B f x)
           )
-          (fun x : A => Path.inv A (f x) (g x) (apply p x))
+          (fun x : A => Path.inv B (f x) (g x) (apply p x))
 .
 (* from: originally defined by Hexirp *)
 
