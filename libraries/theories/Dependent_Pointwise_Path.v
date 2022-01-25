@@ -55,7 +55,7 @@ Definition
             Path
               (B x)
               (Dependent_Function.apply A B f x)
-              (Dependent_Function.apply A B h x)
+              (Dependent_Function.apply A B g x)
         )
 .
 
