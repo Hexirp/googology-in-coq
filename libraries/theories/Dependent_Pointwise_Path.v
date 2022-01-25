@@ -32,12 +32,47 @@ Definition
 (** 点ごとの道です。 *)
 
 Definition
+  abstract@{i | }
+      (A : Type@{i})
+      (B : A -> Type@{i})
+      (f : Dependent_Function A B)
+      (g : Dependent_Function A B)
+    :
+        (
+          forall x : A,
+            Path
+              (B x)
+              (Dependent_Function.apply A B f x)
+              (Dependent_Function.apply A B g x)
+        )
+      ->
+        Dependent_Pointwise_Path A B f g
+    :=
+      Dependent_Function.abstract
+        A
+        (
+          fun x : A =>
+            Path
+              (B x)
+              (Dependent_Function.apply A B f x)
+              (Dependent_Function.apply A B h x)
+        )
+.
+
+Definition
   apply@{i | }
       (A : Type@{i})
       (B : A -> Type@{i})
       (f : Dependent_Function A B)
       (g : Dependent_Function A B)
-    : Dependent_Pointwise_Path A B f g -> forall x : A, Path (B x) (f x) (g x)
+    :
+        Dependent_Pointwise_Path A B f g
+      ->
+        forall x : A,
+          Path
+            (B x)
+            (Dependent_Function.apply A B f x)
+            (Dependent_Function.apply A B g x)
     :=
       fun (p : Dependent_Pointwise_Path A B f g) (x : A) =>
         Dependent_Function.apply
@@ -60,15 +95,11 @@ Definition
   id@{i | } (A : Type@{i}) (B : A -> Type@{i}) (f : Dependent_Function A B)
     : Dependent_Pointwise_Path A B f f
     :=
-      Dependent_Function.abstract
+      abstract
         A
-        (
-          fun x : A =>
-            Path
-              (B x)
-              (Dependent_Function.apply A B f x)
-              (Dependent_Function.apply A B f x)
-        )
+        B
+        f
+        f
         (fun x : A => (Path.id (B x) (Dependent_Function.apply A B f x)))
 .
 (* from: originally defined by Hexirp *)
@@ -95,13 +126,9 @@ Definition
       =>
         Dependent_Function.abstract
           A
-          (
-            fun x : A =>
-              Path
-                (B x)
-                (Dependent_Function.apply A B f x)
-                (Dependent_Function.apply A B h x)
-          )
+          B
+          f
+          h
           (
             fun x : A =>
               Path.conc
@@ -128,13 +155,9 @@ Definition
       fun p : Dependent_Pointwise_Path A B f g =>
         Dependent_Function.abstract
           A
-          (
-            fun x : A =>
-              Path
-                (B x)
-                (Dependent_Function.apply A B g x)
-                (Dependent_Function.apply A B f x)
-          )
+          B
+          g
+          f
           (
             fun x : A =>
               Path.inv
