@@ -124,7 +124,7 @@ Definition
         (p : Dependent_Pointwise_Path A B f g)
         (q : Dependent_Pointwise_Path A B g h)
       =>
-        Dependent_Function.abstract
+        abstract
           A
           B
           f
@@ -153,7 +153,7 @@ Definition
     : Dependent_Pointwise_Path A B f g -> Dependent_Pointwise_Path A B g f
     :=
       fun p : Dependent_Pointwise_Path A B f g =>
-        Dependent_Function.abstract
+        abstract
           A
           B
           g
