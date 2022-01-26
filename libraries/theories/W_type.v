@@ -20,6 +20,16 @@ Inductive
 
 (** ウ型です。 W-types です。 *)
 
+(** [W_type] は [Alpha] と [Beta] という補助の型により定義されています。 *)
+
+(** [Alpha] と [Beta] の組み立て方には複数の選択肢がありました。 *)
+
+(** まず、 [Alpha] の定義の中で [Beta] を使うようにする方法がありました。しかし、これでは層の数が多すぎて面倒くさいことになる気がします。そのため、 [Alpha] の引数に [Beta] を渡すようにしました。 *)
+
+(** 次に、 [Alpha] の引数として [W_type] を渡すのではなく [W_type A B] を渡す方法がありました。しかし、これでは [Alpha] の引数として [A] と [B] を渡した後に [W_type A B] を渡さなければならず、 [A] と [B] を 2 回書くことになってしまいます。これでは面倒くさいため、 [W_type] を渡すようにしました。 *)
+
+(** 最終的に、 [W_type@{i}] は [forall (A : Type@{i}) (B : A -> Type@{i}), Type@{i}] という型の値で、 [Alpha@{i} Beta@{i}] は、 [forall (A : Type@{i}) (B : A -> Type@{i}), Type@{i}] を取って返す関数で、 [W_type@{i}] は [Alpha@{i} Beta@{i}] の不動点であるという風に定義されるようにしました。 *)
+
 Definition
   matching@{i | }
       (A : Type@{i})

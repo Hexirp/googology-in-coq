@@ -31,6 +31,31 @@ Definition
 (** 点ごとの道です。 *)
 
 Definition
+  abstract@{i | }
+      (A : Type@{i})
+      (B : Type@{i})
+      (f : Function A B)
+      (g : Function A B)
+    :
+        (
+          forall x : A,
+            Path B (Function.apply A B f x) (Function.apply A B g x)
+        )
+      ->
+        Pointwise_Path A B f g
+    :=
+      Dependent_Function.abstract
+        A
+        (
+          fun x : A =>
+            Path B (Function.apply A B f x) (Function.apply A B g x)
+        )
+.
+(* from: originally defined by Hexirp *)
+
+(** 点ごとの道を作成します。 *)
+
+Definition
   apply@{i | }
       (A : Type@{i})
       (B : Type@{i})
@@ -56,9 +81,11 @@ Definition
   id@{i | } (A : Type@{i}) (B : Type@{i}) (f : Function A B)
     : Pointwise_Path A B f f
     :=
-      Dependent_Function.abstract
+      abstract
         A
-        (fun x : A => Path B (Function.apply A B f x) (Function.apply A B f x))
+        B
+        f
+        f
         (fun x : A => (Path.id B (Function.apply A B f x)))
 .
 (* from: originally defined by Hexirp *)
@@ -80,12 +107,11 @@ Definition
         Pointwise_Path A B f h
     :=
       fun (p : Pointwise_Path A B f g) (q : Pointwise_Path A B g h) =>
-        Dependent_Function.abstract
+        abstract
           A
-          (
-            fun x : A =>
-              Path B (Function.apply A B f x) (Function.apply A B h x)
-          )
+          B
+          f
+          h
           (
             fun x : A =>
               Path.conc
@@ -110,12 +136,11 @@ Definition
     : Pointwise_Path A B f g -> Pointwise_Path A B g f
     :=
       fun p : Pointwise_Path A B f g =>
-        Dependent_Function.abstract
+        abstract
           A
-          (
-            fun x : A =>
-              Path B (Function.apply A B g x) (Function.apply A B f x)
-          )
+          B
+          g
+          f
           (
             fun x : A =>
               Path.inv
@@ -140,18 +165,18 @@ Definition
     :
         Pointwise_Path A B g_L g_R
       ->
-        Pointwise_Path A C (Function.comp A B C f g_L) (Function.comp A B C f g_R)
+        Pointwise_Path
+          A
+          C
+          (Function.comp A B C f g_L)
+          (Function.comp A B C f g_R)
     :=
       fun p : Pointwise_Path A B g_L g_R =>
-        Dependent_Function.abstract
+        abstract
           A
-          (
-            fun x : A =>
-              Path
-                C
-                (Function.apply B C f (Function.apply A B g_L x))
-                (Function.apply B C f (Function.apply A B g_R x))
-          )
+          C
+          (Function.comp A B C f g_L)
+          (Function.comp A B C f g_R)
           (
             fun x : A =>
               Path.ap
@@ -185,15 +210,11 @@ Definition
           (Function.comp A B C f_R g)
     :=
       fun p : Pointwise_Path B C f_L f_R =>
-        Dependent_Function.abstract
+        abstract
           A
-          (
-            fun x : A =>
-              Path
-                C
-                (Function.apply B C f_L (Function.apply A B g x))
-                (Function.apply B C f_R (Function.apply A B g x))
-          )
+          C
+          (Function.comp A B C f_L g)
+          (Function.comp A B C f_R g)
           (
             fun x : A =>
               apply
@@ -236,7 +257,16 @@ Definition
           f
           (Function.comp A B C g_L h)
           (Function.comp A B C g_R h)
-          (wisker_R A B C g_L g_R h p)
+          (
+            wisker_R
+              A
+              B
+              C
+              g_L
+              g_R
+              h
+              p
+          )
 .
 (* from: originally defined by Hexirp *)
 
