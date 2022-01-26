@@ -210,7 +210,7 @@ Definition
           (Function.comp A B C f_R g)
     :=
       fun p : Pointwise_Path B C f_L f_R =>
-        Dependent_Function.abstract
+        abstract
           A
           C
           (Function.comp A B C f_L g)
