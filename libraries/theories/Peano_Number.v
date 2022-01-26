@@ -7,6 +7,7 @@ Require Googology_In_Coq.Sum.
 Require Googology_In_Coq.Void.
 Require Googology_In_Coq.Unit.
 Require Googology_In_Coq.W_type.
+Require Googology_In_Coq.Universe.
 Require Googology_In_Coq.Bool.
 
 (** ライブラリを要求します。 *)
@@ -18,16 +19,33 @@ Import Googology_In_Coq.Sum (Sum).
 Import Googology_In_Coq.Void (Void).
 Import Googology_In_Coq.Unit (Unit).
 Import Googology_In_Coq.W_type (W_type).
+Import Googology_In_Coq.Universe (Universe).
 Import Googology_In_Coq.Bool (Bool).
 
 (** ライブラリを開きます。 *)
 
+Definition Alpha@{i | } : Type@{i} := Sum@{i} Unit@{i} Unit@{i}.
+(* from: originally defined by Hexirp *)
+
+(** 自然数の型のアルファです。 *)
+
+Definition
+  Beta@{i s_i | i < s_i} : Alpha@{i} -> Type@{i}
+    :=
+      Sum.matching@{s_i}
+        Unit@{i}
+        Unit@{i}
+        Universe@{i s_i}
+        (Unit.matching@{s_i} Universe@{i s_i} Void@{i})
+        (Unit.matching@{s_i} Universe@{i s_i} Unit@{i})
+.
+(* from: originally defined by Hexirp *)
+
+(** 自然数の型のベータです。 *)
+
 Definition
   Peano_Number@{i s_i | i < s_i} : Type@{i}
-    :=
-      W_type@{i}
-        Bool@{i}
-        (Bool.matching_nodep_visible@{s_i} Type@{i} Void@{i} Unit@{i})
+    := W_type@{i} Alpha@{i} Beta@{i s_i}
 .
 (* from: originally defined by Hexirp *)
 
