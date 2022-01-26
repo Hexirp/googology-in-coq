@@ -44,7 +44,7 @@ Definition
       ->
         Pointwise_Path A B f g
     :=
-      Function.abstract
+      Dependent_Function.abstract
         A
         (
           fun x : A =>
