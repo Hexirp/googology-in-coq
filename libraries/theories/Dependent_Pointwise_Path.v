@@ -58,6 +58,9 @@ Definition
               (Dependent_Function.apply A B g x)
         )
 .
+(* from: originally defined by Hexirp *)
+
+(** 点ごとの道を作成します。 *)
 
 Definition
   apply@{i | }
