@@ -53,7 +53,17 @@ Definition
 
 Definition
   zero@{i s_i | i < s_i} : Peano_Number@{i s_i}
-    := W_type.sup (Dependent_Sum.pair Bool.false Void.matching_nodep)
+    :=
+      W_type.sup
+        Alpha@{i}
+        Beta@{i s_i}
+        (
+          W_type.Alpha.pair
+            W_type.Beta
+            W_type
+            (Sum.left Unit Unit Unit.unit)
+            (Void.matching_nodep (W_type Alpha@{i} Beta@{i s_i)
+        )
 .
 (* from: originally defined by Hexirp *)
 
