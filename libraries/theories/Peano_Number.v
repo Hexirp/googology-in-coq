@@ -32,12 +32,12 @@ Definition Alpha@{i | } : Type@{i} := Sum@{i} Unit@{i} Unit@{i}.
 Definition
   Beta@{i s_i | i < s_i} : Alpha@{i} -> Type@{i}
     :=
-      Sum.matching@{s_i}
+      Sum.matching_nodep@{s_i}
         Unit@{i}
         Unit@{i}
         Universe@{i s_i}
-        (Unit.matching@{s_i} Universe@{i s_i} Void@{i})
-        (Unit.matching@{s_i} Universe@{i s_i} Unit@{i})
+        (Unit.matching_nodep@{s_i} Universe@{i s_i} Void@{i})
+        (Unit.matching_nodep@{s_i} Universe@{i s_i} Unit@{i})
 .
 (* from: originally defined by Hexirp *)
 
