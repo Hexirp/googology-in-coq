@@ -62,7 +62,7 @@ Definition
             W_type.Beta
             W_type
             (Sum.left Unit Unit Unit.unit)
-            (Void.matching_nodep (W_type Alpha@{i} Beta@{i s_i})
+            (Void.matching_nodep (W_type Alpha@{i} Beta@{i s_i}))
         )
 .
 (* from: originally defined by Hexirp *)
