@@ -59,11 +59,11 @@ Definition
         Beta@{i s_i}
         (
           W_type.Alpha.pair
-            W_type.Beta.Beta
-            W_type
+            W_type.Beta.Beta@{i}
+            W_type@{i}
             Alpha@{i}
             Beta@{i s_i}
-            (Sum.left Unit Unit Unit.unit)
+            (Sum.left Unit@{i} Unit@{i} Unit.unit)
             (Void.matching_nodep (W_type Alpha@{i} Beta@{i s_i}))
         )
 .
