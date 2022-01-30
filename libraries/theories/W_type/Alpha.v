@@ -108,7 +108,7 @@ Definition
       (B : A -> Type@{i})
       (P : Type@{i})
       (constructor_pair : forall a : A, beta t A B a -> P)
-    : forall x : Alpha beta t A B, P x
+    : Alpha beta t A B -> P
     := matching beta t A B (fun x_ : Alpha beta t A B => P) constructor_pair
 .
 (* from: originally defined by Hexirp *)
