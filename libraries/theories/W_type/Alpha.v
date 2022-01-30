@@ -83,7 +83,7 @@ Definition
           : forall (a : A) (b : beta t A B a), P (pair beta t A B a b)
       )
     : forall x : Alpha beta t A B, P x
-    := Dependent_Sum.matching A (beta t A B) P
+    := Dependent_Sum.matching A (beta t A B) P constructor_pair
 .
 (* from: originally defined by Hexirp *)
 
