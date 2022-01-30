@@ -35,7 +35,7 @@ Definition
             Alpha@{i}
             Beta@{i s_i}
             Alpha.zero
-            Beta.zero
+            (Beta.zero (W_type@{i} Alpha@{i} Beta@{i s_i}))
         )
 .
 (* from: originally defined by Hexirp *)

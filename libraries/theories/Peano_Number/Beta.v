@@ -23,3 +23,11 @@ Definition
 (* from: originally defined by Hexirp *)
 
 (** 自然数の型のベータです。 *)
+
+Definition
+  zero@{i s_i | i < s_i} (A : Type@{i}) : Beta Alpha.zero -> A
+    := Void.matching_nodep A
+.
+(* from: originally defined by Hexirp *)
+
+(** 自然数の型のベータの第一構築子です。 *)
