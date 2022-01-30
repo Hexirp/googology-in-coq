@@ -35,7 +35,7 @@ Definition
             Alpha@{i}
             Beta@{i s_i}
             Alpha.zero
-            (Beta.zero (W_type@{i} Alpha@{i} Beta@{i s_i}))
+            (Beta.zero Peano_Number@{i s_i})
         )
 .
 (* from: originally defined by Hexirp *)
@@ -44,7 +44,19 @@ Definition
 
 Definition
   succ@{i s_i | i < s_i} (n_p : Peano_Number@{i s_i}) : Peano_Number@{i s_i}
-    := W_type.sup (Dependent_Sum.pair Bool.true (Unit.matching_nodep n_p))
+    :=
+      W_type.sup
+        Alpha@{i}
+        Beta@{i s_i}
+        (
+          W_type.Alpha.pair
+            W_type.Beta@{i}
+            W_type@{i}
+            Alpha@{i}
+            Beta@{i s_i}
+            Alpha.succ
+            (Beta.succ Peano_Number@{i s_i} n_p)
+        )
 .
 (* from: originally defined by Hexirp *)
 
