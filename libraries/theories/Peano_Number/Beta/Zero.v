@@ -13,7 +13,7 @@ Import Googology_In_Coq.Void (Void).
 Definition Zero@{i | } : Type@{i} := Void@{i}.
 (* from: originally defined by Hexirp *)
 
-(** 空型です。 *)
+(** 自然数の型のベータの [zero] です。 *)
 
 Definition
   matching@{i | } (P : Zero@{i} -> Type@{i}) : forall x : Zero@{i}, P x
