@@ -30,4 +30,12 @@ Definition
 .
 (* from: originally defined by Hexirp *)
 
-(** 自然数の型のベータの第一構築子です。 *)
+(** 自然数の型のベータの [zero] です。 *)
+
+Definition
+  succ@{i s_i | i < s_i} (A : Type@{i}) (x_p : A) : Beta Alpha.succ -> A
+    := Unit.matching_nodep A x_p
+.
+(* from: originally defined by Hexirp *)
+
+(** 自然数の型のベータの [succ] です。 *)
