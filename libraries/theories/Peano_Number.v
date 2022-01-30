@@ -96,7 +96,36 @@ Proof.
         _
     )
   .
-  exact _.
+  refine
+    (
+      Alpha.matching
+        (
+          fun x_v_a_ : Alpha@{i} =>
+            forall b : W_type.Beta@{i} W_type@{i} Alpha@{i} Beta@{i s_i} a,
+              P
+                (
+                  W_type.sup
+                    Alpha@{i}
+                    Beta@{i s_i}
+                    (
+                      Alpha.pair
+                        W_type.Beta@{i}
+                        W_type@{i}
+                        Alpha@{i}
+                        Beta@{i s_i}
+                        x_v_a_
+                        x_v_b
+                    )
+                )
+        )
+        _
+        _
+    )
+  .
+  -
+    exact _.
+  -
+    exact _.
 Defined.
 (* from: originally defined by Hexirp *)
 
