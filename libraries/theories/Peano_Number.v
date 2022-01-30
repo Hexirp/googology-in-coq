@@ -74,6 +74,26 @@ Definition
 .
 Proof.
   refine (W_type.matching Alpha@{i} Beta@{i s_i} P _).
+  refine
+    (
+      W_type.Alpha.matching
+        W_type.Beta@{i}
+        W_type@{i}
+        Alpha@{i}
+        Beta@{i s_i}
+        (
+          fun
+            x_v_
+              :
+                W_type.Alpha@{i}
+                  W_type.Beta@{i}
+                  W_type@{i}
+                  Alpha@{i}
+                  Beta@{i s_i}
+          =>
+            P (W_type.sup Alpha@{i} Beta@{i s_i} x_v_)
+        )
+    )
   exact _.
 Defined.
 (* from: originally defined by Hexirp *)
