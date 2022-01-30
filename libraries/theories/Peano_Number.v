@@ -34,8 +34,8 @@ Definition
             W_type@{i}
             Alpha@{i}
             Beta@{i s_i}
-            (Sum.left Unit@{i} Unit@{i} Unit.unit)
-            (Void.matching_nodep (W_type Alpha@{i} Beta@{i s_i}))
+            Alpha.zero
+            Beta.zero
         )
 .
 (* from: originally defined by Hexirp *)
