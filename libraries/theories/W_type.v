@@ -28,7 +28,7 @@ Definition
       (A : Type@{i})
       (B : A -> Type@{i})
     : Type@{i}
-    := Alpha.Alpha beta t A B
+    := Alpha.Alpha@{i} beta t A B
 .
 (* from: originally defined by Hexirp *)
 
@@ -40,7 +40,7 @@ Definition
       (A : Type@{i})
       (B : A -> Type@{i})
     : A -> Type@{i}
-    := Beta t A B
+    := Beta.Beta@{i} t A B
 .
 (* from: originally defined by Hexirp *)
 
