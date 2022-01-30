@@ -73,9 +73,7 @@ Definition
     : forall x : Peano_Number@{i s_i}, P x
 .
 Proof.
-  refine (W_type.matching P _).
-  refine (Dependent_Sum.matching _ _).
-  refine (Bool.matching _ _ _).
+  refine (W_type.matching Alpha@{i} Beta@{i s_i} P _).
   exact _.
 Defined.
 (* from: originally defined by Hexirp *)
