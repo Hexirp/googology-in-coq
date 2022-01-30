@@ -7,8 +7,6 @@ Require Googology_In_Coq.W_type.Beta.
 (** ライブラリを要求します。 *)
 
 Import Googology_In_Coq.Base.
-Import Googology_In_Coq.W_type.Alpha.
-Import Googology_In_Coq.W_type.Beta.
 
 (** ライブラリを開きます。 *)
 
