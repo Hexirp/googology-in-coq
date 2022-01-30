@@ -151,7 +151,7 @@ Proof.
           _
       )
     .
-    exact zero.
+    exact constructor_zero.
   -
     exact _.
 Defined.
