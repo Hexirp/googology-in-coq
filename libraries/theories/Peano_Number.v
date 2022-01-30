@@ -91,7 +91,13 @@ Proof.
                   Alpha@{i}
                   Beta@{i s_i}
           =>
-            P (W_type.sup Alpha@{i} Beta@{i s_i} x_v_)
+            P
+              (
+                W_type.sup
+                  Alpha@{i}
+                  Beta@{i s_i}
+                  x_v_
+              )
         )
         _
     )
@@ -102,7 +108,13 @@ Proof.
         (
           fun x_v_a_ : Alpha@{i} =>
             forall
-              x_v_b : W_type.Beta@{i} W_type@{i} Alpha@{i} Beta@{i s_i} x_v_a_
+              x_v_b
+                :
+                  W_type.Beta@{i}
+                    W_type@{i}
+                    Alpha@{i}
+                    Beta@{i s_i}
+                    x_v_a_
             ,
               P
                 (
@@ -125,7 +137,21 @@ Proof.
     )
   .
   -
-    exact _.
+    refine
+      (
+        fun
+          x_v_b
+            :
+              W_type.Beta@{i}
+                W_type@{i}
+                Alpha@{i}
+                Beta@{i s_i}
+                Alpha.zero
+        =>
+          _
+      )
+    .
+    exact zero.
   -
     exact _.
 Defined.
