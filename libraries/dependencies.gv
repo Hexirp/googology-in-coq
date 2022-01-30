@@ -71,10 +71,10 @@ digraph Dependencies {
   "Unit" -> "Peano_Number.Beta.Succ";
   # Peano_Number.Beta
   "Base" -> "Peano_Number.Beta";
-  "Void" -> "Peano_Number.Beta";
-  "Unit" -> "Peano_Number.Beta";
   "Universe" -> "Peano_Number.Beta";
   "Peano_Number.Alpha" -> "Peano_Number.Beta";
+  "Peano_Number.Beta.Zero" -> "Peano_Number.Beta";
+  "Peano_Number.Beta.Succ" -> "Peano_Number.Beta";
   # Peano_Number
   "Base" -> "Peano_Number";
   "W_type" -> "Peano_Number";
