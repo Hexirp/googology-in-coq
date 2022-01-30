@@ -61,6 +61,61 @@ Definition
 (** ウ型のアルファの構築子です。 *)
 
 Definition
+  matching@{i | }
+      (
+        beta
+          :
+            forall
+              t : forall A : Type@{i}, (A -> Type@{i}) -> Type@{i}
+            ,
+            forall
+              (A : Type@{i})
+              (B : A -> Type@{i})
+            ,
+              A -> Type@{i}
+      )
+      (t : forall (A : Type@{i}) (B : A -> Type@{i}), Type@{i})
+      (A : Type@{i})
+      (B : A -> Type@{i})
+      (P : Alpha beta t A B -> Type@{i})
+      (
+        constructor_pair
+          : forall (a : A) (b : beta t A B a), P (pair beta t A B a b)
+      )
+    : forall x : Alpha beta t A B, P x
+    := Dependent_Sum.matching A (beta t A B) P
+.
+(* from: originally defined by Hexirp *)
+
+(** 場合分けです。 *)
+
+Definition
+  matching_nodep@{i | }
+      (
+        beta
+          :
+            forall
+              t : forall A : Type@{i}, (A -> Type@{i}) -> Type@{i}
+            ,
+            forall
+              (A : Type@{i})
+              (B : A -> Type@{i})
+            ,
+              A -> Type@{i}
+      )
+      (t : forall (A : Type@{i}) (B : A -> Type@{i}), Type@{i})
+      (A : Type@{i})
+      (B : A -> Type@{i})
+      (P : Type@{i})
+      (constructor_pair : forall a : A, beta t A B a -> P)
+    : forall x : Alpha beta t A B, P x
+    := matching beta t A B (fun x_ : Alpha beta t A B => P) constructor_pair
+.
+(* from: originally defined by Hexirp *)
+
+(** 場合分けです。 *)
+
+Definition
   first@{i | }
       (
         beta
@@ -78,7 +133,7 @@ Definition
       (A : Type@{i})
       (B : A -> Type@{i})
     : Alpha beta t A B -> A
-    := Dependent_Sum.first A (beta t A B)
+    := matching_nodep beta t A B A (fun (a : A) (b : beta t A B a) => a)
 .
 (* from: originally defined by Hexirp *)
 
@@ -102,7 +157,14 @@ Definition
       (A : Type@{i})
       (B : A -> Type@{i})
     : forall x : Alpha beta t A B, beta t A B (first beta t A B x)
-    := Dependent_Sum.second A (beta t A B)
+    :=
+      matching
+        beta
+        t
+        A
+        B
+        (fun x_ : Alpha beta t A B => B (first beta t A B x_))
+        (fun (a : A) (b : beta t A B a) => b)
 .
 (* from: originally defined by Hexirp *)
 
