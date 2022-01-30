@@ -29,10 +29,10 @@ Definition succ@{i | } : Alpha@{i} := Sum.right Unit@{i} Unit@{i} Unit.unit.
 
 Definition
   matching@{i | }
-      (P : Bool@{i} -> Type@{i})
+      (P : Alpha@{i} -> Type@{i})
       (constructor_zero : P zero)
       (constructor_succ : P succ)
-    : forall x : Bool@{i}, P x
+    : forall x : Alpha@{i}, P x
     :=
       Sum.matching
         Unit@{i}
@@ -58,8 +58,8 @@ Definition
       (P : Type@{i})
       (constructor_zero : P)
       (constructor_succ : P)
-  : Bool@{i} -> P
-  := matching (fun x_ : Bool@{i} => P) constructor_zero constructor_succ
+  : Alpha@{i} -> P
+  := matching (fun x_ : Alpha@{i} => P) constructor_zero constructor_succ
 .
 (* from: originally defined by Hexirp *)
 
