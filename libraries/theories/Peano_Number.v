@@ -93,6 +93,7 @@ Proof.
           =>
             P (W_type.sup Alpha@{i} Beta@{i s_i} x_v_)
         )
+        _
     )
   .
   exact _.
