@@ -21,6 +21,7 @@ theories/Pointwise_Path_Pointwise_Path.v \
 theories/Is_Half_Adjoint_Equivalence.v \
 theories/Bool.v \
 theories/Peano_Number/Alpha.v \
+theories/Peano_Number/Beta/Zero.v \
 theories/Peano_Number/Beta.v \
 theories/Peano_Number.v \
 

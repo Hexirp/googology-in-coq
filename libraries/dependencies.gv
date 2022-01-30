@@ -63,6 +63,9 @@ digraph Dependencies {
   "Base" -> "Peano_Number.Alpha";
   "Sum" -> "Peano_Number.Alpha";
   "Unit" -> "Peano_Number.Alpha";
+  # Peano_Number.Beta.Zero
+  "Base" -> "Peano_Number.Beta";
+  "Void" -> "Peano_Number.Beta.Zero";
   # Peano_Number.Beta
   "Base" -> "Peano_Number.Beta";
   "Void" -> "Peano_Number.Beta";
