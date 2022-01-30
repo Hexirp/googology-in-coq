@@ -59,6 +59,10 @@ digraph Dependencies {
   "Function" -> "Bool";
   "Sum" -> "Bool";
   "Unit" -> "Bool";
+  # Peano_Number.Alpha
+  "Base" -> "Peano_Number.Alpha";
+  "Sum" -> "Peano_Number.Alpha";
+  "Unit" -> "Peano_Number.Alpha";
   # Peano_Number
   "Base" -> "Peano_Number";
   "Function" -> "Peano_Number";
