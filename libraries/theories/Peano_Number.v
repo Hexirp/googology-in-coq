@@ -1,47 +1,18 @@
 (** 自然数の型に関するモジュールです。 *)
 
 Require Googology_In_Coq.Base.
-Require Googology_In_Coq.Function.
-Require Googology_In_Coq.Dependent_Sum.
-Require Googology_In_Coq.Sum.
-Require Googology_In_Coq.Void.
-Require Googology_In_Coq.Unit.
 Require Googology_In_Coq.W_type.
-Require Googology_In_Coq.Universe.
-Require Googology_In_Coq.Bool.
+Require Googology_In_Coq.Peano_Number.Alpha.
+Require Googology_In_Coq.Peano_Number.Beta.
 
 (** ライブラリを要求します。 *)
 
 Import Googology_In_Coq.Base.
-Import Googology_In_Coq.Function (Function).
-Import Googology_In_Coq.Dependent_Sum (Dependent_Sum).
-Import Googology_In_Coq.Sum (Sum).
-Import Googology_In_Coq.Void (Void).
-Import Googology_In_Coq.Unit (Unit).
 Import Googology_In_Coq.W_type (W_type).
-Import Googology_In_Coq.Universe (Universe).
-Import Googology_In_Coq.Bool (Bool).
+Import Googology_In_Coq.Peano_Number.Alpha (Alpha).
+Import Googology_In_Coq.Peano_Number.Beta (Beta).
 
 (** ライブラリを開きます。 *)
-
-Definition Alpha@{i | } : Type@{i} := Sum@{i} Unit@{i} Unit@{i}.
-(* from: originally defined by Hexirp *)
-
-(** 自然数の型のアルファです。 *)
-
-Definition
-  Beta@{i s_i | i < s_i} : Alpha@{i} -> Type@{i}
-    :=
-      Sum.matching_nodep@{s_i}
-        Unit@{i}
-        Unit@{i}
-        Universe@{i s_i}
-        (Unit.matching_nodep@{s_i} Universe@{i s_i} Void@{i})
-        (Unit.matching_nodep@{s_i} Universe@{i s_i} Unit@{i})
-.
-(* from: originally defined by Hexirp *)
-
-(** 自然数の型のベータです。 *)
 
 Definition
   Peano_Number@{i s_i | i < s_i} : Type@{i}
