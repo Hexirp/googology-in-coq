@@ -94,6 +94,7 @@ Proof.
             P (W_type.sup Alpha@{i} Beta@{i s_i} x_v_)
         )
     )
+  .
   exact _.
 Defined.
 (* from: originally defined by Hexirp *)
