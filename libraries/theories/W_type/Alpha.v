@@ -163,7 +163,7 @@ Definition
         t
         A
         B
-        (fun x_ : Alpha beta t A B => B (first beta t A B x_))
+        (fun x_ : Alpha beta t A B => beta t A B (first beta t A B x_))
         (fun (a : A) (b : beta t A B a) => b)
 .
 (* from: originally defined by Hexirp *)
