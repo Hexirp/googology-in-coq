@@ -7,13 +7,46 @@ Require Googology_In_Coq.W_type.Beta.
 (** ライブラリを要求します。 *)
 
 Import Googology_In_Coq.Base.
+Import Googology_In_Coq.W_type.Alpha.
+Import Googology_In_Coq.W_type.Beta.
 
 (** ライブラリを開きます。 *)
 
-Export Googology_In_Coq.W_type.Alpha (Alpha).
-Export Googology_In_Coq.W_type.Beta (Beta).
+Definition
+  Alpha@{i | }
+      (
+        beta
+          :
+            forall
+              t : forall A : Type@{i}, (A -> Type@{i}) -> Type@{i}
+            ,
+            forall
+              (A : Type@{i})
+              (B : A -> Type@{i})
+            ,
+              A -> Type@{i}
+      )
+      (t : forall (A : Type@{i}) (B : A -> Type@{i}), Type@{i})
+      (A : Type@{i})
+      (B : A -> Type@{i})
+    : Type@{i}
+    := Alpha.Alpha beta t A B
+.
+(* from: originally defined by Hexirp *)
 
-(** ライブラリを統合します。 *)
+(** ウ型のアルファです。 *)
+
+Definition
+  Beta@{i | }
+      (t : forall A : Type@{i}, (A -> Type@{i}) -> Type@{i})
+      (A : Type@{i})
+      (B : A -> Type@{i})
+    : A -> Type@{i}
+    := Beta t A B
+.
+(* from: originally defined by Hexirp *)
+
+(** ウ型のベータです。 *)
 
 Inductive
   W_type@{i | } (A : Type@{i}) (B : A -> Type@{i}) : Type@{i}
@@ -27,7 +60,7 @@ Inductive
 
 (** [Alpha] と [Beta] の組み立て方には複数の選択肢がありました。 *)
 
-(** まず、 [Alpha] の定義の中で [Beta] を使うようにする方法がありました。しかし、これでは層の数が多すぎて面倒くさいことになる気がします。そのため、 [Alpha] の引数に [Beta] を渡すようにしました。 *)
+(** まず、 [Alpha] の定義の中で [Beta] を使うようにする方法がありました。しかし、 [Beta] が [Alpha] に依存することは許容できても [Alpha] が [Beta] に依存することは許容できませんでした。そのため、 [Alpha] の引数に [Beta] を渡すようにしました。 *)
 
 (** 次に、 [Alpha] の引数として [W_type] を渡すのではなく [W_type A B] を渡す方法がありました。しかし、これでは [Alpha] の引数として [A] と [B] を渡した後に [W_type A B] を渡さなければならず、 [A] と [B] を 2 回書くことになってしまいます。これでは面倒くさいため、 [W_type] を渡すようにしました。 *)
 

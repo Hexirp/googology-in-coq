@@ -30,7 +30,7 @@ Definition
         Beta@{i s_i}
         (
           W_type.Alpha.pair
-            W_type.Beta.Beta@{i}
+            W_type.Beta@{i}
             W_type@{i}
             Alpha@{i}
             Beta@{i s_i}
