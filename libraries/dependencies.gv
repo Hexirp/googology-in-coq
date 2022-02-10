@@ -78,6 +78,7 @@ digraph Dependencies {
   # Peano_Number
   "Base" -> "Peano_Number";
   "W_type" -> "Peano_Number";
+  "Path" -> "Peano_Number";
   "Peano_Number.Alpha" -> "Peano_Number";
   "Peano_Number.Beta" -> "Peano_Number";
 }

@@ -2,6 +2,7 @@
 
 Require Googology_In_Coq.Base.
 Require Googology_In_Coq.W_type.
+Require Googology_In_Coq.Path.
 Require Googology_In_Coq.Peano_Number.Alpha.
 Require Googology_In_Coq.Peano_Number.Beta.
 
@@ -9,6 +10,7 @@ Require Googology_In_Coq.Peano_Number.Beta.
 
 Import Googology_In_Coq.Base.
 Import Googology_In_Coq.W_type (W_type).
+Import Googology_In_Coq.Path (Path).
 Import Googology_In_Coq.Peano_Number.Alpha (Alpha).
 Import Googology_In_Coq.Peano_Number.Beta (Beta).
 
