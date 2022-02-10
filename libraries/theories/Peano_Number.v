@@ -151,8 +151,37 @@ Proof.
           _
       )
     .
-    unfold zero.
-    exact constructor_zero.
+    refine
+      (
+        Path.trpt
+          Peano_Number@{i s_i}
+          (Beta.zero Peano_Number@{i s_i})
+          x_v_b
+          (
+            fun x_ : Peano_Number@{i s_i} =>
+              P
+                (
+                  W_type.sup
+                    Alpha@{i}
+                    Beta@{i s_i}
+                    (
+                      Alpha.pair
+                        W_type.Beta@{i}
+                        W_type@{i}
+                        Alpha@{i}
+                        Beta@{i s_i}
+                        Alpha.zero
+                        x_
+                    )
+                )
+          )
+          _
+          _
+      )
+    -
+      admit.
+    -
+      exact constructor_zero.
   -
     exact _.
 Defined.
