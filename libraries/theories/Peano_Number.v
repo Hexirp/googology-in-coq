@@ -151,6 +151,7 @@ Proof.
           _
       )
     .
+    unfold zero.
     exact constructor_zero.
   -
     exact _.
