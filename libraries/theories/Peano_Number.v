@@ -156,11 +156,11 @@ Proof.
     refine
       (
         Path.trpt
-          Peano_Number@{i s_i}
+          (Beta@{i s_i} Alpha.zero -> Peano_Number@{i s_i})
           (Beta.zero Peano_Number@{i s_i})
           x_v_b
           (
-            fun x_ : Peano_Number@{i s_i} =>
+            fun x_ : Beta@{i s_i} Alpha.zero -> Peano_Number@{i s_i} =>
               P
                 (
                   W_type.sup
