@@ -181,9 +181,9 @@ Proof.
           _
       )
     .
-    -
+    +
       admit.
-    -
+    +
       exact constructor_zero.
   -
     exact _.
