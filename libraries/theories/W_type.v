@@ -7,44 +7,10 @@ Require Googology_In_Coq.W_type.Beta.
 (** ライブラリを要求します。 *)
 
 Import Googology_In_Coq.Base.
+Import Googology_In_Coq.W_type.Alpha (Alpha).
+Import Googology_In_Coq.W_type.Beta (Beta).
 
 (** ライブラリを開きます。 *)
-
-Definition
-  Alpha@{i | }
-      (
-        beta
-          :
-            forall
-              t : forall A : Type@{i}, (A -> Type@{i}) -> Type@{i}
-            ,
-            forall
-              (A : Type@{i})
-              (B : A -> Type@{i})
-            ,
-              A -> Type@{i}
-      )
-      (t : forall (A : Type@{i}) (B : A -> Type@{i}), Type@{i})
-      (A : Type@{i})
-      (B : A -> Type@{i})
-    : Type@{i}
-    := Alpha.Alpha@{i} beta t A B
-.
-(* from: originally defined by Hexirp *)
-
-(** ウ型のアルファです。 *)
-
-Definition
-  Beta@{i | }
-      (t : forall A : Type@{i}, (A -> Type@{i}) -> Type@{i})
-      (A : Type@{i})
-      (B : A -> Type@{i})
-    : A -> Type@{i}
-    := Beta.Beta@{i} t A B
-.
-(* from: originally defined by Hexirp *)
-
-(** ウ型のベータです。 *)
 
 Inductive
   W_type@{i | } (A : Type@{i}) (B : A -> Type@{i}) : Type@{i}
