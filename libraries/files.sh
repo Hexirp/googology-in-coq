@@ -10,7 +10,6 @@ theories/Product.v \
 theories/Sum.v \
 theories/Void.v \
 theories/Unit.v \
-theories/W_type/Alpha.v \
 theories/W_type/Beta.v \
 theories/W_type.v \
 theories/Universe.v \
