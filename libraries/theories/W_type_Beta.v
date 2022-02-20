@@ -11,7 +11,7 @@ Import Googology_In_Coq.Function (Function).
 (** ライブラリを開きます。 *)
 
 Definition
-  Beta@{i | }
+  W_type_Beta@{i | }
       (t : forall A : Type@{i}, (A -> Type@{i}) -> Type@{i})
       (A : Type@{i})
       (B : A -> Type@{i})
@@ -28,7 +28,7 @@ Definition
       (A : Type@{i})
       (B : A -> Type@{i})
       (a : A)
-    : Beta t A B a -> B a -> t A B
+    : W_type_Beta t A B a -> B a -> t A B
     := Function.apply (B a) (t A B)
 .
 (* from: originally defined by Hexirp *)
