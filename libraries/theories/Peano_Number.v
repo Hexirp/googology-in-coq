@@ -1,6 +1,8 @@
 (** 自然数の型に関するモジュールです。 *)
 
 Require Googology_In_Coq.Base.
+Require Googology_In_Coq.W_type_Alpha.
+Require Googology_In_Coq.W_type_Beta.
 Require Googology_In_Coq.W_type.
 Require Googology_In_Coq.Path.
 Require Googology_In_Coq.Peano_Number.Alpha.
@@ -9,6 +11,8 @@ Require Googology_In_Coq.Peano_Number.Beta.
 (** ライブラリを要求します。 *)
 
 Import Googology_In_Coq.Base.
+Import Googology_In_Coq.W_type_Alpha (W_type_Alpha).
+Import Googology_In_Coq.W_type_Beta (W_type_Beta).
 Import Googology_In_Coq.W_type (W_type).
 Import Googology_In_Coq.Path (Path).
 Import Googology_In_Coq.Peano_Number.Alpha (Alpha).
@@ -31,8 +35,8 @@ Definition
         Alpha@{i}
         Beta@{i s_i}
         (
-          W_type.Alpha.pair
-            W_type.Beta@{i}
+          W_type_Alpha.pair
+            W_type_Beta@{i}
             W_type@{i}
             Alpha@{i}
             Beta@{i s_i}
@@ -51,8 +55,8 @@ Definition
         Alpha@{i}
         Beta@{i s_i}
         (
-          W_type.Alpha.pair
-            W_type.Beta@{i}
+          W_type_Alpha.pair
+            W_type_Beta@{i}
             W_type@{i}
             Alpha@{i}
             Beta@{i s_i}
@@ -78,8 +82,8 @@ Proof.
   refine (W_type.matching Alpha@{i} Beta@{i s_i} P _).
   refine
     (
-      W_type.Alpha.matching
-        W_type.Beta@{i}
+      W_type_Alpha.matching
+        W_type_Beta@{i}
         W_type@{i}
         Alpha@{i}
         Beta@{i s_i}
@@ -87,8 +91,8 @@ Proof.
           fun
             x_v_
               :
-                W_type.Alpha@{i}
-                  W_type.Beta@{i}
+                W_type_Alpha@{i}
+                  W_type_Beta@{i}
                   W_type@{i}
                   Alpha@{i}
                   Beta@{i s_i}
@@ -112,7 +116,7 @@ Proof.
             forall
               x_v_b
                 :
-                  W_type.Beta@{i}
+                  W_type_Beta@{i}
                     W_type@{i}
                     Alpha@{i}
                     Beta@{i s_i}
@@ -125,7 +129,7 @@ Proof.
                     Beta@{i s_i}
                     (
                       Alpha.pair
-                        W_type.Beta@{i}
+                        W_type_Beta@{i}
                         W_type@{i}
                         Alpha@{i}
                         Beta@{i s_i}
@@ -144,7 +148,7 @@ Proof.
         fun
           x_v_b
             :
-              W_type.Beta@{i}
+              W_type_Beta@{i}
                 W_type@{i}
                 Alpha@{i}
                 Beta@{i s_i}
@@ -168,7 +172,7 @@ Proof.
                     Beta@{i s_i}
                     (
                       Alpha.pair
-                        W_type.Beta@{i}
+                        W_type_Beta@{i}
                         W_type@{i}
                         Alpha@{i}
                         Beta@{i s_i}
