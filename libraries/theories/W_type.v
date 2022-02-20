@@ -20,15 +20,15 @@ Inductive
 
 (** ウ型です。 W-types です。 *)
 
-(** [W_type] は [Alpha] と [W_type_Beta] という補助の型により定義されています。 *)
+(** [W_type] は [W_type_Alpha] と [W_type_Beta] という補助の型により定義されています。 *)
 
-(** [Alpha] と [W_type_Beta] の組み立て方には複数の選択肢がありました。 *)
+(** [W_type_Alpha] と [W_type_Beta] の組み立て方には複数の選択肢がありました。 *)
 
-(** まず、 [Alpha] の定義の中で [W_type_Beta] を使うようにする方法がありました。しかし、 [W_type_Beta] が [Alpha] に依存することは許容できても [Alpha] が [W_type_Beta] に依存することは許容できませんでした。そのため、 [Alpha] の引数に [W_type_Beta] を渡すようにしました。 *)
+(** まず、 [W_type_Alpha] の定義の中で [W_type_Beta] を使うようにする方法がありました。しかし、 [W_type_Beta] が [W_type_Alpha] に依存することは許容できても [W_type_Alpha] が [W_type_Beta] に依存することは許容できませんでした。そのため、 [W_type_Alpha] の引数に [W_type_Beta] を渡すようにしました。 *)
 
-(** 次に、 [Alpha] の引数として [W_type] を渡すのではなく [W_type A B] を渡す方法がありました。しかし、これでは [Alpha] の引数として [A] と [B] を渡した後に [W_type A B] を渡さなければならず、 [A] と [B] を 2 回書くことになってしまいます。これでは面倒くさいため、 [W_type] を渡すようにしました。 *)
+(** 次に、 [W_type_Alpha] の引数として [W_type] を渡すのではなく [W_type A B] を渡す方法がありました。しかし、これでは [W_type_Alpha] の引数として [A] と [B] を渡した後に [W_type A B] を渡さなければならず、 [A] と [B] を 2 回書くことになってしまいます。これでは面倒くさいため、 [W_type] を渡すようにしました。 *)
 
-(** 最終的に、 [W_type@{i}] は [forall (A : Type@{i}) (B : A -> Type@{i}), Type@{i}] という型の値で、 [Alpha@{i} W_type_Beta@{i}] は、 [forall (A : Type@{i}) (B : A -> Type@{i}), Type@{i}] を取って返す関数で、 [W_type@{i}] は [Alpha@{i} W_type_Beta@{i}] の不動点であるという風に定義されるようにしました。 *)
+(** 最終的に、 [W_type@{i}] は [forall (A : Type@{i}) (B : A -> Type@{i}), Type@{i}] という型の値で、 [W_type_Alpha@{i} W_type_Beta@{i}] は、 [forall (A : Type@{i}) (B : A -> Type@{i}), Type@{i}] を取って返す関数で、 [W_type@{i}] は [W_type_Alpha@{i} W_type_Beta@{i}] の不動点であるという風に定義されるようにしました。 *)
 
 Definition
   matching@{i | }
