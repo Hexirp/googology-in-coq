@@ -11,7 +11,7 @@ Import Googology_In_Coq.Dependent_Sum (Dependent_Sum).
 (** ライブラリを開きます。 *)
 
 Definition
-  Alpha@{i | }
+  W_type_Alpha@{i | }
       (
         beta
           :
@@ -53,7 +53,7 @@ Definition
       (B : A -> Type@{i})
       (a : A)
       (b : beta t A B a)
-    : Alpha beta t A B
+    : W_type_Alpha beta t A B
     := Dependent_Sum.pair A (beta t A B) a b
 .
 (* from: originally defined by Hexirp *)
@@ -77,12 +77,12 @@ Definition
       (t : forall (A : Type@{i}) (B : A -> Type@{i}), Type@{i})
       (A : Type@{i})
       (B : A -> Type@{i})
-      (P : Alpha beta t A B -> Type@{i})
+      (P : W_type_Alpha beta t A B -> Type@{i})
       (
         constructor_pair
           : forall (a : A) (b : beta t A B a), P (pair beta t A B a b)
       )
-    : forall x : Alpha beta t A B, P x
+    : forall x : W_type_Alpha beta t A B, P x
     := Dependent_Sum.matching A (beta t A B) P constructor_pair
 .
 (* from: originally defined by Hexirp *)
@@ -108,8 +108,8 @@ Definition
       (B : A -> Type@{i})
       (P : Type@{i})
       (constructor_pair : forall a : A, beta t A B a -> P)
-    : Alpha beta t A B -> P
-    := matching beta t A B (fun x_ : Alpha beta t A B => P) constructor_pair
+    : W_type_Alpha beta t A B -> P
+    := matching beta t A B (fun x_ : W_type_Alpha beta t A B => P) constructor_pair
 .
 (* from: originally defined by Hexirp *)
 
@@ -132,7 +132,7 @@ Definition
       (t : forall (A : Type@{i}) (B : A -> Type@{i}), Type@{i})
       (A : Type@{i})
       (B : A -> Type@{i})
-    : Alpha beta t A B -> A
+    : W_type_Alpha beta t A B -> A
     := matching_nodep beta t A B A (fun (a : A) (b : beta t A B a) => a)
 .
 (* from: originally defined by Hexirp *)
@@ -156,14 +156,14 @@ Definition
       (t : forall (A : Type@{i}) (B : A -> Type@{i}), Type@{i})
       (A : Type@{i})
       (B : A -> Type@{i})
-    : forall x : Alpha beta t A B, beta t A B (first beta t A B x)
+    : forall x : W_type_Alpha beta t A B, beta t A B (first beta t A B x)
     :=
       matching
         beta
         t
         A
         B
-        (fun x_ : Alpha beta t A B => beta t A B (first beta t A B x_))
+        (fun x_ : W_type_Alpha beta t A B => beta t A B (first beta t A B x_))
         (fun (a : A) (b : beta t A B a) => b)
 .
 (* from: originally defined by Hexirp *)
