@@ -198,12 +198,14 @@ Proof.
       )
     .
     +
-      exact _.
+      Fail exact _.
+      admit.
     +
       exact constructor_zero.
   -
-    exact _.
-Defined.
+    Fail exact _.
+    admit.
+Admitted.
 (* from: originally defined by Hexirp *)
 
 (** 場合分けです。 *)
@@ -217,8 +219,11 @@ Definition
           : forall x_p : Peano_Number@{i s_i}, P x_p -> P (succ@{i s_i} x_p)
       )
     : forall x : Peano_Number@{i s_i}, P x
-    := _
 .
+Proof.
+  Fail exact _.
+  admit.
+Admitted.
 (* from: originally defined by Hexirp *)
 
 (** 帰納法の原理です。 *)
