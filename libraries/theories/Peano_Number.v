@@ -15,14 +15,14 @@ Import Googology_In_Coq.W_type_Alpha (W_type_Alpha).
 Import Googology_In_Coq.W_type_Beta (W_type_Beta).
 Import Googology_In_Coq.W_type (W_type).
 Import Googology_In_Coq.Path (Path).
-Import Googology_In_Coq.Peano_Number_Alpha (Alpha).
-Import Googology_In_Coq.Peano_Number_Beta (Beta).
+Import Googology_In_Coq.Peano_Number_Alpha (Peano_Number_Alpha).
+Import Googology_In_Coq.Peano_Number_Beta (Peano_Number_Beta).
 
 (** ライブラリを開きます。 *)
 
 Definition
   Peano_Number@{i s_i | i < s_i} : Type@{i}
-    := W_type@{i} Alpha@{i} Beta@{i s_i}
+    := W_type@{i} Peano_Number_Alpha@{i} Peano_Number_Beta@{i s_i}
 .
 (* from: originally defined by Hexirp *)
 
@@ -32,16 +32,16 @@ Definition
   zero@{i s_i | i < s_i} : Peano_Number@{i s_i}
     :=
       W_type.sup
-        Alpha@{i}
-        Beta@{i s_i}
+        Peano_Number_Alpha@{i}
+        Peano_Number_Beta@{i s_i}
         (
           W_type_Alpha.pair
             W_type_Beta@{i}
             W_type@{i}
-            Alpha@{i}
-            Beta@{i s_i}
-            Alpha.zero
-            (Beta.zero Peano_Number@{i s_i})
+            Peano_Number_Alpha@{i}
+            Peano_Number_Beta@{i s_i}
+            Peano_Number_Alpha.zero
+            (Peano_Number_Beta.zero Peano_Number@{i s_i})
         )
 .
 (* from: originally defined by Hexirp *)
@@ -52,16 +52,16 @@ Definition
   succ@{i s_i | i < s_i} (n_p : Peano_Number@{i s_i}) : Peano_Number@{i s_i}
     :=
       W_type.sup
-        Alpha@{i}
-        Beta@{i s_i}
+        Peano_Number_Alpha@{i}
+        Peano_Number_Beta@{i s_i}
         (
           W_type_Alpha.pair
             W_type_Beta@{i}
             W_type@{i}
-            Alpha@{i}
-            Beta@{i s_i}
-            Alpha.succ
-            (Beta.succ Peano_Number@{i s_i} n_p)
+            Peano_Number_Alpha@{i}
+            Peano_Number_Beta@{i s_i}
+            Peano_Number_Alpha.succ
+            (Peano_Number_Beta.succ Peano_Number@{i s_i} n_p)
         )
 .
 (* from: originally defined by Hexirp *)
@@ -79,14 +79,14 @@ Definition
     : forall x : Peano_Number@{i s_i}, P x
 .
 Proof.
-  refine (W_type.matching Alpha@{i} Beta@{i s_i} P _).
+  refine (W_type.matching Peano_Number_Alpha@{i} Peano_Number_Beta@{i s_i} P _).
   refine
     (
       W_type_Alpha.matching
         W_type_Beta@{i}
         W_type@{i}
-        Alpha@{i}
-        Beta@{i s_i}
+        Peano_Number_Alpha@{i}
+        Peano_Number_Beta@{i s_i}
         (
           fun
             x_v_
@@ -94,14 +94,14 @@ Proof.
                 W_type_Alpha@{i}
                   W_type_Beta@{i}
                   W_type@{i}
-                  Alpha@{i}
-                  Beta@{i s_i}
+                  Peano_Number_Alpha@{i}
+                  Peano_Number_Beta@{i s_i}
           =>
             P
               (
                 W_type.sup
-                  Alpha@{i}
-                  Beta@{i s_i}
+                  Peano_Number_Alpha@{i}
+                  Peano_Number_Beta@{i s_i}
                   x_v_
               )
         )
@@ -110,29 +110,29 @@ Proof.
   .
   refine
     (
-      Alpha.matching
+      Peano_Number_Alpha.matching
         (
-          fun x_v_a_ : Alpha@{i} =>
+          fun x_v_a_ : Peano_Number_Alpha@{i} =>
             forall
               x_v_b
                 :
                   W_type_Beta@{i}
                     W_type@{i}
-                    Alpha@{i}
-                    Beta@{i s_i}
+                    Peano_Number_Alpha@{i}
+                    Peano_Number_Beta@{i s_i}
                     x_v_a_
             ,
               P
                 (
                   W_type.sup
-                    Alpha@{i}
-                    Beta@{i s_i}
+                    Peano_Number_Alpha@{i}
+                    Peano_Number_Beta@{i s_i}
                     (
-                      Alpha.pair
+                      Peano_Number_Alpha.pair
                         W_type_Beta@{i}
                         W_type@{i}
-                        Alpha@{i}
-                        Beta@{i s_i}
+                        Peano_Number_Alpha@{i}
+                        Peano_Number_Beta@{i s_i}
                         x_v_a_
                         x_v_b
                     )
@@ -150,9 +150,9 @@ Proof.
             :
               W_type_Beta@{i}
                 W_type@{i}
-                Alpha@{i}
-                Beta@{i s_i}
-                Alpha.zero
+                Peano_Number_Alpha@{i}
+                Peano_Number_Beta@{i s_i}
+                Peano_Number_Alpha.zero
         =>
           _
       )
@@ -160,23 +160,23 @@ Proof.
     refine
       (
         Path.trpt
-          (Beta@{i s_i} Alpha.zero -> Peano_Number@{i s_i})
-          (Beta.zero Peano_Number@{i s_i})
+          (Peano_Number_Beta@{i s_i} Peano_Number_Alpha.zero -> Peano_Number@{i s_i})
+          (Peano_Number_Beta.zero Peano_Number@{i s_i})
           x_v_b
           (
-            fun x_ : Beta@{i s_i} Alpha.zero -> Peano_Number@{i s_i} =>
+            fun x_ : Peano_Number_Beta@{i s_i} Peano_Number_Alpha.zero -> Peano_Number@{i s_i} =>
               P
                 (
                   W_type.sup
-                    Alpha@{i}
-                    Beta@{i s_i}
+                    Peano_Number_Alpha@{i}
+                    Peano_Number_Beta@{i s_i}
                     (
-                      Alpha.pair
+                      Peano_Number_Alpha.pair
                         W_type_Beta@{i}
                         W_type@{i}
-                        Alpha@{i}
-                        Beta@{i s_i}
-                        Alpha.zero
+                        Peano_Number_Alpha@{i}
+                        Peano_Number_Beta@{i s_i}
+                        Peano_Number_Alpha.zero
                         x_
                     )
                 )
