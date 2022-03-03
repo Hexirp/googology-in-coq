@@ -12,13 +12,13 @@ Import Googology_In_Coq.Base.
 Import Googology_In_Coq.Universe (Universe).
 Import Googology_In_Coq.Peano_Number_Alpha (Peano_Number_Alpha).
 Import Googology_In_Coq.Peano_Number_Beta_Zero (Peano_Number_Beta_Zero).
-Import Googology_In_Coq.Peano_Number_Beta_Succ (Succ).
+Import Googology_In_Coq.Peano_Number_Beta_Succ (Peano_Number_Beta_Succ).
 
 (** ライブラリを開きます。 *)
 
 Definition
   Beta@{i s_i | i < s_i} : Peano_Number_Alpha@{i} -> Type@{i}
-    := Peano_Number_Alpha.matching_nodep Universe@{i s_i} Peano_Number_Beta_Zero@{i} Succ@{i}
+    := Peano_Number_Alpha.matching_nodep Universe@{i s_i} Peano_Number_Beta_Zero@{i} Peano_Number_Beta_Succ@{i}
 .
 (* from: originally defined by Hexirp *)
 
@@ -34,7 +34,7 @@ Definition
 
 Definition
   succ@{i s_i | i < s_i} (A : Type@{i}) (x_p : A) : Beta Peano_Number_Alpha.succ -> A
-    := Succ.matching_nodep A x_p
+    := Peano_Number_Beta_Succ.matching_nodep A x_p
 .
 (* from: originally defined by Hexirp *)
 
