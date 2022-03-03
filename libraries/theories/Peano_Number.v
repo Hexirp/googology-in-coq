@@ -5,8 +5,8 @@ Require Googology_In_Coq.W_type_Alpha.
 Require Googology_In_Coq.W_type_Beta.
 Require Googology_In_Coq.W_type.
 Require Googology_In_Coq.Path.
-Require Googology_In_Coq.Peano_Number.Alpha.
-Require Googology_In_Coq.Peano_Number.Beta.
+Require Googology_In_Coq.Peano_Number_Alpha.
+Require Googology_In_Coq.Peano_Number_Beta.
 
 (** ライブラリを要求します。 *)
 
@@ -15,8 +15,8 @@ Import Googology_In_Coq.W_type_Alpha (W_type_Alpha).
 Import Googology_In_Coq.W_type_Beta (W_type_Beta).
 Import Googology_In_Coq.W_type (W_type).
 Import Googology_In_Coq.Path (Path).
-Import Googology_In_Coq.Peano_Number.Alpha (Alpha).
-Import Googology_In_Coq.Peano_Number.Beta (Beta).
+Import Googology_In_Coq.Peano_Number_Alpha (Alpha).
+Import Googology_In_Coq.Peano_Number_Beta (Beta).
 
 (** ライブラリを開きます。 *)
 

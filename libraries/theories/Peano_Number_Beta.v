@@ -2,15 +2,15 @@
 
 Require Googology_In_Coq.Base.
 Require Googology_In_Coq.Universe.
-Require Googology_In_Coq.Peano_Number.Alpha.
-Require Googology_In_Coq.Peano_Number.Beta.Zero.
-Require Googology_In_Coq.Peano_Number.Beta.Succ.
+Require Googology_In_Coq.Peano_Number_Alpha.
+Require Googology_In_Coq.Peano_Number_Beta_Zero.
+Require Googology_In_Coq.Peano_Number_Beta_Succ.
 
 (** ライブラリを要求します。 *)
 
 Import Googology_In_Coq.Base.
 Import Googology_In_Coq.Universe (Universe).
-Import Googology_In_Coq.Peano_Number.Alpha (Alpha).
+Import Googology_In_Coq.Peano_Number_Alpha (Alpha).
 
 (** ライブラリを開きます。 *)
 
