@@ -130,7 +130,7 @@ Proof.
                     Peano_Number_Alpha@{i}
                     Peano_Number_Beta@{i s_i}
                     (
-                      Peano_Number_Alpha.pair
+                      W_type_Alpha.pair
                         W_type_Beta@{i}
                         W_type@{i}
                         Peano_Number_Alpha@{i}
