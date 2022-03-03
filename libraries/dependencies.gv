@@ -19,16 +19,16 @@ digraph Dependencies {
   "Base" -> "Unit";
   # Void
   "Base" -> "Void";
-  # W_type.Alpha
-  "Base" -> "W_type.Alpha";
-  "Dependent_Sum" -> "W_type.Alpha";
-  # W_type.Beta
-  "Base" -> "W_type.Beta";
-  "Function" -> "W_type.Beta";
+  # W_type_Alpha
+  "Base" -> "W_type_Alpha";
+  "Dependent_Sum" -> "W_type_Alpha";
+  # W_type_Beta
+  "Base" -> "W_type_Beta";
+  "Function" -> "W_type_Beta";
   # W_type
   "Base" -> "W_type";
-  "W_type.Alpha" -> "W_type";
-  "W_type.Beta" -> "W_type";
+  "W_type_Alpha" -> "W_type";
+  "W_type_Beta" -> "W_type";
   # Universe
   "Base" -> "Universe";
   # Path
@@ -59,26 +59,26 @@ digraph Dependencies {
   "Function" -> "Bool";
   "Sum" -> "Bool";
   "Unit" -> "Bool";
-  # Peano_Number.Alpha
-  "Base" -> "Peano_Number.Alpha";
-  "Sum" -> "Peano_Number.Alpha";
-  "Unit" -> "Peano_Number.Alpha";
-  # Peano_Number.Beta.Zero
-  "Base" -> "Peano_Number.Beta.Zero";
-  "Void" -> "Peano_Number.Beta.Zero";
-  # Peano_Number.Beta.Succ
-  "Base" -> "Peano_Number.Beta.Succ";
-  "Unit" -> "Peano_Number.Beta.Succ";
-  # Peano_Number.Beta
-  "Base" -> "Peano_Number.Beta";
-  "Universe" -> "Peano_Number.Beta";
-  "Peano_Number.Alpha" -> "Peano_Number.Beta";
-  "Peano_Number.Beta.Zero" -> "Peano_Number.Beta";
-  "Peano_Number.Beta.Succ" -> "Peano_Number.Beta";
+  # Peano_Number_Alpha
+  "Base" -> "Peano_Number_Alpha";
+  "Sum" -> "Peano_Number_Alpha";
+  "Unit" -> "Peano_Number_Alpha";
+  # Peano_Number_Beta_Zero
+  "Base" -> "Peano_Number_Beta_Zero";
+  "Void" -> "Peano_Number_Beta_Zero";
+  # Peano_Number_Beta_Succ
+  "Base" -> "Peano_Number_Beta_Succ";
+  "Unit" -> "Peano_Number_Beta_Succ";
+  # Peano_Number_Beta
+  "Base" -> "Peano_Number_Beta";
+  "Universe" -> "Peano_Number_Beta";
+  "Peano_Number_Alpha" -> "Peano_Number_Beta";
+  "Peano_Number_Beta_Zero" -> "Peano_Number_Beta";
+  "Peano_Number_Beta_Succ" -> "Peano_Number_Beta";
   # Peano_Number
   "Base" -> "Peano_Number";
   "W_type" -> "Peano_Number";
   "Path" -> "Peano_Number";
-  "Peano_Number.Alpha" -> "Peano_Number";
-  "Peano_Number.Beta" -> "Peano_Number";
+  "Peano_Number_Alpha" -> "Peano_Number";
+  "Peano_Number_Beta" -> "Peano_Number";
 }

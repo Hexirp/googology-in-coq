@@ -10,8 +10,8 @@ theories/Product.v \
 theories/Sum.v \
 theories/Void.v \
 theories/Unit.v \
-theories/W_type/Alpha.v \
-theories/W_type/Beta.v \
+theories/W_type_Alpha.v \
+theories/W_type_Beta.v \
 theories/W_type.v \
 theories/Universe.v \
 theories/Path.v \
@@ -20,10 +20,10 @@ theories/Pointwise_Path.v \
 theories/Pointwise_Path_Pointwise_Path.v \
 theories/Is_Half_Adjoint_Equivalence.v \
 theories/Bool.v \
-theories/Peano_Number/Alpha.v \
-theories/Peano_Number/Beta/Zero.v \
-theories/Peano_Number/Beta/Succ.v \
-theories/Peano_Number/Beta.v \
+theories/Peano_Number_Alpha.v \
+theories/Peano_Number_Beta_Zero.v \
+theories/Peano_Number_Beta_Succ.v \
+theories/Peano_Number_Beta.v \
 theories/Peano_Number.v \
 
 do
