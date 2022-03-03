@@ -79,7 +79,9 @@ Definition
     : forall x : Peano_Number@{i s_i}, P x
 .
 Proof.
-  refine (W_type.matching Peano_Number_Alpha@{i} Peano_Number_Beta@{i s_i} P _).
+  refine
+    (W_type.matching Peano_Number_Alpha@{i} Peano_Number_Beta@{i s_i} P _)
+  .
   refine
     (
       W_type_Alpha.matching
@@ -160,18 +162,28 @@ Proof.
     refine
       (
         Path.trpt
-          (Peano_Number_Beta@{i s_i} Peano_Number_Alpha.zero -> Peano_Number@{i s_i})
+          (
+              Peano_Number_Beta@{i s_i} Peano_Number_Alpha.zero
+            ->
+              Peano_Number@{i s_i}
+          )
           (Peano_Number_Beta.zero Peano_Number@{i s_i})
           x_v_b
           (
-            fun x_ : Peano_Number_Beta@{i s_i} Peano_Number_Alpha.zero -> Peano_Number@{i s_i} =>
+            fun
+              x_
+                :
+                    Peano_Number_Beta@{i s_i} Peano_Number_Alpha.zero
+                  ->
+                    Peano_Number@{i s_i}
+            =>
               P
                 (
                   W_type.sup
                     Peano_Number_Alpha@{i}
                     Peano_Number_Beta@{i s_i}
                     (
-                      Peano_Number_Alpha.pair
+                      W_type_Alpha.pair
                         W_type_Beta@{i}
                         W_type@{i}
                         Peano_Number_Alpha@{i}
@@ -186,7 +198,7 @@ Proof.
       )
     .
     +
-      admit.
+      exact _.
     +
       exact constructor_zero.
   -
