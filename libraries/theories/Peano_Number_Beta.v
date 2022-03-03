@@ -11,18 +11,10 @@ Require Googology_In_Coq.Peano_Number_Beta_Succ.
 Import Googology_In_Coq.Base.
 Import Googology_In_Coq.Universe (Universe).
 Import Googology_In_Coq.Peano_Number_Alpha (Alpha).
+Import Googology_In_Coq.Peano_Number_Beta_Zero (Zero).
+Import Googology_In_Coq.Peano_Number_Beta_Succ (Succ).
 
 (** ライブラリを開きます。 *)
-
-Definition Zero@{i | } : Type@{i} := Zero.Zero@{i}.
-(* from: originally defined by Hexirp *)
-
-(** 自然数の型のベータの [zero] です。 *)
-
-Definition Succ@{i | } : Type@{i} := Succ.Succ@{i}.
-(* from: originally defined by Hexirp *)
-
-(** 自然数の型のベータの [succ] です。 *)
 
 Definition
   Beta@{i s_i | i < s_i} : Alpha@{i} -> Type@{i}
