@@ -246,6 +246,7 @@ Proof.
           _
       )
     .
+    refine (constructor_succ _).
     exact _.
 Defined.
 (* from: originally defined by Hexirp *)
