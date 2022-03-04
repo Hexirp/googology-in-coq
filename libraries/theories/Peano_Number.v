@@ -337,8 +337,9 @@ Definition
 .
 Proof.
   refine (W_type.induction _ _ _ _).
-  exact _.
-Defined.
+  Fail exact _.
+  admit.
+Admitted.
 (* from: originally defined by Hexirp *)
 
 (** 帰納法の原理です。 *)
