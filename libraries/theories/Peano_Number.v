@@ -3,6 +3,7 @@
 Require Googology_In_Coq.Base.
 Require Googology_In_Coq.Function.
 Require Googology_In_Coq.Product.
+Require Googology_In_Coq.Unit.
 Require Googology_In_Coq.W_type_Beta.
 Require Googology_In_Coq.W_type_Alpha.
 Require Googology_In_Coq.W_type.
@@ -17,6 +18,7 @@ Require Googology_In_Coq.Peano_Number_Arity.
 Import Googology_In_Coq.Base.
 Import Googology_In_Coq.Function (Function).
 Import Googology_In_Coq.Product (Product).
+Import Googology_In_Coq.Unit (Unit).
 Import Googology_In_Coq.W_type_Beta (W_type_Beta).
 Import Googology_In_Coq.W_type_Alpha (W_type_Alpha).
 Import Googology_In_Coq.W_type (W_type).
@@ -246,8 +248,47 @@ Proof.
           _
       )
     .
-    refine (constructor_succ _).
-    exact _.
+    refine
+      (
+        Path.trpt
+          (
+            Function@{i}
+              (Peano_Number_Arity@{i s_i} Peano_Number_Tag.succ)
+              Peano_Number@{i s_i}
+          )
+          (Peano_Number_Arity.succ Peano_Number@{i s_i} (x_v_b Unit.unit))
+          x_v_b
+          (
+            fun
+              x_
+                :
+                  Function@{i}
+                    (Peano_Number_Arity@{i s_i} Peano_Number_Tag.succ)
+                    Peano_Number@{i s_i}
+            =>
+              P
+                (
+                  W_type.fixer
+                    Peano_Number_Tag@{i}
+                    Peano_Number_Arity@{i s_i}
+                    (
+                      W_type_Alpha.pair
+                        W_type@{i}
+                        Peano_Number_Tag@{i}
+                        Peano_Number_Arity@{i s_i}
+                        Peano_Number_Tag.succ
+                        x_
+                    )
+                )
+          )
+          _
+          _
+      )
+    .
+    -
+      exact _.
+    -
+      exact _.
 Defined.
 (* from: originally defined by Hexirp *)
 
