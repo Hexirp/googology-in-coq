@@ -76,8 +76,8 @@ Definition
                         W_type
                         A
                         B
-                        (W_type_Alpha.first W_type_Beta W_type A B x_v)
-                        (W_type_Alpha.second W_type_Beta W_type A B x_v)
+                        (W_type_Alpha.first W_type A B x_v)
+                        (W_type_Alpha.second W_type A B x_v)
                         x_v_2_x
                     )
               )
@@ -105,8 +105,8 @@ Definition
                           W_type
                           A
                           B
-                          (W_type_Alpha.first W_type_Beta W_type A B x_v)
-                          (W_type_Alpha.second W_type_Beta W_type A B x_v)
+                          (W_type_Alpha.first W_type A B x_v)
+                          (W_type_Alpha.second W_type A B x_v)
                           x_v_2_x
                       )
                 )
