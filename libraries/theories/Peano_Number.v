@@ -1,8 +1,8 @@
 (** 自然数の型に関するモジュールです。 *)
 
 Require Googology_In_Coq.Base.
-Require Googology_In_Coq.W_type_Alpha.
 Require Googology_In_Coq.W_type_Beta.
+Require Googology_In_Coq.W_type_Alpha.
 Require Googology_In_Coq.W_type.
 Require Googology_In_Coq.Path.
 Require Googology_In_Coq.Peano_Number_Alpha.
@@ -11,8 +11,8 @@ Require Googology_In_Coq.Peano_Number_Beta.
 (** ライブラリを要求します。 *)
 
 Import Googology_In_Coq.Base.
-Import Googology_In_Coq.W_type_Alpha (W_type_Alpha).
 Import Googology_In_Coq.W_type_Beta (W_type_Beta).
+Import Googology_In_Coq.W_type_Alpha (W_type_Alpha).
 Import Googology_In_Coq.W_type (W_type).
 Import Googology_In_Coq.Path (Path).
 Import Googology_In_Coq.Peano_Number_Alpha (Peano_Number_Alpha).
@@ -36,7 +36,6 @@ Definition
         Peano_Number_Beta@{i s_i}
         (
           W_type_Alpha.pair
-            W_type_Beta@{i}
             W_type@{i}
             Peano_Number_Alpha@{i}
             Peano_Number_Beta@{i s_i}
@@ -56,7 +55,6 @@ Definition
         Peano_Number_Beta@{i s_i}
         (
           W_type_Alpha.pair
-            W_type_Beta@{i}
             W_type@{i}
             Peano_Number_Alpha@{i}
             Peano_Number_Beta@{i s_i}
@@ -85,7 +83,6 @@ Proof.
   refine
     (
       W_type_Alpha.matching
-        W_type_Beta@{i}
         W_type@{i}
         Peano_Number_Alpha@{i}
         Peano_Number_Beta@{i s_i}
@@ -94,7 +91,6 @@ Proof.
             x_v_
               :
                 W_type_Alpha@{i}
-                  W_type_Beta@{i}
                   W_type@{i}
                   Peano_Number_Alpha@{i}
                   Peano_Number_Beta@{i s_i}
@@ -131,7 +127,6 @@ Proof.
                     Peano_Number_Beta@{i s_i}
                     (
                       W_type_Alpha.pair
-                        W_type_Beta@{i}
                         W_type@{i}
                         Peano_Number_Alpha@{i}
                         Peano_Number_Beta@{i s_i}
@@ -184,7 +179,6 @@ Proof.
                     Peano_Number_Beta@{i s_i}
                     (
                       W_type_Alpha.pair
-                        W_type_Beta@{i}
                         W_type@{i}
                         Peano_Number_Alpha@{i}
                         Peano_Number_Beta@{i s_i}
