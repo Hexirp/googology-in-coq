@@ -285,9 +285,9 @@ Proof.
           _
       )
     .
-    -
+    +
       exact _.
-    -
+    +
       exact _.
 Defined.
 (* from: originally defined by Hexirp *)
