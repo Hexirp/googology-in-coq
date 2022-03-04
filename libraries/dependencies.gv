@@ -60,10 +60,10 @@ digraph Dependencies {
   "Function" -> "Bool";
   "Sum" -> "Bool";
   "Unit" -> "Bool";
-  # Peano_Number_Alpha
-  "Base" -> "Peano_Number_Alpha";
-  "Sum" -> "Peano_Number_Alpha";
-  "Unit" -> "Peano_Number_Alpha";
+  # Peano_Number_Tag
+  "Base" -> "Peano_Number_Tag";
+  "Sum" -> "Peano_Number_Tag";
+  "Unit" -> "Peano_Number_Tag";
   # Peano_Number_Beta_Zero
   "Base" -> "Peano_Number_Beta_Zero";
   "Void" -> "Peano_Number_Beta_Zero";
@@ -73,13 +73,13 @@ digraph Dependencies {
   # Peano_Number_Beta
   "Base" -> "Peano_Number_Beta";
   "Universe" -> "Peano_Number_Beta";
-  "Peano_Number_Alpha" -> "Peano_Number_Beta";
+  "Peano_Number_Tag" -> "Peano_Number_Beta";
   "Peano_Number_Beta_Zero" -> "Peano_Number_Beta";
   "Peano_Number_Beta_Successor" -> "Peano_Number_Beta";
   # Peano_Number
   "Base" -> "Peano_Number";
   "W_type" -> "Peano_Number";
   "Path" -> "Peano_Number";
-  "Peano_Number_Alpha" -> "Peano_Number";
+  "Peano_Number_Tag" -> "Peano_Number";
   "Peano_Number_Beta" -> "Peano_Number";
 }
