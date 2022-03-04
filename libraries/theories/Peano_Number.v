@@ -232,9 +232,8 @@ Proof.
     +
       exact constructor_zero.
   -
-    Fail exact _.
-    admit.
-Admitted.
+    exact _.
+Defined.
 (* from: originally defined by Hexirp *)
 
 (** 場合分けです。 *)
