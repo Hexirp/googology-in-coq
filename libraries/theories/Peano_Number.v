@@ -1,20 +1,30 @@
 (** 自然数の型に関するモジュールです。 *)
 
 Require Googology_In_Coq.Base.
+Require Googology_In_Coq.Function.
+Require Googology_In_Coq.Product.
+Require Googology_In_Coq.Unit.
 Require Googology_In_Coq.W_type_Beta.
 Require Googology_In_Coq.W_type_Alpha.
 Require Googology_In_Coq.W_type.
 Require Googology_In_Coq.Path.
+Require Googology_In_Coq.Pointwise_Path.
+Require Googology_In_Coq.Naive_Functional_Extensionality.
 Require Googology_In_Coq.Peano_Number_Tag.
 Require Googology_In_Coq.Peano_Number_Arity.
 
 (** ライブラリを要求します。 *)
 
 Import Googology_In_Coq.Base.
+Import Googology_In_Coq.Function (Function).
+Import Googology_In_Coq.Product (Product).
+Import Googology_In_Coq.Unit (Unit).
 Import Googology_In_Coq.W_type_Beta (W_type_Beta).
 Import Googology_In_Coq.W_type_Alpha (W_type_Alpha).
 Import Googology_In_Coq.W_type (W_type).
 Import Googology_In_Coq.Path (Path).
+Import Googology_In_Coq.Pointwise_Path (Pointwise_Path).
+Import Googology_In_Coq.Naive_Functional_Extensionality (Naive_Functional_Extensionality).
 Import Googology_In_Coq.Peano_Number_Tag (Peano_Number_Tag).
 Import Googology_In_Coq.Peano_Number_Arity (Peano_Number_Arity).
 
@@ -68,6 +78,12 @@ Definition
 
 Definition
   matching@{i s_i | i < s_i}
+      (
+        naive_functional_extensionality
+          :
+            forall (A : Type@{i}) (B : Type@{i}),
+              Naive_Functional_Extensionality A B
+      )
       (P : Peano_Number@{i s_i} -> Type@{i})
       (constructor_zero : P zero@{i s_i})
       (
@@ -158,8 +174,8 @@ Proof.
       (
         Path.trpt
           (
-              Peano_Number_Arity@{i s_i} Peano_Number_Tag.zero
-            ->
+            Function@{i}
+              (Peano_Number_Arity@{i s_i} Peano_Number_Tag.zero)
               Peano_Number@{i s_i}
           )
           (Peano_Number_Arity.zero Peano_Number@{i s_i})
@@ -168,8 +184,8 @@ Proof.
             fun
               x_
                 :
-                    Peano_Number_Arity@{i s_i} Peano_Number_Tag.zero
-                  ->
+                  Function@{i}
+                    (Peano_Number_Arity@{i s_i} Peano_Number_Tag.zero)
                     Peano_Number@{i s_i}
             =>
               P
@@ -192,20 +208,125 @@ Proof.
       )
     .
     +
-      Fail exact _.
-      admit.
+      refine
+        (
+          naive_functional_extensionality
+            (Peano_Number_Arity@{i s_i} Peano_Number_Tag.zero)
+            Peano_Number@{i s_i}
+            (
+              Product.pair
+                (
+                  Function@{i}
+                    (Peano_Number_Arity@{i s_i} Peano_Number_Tag.zero)
+                    Peano_Number@{i s_i}
+                )
+                (
+                  Function@{i}
+                    (Peano_Number_Arity@{i s_i} Peano_Number_Tag.zero)
+                    Peano_Number@{i s_i}
+                )
+                (Peano_Number_Arity.zero Peano_Number@{i s_i})
+                x_v_b
+            )
+            _
+        )
+      .
+      refine (Peano_Number_Arity_Zero.matching _).
     +
       exact constructor_zero.
   -
-    Fail exact _.
-    admit.
-Admitted.
+    refine
+      (
+        fun
+          x_v_b
+            :
+              W_type_Beta@{i}
+                W_type@{i}
+                Peano_Number_Tag@{i}
+                Peano_Number_Arity@{i s_i}
+                Peano_Number_Tag.succ
+        =>
+          _
+      )
+    .
+    refine
+      (
+        Path.trpt
+          (
+            Function@{i}
+              (Peano_Number_Arity@{i s_i} Peano_Number_Tag.succ)
+              Peano_Number@{i s_i}
+          )
+          (Peano_Number_Arity.succ Peano_Number@{i s_i} (x_v_b Unit.unit))
+          x_v_b
+          (
+            fun
+              x_
+                :
+                  Function@{i}
+                    (Peano_Number_Arity@{i s_i} Peano_Number_Tag.succ)
+                    Peano_Number@{i s_i}
+            =>
+              P
+                (
+                  W_type.fixer
+                    Peano_Number_Tag@{i}
+                    Peano_Number_Arity@{i s_i}
+                    (
+                      W_type_Alpha.pair
+                        W_type@{i}
+                        Peano_Number_Tag@{i}
+                        Peano_Number_Arity@{i s_i}
+                        Peano_Number_Tag.succ
+                        x_
+                    )
+                )
+          )
+          _
+          _
+      )
+    .
+    +
+      refine
+        (
+          naive_functional_extensionality
+            (Peano_Number_Arity@{i s_i} Peano_Number_Tag.succ)
+            Peano_Number@{i s_i}
+            (
+              Product.pair
+                (
+                  Function@{i}
+                    (Peano_Number_Arity@{i s_i} Peano_Number_Tag.succ)
+                    Peano_Number@{i s_i}
+                )
+                (
+                  Function@{i}
+                    (Peano_Number_Arity@{i s_i} Peano_Number_Tag.succ)
+                    Peano_Number@{i s_i}
+                )
+                (Peano_Number_Arity.succ Peano_Number@{i s_i} (x_v_b Unit.unit))
+                x_v_b
+            )
+            _
+        )
+      .
+      refine (Unit.matching _ _).
+      refine (Path.id _ _).
+    +
+      refine (constructor_succ _).
+Defined.
 (* from: originally defined by Hexirp *)
 
 (** 場合分けです。 *)
 
 Definition
   induction@{i s_i | i < s_i}
+      (
+        naive_functional_extensionality
+          :
+            forall (A : Type@{i}) (B : Type@{i}),
+              Naive_Functional_Extensionality A B
+      )
       (P : Peano_Number@{i s_i} -> Type@{i})
       (constructor_zero : P zero@{i s_i})
       (
@@ -215,6 +336,7 @@ Definition
     : forall x : Peano_Number@{i s_i}, P x
 .
 Proof.
+  refine (W_type.induction _ _ _ _).
   Fail exact _.
   admit.
 Admitted.

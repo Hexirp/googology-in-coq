@@ -19,6 +19,7 @@ theories/Dependent_Pointwise_Path.v \
 theories/Pointwise_Path.v \
 theories/Pointwise_Path_Pointwise_Path.v \
 theories/Is_Half_Adjoint_Equivalence.v \
+theories/Naive_Functional_Extensionality.v \
 theories/Bool.v \
 theories/Peano_Number_Tag.v \
 theories/Peano_Number_Arity_Zero.v \
