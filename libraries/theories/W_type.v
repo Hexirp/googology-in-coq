@@ -14,7 +14,7 @@ Import Googology_In_Coq.W_type_Beta (W_type_Beta).
 
 Inductive
   W_type@{i | } (A : Type@{i}) (B : A -> Type@{i}) : Type@{i}
-    := sup : W_type_Alpha W_type_Beta W_type A B -> W_type A B
+    := fixer : W_type_Alpha W_type_Beta W_type A B -> W_type A B
 .
 (* from: originally defined by Hexirp *)
 
@@ -36,13 +36,13 @@ Definition
       (B : A -> Type@{i})
       (P : W_type A B -> Type@{i})
       (
-        constructor_sup
-          : forall x_v : W_type_Alpha W_type_Beta W_type A B, P (sup A B x_v)
+        constructor_fixer
+          : forall x_v : W_type_Alpha W_type_Beta W_type A B, P (fixer A B x_v)
       )
     : forall x : W_type A B, P x
     :=
       fun x : W_type A B =>
-        match x as x_ return P x_ with sup _ _ x_v => constructor_sup x_v end
+        match x as x_ return P x_ with fixer _ _ x_v => constructor_fixer x_v end
 .
 (* from: originally defined by Hexirp *)
 
@@ -53,9 +53,9 @@ Definition
       (A : Type@{i})
       (B : A -> Type@{i})
       (P : Type@{i})
-      (constructor_sup : W_type_Alpha W_type_Beta W_type A B -> P)
+      (constructor_fixer : W_type_Alpha W_type_Beta W_type A B -> P)
     : W_type A B -> P
-    := matching A B (fun x_ : W_type A B => P) constructor_sup
+    := matching A B (fun x_ : W_type A B => P) constructor_fixer
 .
 (* from: originally defined by Hexirp *)
 
@@ -67,7 +67,7 @@ Definition
       (B : A -> Type@{i})
       (P : W_type A B -> Type@{i})
       (
-        constructor_sup
+        constructor_fixer
           :
             forall
               x_v : W_type_Alpha W_type_Beta W_type A B
@@ -86,7 +86,7 @@ Definition
                     )
               )
             ->
-              P (sup A B x_v)
+              P (fixer A B x_v)
       )
     : forall x : W_type A B, P x
     :=
@@ -99,7 +99,7 @@ Definition
             fun
               x_v : W_type_Alpha W_type_Beta W_type A B
             =>
-              constructor_sup
+              constructor_fixer
                 x_v
                 (
                   fun x_v_2_x : B (W_type_Alpha.first W_type_Beta W_type A B x_v) =>
@@ -127,7 +127,7 @@ Definition
       (B : A -> Type@{i})
       (P : Type@{i})
       (
-        constructor_sup
+        constructor_fixer
           :
             forall
               x_v : W_type_Alpha W_type_Beta W_type A B
@@ -137,7 +137,7 @@ Definition
               P
       )
     : W_type A B -> P
-    := induction A B (fun x_ => P) constructor_sup
+    := induction A B (fun x_ => P) constructor_fixer
 .
 (* from: originally defined by Hexirp *)
 
@@ -162,7 +162,7 @@ Definition
             (x_v : W_type_Alpha W_type_Beta W_type A B)
             (y : B (W_type_Alpha.first W_type_Beta W_type A B x_v) -> W_type C D)
           =>
-            sup
+            fixer
               C
               D
               (

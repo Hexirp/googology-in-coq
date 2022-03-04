@@ -31,7 +31,7 @@ Definition
 Definition
   zero@{i s_i | i < s_i} : Peano_Number@{i s_i}
     :=
-      W_type.sup
+      W_type.fixer
         Peano_Number_Alpha@{i}
         Peano_Number_Beta@{i s_i}
         (
@@ -51,7 +51,7 @@ Definition
 Definition
   succ@{i s_i | i < s_i} (n_p : Peano_Number@{i s_i}) : Peano_Number@{i s_i}
     :=
-      W_type.sup
+      W_type.fixer
         Peano_Number_Alpha@{i}
         Peano_Number_Beta@{i s_i}
         (
@@ -101,7 +101,7 @@ Proof.
           =>
             P
               (
-                W_type.sup
+                W_type.fixer
                   Peano_Number_Alpha@{i}
                   Peano_Number_Beta@{i s_i}
                   x_v_
@@ -126,7 +126,7 @@ Proof.
             ,
               P
                 (
-                  W_type.sup
+                  W_type.fixer
                     Peano_Number_Alpha@{i}
                     Peano_Number_Beta@{i s_i}
                     (
@@ -179,7 +179,7 @@ Proof.
             =>
               P
                 (
-                  W_type.sup
+                  W_type.fixer
                     Peano_Number_Alpha@{i}
                     Peano_Number_Beta@{i s_i}
                     (
