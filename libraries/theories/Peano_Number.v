@@ -232,6 +232,20 @@ Proof.
     +
       exact constructor_zero.
   -
+    refine
+      (
+        fun
+          x_v_b
+            :
+              W_type_Beta@{i}
+                W_type@{i}
+                Peano_Number_Tag@{i}
+                Peano_Number_Arity@{i s_i}
+                Peano_Number_Tag.succ
+        =>
+          _
+      )
+    .
     exact _.
 Defined.
 (* from: originally defined by Hexirp *)
