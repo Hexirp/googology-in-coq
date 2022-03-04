@@ -310,6 +310,7 @@ Proof.
             _
         )
       .
+      refine (Unit.matching _ _).
       exact _.
     +
       exact _.
