@@ -3,6 +3,8 @@
 Require Googology_In_Coq.Base.
 Require Googology_In_Coq.Dependent_Function.
 Require Googology_In_Coq.Function.
+Require Googology_In_Coq.Product.
+Require Googology_In_Coq.Universe.
 Require Googology_In_Coq.Path.
 Require Googology_In_Coq.Pointwise_Path.
 
@@ -11,6 +13,8 @@ Require Googology_In_Coq.Pointwise_Path.
 Import Googology_In_Coq.Base.
 Import Googology_In_Coq.Dependent_Function (Dependent_Function).
 Import Googology_In_Coq.Function (Function).
+Import Googology_In_Coq.Product (Product).
+Import Googology_In_Coq.Universe (Universe).
 Import Googology_In_Coq.Path (Path).
 Import Googology_In_Coq.Pointwise_Path (Pointwise_Path).
 
@@ -23,20 +27,25 @@ Definition
     : Type@{s_i}
     :=
       Dependent_Function@{s_i}
-        (Function@{i} A B)
+        (Product@{i} (Function@{i} A B) (Function@{i} A B))
         Universe@{i s_i}
         (
-          fun f : Function@{i} A B =>
-            Dependent_Function@{s_i}
-              (Function@{i} A B)
+          fun t : Product@{i} (Function@{i} A B) (Function@{i} A B) =>
+            Function@{s_i}
+              Universe@{i s_i}
               Universe@{i s_i}
               (
-                fun g : Function@{i} A B =>
-                  Function@{s_i}
-                    Universe@{i s_i}
-                    Universe@{i s_i}
-                    (Pointwise_Path@{i} A B f g)
-                    (Path@{i} (Function@{i} A B) f g)
+                Pointwise_Path@{i}
+                  A
+                  B
+                  (Product.first (Function@{i} A B) (Function@{i} A B) t)
+                  (Product.second (Function@{i} A B) (Function@{i} A B) t)
+              )
+              (
+                Path@{i}
+                  (Function@{i} A B)
+                  (Product.first (Function@{i} A B) (Function@{i} A B) t)
+                  (Product.second (Function@{i} A B) (Function@{i} A B) t)
               )
         )
 .

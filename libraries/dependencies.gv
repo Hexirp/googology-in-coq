@@ -59,6 +59,8 @@ digraph Dependencies {
   "Base" -> "Naive_Functional_Extensionality";
   "Dependent_Function" -> "Naive_Functional_Extensionality";
   "Function" -> "Naive_Functional_Extensionality";
+  "Product" -> "Naive_Functional_Extensionality";
+  "Universe" -> "Naive_Functional_Extensionality";
   "Path" -> "Naive_Functional_Extensionality";
   "Pointwise_Path" -> "Naive_Functional_Extensionality";
   # Bool
