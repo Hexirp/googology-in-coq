@@ -1,20 +1,20 @@
 (** ウ型に関するモジュールです。 *)
 
 Require Googology_In_Coq.Base.
-Require Googology_In_Coq.W_type_Alpha.
 Require Googology_In_Coq.W_type_Beta.
+Require Googology_In_Coq.W_type_Alpha.
 
 (** ライブラリを要求します。 *)
 
 Import Googology_In_Coq.Base.
-Import Googology_In_Coq.W_type_Alpha (W_type_Alpha).
 Import Googology_In_Coq.W_type_Beta (W_type_Beta).
+Import Googology_In_Coq.W_type_Alpha (W_type_Alpha).
 
 (** ライブラリを開きます。 *)
 
 Inductive
   W_type@{i | } (A : Type@{i}) (B : A -> Type@{i}) : Type@{i}
-    := fixer : W_type_Alpha W_type_Beta W_type A B -> W_type A B
+    := fixer : W_type_Alpha W_type A B -> W_type A B
 .
 (* from: originally defined by Hexirp *)
 
@@ -22,13 +22,9 @@ Inductive
 
 (** [W_type] は [W_type_Alpha] と [W_type_Beta] という補助の型により定義されています。 *)
 
-(** [W_type_Alpha] と [W_type_Beta] の組み立て方には複数の選択肢がありました。 *)
+(** [W_type_Alpha] の引数として [W_type] を渡すのではなく [W_type A B] を渡す方法がありました。しかし、これでは [W_type_Alpha] の引数として [A] と [B] を渡した後に [W_type A B] を渡さなければならず、 [A] と [B] を 2 回書くことになってしまいます。これでは面倒くさいため、 [W_type] を渡すようにしました。 *)
 
-(** まず、 [W_type_Alpha] の定義の中で [W_type_Beta] を使うようにする方法がありました。しかし、 [W_type_Beta] が [W_type_Alpha] に依存することは許容できても [W_type_Alpha] が [W_type_Beta] に依存することは許容できませんでした。そのため、 [W_type_Alpha] の引数に [W_type_Beta] を渡すようにしました。 *)
-
-(** 次に、 [W_type_Alpha] の引数として [W_type] を渡すのではなく [W_type A B] を渡す方法がありました。しかし、これでは [W_type_Alpha] の引数として [A] と [B] を渡した後に [W_type A B] を渡さなければならず、 [A] と [B] を 2 回書くことになってしまいます。これでは面倒くさいため、 [W_type] を渡すようにしました。 *)
-
-(** 最終的に、 [W_type@{i}] は [forall (A : Type@{i}) (B : A -> Type@{i}), Type@{i}] という型の値で、 [W_type_Alpha@{i} W_type_Beta@{i}] は、 [forall (A : Type@{i}) (B : A -> Type@{i}), Type@{i}] を取って返す関数で、 [W_type@{i}] は [W_type_Alpha@{i} W_type_Beta@{i}] の不動点であるという風に定義されるようにしました。 *)
+(** [W_type@{i}] は [forall (A : Type@{i}) (B : A -> Type@{i}), Type@{i}] という型の値で、 [W_type_Alpha@{i}] は、 [forall (A : Type@{i}) (B : A -> Type@{i}), Type@{i}] を取って返す関数で、 [W_type@{i}] は [W_type_Alpha@{i} W_type_Beta@{i}] の不動点であるという風に定義されるようにしました。 *)
 
 Definition
   matching@{i | }
@@ -37,7 +33,7 @@ Definition
       (P : W_type A B -> Type@{i})
       (
         constructor_fixer
-          : forall x_v : W_type_Alpha W_type_Beta W_type A B, P (fixer A B x_v)
+          : forall x_v : W_type_Alpha W_type A B, P (fixer A B x_v)
       )
     : forall x : W_type A B, P x
     :=
@@ -53,7 +49,7 @@ Definition
       (A : Type@{i})
       (B : A -> Type@{i})
       (P : Type@{i})
-      (constructor_fixer : W_type_Alpha W_type_Beta W_type A B -> P)
+      (constructor_fixer : W_type_Alpha W_type A B -> P)
     : W_type A B -> P
     := matching A B (fun x_ : W_type A B => P) constructor_fixer
 .
@@ -70,10 +66,10 @@ Definition
         constructor_fixer
           :
             forall
-              x_v : W_type_Alpha W_type_Beta W_type A B
+              x_v : W_type_Alpha W_type A B
             ,
               (
-                forall x_v_2_x : B (W_type_Alpha.first W_type_Beta W_type A B x_v),
+                forall x_v_2_x : B (W_type_Alpha.first W_type A B x_v),
                   P
                     (
                       W_type_Beta.apply
@@ -97,12 +93,12 @@ Definition
           P
           (
             fun
-              x_v : W_type_Alpha W_type_Beta W_type A B
+              x_v : W_type_Alpha W_type A B
             =>
               constructor_fixer
                 x_v
                 (
-                  fun x_v_2_x : B (W_type_Alpha.first W_type_Beta W_type A B x_v) =>
+                  fun x_v_2_x : B (W_type_Alpha.first W_type A B x_v) =>
                     induction
                       (
                         W_type_Beta.apply
@@ -130,9 +126,9 @@ Definition
         constructor_fixer
           :
             forall
-              x_v : W_type_Alpha W_type_Beta W_type A B
+              x_v : W_type_Alpha W_type A B
             ,
-              (B (W_type_Alpha.first W_type_Beta W_type A B x_v) -> P)
+              (B (W_type_Alpha.first W_type A B x_v) -> P)
             ->
               P
       )
@@ -159,22 +155,21 @@ Definition
         (W_type C D)
         (
           fun
-            (x_v : W_type_Alpha W_type_Beta W_type A B)
-            (y : B (W_type_Alpha.first W_type_Beta W_type A B x_v) -> W_type C D)
+            (x_v : W_type_Alpha W_type A B)
+            (y : B (W_type_Alpha.first W_type A B x_v) -> W_type C D)
           =>
             fixer
               C
               D
               (
                 W_type_Alpha.pair
-                  W_type_Beta
                   W_type
                   C
                   D
-                  (f (W_type_Alpha.first W_type_Beta W_type A B x_v))
+                  (f (W_type_Alpha.first W_type A B x_v))
                   (
-                    fun z : D (f (W_type_Alpha.first W_type_Beta W_type A B x_v)) =>
-                      y (g (W_type_Alpha.first W_type_Beta W_type A B x_v) z)
+                    fun z : D (f (W_type_Alpha.first W_type A B x_v)) =>
+                      y (g (W_type_Alpha.first W_type A B x_v) z)
                   )
               )
         )
