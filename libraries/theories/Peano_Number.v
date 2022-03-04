@@ -5,6 +5,7 @@ Require Googology_In_Coq.W_type_Beta.
 Require Googology_In_Coq.W_type_Alpha.
 Require Googology_In_Coq.W_type.
 Require Googology_In_Coq.Path.
+Require Googology_In_Coq.Naive_Functional_Extensionality.
 Require Googology_In_Coq.Peano_Number_Tag.
 Require Googology_In_Coq.Peano_Number_Arity.
 
@@ -15,6 +16,7 @@ Import Googology_In_Coq.W_type_Beta (W_type_Beta).
 Import Googology_In_Coq.W_type_Alpha (W_type_Alpha).
 Import Googology_In_Coq.W_type (W_type).
 Import Googology_In_Coq.Path (Path).
+Import Googology_In_Coq.Naive_Functional_Extensionality (Naive_Functional_Extensionality).
 Import Googology_In_Coq.Peano_Number_Tag (Peano_Number_Tag).
 Import Googology_In_Coq.Peano_Number_Arity (Peano_Number_Arity).
 
@@ -68,6 +70,13 @@ Definition
 
 Definition
   matching@{i s_i | i < s_i}
+      (
+        naive_functional_extensionality
+          :
+            Naive_Functional_Extensionality@{i}
+              (Peano_Number_Arity@{i s_i} Peano_Number_Tag.zero)
+              Peano_Number@{i s_i}
+      )
       (P : Peano_Number@{i s_i} -> Type@{i})
       (constructor_zero : P zero@{i s_i})
       (
@@ -158,8 +167,8 @@ Proof.
       (
         Path.trpt
           (
-              Peano_Number_Arity@{i s_i} Peano_Number_Tag.zero
-            ->
+            Function@{i}
+              (Peano_Number_Arity@{i s_i} Peano_Number_Tag.zero)
               Peano_Number@{i s_i}
           )
           (Peano_Number_Arity.zero Peano_Number@{i s_i})
@@ -168,8 +177,8 @@ Proof.
             fun
               x_
                 :
-                    Peano_Number_Arity@{i s_i} Peano_Number_Tag.zero
-                  ->
+                  Function@{i}
+                    (Peano_Number_Arity@{i s_i} Peano_Number_Tag.zero)
                     Peano_Number@{i s_i}
             =>
               P
@@ -192,8 +201,7 @@ Proof.
       )
     .
     +
-      Fail exact _.
-      admit.
+      exact _.
     +
       exact constructor_zero.
   -
