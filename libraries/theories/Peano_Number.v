@@ -321,6 +321,12 @@ Defined.
 
 Definition
   induction@{i s_i | i < s_i}
+      (
+        naive_functional_extensionality
+          :
+            forall (A : Type@{i}) (B : Type@{i}),
+              Naive_Functional_Extensionality A B
+      )
       (P : Peano_Number@{i s_i} -> Type@{i})
       (constructor_zero : P zero@{i s_i})
       (
@@ -330,9 +336,9 @@ Definition
     : forall x : Peano_Number@{i s_i}, P x
 .
 Proof.
-  Fail exact _.
-  admit.
-Admitted.
+  refine (W_type.induction _ _ _ _).
+  exact _.
+Defined.
 (* from: originally defined by Hexirp *)
 
 (** 帰納法の原理です。 *)
