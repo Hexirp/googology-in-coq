@@ -228,7 +228,7 @@ Proof.
             _
         )
       .
-      exact _.
+      refine (Peano_Number_Arity_Zero.matching _).
     +
       exact constructor_zero.
   -
