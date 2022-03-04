@@ -66,15 +66,15 @@ digraph Dependencies {
   # Peano_Number_Beta_Zero
   "Base" -> "Peano_Number_Beta_Zero";
   "Void" -> "Peano_Number_Beta_Zero";
-  # Peano_Number_Beta_Succ
-  "Base" -> "Peano_Number_Beta_Succ";
-  "Unit" -> "Peano_Number_Beta_Succ";
+  # Peano_Number_Beta_Successor
+  "Base" -> "Peano_Number_Beta_Successor";
+  "Unit" -> "Peano_Number_Beta_Successor";
   # Peano_Number_Beta
   "Base" -> "Peano_Number_Beta";
   "Universe" -> "Peano_Number_Beta";
   "Peano_Number_Alpha" -> "Peano_Number_Beta";
   "Peano_Number_Beta_Zero" -> "Peano_Number_Beta";
-  "Peano_Number_Beta_Succ" -> "Peano_Number_Beta";
+  "Peano_Number_Beta_Successor" -> "Peano_Number_Beta";
   # Peano_Number
   "Base" -> "Peano_Number";
   "W_type" -> "Peano_Number";

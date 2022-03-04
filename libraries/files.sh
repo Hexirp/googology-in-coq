@@ -22,7 +22,7 @@ theories/Is_Half_Adjoint_Equivalence.v \
 theories/Bool.v \
 theories/Peano_Number_Alpha.v \
 theories/Peano_Number_Beta_Zero.v \
-theories/Peano_Number_Beta_Succ.v \
+theories/Peano_Number_Beta_Successor.v \
 theories/Peano_Number_Beta.v \
 theories/Peano_Number.v \
 
