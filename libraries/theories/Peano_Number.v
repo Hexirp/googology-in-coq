@@ -313,7 +313,7 @@ Proof.
       refine (Unit.matching _ _).
       refine (Path.id _ _).
     +
-      exact _.
+      refine (constructor_succ _).
 Defined.
 (* from: originally defined by Hexirp *)
 
