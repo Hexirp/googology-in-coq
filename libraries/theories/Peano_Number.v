@@ -81,9 +81,8 @@ Definition
       (
         naive_functional_extensionality
           :
-            Naive_Functional_Extensionality@{i}
-              (Peano_Number_Arity@{i s_i} Peano_Number_Tag.zero)
-              Peano_Number@{i s_i}
+            forall (A : Type@{i}) (B : Type@{i}),
+              Naive_Functional_Extensionality A B
       )
       (P : Peano_Number@{i s_i} -> Type@{i})
       (constructor_zero : P zero@{i s_i})
@@ -212,6 +211,8 @@ Proof.
       refine
         (
           naive_functional_extensionality
+            (Peano_Number_Arity@{i s_i} Peano_Number_Tag.zero)
+            Peano_Number@{i s_i}
             (
               Product.pair
                 (
@@ -286,6 +287,29 @@ Proof.
       )
     .
     +
+      refine
+        (
+          naive_functional_extensionality
+            (Peano_Number_Arity@{i s_i} Peano_Number_Tag.succ)
+            Peano_Number@{i s_i}
+            (
+              Product.pair
+                (
+                  Function@{i}
+                    (Peano_Number_Arity@{i s_i} Peano_Number_Tag.succ)
+                    Peano_Number@{i s_i}
+                )
+                (
+                  Function@{i}
+                    (Peano_Number_Arity@{i s_i} Peano_Number_Tag.succ)
+                    Peano_Number@{i s_i}
+                )
+                (Peano_Number_Arity.zero Peano_Number@{i s_i} (x_v_b Unit.unit))
+                x_v_b
+            )
+            _
+        )
+      .
       exact _.
     +
       exact _.
