@@ -28,7 +28,6 @@ Definition
     :=
       Dependent_Function@{s_i}
         (Product@{i} (Function@{i} A B) (Function@{i} A B))
-        Universe@{i s_i}
         (
           fun t : Product@{i} (Function@{i} A B) (Function@{i} A B) =>
             Function@{s_i}
