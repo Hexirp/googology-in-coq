@@ -14,14 +14,13 @@ Import Googology_In_Coq.Base.
 Import Googology_In_Coq.Dependent_Function (Dependent_Function).
 Import Googology_In_Coq.Function (Function).
 Import Googology_In_Coq.Product (Product).
-Import Googology_In_Coq.Universe (Universe).
 Import Googology_In_Coq.Path (Path).
 Import Googology_In_Coq.Pointwise_Path (Pointwise_Path).
 
 (** ライブラリを開きます。 *)
 
 Definition
-  Naive_Functional_Extensionality@{i s_i | i < s_i}
+  Naive_Functional_Extensionality@{i | }
       (A : Type@{i})
       (B : Type@{i})
     : Type@{i}
