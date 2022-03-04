@@ -24,15 +24,13 @@ Definition
   Naive_Functional_Extensionality@{i s_i | i < s_i}
       (A : Type@{i})
       (B : Type@{i})
-    : Type@{s_i}
+    : Type@{i}
     :=
-      Dependent_Function@{s_i}
+      Dependent_Function@{i}
         (Product@{i} (Function@{i} A B) (Function@{i} A B))
         (
           fun t : Product@{i} (Function@{i} A B) (Function@{i} A B) =>
-            Function@{s_i}
-              Universe@{i s_i}
-              Universe@{i s_i}
+            Function@{i}
               (
                 Pointwise_Path@{i}
                   A
