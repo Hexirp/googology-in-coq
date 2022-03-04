@@ -304,7 +304,7 @@ Proof.
                     (Peano_Number_Arity@{i s_i} Peano_Number_Tag.succ)
                     Peano_Number@{i s_i}
                 )
-                (Peano_Number_Arity.zero Peano_Number@{i s_i} (x_v_b Unit.unit))
+                (Peano_Number_Arity.succ Peano_Number@{i s_i} (x_v_b Unit.unit))
                 x_v_b
             )
             _
