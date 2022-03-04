@@ -203,6 +203,27 @@ Proof.
       )
     .
     +
+      refine
+        (
+          naive_functional_extensionality
+            (
+              Product.pair
+                (
+                  Function@{i}
+                    (Peano_Number_Arity@{i s_i} Peano_Number_Tag.zero)
+                    Peano_Number@{i s_i}
+                )
+                (
+                  Function@{i}
+                    (Peano_Number_Arity@{i s_i} Peano_Number_Tag.zero)
+                    Peano_Number@{i s_i}
+                )
+                (Peano_Number_Arity.zero Peano_Number@{i s_i})
+                x_v_b
+            )
+            _
+        )
+      .
       exact _.
     +
       exact constructor_zero.
