@@ -85,8 +85,12 @@ digraph Dependencies {
   "Peano_Number_Arity_Successor" -> "Peano_Number_Arity";
   # Peano_Number
   "Base" -> "Peano_Number";
+  "Function" -> "Peano_Number";
+  "Product" -> "Peano_Number";
   "W_type" -> "Peano_Number";
   "Path" -> "Peano_Number";
+  "Pointwise_Path" -> "Peano_Number";
+  "Naive_Functional_Extensionality" -> "Peano_Number";
   "Peano_Number_Tag" -> "Peano_Number";
   "Peano_Number_Arity" -> "Peano_Number";
 }

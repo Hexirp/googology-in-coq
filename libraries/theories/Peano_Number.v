@@ -2,10 +2,12 @@
 
 Require Googology_In_Coq.Base.
 Require Googology_In_Coq.Function.
+Require Googology_In_Coq.Product.
 Require Googology_In_Coq.W_type_Beta.
 Require Googology_In_Coq.W_type_Alpha.
 Require Googology_In_Coq.W_type.
 Require Googology_In_Coq.Path.
+Require Googology_In_Coq.Pointwise_Path.
 Require Googology_In_Coq.Naive_Functional_Extensionality.
 Require Googology_In_Coq.Peano_Number_Tag.
 Require Googology_In_Coq.Peano_Number_Arity.
@@ -14,10 +16,12 @@ Require Googology_In_Coq.Peano_Number_Arity.
 
 Import Googology_In_Coq.Base.
 Import Googology_In_Coq.Function (Function).
+Import Googology_In_Coq.Product (Product).
 Import Googology_In_Coq.W_type_Beta (W_type_Beta).
 Import Googology_In_Coq.W_type_Alpha (W_type_Alpha).
 Import Googology_In_Coq.W_type (W_type).
 Import Googology_In_Coq.Path (Path).
+Import Googology_In_Coq.Pointwise_Path (Pointwise_Path).
 Import Googology_In_Coq.Naive_Functional_Extensionality (Naive_Functional_Extensionality).
 Import Googology_In_Coq.Peano_Number_Tag (Peano_Number_Tag).
 Import Googology_In_Coq.Peano_Number_Arity (Peano_Number_Arity).
