@@ -10,7 +10,7 @@ Import Googology_In_Coq.Unit (Unit).
 
 (** ライブラリを開きます。 *)
 
-Definition Peano_Number_Beta_Successor@{i | } : Type@{i} := Unit@{i}.
+Definition Peano_Number_Arity_Successor@{i | } : Type@{i} := Unit@{i}.
 (* from: originally defined by Hexirp *)
 
 (** 自然数の型のベータの [succ] です。 *)
@@ -21,8 +21,8 @@ Definition unit@{i | } : Unit@{i} := Unit.unit.
 (** 自然数の型のベータの [succ] の構築子です。 *)
 
 Definition
-  matching@{i | } (P : Peano_Number_Beta_Successor@{i} -> Type@{i}) (constructor_unit : P unit)
-    : forall x : Peano_Number_Beta_Successor@{i}, P x
+  matching@{i | } (P : Peano_Number_Arity_Successor@{i} -> Type@{i}) (constructor_unit : P unit)
+    : forall x : Peano_Number_Arity_Successor@{i}, P x
     := Unit.matching P constructor_unit
 .
 (* from: originally defined by Hexirp *)
@@ -30,15 +30,15 @@ Definition
 (** 場合分けです。 *)
 
 Definition
-  matching_nodep@{i | } (P : Type@{i}) (constructor_unit : P) : Peano_Number_Beta_Successor@{i} -> P
-    := matching (fun x_ : Peano_Number_Beta_Successor@{i} => P) constructor_unit
+  matching_nodep@{i | } (P : Type@{i}) (constructor_unit : P) : Peano_Number_Arity_Successor@{i} -> P
+    := matching (fun x_ : Peano_Number_Arity_Successor@{i} => P) constructor_unit
 .
 (* from: originally defined by Hexirp *)
 
 (** 場合分けです。 *)
 
 Definition
-  comatching_nodep@{i | } (P : Type@{i}) : P -> Peano_Number_Beta_Successor@{i} := fun x : P => unit
+  comatching_nodep@{i | } (P : Type@{i}) : P -> Peano_Number_Arity_Successor@{i} := fun x : P => unit
 .
 (* from: originally defined by Hexirp *)
 

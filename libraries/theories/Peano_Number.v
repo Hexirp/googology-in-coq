@@ -6,7 +6,7 @@ Require Googology_In_Coq.W_type_Alpha.
 Require Googology_In_Coq.W_type.
 Require Googology_In_Coq.Path.
 Require Googology_In_Coq.Peano_Number_Tag.
-Require Googology_In_Coq.Peano_Number_Beta.
+Require Googology_In_Coq.Peano_Number_Arity.
 
 (** ライブラリを要求します。 *)
 
@@ -16,13 +16,13 @@ Import Googology_In_Coq.W_type_Alpha (W_type_Alpha).
 Import Googology_In_Coq.W_type (W_type).
 Import Googology_In_Coq.Path (Path).
 Import Googology_In_Coq.Peano_Number_Tag (Peano_Number_Tag).
-Import Googology_In_Coq.Peano_Number_Beta (Peano_Number_Beta).
+Import Googology_In_Coq.Peano_Number_Arity (Peano_Number_Arity).
 
 (** ライブラリを開きます。 *)
 
 Definition
   Peano_Number@{i s_i | i < s_i} : Type@{i}
-    := W_type@{i} Peano_Number_Tag@{i} Peano_Number_Beta@{i s_i}
+    := W_type@{i} Peano_Number_Tag@{i} Peano_Number_Arity@{i s_i}
 .
 (* from: originally defined by Hexirp *)
 
@@ -33,14 +33,14 @@ Definition
     :=
       W_type.fixer
         Peano_Number_Tag@{i}
-        Peano_Number_Beta@{i s_i}
+        Peano_Number_Arity@{i s_i}
         (
           W_type_Alpha.pair
             W_type@{i}
             Peano_Number_Tag@{i}
-            Peano_Number_Beta@{i s_i}
+            Peano_Number_Arity@{i s_i}
             Peano_Number_Tag.zero
-            (Peano_Number_Beta.zero Peano_Number@{i s_i})
+            (Peano_Number_Arity.zero Peano_Number@{i s_i})
         )
 .
 (* from: originally defined by Hexirp *)
@@ -52,14 +52,14 @@ Definition
     :=
       W_type.fixer
         Peano_Number_Tag@{i}
-        Peano_Number_Beta@{i s_i}
+        Peano_Number_Arity@{i s_i}
         (
           W_type_Alpha.pair
             W_type@{i}
             Peano_Number_Tag@{i}
-            Peano_Number_Beta@{i s_i}
+            Peano_Number_Arity@{i s_i}
             Peano_Number_Tag.succ
-            (Peano_Number_Beta.succ Peano_Number@{i s_i} n_p)
+            (Peano_Number_Arity.succ Peano_Number@{i s_i} n_p)
         )
 .
 (* from: originally defined by Hexirp *)
@@ -78,14 +78,14 @@ Definition
 .
 Proof.
   refine
-    (W_type.matching Peano_Number_Tag@{i} Peano_Number_Beta@{i s_i} P _)
+    (W_type.matching Peano_Number_Tag@{i} Peano_Number_Arity@{i s_i} P _)
   .
   refine
     (
       W_type_Alpha.matching
         W_type@{i}
         Peano_Number_Tag@{i}
-        Peano_Number_Beta@{i s_i}
+        Peano_Number_Arity@{i s_i}
         (
           fun
             x_v_
@@ -93,13 +93,13 @@ Proof.
                 W_type_Alpha@{i}
                   W_type@{i}
                   Peano_Number_Tag@{i}
-                  Peano_Number_Beta@{i s_i}
+                  Peano_Number_Arity@{i s_i}
           =>
             P
               (
                 W_type.fixer
                   Peano_Number_Tag@{i}
-                  Peano_Number_Beta@{i s_i}
+                  Peano_Number_Arity@{i s_i}
                   x_v_
               )
         )
@@ -117,19 +117,19 @@ Proof.
                   W_type_Beta@{i}
                     W_type@{i}
                     Peano_Number_Tag@{i}
-                    Peano_Number_Beta@{i s_i}
+                    Peano_Number_Arity@{i s_i}
                     x_v_a_
             ,
               P
                 (
                   W_type.fixer
                     Peano_Number_Tag@{i}
-                    Peano_Number_Beta@{i s_i}
+                    Peano_Number_Arity@{i s_i}
                     (
                       W_type_Alpha.pair
                         W_type@{i}
                         Peano_Number_Tag@{i}
-                        Peano_Number_Beta@{i s_i}
+                        Peano_Number_Arity@{i s_i}
                         x_v_a_
                         x_v_b
                     )
@@ -148,7 +148,7 @@ Proof.
               W_type_Beta@{i}
                 W_type@{i}
                 Peano_Number_Tag@{i}
-                Peano_Number_Beta@{i s_i}
+                Peano_Number_Arity@{i s_i}
                 Peano_Number_Tag.zero
         =>
           _
@@ -158,17 +158,17 @@ Proof.
       (
         Path.trpt
           (
-              Peano_Number_Beta@{i s_i} Peano_Number_Tag.zero
+              Peano_Number_Arity@{i s_i} Peano_Number_Tag.zero
             ->
               Peano_Number@{i s_i}
           )
-          (Peano_Number_Beta.zero Peano_Number@{i s_i})
+          (Peano_Number_Arity.zero Peano_Number@{i s_i})
           x_v_b
           (
             fun
               x_
                 :
-                    Peano_Number_Beta@{i s_i} Peano_Number_Tag.zero
+                    Peano_Number_Arity@{i s_i} Peano_Number_Tag.zero
                   ->
                     Peano_Number@{i s_i}
             =>
@@ -176,12 +176,12 @@ Proof.
                 (
                   W_type.fixer
                     Peano_Number_Tag@{i}
-                    Peano_Number_Beta@{i s_i}
+                    Peano_Number_Arity@{i s_i}
                     (
                       W_type_Alpha.pair
                         W_type@{i}
                         Peano_Number_Tag@{i}
-                        Peano_Number_Beta@{i s_i}
+                        Peano_Number_Arity@{i s_i}
                         Peano_Number_Tag.zero
                         x_
                     )

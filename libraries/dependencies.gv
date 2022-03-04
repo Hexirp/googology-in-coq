@@ -64,22 +64,22 @@ digraph Dependencies {
   "Base" -> "Peano_Number_Tag";
   "Sum" -> "Peano_Number_Tag";
   "Unit" -> "Peano_Number_Tag";
-  # Peano_Number_Beta_Zero
-  "Base" -> "Peano_Number_Beta_Zero";
-  "Void" -> "Peano_Number_Beta_Zero";
-  # Peano_Number_Beta_Successor
-  "Base" -> "Peano_Number_Beta_Successor";
-  "Unit" -> "Peano_Number_Beta_Successor";
-  # Peano_Number_Beta
-  "Base" -> "Peano_Number_Beta";
-  "Universe" -> "Peano_Number_Beta";
-  "Peano_Number_Tag" -> "Peano_Number_Beta";
-  "Peano_Number_Beta_Zero" -> "Peano_Number_Beta";
-  "Peano_Number_Beta_Successor" -> "Peano_Number_Beta";
+  # Peano_Number_Arity_Zero
+  "Base" -> "Peano_Number_Arity_Zero";
+  "Void" -> "Peano_Number_Arity_Zero";
+  # Peano_Number_Arity_Successor
+  "Base" -> "Peano_Number_Arity_Successor";
+  "Unit" -> "Peano_Number_Arity_Successor";
+  # Peano_Number_Arity
+  "Base" -> "Peano_Number_Arity";
+  "Universe" -> "Peano_Number_Arity";
+  "Peano_Number_Tag" -> "Peano_Number_Arity";
+  "Peano_Number_Arity_Zero" -> "Peano_Number_Arity";
+  "Peano_Number_Arity_Successor" -> "Peano_Number_Arity";
   # Peano_Number
   "Base" -> "Peano_Number";
   "W_type" -> "Peano_Number";
   "Path" -> "Peano_Number";
   "Peano_Number_Tag" -> "Peano_Number";
-  "Peano_Number_Beta" -> "Peano_Number";
+  "Peano_Number_Arity" -> "Peano_Number";
 }
