@@ -38,7 +38,9 @@ Definition
     : forall x : W_type A B, P x
     :=
       fun x : W_type A B =>
-        match x as x_ return P x_ with fixer _ _ x_v => constructor_fixer x_v end
+        match x as x_ return P x_ with
+          fixer _ _ x_v => constructor_fixer x_v
+        end
 .
 (* from: originally defined by Hexirp *)
 
