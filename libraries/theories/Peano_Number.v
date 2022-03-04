@@ -311,7 +311,7 @@ Proof.
         )
       .
       refine (Unit.matching _ _).
-      exact _.
+      refine (Path.id _ _).
     +
       exact _.
 Defined.
