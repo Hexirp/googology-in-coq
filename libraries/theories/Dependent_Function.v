@@ -8,30 +8,38 @@ Import Googology_In_Coq.Base.
 
 (** ライブラリを開きます。 *)
 
-Definition
+Inductive
   Dependent_Function@{i | } (A : Type@{i}) (B : A -> Type@{i}) : Type@{i}
-    := forall x : A, B x
+    := wrap : (forall x : A, B x) -> Dependent_Function A B
 .
 (* from: originally defined by Hexirp *)
 
 (** 依存関数型です。 *)
 
 Definition
-  abstract@{i | } (A : Type@{i}) (B : A -> Type@{i}) (x : forall x : A, B x)
-    : Dependent_Function@{i} A B
-    := x
+  unwrap@{i | } (A : Type@{i}) (B : A -> Type@{i})
+    : Dependent_Function@{i} A B -> forall x : A, B x
+    :=
+      fun x : Dependent_Function@{i} A B =>
+        match x with wrap _ _ x_v => x_v end
+.
+(* from: originally defined by Hexirp *)
+
+(** 依存関数型です。 *)
+
+Definition
+  abstract@{i | } (A : Type@{i}) (B : A -> Type@{i})
+    : (forall x : A, B x) -> Dependent_Function@{i} A B
+    := wrap A B
 .
 (* from: originally defined by Hexirp *)
 
 (** 抽象です。ラムダ抽象です。 *)
 
 Definition
-  apply@{i | }
-      (A : Type@{i})
-      (B : A -> Type@{i})
-      (x : Dependent_Function@{i} A B)
-    : forall x : A, B x
-    := x
+  apply@{i | } (A : Type@{i}) (B : A -> Type@{i})
+    : Dependent_Function@{i} A B -> forall x : A, B x
+    := unwrap A B
 .
 (* from: originally defined by Hexirp *)
 
@@ -49,7 +57,8 @@ Definition
       (g : forall x : C, B (f x) -> D x)
     : Dependent_Function A B -> Dependent_Function C D
     :=
-      fun (x : Dependent_Function A B) (y : C) => g y (x (f y))
+      fun x : Dependent_Function A B =>
+        abstract C D (fun y : C => g y (apply A B x (f y)))
 .
 (* from: originally defined by Hexirp *)
 
