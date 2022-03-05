@@ -58,7 +58,7 @@ Definition
 (** 自然数の型の第一構築子です。 *)
 
 Definition
-  succ@{i s_i | i < s_i} (n_p : Peano_Number@{i s_i}) : Peano_Number@{i s_i}
+  successor@{i s_i | i < s_i} (n_p : Peano_Number@{i s_i}) : Peano_Number@{i s_i}
     :=
       W_type.fixer
         Peano_Number_Tag@{i}
@@ -68,8 +68,8 @@ Definition
             W_type@{i}
             Peano_Number_Tag@{i}
             Peano_Number_Arity@{i s_i}
-            Peano_Number_Tag.succ
-            (Peano_Number_Arity.succ Peano_Number@{i s_i} n_p)
+            Peano_Number_Tag.successor
+            (Peano_Number_Arity.successor Peano_Number@{i s_i} n_p)
         )
 .
 (* from: originally defined by Hexirp *)
@@ -87,8 +87,8 @@ Definition
       (P : Peano_Number@{i s_i} -> Type@{i})
       (constructor_zero : P zero@{i s_i})
       (
-        constructor_succ
-          : forall x_p : Peano_Number@{i s_i}, P (succ@{i s_i} x_p)
+        constructor_successor
+          : forall x_p : Peano_Number@{i s_i}, P (successor@{i s_i} x_p)
       )
     : forall x : Peano_Number@{i s_i}, P x
 .
@@ -244,7 +244,7 @@ Proof.
                 W_type@{i}
                 Peano_Number_Tag@{i}
                 Peano_Number_Arity@{i s_i}
-                Peano_Number_Tag.succ
+                Peano_Number_Tag.successor
         =>
           _
       )
@@ -254,17 +254,17 @@ Proof.
         Path.trpt
           (
             Function@{i}
-              (Peano_Number_Arity@{i s_i} Peano_Number_Tag.succ)
+              (Peano_Number_Arity@{i s_i} Peano_Number_Tag.successor)
               Peano_Number@{i s_i}
           )
-          (Peano_Number_Arity.succ Peano_Number@{i s_i} (x_v_b Unit.unit))
+          (Peano_Number_Arity.successor Peano_Number@{i s_i} (x_v_b Unit.unit))
           x_v_b
           (
             fun
               x_
                 :
                   Function@{i}
-                    (Peano_Number_Arity@{i s_i} Peano_Number_Tag.succ)
+                    (Peano_Number_Arity@{i s_i} Peano_Number_Tag.successor)
                     Peano_Number@{i s_i}
             =>
               P
@@ -277,7 +277,7 @@ Proof.
                         W_type@{i}
                         Peano_Number_Tag@{i}
                         Peano_Number_Arity@{i s_i}
-                        Peano_Number_Tag.succ
+                        Peano_Number_Tag.successor
                         x_
                     )
                 )
@@ -290,21 +290,21 @@ Proof.
       refine
         (
           naive_functional_extensionality
-            (Peano_Number_Arity@{i s_i} Peano_Number_Tag.succ)
+            (Peano_Number_Arity@{i s_i} Peano_Number_Tag.successor)
             Peano_Number@{i s_i}
             (
               Product.pair
                 (
                   Function@{i}
-                    (Peano_Number_Arity@{i s_i} Peano_Number_Tag.succ)
+                    (Peano_Number_Arity@{i s_i} Peano_Number_Tag.successor)
                     Peano_Number@{i s_i}
                 )
                 (
                   Function@{i}
-                    (Peano_Number_Arity@{i s_i} Peano_Number_Tag.succ)
+                    (Peano_Number_Arity@{i s_i} Peano_Number_Tag.successor)
                     Peano_Number@{i s_i}
                 )
-                (Peano_Number_Arity.succ Peano_Number@{i s_i} (x_v_b Unit.unit))
+                (Peano_Number_Arity.successor Peano_Number@{i s_i} (x_v_b Unit.unit))
                 x_v_b
             )
             _
@@ -313,7 +313,7 @@ Proof.
       refine (Unit.matching _ _).
       refine (Path.id _ _).
     +
-      refine (constructor_succ _).
+      refine (constructor_successor _).
 Defined.
 (* from: originally defined by Hexirp *)
 
@@ -330,8 +330,8 @@ Definition
       (P : Peano_Number@{i s_i} -> Type@{i})
       (constructor_zero : P zero@{i s_i})
       (
-        constructor_succ
-          : forall x_p : Peano_Number@{i s_i}, P x_p -> P (succ@{i s_i} x_p)
+        constructor_successor
+          : forall x_p : Peano_Number@{i s_i}, P x_p -> P (successor@{i s_i} x_p)
       )
     : forall x : Peano_Number@{i s_i}, P x
 .

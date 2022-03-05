@@ -22,7 +22,7 @@ Definition zero@{i | } : Peano_Number_Tag@{i} := Sum.left Unit@{i} Unit@{i} Unit
 
 (** 自然数の型のアルファの第一構築子です。 *)
 
-Definition succ@{i | } : Peano_Number_Tag@{i} := Sum.right Unit@{i} Unit@{i} Unit.unit.
+Definition successor@{i | } : Peano_Number_Tag@{i} := Sum.right Unit@{i} Unit@{i} Unit.unit.
 (* from: originally defined by Hexirp *)
 
 (** 自然数の型のアルファの第二構築子です。 *)
@@ -31,7 +31,7 @@ Definition
   matching@{i | }
       (P : Peano_Number_Tag@{i} -> Type@{i})
       (constructor_zero : P zero)
-      (constructor_succ : P succ)
+      (constructor_successor : P successor)
     : forall x : Peano_Number_Tag@{i}, P x
     :=
       Sum.matching
@@ -46,7 +46,7 @@ Definition
         (
           Unit.matching
             (fun x_ : Unit => P (Sum.right Unit@{i} Unit@{i} x_))
-            constructor_succ
+            constructor_successor
         )
 .
 (* from: originally defined by Hexirp *)
@@ -57,9 +57,9 @@ Definition
   matching_nodep@{i | }
       (P : Type@{i})
       (constructor_zero : P)
-      (constructor_succ : P)
+      (constructor_successor : P)
   : Peano_Number_Tag@{i} -> P
-  := matching (fun x_ : Peano_Number_Tag@{i} => P) constructor_zero constructor_succ
+  := matching (fun x_ : Peano_Number_Tag@{i} => P) constructor_zero constructor_successor
 .
 (* from: originally defined by Hexirp *)
 

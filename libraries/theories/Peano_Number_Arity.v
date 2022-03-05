@@ -33,9 +33,9 @@ Definition
 (** 自然数の型のベータの [zero] です。 *)
 
 Definition
-  succ@{i s_i | i < s_i} (A : Type@{i}) (x_p : A) : Peano_Number_Arity Peano_Number_Tag.succ -> A
+  successor@{i s_i | i < s_i} (A : Type@{i}) (x_p : A) : Peano_Number_Arity Peano_Number_Tag.successor -> A
     := Peano_Number_Arity_Successor.matching_nodep A x_p
 .
 (* from: originally defined by Hexirp *)
 
-(** 自然数の型のベータの [succ] です。 *)
+(** 自然数の型のベータの [successor] です。 *)
