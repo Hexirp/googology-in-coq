@@ -32,6 +32,10 @@ Global Set Polymorphic Inductive Cumulativity.
 
 (** [Polymorphic Inductive Cumulativity] をオンにします。 *)
 
+Global Set Printing Universes.
+
+(** 宇宙階層を表示するようにします。 *)
+
 Notation
   "x -> y" := (forall (_ : x), y)
     (at level 99, right associativity, y at level 200)
