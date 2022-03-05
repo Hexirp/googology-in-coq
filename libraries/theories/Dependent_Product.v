@@ -20,14 +20,14 @@ Definition
 
 Definition
   map@{i | }
-      {A : Type@{i}}
-      {B : A -> Type@{i}}
-      {C : Type@{i}}
-      {D : C -> Type@{i}}
+      (A : Type@{i})
+      (B : A -> Type@{i})
+      (C : Type@{i})
+      (D : C -> Type@{i})
       (f : C -> A)
       (g : forall x : C, B (f x) -> D x)
-    : Dependent_Product A B -> Dependent_Product C D
-    := fun (x : Dependent_Product A B) (y : C) => g y (x (f y))
+    : Dependent_Product@{i} A B -> Dependent_Product@{i} C D
+    := fun (x : Dependent_Product@{i} A B) (y : C) => g y (x (f y))
 .
 (* from: originally defined by Hexirp *)
 

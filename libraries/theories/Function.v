@@ -15,18 +15,13 @@ Definition Function@{i | } (A : Type@{i}) (B : Type@{i}) : Type@{i} := A -> B.
 
 (** 関数型です。 *)
 
-Definition id@{i | } {A : Type@{i}} : A -> A := fun x : A => x.
+Definition id@{i | } (A : Type@{i}) : A -> A := fun x : A => x.
 (* from: originally defined by Hexirp *)
 
 (** 恒等関数です。 *)
 
-Definition id_visible@{i | } (A : Type@{i}) : A -> A := fun x : A => x.
-(* from: originally defined by Hexirp *)
-
-(** 引数が明示的な [id] です。 *)
-
 Definition
-  const@{i | } {A : Type@{i}} {B : Type@{i}} : A -> B -> A
+  const@{i | } (A : Type@{i}) (B : Type@{i}) : A -> B -> A
     := fun (x : A) (y : B) => x
 .
 (* from: originally defined by Hexirp *)
@@ -34,7 +29,7 @@ Definition
 (** 定数関数です。 *)
 
 Definition
-  comp@{i | } {A : Type@{i}} {B : Type@{i}} {C : Type@{i}}
+  comp@{i | } (A : Type@{i}) (B : Type@{i}) (C : Type@{i})
     : (B -> C) -> (A -> B) -> A -> C
     := fun (f : B -> C) (g : A -> B) (x : A) => f (g x)
 .
@@ -43,7 +38,7 @@ Definition
 (** 関数の合成です。 *)
 
 Definition
-  apply@{i | } {A : Type@{i}} {B : Type@{i}} : (A -> B) -> A -> B
+  apply@{i | } (A : Type@{i}) (B : Type@{i}) : (A -> B) -> A -> B
     := fun (f : A -> B) (x : A) => f x
 .
 (* from: originally defined by Hexirp *)
@@ -51,7 +46,7 @@ Definition
 (** 関数の適用です。 *)
 
 Definition
-  abstract@{i | } {A : Type@{i}} {B : Type@{i}} : (A -> B) -> A -> B
+  abstract@{i | } (A : Type@{i}) (B : Type@{i}) : (A -> B) -> A -> B
     := fun (f : A -> B) (x : A) => f x
 .
 (* from: originally defined by Hexirp *)
@@ -59,31 +54,15 @@ Definition
 (** 関数の抽象です。 *)
 
 Definition
-  domain@{i j | } {A : Type@{i}} {B : Type@{j}} : (A -> B) -> Type@{i}
-    := fun f : A -> B => A
-.
-(* from: https://www.cs.bham.ac.uk/~mhe/HoTT-UF-in-Agda-Lecture-Notes/ *)
-
-(** 関数の定義域です。あるいは始域です。 *)
-
-Definition
-  codomain@{i j | } {A : Type@{i}} {B : Type@{j}} : (A -> B) -> Type@{j}
-    := fun f : A -> B => B
-.
-(* from: https://www.cs.bham.ac.uk/~mhe/HoTT-UF-in-Agda-Lecture-Notes/ *)
-
-(** 関数の値域です。あるいは終域です。 *)
-
-Definition
   map@{i | }
-      {A : Type@{i}}
-      {B : Type@{i}}
-      {C : Type@{i}}
-      {D : Type@{i}}
+      (A : Type@{i})
+      (B : Type@{i})
+      (C : Type@{i})
+      (D : Type@{i})
       (f : C -> A)
       (g : B -> D)
-    : (A -> B) -> (C -> D)
-    := fun (x : Function A B) (y : C) => g (x (f y))
+    : Function@{i} A B -> Function@{i} C D
+    := fun (x : Function@{i} A B) (y : C) => g (x (f y))
 .
 (* from: originally defined by Hexirp *)
 

@@ -19,61 +19,21 @@ digraph Dependencies {
   "Base" -> "Unit";
   # Void
   "Base" -> "Void";
+  # W_type_Beta
+  "Base" -> "W_type_Beta";
+  "Function" -> "W_type_Beta";
+  # W_type_Alpha
+  "Base" -> "W_type_Alpha";
+  "Dependent_Sum" -> "W_type_Alpha";
+  "W_type_Beta" -> "W_type_Alpha";
   # W_type
   "Base" -> "W_type";
-  "Dependent_Function" -> "W_type";
-  "Function" -> "W_type";
-  "Dependent_Sum" -> "W_type";
+  "W_type_Alpha" -> "W_type";
+  "W_type_Beta" -> "W_type";
   # Universe
   "Base" -> "Universe";
   # Path
   "Base" -> "Path";
-  # Dependent_Function_Path
-  "Base" -> "Dependent_Function_Path";
-  "Dependent_Function" -> "Dependent_Function_Path";
-  "Path" -> "Dependent_Function_Path";
-  # Function_Path
-  "Base" -> "Function_Path";
-  "Function" -> "Function_Path";
-  "Path" -> "Function_Path";
-  # Dependent_Product_Path
-  "Base" -> "Dependent_Product_Path";
-  "Dependent_Product" -> "Dependent_Product_Path";
-  "Path" -> "Dependent_Product_Path";
-  # Dependent_Sum_Path
-  "Base" -> "Dependent_Sum_Path";
-  "Dependent_Sum" -> "Dependent_Sum_Path";
-  "Path" -> "Dependent_Sum_Path";
-  # Product_Path
-  "Base" -> "Product_Path";
-  "Product" -> "Product_Path";
-  "Path" -> "Product_Path";
-  # Sum_Path
-  "Base" -> "Sum_Path";
-  "Sum" -> "Sum_Path";
-  "Path" -> "Sum_Path";
-  # Unit_Path
-  "Base" -> "Unit_Path";
-  "Unit" -> "Unit_Path";
-  "Path" -> "Unit_Path";
-  # Void_Path
-  "Base" -> "Void_Path";
-  "Void" -> "Void_Path";
-  "Path" -> "Void_Path";
-  # W_type_Path
-  "Base" -> "W_type_Path";
-  "Dependent_Function" -> "W_type_Path";
-  "Function" -> "W_type_Path";
-  "Dependent_Sum" -> "W_type_Path";
-  "W_type" -> "W_type_Path";
-  "Path" -> "W_type_Path";
-  # Universe_Path
-  "Base" -> "Universe_Path";
-  "Universe" -> "Universe_Path";
-  "Path" -> "Universe_Path";
-  # Path_Path
-  "Base" -> "Path_Path";
-  "Path" -> "Path_Path";
   # Dependent_Pointwise_Path
   "Base" -> "Dependent_Pointwise_Path";
   "Dependent_Function" -> "Dependent_Pointwise_Path";
@@ -95,9 +55,43 @@ digraph Dependencies {
   "Product" -> "Is_Half_Adjoint_Equivalence";
   "Pointwise_Path" -> "Is_Half_Adjoint_Equivalence";
   "Pointwise_Path_Pointwise_Path" -> "Is_Half_Adjoint_Equivalence";
+  # Naive_Functional_Extensionality
+  "Base" -> "Naive_Functional_Extensionality";
+  "Dependent_Function" -> "Naive_Functional_Extensionality";
+  "Function" -> "Naive_Functional_Extensionality";
+  "Product" -> "Naive_Functional_Extensionality";
+  "Path" -> "Naive_Functional_Extensionality";
+  "Pointwise_Path" -> "Naive_Functional_Extensionality";
   # Bool
   "Base" -> "Bool";
   "Function" -> "Bool";
   "Sum" -> "Bool";
   "Unit" -> "Bool";
+  # Peano_Number_Tag
+  "Base" -> "Peano_Number_Tag";
+  "Sum" -> "Peano_Number_Tag";
+  "Unit" -> "Peano_Number_Tag";
+  # Peano_Number_Arity_Zero
+  "Base" -> "Peano_Number_Arity_Zero";
+  "Void" -> "Peano_Number_Arity_Zero";
+  # Peano_Number_Arity_Successor
+  "Base" -> "Peano_Number_Arity_Successor";
+  "Unit" -> "Peano_Number_Arity_Successor";
+  # Peano_Number_Arity
+  "Base" -> "Peano_Number_Arity";
+  "Universe" -> "Peano_Number_Arity";
+  "Peano_Number_Tag" -> "Peano_Number_Arity";
+  "Peano_Number_Arity_Zero" -> "Peano_Number_Arity";
+  "Peano_Number_Arity_Successor" -> "Peano_Number_Arity";
+  # Peano_Number
+  "Base" -> "Peano_Number";
+  "Function" -> "Peano_Number";
+  "Product" -> "Peano_Number";
+  "Unit" -> "Peano_Number";
+  "W_type" -> "Peano_Number";
+  "Path" -> "Peano_Number";
+  "Pointwise_Path" -> "Peano_Number";
+  "Naive_Functional_Extensionality" -> "Peano_Number";
+  "Peano_Number_Tag" -> "Peano_Number";
+  "Peano_Number_Arity" -> "Peano_Number";
 }

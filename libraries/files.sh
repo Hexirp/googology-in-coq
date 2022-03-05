@@ -10,24 +10,22 @@ theories/Product.v \
 theories/Sum.v \
 theories/Void.v \
 theories/Unit.v \
+theories/W_type_Beta.v \
+theories/W_type_Alpha.v \
 theories/W_type.v \
 theories/Universe.v \
 theories/Path.v \
-theories/Dependent_Function_Path.v \
-theories/Function_Path.v \
-theories/Dependent_Product_Path.v \
-theories/Dependent_Sum_Path.v \
-theories/Product_Path.v \
-theories/Sum_Path.v \
-theories/Unit_Path.v \
-theories/W_type_Path.v \
-theories/Universe_Path.v \
-theories/Path_Path.v \
 theories/Dependent_Pointwise_Path.v \
 theories/Pointwise_Path.v \
 theories/Pointwise_Path_Pointwise_Path.v \
 theories/Is_Half_Adjoint_Equivalence.v \
+theories/Naive_Functional_Extensionality.v \
 theories/Bool.v \
+theories/Peano_Number_Tag.v \
+theories/Peano_Number_Arity_Zero.v \
+theories/Peano_Number_Arity_Successor.v \
+theories/Peano_Number_Arity.v \
+theories/Peano_Number.v \
 
 do
   echo -n " ${file}"

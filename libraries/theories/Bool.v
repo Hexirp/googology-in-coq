@@ -19,15 +19,15 @@ Definition Bool@{i | } : Type@{i} := Sum@{i} Unit@{i} Unit@{i}.
 
 (** ブーリアン型です。 *)
 
-Definition false@{i | } : Bool@{i} := Sum.left Unit.unit.
-(* from: originally defined by Hexirp *)
-
-(** ブーリアン型の第二構築子です。 *)
-
-Definition true@{i | } : Bool@{i} := Sum.right Unit.unit.
+Definition false@{i | } : Bool@{i} := Sum.left Unit@{i} Unit@{i} Unit.unit.
 (* from: originally defined by Hexirp *)
 
 (** ブーリアン型の第一構築子です。 *)
+
+Definition true@{i | } : Bool@{i} := Sum.right Unit@{i} Unit@{i} Unit.unit.
+(* from: originally defined by Hexirp *)
+
+(** ブーリアン型の第二構築子です。 *)
 
 Definition
   matching@{i | }
@@ -37,9 +37,19 @@ Definition
     : forall x : Bool@{i}, P x
     :=
       Sum.matching
+        Unit@{i}
+        Unit@{i}
         P
-        (Unit.matching (fun x_ : Unit => P (Sum.left x_)) constructor_false)
-        (Unit.matching (fun x_ : Unit => P (Sum.right x_)) constructor_true)
+        (
+          Unit.matching
+            (fun x_ : Unit => P (Sum.left Unit@{i} Unit@{i} x_))
+            constructor_false
+        )
+        (
+          Unit.matching
+            (fun x_ : Unit => P (Sum.right Unit@{i} Unit@{i} x_))
+            constructor_true
+        )
 .
 (* from: originally defined by Hexirp *)
 
@@ -47,7 +57,7 @@ Definition
 
 Definition
   matching_nodep@{i | }
-      {P : Type@{i}}
+      (P : Type@{i})
       (constructor_false : P)
       (constructor_true : P)
   : Bool@{i} -> P
@@ -59,7 +69,11 @@ Definition
 
 Definition
   and@{i | } : Bool@{i} -> Bool@{i} -> Bool@{i}
-    := matching_nodep (Function.const false) Function.id
+    :=
+      matching_nodep
+        (Bool@{i} -> Bool@{i})
+        (Function.const Bool@{i} Bool@{i} false)
+        (Function.id Bool@{i})
 .
 (* from: originally defined by Hexirp *)
 
@@ -67,7 +81,11 @@ Definition
 
 Definition
   or@{i | } : Bool@{i} -> Bool@{i} -> Bool@{i}
-    := matching_nodep Function.id (Function.const true)
+    :=
+      matching_nodep
+        (Bool@{i} -> Bool@{i})
+        (Function.id Bool@{i})
+        (Function.const Bool@{i} Bool@{i} true)
 .
 (* from: originally defined by Hexirp *)
 
@@ -75,7 +93,7 @@ Definition
 
 Definition
   not@{i | } : Bool@{i} -> Bool@{i}
-    := matching_nodep true false
+    := matching_nodep Bool@{i} true false
 .
 (* from: originally defined by Hexirp *)
 

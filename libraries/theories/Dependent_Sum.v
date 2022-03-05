@@ -16,20 +16,18 @@ Inductive
 
 (** 依存直和型です。 *)
 
-Arguments pair {A} {B} a b.
-
-(** [pair] についての暗黙引数を設定します。 *)
-
 Definition
   matching@{i | }
-      {A : Type@{i}}
-      {B : A -> Type@{i}}
+      (A : Type@{i})
+      (B : A -> Type@{i})
       (P : Dependent_Sum A B -> Type@{i})
-      (constructor_pair : forall (a : A) (b : B a), P (pair a b))
+      (constructor_pair : forall (a : A) (b : B a), P (pair A B a b))
     : forall x : Dependent_Sum A B, P x
     :=
       fun x : Dependent_Sum A B =>
-        match x with pair a b => constructor_pair a b end
+        match x as x_ return P x_ with
+          pair _ _ a b => constructor_pair a b
+        end
 .
 (* from: originally defined by Hexirp *)
 
@@ -37,44 +35,33 @@ Definition
 
 Definition
   matching_nodep@{i | }
-      {A : Type@{i}}
-      {B : A -> Type@{i}}
-      {P : Type@{i}}
+      (A : Type@{i})
+      (B : A -> Type@{i})
+      (P : Type@{i})
       (constructor_pair : forall a : A, B a -> P)
     : Dependent_Sum A B -> P
-    := matching (fun x_ : Dependent_Sum A B => P) constructor_pair
+    := matching A B (fun x_ : Dependent_Sum A B => P) constructor_pair
 .
 (* from: originally defined by Hexirp *)
 
 (** 場合分けです。 *)
 
 Definition
-  matching_nodep_visible@{i | }
-      {A : Type@{i}}
-      {B : A -> Type@{i}}
-      (P : Type@{i})
-      (constructor_pair : forall a : A, B a -> P)
-    : Dependent_Sum A B -> P
-    := matching (fun x_ : Dependent_Sum A B => P) constructor_pair
-.
-(* from: originally defined by Hexirp *)
-
-(** 引数が明示的な [matching_nodep] です。 *)
-
-Definition
-  first@{i | } {A : Type@{i}} {B : A -> Type@{i}} : Dependent_Sum A B -> A
-    := matching_nodep (fun (a : A) (b : B a) => a)
+  first@{i | } (A : Type@{i}) (B : A -> Type@{i}) : Dependent_Sum A B -> A
+    := matching_nodep A B A (fun (a : A) (b : B a) => a)
 .
 (* from: originally defined by Hexirp *)
 
 (** 依存直和型の第一射影関数です。 *)
 
 Definition
-  second@{i | } {A : Type@{i}} {B : A -> Type@{i}}
-    : forall x : Dependent_Sum A B, B (first x)
+  second@{i | } (A : Type@{i}) (B : A -> Type@{i})
+    : forall x : Dependent_Sum A B, B (first A B x)
     :=
       matching
-        (fun x_ : Dependent_Sum A B => B (first x_))
+        A
+        B
+        (fun x_ : Dependent_Sum A B => B (first A B x_))
         (fun (a : A) (b : B a) => b)
 .
 (* from: originally defined by Hexirp *)
@@ -83,14 +70,16 @@ Definition
 
 Definition
   map@{i | }
-      {A : Type@{i}}
-      {B : A -> Type@{i}}
-      {C : Type@{i}}
-      {D : C -> Type@{i}}
+      (A : Type@{i})
+      (B : A -> Type@{i})
+      (C : Type@{i})
+      (D : C -> Type@{i})
       (f : A -> C)
       (g : forall x : A, B x -> D (f x))
-    : Dependent_Sum A B -> Dependent_Sum C D
-    := fun x : Dependent_Sum A B => pair (f (first x)) (g (first x) (second x))
+    : Dependent_Sum@{i} A B -> Dependent_Sum@{i} C D
+    :=
+      fun x : Dependent_Sum@{i} A B =>
+        pair C D (f (first A B x)) (g (first A B x) (second A B x))
 .
 (* from: originally defined by Hexirp *)
 
