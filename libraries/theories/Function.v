@@ -10,19 +10,50 @@ Import Googology_In_Coq.Dependent_Function (Dependent_Function).
 
 (** ライブラリを開きます。 *)
 
-Definition Function@{i | } (A : Type@{i}) (B : Type@{i}) : Type@{i} := A -> B.
+Inductive
+  Function@{i | } (A : Type@{i}) (B : Type@{i}) : Type@{i}
+    := wrap : Dependent_Function@{i} A (fun x : A => B) -> Function A B
+.
 (* from: originally defined by Hexirp *)
 
 (** 関数型です。 *)
 
-Definition id@{i | } (A : Type@{i}) : A -> A := fun x : A => x.
+Definition
+  unwrap@{i | } (A : Type@{i}) (B : Type@{i})
+    : Function@{i} A B -> A -> B
+    := fun x : Function@{i} A B => match x with wrap _ _ x_v => x_v end
+.
+(* from: originally defined by Hexirp *)
+
+(** 関数型です。 *)
+
+Definition
+  abstract@{i | } (A : Type@{i}) (B : Type@{i}) : (A -> B) -> Function@{i} A B
+    := wrap A B
+.
+(* from: originally defined by Hexirp *)
+
+(** 関数の抽象です。 *)
+
+Definition
+  apply@{i | } (A : Type@{i}) (B : Type@{i}) : Function@{i} A B -> A -> B
+    := unwrap A B
+.
+(* from: originally defined by Hexirp *)
+
+(** 関数の適用です。 *)
+
+Definition
+  id@{i | } (A : Type@{i}) : Function@{i} A A := abstract A A (fun x : A => x)
+.
 (* from: originally defined by Hexirp *)
 
 (** 恒等関数です。 *)
 
 Definition
-  const@{i | } (A : Type@{i}) (B : Type@{i}) : A -> B -> A
-    := fun (x : A) (y : B) => x
+  const@{i | } (A : Type@{i}) (B : Type@{i}) (x : A)
+    : Function@{i} B A
+    := abstract B A (fun y : B => x)
 .
 (* from: originally defined by Hexirp *)
 
@@ -30,28 +61,14 @@ Definition
 
 Definition
   comp@{i | } (A : Type@{i}) (B : Type@{i}) (C : Type@{i})
-    : (B -> C) -> (A -> B) -> A -> C
-    := fun (f : B -> C) (g : A -> B) (x : A) => f (g x)
+    : Function@{i} B C -> Function@{i} A B -> Function@{i} A C
+    :=
+      fun (f : Function@{i} B C) (g : Function@{i} A B) =>
+        abstract A C (fun x : A => apply B C f (apply A B g x))
 .
 (* from: originally defined by Hexirp *)
 
 (** 関数の合成です。 *)
-
-Definition
-  apply@{i | } (A : Type@{i}) (B : Type@{i}) : (A -> B) -> A -> B
-    := fun (f : A -> B) (x : A) => f x
-.
-(* from: originally defined by Hexirp *)
-
-(** 関数の適用です。 *)
-
-Definition
-  abstract@{i | } (A : Type@{i}) (B : Type@{i}) : (A -> B) -> A -> B
-    := fun (f : A -> B) (x : A) => f x
-.
-(* from: originally defined by Hexirp *)
-
-(** 関数の抽象です。 *)
 
 Definition
   map@{i | }
@@ -62,7 +79,9 @@ Definition
       (f : C -> A)
       (g : B -> D)
     : Function@{i} A B -> Function@{i} C D
-    := fun (x : Function@{i} A B) (y : C) => g (x (f y))
+    :=
+      fun x : Function@{i} A B =>
+        abstract C D (fun y : C => g (apply A B x (f y)))
 .
 (* from: originally defined by Hexirp *)
 
