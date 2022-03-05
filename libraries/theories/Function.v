@@ -20,7 +20,7 @@ Inductive
 
 Definition
   unwrap@{i | } (A : Type@{i}) (B : Type@{i})
-    : Function@{i} A B -> A -> B
+    : Function@{i} A B -> Dependent_Function@{i} A (fun x : A => B)
     := fun x : Function@{i} A B => match x with wrap _ _ x_v => x_v end
 .
 (* from: originally defined by Hexirp *)
@@ -29,7 +29,9 @@ Definition
 
 Definition
   abstract@{i | } (A : Type@{i}) (B : Type@{i}) : (A -> B) -> Function@{i} A B
-    := wrap A B
+    :=
+      fun x : A -> B =>
+        wrap A B (Dependent_Function.wrap A (fun x : A => B) x)
 .
 (* from: originally defined by Hexirp *)
 
@@ -37,7 +39,9 @@ Definition
 
 Definition
   apply@{i | } (A : Type@{i}) (B : Type@{i}) : Function@{i} A B -> A -> B
-    := unwrap A B
+    :=
+      fun x : Function@{i} A B =>
+        Dependent_Function.unwrap A (fun x : A => B) (unwrap A B x)
 .
 (* from: originally defined by Hexirp *)
 
