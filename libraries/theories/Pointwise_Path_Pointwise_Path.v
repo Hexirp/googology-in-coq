@@ -16,20 +16,28 @@ Import Googology_In_Coq.Pointwise_Path (Pointwise_Path).
 
 (** ライブラリを開きます。 *)
 
-Definition
+Inductive
   Pointwise_Path_Pointwise_Path@{i | }
       (A : Type@{i})
       (B : Type@{i})
-      (f : Function A B)
-      (g : Function A B)
-    : Pointwise_Path A B f g -> Pointwise_Path A B f g -> Type@{i}
+      (f : Function@{i} A B)
+      (g : Function@{i} A B)
+      (p : Pointwise_Path@{i} A B f g)
+      (q : Pointwise_Path@{i} A B f g)
+    : Type@{i}
     :=
-      fun (p : Pointwise_Path A B f g) (q : Pointwise_Path A B f g) =>
-        Dependent_Function
+      fun
+        (p : Pointwise_Path@{i} A B f g)
+        (q : Pointwise_Path@{i} A B f g)
+      =>
+        Dependent_Function@{i}
           A
           (
             fun x : A =>
-              Path (Path B (f x) (g x)) (Pointwise_Path.apply A B f g p x) (Pointwise_Path.apply A B f g q x)
+              Path@{i}
+                (Path@{i} B (Function.apply A B f x) (Function.apply A B g x))
+                (Pointwise_Path.apply A B f g p x)
+                (Pointwise_Path.apply A B f g q x)
           )
 .
 (* from: originally defined by Hexirp *)
