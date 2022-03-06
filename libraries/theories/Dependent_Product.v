@@ -19,6 +19,39 @@ Inductive
 (** 依存直積型です。 *)
 
 Definition
+  unwrap@{i | } (A : Type@{i}) (B : A -> Type@{i})
+    : Dependent_Product@{i} A B -> Dependent_Function@{i} A B
+    :=
+      fun x : Dependent_Product@{i} A B =>
+        match x with wrap _ _ x_v => x_v end
+.
+(* from: originally defined by Hexirp *)
+
+(** 関数型です。 *)
+
+Definition
+  abstract@{i | } (A : Type@{i}) (B : A -> Type@{i})
+    : (forall x : A, B x) -> Dependent_Product@{i} A B
+    :=
+      fun x : forall x : A, B x =>
+        wrap A B (Dependent_Function.wrap A B x)
+.
+(* from: originally defined by Hexirp *)
+
+(** 関数の抽象です。 *)
+
+Definition
+  apply@{i | } (A : Type@{i}) (B : A -> Type@{i})
+    : Dependent_Product@{i} A B -> forall x : A, B x
+    :=
+      fun x : Dependent_Product@{i} A B =>
+        Dependent_Function.unwrap A B (unwrap A B x)
+.
+(* from: originally defined by Hexirp *)
+
+(** 関数の適用です。 *)
+
+Definition
   map@{i | }
       (A : Type@{i})
       (B : A -> Type@{i})
