@@ -101,7 +101,11 @@ Definition
       (B : Type@{i})
       (f : Function@{i} A B)
       (g : Function@{i} A B)
-    : Pointwise_Path@{i} A B f g -> forall x : A, Path@{i} B (f x) (g x)
+    :
+        Pointwise_Path@{i} A B f g
+      ->
+        forall x : A,
+          Path@{i} B (Function.apply A B f x) (Function.apply A B g x)
     :=
       fun x : Pointwise_Path@{i} A B f g =>
         Dependent_Function.apply
