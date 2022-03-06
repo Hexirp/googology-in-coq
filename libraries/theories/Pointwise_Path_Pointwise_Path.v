@@ -26,19 +26,24 @@ Inductive
       (q : Pointwise_Path@{i} A B f g)
     : Type@{i}
     :=
-      fun
-        (p : Pointwise_Path@{i} A B f g)
-        (q : Pointwise_Path@{i} A B f g)
-      =>
-        Dependent_Function@{i}
-          A
-          (
-            fun x : A =>
-              Path@{i}
-                (Path@{i} B (Function.apply A B f x) (Function.apply A B g x))
-                (Pointwise_Path.apply A B f g p x)
-                (Pointwise_Path.apply A B f g q x)
-          )
+      wrap
+        :
+            Dependent_Function@{i}
+              A
+              (
+                fun x : A =>
+                  Path@{i}
+                    (
+                      Path@{i}
+                        B
+                        (Function.apply A B f x)
+                        (Function.apply A B g x)
+                    )
+                    (Pointwise_Path.apply A B f g p x)
+                    (Pointwise_Path.apply A B f g q x)
+              )
+          ->
+            Pointwise_Path_Pointwise_Path A B f g p q
 .
 (* from: originally defined by Hexirp *)
 
