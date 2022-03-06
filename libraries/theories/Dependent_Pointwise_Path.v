@@ -12,20 +12,53 @@ Import Googology_In_Coq.Path (Path).
 
 (** ライブラリを開きます。 *)
 
-Definition
-  Dependent_Pointwise_Path@{i | } (A : Type@{i}) (B : A -> Type@{i})
-    : Dependent_Function A B -> Dependent_Function A B -> Type@{i}
+Inductive
+  Dependent_Pointwise_Path@{i | }
+      (A : Type@{i})
+      (B : A -> Type@{i})
+      (f : Dependent_Function@{i} A B)
+      (g : Dependent_Function@{i} A B)
+    : Type@{i}
     :=
-      fun (f : Dependent_Function A B) (g : Dependent_Function A B) =>
-        Dependent_Function
+      wrap
+        :
+            Dependent_Function@{i}
+              A
+              (
+                fun x : A =>
+                  Path@{i}
+                    (B x)
+                    (Dependent_Function.apply A B f x)
+                    (Dependent_Function.apply A B g x)
+              )
+          ->
+            Dependent_Pointwise_Path A B f g
+.
+(* from: originally defined by Hexirp *)
+
+(** 点ごとの道です。 *)
+
+Definition
+  unwrap@{i | }
+      (A : Type@{i})
+      (B : A -> Type@{i})
+      (f : Dependent_Function@{i} A B)
+      (g : Dependent_Function@{i} A B)
+    :
+        Dependent_Pointwise_Path@{i} A B f g
+      ->
+        Dependent_Function@{i}
           A
           (
             fun x : A =>
-              Path
+              Path@{i}
                 (B x)
                 (Dependent_Function.apply A B f x)
                 (Dependent_Function.apply A B g x)
           )
+    :=
+      fun x : Dependent_Pointwise_Path@{i} A B f g =>
+        match x with wrap _ _ _ _ x_v => x_v end
 .
 (* from: originally defined by Hexirp *)
 
@@ -35,28 +68,39 @@ Definition
   abstract@{i | }
       (A : Type@{i})
       (B : A -> Type@{i})
-      (f : Dependent_Function A B)
-      (g : Dependent_Function A B)
+      (f : Dependent_Function@{i} A B)
+      (g : Dependent_Function@{i} A B)
     :
         (
           forall x : A,
-            Path
+            Path@{i}
               (B x)
               (Dependent_Function.apply A B f x)
               (Dependent_Function.apply A B g x)
         )
       ->
-        Dependent_Pointwise_Path A B f g
+        Dependent_Pointwise_Path@{i} A B f g
     :=
-      Dependent_Function.abstract
-        A
-        (
-          fun x : A =>
-            Path
-              (B x)
-              (Dependent_Function.apply A B f x)
-              (Dependent_Function.apply A B g x)
-        )
+      fun
+        x : forall x : A,
+          Path@{i}
+            (B x)
+            (Dependent_Function.apply A B f x)
+            (Dependent_Function.apply A B g x)
+      =>
+        wrap A B f g
+          (
+            Dependent_Function.abstract
+              A
+              (
+                fun x : A =>
+                  Path@{i}
+                    (B x)
+                    (Dependent_Function.apply A B f x)
+                    (Dependent_Function.apply A B g x)
+              )
+              x
+          )
 .
 (* from: originally defined by Hexirp *)
 
@@ -66,37 +110,36 @@ Definition
   apply@{i | }
       (A : Type@{i})
       (B : A -> Type@{i})
-      (f : Dependent_Function A B)
-      (g : Dependent_Function A B)
+      (f : Dependent_Function@{i} A B)
+      (g : Dependent_Function@{i} A B)
     :
-        Dependent_Pointwise_Path A B f g
+        Dependent_Pointwise_Path@{i} A B f g
       ->
         forall x : A,
-          Path
+          Path@{i}
             (B x)
             (Dependent_Function.apply A B f x)
             (Dependent_Function.apply A B g x)
     :=
-      fun (p : Dependent_Pointwise_Path A B f g) (x : A) =>
+      fun x : Dependent_Pointwise_Path A B f g =>
         Dependent_Function.apply
           A
           (
             fun x : A =>
-              Path
+              Path@{i}
                 (B x)
                 (Dependent_Function.apply A B f x)
                 (Dependent_Function.apply A B g x)
           )
-          p
-          x
+          (unwrap A B f g x)
 .
 (* from: originally defined by Hexirp *)
 
 (** 点ごとの道を一点で具体化します。 *)
 
 Definition
-  id@{i | } (A : Type@{i}) (B : A -> Type@{i}) (f : Dependent_Function A B)
-    : Dependent_Pointwise_Path A B f f
+  id@{i | } (A : Type@{i}) (B : A -> Type@{i}) (f : Dependent_Function@{i} A B)
+    : Dependent_Pointwise_Path@{i} A B f f
     :=
       abstract
         A
@@ -113,19 +156,19 @@ Definition
   conc@{i | }
       (A : Type@{i})
       (B : A -> Type@{i})
-      (f : Dependent_Function A B)
-      (g : Dependent_Function A B)
-      (h : Dependent_Function A B)
+      (f : Dependent_Function@{i} A B)
+      (g : Dependent_Function@{i} A B)
+      (h : Dependent_Function@{i} A B)
     :
-        Dependent_Pointwise_Path A B f g
+        Dependent_Pointwise_Path@{i} A B f g
       ->
-        Dependent_Pointwise_Path A B g h
+        Dependent_Pointwise_Path@{i} A B g h
       ->
-        Dependent_Pointwise_Path A B f h
+        Dependent_Pointwise_Path@{i} A B f h
     :=
       fun
-        (p : Dependent_Pointwise_Path A B f g)
-        (q : Dependent_Pointwise_Path A B g h)
+        (p : Dependent_Pointwise_Path@{i} A B f g)
+        (q : Dependent_Pointwise_Path@{i} A B g h)
       =>
         abstract
           A
@@ -151,9 +194,12 @@ Definition
   inv@{i | }
       (A : Type@{i})
       (B : A -> Type@{i})
-      (f : Dependent_Function A B)
-      (g : Dependent_Function A B)
-    : Dependent_Pointwise_Path A B f g -> Dependent_Pointwise_Path A B g f
+      (f : Dependent_Function@{i} A B)
+      (g : Dependent_Function@{i} A B)
+    :
+        Dependent_Pointwise_Path@{i} A B f g
+      ->
+        Dependent_Pointwise_Path@{i} A B g f
     :=
       fun p : Dependent_Pointwise_Path A B f g =>
         abstract
