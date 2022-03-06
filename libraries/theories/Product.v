@@ -10,9 +10,18 @@ Import Googology_In_Coq.Dependent_Sum (Dependent_Sum).
 
 (** ライブラリを開きます。 *)
 
-Definition
+Inductive
   Product@{i | } (A : Type@{i}) (B : Type@{i}) : Type@{i}
-    := Dependent_Sum A (fun a : A => B)
+    := wrap : Dependent_Sum@{i} A (fun a : A => B) -> Product A B
+.
+(* from: originally defined by Hexirp *)
+
+(** 直積型です。 *)
+
+Definition
+  unwrap@{i | } (A : Type@{i}) (B : Type@{i})
+    : Product@{i} A B -> Dependent_Sum@{i} A (fun a : A => B)
+    := fun x : Product@{i} A B => match x with wrap _ _ x_v => x_v end
 .
 (* from: originally defined by Hexirp *)
 
@@ -22,8 +31,9 @@ Definition
   pair@{i | } (A : Type@{i}) (B : Type@{i}) : A -> B -> Product A B
     :=
       fun (x_1 : A) (x_2 : B) =>
-        Dependent_Sum.pair A (fun a : A => B) x_1 x_2
+        wrap A B (Dependent_Sum.pair A (fun a : A => B) x_1 x_2)
 .
+(* from: originally defined by Hexirp *)
 
 (** ペアリング関数です。 *)
 
@@ -34,7 +44,17 @@ Definition
       (P : Product A B -> Type@{i})
       (constructor_pair : forall (x_1 : A) (x_2 : B), P (pair A B x_1 x_2))
     : forall x : Product A B, P x
-    := Dependent_Sum.matching A (fun a : A => B) P constructor_pair
+    :=
+      fun x : Product A B =>
+        match x as x_ return P x_ with
+          wrap _ _ x_v =>
+            Dependent_Sum.matching
+              A
+              (fun a : A => B)
+              (fun x_ : Dependent_Sum A (fun a : A => B) => P (wrap A B x_))
+              constructor_pair
+              x_v
+        end
 .
 (* from: originally defined by Hexirp *)
 
