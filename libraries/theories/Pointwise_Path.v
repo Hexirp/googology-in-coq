@@ -37,7 +37,7 @@ Inductive
 
 (** 点ごとの道です。 *)
 
-Inductive
+Definition
   unwrap@{i | }
       (A : Type@{i})
       (B : Type@{i})
