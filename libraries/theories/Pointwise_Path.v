@@ -266,8 +266,8 @@ Definition
               apply
                 B
                 C
-                (Function.apply B C f_L)
-                (Function.apply B C f_R)
+                f_L
+                f_R
                 p
                 (Function.apply A B g x)
           )
