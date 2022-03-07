@@ -19,31 +19,35 @@ Import Googology_In_Coq.Pointwise_Path (Pointwise_Path).
 
 (** ライブラリを開きます。 *)
 
-Definition
+Inductive
   Naive_Functional_Extensionality@{i | }
       (A : Type@{i})
       (B : Type@{i})
     : Type@{i}
     :=
-      Dependent_Function@{i}
-        (Product@{i} (Function@{i} A B) (Function@{i} A B))
-        (
-          fun t : Product@{i} (Function@{i} A B) (Function@{i} A B) =>
-            Function@{i}
+      wrap
+        :
+            Dependent_Function@{i}
+              (Product@{i} (Function@{i} A B) (Function@{i} A B))
               (
-                Pointwise_Path@{i}
-                  A
-                  B
-                  (Product.first (Function@{i} A B) (Function@{i} A B) t)
-                  (Product.second (Function@{i} A B) (Function@{i} A B) t)
+                fun t : Product@{i} (Function@{i} A B) (Function@{i} A B) =>
+                  Function@{i}
+                    (
+                      Pointwise_Path@{i}
+                        A
+                        B
+                        (Product.first (Function@{i} A B) (Function@{i} A B) t)
+                        (Product.second (Function@{i} A B) (Function@{i} A B) t)
+                    )
+                    (
+                      Path@{i}
+                        (Function@{i} A B)
+                        (Product.first (Function@{i} A B) (Function@{i} A B) t)
+                        (Product.second (Function@{i} A B) (Function@{i} A B) t)
+                    )
               )
-              (
-                Path@{i}
-                  (Function@{i} A B)
-                  (Product.first (Function@{i} A B) (Function@{i} A B) t)
-                  (Product.second (Function@{i} A B) (Function@{i} A B) t)
-              )
-        )
+          ->
+            Naive_Functional_Extensionality A B
 .
 (* from: originally defined by Hexirp *)
 
