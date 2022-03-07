@@ -46,7 +46,7 @@ Definition
               Unit.matching
                 (fun x_v_ : Unit@{i} => P (wrap x_v_))
                 constructor_unit
-                x_v_
+                x_v
         end
 .
 (* from: originally defined by Hexirp *)
