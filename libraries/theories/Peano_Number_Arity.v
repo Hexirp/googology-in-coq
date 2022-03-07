@@ -27,8 +27,8 @@ Inductive
                   Universe@{i s_i}
                   (Universe.wrap Peano_Number_Arity_Zero@{i})
                   (Universe.wrap Peano_Number_Arity_Successor@{i})
+                  x
               )
-              x
           ->
             Peano_Number_Arity
 .
