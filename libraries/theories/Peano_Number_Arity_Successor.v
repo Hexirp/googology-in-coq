@@ -19,7 +19,7 @@ Inductive
 (** 自然数の型のベータの [succ] です。 *)
 
 Inductive
-  unwrap{i | } : Peano_Number_Arity_Successor@{i} -> Unit@{i}
+  unwrap@{i | } : Peano_Number_Arity_Successor@{i} -> Unit@{i}
     :=
       fun x : Peano_Number_Arity_Successor@{i} =>
         match x with wrap x_v => x_v end
