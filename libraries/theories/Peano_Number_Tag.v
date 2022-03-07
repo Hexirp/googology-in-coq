@@ -67,6 +67,7 @@ Definition
                           P (wrap (Sum.left Unit@{i} Unit@{i} x_v_L_))
                       )
                       constructor_zero
+                      x_v_L
                 )
                 (
                   fun x_v_R : Unit@{i} =>
@@ -76,6 +77,7 @@ Definition
                           P (wrap (Sum.right Unit@{i} Unit@{i} x_v_R_))
                       )
                       constructor_successor
+                      x_v_R
                 )
                 x_v
         end
