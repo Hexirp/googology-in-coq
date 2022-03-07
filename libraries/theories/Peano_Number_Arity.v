@@ -17,7 +17,7 @@ Import Googology_In_Coq.Peano_Number_Arity_Successor (Peano_Number_Arity_Success
 (** ライブラリを開きます。 *)
 
 Inductive
-  Peano_Number_Arity@{i s_i | i < s_i} (x : Peano_Number_Tag@{i}) : Type@{i}
+  Peano_Number_Arity@{i s_i | i < s_i} (t : Peano_Number_Tag@{i}) : Type@{i}
     :=
       wrap
         :
@@ -27,19 +27,19 @@ Inductive
                   Universe@{i s_i}
                   (Universe.wrap Peano_Number_Arity_Zero@{i})
                   (Universe.wrap Peano_Number_Arity_Successor@{i})
-                  x
+                  t
               )
           ->
-            Peano_Number_Arity x
+            Peano_Number_Arity t
 .
 (* from: originally defined by Hexirp *)
 
 (** 自然数の型のベータです。 *)
 
 Definition
-  unwrap@{i s_i | i < s_i} (x : Peano_Number_Tag@{i})
+  unwrap@{i s_i | i < s_i} (t : Peano_Number_Tag@{i})
     :
-        Peano_Number_Arity@{i s_i} x
+        Peano_Number_Arity@{i s_i} t
       ->
         Universe.unwrap
           (
@@ -47,10 +47,10 @@ Definition
               Universe@{i s_i}
               (Universe.wrap Peano_Number_Arity_Zero@{i})
               (Universe.wrap Peano_Number_Arity_Successor@{i})
-              x
+              t
           )
     :=
-      fun x : Peano_Number_Arity@{i s_i} =>
+      fun x : Peano_Number_Arity@{i s_i} t =>
         match x with wrap _ x_v => x_v end
 .
 (* from: originally defined by Hexirp *)
