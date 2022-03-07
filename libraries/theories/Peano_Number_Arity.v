@@ -60,16 +60,20 @@ Definition
 Definition
   zero@{i s_i | i < s_i} (A : Type@{i})
     : Peano_Number_Arity@{i s_i} Peano_Number_Tag.zero -> A
-    := Peano_Number_Arity_Zero.matching_nodep A
+    :=
+      fun x : Peano_Number_Arity@{i s_i} Peano_Number_Tag.zero =>
+        Peano_Number_Arity_Zero.matching_nodep A (unwrap x)
 .
 (* from: originally defined by Hexirp *)
 
 (** 自然数の型のベータの [zero] です。 *)
 
 Definition
-  successor@{i s_i | i < s_i} (A : Type@{i}) (x_p : A)
+  successor@{i s_i | i < s_i} (A : Type@{i}) (a : A)
     : Peano_Number_Arity@{i s_i} Peano_Number_Tag.successor -> A
-    := Peano_Number_Arity_Successor.matching_nodep A x_p
+    :=
+      fun x : Peano_Number_Arity@{i s_i} Peano_Number_Tag.successor =>
+        Peano_Number_Arity_Successor.matching_nodep A a (unwrap x)
 .
 (* from: originally defined by Hexirp *)
 
