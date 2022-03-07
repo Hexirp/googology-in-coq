@@ -20,7 +20,7 @@ Inductive
 
 (** 自然数の型のアルファです。 *)
 
-Inductive
+Definition
   unwrap@{i | } : Peano_Number_Tag@{i} -> Sum@{i} Unit@{i} Unit@{i}
     := fun x : Peano_Number_Tag@{i} => match x with wrap x_v => x_v end
 .
