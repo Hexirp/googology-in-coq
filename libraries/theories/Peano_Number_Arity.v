@@ -36,7 +36,7 @@ Inductive
 
 (** 自然数の型のベータです。 *)
 
-Inductive
+Definition
   unwrap@{i s_i | i < s_i} (x : Peano_Number_Tag@{i})
     :
         Peano_Number_Arity@{i s_i} x
