@@ -28,7 +28,7 @@ Definition
 
 (** 自然数の型のベータの [succ] です。 *)
 
-Definition unit@{i | } : Unit@{i} := wrap Unit.unit.
+Definition unit@{i | } : Peano_Number_Arity_Successor@{i} := wrap Unit.unit.
 (* from: originally defined by Hexirp *)
 
 (** 自然数の型のベータの [succ] の構築子です。 *)
