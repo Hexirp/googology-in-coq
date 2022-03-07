@@ -30,7 +30,7 @@ Inductive
                   x
               )
           ->
-            Peano_Number_Arity
+            Peano_Number_Arity x
 .
 (* from: originally defined by Hexirp *)
 
@@ -39,7 +39,7 @@ Inductive
 Inductive
   unwrap@{i s_i | i < s_i} (x : Peano_Number_Tag@{i})
     :
-        Peano_Number_Arity@{i s_i}
+        Peano_Number_Arity@{i s_i} x
       ->
         Universe.unwrap
           (
