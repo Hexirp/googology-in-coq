@@ -62,7 +62,9 @@ Definition
     : Peano_Number_Arity@{i s_i} Peano_Number_Tag.zero -> A
     :=
       fun x : Peano_Number_Arity@{i s_i} Peano_Number_Tag.zero =>
-        Peano_Number_Arity_Zero.matching_nodep A (unwrap x)
+        Peano_Number_Arity_Zero.matching_nodep
+          A
+          (unwrap Peano_Number_Tag.zero x)
 .
 (* from: originally defined by Hexirp *)
 
@@ -73,7 +75,10 @@ Definition
     : Peano_Number_Arity@{i s_i} Peano_Number_Tag.successor -> A
     :=
       fun x : Peano_Number_Arity@{i s_i} Peano_Number_Tag.successor =>
-        Peano_Number_Arity_Successor.matching_nodep A a (unwrap x)
+        Peano_Number_Arity_Successor.matching_nodep
+          A
+          a
+          (unwrap Peano_Number_Tag.successor x)
 .
 (* from: originally defined by Hexirp *)
 
