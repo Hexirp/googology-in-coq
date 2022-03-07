@@ -14,17 +14,29 @@ Import Googology_In_Coq.Unit (Unit).
 
 (** ライブラリを開きます。 *)
 
-Definition Bool@{i | } : Type@{i} := Sum@{i} Unit@{i} Unit@{i}.
+Inductive Bool@{i | } : Type@{i} := wrap : Sum@{i} Unit@{i} Unit@{i} -> Bool.
 (* from: originally defined by Hexirp *)
 
 (** ブーリアン型です。 *)
 
-Definition false@{i | } : Bool@{i} := Sum.left Unit@{i} Unit@{i} Unit.unit.
+Definition
+  unwrap@{i | } : Bool@{i} -> Sum@{i} Unit@{i} Unit@{i}
+    := fun x : Bool@{i} => match x with wrap x_v => x_v end
+.
+(* from: originally defined by Hexirp *)
+
+(** ブーリアン型です。 *)
+
+Definition
+  false@{i | } : Bool@{i} := wrap (Sum.left Unit@{i} Unit@{i} Unit.unit)
+.
 (* from: originally defined by Hexirp *)
 
 (** ブーリアン型の第一構築子です。 *)
 
-Definition true@{i | } : Bool@{i} := Sum.right Unit@{i} Unit@{i} Unit.unit.
+Definition
+  true@{i | } : Bool@{i} := wrap (Sum.right Unit@{i} Unit@{i} Unit.unit)
+.
 (* from: originally defined by Hexirp *)
 
 (** ブーリアン型の第二構築子です。 *)
@@ -36,20 +48,36 @@ Definition
       (constructor_true : P true)
     : forall x : Bool@{i}, P x
     :=
-      Sum.matching
-        Unit@{i}
-        Unit@{i}
-        P
-        (
-          Unit.matching
-            (fun x_ : Unit => P (Sum.left Unit@{i} Unit@{i} x_))
-            constructor_false
-        )
-        (
-          Unit.matching
-            (fun x_ : Unit => P (Sum.right Unit@{i} Unit@{i} x_))
-            constructor_true
-        )
+      fun x : Bool@{i} =>
+        match x as x_ return P x_ with
+          wrap x_v
+            =>
+              Sum.matching
+                Unit@{i}
+                Unit@{i}
+                (fun x_v_ : Sum@{i} Unit@{i} Unit@{i} => P x_v_)
+                (
+                  fun x_v_L : Unit@{i} =>
+                    Unit.matching
+                      (
+                        fun x_v_L_ : Unit@{i} =>
+                          P (wrap (Sum.left Unit@{i} Unit@{i} x_v_L_))
+                      )
+                      constructor_false
+                      x_v_L
+                )
+                (
+                  fun x_v_R : Unit@{i} =>
+                    Unit.matching
+                      (
+                        fun x_v_R : Unit@{i} =>
+                          P (wrap (Sum.right Unit@{i} Unit@{i} x_))
+                      )
+                      constructor_true
+                      x_v_R
+                )
+                x_v
+        end
 .
 (* from: originally defined by Hexirp *)
 

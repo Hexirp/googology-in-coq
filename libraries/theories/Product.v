@@ -51,7 +51,10 @@ Definition
             Dependent_Sum.matching
               A
               (fun a : A => B)
-              (fun x_ : Dependent_Sum A (fun a : A => B) => P (wrap A B x_))
+              (
+                fun x_v_ : Dependent_Sum A (fun a : A => B) =>
+                  P (wrap A B x_v_)
+              )
               constructor_pair
               x_v
         end
