@@ -52,7 +52,7 @@ Definition
     : forall x : Peano_Number_Tag@{i}, P x
     :=
       fun x : Peano_Number_Tag@{i} =>
-        match x as x_ return x_ with
+        match x as x_ return P x_ with
           wrap x_v
             =>
               Sum.matching
