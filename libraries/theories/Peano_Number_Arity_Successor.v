@@ -18,7 +18,7 @@ Inductive
 
 (** 自然数の型のベータの [succ] です。 *)
 
-Inductive
+Definition
   unwrap@{i | } : Peano_Number_Arity_Successor@{i} -> Unit@{i}
     :=
       fun x : Peano_Number_Arity_Successor@{i} =>
