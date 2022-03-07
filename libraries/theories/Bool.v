@@ -70,8 +70,8 @@ Definition
                   fun x_v_R : Unit@{i} =>
                     Unit.matching
                       (
-                        fun x_v_R : Unit@{i} =>
-                          P (wrap (Sum.right Unit@{i} Unit@{i} x_))
+                        fun x_v_R_ : Unit@{i} =>
+                          P (wrap (Sum.right Unit@{i} Unit@{i} x_v_R_))
                       )
                       constructor_true
                       x_v_R
