@@ -100,8 +100,13 @@ Definition
     :=
       matching_nodep
         (Bool@{i} -> Bool@{i})
-        (Function.const Bool@{i} Bool@{i} false)
-        (Function.id Bool@{i})
+        (
+          Function.apply
+            Bool@{i}
+            Bool@{i}
+            (Function.const Bool@{i} Bool@{i} false)
+        )
+        (Function.apply Bool@{i} Bool@{i} (Function.id Bool@{i}))
 .
 (* from: originally defined by Hexirp *)
 
@@ -112,8 +117,13 @@ Definition
     :=
       matching_nodep
         (Bool@{i} -> Bool@{i})
-        (Function.id Bool@{i})
-        (Function.const Bool@{i} Bool@{i} true)
+        (Function.apply Bool@{i} Bool@{i} (Function.id Bool@{i}))
+        (
+          Function.apply
+            Bool@{i}
+            Bool@{i}
+            (Function.const Bool@{i} Bool@{i} true)
+        )
 .
 (* from: originally defined by Hexirp *)
 
