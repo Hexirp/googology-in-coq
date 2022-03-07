@@ -55,7 +55,7 @@ Definition
               Sum.matching
                 Unit@{i}
                 Unit@{i}
-                (fun x_v_ : Sum@{i} Unit@{i} Unit@{i} => P x_v_)
+                (fun x_v_ : Sum@{i} Unit@{i} Unit@{i} => P (wrap x_v_))
                 (
                   fun x_v_L : Unit@{i} =>
                     Unit.matching
