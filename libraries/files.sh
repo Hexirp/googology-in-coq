@@ -18,6 +18,7 @@ theories/Path.v \
 theories/Dependent_Pointwise_Path.v \
 theories/Pointwise_Path.v \
 theories/Pointwise_Path_Pointwise_Path.v \
+theories/Section.v \
 theories/Is_Half_Adjoint.v \
 theories/Is_Half_Adjoint_Equivalence.v \
 theories/Naive_Functional_Extensionality.v \

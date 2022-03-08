@@ -6,6 +6,7 @@ Require Googology_In_Coq.Dependent_Sum.
 Require Googology_In_Coq.Product.
 Require Googology_In_Coq.Pointwise_Path.
 Require Googology_In_Coq.Pointwise_Path_Pointwise_Path.
+Require Googology_In_Coq.Section.
 
 (** ライブラリを要求します。 *)
 
@@ -15,6 +16,7 @@ Import Googology_In_Coq.Dependent_Sum (Dependent_Sum).
 Import Googology_In_Coq.Product (Product).
 Import Googology_In_Coq.Pointwise_Path (Pointwise_Path).
 Import Googology_In_Coq.Pointwise_Path_Pointwise_Path (Pointwise_Path_Pointwise_Path).
+Import Googology_In_Coq.Section (Section).
 
 (** ライブラリを開きます。 *)
 
@@ -38,13 +40,7 @@ Inductive
                       (Function.comp A B A g f)
                       (Function.id A)
                   )
-                  (
-                    Pointwise_Path
-                      B
-                      B
-                      (Function.comp B A B f g)
-                      (Function.id B)
-                  )
+                  Section@{i} A B f g
               )
               (
                 fun

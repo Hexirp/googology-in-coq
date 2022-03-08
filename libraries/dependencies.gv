@@ -49,12 +49,17 @@ digraph Dependencies {
   "Function" -> "Pointwise_Path_Pointwise_Path";
   "Path" -> "Pointwise_Path_Pointwise_Path";
   "Pointwise_Path" -> "Pointwise_Path_Pointwise_Path";
+  # Section
+  "Base" -> "Section";
+  "Function" -> "Section";
+  "Pointwise_Path" -> "Section";
   # Is_Half_Adjoint
   "Base" -> "Is_Half_Adjoint";
   "Dependent_Sum" -> "Is_Half_Adjoint";
   "Product" -> "Is_Half_Adjoint";
   "Pointwise_Path" -> "Is_Half_Adjoint";
   "Pointwise_Path_Pointwise_Path" -> "Is_Half_Adjoint";
+  "Section" -> "Is_Half_Adjoint";
   # Is_Half_Adjoint_Equivalence
   "Base" -> "Is_Half_Adjoint_Equivalence";
   "Dependent_Sum" -> "Is_Half_Adjoint_Equivalence";
