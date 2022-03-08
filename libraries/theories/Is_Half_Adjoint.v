@@ -7,6 +7,7 @@ Require Googology_In_Coq.Product.
 Require Googology_In_Coq.Pointwise_Path.
 Require Googology_In_Coq.Pointwise_Path_Pointwise_Path.
 Require Googology_In_Coq.Section.
+Require Googology_In_Coq.Retraction.
 
 (** ライブラリを要求します。 *)
 
@@ -17,6 +18,7 @@ Import Googology_In_Coq.Product (Product).
 Import Googology_In_Coq.Pointwise_Path (Pointwise_Path).
 Import Googology_In_Coq.Pointwise_Path_Pointwise_Path (Pointwise_Path_Pointwise_Path).
 Import Googology_In_Coq.Section (Section).
+Import Googology_In_Coq.Retraction (Retraction).
 
 (** ライブラリを開きます。 *)
 
