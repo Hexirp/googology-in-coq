@@ -60,10 +60,17 @@ Inductive
                         (Function.comp A B A g f)
                         (Function.id A)
                         (
-                          Product.first
-                            (Retraction@{i} A B f g)
-                            (Section@{i} A B f g)
-                            p
+                          Retraction.unwrap
+                            A
+                            B
+                            f
+                            g
+                            (
+                              Product.first
+                                (Retraction@{i} A B f g)
+                                (Section@{i} A B f g)
+                                p
+                            )
                         )
                     )
                     (
@@ -75,10 +82,17 @@ Inductive
                         (Function.id B)
                         f
                         (
-                          Product.second
-                            (Retraction@{i} A B f g)
-                            (Section@{i} A B f g)
-                            p
+                          Section.unwrap
+                            A
+                            B
+                            f
+                            g
+                            (
+                              Product.second
+                                (Retraction@{i} A B f g)
+                                (Section@{i} A B f g)
+                                p
+                            )
                         )
                     )
               )
