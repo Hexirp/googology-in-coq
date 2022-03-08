@@ -54,13 +54,7 @@ Inductive
                             (Function.comp A B A g f)
                             (Function.id A)
                         )
-                        (
-                          Pointwise_Path
-                            B
-                            B
-                            (Function.comp B A B f g)
-                            (Function.id B)
-                        )
+                        (Section@{i} A B f g)
                 =>
                   Pointwise_Path_Pointwise_Path
                     A
@@ -84,13 +78,7 @@ Inductive
                                 (Function.comp A B A g f)
                                 (Function.id A)
                             )
-                            (
-                              Pointwise_Path
-                                B
-                                B
-                                (Function.comp B A B f g)
-                                (Function.id B)
-                            )
+                            (Section@{i} A B f g)
                             p
                         )
                     )
@@ -111,13 +99,7 @@ Inductive
                                 (Function.comp A B A g f)
                                 (Function.id A)
                             )
-                            (
-                              Pointwise_Path
-                                B
-                                B
-                                (Function.comp B A B f g)
-                                (Function.id B)
-                            )
+                            (Section@{i} A B f g)
                             p
                         )
                     )

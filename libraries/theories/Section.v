@@ -31,3 +31,19 @@ Inductive
 (** 切断の型です。 *)
 
 (** 名前の由来は [f] が切断 (section) であることの証明を偶然にも此の型が与えていることです。 *)
+
+Definition
+  unwrap@{i | }
+      (A : Type@{i})
+      (B : Type@{i})
+      (f : Function@{i} A B)
+      (g : Function@{i} B A)
+    :
+        Section@{i} A B f g
+      ->
+        Pointwise_Path@{i} B B (Function.comp B A B f g) (Function.id B)
+    := fun x : Section@{i} A B f g => match x with wrap _ _ _ _ x_v => x_v end
+.
+(* from: originally defined by Hexirp *)
+
+(** 切断の型です。 *)
