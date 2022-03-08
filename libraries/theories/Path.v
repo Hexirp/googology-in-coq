@@ -178,16 +178,18 @@ Definition
         (Function.abstract A B (Function.apply A B x))
         x
     :=
-      match x
-        as x_
-        return
-          Path@{i}
-            (Function@{i} A B)
-            (Function.abstract A B (Function.apply A B x_))
-            x_
-      with
-        Function.wrap _ _ x_v => id (Function@{i} A B) (Function.wrap A B x_v)
-      end
+      Function.matching
+        A
+        B
+        (
+          fun x_ : Function@{i} A B =>
+            Path@{i}
+              (Function@{i} A B)
+              (Function.abstract A B (Function.apply A B x_))
+              x_
+        )
+        (fun x_v : A -> B => id (Function@{i} A B) (Function.wrap A B x_v))
+        x
 .
 (* from: originally defined by Hexirp *)
 
