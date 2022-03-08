@@ -23,7 +23,7 @@ Inductive
       (A : Type@{i})
       (B : Type@{i})
       (f : Function@{i} A B)
-      (g : Function@{i} A B)
+      (g : Function@{i} B A)
     : Type@{i}
     :=
       wrap
