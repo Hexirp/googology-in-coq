@@ -53,6 +53,10 @@ digraph Dependencies {
   "Base" -> "Section";
   "Function" -> "Section";
   "Pointwise_Path" -> "Section";
+  # Retraction
+  "Base" -> "Retraction";
+  "Function" -> "Retraction";
+  "Pointwise_Path" -> "Retraction";
   # Is_Half_Adjoint
   "Base" -> "Is_Half_Adjoint";
   "Dependent_Sum" -> "Is_Half_Adjoint";
@@ -60,6 +64,7 @@ digraph Dependencies {
   "Pointwise_Path" -> "Is_Half_Adjoint";
   "Pointwise_Path_Pointwise_Path" -> "Is_Half_Adjoint";
   "Section" -> "Is_Half_Adjoint";
+  "Retraction" -> "Is_Half_Adjoint";
   # Is_Half_Adjoint_Equivalence
   "Base" -> "Is_Half_Adjoint_Equivalence";
   "Dependent_Sum" -> "Is_Half_Adjoint_Equivalence";

@@ -33,13 +33,7 @@ Inductive
             Dependent_Sum
               (
                 Product
-                  (
-                    Pointwise_Path
-                      A
-                      A
-                      (Function.comp A B A g f)
-                      (Function.id A)
-                  )
+                  (Retraction@{i} A B f g)
                   (Section@{i} A B f g)
               )
               (
@@ -47,13 +41,7 @@ Inductive
                   p
                     :
                       Product
-                        (
-                          Pointwise_Path
-                            A
-                            A
-                            (Function.comp A B A g f)
-                            (Function.id A)
-                        )
+                        (Retraction@{i} A B f g)
                         (Section@{i} A B f g)
                 =>
                   Pointwise_Path_Pointwise_Path
@@ -71,13 +59,7 @@ Inductive
                         (Function.id A)
                         (
                           Product.first
-                            (
-                              Pointwise_Path
-                                A
-                                A
-                                (Function.comp A B A g f)
-                                (Function.id A)
-                            )
+                            (Retraction@{i} A B f g)
                             (Section@{i} A B f g)
                             p
                         )
@@ -92,13 +74,7 @@ Inductive
                         f
                         (
                           Product.second
-                            (
-                              Pointwise_Path
-                                A
-                                A
-                                (Function.comp A B A g f)
-                                (Function.id A)
-                            )
+                            (Retraction@{i} A B f g)
                             (Section@{i} A B f g)
                             p
                         )
