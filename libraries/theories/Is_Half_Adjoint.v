@@ -127,7 +127,7 @@ Inductive
                     )
               )
           ->
-            Is_Half_Adjoint_Equivalence A B f
+            Is_Half_Adjoint A B f g
 .
 (* from: originally defined by Hexirp *)
 
