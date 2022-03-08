@@ -39,7 +39,7 @@ Definition
 Definition
   matching@{i | }
       (A : Type@{i})
-      (B : A -> type@{i})
+      (B : A -> Type@{i})
       (P : (forall x : A, B x) -> Type@{i})
       (
         constructor_abstract
