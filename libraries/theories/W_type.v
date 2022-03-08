@@ -170,8 +170,15 @@ Definition
                   D
                   (f (W_type_Alpha.first W_type A B x_v))
                   (
-                    fun z : D (f (W_type_Alpha.first W_type A B x_v)) =>
-                      y (g (W_type_Alpha.first W_type A B x_v) z)
+                    W_type_Beta.abstract
+                      W_type
+                      C
+                      D
+                      (f (W_type_Alpha.first W_type A B x_v))
+                      (
+                        fun z : D (f (W_type_Alpha.first W_type A B x_v)) =>
+                          y (g (W_type_Alpha.first W_type A B x_v) z)
+                      )
                   )
               )
         )
