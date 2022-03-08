@@ -40,7 +40,7 @@ Definition
   matching@{i | }
       (A : Type@{i})
       (B : A -> Type@{i})
-      (P : (forall x : A, B x) -> Type@{i})
+      (P : Dependent_Function@{i} A B -> Type@{i})
       (
         constructor_abstract
           : forall x_v : forall x : A, B x, P (abstract A B x_v)
