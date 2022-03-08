@@ -28,7 +28,8 @@ Definition
 (** 関数型です。 *)
 
 Definition
-  abstract@{i | } (A : Type@{i}) (B : Type@{i}) : (A -> B) -> Function@{i} A B
+  abstract@{i | } (A : Type@{i}) (B : Type@{i})
+    : (A -> B) -> Function@{i} A B
     :=
       fun x : A -> B =>
         wrap A B (Dependent_Function.wrap A (fun x : A => B) x)
@@ -38,10 +39,44 @@ Definition
 (** 関数の抽象です。 *)
 
 Definition
-  apply@{i | } (A : Type@{i}) (B : Type@{i}) : Function@{i} A B -> A -> B
+  matching@{i | }
+      (A : Type@{i})
+      (B : Type@{i})
+      (P : Function@{i} A B -> Type@{i})
+      (constructor_abstract : forall x_v : A -> B, P (abstract A B x_v))
+    : forall x : Function@{i} A B, P x
     :=
       fun x : Function@{i} A B =>
-        Dependent_Function.unwrap A (fun x : A => B) (unwrap A B x)
+        match x as x_ return P x_ with
+          wrap _ _ x_v
+            =>
+              match x_v as x_v_ return P x_v_ with
+                Dependent_Function.wrap _ _ x_v_v
+                  =>
+                    constructor_abstract x_v_v
+              end
+        end
+.
+(* from: originally defined by Hexirp *)
+
+(** 場合分けです。 *)
+
+Definition
+  matching_nodep@{i | }
+      (A : Type@{i})
+      (B : Type@{i})
+      (P : Type@{i})
+      (constructor_abstract : (A -> B) -> P)
+    : Function@{i} A B -> P
+    := matching A B (fun x_ : Function@{i} A B => P)
+.
+(* from: originally defined by Hexirp *)
+
+(** 場合分けです。 *)
+
+Definition
+  apply@{i | } (A : Type@{i}) (B : Type@{i}) : Function@{i} A B -> A -> B
+    := matching_nodep A B (A -> B) (fun x_v : A -> B => x_v)
 .
 (* from: originally defined by Hexirp *)
 
