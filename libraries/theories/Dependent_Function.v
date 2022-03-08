@@ -37,9 +37,47 @@ Definition
 (** 抽象です。ラムダ抽象です。 *)
 
 Definition
+  matching@{i | }
+      (A : Type@{i})
+      (B : A -> type@{i})
+      (P : (forall x : A, B x) -> Type@{i})
+      (
+        constructor_abstract
+          : forall x_v : forall x : A, B x, P (abstract A B x_v)
+      )
+    : forall x : Dependent_Function@{i} A B, P x
+    :=
+      fun x : Dependent_Function@{i} A B, P x =>
+        match x as x_ return P x_ with
+          wrap _ _ x_v => constructor_abstract A B x_v
+        end
+.
+(* from: originally defined by Hexirp *)
+
+(** 場合分けです。 *)
+
+Definition
+  matching_nodep@{i | }
+      (A : Type@{i})
+      (B : A -> type@{i})
+      (P : Type@{i})
+      (constructor_abstract : (forall x : A, B x) -> P)
+    : Dependent_Function@{i} A B -> P
+    := matching_nodep A B (fun x_ : Dependent_Function@{i} A B => P)
+.
+(* from: originally defined by Hexirp *)
+
+(** 場合分けです。 *)
+
+Definition
   apply@{i | } (A : Type@{i}) (B : A -> Type@{i})
     : Dependent_Function@{i} A B -> forall x : A, B x
-    := unwrap A B
+    :=
+      matching_nodep
+        A
+        B
+        (forall x : A, B x)
+        (fun x_v : forall x : A, B x => x_v)
 .
 (* from: originally defined by Hexirp *)
 

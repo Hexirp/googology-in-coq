@@ -50,11 +50,15 @@ Definition
         match x as x_ return P x_ with
           wrap _ _ x_v
             =>
-              match x_v as x_v_ return P x_v_ with
-                Dependent_Function.wrap _ _ x_v_v
-                  =>
-                    constructor_abstract x_v_v
-              end
+              Dependent_Function.matching
+                A
+                (fun x : A => B)
+                (
+                  fun x_v_ : Dependent_Function@{i} A (fun x : A => B) =>
+                    P (wrap x_v_)
+                )
+                constructor_abstract
+                x_v
         end
 .
 (* from: originally defined by Hexirp *)
