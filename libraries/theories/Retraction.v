@@ -41,7 +41,7 @@ Definition
     :
         Retraction@{i} A B f g
       ->
-        Pointwise_Path@{i} A A (Function.comp A B A f g) (Function.id A)
+        Pointwise_Path@{i} A A (Function.comp A B A g f) (Function.id A)
     :=
       fun x : Retraction@{i} A B f g =>
         match x with wrap _ _ _ _ x_v => x_v end
