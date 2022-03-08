@@ -40,7 +40,7 @@ Inductive
                       (Function.comp A B A g f)
                       (Function.id A)
                   )
-                  Section@{i} A B f g
+                  (Section@{i} A B f g)
               )
               (
                 fun
