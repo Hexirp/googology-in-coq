@@ -34,6 +34,7 @@ digraph Dependencies {
   "Base" -> "Universe";
   # Path
   "Base" -> "Path";
+  "Function" -> "Path";
   # Dependent_Pointwise_Path
   "Base" -> "Dependent_Pointwise_Path";
   "Dependent_Function" -> "Dependent_Pointwise_Path";

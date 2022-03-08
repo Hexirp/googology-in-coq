@@ -3,10 +3,12 @@
 (** [match] 式をオープンにしない理由は、道を定義する方法に複数の種類があるためです。具体的には、基点がある定義や基点がない定義や cubical 風に interval を使う定義などがあります。 *)
 
 Require Googology_In_Coq.Base.
+Require Googology_In_Coq.Function.
 
 (** ライブラリを要求します。 *)
 
 Import Googology_In_Coq.Base.
+Import Googology_In_Coq.Function (Function).
 
 (** ライブラリを開きます。 *)
 
@@ -123,11 +125,25 @@ Definition
 (** 道の逆です。 *)
 
 Definition
-  ap@{i | } (A : Type@{i}) (B : Type@{i}) (f : A -> B) (x : A) (y : A)
-    : Path A x y -> Path B (f x) (f y)
+  ap@{i | }
+      (A : Type@{i})
+      (B : Type@{i})
+      (f : Function@{i} A B)
+      (x : A)
+      (y : A)
+    : Path A x y -> Path B (Function.apply A B f x) (Function.apply A B f y)
     :=
       fun p : Path A x y =>
-        trpt A x y (fun y_ => Path B (f x) (f y_)) p (id B (f x))
+        trpt
+          A
+          x
+          y
+          (
+            fun y_ =>
+              Path B (Function.apply A B f x) (Function.apply A B f y_)
+          )
+          p
+          (id B (Function.apply A B f x))
 .
 (* from: originally defined by Hexirp *)
 

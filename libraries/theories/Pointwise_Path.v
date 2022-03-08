@@ -228,7 +228,7 @@ Definition
               Path.ap
                 B
                 C
-                (Function.apply B C f)
+                f
                 (Function.apply A B g_L x)
                 (Function.apply A B g_R x)
                 (apply A B g_L g_R p x)
