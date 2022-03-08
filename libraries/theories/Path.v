@@ -166,3 +166,29 @@ Definition
 (* from: originally defined by Hexirp *)
 
 (** 道による輸送と逆です。 *)
+
+Definition
+  function_abstract_apply@{i | }
+      (A : Type@{i})
+      (B : Type@{i})
+      (x : Function@{i} A B)
+    :
+      Path@{i}
+        (Function@{i} A B)
+        (Function.abstract A B (Function.apply A B x))
+        x
+    :=
+      match x
+        as x_
+        return
+          Path@{i}
+            (Function@{i} A B)
+            (Function.abstract A B (Function.apply A B x_))
+            x_
+      with
+        Function.wrap _ _ x_v => id (Function@{i} A B) (Function.wrap A B x_v)
+      end
+.
+(* from: originally defined by Hexirp *)
+
+(** [Function] の η 変換です。 *)
