@@ -3,18 +3,14 @@
 Require Googology_In_Coq.Base.
 Require Googology_In_Coq.Function.
 Require Googology_In_Coq.Dependent_Sum.
-Require Googology_In_Coq.Product.
-Require Googology_In_Coq.Pointwise_Path.
-Require Googology_In_Coq.Pointwise_Path_Pointwise_Path.
+Require Googology_In_Coq.Is_Half_Adjoint.
 
 (** ライブラリを要求します。 *)
 
 Import Googology_In_Coq.Base.
 Import Googology_In_Coq.Function (Function).
 Import Googology_In_Coq.Dependent_Sum (Dependent_Sum).
-Import Googology_In_Coq.Product (Product).
-Import Googology_In_Coq.Pointwise_Path (Pointwise_Path).
-Import Googology_In_Coq.Pointwise_Path_Pointwise_Path (Pointwise_Path_Pointwise_Path).
+Import Googology_In_Coq.Is_Half_Adjoint (Is_Half_Adjoint).
 
 (** ライブラリを開きます。 *)
 
@@ -27,109 +23,9 @@ Inductive
     :=
       wrap
         :
-            Dependent_Sum
-              (Function B A)
-              (
-                fun g : Function B A =>
-                  Dependent_Sum
-                    (
-                      Product
-                        (
-                          Pointwise_Path
-                            A
-                            A
-                            (Function.comp A B A g f)
-                            (Function.id A)
-                        )
-                        (
-                          Pointwise_Path
-                            B
-                            B
-                            (Function.comp B A B f g)
-                            (Function.id B)
-                        )
-                    )
-                    (
-                      fun
-                        p
-                          :
-                            Product
-                              (
-                                Pointwise_Path
-                                  A
-                                  A
-                                  (Function.comp A B A g f)
-                                  (Function.id A)
-                              )
-                              (
-                                Pointwise_Path
-                                  B
-                                  B
-                                  (Function.comp B A B f g)
-                                  (Function.id B)
-                              )
-                      =>
-                        Pointwise_Path_Pointwise_Path
-                          A
-                          B
-                          (Function.comp A A B f (Function.comp A B A g f))
-                          f
-                          (
-                            Pointwise_Path.wisker_L
-                              A
-                              A
-                              B
-                              f
-                              (Function.comp A B A g f)
-                              (Function.id A)
-                              (
-                                Product.first
-                                  (
-                                    Pointwise_Path
-                                      A
-                                      A
-                                      (Function.comp A B A g f)
-                                      (Function.id A)
-                                  )
-                                  (
-                                    Pointwise_Path
-                                      B
-                                      B
-                                      (Function.comp B A B f g)
-                                      (Function.id B)
-                                  )
-                                  p
-                              )
-                          )
-                          (
-                            Pointwise_Path.wisker_R
-                              A
-                              B
-                              B
-                              (Function.comp B A B f g)
-                              (Function.id B)
-                              f
-                              (
-                                Product.second
-                                  (
-                                    Pointwise_Path
-                                      A
-                                      A
-                                      (Function.comp A B A g f)
-                                      (Function.id A)
-                                  )
-                                  (
-                                    Pointwise_Path
-                                      B
-                                      B
-                                      (Function.comp B A B f g)
-                                      (Function.id B)
-                                  )
-                                  p
-                              )
-                          )
-                    )
-              )
+            Dependent_Sum@{i}
+              (Function@{i} B A)
+              (fun g : Function:{i} B A => Is_Half_Adjoint A B f g)
           ->
             Is_Half_Adjoint_Equivalence A B f
 .
