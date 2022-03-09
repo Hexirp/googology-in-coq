@@ -62,6 +62,7 @@ digraph Dependencies {
   "Base" -> "Is_Half_Adjoint";
   "Dependent_Sum" -> "Is_Half_Adjoint";
   "Product" -> "Is_Half_Adjoint";
+  "Path" -> "Is_Half_Adjoint";
   "Pointwise_Path" -> "Is_Half_Adjoint";
   "Pointwise_Path_Pointwise_Path" -> "Is_Half_Adjoint";
   "Section" -> "Is_Half_Adjoint";

@@ -4,6 +4,7 @@ Require Googology_In_Coq.Base.
 Require Googology_In_Coq.Function.
 Require Googology_In_Coq.Dependent_Sum.
 Require Googology_In_Coq.Product.
+Require Googology_In_Coq.Path.
 Require Googology_In_Coq.Pointwise_Path.
 Require Googology_In_Coq.Pointwise_Path_Pointwise_Path.
 Require Googology_In_Coq.Section.
@@ -15,6 +16,7 @@ Import Googology_In_Coq.Base.
 Import Googology_In_Coq.Function (Function).
 Import Googology_In_Coq.Dependent_Sum (Dependent_Sum).
 Import Googology_In_Coq.Product (Product).
+Import Googology_In_Coq.Path (Path).
 Import Googology_In_Coq.Pointwise_Path (Pointwise_Path).
 Import Googology_In_Coq.Pointwise_Path_Pointwise_Path (Pointwise_Path_Pointwise_Path).
 Import Googology_In_Coq.Section (Section).
@@ -52,24 +54,37 @@ Inductive
                     (Function.comp A A B f (Function.comp A B A g f))
                     f
                     (
-                      Pointwise_Path.wisker_L
-                        A
-                        A
-                        B
+                      Path.trpv
+                        (Function@{i} A B)
                         f
-                        (Function.comp A B A g f)
-                        (Function.id A)
+                        (Function.abstract A B (Function.apply A B f))
                         (
-                          Retraction.unwrap
+                          fun f_ : Function@{i} A B =>
+                            Pointwise_Path@{i} A B
+                              (Function.comp A A B f (Function.comp A B A g f))
+                              f_
+                        )
+                        (Path.function_abstract_apply A B f)
+                        (
+                          Pointwise_Path.wisker_L
+                            A
                             A
                             B
                             f
-                            g
+                            (Function.comp A B A g f)
+                            (Function.id A)
                             (
-                              Product.first
-                                (Retraction@{i} A B f g)
-                                (Section@{i} A B f g)
-                                p
+                              Retraction.unwrap
+                                A
+                                B
+                                f
+                                g
+                                (
+                                  Product.first
+                                    (Retraction@{i} A B f g)
+                                    (Section@{i} A B f g)
+                                    p
+                                )
                             )
                         )
                     )
