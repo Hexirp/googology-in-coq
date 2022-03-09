@@ -63,7 +63,7 @@ Definition
       (P : Type@{i})
       (constructor_abstract : (forall x : A, B x) -> P)
     : Dependent_Function@{i} A B -> P
-    := matching_nodep A B (fun x_ : Dependent_Function@{i} A B => P)
+    := matching A B (fun x_ : Dependent_Function@{i} A B => P)
 .
 (* from: originally defined by Hexirp *)
 
