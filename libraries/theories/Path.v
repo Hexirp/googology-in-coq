@@ -28,7 +28,7 @@ Definition
     : forall (a' : A) (x : Path@{i} A a a'), P a' x
     :=
       fun (a' : A) (x : Path@{i} A a a') =>
-        match x as x_ in Path@{i} _ _ a'_ return P a'_ x_ with
+        match x as x_ in Path _ _ a'_ return P a'_ x_ with
           id _ _ => constructor_id
         end
 .
