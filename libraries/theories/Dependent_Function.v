@@ -59,7 +59,7 @@ Definition
 Definition
   matching_nodep@{i | }
       (A : Type@{i})
-      (B : A -> type@{i})
+      (B : A -> Type@{i})
       (P : Type@{i})
       (constructor_abstract : (forall x : A, B x) -> P)
     : Dependent_Function@{i} A B -> P
