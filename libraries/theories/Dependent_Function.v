@@ -63,7 +63,12 @@ Definition
       (P : Type@{i})
       (constructor_abstract : (forall x : A, B x) -> P)
     : Dependent_Function@{i} A B -> P
-    := matching A B (fun x_ : Dependent_Function@{i} A B => P)
+    :=
+      matching
+        A
+        B
+        (fun x_ : Dependent_Function@{i} A B => P)
+        constructor_abstract
 .
 (* from: originally defined by Hexirp *)
 
