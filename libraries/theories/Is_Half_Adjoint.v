@@ -89,24 +89,37 @@ Inductive
                         )
                     )
                     (
-                      Pointwise_Path.wisker_R
-                        A
-                        B
-                        B
-                        (Function.comp B A B f g)
-                        (Function.id B)
+                      Path.trpt
+                        (Function@{i} A B)
+                        (Function.abstract A B (Function.apply A B f))
                         f
                         (
-                          Section.unwrap
+                          fun f_ : Function@{i} A B =>
+                            Pointwise_Path@{i} A B
+                              (Function.comp A A B f (Function.comp A B A g f))
+                              f_
+                        )
+                        (Path.function_abstract_apply A B f)
+                        (
+                          Pointwise_Path.wisker_R
                             A
                             B
+                            B
+                            (Function.comp B A B f g)
+                            (Function.id B)
                             f
-                            g
                             (
-                              Product.second
-                                (Retraction@{i} A B f g)
-                                (Section@{i} A B f g)
-                                p
+                              Section.unwrap
+                                A
+                                B
+                                f
+                                g
+                                (
+                                  Product.second
+                                    (Retraction@{i} A B f g)
+                                    (Section@{i} A B f g)
+                                    p
+                                )
                             )
                         )
                     )
