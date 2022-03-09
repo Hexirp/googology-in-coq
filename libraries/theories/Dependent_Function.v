@@ -49,7 +49,7 @@ Definition
     :=
       fun x : Dependent_Function@{i} A B =>
         match x as x_ return P x_ with
-          wrap _ _ x_v => constructor_abstract A B x_v
+          wrap _ _ x_v => constructor_abstract x_v
         end
 .
 (* from: originally defined by Hexirp *)
