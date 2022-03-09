@@ -54,10 +54,10 @@ Inductive
                     (Function.comp A A B f (Function.comp A B A g f))
                     f
                     (
-                      Path.trpv
+                      Path.trpt
                         (Function@{i} A B)
-                        f
                         (Function.abstract A B (Function.apply A B f))
+                        f
                         (
                           fun f_ : Function@{i} A B =>
                             Pointwise_Path@{i} A B
