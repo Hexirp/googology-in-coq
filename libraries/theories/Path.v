@@ -197,7 +197,10 @@ Definition
               (Function.abstract A B (Function.apply A B x_))
               x_
         )
-        (fun x_v : A -> B => id (Function@{i} A B) (Function.wrap A B x_v))
+        (
+          fun x_v : A -> B =>
+            id (Function@{i} A B) (Function.abstract A B x_v)
+        )
         x
 .
 (* from: originally defined by Hexirp *)
