@@ -55,7 +55,7 @@ Definition
                 (fun x : A => B)
                 (
                   fun x_v_ : Dependent_Function@{i} A (fun x : A => B) =>
-                    P (wrap x_v_)
+                    P (wrap A B x_v_)
                 )
                 constructor_abstract
                 x_v
@@ -72,7 +72,7 @@ Definition
       (P : Type@{i})
       (constructor_abstract : (A -> B) -> P)
     : Function@{i} A B -> P
-    := matching A B (fun x_ : Function@{i} A B => P)
+    := matching A B (fun x_ : Function@{i} A B => P) constructor_abstract
 .
 (* from: originally defined by Hexirp *)
 
