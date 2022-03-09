@@ -30,9 +30,26 @@ Import Googology_In_Coq.Peano_Number_Arity (Peano_Number_Arity).
 
 (** ライブラリを開きます。 *)
 
-Definition
+Inductive
   Peano_Number@{i s_i | i < s_i} : Type@{i}
-    := W_type@{i} Peano_Number_Tag@{i} Peano_Number_Arity@{i s_i}
+    :=
+      wrap
+        :
+            W_type@{i} Peano_Number_Tag@{i} Peano_Number_Arity@{i s_i}
+          ->
+            Peano_Number
+.
+(* from: originally defined by Hexirp *)
+
+(** 自然数の型です。 *)
+
+Definition
+  unwrap@{i s_i | i < s_i}
+    :
+        Peano_Number@{i s_i}
+      ->
+        W_type@{i} Peano_Number_Tag@{i} Peano_Number_Arity@{i s_i}
+    := fun x : Peano_Number@{i s_i} => match x with wrap x_v => x_v end
 .
 (* from: originally defined by Hexirp *)
 
