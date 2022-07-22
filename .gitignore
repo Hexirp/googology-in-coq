@@ -1,3 +1,4 @@
+# for coqc
 .*.aux
 .*.d
 *.a
@@ -34,3 +35,6 @@ nra.cache
 
 # for coqdoc
 libraries/docs/
+
+# for user shell
+coq_path.sh
