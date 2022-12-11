@@ -16,4 +16,4 @@ Definition Dependent_Function@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } )
 Definition map_Dependent_Function@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) ( C : Type@{ i } ) ( D : C -> Type@{ i } ) ( f : C -> A ) ( g : forall x : C, B ( f x ) -> D x ) ( x : Dependent_Function A B ) : Dependent_Function C D := fun y : C => g y ( x ( f y ) ).
 (* from: originally defined by Hexirp *)
 
-(** 依存関数型の上の写像です。 *)
+(** 依存関数型から依存関数への写像です。 *)
