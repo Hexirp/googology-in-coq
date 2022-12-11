@@ -8,13 +8,12 @@ Import Googology_In_Coq.Base.
 
 (** ライブラリを開きます。 *)
 
-Inductive
-  Dependent_Function@{i | } (A : Type@{i}) (B : A -> Type@{i}) : Type@{i}
-    := wrap : (forall x : A, B x) -> Dependent_Function A B
-.
+Inductive Dependent_Function@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) : Type@{ i } := wrap : ( forall x : A, B x ) -> Dependent_Function A B.
 (* from: originally defined by Hexirp *)
 
 (** 依存関数型です。 *)
+
+Definition matching@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) ( E : Dependent_Function@{ i } A B -> Dependent_Function@{ i } A B -> Type@{i} ) ( P : Type@{ i } ) ( d : P -> Dependent_Function@{ i } ) ( cw : ( forall x : A, B x ) -> P ) ( ew : forall x : Dependent_Function@{ i } A B, E ( d ( cw x ) ) x ) : Dependent_Function@{ i } A B -> exists x : P, d x =
 
 Definition
   unwrap@{i | } (A : Type@{i}) (B : A -> Type@{i})
