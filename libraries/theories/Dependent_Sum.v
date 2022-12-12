@@ -18,7 +18,7 @@ Definition matching_Dependent_Sum@{ i j | } ( A : Type@{ i } ) ( B : A -> Type@{
 
 (** 場合分けです。 *)
 
-Definition equality_matching_Dependent_Sum@{ i j | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) ( P : Type@{ j } ) ( display : P -> Dependent_Sum A B ) ( cp : forall a : A, B a -> P ) ( forall ( a : A ) ( b : B a ), display ( cp a b ) = pair_Dependent_Sum a b ) ( x : Dependent_Sum A B ) : display ( matching_Dependent_Sum A B P cp x ) = x := match x as x_ return P with pair_Dependent_Sum _ _ a b => cp a b end.
+Definition equality_matching_Dependent_Sum@{ i j | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) ( P : Type@{ j } ) ( display : P -> Dependent_Sum A B ) ( cp : forall a : A, B a -> P ) ( ecp : forall ( a : A ) ( b : B a ), display ( cp a b ) = pair_Dependent_Sum a b ) ( x : Dependent_Sum A B ) : display ( matching_Dependent_Sum A B P cp x ) = x := match x as x_ return P with pair_Dependent_Sum _ _ a b => cp a b end.
 (* from: originally defined by Hexirp *)
 
 (** 場合分けの等式です。 *)
