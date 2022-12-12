@@ -14,7 +14,7 @@ jobs:
           custom_script: |
             startGroup "Coordinate"
               cd libraries/
-              cp _CoqProject.txt _CoqProject
+              cp -f _CoqProject.txt _CoqProject
             endGroup
             {{before_install}}
             {{install}}
