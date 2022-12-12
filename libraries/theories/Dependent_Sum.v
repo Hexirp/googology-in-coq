@@ -8,48 +8,27 @@ Import Googology_In_Coq.Base.
 
 (** ライブラリを開きます。 *)
 
-Inductive
-  Dependent_Sum@{i | } (A : Type@{i}) (B : A -> Type@{i}) : Type@{i}
-    := pair : forall a : A, B a -> Dependent_Sum A B
-.
+Inductive Dependent_Sum@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) : Type@{ i } := pair_Dependent_Sum : forall a : A, B a -> Dependent_Sum A B.
 (* from: originally defined by Hexirp *)
 
 (** 依存直和型です。 *)
 
-Definition
-  matching@{i | }
-      (A : Type@{i})
-      (B : A -> Type@{i})
-      (P : Dependent_Sum A B -> Type@{i})
-      (constructor_pair : forall (a : A) (b : B a), P (pair A B a b))
-    : forall x : Dependent_Sum A B, P x
-    :=
-      fun x : Dependent_Sum A B =>
-        match x as x_ return P x_ with
-          pair _ _ a b => constructor_pair a b
-        end
-.
+Definition matching_Dependent_Sum@{ i j | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) ( P : Type@{ j } ) ( cp : forall a : A, B a -> P ) ( x : Dependent_Sum A B ) : P := match x as x_ return P with pair_Dependent_Sum _ _ a b => cp a b end.
 (* from: originally defined by Hexirp *)
 
 (** 場合分けです。 *)
 
-Definition
-  matching_nodep@{i | }
-      (A : Type@{i})
-      (B : A -> Type@{i})
-      (P : Type@{i})
-      (constructor_pair : forall a : A, B a -> P)
-    : Dependent_Sum A B -> P
-    := matching A B (fun x_ : Dependent_Sum A B => P) constructor_pair
-.
+Definition equality_matching_Dependent_Sum@{ i j | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) ( P : Type@{ j } ) ( display : P -> Dependent_Sum A B ) ( cp : forall a : A, B a -> P ) ( forall ( a : A ) ( b : B a ), display ( cp a b ) = pair_Dependent_Sum a b ) ( x : Dependent_Sum A B ) : display ( matching_Dependent_Sum A B P cp x ) = x := match x as x_ return P with pair_Dependent_Sum _ _ a b => cp a b end.
 (* from: originally defined by Hexirp *)
 
-(** 場合分けです。 *)
+(** 場合分けの等式です。 *)
 
-Definition
-  first@{i | } (A : Type@{i}) (B : A -> Type@{i}) : Dependent_Sum A B -> A
-    := matching_nodep A B A (fun (a : A) (b : B a) => a)
-.
+Definition comaching_Dependent_Sum@{ i j | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) ( P : Type@{ j } ) ( df : P -> A ) ( ds : forall x : P, B ( df x ) ) ( x : P ) : Dependent_Sum A B := pair_Dependent_Sum A B ( df x ) ( ds x ).
+(* from: originally defined by Hexirp *)
+
+(** 余場合分けです。 *)
+
+Definition first_Dependent_Sum@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) : Dependent_Sum A B -> A := matching A B A ( fun ( a : A ) ( b : B a ) => a ).
 (* from: originally defined by Hexirp *)
 
 (** 依存直和型の第一射影関数です。 *)
@@ -68,19 +47,7 @@ Definition
 
 (** 依存直和型の第二射影関数です。 *)
 
-Definition
-  map@{i | }
-      (A : Type@{i})
-      (B : A -> Type@{i})
-      (C : Type@{i})
-      (D : C -> Type@{i})
-      (f : A -> C)
-      (g : forall x : A, B x -> D (f x))
-    : Dependent_Sum@{i} A B -> Dependent_Sum@{i} C D
-    :=
-      fun x : Dependent_Sum@{i} A B =>
-        pair C D (f (first A B x)) (g (first A B x) (second A B x))
-.
+Definition map_Dependent_Sum@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) ( C : Type@{ i } ) ( D : C -> Type@{ i } ) ( f : A -> C ) ( g : forall x : A, B x -> D ( f x ) ) ( x : Dependent_Sum@{i} A B ) : Dependent_Sum@{i} C D := pair_Dependent_Sum C D ( f ( first_Dependent_Sum A B x ) ) ( g ( first_Dependent_Sum A B x ) ( second A B x ) ).
 (* from: originally defined by Hexirp *)
 
 (** 依存直和型の写像です。 *)
