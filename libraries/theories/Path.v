@@ -9,16 +9,29 @@ Import Googology_In_Coq.Base.
 (** ライブラリを開きます。 *)
 
 Inductive Path@{ i | } ( A : Type@{ i } ) ( a : A ) : A -> Type@{ i } := id_Path : Path A a a.
+(* from: originally defined by Hexirp *)
 
 (** 道の型です。 *)
 
 Definition matching_Path@{ i j | } ( A : Type@{ i } ) ( a : A ) ( P : A -> Type@{ j } ) ( ci : P a ) ( a' : A ) ( x : Path A a a' ) : P a' := match x in Path _ _ a'_ return P a'_ with id_Path _ _ => ci end.
+(* from: originally defined by Hexirp *)
 
 (** 道の場合分けです。 *)
 
 Definition identity_matching_Path@{ i j | } ( A : Type@{ i } ) ( a : A ) ( P : A -> Type@{ j } ) ( display : forall a' : A, P a' -> Path A a a' ) ( ci : P a ) ( ici : Path ( Path A a a ) ( display a ci ) ( id_Path A a ) ) ( a' : A ) ( x : Path A a a' ) : Path ( Path A a a' ) ( display a' ( matching_Path A a P ci a' x ) ) x := match x as x_ in Path _ _ a'_ return Path ( Path A a a'_ ) ( display a'_ ( matching_Path A a P ci a'_ x_ ) ) x_ with id_Path _ _ => ici end.
+(* from: originally defined by Hexirp *)
 
 (** 道の場合分けの恒等式です。 *)
+
+Definition partical_comatching_Path@{ i j | } ( A : Type@{ i } ) ( a : A ) ( P : A -> Type@{ j } ) ( x : P a ) : Path A a a := id_Path A a.
+(* from: originally defined by Hexirp *)
+
+(** 道の部分的な余場合分けです。 *)
+
+Fail Definition identity_partical_comatching_Path@{ i j | } ( A : Type@{ i } ) ( a : A ) ( P : A -> Type@{ j } ) ( codisplay : forall a' : A, Path A a a' -> P a' ) ( x : Path A a a ) : Path ( Path A a a ) ( comatching_Path A a P ( codisplay a x ) ) x := _.
+(* from: originally defined by Hexirp *)
+
+(** 道の部分的な余場合分けの恒等式です。しかし、部分的なものであるため、 UIP と同値となってしまい成立しません。 *)
 
 Definition trpt_Path@{ i j | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( B : A -> Type@{ j } ) ( p : Path A x y ) ( u : B x ) : B y := matching_Path A x B u y p.
 (* from: originally defined by Hexirp *)
