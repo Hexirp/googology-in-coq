@@ -14,7 +14,6 @@ jobs:
           custom_script: |
             startGroup "Coordinate"
               cd libraries/
-              cp -f _CoqProject.txt _CoqProject
             endGroup
             {{before_install}}
             {{install}}
@@ -24,6 +23,5 @@ jobs:
             {{after_script}}
             {{uninstall}}
             startGroup "Uncoordinate"
-              rm _CoqProject
               cd ../
             endGroup
