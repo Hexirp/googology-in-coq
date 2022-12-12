@@ -6,8 +6,11 @@ digraph Dependencies {
   "Base" -> "Function";
   # Dependent_Product
   "Base" -> "Dependent_Product";
+  # Path
+  "Base" -> "Path";
   # Dependent_Sum
   "Base" -> "Dependent_Sum";
+  "Path" -> "Dependent_Sum";
   # Product
   "Base" -> "Product";
   "Dependent_Sum" -> "Product";
@@ -30,9 +33,6 @@ digraph Dependencies {
   "W_type_Beta" -> "W_type";
   # Universe
   "Base" -> "Universe";
-  # Path
-  "Base" -> "Path";
-  "Function" -> "Path";
   # Dependent_Pointwise_Path
   "Base" -> "Dependent_Pointwise_Path";
   "Dependent_Function" -> "Dependent_Pointwise_Path";

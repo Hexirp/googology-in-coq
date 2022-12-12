@@ -5,6 +5,7 @@ theories/Base.v \
 theories/Dependent_Function.v \
 theories/Function.v \
 theories/Dependent_Product.v \
+theories/Path.v \
 theories/Dependent_Sum.v \
 theories/Product.v \
 theories/Sum.v \
@@ -14,7 +15,6 @@ theories/W_type_Beta.v \
 theories/W_type_Alpha.v \
 theories/W_type.v \
 theories/Universe.v \
-theories/Path.v \
 theories/Dependent_Pointwise_Path.v \
 theories/Pointwise_Path.v \
 theories/Pointwise_Path_Pointwise_Path.v \
