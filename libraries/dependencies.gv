@@ -6,7 +6,6 @@ digraph Dependencies {
   "Base" -> "Function";
   # Dependent_Product
   "Base" -> "Dependent_Product";
-  "Dependent_Function" -> "Dependent_Product";
   # Dependent_Sum
   "Base" -> "Dependent_Sum";
   # Product
