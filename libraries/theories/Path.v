@@ -14,11 +14,11 @@ Inductive Path@{ i | } ( A : Type@{ i } ) ( a : A ) : A -> Type@{ i } := id_Path
 
 Definition matching_Path@{ i j | } ( A : Type@{ i } ) ( a : A ) ( P : A -> Type@{ j } ) ( ci : P a ) ( a' : A ) ( x : Path A a a' ) : P a' := match x in Path _ _ a'_ return P a'_ with id_Path _ _ => ci end.
 
-(** 場合分けです。 *)
+(** 道の場合分けです。 *)
 
 Definition identity_matching_Path@{ i j | } ( A : Type@{ i } ) ( a : A ) ( P : A -> Type@{ j } ) ( display : forall a' : A, P a' -> Path A a a' ) ( ci : P a ) ( ici : Path ( Path A a a ) ( display a ci ) ( id_Path A a ) ) ( a' : A ) ( x : Path A a a' ) : Path ( Path A a a' ) ( display a' ( matching_Path A a P ci a' x ) ) x := match x as x_ in Path _ _ a'_ return Path ( Path A a a'_ ) ( display a'_ ( matching_Path A a P ci a'_ x_ ) ) x_ with id_Path _ _ => ici end.
 
-(** 場合分けの恒等式です。 *)
+(** 道の場合分けの恒等式です。 *)
 
 Definition trpt_Path@{ i j | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( B : A -> Type@{ j } ) ( p : Path A x y ) ( u : B x ) : B y := matching_Path A x B u y p.
 (* from: originally defined by Hexirp *)
@@ -40,12 +40,12 @@ Definition ap_Path@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( f : A -> B ) 
 
 (** 道への適用です。 *)
 
-Definition trpv@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( B : A -> Type@{ i } ) ( p : Path A x y ) ( u : B y ) : B x := trpt_Path A y x B ( inv_Path A x y p)  u.
+Definition trpv_Path@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( B : A -> Type@{ i } ) ( p : Path A x y ) ( u : B y ) : B x := trpt_Path A y x B ( inv_Path A x y p)  u.
 (* from: originally defined by Hexirp *)
 
 (** 道による輸送と逆です。 *)
 
-Definition conv@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( z : A ) ( p : Path A x y ) ( q : Path A x z ) : Path A y z := conc_Path A y x z ( inv_Path A x y p ) q.
+Definition conv_Path@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( z : A ) ( p : Path A x y ) ( q : Path A x z ) : Path A y z := conc_Path A y x z ( inv_Path A x y p ) q.
 (* from: originally defined by Hexirp *)
 
 (** 道の結合と逆です。 *)
