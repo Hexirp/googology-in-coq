@@ -1,72 +1,31 @@
 (** 直和型に関するモジュールです。 *)
 
 Require Googology_In_Coq.Base.
+Require Googology_In_Coq.Path.
 
 (** ライブラリを要求します。 *)
 
 Import Googology_In_Coq.Base.
+Import Googology_In_Coq.Path.
 
 (** ライブラリを開きます。 *)
 
-Inductive
-  Sum@{i | } (A : Type@{i}) (B : Type@{i}) : Type@{i}
-    := left : A -> Sum A B | right : B -> Sum A B
-.
+Inductive Sum@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) : Type@{ i } := left_Sum : A -> Sum A B | right_Sum : B -> Sum A B.
 (* from: originally defined by Hexirp *)
 
 (** 直和型です。 *)
 
-Definition
-  matching@{i | }
-      (A : Type@{i})
-      (B : Type@{i})
-      (P : Sum@{i} A B -> Type@{i})
-      (constructor_left : forall x_L : A, P (left A B x_L))
-      (constructor_right : forall x_R : B, P (right A B x_R))
-    : forall x : Sum A B, P x
-    :=
-      fun x : Sum A B =>
-        match x as x_ return P x_ with
-            left _ _ x_L => constructor_left x_L
-          |
-            right _ _ x_R => constructor_right x_R
-        end
-.
+Definition matching_Sum@{ i j | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( P : Type@{ j } ) ( cl : A -> P ) ( cr : B -> P ) ( x : Sum A B ) : P := match x with left_Sum _ _ xl => cl xl | right_Sum _ _ xr => cr xr end.
 (* from: originally defined by Hexirp *)
 
-(** 場合分けです。 *)
+(** 直和型の場合分けです。 *)
 
-Definition
-  matching_nodep@{i | }
-      (A : Type@{i})
-      (B : Type@{i})
-      (P : Type@{i})
-      (constructor_left : A -> P)
-      (constructor_right : B -> P)
-    : Sum A B -> P
-    := matching A B (fun x_ : Sum A B => P) constructor_left constructor_right
-.
+Definition identity_matching_Sum@{ i j | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( P : Type@{ j } ) ( display : P -> Sum A B ) ( cl : A -> P ) ( icl : forall xl : A, Path ( Sum A B ) ( display ( cl xl ) ) ( left_Sum A B xl ) ) ( cr : B -> P ) ( icr : forall xr : B, Path ( Sum A B ) ( display ( cr xr ) ) ( right_Sum A B xr ) ) ( x : Sum A B ) : Path ( Sum A B ) ( display ( matching_Sum A B P cl cr x ) ) x := match x as x_ return Path ( Sum A B ) ( display ( matching_Sum A B P cl cr x_ ) ) x_ with left_Sum _ _ xl => icl xl | right_Sum _ _ xr => icr xr end.
 (* from: originally defined by Hexirp *)
 
-(** 場合分けです。 *)
+(** 直和型の場合分けです。 *)
 
-Definition
-  map@{i | }
-      (A : Type@{i})
-      (B : Type@{i})
-      (C : Type@{i})
-      (D : Type@{i})
-      (f : A -> C)
-      (g : B -> D)
-    : Sum@{i} A B -> Sum@{i} C D
-    :=
-      matching_nodep
-        A
-        B
-        (Sum@{i} C D)
-        (fun x_L : A => left C D (f x_L))
-        (fun x_R : B => right C D (g x_R))
-.
+Definition map_Sum@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( C : Type@{ i } ) ( D : Type@{ i } ) ( f : A -> C ) ( g : B -> D ) : Sum A B -> Sum C D := matching_Sum A B ( Sum C D ) ( fun xl : A => left_Sum C D ( f xl ) ) ( fun xr : B => right_Sum C D ( g xr ) ).
 (* from: originally defined by Hexirp *)
 
 (** 直和型の写像です。 *)
