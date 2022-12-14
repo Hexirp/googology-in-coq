@@ -43,9 +43,9 @@ Definition comatching_Dependent_Sum@{ i j | } ( A : Type@{ i } ) ( B : A -> Type
 Fail Definition identity_comaching_Dependent_Sum@{ i j | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) ( P : Type@{ j } ) ( codisplay : Dependent_Sum A B -> P ) ( df : P -> A ) ( idf : forall x : Dependent_Sum A B, Path A ( df ( codisplay x ) ) ( first_Dependent_Sum A B x ) ) ( ds : forall x : P, B ( df x ) ) ( ids : forall x : Dependent_Sum A B, Path ( B ( df ( codisplay x ) ) ) ( ds ( codisplay x ) ) ( trpv_Path A ( df (codisplay x ) ) ( first_Dependent_Sum A B x ) B ( idf x ) ( second_Dependent_Sum A B x ) ) ) ( x : Dependent_Sum A B ) : Path ( Dependent_Sum A B ) ( comatching_Dependent_Sum A B P df ds ( codisplay x ) ) x := _.
 (* from: originally defined by Hexirp *)
 
-(** 依存直和型の余場合分けの恒等式です。これは証明に依存直和型の η 規則が必要であるため、ここでは証明できません。 *)
+(** 依存直和型の余場合分けの恒等式です。ただし、これを実装するためには直積型の η 規則が必要であるため、今は実装できません。 *)
 
-Definition map_Dependent_Sum@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) ( C : Type@{ i } ) ( D : C -> Type@{ i } ) ( f : A -> C ) ( g : forall x : A, B x -> D ( f x ) ) ( x : Dependent_Sum@{i} A B ) : Dependent_Sum@{i} C D := pair_Dependent_Sum C D ( f ( first_Dependent_Sum A B x ) ) ( g ( first_Dependent_Sum A B x ) ( second_Dependent_Sum A B x ) ).
+Definition map_Dependent_Sum@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) ( C : Type@{ i } ) ( D : C -> Type@{ i } ) ( f : A -> C ) ( g : forall x : A, B x -> D ( f x ) ) ( x : Dependent_Sum A B ) : Dependent_Sum C D := pair_Dependent_Sum C D ( f ( first_Dependent_Sum A B x ) ) ( g ( first_Dependent_Sum A B x ) ( second_Dependent_Sum A B x ) ).
 (* from: originally defined by Hexirp *)
 
 (** 依存直和型の写像です。 *)

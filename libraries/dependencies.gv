@@ -13,7 +13,7 @@ digraph Dependencies {
   "Path" -> "Dependent_Sum";
   # Product
   "Base" -> "Product";
-  "Dependent_Sum" -> "Product";
+  "Path" -> "Product";
   # Sum
   "Base" -> "Sum";
   # Unit
