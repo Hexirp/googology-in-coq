@@ -40,9 +40,9 @@ Definition comatching_Product@{ i j | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( 
 
 (** 直積型の余場合分けです。 *)
 
-Conjecture path_proj_Product@{ i | } : forall ( A : Type@{ i } ) ( B : Type@{ i } ) ( x : Product A B ) ( y : Product A B ) ( pf : Path A ( first_Product A B x ) ( first_Product A B x ) ) ( ps : Path B ( second_Product A B x ) ( second_Product A B y ) ), Path ( Product A B ) x y.
+Conjecture path_proj_Product@{ i | } : forall ( A : Type@{ i } ) ( B : Type@{ i } ) ( x : Product A B ) ( y : Product A B ) ( pf : Path A ( first_Product A B x ) ( first_Product A B y ) ) ( ps : Path B ( second_Product A B x ) ( second_Product A B y ) ), Path ( Product A B ) x y.
 
-Definition identity_comatching_Product@{ i j | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( P : Type@{ j } ) ( codisplay : Product A B -> P ) ( df : P -> A ) ( idf : forall x : Product A B, Path A ( df ( codisplay x ) ) ( first_Product A B x ) ) ( ds : P -> B ) ( ids : forall x : Product A B, Path B ( ds ( codisplay x ) ) ( second_Product A B x ) ) ( x : Product A B ) : Path ( Product A B ) ( comatching_Product A B P df ds ( codisplay x ) ) x := path_proj_Product A B ( comatching_Product A B P df ds ( codisplay x ) ) x _ _.
+Definition identity_comatching_Product@{ i j | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( P : Type@{ j } ) ( codisplay : Product A B -> P ) ( df : P -> A ) ( idf : forall x : Product A B, Path A ( df ( codisplay x ) ) ( first_Product A B x ) ) ( ds : P -> B ) ( ids : forall x : Product A B, Path B ( ds ( codisplay x ) ) ( second_Product A B x ) ) ( x : Product A B ) : Path ( Product A B ) ( comatching_Product A B P df ds ( codisplay x ) ) x := path_proj_Product A B ( comatching_Product A B P df ds ( codisplay x ) ) x ( match x as x_ return Path A ( first_Product A B ( comatching_Product A B P df ds ( codisplay x_ ) ) ) ( first_Product A B x_ ) with pair_Product _ _ xf xs => idf ( pair_Product A B xf xs ) end ) ( match x as x_ return Path B ( second_Product A B ( comatching_Product A B P df ds ( codisplay x_ ) ) ) ( second_Product A B x_ ) with pair_Product _ _ xf xs => ids ( pair_Product A B xf xs ) end ).
 (* from: originally defined by Hexirp *)
 
 (** 直積型の余場合分けの恒等式です。ただし、これを実装するためには直積型の η 規則が必要であるため、今は実装できません。 *)
