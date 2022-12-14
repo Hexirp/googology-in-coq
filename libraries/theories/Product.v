@@ -40,7 +40,9 @@ Definition comatching_Product@{ i j | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( 
 
 (** 直積型の余場合分けです。 *)
 
-Definition identity_comatching_Product@{ i j | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( P : Type@{ j } ) ( codisplay : Product A B -> P ) ( df : P -> A ) ( idf : forall x : Product A B, Path A ( df ( codisplay x ) ) ( first_Product A B x ) ) ( ds : P -> B ) ( ids : forall x : Product A B, Path B ( ds ( codisplay x ) ) ( second_Product A B x ) ) ( x : Product A B ) : Path ( Product A B ) ( comatching_Product A B P df ds ( codisplay x ) ) x := match x as x_ return Path ( Product A B ) ( comatching_Product A B P df ds ( codisplay x_ ) ) x_ with pair_Product _ _ xf xs => _ end.
+Conjecture path_proj_Product@{ i | } : forall ( A : Type@{ i } ) ( B : Type@{ i } ) ( x : Product A B ) ( y : Product A B ) ( pf : Path A ( first_Product A B x ) ( first_Product A B x ) ) ( ps : Path B ( second_Product A B x ) ( second_Product A B y ) ), Path ( Product A B ) x y.
+
+Definition identity_comatching_Product@{ i j | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( P : Type@{ j } ) ( codisplay : Product A B -> P ) ( df : P -> A ) ( idf : forall x : Product A B, Path A ( df ( codisplay x ) ) ( first_Product A B x ) ) ( ds : P -> B ) ( ids : forall x : Product A B, Path B ( ds ( codisplay x ) ) ( second_Product A B x ) ) ( x : Product A B ) : Path ( Product A B ) ( comatching_Product A B P df ds ( codisplay x ) ) x := path_proj_Product A B ( comatching_Product A B P df ds ( codisplay x ) ) x _ _.
 (* from: originally defined by Hexirp *)
 
 (** 直積型の余場合分けの恒等式です。ただし、これを実装するためには直積型の η 規則が必要であるため、今は実装できません。 *)
