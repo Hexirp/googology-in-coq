@@ -19,6 +19,7 @@ digraph Dependencies {
   "Path" -> "Sum";
   # Unit
   "Base" -> "Unit";
+  "Base" -> "Path";
   # Void
   "Base" -> "Void";
   # W_type_Beta
