@@ -67,3 +67,13 @@ Definition map_Path@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( f : A -> B )
 (* from: originally defined by Hexirp *)
 
 (** 道から道への写像です。 *)
+
+(** ** 応用 *)
+
+Definition trpt_2_Path@{ i j | } ( A : Type@{ i } ) ( xa : A ) ( ya : A ) ( B : Type@{ i } ) ( xb : B ) ( yb : B ) ( C : A -> B -> Type@{ j } ) ( pa : Path A xa ya ) ( pb : Path B xb yb ) ( u : C xa xb ) : C ya yb.
+Proof.
+  admit.
+Admitted.
+(* from: originally defined by Hexirp *)
+
+(** 輸送です。 *)
