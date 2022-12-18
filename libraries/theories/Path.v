@@ -23,12 +23,12 @@ Definition identity_matching_Path@{ i j | } ( A : Type@{ i } ) ( a : A ) ( P : A
 
 (** 道の場合分けの恒等式です。 *)
 
-Definition partical_comatching_Path@{ i j | } ( A : Type@{ i } ) ( a : A ) ( P : A -> Type@{ j } ) ( x : P a ) : Path A a a := id_Path A a.
+Definition comatching_Path@{ i j | } ( A : Type@{ i } ) ( a : A ) ( P : Type@{ j } ) ( display : P -> A ) ( a' : A ) ( x : P ) ( ix : Path A ( display x ) a' ) : Path A a' ( display x ) := match ix in Path _ _ a_ return Path A a_ ( display x ) with id_Path _ _ => id_Path A ( display x ) end.
 (* from: originally defined by Hexirp *)
 
 (** 道の部分的な余場合分けです。 *)
 
-Fail Definition identity_partical_comatching_Path@{ i j | } ( A : Type@{ i } ) ( a : A ) ( P : A -> Type@{ j } ) ( codisplay : forall a' : A, Path A a a' -> P a' ) ( x : Path A a a ) : Path ( Path A a a ) ( comatching_Path A a P ( codisplay a x ) ) x := _.
+Definition identity_comatching_Path@{ i j | } ( A : Type@{ i } ) ( a : A ) ( P : Type@{ j } ) ( display : P -> A ) ( codisplay : forall a' : A, Path A a a' -> P ) ( identity_codisplay : forall ( a' : A ) ( x : Path A a a' ), Path A ( display ( codisplay a' x ) ) a' ) ( a' : A ) ( x : Path A a a' ) : Path ( Path A a a' ) ( match identity_codisplay a' x in Path _ _ a'_ return Path A a a'_ with id_Path _ _ => comatching_Path A a P display a' ( codisplay a' x ) ( identity_codisplay a' x ) end ) x := _.
 (* from: originally defined by Hexirp *)
 
 (** 道の部分的な余場合分けの恒等式です。しかし、部分的なものであるため、 UIP と同値となってしまい成立しません。 *)
