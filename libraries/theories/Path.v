@@ -28,7 +28,7 @@ Definition comatching_Path@{ i j | } ( A : Type@{ i } ) ( a : A ) ( P : Type@{ j
 
 (** 道の部分的な余場合分けです。 *)
 
-Definition identity_comatching_Path@{ i j | } ( A : Type@{ i } ) ( a : A ) ( P : Type@{ j } ) ( display : P -> A ) ( codisplay : forall a' : A, Path A a a' -> P ) ( identity_codisplay : forall ( a' : A ) ( x : Path A a a' ), Path A ( display ( codisplay a' x ) ) a' ) ( x : Path A a a ) : Path ( Path A a a ) ( match identity_codisplay a x in Path _ _ a_ return Path A a a_ with id_Path _ _ => comatching_Path A a P display ( codisplay a x ) ( identity_codisplay a x ) end ) x := _.
+Definition identity_comatching_Path@{ i j | } ( A : Type@{ i } ) ( a : A ) ( P : Type@{ j } ) ( display : P -> A ) ( codisplay : forall a' : A, Path A a a' -> P ) ( identity_codisplay : forall ( a' : A ) ( x : Path A a a' ), Path A ( display ( codisplay a' x ) ) a' ) ( a' : A ) ( x : Path A a a' ) : Path ( Path A a a' ) ( match identity_codisplay a' x in Path _ _ a'_ return Path A a a'_ with id_Path _ _ => comatching_Path A a P display ( codisplay a' x ) ( identity_codisplay a x ) end ) x := _.
 (* from: originally defined by Hexirp *)
 
 (** 道の部分的な余場合分けの恒等式です。しかし、部分的なものであるため、 UIP と同値となってしまい成立しません。 *)
