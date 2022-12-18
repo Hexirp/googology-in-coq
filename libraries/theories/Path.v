@@ -63,10 +63,10 @@ Definition comatching_Path@{ i j | } ( A : Type@{ i } ) ( a : A ) ( P : Type@{ j
 
 (** 道の余場合分けです。 *)
 
-Definition identity_comatching_Path@{ i j | } ( A : Type@{ i } ) ( a : A ) ( P : Type@{ j } ) ( display : P -> A ) ( codisplay : forall a' : A, Path A a a' -> P ) ( identity_codisplay : forall ( a' : A ) ( x : Path A a a' ), Path A ( display ( codisplay a' x ) ) a' ) ( a' : A ) ( x : Path A a a' ) : Path ( Path A a a' ) ( conc_Path A a ( display ( codisplay a' x ) ) a' ( comatching_Path A a P display ( codisplay a' x ) ( conc_Path A ( display ( codisplay a' x ) ) a' a ( identity_codisplay a' x ) ( inv_Path A a a' x ) ) ) ( identity_codisplay a' x ) ) x := match x as x_ in Path _ _ a'_ return Path ( Path A a a'_ ) ( conc_Path A a ( display ( codisplay a'_ x_ ) ) a'_ ( comatching_Path A a P display ( codisplay a'_ x_ ) ( conc_Path A ( display ( codisplay a'_ x_ ) ) a'_ a ( identity_codisplay a'_ x_ ) ( inv_Path A a a'_ x_ ) ) ) ( identity_codisplay a'_ x_ ) ) x_ with id_Path _ _ => _ end.
+Fail Definition identity_comatching_Path@{ i j | } ( A : Type@{ i } ) ( a : A ) ( P : Type@{ j } ) ( display : P -> A ) ( codisplay : forall a' : A, Path A a a' -> P ) ( identity_codisplay : forall ( a' : A ) ( x : Path A a a' ), Path A ( display ( codisplay a' x ) ) a' ) ( a' : A ) ( x : Path A a a' ) : Path ( Path A a a' ) ( conc_Path A a ( display ( codisplay a' x ) ) a' ( comatching_Path A a P display ( codisplay a' x ) ( conc_Path A ( display ( codisplay a' x ) ) a' a ( identity_codisplay a' x ) ( inv_Path A a a' x ) ) ) ( identity_codisplay a' x ) ) x := match x as x_ in Path _ _ a'_ return Path ( Path A a a'_ ) ( conc_Path A a ( display ( codisplay a'_ x_ ) ) a'_ ( comatching_Path A a P display ( codisplay a'_ x_ ) ( conc_Path A ( display ( codisplay a'_ x_ ) ) a'_ a ( identity_codisplay a'_ x_ ) ( inv_Path A a a'_ x_ ) ) ) ( identity_codisplay a'_ x_ ) ) x_ with id_Path _ _ => _ end.
 (* from: originally defined by Hexirp *)
 
-(** 道の部分的な余場合分けの恒等式です。しかし、部分的なものであるため、 UIP と同値となってしまい成立しません。 *)
+(** 道の余場合分けの恒等式です。たぶん証明できると思いますが、グルーポイドの計算が必要になるので、いったん飛ばします。 *)
 
 (** ** 応用 *)
 
