@@ -25,12 +25,12 @@ Definition identity_matching_Dependent_Sum@{ i j | } ( A : Type@{ i } ) ( B : A 
 
 (** 依存直和型の場合分けの恒等式です。 *)
 
-Definition first_Dependent_Sum@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) ( x : Dependent_Sum A B ) : A := match x with pair_Dependent_Sum _ _ a _ => a end.
+Definition first_Dependent_Sum@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) : Dependent_Sum A B -> A := matching_Dependent_Sum A B A ( fun ( xf : A ) ( _ : B xf ) => xf ).
 (* from: originally defined by Hexirp *)
 
 (** 依存直和型の第一射影関数です。 *)
 
-Definition second_Dependent_Sum@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) ( x : Dependent_Sum A B ) : B ( first_Dependent_Sum A B x ) := match x as x_ return B ( first_Dependent_Sum A B x_ ) with pair_Dependent_Sum _ _ a b => b end.
+Definition second_Dependent_Sum@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) ( x : Dependent_Sum A B ) : B ( first_Dependent_Sum A B x ) := match x as x_ return B ( first_Dependent_Sum A B x_ ) with pair_Dependent_Sum _ _ xf xs => xs end.
 (* from: originally defined by Hexirp *)
 
 (** 依存直和型の第二射影関数です。 *)
