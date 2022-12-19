@@ -35,6 +35,8 @@ Definition second_Product@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( x : Pr
 
 (** 直積型の第二射影関数です。 *)
 
+Definition dependent_matching_Product@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( P : Product A B -> Type@{ j } ) ( cp : forall ( xf : A ) ( xs : B ), P ( pair_Product A B ) ) ( x : Product A B ) : P x := _.
+
 Definition comatching_Product@{ i j | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( P : Type@{ j } ) ( df : P -> A ) ( ds : P -> B ) ( x : P ) : Product A B := pair_Product A B ( df x ) ( ds x ).
 (* from: originally defined by Hexirp *)
 
