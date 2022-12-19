@@ -35,15 +35,10 @@ Definition second_Dependent_Sum@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i }
 
 (** 依存直和型の第二射影関数です。 *)
 
-Definition dependent_matching_Path@{ i j | } ( A : Type@{ i } ) ( a : A ) ( P : forall a' : A, Path A a a' -> Type@{ j } ) ( ci : P a ( id_Path A a ) ) ( a' : A ) ( x : Path A a a' ) : P a' x := trpt_Path ( Path A a a' ) ( first_Dependent_Sum ( Path A a a' ) ( P a' ) ( matching_Path A a ( fun a' : A => Dependent_Sum ( Path A a a' ) ( P a' ) ) ( pair_Dependent_Sum ( Path A a a ) ( P a ) ( id_Path A a ) ci ) a' x ) ) x ( P a' ) _ ( second_Dependent_Sum ( Path A a a' ) ( P a' ) ( matching_Path A a ( fun a' : A => Dependent_Sum ( Path A a a' ) ( P a' ) ) ( pair_Dependent_Sum ( Path A a a ) ( P a ) ( id_Path A a ) ci ) a' x ) ).
+Definition dependent_matching_Path@{ i j mij | i <= mij, j <= mij } ( A : Type@{ i } ) ( a : A ) ( P : forall a' : A, Path A a a' -> Type@{ j } ) ( ci : P a ( id_Path A a ) ) ( a' : A ) ( x : Path A a a' ) : P a' x := trpt_Path ( Path A a a' ) ( first_Dependent_Sum ( Path A a a' ) ( P a' ) ( matching_Path A a ( fun a' : A => Dependent_Sum@{ mij } ( Path A a a' ) ( P a' ) ) ( pair_Dependent_Sum ( Path A a a ) ( P a ) ( id_Path A a ) ci ) a' x ) ) x ( P a' ) ( identity_matching_Path A a ( fun a' : A => Dependent_Sum@{ mij } ( Path A a a' ) ( P a' ) ) ( fun a' : A => first_Dependent_Sum ( Path A a a' ) ( P a' ) ) ( pair_Dependent_Sum ( Path A a a ) ( P a ) ( id_Path A a ) ci ) ( id_Path ( Path A a a ) ( id_Path A a ) ) a' x ) ( second_Dependent_Sum ( Path A a a' ) ( P a' ) ( matching_Path A a ( fun a' : A => Dependent_Sum@{ mij } ( Path A a a' ) ( P a' ) ) ( pair_Dependent_Sum ( Path A a a ) ( P a ) ( id_Path A a ) ci ) a' x ) ).
 (* from: originally defined by Hexirp *)
 
-(** 道の場合分けです。 *)
-
-Definition identity_matching_Path@{ i j | } ( A : Type@{ i } ) ( a : A ) ( P : A -> Type@{ j } ) ( display : forall a' : A, P a' -> Path A a a' ) ( ci : P a ) ( ici : Path ( Path A a a ) ( display a ci ) ( id_Path A a ) ) ( a' : A ) ( x : Path A a a' ) : Path ( Path A a a' ) ( display a' ( matching_Path A a P ci a' x ) ) x := match x as x_ in Path _ _ a'_ return Path ( Path A a a'_ ) ( display a'_ ( matching_Path A a P ci a'_ x_ ) ) x_ with id_Path _ _ => ici end.
-(* from: originally defined by Hexirp *)
-
-(** 道の場合分けの恒等式です。 *)
+(** 道の依存場合分けです。 *)
 
 Definition comatching_Dependent_Sum@{ i j | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) ( P : Type@{ j } ) ( df : P -> A ) ( ds : forall x : P, B ( df x ) ) ( x : P ) : Dependent_Sum A B := pair_Dependent_Sum A B ( df x ) ( ds x ).
 (* from: originally defined by Hexirp *)
