@@ -23,6 +23,11 @@ Definition identity_matching_Path@{ i j | } ( A : Type@{ i } ) ( a : A ) ( P : A
 
 (** 道の場合分けの恒等式です。 *)
 
+Definition dependent_matching_Path@{ i j | } ( A : Type@{ i } ) ( a : A ) ( P : forall a' : A, Path A a a' -> Type@{ j } ) ( ci : P a ( id_Path A a ) ) ( a' : A ) ( x : Path A a a' ) : P a' x := match x as x_ in Path _ _ a'_ return P a'_ x_ with id_Path _ _ => ci end.
+(* from: originally defined by Hexirp *)
+
+(** 道の依存場合分けです。 *)
+
 Definition trpt_Path@{ i j | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( B : A -> Type@{ j } ) ( p : Path A x y ) ( u : B x ) : B y := matching_Path A x B u y p.
 (* from: originally defined by Hexirp *)
 
