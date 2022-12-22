@@ -28,27 +28,32 @@ Definition dependent_matching_Path@{ i j | } ( A : Type@{ i } ) ( a : A ) ( P : 
 
 (** 道の依存場合分けです。 *)
 
-Definition trpt_Path@{ i j | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( B : A -> Type@{ j } ) ( p : Path A x y ) ( u : B x ) : B y := matching_Path A x B u y p.
+Definition trpt_Path@{ i j | } ( A : Type@{ i } ) ( B : A -> Type@{ j } ) ( x : A ) ( y : A ) ( p : Path A x y ) ( u : B x ) : B y := matching_Path A x B u y p.
 (* from: originally defined by Hexirp *)
 
 (** 輸送です。 *)
 
-Definition conc_Path@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( z : A ) ( p : Path A x y ) ( q : Path A y z ) : Path A x z := trpt_Path A y z ( Path A x ) q p.
+Definition conc_Path@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( z : A ) ( p : Path A x y ) ( q : Path A y z ) : Path A x z := matching_Path A x ( fun y_ : A => forall z_ : A, Path A y_ z_ -> Path A x z_ ) ( fun ( z_ : A ) ( q_ : Path A x z_ ) => q_ ) y p z q.
 (* from: originally defined by Hexirp *)
 
 (** 道の結合です。 *)
 
-Definition inv_Path@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( p : Path A x y ) : Path A y x := trpt_Path A x y ( fun y_ : A => Path A y_ x ) p ( id_Path A x ).
+Definition inv_Path@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( p : Path A x y ) : Path A y x := matching_Path A x ( fun y_ : A => Path A y_ x ) ( id_Path A x ) y p.
 (* from: originally defined by Hexirp *)
 
 (** 道の逆です。 *)
 
-Definition ap_Path@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( f : A -> B ) ( x : A ) ( y : A ) ( p : Path A x y ) : Path B ( f x ) ( f y ) := trpt_Path A x y ( fun y_ : A => Path B ( f x ) ( f y_ ) ) p ( id_Path B ( f x ) ).
+Definition assoc_conc_Path@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( z : A ) ( w : A ) ( p : Path A x y ) ( q : Path A y z ) ( r : Path A z w ) : Path ( Path A x w ) ( conc_Path A x z w ( conc_Path A x y z p q ) r ) ( conc_Path A x y w p ( conc_Path A y z w q r ) ) := dependent_matching_Path A x ( fun ( y_ : A ) ( p_ : Path A x y_ ) => forall ( z_ : A ) ( q_ : Path A y_ z_ ) ( w_ : A ) ( r_ : Path A z_ w_ ), Path ( Path A x w_ ) ( conc_Path A x z_ w_ ( conc_Path A x y_ z_ p_ q_ ) r_ ) ( conc_Path A x y_ w_ p_ ( conc_Path A y_ z_ w_ q_ r_ ) ) ) ( fun ( z_ : A ) ( q_ : Path A x z_ ) ( w_ : A ) ( r_ : Path A z_ w_ ) => id_Path ( Path A x w_ ) ( conc_Path A x z_ w_ q_ r_ ) ) y p z q w r.
+(* from: originally defined by Hexirp *)
+
+(** 道の結合の結合子 (associator) です。 *)
+
+Definition ap_Path@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( f : A -> B ) ( x : A ) ( y : A ) ( p : Path A x y ) : Path B ( f x ) ( f y ) := trpt_Path A ( fun y_ : A => Path B ( f x ) ( f y_ ) ) x y p ( id_Path B ( f x ) ).
 (* from: originally defined by Hexirp *)
 
 (** 道への適用です。 *)
 
-Definition trpv_Path@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( B : A -> Type@{ i } ) ( p : Path A x y ) ( u : B y ) : B x := trpt_Path A y x B ( inv_Path A x y p) u.
+Definition trpv_Path@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( B : A -> Type@{ i } ) ( p : Path A x y ) ( u : B y ) : B x := trpt_Path A B y x ( inv_Path A x y p) u.
 (* from: originally defined by Hexirp *)
 
 (** 道による輸送と逆です。 *)
@@ -75,7 +80,7 @@ Fail Definition identity_comatching_Path@{ i j | } ( A : Type@{ i } ) ( a : A ) 
 
 (** ** 応用 *)
 
-Definition trpt_2_Path@{ i j | } ( A : Type@{ i } ) ( xa : A ) ( ya : A ) ( B : Type@{ i } ) ( xb : B ) ( yb : B ) ( C : A -> B -> Type@{ j } ) ( pa : Path A xa ya ) ( pb : Path B xb yb ) ( u : C xa xb ) : C ya yb := trpt_Path B xb yb ( C ya ) pb ( trpt_Path A xa ya ( fun ya_ : A => C ya_ xb ) pa u ).
+Definition trpt_2_Path@{ i j | } ( A : Type@{ i } ) ( xa : A ) ( ya : A ) ( B : Type@{ i } ) ( xb : B ) ( yb : B ) ( C : A -> B -> Type@{ j } ) ( pa : Path A xa ya ) ( pb : Path B xb yb ) ( u : C xa xb ) : C ya yb := trpt_Path B ( C ya ) xb yb pb ( trpt_Path A ( fun ya_ : A => C ya_ xb ) xa ya pa u ).
 (* from: originally defined by Hexirp *)
 
 (** 二つの道を通した輸送です。 *)
