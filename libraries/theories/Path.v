@@ -43,15 +43,35 @@ Definition inv_Path@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( p : Path A 
 
 (** 道の逆です。 *)
 
-Definition assoc_conc_Path@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( z : A ) ( w : A ) ( p : Path A x y ) ( q : Path A y z ) ( r : Path A z w ) : Path ( Path A x w ) ( conc_Path A x z w ( conc_Path A x y z p q ) r ) ( conc_Path A x y w p ( conc_Path A y z w q r ) ) := dependent_matching_Path A x ( fun ( y_ : A ) ( p_ : Path A x y_ ) => forall ( z_ : A ) ( q_ : Path A y_ z_ ) ( w_ : A ) ( r_ : Path A z_ w_ ), Path ( Path A x w_ ) ( conc_Path A x z_ w_ ( conc_Path A x y_ z_ p_ q_ ) r_ ) ( conc_Path A x y_ w_ p_ ( conc_Path A y_ z_ w_ q_ r_ ) ) ) ( fun ( z_ : A ) ( q_ : Path A x z_ ) ( w_ : A ) ( r_ : Path A z_ w_ ) => id_Path ( Path A x w_ ) ( conc_Path A x z_ w_ q_ r_ ) ) y p z q w r.
+Definition assoc_Path@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( z : A ) ( w : A ) ( p : Path A x y ) ( q : Path A y z ) ( r : Path A z w ) : Path ( Path A x w ) ( conc_Path A x z w ( conc_Path A x y z p q ) r ) ( conc_Path A x y w p ( conc_Path A y z w q r ) ) := dependent_matching_Path A x ( fun ( y_ : A ) ( p_ : Path A x y_ ) => forall ( z_ : A ) ( q_ : Path A y_ z_ ) ( w_ : A ) ( r_ : Path A z_ w_ ), Path ( Path A x w_ ) ( conc_Path A x z_ w_ ( conc_Path A x y_ z_ p_ q_ ) r_ ) ( conc_Path A x y_ w_ p_ ( conc_Path A y_ z_ w_ q_ r_ ) ) ) ( fun ( z_ : A ) ( q_ : Path A x z_ ) ( w_ : A ) ( r_ : Path A z_ w_ ) => id_Path ( Path A x w_ ) ( conc_Path A x z_ w_ q_ r_ ) ) y p z q w r.
 (* from: originally defined by Hexirp *)
 
-(** 道の結合の結合子 (associator) です。 *)
+(** 道の結合法則の演算子です。 *)
+
+Definition left_unit_Path@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( p : Path A x y ) : Path ( Path A x y ) ( conc_Path A x x y ( id_Path A x ) p ) p := id_Path ( Path A x y ) p.
+(* from: originally defined by Hexirp *)
+
+(** 道の左単位元法則の演算子です。 *)
+
+Definition right_unit_Path@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( p : Path A x y ) : Path ( Path A x y ) ( conc_Path A x y y p ( id_Path A y ) ) p := dependent_matching_Path A x ( fun ( y_ : A ) ( p_ : Path A x y_ ) => Path ( Path A x y_ ) ( conc_Path A x y_ y_ p_ ( id_Path A y_ ) ) p_ ) ( id_Path ( Path A x x ) ( id_Path A x ) ) y p.
+(* from: originally defined by Hexirp *)
+
+(** 道の右単位元法則の演算子です。 *)
+
+Definition left_inv_Path@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( p : Path A x y ) : Path ( Path A y y ) ( conc_Path A y x y ( inv_Path A x y p ) p ) ( id_Path A y ) := dependent_matching_Path A x ( fun ( y_ : A ) ( p_ : Path A x y_ ) => Path ( Path A y_ y_ ) ( conc_Path A y_ x y_ ( inv_Path A x y_ p_ ) p_ ) ( id_Path A y_ ) ) ( id_Path ( Path A x x ) ( id_Path A x ) ) y p.
+(* from: originally defined by Hexirp *)
+
+(** 道の左逆元法則の演算子です。 *)
+
+Definition right_inv_Path@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( p : Path A x y ) : Path ( Path A x x ) ( conc_Path A x y x p ( inv_Path A x y p ) ) ( id_Path A x ) := dependent_matching_Path A x ( fun ( y_ : A ) ( p_ : Path A x y_ ) => Path ( Path A x x ) ( conc_Path A x y_ x p_ ( inv_Path A x y_ p_ ) ) ( id_Path A x ) ) ( id_Path ( Path A x x ) ( id_Path A x ) ) y p.
+(* from: originally defined by Hexirp *)
+
+(** 道の右逆元法則の演算子です。 *)
 
 Definition ap_Path@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( f : A -> B ) ( x : A ) ( y : A ) ( p : Path A x y ) : Path B ( f x ) ( f y ) := trpt_Path A ( fun y_ : A => Path B ( f x ) ( f y_ ) ) x y p ( id_Path B ( f x ) ).
 (* from: originally defined by Hexirp *)
 
-(** 道への適用です。 *)
+(** 関数を道に適用する演算子です。 *)
 
 Definition trpv_Path@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( B : A -> Type@{ i } ) ( p : Path A x y ) ( u : B y ) : B x := trpt_Path A B y x ( inv_Path A x y p) u.
 (* from: originally defined by Hexirp *)
