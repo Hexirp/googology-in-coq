@@ -8,6 +8,7 @@ digraph Dependencies {
   "Base" -> "Dependent_Product";
   # Path
   "Base" -> "Path";
+  "Function" -> "Path";
   # Dependent_Sum
   "Base" -> "Dependent_Sum";
   "Path" -> "Dependent_Sum";
