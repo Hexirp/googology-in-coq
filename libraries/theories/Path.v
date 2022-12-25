@@ -85,6 +85,21 @@ Definition ap_comp_Path@{ i j k | } ( A : Type@{ i } ) ( B : Type@{ j } ) ( C : 
 
 (** [ap_Path] と [comp_Function] の等式です。 *)
 
+Definition ap_idp_Path@{ i j | } ( A : Type@{ i } ) ( B : Type@{ j } ) ( f : A -> B ) ( x : A ) : Path ( Path B ( f x ) ( f x ) ) ( ap_Path A B f x x ( id_Path A x ) ) ( id_Path B ( f x ) ) := id_Path ( Path B ( f x ) ( f x ) ) ( id_Path B ( f x ) ).
+(* from: originally defined by Hexirp *)
+
+(** [ap_Path] と [id_Path] の等式です。 *)
+
+Definition ap_conc_Path@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( f : A -> B ) ( x : A ) ( y : A ) ( z : A ) ( p : Path A x y ) ( q : Path A y z ) : Path ( Path B ( f x ) ( f z ) ) ( ap_Path A B f x z ( conc_Path A x y z p q ) ) ( conc_Path B ( f x ) ( f y ) ( f z ) ( ap_Path A B f x y p ) ( ap_Path A B f y z q ) ) := dependent_matching_Path A x ( fun ( y_ : A ) ( p_ : Path A x y_ ) => forall ( z_ : A ) ( q_ : Path A y_ z_ ), Path ( Path B ( f x ) ( f z_ ) ) ( ap_Path A B f x z_ ( conc_Path A x y_ z_ p_ q_ ) ) ( conc_Path B ( f x ) ( f y_ ) ( f z_ ) ( ap_Path A B f x y_ p_ ) ( ap_Path A B f y_ z_ q_ ) ) ) ( fun ( z_ : A ) ( q_ : Path A x z_ ) => id_Path ( Path B ( f x ) ( f z_ ) ) ( ap_Path A B f x z_ q_ ) ) y p z q.
+(* from: originally defined by Hexirp *)
+
+(** [ap_Path] と [conc_Path] の等式です。 *)
+
+Definition ap_inv_Path@{ i j | } ( A : Type@{ i } ) ( B : Type@{ j } ) ( f : A -> B ) ( x : A ) ( y : A ) ( p : Path A x y ) : Path ( Path B ( f y ) ( f x ) ) ( ap_Path A B f y x ( inv_Path A x y p ) ) ( inv_Path B ( f x ) ( f y ) ( ap_Path A B f x y p ) ) := dependent_matching_Path A x ( fun ( y_ : A ) ( p_ : Path A x y_ ) => Path ( Path B ( f y_ ) ( f x ) ) ( ap_Path A B f y_ x ( inv_Path A x y_ p_ ) ) ( inv_Path B ( f x ) ( f y_ ) ( ap_Path A B f x y_ p_ ) ) ) ( id_Path ( Path B ( f x ) ( f x ) ) ( id_Path B ( f x ) ) ) y p.
+(* from: originally defined by Hexirp *)
+
+(** [ap_Path] と [id_Path] の等式です。 *)
+
 Definition trpv_Path@{ i j | } ( A : Type@{ i } ) ( B : A -> Type@{ j } ) ( x : A ) ( y : A ) ( p : Path A x y ) ( u : B y ) : B x := trpt_Path A B y x ( inv_Path A x y p) u.
 (* from: originally defined by Hexirp *)
 
