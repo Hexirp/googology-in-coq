@@ -13,7 +13,7 @@ Definition Dependent_Function@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } )
 
 (** 依存関数型です。 *)
 
-Definition map_Dependent_Function@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) ( C : Type@{ i } ) ( D : C -> Type@{ i } ) ( f : C -> A ) ( g : forall x : C, B ( f x ) -> D x ) ( x : Dependent_Function A B ) : Dependent_Function C D := fun y : C => g y ( x ( f y ) ).
+Definition map_Dependent_Function@{ i j k l | } ( A : Type@{ i } ) ( B : A -> Type@{ j } ) ( C : Type@{ k } ) ( D : C -> Type@{ l } ) ( f : C -> A ) ( g : forall x : C, B ( f x ) -> D x ) ( x : forall a : A, B a ) : forall c : C, D c := fun y : C => g y ( x ( f y ) ).
 (* from: originally defined by Hexirp *)
 
 (** 依存関数型から依存関数への写像です。 *)

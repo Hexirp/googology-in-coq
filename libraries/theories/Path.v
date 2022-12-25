@@ -70,7 +70,7 @@ Definition right_inv_Path@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( p : P
 
 (** 道の右逆元法則の等式です。 *)
 
-Definition ap_Path@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( f : A -> B ) ( x : A ) ( y : A ) ( p : Path A x y ) : Path B ( f x ) ( f y ) := matching_Path A x ( fun y_ : A => Path B ( f x ) ( f y_ ) ) ( id_Path B ( f x ) ) y p.
+Definition ap_Path@{ i j | } ( A : Type@{ i } ) ( B : Type@{ j } ) ( f : A -> B ) ( x : A ) ( y : A ) ( p : Path A x y ) : Path B ( f x ) ( f y ) := matching_Path A x ( fun y_ : A => Path B ( f x ) ( f y_ ) ) ( id_Path B ( f x ) ) y p.
 (* from: originally defined by Hexirp *)
 
 (** 関数を道に適用する演算子です。 *)
@@ -80,12 +80,12 @@ Definition ap_idf_Path@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( p : Path
 
 (** [ap_Path] と [id_Function] の等式です。 *)
 
-Definition ap_comp_Path@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( C : Type@{ i } ) ( f : B -> C ) ( g : A -> B ) ( x : A ) ( y : A ) ( p : Path A x y ) : Path ( Path C ( f ( g x ) ) ( f ( g y ) ) ) ( ap_Path A C ( comp_Function A B C f g ) x y p ) ( ap_Path B C f ( g x ) ( g y ) ( ap_Path A B g x y p ) ) := dependent_matching_Path A x ( fun ( y_ : A ) ( p_ : Path A x y_ ) => Path ( Path C ( f ( g x ) ) ( f ( g y_ ) ) ) ( ap_Path A C ( comp_Function A B C f g ) x y_ p_ ) ( ap_Path B C f ( g x ) ( g y_ ) ( ap_Path A B g x y_ p_ ) ) ) ( id_Path ( Path C ( f ( g x ) ) ( f ( g x ) ) ) ( id_Path C ( f ( g x ) ) ) ) y p.
+Definition ap_comp_Path@{ i j k | } ( A : Type@{ i } ) ( B : Type@{ j } ) ( C : Type@{ k } ) ( f : B -> C ) ( g : A -> B ) ( x : A ) ( y : A ) ( p : Path A x y ) : Path ( Path C ( f ( g x ) ) ( f ( g y ) ) ) ( ap_Path A C ( comp_Function A B C f g ) x y p ) ( ap_Path B C f ( g x ) ( g y ) ( ap_Path A B g x y p ) ) := dependent_matching_Path A x ( fun ( y_ : A ) ( p_ : Path A x y_ ) => Path ( Path C ( f ( g x ) ) ( f ( g y_ ) ) ) ( ap_Path A C ( comp_Function A B C f g ) x y_ p_ ) ( ap_Path B C f ( g x ) ( g y_ ) ( ap_Path A B g x y_ p_ ) ) ) ( id_Path ( Path C ( f ( g x ) ) ( f ( g x ) ) ) ( id_Path C ( f ( g x ) ) ) ) y p.
 (* from: originally defined by Hexirp *)
 
 (** [ap_Path] と [comp_Function] の等式です。 *)
 
-Definition trpv_Path@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( B : A -> Type@{ i } ) ( p : Path A x y ) ( u : B y ) : B x := trpt_Path A B y x ( inv_Path A x y p) u.
+Definition trpv_Path@{ i j | } ( A : Type@{ i } ) ( B : A -> Type@{ j } ) ( x : A ) ( y : A ) ( p : Path A x y ) ( u : B y ) : B x := trpt_Path A B y x ( inv_Path A x y p) u.
 (* from: originally defined by Hexirp *)
 
 (** 道による輸送と逆です。 *)

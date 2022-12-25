@@ -13,22 +13,22 @@ Definition Function@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) : Type@{ i } :
 
 (** 関数型です。 *)
 
-Definition id_Function@{ i | } ( A : Type@{ i } ) : Function@{ i } A A := fun x : A => x.
+Definition id_Function@{ i | } ( A : Type@{ i } ) : A -> A := fun x : A => x.
 (* from: originally defined by Hexirp *)
 
 (** 恒等関数です。 *)
 
-Definition const_Function@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( x : A ) : Function@{ i } B A := fun y : B => x.
+Definition const_Function@{ i j | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( x : A ) : B -> A := fun y : B => x.
 (* from: originally defined by Hexirp *)
 
 (** 定数関数です。 *)
 
-Definition comp_Function@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( C : Type@{ i } ) ( f : Function@{ i } B C ) ( g : Function@{ i } A B ) : Function@{ i } A C := fun x : A => f ( g x ).
+Definition comp_Function@{ i j k | } ( A : Type@{ i } ) ( B : Type@{ j } ) ( C : Type@{ k } ) ( f : B -> C ) ( g : A -> B ) : A -> C := fun x : A => f ( g x ).
 (* from: originally defined by Hexirp *)
 
 (** 関数の合成です。 *)
 
-Definition map@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( C : Type@{ i } ) ( D : Type@{ i } ) ( f : C -> A ) ( g : B -> D ) ( x : Function@{ i } A B ) : Function@{ i } C D := fun y : C => g ( x ( f y ) ).
+Definition map@{ i j k l | } ( A : Type@{ i } ) ( B : Type@{ j } ) ( C : Type@{ k } ) ( D : Type@{ l } ) ( f : C -> A ) ( g : B -> D ) ( x : A -> B ) : C -> D := fun y : C => g ( x ( f y ) ).
 (* from: originally defined by Hexirp *)
 
 (** 関数型から関数型への写像です。 *)
