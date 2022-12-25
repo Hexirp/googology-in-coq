@@ -30,11 +30,6 @@ Definition dependent_matching_Path@{ i j | } ( A : Type@{ i } ) ( a : A ) ( P : 
 
 (** 道の依存場合分けです。 *)
 
-Definition trpt_Path@{ i j | } ( A : Type@{ i } ) ( B : A -> Type@{ j } ) ( x : A ) ( y : A ) ( p : Path A x y ) ( u : B x ) : B y := matching_Path A x B u y p.
-(* from: originally defined by Hexirp *)
-
-(** 輸送です。 *)
-
 Definition conc_Path@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( z : A ) ( p : Path A x y ) ( q : Path A y z ) : Path A x z := matching_Path A x ( fun y_ : A => forall z_ : A, Path A y_ z_ -> Path A x z_ ) ( fun ( z_ : A ) ( q_ : Path A x z_ ) => q_ ) y p z q.
 (* from: originally defined by Hexirp *)
 
@@ -100,15 +95,15 @@ Definition ap_inv_Path@{ i j | } ( A : Type@{ i } ) ( B : Type@{ j } ) ( f : A -
 
 (** [ap_Path] と [id_Path] の等式です。 *)
 
-Definition trpv_Path@{ i j | } ( A : Type@{ i } ) ( B : A -> Type@{ j } ) ( x : A ) ( y : A ) ( p : Path A x y ) ( u : B y ) : B x := trpt_Path A B y x ( inv_Path A x y p) u.
+Definition trpt_Path@{ i j | } ( A : Type@{ i } ) ( B : A -> Type@{ j } ) ( x : A ) ( y : A ) ( p : Path A x y ) ( u : B x ) : B y := matching_Path A x ( fun y_ : A => B x -> B y_ ) ( id_Function ( B x ) ) y p u.
 (* from: originally defined by Hexirp *)
 
-(** 道による輸送と逆です。 *)
+(** 輸送です。 *)
 
-Definition conv_Path@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( z : A ) ( p : Path A x y ) ( q : Path A x z ) : Path A y z := conc_Path A y x z ( inv_Path A x y p ) q.
+Definition apd_Path@{ i j | } ( A : Type@{ i } ) ( B : A -> Type@{ j } ) ( f : forall a : A, B a ) ( x : A ) ( y : A ) ( p : Path A x y ) : Path ( B y ) ( trpt_Path A B x y p ( f x ) ) ( f y ) := dependent_matching_Path A x ( fun ( y_ : A ) ( p_ : Path A x y_ ) => Path ( B y_ ) ( trpt_Path A B x y_ p_ ( f x ) ) ( f y_ ) ) ( id_Path ( B x ) ( f x ) ) y p.
 (* from: originally defined by Hexirp *)
 
-(** 道の結合と逆です。 *)
+(** 依存関数を道に適用する演算子です。 *)
 
 Definition map_Path@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( f : A -> B ) ( x : A ) ( y : A ) ( p : Path A x y ) : Path B ( f x ) ( f y ) := ap_Path A B f x y p.
 (* from: originally defined by Hexirp *)
