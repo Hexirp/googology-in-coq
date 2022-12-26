@@ -15,27 +15,30 @@ Inductive Product@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) : Type@{ i } := 
 
 (** 直積型です。 *)
 
-Definition matching_Product@{ i j | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( P : Type@{ j } ) ( cp : A -> B -> P ) ( x : Product A B ) : P := match x with pair_Product _ _ a b => cp a b end.
+Definition matching_Product@{ i j | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( P : Type@{ j } ) ( cp : A -> B -> P ) ( x : Product A B ) : P := match x with pair_Product _ _ xf xs => cp xf xs end.
 (* from: originally defined by Hexirp *)
 
 (** 直積型の場合分けです。 *)
 
-Definition identity_matching_Product@{ i j | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( P : Type@{ j } ) ( display : P -> Product A B ) (cp : A -> B -> P ) ( icp : forall ( a : A ) ( b : B ), Path ( Product A B ) ( display ( cp a b ) ) ( pair_Product A B a b ) ) ( x : Product A B ) : Path ( Product A B ) ( display ( matching_Product A B P cp x ) ) x := match x as x_ return Path ( Product A B ) ( display ( matching_Product A B P cp x_ ) ) x_ with pair_Product _ _ a b => icp a b end.
+Definition identity_matching_Product@{ i j | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( P : Type@{ j } ) ( display : P -> Product A B ) (cp : A -> B -> P ) ( icp : forall ( a : A ) ( b : B ), Path ( Product A B ) ( display ( cp a b ) ) ( pair_Product A B a b ) ) ( x : Product A B ) : Path ( Product A B ) ( display ( matching_Product A B P cp x ) ) x := match x as x_ return Path ( Product A B ) ( display ( matching_Product A B P cp x_ ) ) x_ with pair_Product _ _ xf xs => icp xf xs end.
 (* from: originally defined by Hexirp *)
 
 (** 直積型の場合分けの恒等式です。 *)
 
-Definition first_Product@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( x : Product A B ) : A := match x with pair_Product _ _ a _ => a end.
+Definition dependent_matching_Product@{ i j | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( P : Product A B -> Type@{ j } ) ( cp : forall ( xf : A ) ( xs : B ), P ( pair_Product A B xf xs ) ) ( x : Product A B ) : P x := match x as x_ return P x_ with pair_Product _ _ xf xs => cp xf xs end.
+(* from: originally defined by Hexirp *)
+
+(** 直積型の依存場合分けです。 *)
+
+Definition first_Product@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( x : Product A B ) : A := matching_Product A B A ( fun ( xf : A ) ( xs : B ) => xf ) x.
 (* from: originally defined by Hexirp *)
 
 (** 直積型の第一射影関数です。 *)
 
-Definition second_Product@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( x : Product A B ) : B := match x with pair_Product _ _ _ b => b end.
+Definition second_Product@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( x : Product A B ) : B := matching_Product A B B ( fun ( xf : A ) ( xs : B ) => xs ) x.
 (* from: originally defined by Hexirp *)
 
 (** 直積型の第二射影関数です。 *)
-
-Definition dependent_matching_Product@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( P : Product A B -> Type@{ j } ) ( cp : forall ( xf : A ) ( xs : B ), P ( pair_Product A B ) ) ( x : Product A B ) : P x := _.
 
 Definition comatching_Product@{ i j | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( P : Type@{ j } ) ( df : P -> A ) ( ds : P -> B ) ( x : P ) : Product A B := pair_Product A B ( df x ) ( ds x ).
 (* from: originally defined by Hexirp *)
