@@ -25,7 +25,12 @@ Definition identity_matching_Sum@{ i j | } ( A : Type@{ i } ) ( B : Type@{ i } )
 
 (** 直和型の場合分けです。 *)
 
-Definition map_Sum@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( C : Type@{ i } ) ( D : Type@{ i } ) ( f : A -> C ) ( g : B -> D ) : Sum A B -> Sum C D := matching_Sum A B ( Sum C D ) ( fun xl : A => left_Sum C D ( f xl ) ) ( fun xr : B => right_Sum C D ( g xr ) ).
+Definition dependent_matching_Sum@{ i j | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( P : Sum A B -> Type@{ j } ) ( cl : forall xl : A, P ( left_Sum A B xl ) ) ( cr : forall xr : B, P ( right_Sum A B xr ) ) ( x : Sum A B ) : P x := match x as x_ return P x_ with left_Sum _ _ xl => cl xl | right_Sum _ _ xr => cr xr end.
+(* from: originally defined by Hexirp *)
+
+(** 直和型の依存場合分けです。 *)
+
+Definition map_Sum@{ i j | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( C : Type@{ j } ) ( D : Type@{ j } ) ( f : A -> C ) ( g : B -> D ) : Sum A B -> Sum C D := matching_Sum A B ( Sum C D ) ( fun xl : A => left_Sum C D ( f xl ) ) ( fun xr : B => right_Sum C D ( g xr ) ).
 (* from: originally defined by Hexirp *)
 
 (** 直和型の写像です。 *)
