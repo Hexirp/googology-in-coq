@@ -30,7 +30,7 @@ Definition dependent_matching_Void@{ i j | } ( P : Void@{ i } -> Type@{ j } ) ( 
 
 (** 空型の依存場合分けです。 *)
 
-Definition absurd@{ i j | } ( A : Type@{ i } ) : Void@{ j } -> A := matching_Void A.
+Definition absurd@{ i j | } ( A : Type@{ j } ) : Void@{ i } -> A := matching_Void A.
 (* from: originally defined by Hexirp *)
 
 (** 空型から任意の型を取り出す関数です。 *)

@@ -25,17 +25,22 @@ Definition identity_matching_Unit@{ i j | } ( P : Type@{ j } ) ( display : P -> 
 
 (** 単一型の場合分けの恒等式です。 *)
 
+Definition dependent_matching_Unit@{ i j | } ( P : Unit@{ i } -> Type@{ j } ) ( cu : P unit_Unit ) ( x : Unit@{ i } ) : P x := match x as x_ return P x_ with unit_Unit => cu end.
+(* from: originally defined by Hexirp *)
+
+(** 単一型の依存場合分けです。 *)
+
 Definition comatching_Unit@{ i j | } ( P : Type@{ j } ) ( x : P ) : Unit@{ i } := unit_Unit.
 (* from: originally defined by Hexirp *)
 
 (** 単一型の余場合分けです。 *)
 
-Definition identity_comatching_Unit@{ i j | } ( P : Type@{ j } ) ( codisplay : Unit@{ i } -> P ) ( x : Unit@{ i } ) : Path Unit@{ i } ( comatching_Unit P ( codisplay x ) ) x := match x as x_ return Path Unit ( comatching_Unit P ( codisplay x_ ) ) x_ with unit_Unit => id_Path Unit unit_Unit end.
+Definition identity_comatching_Unit@{ i j | } ( P : Type@{ j } ) ( codisplay : Unit@{ i } -> P ) ( x : Unit@{ i } ) : Path Unit@{ i } ( comatching_Unit P ( codisplay x ) ) x := dependent_matching_Unit ( fun x_ : Unit@{ i } => Path Unit@{ i } ( comatching_Unit P ( codisplay x_ ) ) x_ ) ( id_Path Unit@{ i } unit_Unit ) x.
 (* from: originally defined by Hexirp *)
 
 (** 単一型の余場合分けの恒等式です。 *)
 
-Definition const_Unit@{ i | } ( A : Type@{ i } ) : A -> Unit@{ i } := fun x : A => unit_Unit.
+Definition const_Unit@{ i j | } ( A : Type@{ j } ) : A -> Unit@{ i } := fun x : A => unit_Unit.
 (* from: originally defined by Hexirp *)
 
-(** 定数関数です。 *)
+(** 単一型の定数関数です。 *)

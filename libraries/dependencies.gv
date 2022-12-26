@@ -9,9 +9,10 @@ digraph Dependencies {
   "Function" -> "Path";
   # Void
   "Base" -> "Void";
+  "Path" -> "Void";
   # Unit
   "Base" -> "Unit";
-  "Base" -> "Path";
+  "Path" -> "Unit";
   # Sum
   "Base" -> "Sum";
   "Path" -> "Sum";
