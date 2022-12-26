@@ -4,25 +4,25 @@ digraph Dependencies {
   "Base" -> "Dependent_Function";
   # Function
   "Base" -> "Function";
-  # Dependent_Product
-  "Base" -> "Dependent_Product";
   # Path
   "Base" -> "Path";
   "Function" -> "Path";
-  # Dependent_Sum
-  "Base" -> "Dependent_Sum";
-  "Path" -> "Dependent_Sum";
-  # Product
-  "Base" -> "Product";
-  "Path" -> "Product";
-  # Sum
-  "Base" -> "Sum";
-  "Path" -> "Sum";
+  # Void
+  "Base" -> "Void";
   # Unit
   "Base" -> "Unit";
   "Base" -> "Path";
-  # Void
-  "Base" -> "Void";
+  # Sum
+  "Base" -> "Sum";
+  "Path" -> "Sum";
+  # Product
+  "Base" -> "Product";
+  "Path" -> "Product";
+  # Dependent_Sum
+  "Base" -> "Dependent_Sum";
+  "Path" -> "Dependent_Sum";
+  # Dependent_Product
+  "Base" -> "Dependent_Product";
   # W_type_Beta
   "Base" -> "W_type_Beta";
   "Function" -> "W_type_Beta";
