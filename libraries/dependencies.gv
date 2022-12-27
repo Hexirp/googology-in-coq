@@ -1,4 +1,6 @@
 digraph Dependencies {
+  edge [ minlen = 3 ];
+
   # Base
   # Dependent_Function
   "Base" -> "Dependent_Function";
