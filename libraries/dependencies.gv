@@ -16,6 +16,7 @@ digraph Dependencies {
   # Sum
   "Base" -> "Sum";
   "Path" -> "Sum";
+  "Void" -> "Sum";
   # Product
   "Base" -> "Product";
   "Path" -> "Product";

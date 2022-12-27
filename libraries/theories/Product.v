@@ -30,6 +30,14 @@ Definition dependent_matching_Product@{ i j | } ( A : Type@{ i } ) ( B : Type@{ 
 
 (** 直積型の依存場合分けです。 *)
 
+Definition path_cons_Product@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( x : Product A B ) ( y : Product A B ) := Path ( Product A B ) x y.
+Proof.
+  exact _.
+Defined.
+(* from: originally defined by Hexirp *)
+
+(** 直積型の構成子の道です。 *)
+
 Definition first_Product@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( x : Product A B ) : A := matching_Product A B A ( fun ( xf : A ) ( xs : B ) => xf ) x.
 (* from: originally defined by Hexirp *)
 

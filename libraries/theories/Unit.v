@@ -30,6 +30,11 @@ Definition dependent_matching_Unit@{ i j | } ( P : Unit@{ i } -> Type@{ j } ) ( 
 
 (** 単一型の依存場合分けです。 *)
 
+Definition from_path_cons_Unit@{ i | } ( x : Unit@{ i } ) ( y : Unit@{ i } ) : Path Unit@{ i } x y := dependent_matching_Unit ( fun x_ : Unit@{i} => forall y_ : Unit@{ i }, Path Unit@{ i } x_ y_ ) ( fun y_ : Unit@{ i } => dependent_matching_Unit ( fun y__ : Unit@{ i } => Path Unit@{ i } unit_Unit y__ ) ( id_Path Unit@{ i } unit_Unit ) y_ ) x y.
+(* from: originally defined by Hexirp *)
+
+(** 単一型の構築子の道から単一型の道を作る関数です。 *)
+
 Definition comatching_Unit@{ i j | } ( P : Type@{ j } ) ( x : P ) : Unit@{ i } := unit_Unit.
 (* from: originally defined by Hexirp *)
 
