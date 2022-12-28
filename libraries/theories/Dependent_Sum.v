@@ -40,7 +40,29 @@ Proof.
 Defined.
 (* from: originally defined by Hexirp *)
 
-(** 依存直和型の構築子の関数です。 *)
+(** 依存直和型の構築子の道です。 *)
+
+Definition from_path_cons_Dependent_Sum@{ i si | i < si } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) ( x : Dependent_Sum A B ) ( y : Dependent_Sum A B ) ( p : path_cons_Dependent_Sum@{ i si } A B x y ) : Path ( Dependent_Sum A B ) x y.
+Proof.
+  refine ( dependent_matching_Dependent_Sum A B ( fun x_ : Dependent_Sum A B => forall ( y_ : Dependent_Sum A B ) ( p_ : path_cons_Dependent_Sum A B x_ y_ ), Path ( Dependent_Sum A B ) x_ y_ ) _ x y p ).
+  refine ( fun ( xf : A ) ( xs : B xf ) ( y_ : Dependent_Sum A B ) ( p_ : path_cons_Dependent_Sum A B ( pair_Dependent_Sum A B xf xs ) y_ ) => _ ).
+  refine ( dependent_matching_Dependent_Sum@{ i si } A B ( fun y__ : Dependent_Sum A B => forall p__ : path_cons_Dependent_Sum A B ( pair_Dependent_Sum A B xf xs ) y__, Path ( Dependent_Sum A B ) ( pair_Dependent_Sum A B xf xs ) y__ ) _ y_ p_ ).
+  refine ( fun ( yf : A ) ( ys : B yf ) => _ ).
+  change ( path_cons_Dependent_Sum A B ( pair_Dependent_Sum A B xf xs ) ( pair_Dependent_Sum A B yf ys ) -> Path ( Dependent_Sum A B ) ( pair_Dependent_Sum A B xf xs ) ( pair_Dependent_Sum A B yf ys ) ).
+  change ( Dependent_Sum ( Path A xf yf ) ( fun pf : Path A xf yf => Path ( B yf ) ( trpt_Path A B xf yf pf xs ) ys ) -> Path ( Dependent_Sum A B ) ( pair_Dependent_Sum A B xf xs ) ( pair_Dependent_Sum A B yf ys ) ).
+  refine ( fun p__ : Dependent_Sum ( Path A xf yf ) ( fun pf : Path A xf yf => Path ( B yf ) ( trpt_Path A B xf yf pf xs ) ys ) => _ ).
+  refine ( matching_Dependent_Sum ( Path A xf yf ) ( fun pf : Path A xf yf => Path ( B yf ) ( trpt_Path A B xf yf pf xs ) ys ) ( Path ( Dependent_Sum A B ) ( pair_Dependent_Sum A B xf xs ) ( pair_Dependent_Sum A B yf ys ) ) _ p__ ).
+  refine ( fun ( pf : Path A xf yf ) ( ps : Path ( B yf ) ( trpt_Path A B xf yf pf xs ) ys ) => _ ).
+  refine ( dependent_matching_Path A xf ( fun ( yf_ : A ) ( pf_ : Path A xf yf_ ) => forall ( ys_ : B yf_ ) ( ps_ : Path ( B yf_ ) ( trpt_Path A B xf yf_ pf_ xs ) ys_ ), Path ( Dependent_Sum A B ) ( pair_Dependent_Sum A B xf xs ) ( pair_Dependent_Sum A B yf_ ys_ ) ) _ yf pf ys ps ).
+  change ( forall ( ys_ : B xf ) ( ps_ : Path ( B xf ) ( trpt_Path A B xf xf ( id_Path A xf ) xs ) ys_ ), Path ( Dependent_Sum A B ) ( pair_Dependent_Sum A B xf xs ) ( pair_Dependent_Sum A B xf ys_ ) ).
+  change ( forall ( ys_ : B xf ) ( ps_ : Path ( B xf ) xs ys_ ), Path ( Dependent_Sum A B ) ( pair_Dependent_Sum A B xf xs ) ( pair_Dependent_Sum A B xf ys_ ) ).
+  refine ( fun ( ys_ : B xf ) ( ps_ : Path ( B xf ) xs ys_ ) => _ ).
+  refine ( matching_Path ( B xf ) xs ( fun ys__ : B xf => Path ( Dependent_Sum A B ) ( pair_Dependent_Sum A B xf xs ) ( pair_Dependent_Sum A B xf ys__ ) ) _ ys_ ps_ ).
+  exact ( id_Path ( Dependent_Sum A B ) ( pair_Dependent_Sum A B xf xs ) ).
+Defined.
+(* from: originally defined by Hexirp *)
+
+(** 依存直和型の構築子の道から依存直和型の道への関数です。 *)
 
 Definition first_Dependent_Sum@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) ( x : Dependent_Sum A B ) : A := matching_Dependent_Sum A B A ( fun ( xf : A ) ( _ : B xf ) => xf ) x.
 (* from: originally defined by Hexirp *)
