@@ -10,22 +10,35 @@ Import Googology_In_Coq.Path.
 
 (** ライブラリを開きます。 *)
 
-Inductive Dependent_Sum@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) : Type@{ i } := pair_Dependent_Sum : forall a : A, B a -> Dependent_Sum A B.
+Inductive Dependent_Sum@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) : Type@{ i } := pair_Dependent_Sum : forall xf : A, B xf -> Dependent_Sum A B.
 (* from: originally defined by Hexirp *)
 
 (** 依存直和型です。 *)
 
-Definition matching_Dependent_Sum@{ i j | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) ( P : Type@{ j } ) ( cp : forall a : A, B a -> P ) ( x : Dependent_Sum A B ) : P := match x as x_ return P with pair_Dependent_Sum _ _ a b => cp a b end.
+Definition matching_Dependent_Sum@{ i j | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) ( P : Type@{ j } ) ( cp : forall xf : A, B xf -> P ) ( x : Dependent_Sum A B ) : P := match x with pair_Dependent_Sum _ _ xf xs => cp xf xs end.
 (* from: originally defined by Hexirp *)
 
 (** 依存直和型の場合分けです。 *)
 
-Definition identity_matching_Dependent_Sum@{ i j | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) ( P : Type@{ j } ) ( display : P -> Dependent_Sum A B ) ( cp : forall a : A, B a -> P ) ( icp : forall ( a : A ) ( b : B a ), Path ( Dependent_Sum A B ) ( display ( cp a b ) ) ( pair_Dependent_Sum A B a b ) ) ( x : Dependent_Sum A B ) : Path ( Dependent_Sum A B ) ( display ( matching_Dependent_Sum A B P cp x ) ) x := match x as x_ return Path ( Dependent_Sum A B ) ( display ( matching_Dependent_Sum A B P cp x_ ) ) x_ with pair_Dependent_Sum _ _ a b => icp a b end.
+Definition identity_matching_Dependent_Sum@{ i j | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) ( P : Type@{ j } ) ( display : P -> Dependent_Sum A B ) ( cp : forall xf : A, B xf -> P ) ( icp : forall ( xf : A ) ( xs : B xf ), Path ( Dependent_Sum A B ) ( display ( cp xf xs ) ) ( pair_Dependent_Sum A B xf xs ) ) ( x : Dependent_Sum A B ) : Path ( Dependent_Sum A B ) ( display ( matching_Dependent_Sum A B P cp x ) ) x := match x as x_ return Path ( Dependent_Sum A B ) ( display ( matching_Dependent_Sum A B P cp x_ ) ) x_ with pair_Dependent_Sum _ _ xf xs => icp xf xs end.
 (* from: originally defined by Hexirp *)
 
 (** 依存直和型の場合分けの恒等式です。 *)
 
-Definition first_Dependent_Sum@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) : Dependent_Sum A B -> A := matching_Dependent_Sum A B A ( fun ( xf : A ) ( _ : B xf ) => xf ).
+Definition dependent_matching_Dependent_Sum@{ i j | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) ( P : Dependent_Sum A B -> Type@{ j } ) ( cp : forall ( xf : A ) ( xs : B xf ), P ( pair_Dependent_Sum A B xf xs ) ) ( x : Dependent_Sum A B ) : P x := match x as x_ return P x_ with pair_Dependent_Sum _ _ xf xs => cp xf xs end.
+(* from: originally defined by Hexirp *)
+
+(** 依存直和型の依存場合分けです。 *)
+
+Definition path_cons_Dependent_Sum@{ i si | i < si } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) ( x : Dependent_Sum A B ) ( y : Dependent_Sum A B ) : Type@{ i }.
+Proof.
+  exact _.
+Defined.
+(* from: originally defined by Hexirp *)
+
+(** 依存直和型の構築子の関数です。 *)
+
+Definition first_Dependent_Sum@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) ( x : Dependent_Sum A B ) : A := matching_Dependent_Sum A B A ( fun ( xf : A ) ( _ : B xf ) => xf ) x.
 (* from: originally defined by Hexirp *)
 
 (** 依存直和型の第一射影関数です。 *)
@@ -34,11 +47,6 @@ Definition second_Dependent_Sum@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i }
 (* from: originally defined by Hexirp *)
 
 (** 依存直和型の第二射影関数です。 *)
-
-Definition dependent_matching_Path@{ i j mij | i <= mij, j <= mij } ( A : Type@{ i } ) ( a : A ) ( P : forall a' : A, Path A a a' -> Type@{ j } ) ( ci : P a ( id_Path A a ) ) ( a' : A ) ( x : Path A a a' ) : P a' x := trpt_Path ( Path A a a' ) ( first_Dependent_Sum ( Path A a a' ) ( P a' ) ( matching_Path A a ( fun a' : A => Dependent_Sum@{ mij } ( Path A a a' ) ( P a' ) ) ( pair_Dependent_Sum ( Path A a a ) ( P a ) ( id_Path A a ) ci ) a' x ) ) x ( P a' ) ( identity_matching_Path A a ( fun a' : A => Dependent_Sum@{ mij } ( Path A a a' ) ( P a' ) ) ( fun a' : A => first_Dependent_Sum ( Path A a a' ) ( P a' ) ) ( pair_Dependent_Sum ( Path A a a ) ( P a ) ( id_Path A a ) ci ) ( id_Path ( Path A a a ) ( id_Path A a ) ) a' x ) ( second_Dependent_Sum ( Path A a a' ) ( P a' ) ( matching_Path A a ( fun a' : A => Dependent_Sum@{ mij } ( Path A a a' ) ( P a' ) ) ( pair_Dependent_Sum ( Path A a a ) ( P a ) ( id_Path A a ) ci ) a' x ) ).
-(* from: originally defined by Hexirp *)
-
-(** 道の依存場合分けです。 *)
 
 Definition comatching_Dependent_Sum@{ i j | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) ( P : Type@{ j } ) ( df : P -> A ) ( ds : forall x : P, B ( df x ) ) ( x : P ) : Dependent_Sum A B := pair_Dependent_Sum A B ( df x ) ( ds x ).
 (* from: originally defined by Hexirp *)

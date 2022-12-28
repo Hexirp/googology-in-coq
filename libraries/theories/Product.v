@@ -20,7 +20,7 @@ Definition matching_Product@{ i j | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( P 
 
 (** 直積型の場合分けです。 *)
 
-Definition identity_matching_Product@{ i j | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( P : Type@{ j } ) ( display : P -> Product A B ) (cp : A -> B -> P ) ( icp : forall ( a : A ) ( b : B ), Path ( Product A B ) ( display ( cp a b ) ) ( pair_Product A B a b ) ) ( x : Product A B ) : Path ( Product A B ) ( display ( matching_Product A B P cp x ) ) x := match x as x_ return Path ( Product A B ) ( display ( matching_Product A B P cp x_ ) ) x_ with pair_Product _ _ xf xs => icp xf xs end.
+Definition identity_matching_Product@{ i j | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( P : Type@{ j } ) ( display : P -> Product A B ) (cp : A -> B -> P ) ( icp : forall ( xf : A ) ( xs : B ), Path ( Product A B ) ( display ( cp xf xs ) ) ( pair_Product A B xf xs ) ) ( x : Product A B ) : Path ( Product A B ) ( display ( matching_Product A B P cp x ) ) x := match x as x_ return Path ( Product A B ) ( display ( matching_Product A B P cp x_ ) ) x_ with pair_Product _ _ xf xs => icp xf xs end.
 (* from: originally defined by Hexirp *)
 
 (** 直積型の場合分けの恒等式です。 *)
