@@ -32,7 +32,11 @@ Definition dependent_matching_Dependent_Sum@{ i j | } ( A : Type@{ i } ) ( B : A
 
 Definition path_cons_Dependent_Sum@{ i si | i < si } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) ( x : Dependent_Sum A B ) ( y : Dependent_Sum A B ) : Type@{ i }.
 Proof.
-  exact _.
+  refine ( matching_Dependent_Sum@{ i si } A B ( forall y_ : Dependent_Sum A B, Type@{ i } ) _ x y ).
+  refine ( fun ( xf : A ) ( xs : B xf ) ( y_ : Dependent_Sum A B ) => _ ).
+  refine ( matching_Dependent_Sum@{ i si } A B Type@{ i } _ y_ ).
+  refine ( fun ( yf : A ) ( ys : B yf ) => _ ).
+  exact ( Dependent_Sum ( Path A xf yf ) ( fun pf : Path A xf yf => Path ( B yf ) ( trpt_Path A B xf yf pf xs ) ys ) ).
 Defined.
 (* from: originally defined by Hexirp *)
 
