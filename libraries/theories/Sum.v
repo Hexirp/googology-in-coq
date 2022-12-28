@@ -58,36 +58,36 @@ Defined.
 
 (** 直和型の構築子の道です。 *)
 
-Definition from_path_cons_Sum@{ i si | i < si } ( A : Type@{ i } ) ( B : Type@{ i } ) ( x : Sum A B ) ( y : Sum A B ) ( p : path_cons_Sum A B x y ) : Path ( Sum A B ) x y.
+Definition from_path_cons_Sum@{ i si | i < si } ( A : Type@{ i } ) ( B : Type@{ i } ) ( x : Sum A B ) ( y : Sum A B ) ( p : path_cons_Sum@{ i si } A B x y ) : Path ( Sum A B ) x y.
 Proof.
-  refine ( dependent_matching_Sum A B ( fun x_ : Sum A B => forall ( y_ : Sum A B ) ( p_ : path_cons_Sum A B x_ y_ ), Path ( Sum A B ) x_ y_ ) _ _ x y p ).
+  refine ( dependent_matching_Sum A B ( fun x_ : Sum A B => forall ( y_ : Sum A B ) ( p_ : path_cons_Sum@{ i si } A B x_ y_ ), Path ( Sum A B ) x_ y_ ) _ _ x y p ).
   -
-    refine ( fun ( xl : A ) ( y_ : Sum A B ) ( p_ : path_cons_Sum A B ( left_Sum A B xl ) y_ ) => _ ).
-    refine ( dependent_matching_Sum A B ( fun y__ : Sum A B => forall p__ : path_cons_Sum A B ( left_Sum A B xl ) y__, Path ( Sum A B ) ( left_Sum A B xl ) y__ ) _ _ y_ p_ ).
+    refine ( fun ( xl : A ) ( y_ : Sum A B ) ( p_ : path_cons_Sum@{ i si } A B ( left_Sum A B xl ) y_ ) => _ ).
+    refine ( dependent_matching_Sum A B ( fun y__ : Sum A B => forall p__ : path_cons_Sum@{ i si } A B ( left_Sum A B xl ) y__, Path ( Sum A B ) ( left_Sum A B xl ) y__ ) _ _ y_ p_ ).
     +
       refine ( fun yl : A => _ ).
-      change ( path_cons_Sum A B ( left_Sum A B xl ) ( left_Sum A B yl ) -> Path ( Sum A B ) ( left_Sum A B xl ) ( left_Sum A B yl ) ).
+      change ( path_cons_Sum@{ i si } A B ( left_Sum A B xl ) ( left_Sum A B yl ) -> Path ( Sum A B ) ( left_Sum A B xl ) ( left_Sum A B yl ) ).
       change ( Path A xl yl -> Path ( Sum A B ) ( left_Sum A B xl ) ( left_Sum A B yl ) ).
       refine ( fun p__ : Path A xl yl => _ ).
       exact ( ap_Path A ( Sum A B ) ( left_Sum A B ) xl yl p__ ).
     +
       refine ( fun yr : B => _ ).
-      change ( path_cons_Sum A B ( left_Sum A B xl ) ( right_Sum A B yr ) -> Path ( Sum A B ) ( left_Sum A B xl ) ( right_Sum A B yr ) ).
+      change ( path_cons_Sum@{ i si } A B ( left_Sum A B xl ) ( right_Sum A B yr ) -> Path ( Sum A B ) ( left_Sum A B xl ) ( right_Sum A B yr ) ).
       change ( Void@{ i } -> Path ( Sum A B ) ( left_Sum A B xl ) ( right_Sum A B yr ) ).
       refine ( fun p__ : Void@{ i } => _ ).
       exact ( absurd_Void ( Path ( Sum A B ) ( left_Sum A B xl ) ( right_Sum A B yr ) ) p__ ).
   -
-    refine ( fun ( xr : B ) ( y_ : Sum A B ) ( p_ : path_cons_Sum A B ( right_Sum A B xr ) y_ ) => _ ).
-    refine ( dependent_matching_Sum A B ( fun y__ : Sum A B => forall p__ : path_cons_Sum A B ( right_Sum A B xr ) y__, Path ( Sum A B ) ( right_Sum A B xr ) y__ ) _ _ y_ p_ ).
+    refine ( fun ( xr : B ) ( y_ : Sum A B ) ( p_ : path_cons_Sum@{ i si } A B ( right_Sum A B xr ) y_ ) => _ ).
+    refine ( dependent_matching_Sum A B ( fun y__ : Sum A B => forall p__ : path_cons_Sum@{ i si } A B ( right_Sum A B xr ) y__, Path ( Sum A B ) ( right_Sum A B xr ) y__ ) _ _ y_ p_ ).
     +
       refine ( fun yl : A => _ ).
-      change ( path_cons_Sum A B ( right_Sum A B xr ) ( left_Sum A B yl ) -> Path ( Sum A B ) ( right_Sum A B xr ) ( left_Sum A B yl ) ).
+      change ( path_cons_Sum@{ i si } A B ( right_Sum A B xr ) ( left_Sum A B yl ) -> Path ( Sum A B ) ( right_Sum A B xr ) ( left_Sum A B yl ) ).
       change ( Void@{ i } -> Path ( Sum A B ) ( right_Sum A B xr ) ( left_Sum A B yl ) ).
       refine ( fun p__ : Void@{ i } => _ ).
       exact ( absurd_Void ( Path ( Sum A B ) ( right_Sum A B xr ) ( left_Sum A B yl ) ) p__ ).
     +
       refine ( fun yr : B => _ ).
-      change ( path_cons_Sum A B ( right_Sum A B xr ) ( right_Sum A B yr ) -> Path ( Sum A B ) ( right_Sum A B xr ) ( right_Sum A B yr ) ).
+      change ( path_cons_Sum@{ i si } A B ( right_Sum A B xr ) ( right_Sum A B yr ) -> Path ( Sum A B ) ( right_Sum A B xr ) ( right_Sum A B yr ) ).
       change ( Path B xr yr -> Path ( Sum A B ) ( right_Sum A B xr ) ( right_Sum A B yr ) ).
       refine ( fun p__ : Path B xr yr => _ ).
       exact ( ap_Path B ( Sum A B ) ( right_Sum A B ) xr yr p__ ).

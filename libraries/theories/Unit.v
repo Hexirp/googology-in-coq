@@ -45,6 +45,11 @@ Definition identity_comatching_Unit@{ i j | } ( P : Type@{ j } ) ( codisplay : U
 
 (** 単一型の余場合分けの恒等式です。 *)
 
+Definition from_path_dest_Unit@{ i | } ( x : Unit@{ i } ) ( y : Unit@{ i } ) : Path Unit@{ i } x y := from_path_cons_Unit x y.
+(* from: originally defined by Hexirp *)
+
+(** 単一型の構築子の道から単一型の道を作る関数です。 *)
+
 Definition const_Unit@{ i j | } ( A : Type@{ j } ) : A -> Unit@{ i } := fun x : A => unit_Unit.
 (* from: originally defined by Hexirp *)
 

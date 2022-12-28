@@ -131,7 +131,7 @@ Defined.
 
 (** ** 多重引数 *)
 
-Definition trpt_2_Path@{ i j | } ( A : Type@{ i } ) ( B : Type@{ j } ) ( C : A -> B -> Type@{ j } ) ( xa : A ) ( ya : A ) ( pa : Path A xa ya ) ( xb : B ) ( yb : B ) ( pb : Path B xb yb ) ( u : C xa xb ) : C ya yb := matching_Path A xa ( fun ya_ : A => forall ( yb_ : B ) ( pb_ : Path B xb yb_ ), C ya_ yb_ ) ( fun ( yb_ : B ) ( pb_ : Path B xb yb_ ) => matching_Path B xb ( C xa ) u yb_ pb_ ) ya pa yb pb.
+Definition trpt_2_Path@{ i j | } ( A : Type@{ i } ) ( B : Type@{ j } ) ( C : A -> B -> Type@{ j } ) ( xa : A ) ( ya : A ) ( pa : Path A xa ya ) ( xb : B ) ( yb : B ) ( pb : Path B xb yb ) ( u : C xa xb ) : C ya yb := matching_Path A xa ( fun ya_ : A => forall ( yb_ : B ) ( pb_ : Path B xb yb_ ), C ya_ yb_ ) ( fun ( yb_ : B ) ( pb_ : Path B xb yb_ ) => matching_Path B xb ( fun yb__ : B => C xa yb__ ) u yb_ pb_ ) ya pa yb pb.
 (* from: originally defined by Hexirp *)
 
 (** 二つの道を通した輸送です。 *)

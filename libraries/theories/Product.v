@@ -30,35 +30,90 @@ Definition dependent_matching_Product@{ i j | } ( A : Type@{ i } ) ( B : Type@{ 
 
 (** 直積型の依存場合分けです。 *)
 
-Definition path_cons_Product@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( x : Product A B ) ( y : Product A B ) := Path ( Product A B ) x y.
+Definition path_cons_Product@{ i si | i < si } ( A : Type@{ i } ) ( B : Type@{ i } ) ( x : Product A B ) ( y : Product A B ) : Type@{ i }.
 Proof.
-  exact _.
+  refine ( matching_Product@{ i si } A B ( forall y_ : Product A B, Type@{ i } ) _ x y ).
+  refine ( fun ( xf : A ) ( xs : B ) ( y_ : Product A B ) => _ ).
+  refine ( matching_Product@{ i si } A B Type@{ i } _ y_ ).
+  refine ( fun ( yf : A ) ( ys : B ) => _ ).
+  exact ( Product ( Path A xf yf ) ( Path B xs ys ) ).
 Defined.
 (* from: originally defined by Hexirp *)
 
 (** 直積型の構成子の道です。 *)
 
+Definition from_path_cons_Product@{ i si | i < si } ( A : Type@{ i } ) ( B : Type@{ i } ) ( x : Product A B ) ( y : Product A B ) ( p : path_cons_Product@{ i si } A B x y ) : Path ( Product A B ) x y.
+Proof.
+  refine ( dependent_matching_Product A B ( fun x_ : Product A B => forall ( y_ : Product A B ) ( p_ : path_cons_Product@{ i si } A B x_ y_ ), Path ( Product A B ) x_ y_ ) _ x y p ).
+  refine ( fun ( xf : A ) ( xs : B ) ( y_ : Product A B ) ( p_ : path_cons_Product@{ i si } A B ( pair_Product A B xf xs ) y_ ) => _ ).
+  refine ( dependent_matching_Product A B ( fun y__ : Product A B => forall p__ : path_cons_Product@{ i si } A B ( pair_Product A B xf xs ) y__, Path ( Product A B ) ( pair_Product A B xf xs ) y__ ) _ y_ p_ ).
+  refine ( fun ( yf : A ) ( ys : B ) => _ ).
+  change ( path_cons_Product@{ i si } A B ( pair_Product A B xf xs ) ( pair_Product A B yf ys ) -> Path ( Product A B ) ( pair_Product A B xf xs ) ( pair_Product A B yf ys ) ).
+  change ( Product ( Path A xf yf ) ( Path B xs ys ) -> Path ( Product A B ) ( pair_Product A B xf xs ) ( pair_Product A B yf ys ) ).
+  refine ( fun p__ : Product ( Path A xf yf ) ( Path B xs ys ) => _ ).
+  refine ( matching_Product ( Path A xf yf ) ( Path B xs ys ) ( Path ( Product A B ) ( pair_Product A B xf xs ) ( pair_Product A B yf ys ) ) _ p__ ).
+  refine ( fun ( pf : Path A xf yf ) ( ps : Path B xs ys ) => _ ).
+  exact ( trpt_2_Path A B ( fun ( yf_ : A ) ( ys_ : B ) => Path ( Product A B ) ( pair_Product A B xf xs ) ( pair_Product A B yf_ ys_ ) ) xf yf pf xs ys ps ( id_Path ( Product A B ) ( pair_Product A B xf xs ) ) ).
+Defined.
+(* from: originally defined by Hexirp *)
+
+(** 直積型の構成子の道から直積型の道への関数です。 *)
+
 Definition first_Product@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( x : Product A B ) : A := matching_Product A B A ( fun ( xf : A ) ( xs : B ) => xf ) x.
 (* from: originally defined by Hexirp *)
 
-(** 直積型の第一射影関数です。 *)
+(** 直積型の第一射影関数（分解子）です。 *)
 
 Definition second_Product@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( x : Product A B ) : B := matching_Product A B B ( fun ( xf : A ) ( xs : B ) => xs ) x.
 (* from: originally defined by Hexirp *)
 
-(** 直積型の第二射影関数です。 *)
+(** 直積型の第二射影関数（分解子）です。 *)
+
+Definition path_dest_Product@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( x : Product A B ) ( y : Product A B ) : Type@{ i } := Product ( Path A ( first_Product A B x ) ( first_Product A B y ) ) ( Path B ( second_Product A B x ) ( second_Product A B y ) ).
+(* from: originally defined by Hexirp *)
+
+(** 直積型の分解子の道です。 *)
+
+Definition from_path_dest_Product@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( x : Product A B ) ( y : Product A B ) ( p : path_dest_Product A B x y ) : Path ( Product A B ) x y.
+Proof.
+  refine ( dependent_matching_Product A B ( fun x_ : Product A B => forall ( y_ : Product A B ) ( p_ : path_dest_Product A B x_ y_ ), Path ( Product A B ) x_ y_ ) _ x y p ).
+  refine ( fun ( xf : A ) ( xs : B ) ( y_ : Product A B ) ( p_ : path_dest_Product@{ i } A B ( pair_Product A B xf xs ) y_ ) => _ ).
+  refine ( dependent_matching_Product A B ( fun y__ : Product A B => forall p__ : path_dest_Product A B ( pair_Product A B xf xs ) y__, Path ( Product A B ) ( pair_Product A B xf xs ) y__ ) _ y_ p_ ).
+  refine ( fun ( yf : A ) ( ys : B ) => _ ).
+  change ( path_cons_Product A B ( pair_Product A B xf xs ) ( pair_Product A B yf ys ) -> Path ( Product A B ) ( pair_Product A B xf xs ) ( pair_Product A B yf ys ) ).
+  change ( Product ( Path A xf yf ) ( Path B xs ys ) -> Path ( Product A B ) ( pair_Product A B xf xs ) ( pair_Product A B yf ys ) ).
+  refine ( fun p__ : Product ( Path A xf yf ) ( Path B xs ys ) => _ ).
+  refine ( matching_Product ( Path A xf yf ) ( Path B xs ys ) ( Path ( Product A B ) ( pair_Product A B xf xs ) ( pair_Product A B yf ys ) ) _ p__ ).
+  refine ( fun ( pf : Path A xf yf ) ( ps : Path B xs ys ) => _ ).
+  exact ( trpt_2_Path A B ( fun ( yf_ : A ) ( ys_ : B ) => Path ( Product A B ) ( pair_Product A B xf xs ) ( pair_Product A B yf_ ys_ ) ) xf yf pf xs ys ps ( id_Path ( Product A B ) ( pair_Product A B xf xs ) ) ).
+Defined.
+(* from: originally defined by Hexirp *)
+
+(** 直積型の分解子の道です。 *)
 
 Definition comatching_Product@{ i j | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( P : Type@{ j } ) ( df : P -> A ) ( ds : P -> B ) ( x : P ) : Product A B := pair_Product A B ( df x ) ( ds x ).
 (* from: originally defined by Hexirp *)
 
 (** 直積型の余場合分けです。 *)
 
-Definition path_proj_Product@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( x : Product A B ) ( y : Product A B ) : Path A ( first_Product A B x ) ( first_Product A B y ) -> Path B ( second_Product A B x ) ( second_Product A B y ) -> Path ( Product A B ) x y := match x as x_ return Path A ( first_Product A B x_ ) ( first_Product A B y ) -> Path B ( second_Product A B x_ ) ( second_Product A B y ) -> Path ( Product A B ) x_ y with pair_Product _ _ xf xs => match y as y_ return Path A xf ( first_Product A B y_ ) -> Path B xs ( second_Product A B y_ ) -> Path ( Product A B ) ( pair_Product A B xf xs ) y_ with pair_Product _ _ yf ys => fun ( pf : Path A xf yf ) ( ps : Path B xs ys ) => trpt_2_Path A xf yf B xs ys ( fun ( yf_ : A ) ( ys_ : B ) => Path ( Product A B ) ( pair_Product A B xf xs ) ( pair_Product A B yf_ ys_ ) ) pf ps ( id_Path ( Product A B ) ( pair_Product A B xf xs ) ) end end.
-(* from: originally defined by Hexirp *)
-
-(** 射影関数と道です。 *)
-
-Definition identity_comatching_Product@{ i j | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( P : Type@{ j } ) ( codisplay : Product A B -> P ) ( df : P -> A ) ( idf : forall x : Product A B, Path A ( df ( codisplay x ) ) ( first_Product A B x ) ) ( ds : P -> B ) ( ids : forall x : Product A B, Path B ( ds ( codisplay x ) ) ( second_Product A B x ) ) ( x : Product A B ) : Path ( Product A B ) ( comatching_Product A B P df ds ( codisplay x ) ) x := match x as x_ return Path ( Product A B ) ( comatching_Product A B P df ds ( codisplay x_ ) ) x_ with pair_Product _ _ xf xs => path_proj_Product A B ( comatching_Product A B P df ds ( codisplay ( pair_Product A B xf xs ) ) ) ( pair_Product A B xf xs ) ( idf ( pair_Product A B xf xs ) ) ( ids ( pair_Product A B xf xs ) ) end.
+Definition identity_comatching_Product@{ i j | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( P : Type@{ j } ) ( codisplay : Product A B -> P ) ( df : P -> A ) ( idf : forall x : Product A B, Path A ( df ( codisplay x ) ) ( first_Product A B x ) ) ( ds : P -> B ) ( ids : forall x : Product A B, Path B ( ds ( codisplay x ) ) ( second_Product A B x ) ) ( x : Product A B ) : Path ( Product A B ) ( comatching_Product A B P df ds ( codisplay x ) ) x.
+Proof.
+  refine ( dependent_matching_Product A B ( fun x_ : Product A B => Path ( Product A B ) ( comatching_Product A B P df ds ( codisplay x_ ) ) x_ ) _ x ).
+  refine ( fun ( xf : A ) ( xs : B ) => _ ).
+  refine ( from_path_dest_Product A B ( comatching_Product A B P df ds ( codisplay ( pair_Product A B xf xs ) ) ) ( pair_Product A B xf xs ) _ ).
+  change ( path_dest_Product A B ( comatching_Product A B P df ds ( codisplay ( pair_Product A B xf xs ) ) ) ( pair_Product A B xf xs ) ).
+  change ( Product ( Path A ( first_Product A B ( comatching_Product A B P df ds ( codisplay ( pair_Product A B xf xs ) ) ) ) ( first_Product A B ( pair_Product A B xf xs ) ) ) ( Path B ( second_Product A B ( comatching_Product A B P df ds ( codisplay ( pair_Product A B xf xs ) ) ) ) ( second_Product A B ( pair_Product A B xf xs ) ) ) ).
+  change ( Product ( Path A ( df ( codisplay ( pair_Product A B xf xs ) ) ) xf ) ( Path B ( ds ( codisplay ( pair_Product A B xf xs ) ) ) xs ) ).
+  refine ( pair_Product ( Path A ( df ( codisplay ( pair_Product A B xf xs ) ) ) xf ) ( Path B ( ds ( codisplay ( pair_Product A B xf xs ) ) ) xs ) _ _ ).
+  -
+    change ( Path A ( df ( codisplay ( pair_Product A B xf xs ) ) ) xf ).
+    change ( Path A ( df ( codisplay ( pair_Product A B xf xs ) ) ) ( first_Product A B ( pair_Product A B xf xs ) ) ).
+    exact ( idf ( pair_Product A B xf xs ) ).
+  -
+    change ( Path B ( ds ( codisplay ( pair_Product A B xf xs ) ) ) xs ).
+    change ( Path B ( ds ( codisplay ( pair_Product A B xf xs ) ) ) ( second_Product A B ( pair_Product A B xf xs ) ) ).
+    exact ( ids ( pair_Product A B xf xs ) ).
+Defined.
 (* from: originally defined by Hexirp *)
 
 (** 直積型の余場合分けの恒等式です。 *)
@@ -68,13 +123,12 @@ Definition curry_Product@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( C : Typ
 
 (** 関数のカリー化です。 *)
 
-Definition uncurry_Product@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( C : Type@{ i } ) ( f : A -> B -> C) ( x : Product A B ) : C := f ( first_Product A B x ) ( second_Product A B x ).
+Definition uncurry_Product@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( C : Type@{ i } ) ( f : A -> B -> C) ( x : Product A B ) : C := matching_Product A B C ( fun ( xf : A ) ( xs : B ) => f xf xs ) x.
 (* from: originally defined by Hexirp *)
 
 (** 関数の非カリー化です。 *)
 
-Definition map_Product@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( C : Type@{ i } ) ( D : Type@{ i } ) ( f : A -> C ) ( g : B -> D ) ( x : Product A B ) : Product@{i} C D := pair_Product C D ( f ( first_Product A B x ) ) ( g ( second_Product A B x ) )
-.
+Definition map_Product@{ i j | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( C : Type@{ j } ) ( D : Type@{ j } ) ( f : A -> C ) ( g : B -> D ) ( x : Product A B ) : Product C D := matching_Product A B ( Product C D ) ( fun ( xf : A ) ( xs : B ) => pair_Product C D ( f xf ) ( g xs ) ) x.
 (* from: originally defined by Hexirp *)
 
 (** 直積型の写像です。 *)

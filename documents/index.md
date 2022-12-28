@@ -251,7 +251,26 @@ CI で使います。
 * `theories/[x0]/[x1]/.../[xn].v` から生成される物
   * `docs/[x0].[x1].....[xn].html`
 
-## デバッグ
+## プログラミング
+
+タクティックを使う時は、次のように進めます。
+
+```coq
+Proof.
+  exact _. (* 穴を埋めることが出来ないというエラーが出る。 *)
+Defined.
+
+Proof.
+  refine ( foo _ ). (* 証明を進める。 *)
+  exact _. (* 穴を埋めることが出来ないというエラーが出る。 *)
+Defined.
+
+Proof.
+  refine ( foo _ ).
+  refine ( baa _ ). (* 証明を進める。 *)
+  exact baz. (* 証明を終わらせる。 *)
+Defined
+```
 
 正しいはずの場所でエラーが起きたり、誤っているはずの場所でエラーが起きなかったりして、その原因が分からない場合は、最終手段として "View" タブの "Display all low-level contents" が使えます。
 
