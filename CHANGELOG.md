@@ -1,14 +1,33 @@
 # 変更記録
 
-## まだリリースされていない変更
+## 0.2.0
 
-`GiC.Type.Nat` ライブラリを追加しました。自然数を取り扱うライブラリです。
+0.2.0 は `v0.2.0` です。
+
+```txt
+theories/Base.v
+theories/Dependent_Function.v
+theories/Function.v
+theories/Path.v
+theories/Void.v
+theories/Unit.v
+theories/Sum.v
+theories/Product.v
+theories/Dependent_Sum.v
+theories/Dependent_Product.v
+```
+
+上記のようにライブラリを再編しました。
+
+コーディングスタイルを大幅に変更しました。
+
+最上位モジュール名を `GiC` から `Googology_In_Coq` へ変更しました。
+
+GitHub Actions による CI を追加しました。
 
 ## 0.1.2
 
-* [Commit ID][commit-v0.1.2]
-
-[commit-v0.1.2]: https://gitlab.com/Hexirp/googology-in-coq/-/commit/eddaf097c31849b6c4f4d9ce1da3704ff8290103
+0.1.2 は `v0.1.2` (`eddaf097c31849b6c4f4d9ce1da3704ff8290103`) です。
 
 `Fiber` を追加しました。 Homotopy Type Theory における重要な概念です。
 
@@ -22,9 +41,7 @@
 
 ## 0.1.1
 
-* [Commit ID][commit-0.1.1]
-
-[commit-0.1.1]: https://gitlab.com/Hexirp/googology-in-coq/-/commit/a5a553353d0b5f9464a6966ccee4e99447dd2700
+0.1.1 は `v0.1.1` (`a5a553353d0b5f9464a6966ccee4e99447dd2700`) です。
 
 `path_elim` というタクティックを追加しました。これは `refine (match p with idpath _ end)` を `path_elim p` という形で短縮するものです。
 
@@ -36,13 +53,11 @@
 
 ## 0.1.0
 
-* [Commit ID][commit-v0.1.0]
-
-[commit-v0.1.0]: https://gitlab.com/Hexirp/googology-in-coq/-/commit/0dfec356061093a1288ac16d123570edecb7f1d4
+0.1.0 は `v0.1.0` (`0dfec356061093a1288ac16d123570edecb7f1d4`) です。
 
 確固としたコーディングスタイルに従って、ライブラリとドキュメントを作成しました。
 
-```text
+```txt
 GiC.Base
 GiC.Function
 GiC.Path.Base
@@ -64,7 +79,7 @@ GiC.Type.Base
 
 上記のライブラリを追加しました。
 
-```text
+```txt
 compile.sh
 coq_path.sh
 coqc.sh
@@ -77,7 +92,7 @@ make_document.sh
 
 上記の shell スクリプトを追加しました。
 
-```text
+```txt
 index.md
 libraries-tred.gv
 libraries.gv
@@ -89,8 +104,6 @@ GitLab CI/CD を導入しました。継続的にテストを行うことで作�
 
 ## 0.0.0
 
-* [Commit ID][commit-v0.0.0]
-
-[commit-v0.0.0]: https://gitlab.com/Hexirp/googology-in-coq/-/commit/ac7eb156aac3804e8f2f52c54943fc6d6b6d083d
+0.0.0 は `v0.0.0` (`ac7eb156aac3804e8f2f52c54943fc6d6b6d083d`) です。
 
 最初のバージョンであり、どのようなコードも含まれていません。
