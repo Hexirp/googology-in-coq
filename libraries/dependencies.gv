@@ -27,6 +27,7 @@ digraph Dependencies {
   "Path" -> "Dependent_Sum";
   # Dependent_Product
   "Base" -> "Dependent_Product";
+  "Path" -> "Dependent_Product";
   # W_type_Beta
   "Base" -> "W_type_Beta";
   "Function" -> "W_type_Beta";
