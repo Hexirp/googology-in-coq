@@ -73,32 +73,6 @@ digraph Dependencies {
   "Path" -> "Pointwise_Path_Pointwise_Path";
   "Pointwise_Path" -> "Pointwise_Path_Pointwise_Path";
 
-  # Section
-  "Base" -> "Section";
-  "Function" -> "Section";
-  "Pointwise_Path" -> "Section";
-
-  # Retraction
-  "Base" -> "Retraction";
-  "Function" -> "Retraction";
-  "Pointwise_Path" -> "Retraction";
-
-  # Is_Half_Adjoint
-  "Base" -> "Is_Half_Adjoint";
-  "Dependent_Sum" -> "Is_Half_Adjoint";
-  "Product" -> "Is_Half_Adjoint";
-  "Path" -> "Is_Half_Adjoint";
-  "Pointwise_Path" -> "Is_Half_Adjoint";
-  "Pointwise_Path_Pointwise_Path" -> "Is_Half_Adjoint";
-  "Section" -> "Is_Half_Adjoint";
-  "Retraction" -> "Is_Half_Adjoint";
-
-  # Is_Half_Adjoint_Equivalence
-  "Base" -> "Is_Half_Adjoint_Equivalence";
-  "Dependent_Sum" -> "Is_Half_Adjoint_Equivalence";
-  "Product" -> "Is_Half_Adjoint_Equivalence";
-  "Is_Half_Adjoint" -> "Is_Half_Adjoint_Equivalence";
-
   # Naive_Functional_Extensionality
   "Base" -> "Naive_Functional_Extensionality";
   "Dependent_Function" -> "Naive_Functional_Extensionality";
