@@ -11,6 +11,7 @@ theories/Sum.v \
 theories/Product.v \
 theories/Dependent_Sum.v \
 theories/Dependent_Product.v \
+theories/Peano_Number.v \
 
 do
   echo -n " ${file}"
