@@ -38,20 +38,6 @@ digraph Dependencies {
   "Base" -> "Dependent_Product";
   "Path" -> "Dependent_Product";
 
-  # W_type_Beta
-  "Base" -> "W_type_Beta";
-  "Function" -> "W_type_Beta";
-
-  # W_type_Alpha
-  "Base" -> "W_type_Alpha";
-  "Dependent_Sum" -> "W_type_Alpha";
-  "W_type_Beta" -> "W_type_Alpha";
-
-  # W_type
-  "Base" -> "W_type";
-  "W_type_Alpha" -> "W_type";
-  "W_type_Beta" -> "W_type";
-
   # Universe
   "Base" -> "Universe";
 
