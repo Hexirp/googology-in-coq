@@ -37,36 +37,4 @@ digraph Dependencies {
   # Dependent_Product
   "Base" -> "Dependent_Product";
   "Path" -> "Dependent_Product";
-
-  # Dependent_Pointwise_Path
-  "Base" -> "Dependent_Pointwise_Path";
-  "Dependent_Function" -> "Dependent_Pointwise_Path";
-  "Path" -> "Dependent_Pointwise_Path";
-
-  # Pointwise_Path
-  "Base" -> "Pointwise_Path";
-  "Dependent_Function" -> "Pointwise_Path";
-  "Function" -> "Pointwise_Path";
-  "Path" -> "Pointwise_Path";
-
-  # Pointwise_Path_Pointwise_Path
-  "Base" -> "Pointwise_Path_Pointwise_Path";
-  "Dependent_Function" -> "Pointwise_Path_Pointwise_Path";
-  "Function" -> "Pointwise_Path_Pointwise_Path";
-  "Path" -> "Pointwise_Path_Pointwise_Path";
-  "Pointwise_Path" -> "Pointwise_Path_Pointwise_Path";
-
-  # Naive_Functional_Extensionality
-  "Base" -> "Naive_Functional_Extensionality";
-  "Dependent_Function" -> "Naive_Functional_Extensionality";
-  "Function" -> "Naive_Functional_Extensionality";
-  "Product" -> "Naive_Functional_Extensionality";
-  "Path" -> "Naive_Functional_Extensionality";
-  "Pointwise_Path" -> "Naive_Functional_Extensionality";
-
-  # Bool
-  "Base" -> "Bool";
-  "Function" -> "Bool";
-  "Sum" -> "Bool";
-  "Unit" -> "Bool";
 }
