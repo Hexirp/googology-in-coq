@@ -118,15 +118,15 @@ Defined.
 
 (** 直積型の余場合分けの恒等式です。 *)
 
-Definition curry_Product@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( C : Type@{ i } ) ( f : Product A B -> C ) ( x : A ) ( y : B ) : C := f ( pair_Product A B x y ).
+Definition curry_Product@{ i j | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( C : Type@{ j } ) ( f : Product A B -> C ) ( x : A ) ( y : B ) : C := f ( pair_Product A B x y ).
 (* from: originally defined by Hexirp *)
 
-(** 関数のカリー化です。 *)
+(** 直積型のカリー化です。 *)
 
-Definition uncurry_Product@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( C : Type@{ i } ) ( f : A -> B -> C) ( x : Product A B ) : C := matching_Product A B C ( fun ( xf : A ) ( xs : B ) => f xf xs ) x.
+Definition uncurry_Product@{ i j | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( C : Type@{ j } ) ( f : A -> B -> C ) ( x : Product A B ) : C := matching_Product@{ i j } A B C ( fun ( xf : A ) ( xs : B ) => f xf xs ) x.
 (* from: originally defined by Hexirp *)
 
-(** 関数の非カリー化です。 *)
+(** 直積型の非カリー化です。 *)
 
 Definition map_Product@{ i j | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( C : Type@{ j } ) ( D : Type@{ j } ) ( f : A -> C ) ( g : B -> D ) ( x : Product A B ) : Product C D := matching_Product A B ( Product C D ) ( fun ( xf : A ) ( xs : B ) => pair_Product C D ( f xf ) ( g xs ) ) x.
 (* from: originally defined by Hexirp *)
