@@ -139,7 +139,7 @@ Definition uncurry_Product@{ i j | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) 
 
 (** 依存直和型の非カリー化です。 *)
 
-Definition map_Dependent_Sum@{ i j | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) ( C : Type@{ j } ) ( D : C -> Type@{ j } ) ( f : A -> C ) ( g : forall x : A, B x -> D ( f x ) ) ( x : Dependent_Sum A B ) : Dependent_Sum C D := pair_Dependent_Sum C D ( f ( first_Dependent_Sum A B x ) ) ( g ( first_Dependent_Sum A B x ) ( second_Dependent_Sum A B x ) ).
+Definition map_Dependent_Sum@{ i j | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) ( C : Type@{ j } ) ( D : C -> Type@{ j } ) ( f : A -> C ) ( g : forall x : A, B x -> D ( f x ) ) ( x : Dependent_Sum A B ) : Dependent_Sum C D := matching_Dependent_Sum A B ( Dependent_Sum C D ) ( fun ( xf : A ) ( xs : B xf ) => pair_Dependent_Sum C D ( f xf ) ( g xf xs ) ) x.
 (* from: originally defined by Hexirp *)
 
 (** 依存直和型の写像です。 *)
