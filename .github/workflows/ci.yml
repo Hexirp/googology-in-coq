@@ -24,6 +24,6 @@ jobs:
             {{after_script}}
             {{uninstall}}
             startGroup "Uncoordinate"
-              sudo mv __CoqProject _CoqProject
+              sudo mv _CoqProject __CoqProject
               cd ../
             endGroup
