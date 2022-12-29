@@ -2,7 +2,7 @@
 
 ## 0.2.0
 
-0.2.0 は `v0.2.0` です。
+0.2.0 は `v0.2.0` (`3c6ab85abd577ede9e519efd0bb2fa65e74cf4f3`) です。
 
 ```txt
 theories/Base.v
