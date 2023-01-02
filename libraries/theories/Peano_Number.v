@@ -58,3 +58,8 @@ Definition dependent_recursion_Peano_Number@{ i j | } ( P : Peano_Number@{ i } -
 (* from: originally defined by Hexirp *)
 
 (** 自然数型の依存再帰です。 *)
+
+Definition add_Peano_Number@{ i | } ( m : Peano_Number@{ i } ) ( n : Peano_Number@{ i } ) : Peano_Number@{ i } := recursion_Peano_Number ( Peano_Number@{ i } -> Peano_Number@{ i } ) ( fun n_ : Peano_Number@{ i } => n_ ) ( fun ( rp : Peano_Number@{ i } -> Peano_Number@{ i } ) ( n_ : Peano_Number@{ i } ) => succ_Peano_Number ( rp n_ ) ) m n.
+(* from: originally defined by Hexirp *)
+
+(** 加算です。 *)
