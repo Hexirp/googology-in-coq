@@ -37,4 +37,13 @@ digraph Dependencies {
   # Dependent_Product
   "Base" -> "Dependent_Product";
   "Path" -> "Dependent_Product";
+
+  # Peano_Number
+  "Base" -> "Peano_Number";
+  "Path" -> "Peano_Number";
+
+  # Peano_Integer
+  "Base" -> "Peano_Integer";
+  "Path" -> "Peano_Integer";
+  "Peano_Number" -> "Peano_Integer";
 }
