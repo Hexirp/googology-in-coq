@@ -68,3 +68,8 @@ Definition mul_Peano_Number@{ i | } ( m : Peano_Number@{ i } ) ( n : Peano_Numbe
 (* from: originally defined by Hexirp *)
 
 (** 乗算です。 *)
+
+Definition exp_Peano_Number@{ i | } ( m : Peano_Number@{ i } ) ( n : Peano_Number@{ i } ) : Peano_Number@{ i } := recursion_Peano_Number Peano_Number@{ i } ( succ_Peano_Number zero_Peano_Number ) ( fun rp : Peano_Number@{ i } => mul_Peano_Number m rp ) n.
+(* from: originally defined by Hexirp *)
+
+(** 冪乗です。 *)
