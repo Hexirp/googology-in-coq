@@ -95,7 +95,7 @@ Definition ap_inv_Path@{ i j | } ( A : Type@{ i } ) ( B : Type@{ j } ) ( f : A -
 
 (** [ap_Path] と [id_Path] の等式です。 *)
 
-Definition trpt_Path@{ i j | } ( A : Type@{ i } ) ( B : A -> Type@{ j } ) ( x : A ) ( y : A ) ( p : Path A x y ) ( u : B x ) : B y := matching_Path A x ( fun y_ : A => B x -> B y_ ) ( id_Function ( B x ) ) y p u.
+Definition trpt_Path@{ i j | } ( A : Type@{ i } ) ( B : A -> Type@{ j } ) ( x : A ) ( y : A ) ( p : Path A x y ) ( u : B x ) : B y := matching_Path A x ( fun y_ : A => B x -> B y_ ) ( fun u_ : B x => u_ ) y p u.
 (* from: originally defined by Hexirp *)
 
 (** 輸送です。 *)
