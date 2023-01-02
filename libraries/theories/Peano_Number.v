@@ -53,3 +53,8 @@ Defined.
 (* from: originally defined by Hexirp *)
 
 (** 自然数型の再帰の恒等式です。 *)
+
+Definition dependent_recursion_Peano_Number@{ i j | } ( P : Peano_Number@{ i } -> Type@{ j } ) ( cz : P zero_Peano_Number ) ( cs : forall xp : Peano_Number@{ i }, P xp -> P ( succ_Peano_Number xp ) ) ( x : Peano_Number@{ i } ) : P x := ( fix rec ( x_ : Peano_Number@{ i } ) { struct x_ } : P x_ := match x_ as x__ return P x__ with zero_Peano_Number => cz | succ_Peano_Number xp => cs xp ( rec xp ) end ) x.
+(* from: originally defined by Hexirp *)
+
+(** 自然数型の依存再帰です。 *)
