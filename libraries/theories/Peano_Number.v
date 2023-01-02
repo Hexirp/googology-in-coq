@@ -29,3 +29,16 @@ Definition dependent_matching_Peano_Number@{ i j | } ( P : Peano_Number@{ i } ->
 (* from: originally defined by Hexirp *)
 
 (** 自然数型の場合分けです。 *)
+
+Definition recursion_Peano_Number@{ i j | } ( P : Type@{ j } ) ( cz : P ) ( cs : P -> P ) ( x : Peano_Number@{ i } ) : P := ( fix rec ( x_ : Peano_Number@{ i } ) { struct x_ } : P := matching_Peano_Number P cz ( fun xp : Peano_Number@{ i } => cs ( rec xp ) ) x_ ) x.
+(* from: originally defined by Hexirp *)
+
+(** 自然数型の再帰です。 *)
+
+Definition identity_recursion_Peano_Number@{ i j | } ( P : Type@{ j } ) ( display : P -> Peano_Number@{ i } ) ( cz : P ) ( icz : Path Peano_Number@{ i } ( display cz ) zero_Peano_Number ) ( cs : P -> P ) ( ics : forall ( xp : Peano_Number@{ i } ) ( rp : P ), Path Peano_Number@{ i } ( display rp ) xp -> Path Peano_Number@{ i } ( display ( cs rp ) ) ( succ_Peano_Number xp ) ) ( x : Peano_Number@{ i } ) : Path Peano_Number@{ i } ( display ( recursion_Peano_Number P cz cs x ) ) x.
+Proof.
+  exact _.
+Defined.
+(* from: originally defined by Hexirp *)
+
+(** 自然数型の再帰の恒等式です。 *)
