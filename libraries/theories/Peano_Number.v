@@ -89,7 +89,19 @@ Definition mul_Peano_Number@{ i | } ( m : Peano_Number@{ i } ) ( n : Peano_Numbe
 
 (** 乗算です。 *)
 
-Definition add_zero_left_Number@{ i | } ( m : Peano_Number@{ i } ) : Path Peano_Number@{ i } ( add_Peano_Number zero_Peano_Number m ) m := dependent_recursion_Peano_Number ( fun m_ : Peano_Number@{ i } => Path Peano_Number@{ i } ( add_Peano_Number zero_Peano_Number m_ ) m_ ) ( id_Path Peano_Number@{ i } zero_Peano_Number ) ( fun ( mp : Peano_Number@{ i } ) ( rp : Path Peano_Number@{ i } ( add_Peano_Number zero_Peano_Number mp ) mp ) => ap_Path Peano_Number@{ i } Peano_Number@{ i } succ_Peano_Number ( add_Peano_Number zero_Peano_Number mp ) mp rp ) m.
+Definition add_zero_left_Number@{ i | } ( m : Peano_Number@{ i } ) : Path Peano_Number@{ i } ( add_Peano_Number zero_Peano_Number m ) m.
+Proof.
+  refine ( dependent_recursion_Peano_Number ( fun m_ : Peano_Number@{ i } => Path Peano_Number@{ i } ( add_Peano_Number zero_Peano_Number m_ ) m_ ) _ _ m ).
+  -
+    change ( Path Peano_Number@{ i } ( add_Peano_Number zero_Peano_Number zero_Peano_Number ) zero_Peano_Number ).
+    change ( Path Peano_Number@{ i } zero_Peano_Number zero_Peano_Number ).
+    exact ( id_Path Peano_Number@{ i } zero_Peano_Number ).
+  -
+    refine ( fun ( np : Peano_Number@{ i } ) ( rp : Path Peano_Number@{ i } ( add_Peano_Number zero_Peano_Number np ) np ) => _ ).
+    change ( Path Peano_Number@{ i } ( add_Peano_Number zero_Peano_Number ( succ_Peano_Number np ) ) ( succ_Peano_Number np ) ).
+    change ( Path Peano_Number@{ i } ( succ_Peano_Number ( add_Peano_Number zero_Peano_Number np ) ) ( succ_Peano_Number np ) ).
+    exact ( ap_Path Peano_Number@{ i } Peano_Number@{ i } succ_Peano_Number ( add_Peano_Number zero_Peano_Number np ) np rp ).
+Defined.
 (* from: originally defined by Hexirp *)
 
 (** 加算の左単位元法則です。 *)
