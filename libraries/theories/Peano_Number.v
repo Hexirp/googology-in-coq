@@ -101,7 +101,7 @@ Defined.
 
 (** 加算の左単位元法則です。 *)
 
-Definition add_right_unit_Peano_Number@{ i | } ( m : Peano_Number@{ i } ) : Path Peano_Number@{ i } ( add_Peano_Number m zero_Peano_Number ) m := id_Path Peano_Number@{ i } m.
+Definition add_right_zero_Peano_Number@{ i | } ( m : Peano_Number@{ i } ) : Path Peano_Number@{ i } ( add_Peano_Number m zero_Peano_Number ) m := id_Path Peano_Number@{ i } m.
 (* from: originally defined by Hexirp *)
 
 (** 加算の右単位元法則です。 *)
