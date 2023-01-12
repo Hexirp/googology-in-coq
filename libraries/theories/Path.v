@@ -35,11 +35,6 @@ Definition conc_Path@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( z : A ) ( 
 
 (** 道の結合です。 *)
 
-Definition inv_Path@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( p : Path A x y ) : Path A y x := matching_Path A x ( fun y_ : A => Path A y_ x ) ( id_Path A x ) y p.
-(* from: originally defined by Hexirp *)
-
-(** 道の逆です。 *)
-
 Definition assoc_Path@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( z : A ) ( w : A ) ( p : Path A x y ) ( q : Path A y z ) ( r : Path A z w ) : Path ( Path A x w ) ( conc_Path A x z w ( conc_Path A x y z p q ) r ) ( conc_Path A x y w p ( conc_Path A y z w q r ) ) := dependent_matching_Path A x ( fun ( y_ : A ) ( p_ : Path A x y_ ) => forall ( z_ : A ) ( q_ : Path A y_ z_ ) ( w_ : A ) ( r_ : Path A z_ w_ ), Path ( Path A x w_ ) ( conc_Path A x z_ w_ ( conc_Path A x y_ z_ p_ q_ ) r_ ) ( conc_Path A x y_ w_ p_ ( conc_Path A y_ z_ w_ q_ r_ ) ) ) ( fun ( z_ : A ) ( q_ : Path A x z_ ) ( w_ : A ) ( r_ : Path A z_ w_ ) => id_Path ( Path A x w_ ) ( conc_Path A x z_ w_ q_ r_ ) ) y p z q w r.
 (* from: originally defined by Hexirp *)
 
@@ -54,6 +49,11 @@ Definition right_unit_Path@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( p : 
 (* from: originally defined by Hexirp *)
 
 (** 道の右単位元法則の等式です。 *)
+
+Definition inv_Path@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( p : Path A x y ) : Path A y x := matching_Path A x ( fun y_ : A => Path A y_ x ) ( id_Path A x ) y p.
+(* from: originally defined by Hexirp *)
+
+(** 道の逆です。 *)
 
 Definition left_inv_Path@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( p : Path A x y ) : Path ( Path A y y ) ( conc_Path A y x y ( inv_Path A x y p ) p ) ( id_Path A y ) := dependent_matching_Path A x ( fun ( y_ : A ) ( p_ : Path A x y_ ) => Path ( Path A y_ y_ ) ( conc_Path A y_ x y_ ( inv_Path A x y_ p_ ) p_ ) ( id_Path A y_ ) ) ( id_Path ( Path A x x ) ( id_Path A x ) ) y p.
 (* from: originally defined by Hexirp *)
