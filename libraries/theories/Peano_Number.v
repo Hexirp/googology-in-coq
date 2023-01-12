@@ -89,7 +89,7 @@ Definition mul_Peano_Number@{ i | } ( m : Peano_Number@{ i } ) ( n : Peano_Numbe
 
 (** 乗算です。 *)
 
-Definition add_zero_left_Number@{ i | } ( m : Peano_Number@{ i } ) : Path Peano_Number@{ i } ( add_Peano_Number zero_Peano_Number m ) m.
+Definition add_left_unit_Peano_Number@{ i | } ( m : Peano_Number@{ i } ) : Path Peano_Number@{ i } ( add_Peano_Number zero_Peano_Number m ) m.
 Proof.
   refine ( dependent_recursion_Peano_Number ( fun m_ : Peano_Number@{ i } => Path Peano_Number@{ i } ( add_Peano_Number zero_Peano_Number m_ ) m_ ) _ _ m ).
   -
