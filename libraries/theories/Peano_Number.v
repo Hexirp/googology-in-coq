@@ -106,6 +106,23 @@ Definition add_right_zero_Peano_Number@{ i | } ( m : Peano_Number@{ i } ) : Path
 
 (** 加算の右にゼロが入る時の等式です。 *)
 
+Definition add_left_succ_Peano_Number@{ i | } ( m : Peano_Number@{ i } ) ( n : Peano_Number@{ i } ) : Path Peano_Number@{ i } ( add_Peano_Number ( succ_Peano_Number m ) n ) ( succ_Peano_Number ( add_Peano_Number m n ) ).
+Proof.
+  refine ( dependent_recursion_Peano_Number ( fun n_ : Peano_Number@{ i } => Path Peano_Number@{ i } ( add_Peano_Number ( succ_Peano_Number m ) n_ ) ( succ_Peano_Number ( add_Peano_Number m n_ ) ) ) _ _ n ).
+  -
+    change ( Path Peano_Number@{ i } ( add_Peano_Number ( succ_Peano_Number m ) zero_Peano_Number ) ( succ_Peano_Number ( add_Peano_Number m zero_Peano_Number ) ) ).
+    change ( Path Peano_Number@{ i } ( succ_Peano_Number m ) ( succ_Peano_Number m ) ).
+    exact ( id_Path Peano_Number@{ i } ( succ_Peano_Number m ) ).
+  -
+    refine ( fun ( np : Peano_Number@{ i } ) ( rp : Path Peano_Number@{ i } ( add_Peano_Number ( succ_Peano_Number m ) np ) ( succ_Peano_Number ( add_Peano_Number m np ) ) ) => _ ).
+    change ( Path Peano_Number@{ i } ( add_Peano_Number ( succ_Peano_Number m ) ( succ_Peano_Number np ) ) ( succ_Peano_Number ( add_Peano_Number m ( succ_Peano_Number np ) ) ) ).
+    change ( Path Peano_Number@{ i } ( succ_Peano_Number ( add_Peano_Number ( succ_Peano_Number m ) np ) ) ( succ_Peano_Number ( succ_Peano_Number ( add_Peano_Number m np ) ) ) ).
+    exact ( ap_Path Peano_Number@{ i } Peano_Number@{ i } succ_Peano_Number ( add_Peano_Number ( succ_Peano_Number m ) np ) ( succ_Peano_Number ( add_Peano_Number m np ) ) rp ).
+Defined.
+(* from: originally defined by Hexirp *)
+
+(** 加算の左に後者数が入る時の等式です。 *)
+
 Definition mul_Peano_Number@{ i | } ( m : Peano_Number@{ i } ) ( n : Peano_Number@{ i } ) : Peano_Number@{ i } := recursion_Peano_Number Peano_Number@{ i } zero_Peano_Number ( fun rp : Peano_Number@{ i } => add_Peano_Number m rp ) n.
 (* from: originally defined by Hexirp *)
 
