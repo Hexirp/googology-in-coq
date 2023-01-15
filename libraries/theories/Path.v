@@ -30,6 +30,31 @@ Definition dependent_matching_Path@{ i j | } ( A : Type@{ i } ) ( a : A ) ( P : 
 
 (** 道の依存場合分けです。 *)
 
+Definition comatching_Path@{ i j | } ( A : Type@{ i } ) ( a : A ) ( P : Type@{ j } ) ( display : P -> A ) ( x : P ) ( ix : Path A ( display x ) a ) : Path A a ( display x ) := matching_Path A ( display x ) ( fun a_ : A => Path A a_ ( display x ) ) ( id_Path A ( display x ) ) a ix.
+(* from: originally defined by Hexirp *)
+
+(** 道の余場合分けです。 *)
+
+Definition identity_comatching_Path@{ i j | } ( A : Type@{ i } ) ( a : A ) ( P : Type@{ j } ) ( display : P -> A ) ( codisplay : forall a' : A, Path A a a' -> P ) ( identity_codisplay : forall ( a' : A ) ( x : Path A a a' ), Path A ( display ( codisplay a' x ) ) a' ) ( a' : A ) ( x : Path A a a' ) : Path ( Path A a a' ) ( trpt_Path A ( fun a'_ : A => Path A a a'_ ) ( display ( codisplay a' x ) ) a' ( identity_codisplay a' x ) ( comatching_Path A a P display ( codisplay a' x ) ( dependent_matching_Path A a ( fun ( a'_ : A ) ( x_ : Path A a a'_ ) => Path A ( display ( codisplay a'_ x_ ) ) a ) ( identity_codisplay a ( id_Path A a ) ) a' x ) ) ) x.
+Proof.
+  change ( Path ( Path A a a' ) ( trpt_Path A ( fun a'_ : A => Path A a a'_ ) ( display ( codisplay a' x ) ) a' ( identity_codisplay a' x ) ( comatching_Path A a P display ( codisplay a' x ) ( dependent_matching_Path A a ( fun ( a'_ : A ) ( x_ : Path A a a'_ ) => Path A ( display ( codisplay a'_ x_ ) ) a ) ( identity_codisplay a ( id_Path A a ) ) a' x ) ) ) x ).
+  change ( Path ( Path A a a' ) ( trpt_Path A ( fun a'__ : A => Path A a a'__ ) ( display ( codisplay a' x ) ) a' ( identity_codisplay a' x ) ( comatching_Path A a P display ( codisplay a' x ) ( dependent_matching_Path A a ( fun ( a'__ : A ) ( x__ : Path A a a'__ ) => Path A ( display ( codisplay a'__ x__ ) ) a ) ( identity_codisplay a ( id_Path A a ) ) a' x ) ) ) x ).
+  refine ( dependent_matching_Path A a ( fun ( a'_ : A ) ( x_ : Path A a a'_ ) => Path ( Path A a a'_ ) ( trpt_Path A ( fun a'__ : A => Path A a a'__ ) ( display ( codisplay a'_ x_ ) ) a'_ ( identity_codisplay a'_ x_ ) ( comatching_Path A a P display ( codisplay a'_ x_ ) ( dependent_matching_Path A a ( fun ( a'__ : A ) ( x_ : Path A a a'__ ) => Path A ( display ( codisplay a'__ x_ ) ) a ) ( identity_codisplay a ( id_Path A a ) ) a'_ x_ ) ) ) x_ ) _ a' x ).
+  change ( Path ( Path A a a ) ( trpt_Path A ( fun a'__ : A => Path A a a'__ ) ( display ( codisplay a ( id_Path A a ) ) ) a ( identity_codisplay a ( id_Path A a ) ) ( comatching_Path A a P display ( codisplay a ( id_Path A a ) ) ( dependent_matching_Path A a ( fun ( a'__ : A ) ( x__ : Path A a a'__ ) => Path A ( display ( codisplay a'__ x__ ) ) a ) ( identity_codisplay a ( id_Path A a ) ) a ( id_Path A a ) ) ) ) ( id_Path A a ) ).
+  change ( Path ( Path A a a ) ( trpt_Path A ( fun a_ : A => Path A a a_ ) ( display ( codisplay a ( id_Path A a ) ) ) a ( identity_codisplay a ( id_Path A a ) ) ( comatching_Path A a P display ( codisplay a ( id_Path A a ) ) ( dependent_matching_Path A a ( fun ( a_ : A ) ( x_ : Path A a a_ ) => Path A ( display ( codisplay a_ x_ ) ) a ) ( identity_codisplay a ( id_Path A a ) ) a ( id_Path A a ) ) ) ) ( id_Path A a ) ).
+  change ( Path ( Path A a a ) ( trpt_Path A ( fun a_ : A => Path A a a_ ) ( display ( codisplay a ( id_Path A a ) ) ) a ( identity_codisplay a ( id_Path A a ) ) ( comatching_Path A a P display ( codisplay a ( id_Path A a ) ) ( identity_codisplay a ( id_Path A a ) ) ) ) ( id_Path A a ) ).
+  change ( Path ( Path A a a ) ( trpt_Path A ( fun a__ : A => Path A a a__ ) ( display ( codisplay a ( id_Path A a ) ) ) a ( identity_codisplay a ( id_Path A a ) ) ( comatching_Path A a P display ( codisplay a ( id_Path A a ) ) ( identity_codisplay a ( id_Path A a ) ) ) ) ( id_Path A a ) ).
+  refine ( dependent_matching_Path A ( display ( codisplay a ( id_Path A a ) ) ) ( fun ( a_ : A ) ( x_ : Path A ( display ( codisplay a ( id_Path A a ) ) ) a_ ) => Path ( Path A a_ a_ ) ( trpt_Path A ( fun a__ : A => Path A a_ a__ ) ( display ( codisplay a ( id_Path A a ) ) ) a_ x_ ( comatching_Path A a_ P display ( codisplay a ( id_Path A a ) ) x_ ) ) ( id_Path A a_ ) ) _ a ( identity_codisplay a ( id_Path A a ) ) ).
+  change ( Path ( Path A ( display ( codisplay a ( id_Path A a ) ) ) ( display ( codisplay a ( id_Path A a ) ) ) ) ( trpt_Path A ( fun a__ : A => Path A ( display ( codisplay a ( id_Path A a ) ) ) a__ ) ( display ( codisplay a ( id_Path A a ) ) ) ( display ( codisplay a ( id_Path A a ) ) ) ( id_Path A ( display ( codisplay a ( id_Path A a ) ) ) ) ( comatching_Path A ( display ( codisplay a ( id_Path A a ) ) ) P display ( codisplay a ( id_Path A a ) ) ( id_Path A ( display ( codisplay a ( id_Path A a ) ) ) ) ) ) ( id_Path A ( display ( codisplay a ( id_Path A a ) ) ) ) ).
+  change ( Path ( Path A ( display ( codisplay a ( id_Path A a ) ) ) ( display ( codisplay a ( id_Path A a ) ) ) ) ( trpt_Path A ( fun a_ : A => Path A ( display ( codisplay a ( id_Path A a ) ) ) a_ ) ( display ( codisplay a ( id_Path A a ) ) ) ( display ( codisplay a ( id_Path A a ) ) ) ( id_Path A ( display ( codisplay a ( id_Path A a ) ) ) ) ( comatching_Path A ( display ( codisplay a ( id_Path A a ) ) ) P display ( codisplay a ( id_Path A a ) ) ( id_Path A ( display ( codisplay a ( id_Path A a ) ) ) ) ) ) ( id_Path A ( display ( codisplay a ( id_Path A a ) ) ) ) ).
+  change ( Path ( Path A ( display ( codisplay a ( id_Path A a ) ) ) ( display ( codisplay a ( id_Path A a ) ) ) ) ( comatching_Path A ( display ( codisplay a ( id_Path A a ) ) ) P display ( codisplay a ( id_Path A a ) ) ( id_Path A ( display ( codisplay a ( id_Path A a ) ) ) ) ) ( id_Path A ( display ( codisplay a ( id_Path A a ) ) ) ) ).
+  change ( Path ( Path A ( display ( codisplay a ( id_Path A a ) ) ) ( display ( codisplay a ( id_Path A a ) ) ) ) ( id_Path A ( display ( codisplay a ( id_Path A a ) ) ) ) ( id_Path A ( display ( codisplay a ( id_Path A a ) ) ) ) ).
+  exact ( id_Path ( Path A ( display ( codisplay a ( id_Path A a ) ) ) ( display ( codisplay a ( id_Path A a ) ) ) ) ( id_Path A ( display ( codisplay a ( id_Path A a ) ) ) ) ).
+Defined.
+(* from: originally defined by Hexirp *)
+
+(** 道の余場合分けの恒等式です。 *)
+
 Definition conc_Path@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( z : A ) ( p : Path A x y ) ( q : Path A y z ) : Path A x z := matching_Path A x ( fun y_ : A => forall z_ : A, Path A y_ z_ -> Path A x z_ ) ( fun ( z_ : A ) ( q_ : Path A x z_ ) => q_ ) y p z q.
 (* from: originally defined by Hexirp *)
 
@@ -109,31 +134,6 @@ Definition map_Path@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( f : A -> B )
 (* from: originally defined by Hexirp *)
 
 (** 道から道への写像です。 *)
-
-Definition comatching_Path@{ i j | } ( A : Type@{ i } ) ( a : A ) ( P : Type@{ j } ) ( display : P -> A ) ( x : P ) ( ix : Path A ( display x ) a ) : Path A a ( display x ) := matching_Path A ( display x ) ( fun a_ : A => Path A a_ ( display x ) ) ( id_Path A ( display x ) ) a ix.
-(* from: originally defined by Hexirp *)
-
-(** 道の余場合分けです。 *)
-
-Definition identity_comatching_Path@{ i j | } ( A : Type@{ i } ) ( a : A ) ( P : Type@{ j } ) ( display : P -> A ) ( codisplay : forall a' : A, Path A a a' -> P ) ( identity_codisplay : forall ( a' : A ) ( x : Path A a a' ), Path A ( display ( codisplay a' x ) ) a' ) ( a' : A ) ( x : Path A a a' ) : Path ( Path A a a' ) ( trpt_Path A ( fun a'_ : A => Path A a a'_ ) ( display ( codisplay a' x ) ) a' ( identity_codisplay a' x ) ( comatching_Path A a P display ( codisplay a' x ) ( dependent_matching_Path A a ( fun ( a'_ : A ) ( x_ : Path A a a'_ ) => Path A ( display ( codisplay a'_ x_ ) ) a ) ( identity_codisplay a ( id_Path A a ) ) a' x ) ) ) x.
-Proof.
-  change ( Path ( Path A a a' ) ( trpt_Path A ( fun a'_ : A => Path A a a'_ ) ( display ( codisplay a' x ) ) a' ( identity_codisplay a' x ) ( comatching_Path A a P display ( codisplay a' x ) ( dependent_matching_Path A a ( fun ( a'_ : A ) ( x_ : Path A a a'_ ) => Path A ( display ( codisplay a'_ x_ ) ) a ) ( identity_codisplay a ( id_Path A a ) ) a' x ) ) ) x ).
-  change ( Path ( Path A a a' ) ( trpt_Path A ( fun a'__ : A => Path A a a'__ ) ( display ( codisplay a' x ) ) a' ( identity_codisplay a' x ) ( comatching_Path A a P display ( codisplay a' x ) ( dependent_matching_Path A a ( fun ( a'__ : A ) ( x__ : Path A a a'__ ) => Path A ( display ( codisplay a'__ x__ ) ) a ) ( identity_codisplay a ( id_Path A a ) ) a' x ) ) ) x ).
-  refine ( dependent_matching_Path A a ( fun ( a'_ : A ) ( x_ : Path A a a'_ ) => Path ( Path A a a'_ ) ( trpt_Path A ( fun a'__ : A => Path A a a'__ ) ( display ( codisplay a'_ x_ ) ) a'_ ( identity_codisplay a'_ x_ ) ( comatching_Path A a P display ( codisplay a'_ x_ ) ( dependent_matching_Path A a ( fun ( a'__ : A ) ( x_ : Path A a a'__ ) => Path A ( display ( codisplay a'__ x_ ) ) a ) ( identity_codisplay a ( id_Path A a ) ) a'_ x_ ) ) ) x_ ) _ a' x ).
-  change ( Path ( Path A a a ) ( trpt_Path A ( fun a'__ : A => Path A a a'__ ) ( display ( codisplay a ( id_Path A a ) ) ) a ( identity_codisplay a ( id_Path A a ) ) ( comatching_Path A a P display ( codisplay a ( id_Path A a ) ) ( dependent_matching_Path A a ( fun ( a'__ : A ) ( x__ : Path A a a'__ ) => Path A ( display ( codisplay a'__ x__ ) ) a ) ( identity_codisplay a ( id_Path A a ) ) a ( id_Path A a ) ) ) ) ( id_Path A a ) ).
-  change ( Path ( Path A a a ) ( trpt_Path A ( fun a_ : A => Path A a a_ ) ( display ( codisplay a ( id_Path A a ) ) ) a ( identity_codisplay a ( id_Path A a ) ) ( comatching_Path A a P display ( codisplay a ( id_Path A a ) ) ( dependent_matching_Path A a ( fun ( a_ : A ) ( x_ : Path A a a_ ) => Path A ( display ( codisplay a_ x_ ) ) a ) ( identity_codisplay a ( id_Path A a ) ) a ( id_Path A a ) ) ) ) ( id_Path A a ) ).
-  change ( Path ( Path A a a ) ( trpt_Path A ( fun a_ : A => Path A a a_ ) ( display ( codisplay a ( id_Path A a ) ) ) a ( identity_codisplay a ( id_Path A a ) ) ( comatching_Path A a P display ( codisplay a ( id_Path A a ) ) ( identity_codisplay a ( id_Path A a ) ) ) ) ( id_Path A a ) ).
-  change ( Path ( Path A a a ) ( trpt_Path A ( fun a__ : A => Path A a a__ ) ( display ( codisplay a ( id_Path A a ) ) ) a ( identity_codisplay a ( id_Path A a ) ) ( comatching_Path A a P display ( codisplay a ( id_Path A a ) ) ( identity_codisplay a ( id_Path A a ) ) ) ) ( id_Path A a ) ).
-  refine ( dependent_matching_Path A ( display ( codisplay a ( id_Path A a ) ) ) ( fun ( a_ : A ) ( x_ : Path A ( display ( codisplay a ( id_Path A a ) ) ) a_ ) => Path ( Path A a_ a_ ) ( trpt_Path A ( fun a__ : A => Path A a_ a__ ) ( display ( codisplay a ( id_Path A a ) ) ) a_ x_ ( comatching_Path A a_ P display ( codisplay a ( id_Path A a ) ) x_ ) ) ( id_Path A a_ ) ) _ a ( identity_codisplay a ( id_Path A a ) ) ).
-  change ( Path ( Path A ( display ( codisplay a ( id_Path A a ) ) ) ( display ( codisplay a ( id_Path A a ) ) ) ) ( trpt_Path A ( fun a__ : A => Path A ( display ( codisplay a ( id_Path A a ) ) ) a__ ) ( display ( codisplay a ( id_Path A a ) ) ) ( display ( codisplay a ( id_Path A a ) ) ) ( id_Path A ( display ( codisplay a ( id_Path A a ) ) ) ) ( comatching_Path A ( display ( codisplay a ( id_Path A a ) ) ) P display ( codisplay a ( id_Path A a ) ) ( id_Path A ( display ( codisplay a ( id_Path A a ) ) ) ) ) ) ( id_Path A ( display ( codisplay a ( id_Path A a ) ) ) ) ).
-  change ( Path ( Path A ( display ( codisplay a ( id_Path A a ) ) ) ( display ( codisplay a ( id_Path A a ) ) ) ) ( trpt_Path A ( fun a_ : A => Path A ( display ( codisplay a ( id_Path A a ) ) ) a_ ) ( display ( codisplay a ( id_Path A a ) ) ) ( display ( codisplay a ( id_Path A a ) ) ) ( id_Path A ( display ( codisplay a ( id_Path A a ) ) ) ) ( comatching_Path A ( display ( codisplay a ( id_Path A a ) ) ) P display ( codisplay a ( id_Path A a ) ) ( id_Path A ( display ( codisplay a ( id_Path A a ) ) ) ) ) ) ( id_Path A ( display ( codisplay a ( id_Path A a ) ) ) ) ).
-  change ( Path ( Path A ( display ( codisplay a ( id_Path A a ) ) ) ( display ( codisplay a ( id_Path A a ) ) ) ) ( comatching_Path A ( display ( codisplay a ( id_Path A a ) ) ) P display ( codisplay a ( id_Path A a ) ) ( id_Path A ( display ( codisplay a ( id_Path A a ) ) ) ) ) ( id_Path A ( display ( codisplay a ( id_Path A a ) ) ) ) ).
-  change ( Path ( Path A ( display ( codisplay a ( id_Path A a ) ) ) ( display ( codisplay a ( id_Path A a ) ) ) ) ( id_Path A ( display ( codisplay a ( id_Path A a ) ) ) ) ( id_Path A ( display ( codisplay a ( id_Path A a ) ) ) ) ).
-  exact ( id_Path ( Path A ( display ( codisplay a ( id_Path A a ) ) ) ( display ( codisplay a ( id_Path A a ) ) ) ) ( id_Path A ( display ( codisplay a ( id_Path A a ) ) ) ) ).
-Defined.
-(* from: originally defined by Hexirp *)
-
-(** 道の余場合分けの恒等式です。 *)
 
 (** ** 多重引数 *)
 
