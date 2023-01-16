@@ -128,6 +128,20 @@ Definition right_succ_add_Peano_Number@{ i | } ( m : Peano_Number@{ i } ) ( n : 
 
 (** 加算の右に後者数が入る時の等式です。 *)
 
+Definition assoc_add_Peano_Number@{ i | } ( m : Peano_Number@{ i } ) ( n : Peano_Number@{ i } ) ( k : Peano_Number@{ i } ) : Path Peano_Number@{ i } ( add_Peano_Number ( add_Peano_Number m n ) k ) ( add_Peano_Number m ( add_Peano_Number n k ) ).
+Proof.
+  refine ( dependent_matching_Peano_Number ( fun k_ : Peano_Number@{ i } => Path Peano_Number@{ i } ( add_Peano_Number ( add_Peano_Number m n ) k_ ) ( add_Peano_Number m ( add_Peano_Number n k_ ) ) ) _ _ k ).
+  -
+    change ( Path Peano_Number@{ i } ( add_Peano_Number ( add_Peano_Number m n ) zero_Peano_Number ) ( add_Peano_Number m ( add_Peano_Number n zero_Peano_Number ) ) ).
+    change ( Path Peano_Number@{ i } ( add_Peano_Number m n ) ( add_Peano_Number m n ) ).
+    exact ( id_Path Peano_Number@{ i } ( add_Peano_Number m n ) ).
+  -
+    exact _.
+Defined.
+(* from: originally defined by Hexirp *)
+
+(** 加算の結合法則です。 *)
+
 Definition mul_Peano_Number@{ i | } ( m : Peano_Number@{ i } ) ( n : Peano_Number@{ i } ) : Peano_Number@{ i } := recursion_Peano_Number Peano_Number@{ i } zero_Peano_Number ( fun rp : Peano_Number@{ i } => add_Peano_Number m rp ) n.
 (* from: originally defined by Hexirp *)
 
