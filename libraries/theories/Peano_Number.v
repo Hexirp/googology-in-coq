@@ -130,13 +130,16 @@ Definition right_succ_add_Peano_Number@{ i | } ( m : Peano_Number@{ i } ) ( n : 
 
 Definition assoc_add_Peano_Number@{ i | } ( m : Peano_Number@{ i } ) ( n : Peano_Number@{ i } ) ( k : Peano_Number@{ i } ) : Path Peano_Number@{ i } ( add_Peano_Number ( add_Peano_Number m n ) k ) ( add_Peano_Number m ( add_Peano_Number n k ) ).
 Proof.
-  refine ( dependent_matching_Peano_Number ( fun k_ : Peano_Number@{ i } => Path Peano_Number@{ i } ( add_Peano_Number ( add_Peano_Number m n ) k_ ) ( add_Peano_Number m ( add_Peano_Number n k_ ) ) ) _ _ k ).
+  refine ( dependent_recursion_Peano_Number ( fun k_ : Peano_Number@{ i } => Path Peano_Number@{ i } ( add_Peano_Number ( add_Peano_Number m n ) k_ ) ( add_Peano_Number m ( add_Peano_Number n k_ ) ) ) _ _ k ).
   -
     change ( Path Peano_Number@{ i } ( add_Peano_Number ( add_Peano_Number m n ) zero_Peano_Number ) ( add_Peano_Number m ( add_Peano_Number n zero_Peano_Number ) ) ).
     change ( Path Peano_Number@{ i } ( add_Peano_Number m n ) ( add_Peano_Number m n ) ).
     exact ( id_Path Peano_Number@{ i } ( add_Peano_Number m n ) ).
   -
-    exact _.
+    refine ( fun ( kp : Peano_Number@{ i } ) ( rp : Path Peano_Number@{ i } ( add_Peano_Number ( add_Peano_Number m n ) kp ) ( add_Peano_Number m ( add_Peano_Number n kp ) ) ) => _ ).
+    change ( Path Peano_Number@{ i } ( add_Peano_Number ( add_Peano_Number m n ) ( succ_Peano_Number kp ) ) ( add_Peano_Number m ( add_Peano_Number n ( succ_Peano_Number kp ) ) ) ).
+    change ( Path Peano_Number@{ i } ( succ_Peano_Number ( add_Peano_Number ( add_Peano_Number m n ) kp ) ) ( succ_Peano_Number ( add_Peano_Number m ( add_Peano_Number n kp ) ) ) ).
+    exact ( ap_Path Peano_Number@{ i } Peano_Number@{ i } succ_Peano_Number ( add_Peano_Number ( add_Peano_Number m n ) kp ) ( add_Peano_Number m ( add_Peano_Number n kp ) ) rp ).
 Defined.
 (* from: originally defined by Hexirp *)
 
