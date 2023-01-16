@@ -18,22 +18,22 @@ Inductive Path@{ i | } ( A : Type@{ i } ) ( a : A ) : A -> Type@{ i } := id_Path
 Definition matching_Path@{ i j | } ( A : Type@{ i } ) ( a : A ) ( P : A -> Type@{ j } ) ( ci : P a ) ( a' : A ) ( x : Path A a a' ) : P a' := match x in Path _ _ a'_ return P a'_ with id_Path _ _ => ci end.
 (* from: originally defined by Hexirp *)
 
-(** 道の場合分けです。 *)
+(** 道の型の場合分けです。 *)
 
 Definition identity_matching_Path@{ i j | } ( A : Type@{ i } ) ( a : A ) ( P : A -> Type@{ j } ) ( display : forall a' : A, P a' -> Path A a a' ) ( ci : P a ) ( ici : Path ( Path A a a ) ( display a ci ) ( id_Path A a ) ) ( a' : A ) ( x : Path A a a' ) : Path ( Path A a a' ) ( display a' ( matching_Path A a P ci a' x ) ) x := match x as x_ in Path _ _ a'_ return Path ( Path A a a'_ ) ( display a'_ ( matching_Path A a P ci a'_ x_ ) ) x_ with id_Path _ _ => ici end.
 (* from: originally defined by Hexirp *)
 
-(** 道の場合分けの恒等式です。 *)
+(** 道の型の場合分けの恒等式です。 *)
 
 Definition dependent_matching_Path@{ i j | } ( A : Type@{ i } ) ( a : A ) ( P : forall a' : A, Path A a a' -> Type@{ j } ) ( ci : P a ( id_Path A a ) ) ( a' : A ) ( x : Path A a a' ) : P a' x := match x as x_ in Path _ _ a'_ return P a'_ x_ with id_Path _ _ => ci end.
 (* from: originally defined by Hexirp *)
 
-(** 道の依存場合分けです。 *)
+(** 道の型の依存場合分けです。 *)
 
 Definition comatching_Path@{ i j | } ( A : Type@{ i } ) ( a : A ) ( P : Type@{ j } ) ( display : P -> A ) ( x : P ) ( ix : Path A ( display x ) a ) : Path A a ( display x ) := matching_Path A ( display x ) ( fun a_ : A => Path A a_ ( display x ) ) ( id_Path A ( display x ) ) a ix.
 (* from: originally defined by Hexirp *)
 
-(** 道の余場合分けです。 *)
+(** 道の型の余場合分けです。 *)
 
 Definition identity_comatching_Path@{ i j | } ( A : Type@{ i } ) ( a : A ) ( P : Type@{ j } ) ( display : P -> A ) ( codisplay : forall a' : A, Path A a a' -> P ) ( identity_codisplay : forall ( a' : A ) ( x : Path A a a' ), Path A ( display ( codisplay a' x ) ) a' ) ( a' : A ) ( x : Path A a a' ) : Path ( Path A a a' ) ( matching_Path A ( display ( codisplay a' x ) ) ( fun a'_ : A => Path A a a'_ ) ( comatching_Path A a P display ( codisplay a' x ) ( dependent_matching_Path A a ( fun ( a'_ : A ) ( x_ : Path A a a'_ ) => Path A ( display ( codisplay a'_ x_ ) ) a ) ( identity_codisplay a ( id_Path A a ) ) a' x ) ) a' ( identity_codisplay a' x ) ) x.
 Proof.
@@ -53,7 +53,7 @@ Proof.
 Defined.
 (* from: originally defined by Hexirp *)
 
-(** 道の余場合分けの恒等式です。 *)
+(** 道の型の余場合分けの恒等式です。 *)
 
 Definition conc_Path@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( z : A ) ( p : Path A x y ) ( q : Path A y z ) : Path A x z := matching_Path A x ( fun y_ : A => forall z_ : A, Path A y_ z_ -> Path A x z_ ) ( fun ( z_ : A ) ( q_ : Path A x z_ ) => q_ ) y p z q.
 (* from: originally defined by Hexirp *)
