@@ -145,6 +145,14 @@ Defined.
 
 (** 加算の結合法則です。 *)
 
+Definition comm_add_Peano_Number@{ i | } ( m : Peano_Number@{ i } ) ( n : Peano_Number@{ i } ) : Path Peano_Number@{ i } ( add_Peano_Number m n ) ( add_Peano_Number n m ).
+Proof.
+  exact _.
+Defined.
+(* from: originally defined by Hexirp *)
+
+(** 加算の交換法則です。 *)
+
 Definition mul_Peano_Number@{ i | } ( m : Peano_Number@{ i } ) ( n : Peano_Number@{ i } ) : Peano_Number@{ i } := recursion_Peano_Number Peano_Number@{ i } zero_Peano_Number ( fun rp : Peano_Number@{ i } => add_Peano_Number m rp ) n.
 (* from: originally defined by Hexirp *)
 
