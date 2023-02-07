@@ -137,9 +137,16 @@ Proof.
     exact ( id_Path Peano_Number@{ i } ( add_Peano_Number m n ) ).
   -
     refine ( fun ( kp : Peano_Number@{ i } ) ( rp : Path Peano_Number@{ i } ( add_Peano_Number ( add_Peano_Number m n ) kp ) ( add_Peano_Number m ( add_Peano_Number n kp ) ) ) => _ ).
-    change ( Path Peano_Number@{ i } ( add_Peano_Number ( add_Peano_Number m n ) ( succ_Peano_Number kp ) ) ( add_Peano_Number m ( add_Peano_Number n ( succ_Peano_Number kp ) ) ) ).
-    change ( Path Peano_Number@{ i } ( succ_Peano_Number ( add_Peano_Number ( add_Peano_Number m n ) kp ) ) ( succ_Peano_Number ( add_Peano_Number m ( add_Peano_Number n kp ) ) ) ).
-    exact ( ap_Path Peano_Number@{ i } Peano_Number@{ i } succ_Peano_Number ( add_Peano_Number ( add_Peano_Number m n ) kp ) ( add_Peano_Number m ( add_Peano_Number n kp ) ) rp ).
+    refine ( chain_4_conc_Path Peano_Number@{ i } ( add_Peano_Number ( add_Peano_Number m n ) ( succ_Peano_Number kp ) ) ( succ_Peano_Number ( add_Peano_Number ( add_Peano_Number m n ) kp ) ) ( succ_Peano_Number ( add_Peano_Number m ( add_Peano_Number n kp ) ) ) ( add_Peano_Number m ( succ_Peano_Number ( add_Peano_Number n kp ) ) ) ( add_Peano_Number m ( add_Peano_Number n ( succ_Peano_Number kp ) ) ) _ _ _ _ ).
+    +
+      exact ( right_succ_add_Peano_Number ( add_Peano_Number m n ) kp ).
+    +
+      exact ( ap_Path Peano_Number@{ i } Peano_Number@{ i } succ_Peano_Number ( add_Peano_Number ( add_Peano_Number m n ) kp ) ( add_Peano_Number m ( add_Peano_Number n kp ) ) rp ).
+    +
+      exact ( inv_Path Peano_Number@{ i } ( add_Peano_Number m ( succ_Peano_Number ( add_Peano_Number n kp ) ) ) ( succ_Peano_Number ( add_Peano_Number m ( add_Peano_Number n kp ) ) ) ( right_succ_add_Peano_Number m ( add_Peano_Number n kp ) ) ).
+    +
+      refine ( let value_0 := inv_Path Peano_Number@{ i } ( add_Peano_Number n ( succ_Peano_Number kp ) ) ( succ_Peano_Number ( add_Peano_Number n kp ) ) ( right_succ_add_Peano_Number n kp ) in _ ).
+      exact ( ap_Path Peano_Number@{ i } Peano_Number@{ i } ( fun x : Peano_Number@{ i } => add_Peano_Number m x ) ( succ_Peano_Number ( add_Peano_Number n kp ) ) ( add_Peano_Number n ( succ_Peano_Number kp ) ) value_0 ).
 Defined.
 (* from: originally defined by Hexirp *)
 
