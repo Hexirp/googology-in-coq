@@ -156,7 +156,7 @@ Proof.
       exact ( inv_Path Peano_Number@{ i } ( add_Peano_Number m zero_Peano_Number ) m ( right_unit_add_Peano_Number m ) ).
   -
     refine ( fun ( np : Peano_Number@{ i } ) ( rp : Path Peano_Number@{ i } ( add_Peano_Number np m ) ( add_Peano_Number m np ) ) => _ ).
-    refine ( conc_Path Peano_Number@{ i } ( add_Peano_Number ( succ_Peano_Number np ) m ) ( succ_Peano_Number ( add_Peano_Number np m ) ) ( add_Peano_Number m ( succ_Peano_Number np ) ) _ ( conc_Path Peano_Number@{ i } ( succ_Peano_Number ( add_Peano_Number np m ) ) ( succ_Peano_Number ( add_Peano_Number m np ) ) ( add_Peano_Number m ( succ_Peano_Number np ) ) _ _ ) ).
+    refine ( chain_3_conc_Path Peano_Number@{ i } ( add_Peano_Number ( succ_Peano_Number np ) m ) ( succ_Peano_Number ( add_Peano_Number np m ) ) ( succ_Peano_Number ( add_Peano_Number m np ) ) ( add_Peano_Number m ( succ_Peano_Number np ) ) _ _ _ ).
     +
       exact ( left_succ_add_Peano_Number np m ).
     +
