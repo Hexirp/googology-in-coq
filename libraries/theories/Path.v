@@ -145,7 +145,12 @@ Definition chain_2_conc_Path@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( z 
 Definition chain_3_conc_Path@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( z : A ) ( w : A ) ( p : Path A x y ) ( q : Path A y z ) ( r : Path A z w ) : Path A x w := conc_Path A x y w p ( chain_2_conc_Path A y z w q r ).
 (* from: originally defined by Hexirp *)
 
-(** 二つの道の結合です。 *)
+(** 三つの道の結合です。 *)
+
+Definition chain_4_conc_Path@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( z : A ) ( w : A ) ( v : A ) ( p : Path A x y ) ( q : Path A y z ) ( r : Path A z w ) ( s : Path A w v ) : Path A x v := conc_Path A x y v p ( chain_3_conc_Path A y z w v q r s ).
+(* from: originally defined by Hexirp *)
+
+(** 四つの道の結合です。 *)
 
 Definition trpt_2_Path@{ i j | } ( A : Type@{ i } ) ( B : Type@{ j } ) ( C : A -> B -> Type@{ j } ) ( xa : A ) ( ya : A ) ( pa : Path A xa ya ) ( xb : B ) ( yb : B ) ( pb : Path B xb yb ) ( u : C xa xb ) : C ya yb := matching_Path A xa ( fun ya_ : A => forall ( yb_ : B ) ( pb_ : Path B xb yb_ ), C ya_ yb_ ) ( fun ( yb_ : B ) ( pb_ : Path B xb yb_ ) => matching_Path B xb ( fun yb__ : B => C xa yb__ ) u yb_ pb_ ) ya pa yb pb.
 (* from: originally defined by Hexirp *)
