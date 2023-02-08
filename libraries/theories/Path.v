@@ -65,7 +65,7 @@ Definition assoc_Path@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( z : A ) (
 
 (** 道の結合法則の等式です。 *)
 
-Definition left_unit_Path@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( p : Path A x y ) : Path ( Path A x y ) ( conc_Path A x x y ( id_Path A x ) p ) p := id_Path ( Path A x y ) p.
+Definition left_unit_Path@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( p : Path A x y ) : Path ( Path A x y ) ( conc_Path A x x y ( id_Path A x ) p ) p := id_Path ( Path A x y ) ( conc_Path A x x y ( id_Path A x ) p ).
 (* from: originally defined by Hexirp *)
 
 (** 道の左単位元法則の等式です。 *)
@@ -105,7 +105,7 @@ Definition ap_comp_Path@{ i j k | } ( A : Type@{ i } ) ( B : Type@{ j } ) ( C : 
 
 (** [ap_Path] と [comp_Function] の等式です。 *)
 
-Definition ap_idp_Path@{ i j | } ( A : Type@{ i } ) ( B : Type@{ j } ) ( f : A -> B ) ( x : A ) : Path ( Path B ( f x ) ( f x ) ) ( ap_Path A B f x x ( id_Path A x ) ) ( id_Path B ( f x ) ) := id_Path ( Path B ( f x ) ( f x ) ) ( id_Path B ( f x ) ).
+Definition ap_idp_Path@{ i j | } ( A : Type@{ i } ) ( B : Type@{ j } ) ( f : A -> B ) ( x : A ) : Path ( Path B ( f x ) ( f x ) ) ( ap_Path A B f x x ( id_Path A x ) ) ( id_Path B ( f x ) ) := id_Path ( Path B ( f x ) ( f x ) ) ( ap_Path A B f x x ( id_Path A x ) ).
 (* from: originally defined by Hexirp *)
 
 (** [ap_Path] と [id_Path] の等式です。 *)
