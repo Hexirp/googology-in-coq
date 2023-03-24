@@ -110,14 +110,21 @@ Definition left_succ_add_Peano_Number@{ i | } ( m : Peano_Number@{ i } ) ( n : P
 Proof.
   refine ( dependent_recursion_Peano_Number ( fun n_ : Peano_Number@{ i } => Path Peano_Number@{ i } ( add_Peano_Number ( succ_Peano_Number m ) n_ ) ( succ_Peano_Number ( add_Peano_Number m n_ ) ) ) _ _ n ).
   -
-    change ( Path Peano_Number@{ i } ( add_Peano_Number ( succ_Peano_Number m ) zero_Peano_Number ) ( succ_Peano_Number ( add_Peano_Number m zero_Peano_Number ) ) ).
-    change ( Path Peano_Number@{ i } ( succ_Peano_Number m ) ( succ_Peano_Number m ) ).
-    exact ( id_Path Peano_Number@{ i } ( succ_Peano_Number m ) ).
+    refine ( conc_Path Peano_Number@{ i } ( add_Peano_Number ( succ_Peano_Number m ) zero_Peano_Number ) ( succ_Peano_Number m ) ( succ_Peano_Number ( add_Peano_Number m zero_Peano_Number ) ) _ _ ).
+    +
+      exact ( right_unit_add_Peano_Number ( succ_Peano_Number m ) ).
+    +
+      refine ( ap_Path Peano_Number@{ i } Peano_Number@{ i } succ_Peano_Number ( add_Peano_Number m zero_Peano_Number ) m _ ).
+      exact ( right_unit_add_Peano_Number m ).
   -
     refine ( fun ( np : Peano_Number@{ i } ) ( rp : Path Peano_Number@{ i } ( add_Peano_Number ( succ_Peano_Number m ) np ) ( succ_Peano_Number ( add_Peano_Number m np ) ) ) => _ ).
-    change ( Path Peano_Number@{ i } ( add_Peano_Number ( succ_Peano_Number m ) ( succ_Peano_Number np ) ) ( succ_Peano_Number ( add_Peano_Number m ( succ_Peano_Number np ) ) ) ).
-    change ( Path Peano_Number@{ i } ( succ_Peano_Number ( add_Peano_Number ( succ_Peano_Number m ) np ) ) ( succ_Peano_Number ( succ_Peano_Number ( add_Peano_Number m np ) ) ) ).
-    exact ( ap_Path Peano_Number@{ i } Peano_Number@{ i } succ_Peano_Number ( add_Peano_Number ( succ_Peano_Number m ) np ) ( succ_Peano_Number ( add_Peano_Number m np ) ) rp ).
+    refine ( chain_3_conc_Path Peano_Number@{ i } ( add_Peano_Number ( succ_Peano_Number m ) ( succ_Peano_Number np ) ) ( succ_Peano_Number ( add_Peano_Number ( succ_Peano_Number m ) np ) ) ( succ_Peano_Number ( succ_Peano_Number ( add_Peano_Number m np ) ) ) ( succ_Peano_Number ( add_Peano_Number m ( succ_Peano_Number np ) ) ) _ _ _ ).
+    +
+      exact ( id_Path Peano_Number@{ i } ( add_Peano_Number ( succ_Peano_Number m ) ( succ_Peano_Number np ) ) ).
+    +
+      exact ( ap_Path Peano_Number@{ i } Peano_Number@{ i } succ_Peano_Number ( add_Peano_Number ( succ_Peano_Number m ) np ) ( succ_Peano_Number ( add_Peano_Number m np ) ) rp ).
+    +
+      exact ( id_Path Peano_Number@{ i } ( succ_Peano_Number ( succ_Peano_Number ( add_Peano_Number m np ) ) ) ).
 Defined.
 (* from: originally defined by Hexirp *)
 
