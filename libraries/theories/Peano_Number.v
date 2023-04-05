@@ -79,6 +79,36 @@ Definition four_Peano_Number@{ i | } : Peano_Number@{ i } := succ_Peano_Number t
 
 (** 4 です。 *)
 
+Definition five_Peano_Number@{ i | } : Peano_Number@{ i } := succ_Peano_Number four_Peano_Number.
+(* from: originally defined by Hexirp *)
+
+(** 5 です。 *)
+
+Definition six_Peano_Number@{ i | } : Peano_Number@{ i } := succ_Peano_Number five_Peano_Number.
+(* from: originally defined by Hexirp *)
+
+(** 6 です。 *)
+
+Definition seven_Peano_Number@{ i | } : Peano_Number@{ i } := succ_Peano_Number six_Peano_Number.
+(* from: originally defined by Hexirp *)
+
+(** 7 です。 *)
+
+Definition eight_Peano_Number@{ i | } : Peano_Number@{ i } := succ_Peano_Number seven_Peano_Number.
+(* from: originally defined by Hexirp *)
+
+(** 8 です。 *)
+
+Definition nine_Peano_Number@{ i | } : Peano_Number@{ i } := succ_Peano_Number eight_Peano_Number.
+(* from: originally defined by Hexirp *)
+
+(** 9 です。 *)
+
+Definition ten_Peano_Number@{ i | } : Peano_Number@{ i } := succ_Peano_Number nine_Peano_Number.
+(* from: originally defined by Hexirp *)
+
+(** 10 です。 *)
+
 Definition add_Peano_Number@{ i | } ( m : Peano_Number@{ i } ) ( n : Peano_Number@{ i } ) : Peano_Number@{ i } := recursion_Peano_Number Peano_Number@{ i } m ( fun rp : Peano_Number@{ i } => succ_Peano_Number rp ) n.
 (* from: originally defined by Hexirp *)
 
