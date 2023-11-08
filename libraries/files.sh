@@ -14,6 +14,7 @@ theories/Dependent_Product.v \
 theories/Based_Path.v \
 theories/Peano_Number.v \
 theories/Peano_Integer.v \
+theories/Playground.v \
 
 do
   echo -n " ${file}"
