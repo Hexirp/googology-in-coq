@@ -4,14 +4,6 @@ Declare ML Module "ltac_plugin".
 
 (** [ltac_plugin] を読み込みます。 *)
 
-Declare ML Module "ssrmatching_plugin".
-
-(** [ssrmatching_plugin] を読み込みます。 *)
-
-Declare ML Module "ssreflect_plugin".
-
-(** [ssreflect_plugin] を読み込みます。 *)
-
 Global Set Default Proof Mode "Classic".
 
 (** 対話的な証明を行う時のモードを [Classic] にセットします。 *)
