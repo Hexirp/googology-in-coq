@@ -1,33 +1,33 @@
 (** Base モジュールは、基本的な設定を行ないます。 *)
 
+(** [ltac_plugin] を読み込みます。 *)
+
 Declare ML Module "ltac_plugin".
 
-(** [ltac_plugin] を読み込みます。 *)
+(** 対話証明を行う時の様式を [Classic] にセットします。 *)
 
 Global Set Default Proof Mode "Classic".
 
-(** 対話的な証明を行う時のモードを [Classic] にセットします。 *)
+(** 目標の選定子のデフォルトを [all] にします。 *)
 
 Global Set Default Goal Selector "all".
 
-(** ゴールのセレクタのデフォルトを [all] にします。 *)
+(** [Elimination Schemes] を無効にします。 *)
 
 Global Unset Elimination Schemes.
 
-(** [Elimination Schemes] をオフにします。 *)
+(** [Universe Polymorphism] を有効にします。 *)
 
 Global Set Universe Polymorphism.
 
-(** [Universe Polymorphism] をオンにします。 *)
+(** [Polymorphic Inductive Cumulativity] を有効にします。 *)
 
 Global Set Polymorphic Inductive Cumulativity.
 
-(** [Polymorphic Inductive Cumulativity] をオンにします。 *)
+(** 宇宙の詳細を表示するようにします。 *)
 
 Global Set Printing Universes.
 
-(** 宇宙階層を表示するようにします。 *)
+(** [forall _ : x, y] の糖衣構文として [x -> y] を定義します。 https://github.com/coq/coq/blob/aaa8c94362b9159b1fa00baff8cd50cdc2972c7f/theories/Init/Notations.v#L15 を参照しています。 *)
 
 Notation "x -> y" := ( forall _ : x, y ) ( at level 99, right associativity, y at level 200 ).
-
-(** [forall _ : x, y] の糖衣構文として [x -> y] を定義します。 *)
