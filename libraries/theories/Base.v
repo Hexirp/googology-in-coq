@@ -1,4 +1,4 @@
-(** 基本的な設定のモジュールです。 *)
+(** Base モジュールは、基本的な設定を行ないます。 *)
 
 Declare ML Module "ltac_plugin".
 
