@@ -262,3 +262,9 @@ Definition 結合する_道@{ i | }
     : 道 A x z
     := match q in 道 _ _ z_ return 道 A x z_ with 道_恒等 _ _ => p end
 .
+
+(** 道の反転を定義します。 *)
+
+Definition 反転する_道@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( p : 道 A x y ) : 道 A y x
+    := match p in 道 _ _ y_ return 道 A y_ x with 道_恒等 _ _ => 道_恒等 A x end
+.
