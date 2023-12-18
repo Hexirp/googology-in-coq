@@ -536,3 +536,16 @@ Definition 結合する_道@{ i | }
 Definition 反転する_道@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( p : 道 A x y ) : 道 A y x
     := match p in 道 _ _ y_ return 道 A y_ x with 道_恒等 _ _ => 道_恒等 A x end
 .
+
+(** 道への関数適用を定義します。 *)
+
+Definition 適用する_関数_道@{ i | }
+    ( A : Type@{ i } )
+    ( B : Type@{ i } )
+    ( f : A -> B )
+    ( x : A )
+    ( y : A )
+    ( p : 道 A x y )
+    : 道 B ( f x ) ( f y )
+    := match p in 道 _ _ y_ return 道 B ( f x ) ( f y_ ) with 道_恒等 _ _ => 道_恒等 B ( f x ) end
+.
