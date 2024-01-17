@@ -750,7 +750,7 @@ Inductive 自然数の加算の繰り上がり@{ i | } : Type@{ i }
 Definition 足す_自然数@{ i | } : 自然数@{ i } -> 自然数@{ i } -> 自然数@{ i }
     :=
         let
-            fix a ( x : 自然数@{ i } ) ( y : 自然数@{ i } ) ( z : 自然数の加算の繰り上がり ) { struct x } : 自然数@{ i }
+            fix a ( x : 自然数@{ i } ) ( y : 自然数@{ i } ) ( z : 自然数の加算の繰り上がり@{ i } ) { struct x } : 自然数@{ i }
                 :=
                     match
                         x
