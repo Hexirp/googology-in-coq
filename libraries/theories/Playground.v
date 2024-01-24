@@ -794,10 +794,25 @@ Definition 結合する_道@{ i | }
         let
             a
                 :=
-                    match p
-                    in 道 _ _ y_
-                    return 道 A y_ z -> 道 A x z
-                    with 構築子_道 _ _ => fun q_ : 道 A x z => q_
+                    match
+                        p
+                    in
+                        道 _ _ y_
+                    return
+                        道 A y_ z -> 道 A x z
+                    with
+                        構築子_道 _ _
+                            =>
+                                fun q_ : 道 A x z =>
+                                    match
+                                        q_
+                                    in
+                                        道 _ _ z_
+                                    return
+                                        道 A x z_
+                                    with
+                                        構築子_道 _ _ => 構築子_道 A x
+                                    end
                     end
         in
             a q
