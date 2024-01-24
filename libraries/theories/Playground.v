@@ -912,6 +912,23 @@ Definition 二項係数を計算する_自然数@{ i | } : 自然数@{ i } -> �
                         end
                 end
 .
+
+Definition フィボナッチ数を計算する_自然数@{ i | } : 自然数@{ i } -> 自然数@{ i }
+    :=
+        let
+            fix a ( x : 自然数@{ i } ) ( y : 自然数@{ i } ) ( z : 自然数@{ i } ) { struct x } : 自然数@{ i }
+                :=
+                    match
+                        x
+                    with
+                        零_構築子_自然数 => y
+                        |
+                        後者_構築子_自然数 x_p => a x_p z ( 足す_自然数 y z )
+                    end
+        in
+            fun x : 自然数@{ i } => a x 零_自然数 一_自然数
+.
+
 (** 道を定義する。「道」は "path" の訳語である。 *)
 
 Inductive 道@{ i | } ( A : Type@{ i } ) ( x : A ) : A -> Type@{ i } := 構築子_道 : 道 A x x.
