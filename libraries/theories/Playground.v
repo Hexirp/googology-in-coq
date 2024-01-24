@@ -905,28 +905,30 @@ Definition 足す_自然数@{ i | } ( x : 自然数@{ i } ) ( y : 自然数@{ i 
     := 繰り上がりも含めて足す_自然数 x y 零_構築子_自然数の加算の繰り上がり
 .
 
-(** 等式型を定義する。「等式型」は "identity type" の訳語である。 "identity type" の訳語に「等式型」を割り当てるのは、 "Homotopy Type Theory 入門" に倣った。 "Homotopy Type Theory 入門" とは https://uemurax.github.io/pdfs/hott-intro-ja.pdf である。 *)
+(** 道を定義する。 *)
 
-Inductive 等式型@{ i | } ( A : Type@{ i } ) ( x : A ) : A -> Type@{ i } := 構築子_等式型 : 等式型 A x x.
+Inductive 道@{ i | } ( A : Type@{ i } ) ( x : A ) : A -> Type@{ i } := 構築子_道 : 道 A x x.
 
-Definition 反射律_等式型@{ i | } ( A : Type@{ i } ) ( x : A ) : 等式型 A x x := 構築子_等式型 A x.
+(** 恒等道は "identity path" の訳語である。 *)
 
-Definition 推移律_等式型@{ i | }
+Definition 恒等道_道@{ i | } ( A : Type@{ i } ) ( x : A ) : 道 A x x := 構築子_道 A x.
+
+Definition 結合する_道@{ i | }
     ( A : Type@{ i } )
     ( x : A )
     ( y : A )
     ( z : A )
-    ( p : 等式型 A x y )
-    ( q : 等式型 A y z )
-    : 等式型 A x z
+    ( p : 道 A x y )
+    ( q : 道 A y z )
+    : 道 A x z
     :=
         let
             a
                 :=
                     match p
-                    in 等式型 _ _ y_
-                    return 等式型 A y_ z -> 等式型 A x z
-                    with 構築子_等式型 _ _ => fun q_ : 等式型 A x z => q_
+                    in 道 _ _ y_
+                    return 道 A y_ z -> 道 A x z
+                    with 構築子_道 _ _ => fun q_ : 道 A x z => q_
                     end
         in
             a q
