@@ -910,3 +910,24 @@ Definition 足す_自然数@{ i | } ( x : 自然数@{ i } ) ( y : 自然数@{ i 
 Inductive 等式型@{ i | } ( A : Type@{ i } ) ( x : A ) : A -> Type@{ i } := 構築子_等式型 : 等式型 A x x.
 
 Definition 反射律_等式型@{ i | } ( A : Type@{ i } ) ( x : A ) : 等式型 A x x := 構築子_等式型 A x.
+
+Definition 推移律_等式型@{ i | }
+    ( A : Type@{ i } )
+    ( x : A )
+    ( y : A )
+    ( z : A )
+    ( p : 等式型 A x y )
+    ( q : 等式型 A y z )
+    : 等式型 A x z
+    :=
+        let
+            a
+                :=
+                    match p
+                    in 等式型 _ _ y_
+                    return 等式型 A y_ z -> 等式型 A x z
+                    with 構築子_等式型 _ _ => fun q_ : 等式型 A x z => q_
+                    end
+        in
+            a q
+.
