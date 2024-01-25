@@ -937,13 +937,7 @@ Inductive 道@{ i | } ( A : Type@{ i } ) ( x : A ) : A -> Type@{ i } := 構築�
 
 Definition 恒等道_道@{ i | } ( A : Type@{ i } ) ( x : A ) : 道 A x x := 構築子_道 A x.
 
-Definition 結合する_道@{ i | }
-    ( A : Type@{ i } )
-    ( x : A )
-    ( y : A )
-    ( z : A )
-    ( p : 道 A x y )
-    ( q : 道 A y z )
+Definition 結合する_道@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( z : A ) ( p : 道 A x y ) ( q : 道 A y z )
     : 道 A x z
     :=
         let
