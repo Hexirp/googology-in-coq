@@ -263,6 +263,10 @@ Inductive 依存直和@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) : Type
     := 構築子_依存直和 : forall x : A, B x -> 依存直和 A B
 .
 
+(** ブール型を定義します。「ブール型」は "boolean type" の訳語です。 *)
+
+Inductive ブール型@{ i | } : Type@{ i } := 偽_構築子_ブール型 : ブール型 | 真_構築子_ブール型 : ブール型.
+
 (** 道を定義する。「道」は "path" の訳語である。 *)
 
 Inductive 道@{ i | } ( A : Type@{ i } ) ( x : A ) : A -> Type@{ i } := 構築子_道 : 道 A x x.
