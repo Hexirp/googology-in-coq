@@ -235,6 +235,20 @@ Definition A_2024_01_26_0000@{ i j | } ( A : Type@{ i } ) ( B : Type@{ j } ) ( f
     := fun x : 否定@{ j } B => fun y : A => x ( f y )
 .
 
+(** 直和型を定義します。 *)
+
+Inductive 直和@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) : Type@{ i }
+    := 左_構築子_直和 : A -> 直和 A B | 右_構築子_直和 : B -> 直和 A B
+.
+
+Definition A_2024_01_26_0001@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( e : 否定@{ i } B ) ( x : 直和@{ i } A B ) : A
+    := match x with 左_構築子_直和 _ _ x_l => x_l | 右_構築子_直和 _ _ x_r => 不条理である_空型 A ( e x_r ) end
+.
+
+Definition A_2024_01_26_0002@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( e : 否定@{ i } A ) ( x : 直和@{ i } A B ) : B
+    := match x with 左_構築子_直和 _ _ x_l => 不条理である_空型 B ( e x_l ) | 右_構築子_直和 _ _ x_r => x_r end
+.
+
 (** 道を定義する。「道」は "path" の訳語である。 *)
 
 Inductive 道@{ i | } ( A : Type@{ i } ) ( x : A ) : A -> Type@{ i } := 構築子_道 : 道 A x x.
