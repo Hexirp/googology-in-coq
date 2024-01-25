@@ -257,6 +257,12 @@ Inductive 単一型@{ i | } : Type@{ i } := 構築子_単一型 : 単一型.
 
 Inductive 直積@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) : Type@{ i } := 構築子_直積 : A -> B -> 直積 A B.
 
+(** 依存直和型を定義します。 *)
+
+Inductive 依存直和@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) : Type@{ i }
+    := 構築子_依存直和 : forall x : A, B x -> 依存直和 A B
+.
+
 (** 道を定義する。「道」は "path" の訳語である。 *)
 
 Inductive 道@{ i | } ( A : Type@{ i } ) ( x : A ) : A -> Type@{ i } := 構築子_道 : 道 A x x.
