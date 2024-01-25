@@ -253,6 +253,10 @@ Definition A_2024_01_26_0002@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( e :
 
 Inductive 単一型@{ i | } : Type@{ i } := 構築子_単一型 : 単一型.
 
+(** 直積型を定義します。 *)
+
+Inductive 直積@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) : Type@{ i } := 構築子_直積 : A -> B -> 直積 A B.
+
 (** 道を定義する。「道」は "path" の訳語である。 *)
 
 Inductive 道@{ i | } ( A : Type@{ i } ) ( x : A ) : A -> Type@{ i } := 構築子_道 : 道 A x x.
