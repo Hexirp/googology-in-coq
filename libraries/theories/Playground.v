@@ -221,6 +221,12 @@ Definition フィボナッチ数を計算する_自然数@{ i | } : 自然数@{ 
             fun x : 自然数@{ i } => a x 零_自然数 一_自然数
 .
 
+(** 空型を定義します。「空型」は "empty type" の訳語です。 *)
+
+Inductive 空型@{ i | } : Type@{ i } :=.
+
+Definition 不条理である_空型@{ i j | } ( A : Type@{ i } ) ( x : 空型@{ j } ) : A := match x with end.
+
 (** 道を定義する。「道」は "path" の訳語である。 *)
 
 Inductive 道@{ i | } ( A : Type@{ i } ) ( x : A ) : A -> Type@{ i } := 構築子_道 : 道 A x x.
