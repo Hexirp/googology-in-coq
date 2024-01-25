@@ -4,7 +4,7 @@ Require Googology_In_Coq.Base.
 
 Import Googology_In_Coq.Base.
 
-(** 自然数を定義する。 *)
+(** 自然数を定義します。 *)
 
 Inductive 自然数@{ i | } : Type@{i}
     :=
@@ -225,6 +225,8 @@ Definition フィボナッチ数を計算する_自然数@{ i | } : 自然数@{ 
 
 Inductive 空型@{ i | } : Type@{ i } :=.
 
+(** 「不条理である」は "absurd" の訳語です。 *)
+
 Definition 不条理である_空型@{ i j | } ( A : Type@{ i } ) ( x : 空型@{ j } ) : A := match x with end.
 
 (** 否定を定義します。 *)
@@ -267,11 +269,11 @@ Inductive 依存直和@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) : Type
 
 Inductive ブール型@{ i | } : Type@{ i } := 偽_構築子_ブール型 : ブール型 | 真_構築子_ブール型 : ブール型.
 
-(** 道を定義する。「道」は "path" の訳語である。 *)
+(** 道を定義します。「道」は "path" の訳語です。 *)
 
 Inductive 道@{ i | } ( A : Type@{ i } ) ( x : A ) : A -> Type@{ i } := 構築子_道 : 道 A x x.
 
-(** 「恒等道」は "identity path" の訳語である。 *)
+(** 「恒等道」は "identity path" の訳語です。 *)
 
 Definition 恒等道_道@{ i | } ( A : Type@{ i } ) ( x : A ) : 道 A x x := 構築子_道 A x.
 
