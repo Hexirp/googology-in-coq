@@ -249,6 +249,10 @@ Definition A_2024_01_26_0002@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( e :
     := match x with 左_構築子_直和 _ _ x_l => 不条理である_空型 B ( e x_l ) | 右_構築子_直和 _ _ x_r => x_r end
 .
 
+(** 単一型を定義します。「単一型」は "unit type" の訳語です。 *)
+
+Inductive 単一型@{ i | } : Type@{ i } := 構築子_単一型 : 単一型.
+
 (** 道を定義する。「道」は "path" の訳語である。 *)
 
 Inductive 道@{ i | } ( A : Type@{ i } ) ( x : A ) : A -> Type@{ i } := 構築子_道 : 道 A x x.
