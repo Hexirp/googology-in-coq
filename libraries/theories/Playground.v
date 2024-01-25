@@ -971,6 +971,17 @@ Definition 反転する_道@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( p :
     := match p in 道 _ _ y_ return 道 A y_ x with 構築子_道 _ _ => 構築子_道 A x end
 .
 
+Definition 関数を適用する_道@{ i j | }
+        ( A : Type@{ i } )
+        ( B : Type@{ j } )
+        ( f : A -> B )
+        ( x : A )
+        ( y : A )
+        ( p : 道 A x y )
+    : 道 B ( f x ) ( f y )
+    := match p in 道 _ _ y_ return 道 B ( f x ) ( f y_ ) with 構築子_道 _ _ => 構築子_道 B ( f x ) end
+.
+
 Definition A_2024_01_24_0000@{ i | } : 道@{ i } 自然数@{ i } ( 後者を計算する_自然数 八_自然数 ) 九_自然数
     := 恒等道_道 _ _
 .
