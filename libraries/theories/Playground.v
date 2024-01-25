@@ -227,6 +227,14 @@ Inductive 空型@{ i | } : Type@{ i } :=.
 
 Definition 不条理である_空型@{ i j | } ( A : Type@{ i } ) ( x : 空型@{ j } ) : A := match x with end.
 
+(** 否定を定義します。 *)
+
+Definition 否定@{ i | } ( A : Type@{ i } ) : Type@{ i } := A -> 空型@{ i }.
+
+Definition A_2024_01_26_0000@{ i j | } ( A : Type@{ i } ) ( B : Type@{ j } ) ( f : A -> B ) : 否定@{ j } B -> 否定@{ i } A
+    := fun x : 否定@{ j } B => fun y : A => x ( f y )
+.
+
 (** 道を定義する。「道」は "path" の訳語である。 *)
 
 Inductive 道@{ i | } ( A : Type@{ i } ) ( x : A ) : A -> Type@{ i } := 構築子_道 : 道 A x x.
