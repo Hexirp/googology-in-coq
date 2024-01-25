@@ -973,6 +973,10 @@ Definition 結合する_道@{ i | }
             a q
 .
 
+Definition 反転する_道@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( p : 道 A x y ) : 道 A y x
+    := match p in 道 _ _ y_ return 道 A y_ x with 構築子_道 _ _ => 構築子_道 A x end
+.
+
 Definition A_2024_01_24_0000@{ i | } : 道@{ i } 自然数@{ i } ( 後者を計算する_自然数 八_自然数 ) 九_自然数
     := 恒等道_道 _ _
 .
