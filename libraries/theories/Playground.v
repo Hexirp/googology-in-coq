@@ -953,15 +953,7 @@ Definition 結合する_道@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( z :
                         構築子_道 _ _
                             =>
                                 fun q_ : 道 A x z =>
-                                    match
-                                        q_
-                                    in
-                                        道 _ _ z_
-                                    return
-                                        道 A x z_
-                                    with
-                                        構築子_道 _ _ => 構築子_道 A x
-                                    end
+                                    match q_ in 道 _ _ z_ return 道 A x z_ with 構築子_道 _ _ => 構築子_道 A x end
                     end
         in
             a q
