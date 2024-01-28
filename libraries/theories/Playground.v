@@ -4,6 +4,54 @@ Require Googology_In_Coq.Base.
 
 Import Googology_In_Coq.Base.
 
+(** 空型を定義します。「空型」は "empty type" の訳語です。 *)
+
+Inductive 空型@{ i | } : Type@{ i } :=.
+
+(** 「不条理である」は "absurd" の訳語です。 *)
+
+Definition 不条理である_空型@{ i j | } ( A : Type@{ i } ) ( x : 空型@{ j } ) : A := match x with end.
+
+(** 否定を定義します。 *)
+
+Definition 否定@{ i | } ( A : Type@{ i } ) : Type@{ i } := A -> 空型@{ i }.
+
+Definition A_2024_01_26_0000@{ i j | } ( A : Type@{ i } ) ( B : Type@{ j } ) ( f : A -> B ) : 否定@{ j } B -> 否定@{ i } A
+    := fun x : 否定@{ j } B => fun y : A => x ( f y )
+.
+
+(** 直和型を定義します。 *)
+
+Inductive 直和@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) : Type@{ i }
+    := 左_構築子_直和 : A -> 直和 A B | 右_構築子_直和 : B -> 直和 A B
+.
+
+Definition A_2024_01_26_0001@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( e : 否定@{ i } B ) ( x : 直和@{ i } A B ) : A
+    := match x with 左_構築子_直和 _ _ x_l => x_l | 右_構築子_直和 _ _ x_r => 不条理である_空型 A ( e x_r ) end
+.
+
+Definition A_2024_01_26_0002@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( e : 否定@{ i } A ) ( x : 直和@{ i } A B ) : B
+    := match x with 左_構築子_直和 _ _ x_l => 不条理である_空型 B ( e x_l ) | 右_構築子_直和 _ _ x_r => x_r end
+.
+
+(** 単一型を定義します。「単一型」は "unit type" の訳語です。 *)
+
+Inductive 単一型@{ i | } : Type@{ i } := 構築子_単一型 : 単一型.
+
+(** 直積型を定義します。 *)
+
+Inductive 直積@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) : Type@{ i } := 構築子_直積 : A -> B -> 直積 A B.
+
+(** 依存直和型を定義します。 *)
+
+Inductive 依存直和@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) : Type@{ i }
+    := 構築子_依存直和 : forall x : A, B x -> 依存直和 A B
+.
+
+(** ブール型を定義します。「ブール型」は "boolean type" の訳語です。 *)
+
+Inductive ブール型@{ i | } : Type@{ i } := 偽_構築子_ブール型 : ブール型 | 真_構築子_ブール型 : ブール型.
+
 (** 自然数を定義します。 *)
 
 Inductive 自然数@{ i | } : Type@{i}
@@ -220,54 +268,6 @@ Definition フィボナッチ数を計算する_自然数@{ i | } : 自然数@{ 
         in
             fun x : 自然数@{ i } => a x 零_自然数 一_自然数
 .
-
-(** 空型を定義します。「空型」は "empty type" の訳語です。 *)
-
-Inductive 空型@{ i | } : Type@{ i } :=.
-
-(** 「不条理である」は "absurd" の訳語です。 *)
-
-Definition 不条理である_空型@{ i j | } ( A : Type@{ i } ) ( x : 空型@{ j } ) : A := match x with end.
-
-(** 否定を定義します。 *)
-
-Definition 否定@{ i | } ( A : Type@{ i } ) : Type@{ i } := A -> 空型@{ i }.
-
-Definition A_2024_01_26_0000@{ i j | } ( A : Type@{ i } ) ( B : Type@{ j } ) ( f : A -> B ) : 否定@{ j } B -> 否定@{ i } A
-    := fun x : 否定@{ j } B => fun y : A => x ( f y )
-.
-
-(** 直和型を定義します。 *)
-
-Inductive 直和@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) : Type@{ i }
-    := 左_構築子_直和 : A -> 直和 A B | 右_構築子_直和 : B -> 直和 A B
-.
-
-Definition A_2024_01_26_0001@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( e : 否定@{ i } B ) ( x : 直和@{ i } A B ) : A
-    := match x with 左_構築子_直和 _ _ x_l => x_l | 右_構築子_直和 _ _ x_r => 不条理である_空型 A ( e x_r ) end
-.
-
-Definition A_2024_01_26_0002@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( e : 否定@{ i } A ) ( x : 直和@{ i } A B ) : B
-    := match x with 左_構築子_直和 _ _ x_l => 不条理である_空型 B ( e x_l ) | 右_構築子_直和 _ _ x_r => x_r end
-.
-
-(** 単一型を定義します。「単一型」は "unit type" の訳語です。 *)
-
-Inductive 単一型@{ i | } : Type@{ i } := 構築子_単一型 : 単一型.
-
-(** 直積型を定義します。 *)
-
-Inductive 直積@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) : Type@{ i } := 構築子_直積 : A -> B -> 直積 A B.
-
-(** 依存直和型を定義します。 *)
-
-Inductive 依存直和@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) : Type@{ i }
-    := 構築子_依存直和 : forall x : A, B x -> 依存直和 A B
-.
-
-(** ブール型を定義します。「ブール型」は "boolean type" の訳語です。 *)
-
-Inductive ブール型@{ i | } : Type@{ i } := 偽_構築子_ブール型 : ブール型 | 真_構築子_ブール型 : ブール型.
 
 (** 道を定義します。「道」は "path" の訳語です。 *)
 
