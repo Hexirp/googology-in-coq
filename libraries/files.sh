@@ -11,7 +11,6 @@ theories/Sum.v \
 theories/Product.v \
 theories/Dependent_Sum.v \
 theories/Dependent_Product.v \
-theories/Based_Path.v \
 theories/Playground.v \
 
 do
