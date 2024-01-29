@@ -324,6 +324,63 @@ Definition 関数を適用する_道@{ i j | }
     := match p in 道 _ _ y_ return 道 B ( f x ) ( f y_ ) with 構築子_道 _ _ => 構築子_道 B ( f x ) end
 .
 
+(** 基点付き道を定義します。 *)
+
+Definition 基点付き道@{ i | } ( A : Type@{ i } ) ( x : A ) : Type@{ i }
+    := 依存直和@{ i } A ( fun y : A => 道@{ i } A x y )
+.
+
+Definition 恒等道_基点付き道@{ i | } ( A : Type@{ i } ) ( x : A ) : 基点付き道@{ i } A x
+    := 構築する_依存直和 A ( fun y : A => 道@{ i } A x y ) x ( 恒等道_道 A x )
+.
+
+Definition A_2024_01_30_0000@{ i | } ( A : Type@{ i } ) ( x : A ) ( p : 基点付き道@{ i } A x )
+    : 道@{ i } ( 基点付き道@{ i } A x ) ( 恒等道_基点付き道 A x ) p
+.
+Proof.
+    refine
+        (
+            match
+                p
+            as
+                p_
+            return
+                道@{ i } ( 基点付き道@{ i } A x ) ( 恒等道_基点付き道 A x ) p_
+            with
+                構築子_依存直和 _ _ y p => _
+            end
+        )
+    .
+    refine
+        (
+            match
+                p
+            as
+                p_
+            in
+                道 _ _ y_
+            return
+                道@{ i }
+                    ( 基点付き道@{ i } A x )
+                    ( 恒等道_基点付き道 A x )
+                    ( 構築する_依存直和 A ( fun y : A => 道@{ i } A x y ) y_ p_ )
+            with
+                構築子_道 _ _ => _
+            end
+        )
+    .
+    change
+        (
+            道@{ i }
+                ( 基点付き道@{ i } A x )
+                ( 恒等道_基点付き道 A x )
+                ( 構築する_依存直和 A ( fun y : A => 道@{ i } A x y ) x ( 恒等道_道 A x ) )
+        )
+    .
+    change ( 道@{ i } ( 基点付き道@{ i } A x ) ( 恒等道_基点付き道 A x ) ( 恒等道_基点付き道 A x ) ).
+    exact ( 恒等道_道 ( 基点付き道@{ i } A x ) ( 恒等道_基点付き道 A x ) ).
+Defined.
+
 (** 自然数の定理を証明します。 *)
 
 Definition A_2024_01_24_0000@{ i | } : 道@{ i } 自然数@{ i } ( 後者を計算する_自然数 八_自然数 ) 九_自然数
