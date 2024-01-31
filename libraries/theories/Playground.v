@@ -348,25 +348,15 @@ Definition 恒等道_道@{ i | } ( A : Type@{ i } ) ( x : A ) : 道 A x x := 構
 
 Definition 結合する_道@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( z : A ) ( p : 道 A x y ) ( q : 道 A y z )
     : 道 A x z
-    :=
-        let
-            a
-                :=
-                    match
-                        p
-                    in
-                        道 _ _ y_
-                    return
-                        道 A y_ z -> 道 A x z
-                    with
-                        構築子_道 _ _
-                            =>
-                                fun q_ : 道 A x z =>
-                                    match q_ in 道 _ _ z_ return 道 A x z_ with 構築子_道 _ _ => 構築子_道 A x end
-                    end
-        in
-            a q
 .
+Proof.
+    refine ( let a := _ in a p q ).
+    refine ( fun p : 道@{ i } A x y => _ ).
+    refine ( match p in 道 _ _ y_ return 道@{ i } A y_ z -> 道 A x z with 構築子_道 _ _ => _ end ).
+    refine ( fun q : 道@{ i } A x z => _ ).
+    refine ( match q in 道 _ _ z_ return 道@{ i } A x z_ with 構築子_道 _ _ => _ end ).
+    exact ( 恒等道_道 A x ).
+Defined.
 
 Definition 反転する_道@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( p : 道 A x y ) : 道 A y x
     := match p in 道 _ _ y_ return 道 A y_ x with 構築子_道 _ _ => 構築子_道 A x end
