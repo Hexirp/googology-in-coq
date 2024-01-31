@@ -52,6 +52,15 @@ Definition 構築する_依存直和@{ i | } ( A : Type@{ i } ) ( B : A -> Type@
     := 構築子_依存直和 A B x y
 .
 
+Definition 第一射影関数_依存直和@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) ( x : 依存直和@{ i } A B ) : A
+    := match x with 構築子_依存直和 _ _ x_1 x_2 => x_1 end
+.
+
+Definition 第二射影関数_依存直和@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) ( x : 依存直和@{ i } A B )
+    : B ( 第一射影関数_依存直和 A B x )
+    := match x as x_ return B ( 第一射影関数_依存直和 A B x_ ) with 構築子_依存直和 _ _ x_1 x_2 => x_2 end
+.
+
 (** 依存直積型を定義します。 *)
 
 Definition 依存直積@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) : Type@{ i } := forall x : A, B x.
