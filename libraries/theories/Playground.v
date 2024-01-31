@@ -457,6 +457,43 @@ Proof.
     exact ( 恒等道_道 ( 道@{ i } A x x ) ( 恒等道_道 A x ) ).
 Defined.
 
+Definition A_2024_02_01_0000@{ i | } ( A : Type@{ i } ) ( x : A )
+    : 道@{ i } ( 道@{ i } A x x ) ( 結合する_道 A x x x ( 恒等道_道 A x ) ( 恒等道_道 A x ) ) ( 恒等道_道 A x )
+    := 恒等道_道 _ _
+.
+
+Definition A_2024_02_01_0001@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( p : 道@{ i } A x y )
+    : 道@{ i } ( 道@{ i } A x y ) ( 結合する_道 A x y y p ( 恒等道_道 A y ) ) p
+    :=
+        match
+            p
+        as
+            p_
+        in
+            道 _ _ y_
+        return
+            道@{ i } ( 道@{ i } A x y_ ) ( 結合する_道 A x y_ y_ p_ ( 恒等道_道 A y_ ) ) p_
+        with
+            構築子_道 _ _ => 恒等道_道 ( 道@{ i } A x x ) ( 恒等道_道 A x )
+        end
+.
+
+Definition A_2024_02_01_0002@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( p : 道@{ i } A x y )
+    : 道@{ i } ( 道@{ i } A x y ) ( 結合する_道 A x x y ( 恒等道_道 A x ) p ) p
+    :=
+        match
+            p
+        as
+            p_
+        in
+            道 _ _ y_
+        return
+            道@{ i } ( 道@{ i } A x y_ ) ( 結合する_道 A x x y_ ( 恒等道_道 A x ) p_ ) p_
+        with
+            構築子_道 _ _ => 恒等道_道 ( 道@{ i } A x x ) ( 恒等道_道 A x )
+        end
+.
+
 (** 基点付き道を定義します。 *)
 
 Definition 基点付き道@{ i | } ( A : Type@{ i } ) ( x : A ) : Type@{ i }
