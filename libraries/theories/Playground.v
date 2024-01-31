@@ -348,15 +348,17 @@ Definition 恒等道_道@{ i | } ( A : Type@{ i } ) ( x : A ) : 道 A x x := 構
 
 Definition 結合する_道@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( z : A ) ( p : 道 A x y ) ( q : 道 A y z )
     : 道 A x z
+    :=
+        match
+            q
+        in
+            道 _ _ z_
+        return
+            道 A x z_
+        with
+            構築子_道 _ _ => match p in 道 _ _ y_ return 道 A x y_ with 構築子_道 _ _ => 恒等道_道 A x end
+        end
 .
-Proof.
-    refine ( let a := _ in a p q ).
-    refine ( fun p : 道@{ i } A x y => _ ).
-    refine ( match p in 道 _ _ y_ return 道@{ i } A y_ z -> 道 A x z with 構築子_道 _ _ => _ end ).
-    refine ( fun q : 道@{ i } A x z => _ ).
-    refine ( match q in 道 _ _ z_ return 道@{ i } A x z_ with 構築子_道 _ _ => _ end ).
-    exact ( 恒等道_道 A x ).
-Defined.
 
 Definition 反転する_道@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( p : 道 A x y ) : 道 A y x
     := match p in 道 _ _ y_ return 道 A y_ x with 構築子_道 _ _ => 構築子_道 A x end
@@ -389,50 +391,6 @@ Definition 結合演算の結合法則_道@{ i | }
             ( 結合する_道 A x y w p ( 結合する_道 A y z w q r ) )
 .
 Proof.
-    refine ( let a := _ in a p q r ).
-    refine ( fun p : 道@{ i } A x y => _ ).
-    refine
-        (
-            match
-                p
-            as
-                p_
-            in
-                道 _ _ y_
-            return
-                forall ( q_ : 道@{ i } A y_ z ) ( r : 道@{ i } A z w )
-                    ,
-                        道@{ i }
-                            ( 道@{ i } A x w )
-                            ( 結合する_道 A x z w ( 結合する_道 A x y_ z p_ q_ ) r )
-                            ( 結合する_道 A x y_ w p_ ( 結合する_道 A y_ z w q_ r ) )
-            with
-                構築子_道 _ _ => _
-            end
-        )
-    .
-    refine ( fun q : 道@{ i } A x z => _ ).
-    refine
-        (
-            match
-                q
-            as
-                q_
-            in
-                道 _ _ z_
-            return
-                forall r_ : 道@{ i } A z_ w
-                    ,
-                        道@{ i }
-                            ( 道@{ i } A x w )
-                            ( 結合する_道 A x z_ w ( 結合する_道 A x x z_ ( 恒等道_道 A x ) q_ ) r_ )
-                            ( 結合する_道 A x x w ( 恒等道_道 A x ) ( 結合する_道 A x z_ w q_ r_ ) )
-            with
-                構築子_道 _ _ => _
-            end
-        )
-    .
-    refine ( fun r : 道@{ i } A x w => _ ).
     refine
         (
             match
@@ -442,10 +400,46 @@ Proof.
             in
                 道 _ _ w_
             return
-                    道@{ i }
-                        ( 道@{ i } A x w_ )
-                        ( 結合する_道 A x x w_ ( 結合する_道 A x x x ( 恒等道_道 A x ) ( 恒等道_道 A x ) ) r_ )
-                        ( 結合する_道 A x x w_ ( 恒等道_道 A x ) ( 結合する_道 A x x w_ ( 恒等道_道 A x ) r_ ) )
+                道@{ i }
+                    ( 道@{ i } A x w_ )
+                    ( 結合する_道 A x z w_ ( 結合する_道 A x y z p q ) r_ )
+                    ( 結合する_道 A x y w_ p ( 結合する_道 A y z w_ q r_ ) )
+            with
+                構築子_道 _ _ => _
+            end
+        )
+    .
+    refine
+        (
+            match
+                q
+            as
+                q_
+            in
+                道 _ _ z_
+            return
+                道@{ i }
+                    ( 道@{ i } A x z_ )
+                    ( 結合する_道 A x z_ z_ ( 結合する_道 A x y z_ p q_ ) ( 恒等道_道 A z_ ) )
+                    ( 結合する_道 A x y z_ p ( 結合する_道 A y z_ z_ q_ ( 恒等道_道 A z_ ) ) )
+            with
+                構築子_道 _ _ => _
+            end
+        )
+    .
+    refine
+        (
+            match
+                p
+            as
+                p_
+            in
+                道 _ _ y_
+            return
+                道@{ i }
+                    ( 道@{ i } A x y_ )
+                    ( 結合する_道 A x y_ y_ ( 結合する_道 A x y_ y_ p_ ( 恒等道_道 A y_ ) ) ( 恒等道_道 A y_ ) )
+                    ( 結合する_道 A x y_ y_ p_ ( 結合する_道 A y_ y_ y_ ( 恒等道_道 A y_ ) ( 恒等道_道 A y_ ) ) )
             with
                 構築子_道 _ _ => _
             end
