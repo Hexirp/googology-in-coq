@@ -42,6 +42,19 @@ Inductive 単一型@{ i | } : Type@{ i } := 構築子_単一型 : 単一型.
 
 Inductive 直積@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) : Type@{ i } := 構築子_直積 : A -> B -> 直積 A B.
 
+
+Definition 構築する_直積@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( x : A ) ( y : B ) : 直積@{ i } A B
+    := 構築子_直積 A B x y
+.
+
+Definition 第一射影関数_直積@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( x : 直積@{ i } A B ) : A
+    := match x with 構築子_直積 _ _ x_1 x_2 => x_1 end
+.
+
+Definition 第二射影関数_直積@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( x : 直積@{ i } A B ) : B
+    := match x with 構築子_直積 _ _ x_1 x_2 => x_2 end
+.
+
 (** 依存直和型を定義します。 *)
 
 Inductive 依存直和@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) : Type@{ i }
