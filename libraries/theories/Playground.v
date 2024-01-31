@@ -55,6 +55,20 @@ Definition 第二射影関数_直積@{ i | } ( A : Type@{ i } ) ( B : Type@{ i }
     := match x with 構築子_直積 _ _ x_1 x_2 => x_2 end
 .
 
+Definition カリー化する_直積@{ i | }
+        ( A : Type@{ i } )
+        ( B : Type@{ i } )
+        ( C : Type@{ i } )
+        ( f : 直積@{ i } A B -> C )
+    : A -> B -> C
+    := fun ( x_1 : A ) ( x_2 : B ) => f ( 構築する_直積 A B x_1 x_2 )
+.
+
+Definition 非カリー化する_直積@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( C : Type@{ i } ) ( f : A -> B -> C )
+    : 直積@{ i } A B -> C
+    := fun x : 直積@{ i } A B => match x with 構築子_直積 _ _ x_1 x_2 => f x_1 x_2 end
+.
+
 (** 依存直和型を定義します。 *)
 
 Inductive 依存直和@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) : Type@{ i }
@@ -72,6 +86,24 @@ Definition 第一射影関数_依存直和@{ i | } ( A : Type@{ i } ) ( B : A ->
 Definition 第二射影関数_依存直和@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) ( x : 依存直和@{ i } A B )
     : B ( 第一射影関数_依存直和 A B x )
     := match x as x_ return B ( 第一射影関数_依存直和 A B x_ ) with 構築子_依存直和 _ _ x_1 x_2 => x_2 end
+.
+
+Definition カリー化する_依存直和@{ i | }
+        ( A : Type@{ i } )
+        ( B : A -> Type@{ i } )
+        ( C : Type@{ i } )
+        ( f : 依存直和@{ i } A B -> C )
+    : forall x : A, B x -> C
+    := fun ( x_1 : A ) ( x_2 : B x_1 ) => f ( 構築する_依存直和 A B x_1 x_2 )
+.
+
+Definition 非カリー化する_依存直和@{ i | }
+        ( A : Type@{ i } )
+        ( B : A -> Type@{ i } )
+        ( C : Type@{ i } )
+        ( f : forall x : A, B x -> C )
+    : 依存直和@{ i } A B -> C
+    := fun x : 依存直和@{ i } A B => match x with 構築子_依存直和 _ _ x_1 x_2 => f x_1 x_2 end
 .
 
 (** 依存直積型を定義します。 *)
