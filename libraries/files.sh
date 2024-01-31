@@ -8,7 +8,6 @@ theories/Path.v \
 theories/Void.v \
 theories/Unit.v \
 theories/Sum.v \
-theories/Product.v \
 theories/Playground.v \
 
 do
