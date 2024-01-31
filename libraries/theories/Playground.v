@@ -75,7 +75,8 @@ Inductive 依存直和@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) : Type
     := 構築子_依存直和 : forall x : A, B x -> 依存直和 A B
 .
 
-Definition 構築する_依存直和@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) ( x : A ) ( y : B x ) : 依存直和 A B
+Definition 構築する_依存直和@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) ( x : A ) ( y : B x )
+    : 依存直和@{ i } A B
     := 構築子_依存直和 A B x y
 .
 
