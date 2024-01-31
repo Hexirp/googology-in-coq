@@ -373,6 +373,96 @@ Definition 関数を適用する_道@{ i j | }
     := match p in 道 _ _ y_ return 道 B ( f x ) ( f y_ ) with 構築子_道 _ _ => 構築子_道 B ( f x ) end
 .
 
+Definition 結合演算の結合法則_道@{ i | }
+        ( A : Type@{ i } )
+        ( x : A )
+        ( y : A )
+        ( z : A )
+        ( w : A )
+        ( p : 道@{ i } A x y )
+        ( q : 道@{ i } A y z )
+        ( r : 道@{ i } A z w )
+    :
+        道@{ i }
+            ( 道@{ i } A x w )
+            ( 結合する_道 A x z w ( 結合する_道 A x y z p q ) r )
+            ( 結合する_道 A x y w p ( 結合する_道 A y z w q r ) )
+.
+Proof.
+    refine ( let a := _ in a p q r ).
+    refine ( fun p : 道@{ i } A x y => _ ).
+    refine
+        (
+            match
+                p
+            as
+                p_
+            in
+                道 _ _ y_
+            return
+                forall ( q_ : 道@{ i } A y_ z ) ( r : 道@{ i } A z w )
+                    ,
+                        道@{ i }
+                            ( 道@{ i } A x w )
+                            ( 結合する_道 A x z w ( 結合する_道 A x y_ z p_ q_ ) r )
+                            ( 結合する_道 A x y_ w p_ ( 結合する_道 A y_ z w q_ r ) )
+            with
+                構築子_道 _ _ => _
+            end
+        )
+    .
+    refine ( fun q : 道@{ i } A x z => _ ).
+    refine
+        (
+            match
+                q
+            as
+                q_
+            in
+                道 _ _ z_
+            return
+                forall r_ : 道@{ i } A z_ w
+                    ,
+                        道@{ i }
+                            ( 道@{ i } A x w )
+                            ( 結合する_道 A x z_ w ( 結合する_道 A x x z_ ( 恒等道_道 A x ) q_ ) r_ )
+                            ( 結合する_道 A x x w ( 恒等道_道 A x ) ( 結合する_道 A x z_ w q_ r_ ) )
+            with
+                構築子_道 _ _ => _
+            end
+        )
+    .
+    refine ( fun r : 道@{ i } A x w => _ ).
+    refine
+        (
+            match
+                r
+            as
+                r_
+            in
+                道 _ _ w_
+            return
+                    道@{ i }
+                        ( 道@{ i } A x w_ )
+                        ( 結合する_道 A x x w_ ( 結合する_道 A x x x ( 恒等道_道 A x ) ( 恒等道_道 A x ) ) r_ )
+                        ( 結合する_道 A x x w_ ( 恒等道_道 A x ) ( 結合する_道 A x x w_ ( 恒等道_道 A x ) r_ ) )
+            with
+                構築子_道 _ _ => _
+            end
+        )
+    .
+    change
+        (
+            道@{ i }
+                ( 道@{ i } A x x )
+                ( 結合する_道 A x x x ( 結合する_道 A x x x ( 恒等道_道 A x ) ( 恒等道_道 A x ) ) ( 恒等道_道 A x ) )
+                ( 結合する_道 A x x x ( 恒等道_道 A x ) ( 結合する_道 A x x x ( 恒等道_道 A x ) ( 恒等道_道 A x ) ) )
+        )
+    .
+    change ( 道@{ i } ( 道@{ i } A x x ) ( 恒等道_道 A x ) ( 恒等道_道 A x ) ).
+    exact ( 恒等道_道 ( 道@{ i } A x x ) ( 恒等道_道 A x ) ).
+Defined.
+
 (** 基点付き道を定義します。 *)
 
 Definition 基点付き道@{ i | } ( A : Type@{ i } ) ( x : A ) : Type@{ i }
