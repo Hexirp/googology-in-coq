@@ -496,6 +496,38 @@ Definition A_2024_02_01_0002@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( p 
         end
 .
 
+Definition A_2024_02_05_0000@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( p : 道@{ i } A x y )
+    : 道@{ i } ( 道@{ i } A y y ) ( 結合する_道 A y x y ( 反転する_道 A x y p ) p ) ( 恒等道_道 A y )
+    :=
+        match
+            p
+        as
+            p_
+        in
+            道 _ _ y_
+        return
+            道@{ i } ( 道@{ i } A y_ y_ ) ( 結合する_道 A y_ x y_ ( 反転する_道 A x y_ p_ ) p_ ) ( 恒等道_道 A y_ )
+        with
+            構築子_道 _ _ => 恒等道_道 ( 道@{ i } A x x ) ( 恒等道_道 A x )
+        end
+.
+
+Definition A_2024_02_05_0001@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( p : 道@{ i } A x y )
+    : 道@{ i } ( 道@{ i } A x x ) ( 結合する_道 A x y x p ( 反転する_道 A x y p ) ) ( 恒等道_道 A x )
+    :=
+        match
+            p
+        as
+            p_
+        in
+            道 _ _ y_
+        return
+            道@{ i } ( 道@{ i } A x x ) ( 結合する_道 A x y_ x p_ ( 反転する_道 A x y_ p_ ) ) ( 恒等道_道 A x )
+        with
+            構築子_道 _ _ => 恒等道_道 ( 道@{ i } A x x ) ( 恒等道_道 A x )
+        end
+.
+
 (** 基点付き道を定義します。 *)
 
 Definition 基点付き道@{ i | } ( A : Type@{ i } ) ( x : A ) : Type@{ i }
