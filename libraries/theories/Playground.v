@@ -4,6 +4,19 @@ Require Googology_In_Coq.Base.
 
 Import Googology_In_Coq.Base.
 
+(** 関数型を定義します。 *)
+
+Definition 関数@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) : Type@{ i } := A -> B.
+
+Definition 恒等関数_関数@{ i } ( A : Type@{ i } ) : A -> A := fun x : A => x.
+
+Definition 合成する_関数@{ i } ( A : Type@{ i } ) ( B : Type@{ i } ) ( C : Type@{ i } ) ( f : B -> C ) ( g : A -> B )
+    : A -> C
+    := fun x : A => f ( g x )
+.
+
+Definition 定数関数_関数@{ i } ( A : Type@{ i } ) ( B : Type@{ i } ) ( x : A ) : B -> A := fun y : B => x.
+
 (** 空型を定義します。「空型」は "empty type" の訳語です。 *)
 
 Inductive 空型@{ i | } : Type@{ i } :=.
