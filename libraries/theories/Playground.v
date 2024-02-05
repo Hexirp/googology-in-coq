@@ -436,7 +436,7 @@ Definition A_2024_02_06_0005@{ i | } ( A : Type@{ i } ) ( x : A )
 .
 
 Definition A_2024_02_06_0008@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( f : A -> B ) ( x : A )
-    : 道@{ i } ( 道@{ i } A x x ) ( 関数を適用する A B f x x ( 恒等道_道 A x ) ) ( 恒等道_道 B ( f x ) )
+    : 道@{ i } ( 道@{ i } B ( f x ) ( f x ) ) ( 関数を適用する_道 A B f x x ( 恒等道_道 A x ) ) ( 恒等道_道 B ( f x ) )
     := 恒等道_道 _ _
 .
 
