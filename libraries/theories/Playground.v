@@ -4,6 +4,10 @@ Require Googology_In_Coq.Base.
 
 Import Googology_In_Coq.Base.
 
+(**依存関数型を定義します。  *)
+
+Definition 依存関数@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) : Type@{ i } := forall x : A, B x.
+
 (** 関数型を定義します。 *)
 
 Definition 関数@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) : Type@{ i } := A -> B.
