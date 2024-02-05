@@ -401,6 +401,28 @@ Definition 輸送する_道@{ i | }
     := match p in 道 _ _ y_ return B y_ with 構築子_道 _ _ => u end
 .
 
+Definition 依存関数を適用する_道@{ i | }
+        ( A : Type@{ i } )
+        ( B : A -> Type@{ i } )
+        ( f : forall x : A, B x )
+        ( x : A )
+        ( y : A )
+        ( p : 道@{ i } A x y )
+    : 道@{ i } ( B y ) ( 輸送する_道 A B x y p ( f x ) ) ( f y )
+    :=
+        match
+            p
+        as
+            p_
+        in
+            道 _ _ y_
+        return
+            道@{ i } ( B y_ ) ( 輸送する_道 A B x y_ p_ ( f x ) ) ( f y_ )
+        with
+            構築子_道 _ _ => 恒等道_道 ( B x ) ( f x )
+        end
+.
+
 (** 道の定理を証明します。 *)
 
 Definition 結合演算の結合法則_道@{ i | }
