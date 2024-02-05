@@ -425,6 +425,35 @@ Definition 依存関数を適用する_道@{ i | }
 
 (** 道の定理を証明します。 *)
 
+Definition A_2024_02_01_0000@{ i | } ( A : Type@{ i } ) ( x : A )
+    : 道@{ i } ( 道@{ i } A x x ) ( 結合する_道 A x x x ( 恒等道_道 A x ) ( 恒等道_道 A x ) ) ( 恒等道_道 A x )
+    := 恒等道_道 _ _
+.
+
+Definition A_2024_02_06_0005@{ i | } ( A : Type@{ i } ) ( x : A )
+    : 道@{ i } ( 道@{ i } A x x ) ( 反転する_道 A x x ( 恒等道_道 A x ) ) ( 恒等道_道 A x )
+    := 恒等道_道 _ _
+.
+
+Definition A_2024_02_06_0008@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( f : A -> B ) ( x : A )
+    : 道@{ i } ( 道@{ i } A x x ) ( 関数を適用する A B f x x ( 恒等道_道 A x ) ) ( 恒等道_道 B ( f x ) )
+    := 恒等道_道 _ _
+.
+
+Definition A_2024_02_06_0006@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) ( x : A ) ( u : B x )
+    : 道@{ i } ( B x ) ( 輸送する_道 A B x x ( 恒等道_道 A x ) u ) u
+    := 恒等道_道 _ _
+.
+
+Definition A_2024_02_06_0007@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) ( f : forall x : A, B x ) ( x : A )
+    :
+        道@{ i }
+            ( 道@{ i } ( B x ) ( f x ) ( f x ) )
+            ( 依存関数を適用する_道 A B f x x ( 恒等道_道 A x ) )
+            ( 恒等道_道 ( B x ) ( f x ) )
+    := 恒等道_道 _ _
+.
+
 Definition 結合演算の結合法則_道@{ i | }
         ( A : Type@{ i } )
         ( x : A )
@@ -506,11 +535,6 @@ Proof.
     change ( 道@{ i } ( 道@{ i } A x x ) ( 恒等道_道 A x ) ( 恒等道_道 A x ) ).
     exact ( 恒等道_道 ( 道@{ i } A x x ) ( 恒等道_道 A x ) ).
 Defined.
-
-Definition A_2024_02_01_0000@{ i | } ( A : Type@{ i } ) ( x : A )
-    : 道@{ i } ( 道@{ i } A x x ) ( 結合する_道 A x x x ( 恒等道_道 A x ) ( 恒等道_道 A x ) ) ( 恒等道_道 A x )
-    := 恒等道_道 _ _
-.
 
 Definition A_2024_02_01_0001@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( p : 道@{ i } A x y )
     : 道@{ i } ( 道@{ i } A x y ) ( 結合する_道 A x y y p ( 恒等道_道 A y ) ) p
