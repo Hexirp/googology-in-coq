@@ -147,8 +147,12 @@ body > div#page > div#main > div.code span.id[title="tactic"] {
     color: mediumblue;
 }
 
+body > div#page > div#main > div.code span.id[title="module"] {
+    color: royalblue;
+}
+
 body > div#page > div#main > div.code span.id[title="library"] {
-    color: dodgerblue;
+    color: steelblue;
 }
 
 body > div#page > div#main > div.code > a.idref:target {

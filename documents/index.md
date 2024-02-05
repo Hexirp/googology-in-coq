@@ -1,6 +1,6 @@
 # document
 
-googology-in-coq は、プログラム的に証明を書くことを目標としています。そのため、 Gallina としての項をソースコードから簡単に読み取れるような記述を維持しなければなりません。
+googology-in-coq は、プログラムとして証明を書くことを目標としています。そのため、 Gallina としての項をソースコードから簡単に読み取れるような記述を維持しなければなりません。
 
 ## コーディング
 
@@ -32,7 +32,7 @@ Set Polymorphic Inductive Cumulativity.
 
 Set Default Proof Mode "Classic".
 
-(** ビュレットを使用しないときにエラーになるように設定します。 *)
+(** 一つのゴールに対してタクティックを働かせないとエラーになるように設定します。 *)
 
 Set Default Goal Selector "!".
 ```
@@ -41,9 +41,7 @@ Set Default Goal Selector "!".
 
 定義における universe level については必ず明示的に記述してください。定義におけるレベルの制約は Coq がチェックしてくれるので、たとえ制約が空だとしても記述してください。 Gallina の式における宇宙のレベルは、それが型を返す関数であるときは記述してください。それ以外については自由です。
 
-universe level について、たとえば `i` と `j` の `max(i,j)` が出てくる場合は、そもそもの `i` と `j` を同じものとして `i` だけで表します。このため、制約には `_ <= _` が出てこないことになります。
-
-追記: レベルについて、 Gallina の式においては引数として何も書かない方が上手く推論してくれる事があるようである。この場合は書かない方が良いかもしれない。
+universe level については、基本的に linear なものとして扱ってください。また、基本的には一つの level のみを使ってください。
 
 モジュールファイルの分け方の基準は、モジュールとしてどのようなものを提供するかという点に重きを置きます。
 
@@ -51,108 +49,207 @@ universe level について、たとえば `i` と `j` の `max(i,j)` が出て�
 
 ### コメント
 
-定義の前には、それを簡単に説明するドキュメントとしてのコメントを付けます。定義を上手く分けられる時は coqdoc の見出し機能を使ってください。その直後には節の意味を説明するコメントをつける方がいいです。
+定義の前には、それを簡単に説明するドキュメントとしてのコメントを付けても構いません。定義を上手く分けられる時は coqdoc の見出し機能を使ってください。そうした場合、その直後に節の意味を説明するコメントをつけましょう。
 
 ```coq
+(** ... *)
+
 Definition foo a b c.
 
 (** ... *)
 
 Definition baa a b c.
-
-(** ... *)
 ```
 
-ドキュメントとしてのコメントは、上記のように記述してください。 coqdoc が使う文芸的プログラミングの考え方に従って、ソースコードとドキュメントが対等になるように記述します。
+ドキュメントとしてのコメントは、上記のように記述してください。 coqdoc が根差す文芸的プログラミングの考え方に従って、ソースコードとドキュメントが対等になるように記述します。
 
-coqdoc には見出し機能があり `(** * ... *)` は `h1` 要素に変換されますが、これは使わないでください。 `h1` 要素が coqdoc によりページの冒頭に追加されるので、 `h1` 要素が重複してしまうことになります。
+coqdoc には見出し機能があり、たとえば `(** * ... *)` は `h1` 要素に変換されますが、これは使わないでください。 `h1` 要素が coqdoc によりページの冒頭に追加されるので、 `h1` 要素が重複してしまうことになります。
 
-定義の前には、それを説明する文章を書いてください。「……というようなものを定義する」という意味で「……です」だけ書いても構いません。
-
-見やすくするため、ドキュメントの中にあるソースコードについては出来るだけ `[ ... ]` でソースコードとしての表示が行われるようにします。
-
-定義の直前には、他のライブラリから引っ張ってきたものであるかどうかを区別するために `(* from: ... *)` というコメントを付けます。どこから定義を持ってきたのか、それとも誰かのオリジナルなのか、定義に手を加えたものであるかを判断できるようにします。
+特に、独自に訳語を充てる場合は、それを説明するコメントを書くようにします。
 
 ### 名前
 
 モジュールの名前は、全部の単語の先頭を大文字にし、 snake case を使ってください。
 
-あるモジュールで定義した関数は、その関数の末尾にモジュールの名前を加えてください。
-
 型を返す関数の時は、大抵、全部の単語の先頭を大文字にしますが、これは強制ではありません。
 
-関数や定理などの名前はポーランド記法を基本にしますが、良い名前があるときはそれを使って構いません。次に細かい慣習を示します。
+名前は、基本的に日本語を使います。最初に、その定義を表す名前を書き、その後にアンダースコアで繋げて、その定義が参照する型の名前を書いてください。
 
-* 関数が返すのが `Type` 型の値の時は先頭を大文字にする。
-  * そうではないときは先頭を小文字にする。
-* ポーランド記法を使わない時は camel case を使う。
-* 依存型に対応したバージョンの関数は `D` を付けて表す。
-  * 依存型に対応しないバージョンの関数は `N` を付けて表す。
-  * これで表しきれない時は、その関数が受け取る型のそれぞれについて依存型かどうか調べて、適切な記号を付ける。
-    * 依存型か非依存型の二分法。例は `compNND` など。
-    * 二重の依存型が現れる時は `DD` とする。例は `trpt_D_DD_DD_DDD` など。
-    * 依存関係をエンコードする。例は `ap011_AN_BDA_CN` など。
-      * `A` が依存型ではない時は `_AN`
-      * `B` が `A` に依存しているときは `_BDA`
-      * `C` が `A` に依存しているときは `_CDA`
-      * `C` が `B` に依存しているときは `_CDB`
-      * `C` が `A` と `B` に依存しているときは `_CDAB`
-* n 変数版とか n-道版というときには n を付ける。
-* ポーランド記法を使う時は、
-  * 区切り文字は `_` を使う。
-  * `A -> B` は `fun_A_B` と書く。
-  * `fun x => t` は `lam_x_t` と書く。
-  * `A -> B -> ... Y -> Z` という形の時は `Z` と略せる。
-  * `Path x y` という形の時は `x` と略せる。
-  * `Path` は `p` と略せる。
-  * `idpath` は `1` と略せる。
-  * `conc p q` は `cpq` と略せる。
-  * `inv p` は `vp` と略せる。
-  * `trpt p u` は `T` と略せる。
-  * `ap f p` は `afp` と略せる。
-  * `ap f p` は `A` と略せる。
-  * `p x` は `px` と略せる。
-  * `p x` は `p` が点ごとの道であれば `P` と略せる。
-  * ポーランド記法が入れ子になった時は `path_'conc_p_1'_p_q` という風にする。
-  * 区別が付かないときは `_L` と `_R` を付けたりする。
-  * `R foo_L foo_R` というときは `foo_R_L_R` としたりする。
-  * 先頭に `'` が来たときは `_` を先頭に付けたりする。
-
-宇宙のレベルの名前については、その役割が `i` より真に大きい値であるということである時は `si` と、その役割が `i` と `j` の最大値であるということである時は `mij` と、それぞれそのようにしてください。
+よい名前が思い付かない場合は、連番にします。 `A_2024_02_06_0012` のように、 `A` の後に日付を繋げて、その後に四桁の連番を繋げます。
 
 ### フォーマット
 
-大抵のトークンの間で空白を空けます。例外は、末尾の `.` との間や、 `Foo@{ i }` などです。
+大抵のトークンの間で空白を空けます。特に、 `( x )` のようにします。例外は、末尾の `.` との間や、 `Foo@{ i }` などです。
 
 coqdoc の仕様により改行するとスペースが挿入されてしまうため、ドキュメントとしてのコメントでは改行を行いません。
 
-改行と字下げについての慣習を次に示します。改行すべき要素が括弧の中に入っていたり、他の規則によって既に字下げされている場合でも、最終的な分かりやすさのために、機械的に慣習に従うことが多いです。これらの規約は、一番外側の文から順番に適用してください。
+改行と字下げについての慣習を次に示します。改行すべき要素が括弧の中に入っていたり、他の規則によって既に字下げされている場合でも、最終的な分かりやすさのために、機械的に慣習に従うことが多いです。これらの規約は、一番外側の式から順番に適用してください。
+
+`( x )` は、次のようにします。
 
 ```coq
-(* ( x ). 0. *)
-( x )
-
-(* ( x ). 1. *)
 (
-  x
+    x
 )
+```
 
-(* f x y. 0. *)
-f x y
+`f x y z` は、次のようにします。
 
-(* f x y. 1. *)
+```coq
 f
-  x
-  y
+    x
+    y
+    z
+```
 
-(* let _ := _ in _. 0. *)
-let _ := _ in _
+`let _ := _ in _` は、次のようにします。
 
-(* let _ := _ in _. 1. *)
+```coq
 let
-  _ := _
+    _ := _
 in
-  _
+    _
+```
+
+`match _ as _ in _ retrun _ with _ => _ | _ => _ | _ => _ end` は、次のようにします。
+
+```coq
+match
+    _
+as
+    _
+in
+    _
+return
+    _
+with
+    _ => _ | _ => _ | _ => _
+end
+
+match
+    _
+as
+    _
+in
+    _
+return
+    _
+with
+    _ => _
+    |
+    _ => _
+    |
+    _ => _
+end
+```
+
+`Definition a _ _ _ : _ := _.` は、次のようにします。
+
+```coq
+Definition a _ _ _ : _
+    := _
+.
+
+Definition a _ _ _
+    : _
+    := _
+.
+
+Definition a
+        _
+        _
+        _
+    : _
+    := _
+.
+
+Definition a
+        _
+        _
+        _
+    :
+        _
+    :=
+        _
+.
+```
+
+`Inductive A _ _ _ : _ := _ : _ | _ : _ | _ : _.` は次のようにします。
+
+```coq
+Inductive A _ _ _ : _
+    := _ : _ | _ : _ | _ : _
+.
+
+Inductive A _ _ _
+    : _
+    := _ : _ | _ : _ | _ : _
+.
+
+Inductive A
+        _
+        _
+        _
+    : _
+    :=
+        _ : _
+        |
+        _ : _
+        |
+        _ : _
+.
+
+Inductive A
+        _
+        _
+        _
+    :
+        _
+    :=
+        _
+            :
+                _
+        |
+        _
+            :
+                _
+        |
+        _
+            :
+                _
+.
+```
+
+`fix a _ _ _ { struct _ } : _ := _` は次のようにします。
+
+```coq
+fix a _ _ _ { struct _ } : _
+    := _
+
+fix a _ _ _ { struct _ }
+    : _
+    := _
+
+fix a
+        _
+        _
+        _
+        { struct _ }
+    : _
+    := _
+
+fix a
+        _
+        _
+        _
+        {
+            struct
+                _
+        }
+    :
+        _
+    :=
+        _
 ```
 
 ### タクティック
@@ -167,23 +264,27 @@ Gallina の項をコントロールできるとして許容されているタク
 * `exact` タクティック（ただし、 Coq に組み込みの "ltac\_plugin" で定義されるタクティックのこと）
 * `change` タクティック
 
-ゴールが複数に増えたときはビュレットを使います。ビュレットは字下げせず、単独の行に置いてください。
+ゴールが複数に増えたときは波括弧を使います。
 
 ```
 refine _.
--
-  exact x.
--
-  refine _.
-  +
-    exact y.
-  +
-    exact z.
+{
+    exact x.
+}
+{
+    refine _.
+    {
+        exact y.
+    }
+    {
+        exact z.
+    }
+}
 ```
 
 `refine` でゴールが解消される時は、代わりに `exact` を使ってください。
 
-ゴールの型を明確にしたい場合は `change` を使ってください。また、ゴールの型を簡約により変形する時も `change` を使ってください。
+ゴールの型を明確にしたい場合は `change` を使ってください。また、明示的にゴールの型を簡約により変形する時も `change` を使ってください。
 
 ## ビルド
 
@@ -199,7 +300,7 @@ CI で使用するファイルです。
 
 ### compile.sh
 
-`files.sh` に記述されたファイルを対象にして、コンパイルを行います。標準ライブラリを使用しないために `-nois` を、詳細なログを出力させるために `-verbose` を、モジュールの構成のために `-R theories/ GiC` を、それぞれ `coqc` のオプションに与えています。
+`files.sh` に記述されたファイルを対象にして、コンパイルを行います。標準ライブラリを使用しないために `-nois` を、詳細なログを出力させるために `-verbose` を、モジュールの構成のために `-R theories/ Googology_In_Coq` を、それぞれ `coqc` のオプションに与えています。
 
 生成する物は次の通りです。
 
@@ -224,9 +325,9 @@ CI で使用するファイルです。
 
 ### edit.sh
 
-プロジェクトの編集を開始します。標準ライブラリを使用しないために `-nois` を、モジュールの構成のために `-R theories/ GiC` を、それぞれ `coqide` のオプションに与えています。
+プロジェクトの編集を開始します。標準ライブラリを使用しないために `-nois` を、モジュールの構成のために `-R theories/ Googology_In_Coq` を、それぞれ `coqide` のオプションに与えています。
 
-これを使うと、標準ライブラリとの名前の衝突が発生せず、 `Require GiC.Base.` というような記述が正常に動作します。
+これを使うと、標準ライブラリとの名前の衝突が発生せず、 `Require Googology_In_Coq.Base.` というような記述が正常に動作します。
 
 ### files.sh
 
@@ -242,7 +343,7 @@ CI で使います。
 
 ### make\_document.sh
 
-`files.sh` に記述されたファイルを対象にして、プロジェクトのコメントによるドキュメントを生成します。日本語でも正常に動作させるために `-utf8` を、生成先として `docs/` を指定するために `-d docs/` を、モジュールの構成のために `-R theories/ GiC` を、それぞれ `coqdoc` のオプションに与えています。
+`files.sh` に記述されたファイルを対象にして、プロジェクトのコメントによるドキュメントを生成します。日本語でも正常に動作させるために `-utf8` を、生成先として `docs/` を指定するために `-d docs/` を、モジュールの構成のために `-R theories/ Googology_In_Coq` を、それぞれ `coqdoc` のオプションに与えています。
 
 生成する物は次の通りです。
 
@@ -272,9 +373,13 @@ Proof.
 Defined
 ```
 
-正しいはずの場所でエラーが起きたり、誤っているはずの場所でエラーが起きなかったりして、その原因が分からない場合は、最終手段として "View" タブの "Display all low-level contents" が使えます。
+## テスト
 
-現状で最もデバッグ困難なのは universe level の不整合でしょう。これはダメな箇所が表示されない上に、推論を使っていると、推論で使用される生の暫定的なレベル変数の名前が出てきます。これを防ぐために universe level の max パターンを使わないことにします。
+`f x y` と `z` が等しいか確かめるためには、次のように書きます。
+
+```coq
+Definition A_2024_02_06_0012@{ i | } : 道@{ i } A ( f x y ) z := 恒等道_道 _ _.
+```
 
 ## 開発
 
@@ -290,8 +395,6 @@ git のコミットは、その意味に沿って、可能な限り、病的に�
 
 もし A というブランチを再構成したい場合は、新しいブランチを切ります。このブランチの名前は自由ですが、説明のために A' という仮の名前を付けます。そして、 A' に A の変更を cherry-pick などで取り込みます。ここで A' に取り込むべき細かい変更が残っている場合は master ブランチへ cherry-pick します。そして、 A' ブランチを master ブランチにマージした後に、取り込まない変更を切り捨てるために A ブランチを ours 戦略でマージします。この方法は、二つ以上のブランチへ再構成する時も適用可能です。もし、 A と A' を完全に一致させられるのなら octopus 戦略も使えます。
 
-もし、ブランチの役割にそぐわない細かい変更をコミットした時は、すぐに master ブランチへ cherry-pick してください。
-
 merge request は、マージする時にワンクッションを置きたい場合に作成してください。それをマージする前に、変更を取り込ませるブランチを変更が取り込まれるブランチにマージしてください。
 
 merge する時は no fast forward としてください。ただし、 git pull の時は例外です。
@@ -303,103 +406,3 @@ rebase は、なるべく使わないでください。ただし、 git pull で
 * fast-forward である。
 * approved である。
 * CI が通っている。
-
-## バージョニング
-
-Semantic Versioning を採用します。現在は基本的に `0.x.y` を付け、設計が確定するまで多くの変更を行う予定です。
-
-## 訳語
-
-紛らわしい単語たちの訳語を一つに定めます。
-
-[Is equality the same as identity?](https://math.stackexchange.com/questions/128778/is-equality-the-same-as-identity) を参考にする。
-
-* equation - 方程式 - 自由変数の値によっては両辺が等しくないかもしれず、自由変数の値に制約を掛ける等式である。
-* identity - 恒等式 - 自由変数の値に関わらず常に等しい等式である。
-
-[What is the difference between identity and equality in OOP](https://stackoverflow.com/questions/1692863/what-is-the-difference-between-identity-and-equality-in-oop) と [等価性の比較と同一性](https://developer.mozilla.org/ja/docs/Web/JavaScript/Equality_comparisons_and_sameness) を参考にする。
-
-* identity - 同一性 - 同じインスタンスであること。
-* equality - 等価性 - 値が等しいこと。
-
-[identity type](https://ncatlab.org/nlab/show/identity+type) を参考にする。
-
-* identity type - 等式型 - ある値とある値が等しいことを示す型。
-* equality type - 等式型 - ある値とある値が等しいことを示す型。
-
-HoTT Book を参考にする。
-
-* identity - equality とあまり区別はされない。 identity type と関連したところで多く使われる。 identity function で恒等関数を指すこともある。
-* equality - identity とあまり区別はされない。 等式そのものを指して equality と言ったり、 judgmental equality とか definitional equality とか propositional equality という風に、形容詞を付けて出てくることも多い。
-* equivalence - 二つの型の間に定義される等しさ。
-* homotopy - 連続的に移り合うものについてのいろいろ。
-
-一般的な訳を参考にする。
-
-* topology - 位相幾何学
-* homotopy - ホモトピー
-
-様々な熟語を並べてみる。
-
-* 同一
-* 同形
-* 同相
-* 同価
-* 同型
-* 同値
-* 相同
-* 相似
-* 等しさ
-* 等価
-* 等値
-
-homotopy は頻繁に出てくる単語であるにもかかわらず、翻訳がホモトピーしかないのはおさまりが悪い。
-
-[homotopy](https://en.wiktionary.org/wiki/homotopy) を参考にする。
-
-* homotopy - From Ancient Greek ὁμός (homós, “same, similar”) + τόπος (tópos, “place”); earliest known use in print in 1922, Oswald Veblen, Analysis Situs.
-
-homotopy の訳を定める。
-
-* homotopy - 類位
-
-equivalence は頻繁に出てくる単語であるにもかかわらず、訳語が equality と重複する「等価」しかない。
-
-equality は一般的な等しさを表し identity は homotopy type theory の中の概念である identity type と結びつくことが多い。
-
-equivalence の訳を定める。
-
-* equivalence - 等価
-
-等価といったら equivalence であると定める。
-
-## 歴史
-
-歴史を簡単にまとめます。
-
-* https://github.com/Hexirp/googology-in-coq/commit/4df41c2a3fd66114f16de4dba1859d7f42fd667a - 一代目の Main.v が追加される。
-* https://github.com/Hexirp/googology-in-coq/commit/0e89ce558fc7f57c75c9a384844f1c655d600b8a - 一代目の Main.v が OldMain.v へリネームされる。
-* https://github.com/Hexirp/googology-in-coq/commit/06eab1805dca316cd726885eafbac04f1dfcb1c0 - 現在の Base.v の大部分が二代目の Main.v として追加される。
-* https://github.com/Hexirp/googology-in-coq/commit/58ad7a0963ad4b88910a6b102475d8e184d5d8d0 - 二代目の Main.v が Core.v へリネームされる。自然数に関するコードが三代目の Main.v として追加される。
-* https://github.com/Hexirp/googology-in-coq/commit/07f1b9203703ef9fe6f8f656763991f695529028 - 現在の "GiC" としてのプロジェクトが開始される。
-* https://github.com/Hexirp/googology-in-coq/commit/d5e6fafe67991bdd8ef0dfcef2076d1d80f1fef2 - 道に関するコードが三代目の Main.v に代わって四代目の Main.v として追加される。
-* https://github.com/Hexirp/googology-in-coq/commit/b3612d1cfb3c846c3b4e7231b94b7480f456b5c0 - たとえ内容が一言であったとしてもドキュメントを書くということが始められる。
-* https://github.com/Hexirp/googology-in-coq/commit/ce65540a3004730135c1a0015f55397b963ec028 - 単語の意味とモジュールの役割について考察した結果に従い、 Core.v が現在の Base.v にリネームされる。
-* https://github.com/Hexirp/googology-in-coq/commit/33d28c102388973db6583b78f542070c18ace06c - 複雑化する証明に対処することを目的として Coq と SSReflect の Ltac の使用が開始された。
-* https://github.com/Hexirp/googology-in-coq/commit/8502cc01c69ef66a90e4dd9c43ed58b47f54fd77 - ファイルの位置付けを行うための GraphViz ファイルが追加される。
-* https://github.com/Hexirp/googology-in-coq/commit/67c9d66ccc1670e0ae0f09437f16716ed04c1e3f - ソースコードの内部に書かれるドキュメントでは、利用者の視点に立ったドキュメントを書けないという考えに従い、外部からのドキュメントとして document/ フォルダが作られる。
-* https://github.com/Hexirp/googology-in-coq/commit/bfcf9f4d42a5d5177788c607d9b43d59b1f6d23a - 使用するプラグインを GiC 全体で一貫させるために、 GiC.Base でプラグインの読み込みを行うようになる。
-* https://github.com/Hexirp/googology-in-coq/commit/6e45860f945debb7d99f0a9902e64dae2179df3b - 宇宙のレベルの制約を Coq にチェックさせるために、制約を必ず書くことが始められる。
-* https://github.com/Hexirp/googology-in-coq/commit/e9d27ed9a1cc15848dcbaf9d01707ebff528b3c5 - ドキュメントのチェックのために coqdoc の使用が開始される。
-* https://github.com/Hexirp/googology-in-coq/commit/89d432c82e32e0be5d0d3a894a68c322baa5bf15 - coqdoc が使えるようになったため、ファイルの構造が分かりやすいように、セクション機能を利用するようになる。
-* https://github.com/Hexirp/googology-in-coq/commit/34cbcda37abceef8f06ad2c2b7a7e43fb1587d0d - Base.v と 四代目の Main.v を元にして詳細な命名規則が記述される。
-* https://github.com/Hexirp/googology-in-coq/commit/27ae14f9b5ad1cb2b2e71473691b23c016c53820 - Base.v と四代目の Main.v を元にして詳細な改行と字下げの規則が記述される。
-* https://github.com/Hexirp/googology-in-coq/commit/9e0be8dde2927104fc51a0be805be1ba0fb42a61 - shell ファイルが整理され、それぞれの役割が明確になった。
-* https://github.com/Hexirp/googology-in-coq/commit/3d7f2c0d0417f0bd9a7c7376c42e13e575034ff1 - ドキュメントに詳細な節が導入されて構造が分かりやすくなった。
-* https://github.com/Hexirp/googology-in-coq/commit/abcb0ac369875055c50748796e8a973d162caaf5 - 型を単純化して理解を容易にするために Section 機能の使用が開始される。
-* https://github.com/Hexirp/googology-in-coq/commit/ddf470fbd874d386d86ff2e79c9a4145bc1ce3ab - 別のライブラリを参考にした定理が分かるように、定理の由来をコメントに書くようになる。
-* https://gitlab.com/Hexirp/googology-in-coq/-/commit/2e052992be3144af771d464988196a2bcedde48c - Git のリポジトリのホスティングに使うサービスを GitHub から GitLab へ変更しました。
-* https://gitlab.com/Hexirp/googology-in-coq/-/commit/afad3b7afbe7309dafc6c7cf903567bc5c3f1dff - ドキュメントの書き方について、より読みやすくなるように規約を定めなおした。
-* https://gitlab.com/Hexirp/googology-in-coq/-/commit/740c03e0aae782b176dacb8cb4d3dff4488acc34 - Everything モジュールのパターンを使い始めた。
-* https://gitlab.com/Hexirp/googology-in-coq/-/commit/c3a7bef293e0920453e20c45c3e45cf63301c0bd - インデントについてのコーディングスタイルを厳密にした。
-* https://gitlab.com/Hexirp/googology-in-coq/-/commit/0a9c0be392a5eb26377c244ec9bce44b31157a13 - HoTT.Basics.PathGroupoids の移植を完了させた。
