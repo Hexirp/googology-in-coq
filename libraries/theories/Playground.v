@@ -541,6 +541,53 @@ Definition A_2024_02_05_0001@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( p 
         end
 .
 
+Definition A_2024_02_06_0000@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( p : 道@{ i } A x y )
+    : 道@{ i } ( 道@{ i } A x y ) ( 関数を適用する_道 A A ( 恒等関数_関数 A ) x y p ) p
+    :=
+        match
+            p
+        as
+            p_
+        in
+            道 _ _ y_
+        return
+            道@{ i } ( 道@{ i } A x y_ ) ( 関数を適用する_道 A A ( 恒等関数_関数 A ) x y_ p_ ) p_
+        with
+            構築子_道 _ _ => 恒等道_道 ( 道@{ i } A x x ) ( 恒等道_道 A x )
+        end
+.
+
+Definition A_2024_02_06_0001@{ i | }
+        ( A : Type@{ i } )
+        ( B : Type@{ i } )
+        ( C : Type@{ i } )
+        ( f : B -> C )
+        ( g : A -> B )
+        ( x : A )
+        ( y : A )
+        ( p : 道@{ i } A x y )
+    :
+        道@{ i }
+            ( 道@{ i } C ( f ( g x ) ) ( f ( g y ) ) )
+            ( 関数を適用する_道 A C ( 合成する_関数 A B C f g ) x y p )
+            ( 関数を適用する_道 B C f ( g x ) ( g y ) ( 関数を適用する_道 A B g x y p ) )
+    :=
+        match
+            p
+        as
+            p_
+        in
+            道 _ _ y_
+        return
+            道@{ i }
+                ( 道@{ i } C ( f ( g x ) ) ( f ( g y_ ) ) )
+                ( 関数を適用する_道 A C ( 合成する_関数 A B C f g ) x y_ p_ )
+                ( 関数を適用する_道 B C f ( g x ) ( g y_ ) ( 関数を適用する_道 A B g x y_ p_ ) )
+        with
+            構築子_道 _ _ => 恒等道_道 ( 道@{ i } C ( f ( g x ) ) ( f ( g x ) ) ) ( 恒等道_道 C ( f ( g x ) ) )
+        end
+.
+
 (** 基点付き道を定義します。 *)
 
 Definition 基点付き道@{ i | } ( A : Type@{ i } ) ( x : A ) : Type@{ i }
