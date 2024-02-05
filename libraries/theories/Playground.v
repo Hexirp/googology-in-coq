@@ -588,6 +588,128 @@ Definition A_2024_02_06_0001@{ i | }
         end
 .
 
+Definition A_2024_02_06_0002@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( f : A -> B ) ( x : A )
+    : 道@{ i } ( 道@{ i } B ( f x ) ( f x ) ) ( 関数を適用する_道 A B f x x ( 恒等道_道 A x ) ) ( 恒等道_道 B ( f x ) )
+    := 恒等道_道 ( 道@{ i } B ( f x ) ( f x ) ) ( 恒等道_道 B ( f x ) )
+.
+
+Definition A_2024_02_06_0003@{ i | }
+        ( A : Type@{ i } )
+        ( B : Type@{ i } )
+        ( f : A -> B )
+        ( x : A )
+        ( y : A )
+        ( z : A )
+        ( p : 道@{ i } A x y )
+        ( q : 道@{ i } A y z )
+    :
+        道@{ i }
+            ( 道@{ i } B ( f x ) ( f z ) )
+            ( 関数を適用する_道 A B f x z ( 結合する_道 A x y z p q ) )
+            ( 結合する_道 B ( f x ) ( f y ) ( f z ) ( 関数を適用する_道 A B f x y p ) ( 関数を適用する_道 A B f y z q ) )
+.
+Proof.
+    refine
+        (
+            match
+                q
+            as
+                q_
+            in
+                道 _ _ z_
+            return
+                道@{ i }
+                    ( 道@{ i } B ( f x ) ( f z_ ) )
+                    ( 関数を適用する_道 A B f x z_ ( 結合する_道 A x y z_ p q_ ) )
+                    (
+                        結合する_道
+                            B
+                            ( f x )
+                            ( f y )
+                            ( f z_ )
+                            ( 関数を適用する_道 A B f x y p )
+                            ( 関数を適用する_道 A B f y z_ q_ )
+                    )
+            with
+                構築子_道 _ _ => _
+            end
+        )
+    .
+    refine
+        (
+            match
+                p
+            as
+                p_
+            in
+                道 _ _ y_
+            return
+                道@{ i }
+                    ( 道@{ i } B ( f x ) ( f y_ ) )
+                    ( 関数を適用する_道 A B f x y_ ( 結合する_道 A x y_ y_ p_ ( 恒等道_道 A y_ ) ) )
+                    (
+                        結合する_道
+                            B
+                            ( f x )
+                            ( f y_ )
+                            ( f y_ )
+                            ( 関数を適用する_道 A B f x y_ p_ )
+                            ( 関数を適用する_道 A B f y_ y_ ( 恒等道_道 A y_ ) )
+                    )
+            with
+                構築子_道 _ _ => _
+            end
+        )
+    .
+    change
+        (
+            道@{ i }
+                ( 道@{ i } B ( f x ) ( f x ) )
+                ( 関数を適用する_道 A B f x x ( 結合する_道 A x x x ( 恒等道_道 A x ) ( 恒等道_道 A x ) ) )
+                (
+                    結合する_道
+                        B
+                        ( f x )
+                        ( f x )
+                        ( f x )
+                        ( 関数を適用する_道 A B f x x ( 恒等道_道 A x ) )
+                        ( 関数を適用する_道 A B f x x ( 恒等道_道 A x ) )
+                )
+        )
+    .
+    change ( 道@{ i } ( 道@{ i } B ( f x ) ( f x ) ) ( 恒等道_道 B ( f x ) ) ( 恒等道_道 B ( f x ) ) ).
+    exact ( 恒等道_道 ( 道@{ i } B ( f x ) ( f x ) ) ( 恒等道_道 B ( f x ) ) ).
+Defined.
+
+Definition A_2024_02_06_0004@{ i | }
+        ( A : Type@{ i } )
+        ( B : Type@{ i } )
+        ( f : A -> B )
+        ( x : A )
+        ( y : A )
+        ( p : 道@{ i } A x y )
+    :
+        道@{ i }
+            ( 道@{ i } B ( f y ) ( f x ) )
+            ( 関数を適用する_道 A B f y x ( 反転する_道 A x y p ) )
+            ( 反転する_道 B ( f x ) ( f y ) ( 関数を適用する_道 A B f x y p ) )
+    :=
+        match
+            p
+        as
+            p_
+        in
+            道 _ _ y_
+        return
+            道@{ i }
+                ( 道@{ i } B ( f y_ ) ( f x ) )
+                ( 関数を適用する_道 A B f y_ x ( 反転する_道 A x y_ p_ ) )
+                ( 反転する_道 B ( f x ) ( f y_ ) ( 関数を適用する_道 A B f x y_ p_ ) )
+        with
+            構築子_道 _ _ => 恒等道_道 ( 道@{ i } B ( f x ) ( f x ) ) ( 恒等道_道 B ( f x ) )
+        end
+.
+
 (** 基点付き道を定義します。 *)
 
 Definition 基点付き道@{ i | } ( A : Type@{ i } ) ( x : A ) : Type@{ i }
