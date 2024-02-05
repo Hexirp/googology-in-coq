@@ -388,6 +388,19 @@ Definition 関数を適用する_道@{ i | }
     := match p in 道 _ _ y_ return 道@{ i } B ( f x ) ( f y_ ) with 構築子_道 _ _ => 構築子_道 B ( f x ) end
 .
 
+(** 「輸送する」は "transport" の訳語です。 *)
+
+Definition 輸送する_道@{ i | }
+        ( A : Type@{ i } )
+        ( B : A -> Type@{ i } )
+        ( x : A )
+        ( y : A )
+        ( p : 道@{ i } A x y )
+        ( u : B x )
+    : B y
+    := match p in 道 _ _ y_ return B y_ with 構築子_道 _ _ => u end
+.
+
 (** 道の定理を証明します。 *)
 
 Definition 結合演算の結合法則_道@{ i | }
