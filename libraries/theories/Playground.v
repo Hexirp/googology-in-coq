@@ -8,9 +8,9 @@ Import Googology_In_Coq.Base.
 
 Definition 関数@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) : Type@{ i } := A -> B.
 
-Definition 恒等関数_関数@{ i } ( A : Type@{ i } ) : A -> A := fun x : A => x.
+Definition 恒等関数_関数@{ i | } ( A : Type@{ i } ) : A -> A := fun x : A => x.
 
-Definition 合成する_関数@{ i } ( A : Type@{ i } ) ( B : Type@{ i } ) ( C : Type@{ i } ) ( f : B -> C ) ( g : A -> B )
+Definition 合成する_関数@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( C : Type@{ i } ) ( f : B -> C ) ( g : A -> B )
     : A -> C
     := fun x : A => f ( g x )
 .
@@ -377,15 +377,15 @@ Definition 反転する_道@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( p :
     := match p in 道 _ _ y_ return 道 A y_ x with 構築子_道 _ _ => 構築子_道 A x end
 .
 
-Definition 関数を適用する_道@{ i j | }
+Definition 関数を適用する_道@{ i | }
         ( A : Type@{ i } )
-        ( B : Type@{ j } )
+        ( B : Type@{ i } )
         ( f : A -> B )
         ( x : A )
         ( y : A )
         ( p : 道 A x y )
     : 道 B ( f x ) ( f y )
-    := match p in 道 _ _ y_ return 道 B ( f x ) ( f y_ ) with 構築子_道 _ _ => 構築子_道 B ( f x ) end
+    := match p in 道 _ _ y_ return 道@{ i } B ( f x ) ( f y_ ) with 構築子_道 _ _ => 構築子_道 B ( f x ) end
 .
 
 (** 道の定理を証明します。 *)
