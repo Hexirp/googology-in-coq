@@ -5,5 +5,4 @@
 -R theories/ Googology_In_Coq
 
 theories/Base.v
-theories/Dependent_Function.v
 theories/Playground.v
