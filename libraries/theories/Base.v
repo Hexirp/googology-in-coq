@@ -28,6 +28,6 @@ Global Set Polymorphic Inductive Cumulativity.
 
 Global Set Printing Universes.
 
-(** [forall _ : x, y] の糖衣構文として [x -> y] を定義します。 https://github.com/coq/coq/blob/aaa8c94362b9159b1fa00baff8cd50cdc2972c7f/theories/Init/Notations.v#L15 を参照しています。 *)
+(** [forall _ : x, y] の糖衣構文として [x -> y] を定義します。 << https://github.com/coq/coq/blob/aaa8c94362b9159b1fa00baff8cd50cdc2972c7f/theories/Init/Notations.v#L15 >> を参照しています。 *)
 
 Notation "x -> y" := ( forall _ : x, y ) ( at level 99, right associativity, y at level 200 ).
