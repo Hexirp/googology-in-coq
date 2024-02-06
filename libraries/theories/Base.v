@@ -8,9 +8,9 @@ Declare ML Module "ltac_plugin".
 
 Global Set Default Proof Mode "Classic".
 
-(** 目標の選定子のデフォルトを [all] にします。 *)
+(** 目標の選定子のデフォルトを [!] にします。 *)
 
-Global Set Default Goal Selector "all".
+Global Set Default Goal Selector "!".
 
 (** [Elimination Schemes] を無効にします。 *)
 
