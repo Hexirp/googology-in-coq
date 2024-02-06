@@ -1,14 +1,14 @@
-(** Base モジュールは、基本的な設定を行ないます。 *)
+(** Base モジュールは、基本的な設定を行なう場所です。 *)
 
 (** [ltac_plugin] を読み込みます。 *)
 
 Declare ML Module "ltac_plugin".
 
-(** 対話証明を行う時の様式を [Classic] にセットします。 *)
+(** 対話証明の形式を [Classic] にします。 *)
 
 Global Set Default Proof Mode "Classic".
 
-(** 目標の選定子のデフォルトを [!] にします。 *)
+(** 目標を選ぶ方法を [!] にします。 *)
 
 Global Set Default Goal Selector "!".
 
