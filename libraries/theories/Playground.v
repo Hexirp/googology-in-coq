@@ -14,6 +14,19 @@ Definition A_2024_07_21_0001@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( C :
     := f ( g x )
 .
 
+(** 二引数関数の引数を入れ替えます。 *)
+
+Definition A_2024_08_02_0002@{ i | }
+        ( A : Type@{ i } )
+        ( B : Type@{ i } )
+        ( C : A -> B -> Type@{ i } )
+        ( f : forall x : A, forall y : B, C x y )
+        ( y : B )
+        ( x : A )
+    : C x y
+    := f x y
+.
+
 (** 定数関数を作る関数を定義します。 *)
 
 Definition A_2024_07_21_0002@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( x : A ) ( y : B ) : A := x .
