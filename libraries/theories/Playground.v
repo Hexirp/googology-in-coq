@@ -439,6 +439,52 @@ Proof .
     exact z .
 Defined .
 
+(** [A] から [B] への関数から [A] への関数から [A] への関数の否定の否定です。 *)
+
+Definition A_2024_08_09_0001@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } )
+    : A_2024_08_01_0001@{ i } ( A_2024_08_01_0001@{ i } ( ( ( A -> B ) -> A ) -> A ) )
+.
+Proof .
+    refine ( A_2024_08_01_0002@{ i } ( A_2024_08_01_0001@{ i } ( ( ( A -> B ) -> A ) -> A ) ) _ ) .
+    refine
+        (
+            let
+                a ( x : A_2024_08_01_0001@{ i } ( ( ( A -> B ) -> A ) -> A ) ) : A_2024_07_21_0003@{ i } := _
+            in
+                a
+        )
+    .
+    refine ( A_2024_08_01_0003@{ i } ( ( ( A -> B ) -> A ) -> A ) x _ ) .
+    refine
+        (
+            let
+                a ( y : ( A -> B ) -> A ) : A := _
+            in
+                a
+        )
+    .
+    refine ( y _ ) .
+    refine
+        (
+            let
+                a ( z : A ) : B := _
+            in
+                a
+        )
+    .
+    refine ( A_2024_07_21_0004@{ i } B _ ) .
+    refine ( A_2024_08_01_0003@{ i } ( ( ( A -> B ) -> A ) -> A ) x _ ) .
+    refine
+        (
+            let
+                a ( w : ( A -> B ) -> A ) : A := _
+            in
+                a
+        )
+    .
+    exact z .
+Defined .
+
 (** 0 始まりの自然数を定義します。 *)
 
 Inductive A_2024_07_21_0031@{ i | } : Type@{i}
