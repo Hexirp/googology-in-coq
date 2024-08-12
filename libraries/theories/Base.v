@@ -24,6 +24,10 @@ Global Set Universe Polymorphism .
 
 Global Set Polymorphic Inductive Cumulativity .
 
+(** [Primitive Projections] を有効にします。 *)
+
+Global Set Primitive Projections .
+
 (** 宇宙の詳細を表示するようにします。 *)
 
 Global Set Printing Universes .
