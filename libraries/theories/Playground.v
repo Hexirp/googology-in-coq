@@ -1,8 +1,20 @@
 (** Playground モジュールは、まだ単独のモジュールに分割していないコードを置く場所です。 *)
 
+(** * 他のファイルの読み込み *)
+
+(** << Googology_In_Coq.Base >> を読み込みます。 *)
+
 Require Googology_In_Coq.Base.
 
+(** * 他のモジュールの取り込み *)
+
+(** << Googology_In_Coq.Base >> を取り込みます。 *)
+
 Import Googology_In_Coq.Base.
+
+(** * 関数に関する定義 *)
+
+(** 関数に関するモジュールを定義します。 *)
 
 Module A_2024_08_26_0002 .
 
@@ -41,6 +53,8 @@ Definition A_2024_08_02_0002@{ i | }
 Definition A_2024_07_21_0002@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( x : A ) ( y : B ) : A := x .
 
 End A_2024_08_26_0002 .
+
+(** * 残り *)
 
 Import A_2024_08_26_0002 .
 
