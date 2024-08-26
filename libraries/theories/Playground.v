@@ -27,13 +27,11 @@ Definition 恒等関数@{ i | } ( A : Type@{ i } ) ( x : A ) : A := A_2024_07_21
 (** 関数合成を定義します。 *)
 
 Definition A_2024_07_21_0001@{ i | }
-        ( A : Type@{ i } )
-        ( B : Type@{ i } )
-        ( C : Type@{ i } )
-        ( f : B -> A )
-        ( g : C -> B )
-        ( x : C )
-    : A
+    : forall A : Type@{ i } , forall B : Type@{ i } , forall C : Type@{ i } , ( B -> A ) -> ( C -> B ) -> C -> A
+    := fun A : Type@{ i } => fun B : Type@{ i } => fun C : Type@{ i } => fun f : B -> A => fun g : C -> B => fun x : C => f ( g x )
+.
+
+Definition 合成する@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( C : Type@{ i } ) ( f : B -> A ) ( g : C -> B ) ( x : C ) : A
     := f ( g x )
 .
 
@@ -3015,7 +3013,7 @@ Definition A_2024_07_25_0005@{ i | }
     :
         A_2024_07_22_0009@{ i }
             ( A_2024_07_22_0009@{ i } A ( f ( g x ) ) ( f ( g y ) ) )
-            ( A_2024_07_22_0013@{ i } A C ( A_2024_07_21_0001@{ i } A B C f g ) x y p )
+            ( A_2024_07_22_0013@{ i } A C ( 合成する@{ i } A B C f g ) x y p )
             ( A_2024_07_22_0013@{ i } A B f ( g x ) ( g y ) ( A_2024_07_22_0013@{ i } B C g x y p ) )
     :=
         match
@@ -3027,7 +3025,7 @@ Definition A_2024_07_25_0005@{ i | }
         return
             A_2024_07_22_0009@{ i }
                 ( A_2024_07_22_0009@{ i } A ( f ( g x_ ) ) ( f ( g y_ ) ) )
-                ( A_2024_07_22_0013@{ i } A C ( A_2024_07_21_0001@{ i } A B C f g ) x_ y_ p_ )
+                ( A_2024_07_22_0013@{ i } A C ( 合成する@{ i } A B C f g ) x_ y_ p_ )
                 ( A_2024_07_22_0013@{ i } A B f ( g x_ ) ( g y_ ) ( A_2024_07_22_0013@{ i } B C g x_ y_ p_ ) )
         with
             A_2024_07_22_0010 _ z
