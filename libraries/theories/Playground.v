@@ -32,7 +32,7 @@ Definition A_2024_07_21_0001@{ i | }
 .
 
 Definition 合成する@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( C : Type@{ i } ) ( f : B -> A ) ( g : C -> B ) ( x : C ) : A
-    := f ( g x )
+    := A_2024_07_21_0001 A B C f g x
 .
 
 (** 二個の引数を取る依存関数を取り、その二個の引数を入れ替えます。 *)
