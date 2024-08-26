@@ -35,17 +35,22 @@ Definition 合成する@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( C : Type
     := f ( g x )
 .
 
-(** 二引数関数の引数を入れ替えます。 *)
+(** 二個の引数を取る依存関数を取り、その二個の引数を入れ替えます。 *)
 
 Definition A_2024_08_02_0002@{ i | }
-        ( A : Type@{ i } )
-        ( B : Type@{ i } )
-        ( C : A -> B -> Type@{ i } )
-        ( f : forall x : A, forall y : B, C x y )
-        ( y : B )
-        ( x : A )
-    : C x y
-    := f x y
+    :
+        forall A : Type@{ i } ,
+        forall B : Type@{ i } ,
+        forall C : A -> B -> Type@{ i } ,
+        ( forall x : A , forall y : B , C x y )
+        ->
+        forall y : B , forall x : A , C x y
+    :=
+        fun A : Type@{ i } =>
+        fun B : Type@{ i } =>
+        fun C : A -> B -> Type@{ i } =>
+        fun f : forall x : A , forall y : B , C x y =>
+        fun y : B => fun x : A => f x y
 .
 
 (** 定数関数を作る関数を定義します。 *)
