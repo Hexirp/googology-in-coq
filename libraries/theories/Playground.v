@@ -4,6 +4,8 @@ Require Googology_In_Coq.Base.
 
 Import Googology_In_Coq.Base.
 
+Module A_2024_08_26_0002 .
+
 (** 恒等関数を定義します。 *)
 
 Definition A_2024_07_21_0000@{ i | } ( A : Type@{ i } ) ( x : A ) : A := x .
@@ -37,6 +39,10 @@ Definition A_2024_08_02_0002@{ i | }
 (** 定数関数を作る関数を定義します。 *)
 
 Definition A_2024_07_21_0002@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( x : A ) ( y : B ) : A := x .
+
+End A_2024_08_26_0002 .
+
+Import A_2024_08_26_0002 .
 
 (** 空型を定義します。「空型」は "empty type" の訳語です。 *)
 
