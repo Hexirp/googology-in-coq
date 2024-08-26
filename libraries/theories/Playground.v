@@ -53,7 +53,7 @@ Definition A_2024_08_02_0002@{ i | }
         fun y : B => fun x : A => f x y
 .
 
-(** 型 [A] の値を取り、その値を返す定数関数を返します。 *)
+(** ある値を取り、その値を常に返す定数関数を作ります。 *)
 
 Definition A_2024_07_21_0002@{ i | }
     : forall A : Type@{ i } , forall B : Type@{ i } , A -> B -> A
