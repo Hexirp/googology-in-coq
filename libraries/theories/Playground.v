@@ -53,9 +53,14 @@ Definition A_2024_08_02_0002@{ i | }
         fun y : B => fun x : A => f x y
 .
 
-(** 定数関数を作る関数を定義します。 *)
+(** 型 [A] の値を取り、その値を返す定数関数を返します。 *)
 
-Definition A_2024_07_21_0002@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( x : A ) ( y : B ) : A := x .
+Definition A_2024_07_21_0002@{ i | }
+    : forall A : Type@{ i } , forall B : Type@{ i } , A -> B -> A
+    := fun A : Type@{ i } => fun B : Type@{ i } => fun x : A => fun y : B => x
+.
+
+Definition 定数関数を作る@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( x : A ) ( y : B ) : A := A_2024_07_21_0002 A B x y .
 
 End A_2024_08_26_0002 .
 
