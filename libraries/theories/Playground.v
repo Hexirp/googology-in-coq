@@ -255,6 +255,10 @@ Definition 左の場合の構築子@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } 
     := A_2024_07_21_0006@{ i } A B x
 .
 
+Definition 右の場合の構築子@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( x : B ) : 直和型@{ i } A B
+    := A_2024_07_21_0007@{ i } A B x
+.
+
 End A_2024_07_21_0005 .
 
 Module 直和型 := A_2024_07_21_0005 .
@@ -1657,7 +1661,7 @@ Proof .
     .
     refine ( 空型.場合分け@{ i } B _ ) .
     refine ( 否定型.分解子@{ i } ( 直和型@{ i } ( A -> B ) ( B -> A ) ) x _ ) .
-    refine ( A_2024_07_21_0007@{ i } ( A -> B ) ( B -> A ) _ ) .
+    refine ( 直和型.右の場合の構築子@{ i } ( A -> B ) ( B -> A ) _ ) .
     refine
         (
             let
@@ -1687,7 +1691,7 @@ Proof .
         )
     .
     refine ( 否定型.分解子@{ i } ( 直和型@{ i } A ( 否定型@{ i } A ) ) x _ ) .
-    refine ( A_2024_07_21_0007@{ i } A ( 否定型@{ i } A ) _ ) .
+    refine ( 直和型.右の場合の構築子@{ i } A ( 否定型@{ i } A ) _ ) .
     refine ( 否定型.構築子@{ i } A _ ) .
     refine
         (
@@ -1827,7 +1831,7 @@ Proof .
         .
         refine ( x _ _ ) .
         {
-            refine ( A_2024_07_21_0007@{ i } A ( 否定型@{ i } A ) _ ) .
+            refine ( 直和型.右の場合の構築子@{ i } A ( 否定型@{ i } A ) _ ) .
             refine ( 否定型.構築子@{ i } A _ ) .
             refine
                 (
@@ -2391,7 +2395,7 @@ Proof .
             exact ( 対偶を取る@{ i } A ( 直和型@{ i } A B ) ( 直和型.左の場合の構築子@{ i } A B ) y ) .
         }
         {
-            exact ( 対偶を取る@{ i } B ( 直和型@{ i } A B ) ( A_2024_07_21_0007@{ i } A B ) y ) .
+            exact ( 対偶を取る@{ i } B ( 直和型@{ i } A B ) ( 直和型.右の場合の構築子@{ i } A B ) y ) .
         }
     }
 Defined .
