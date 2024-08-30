@@ -1040,6 +1040,26 @@ Definition A_2024_07_21_0023@{ i | }
         f ( 依存直和型.構築子@{ i } B C x_1 x_2 )
 .
 
+(** それぞれの区域を取る関数を、依存直和型を取る関数に変えます。 *)
+
+Definition A_2024_07_21_0024@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall B : Type@{ i } ,
+        forall C : B -> Type@{ i } ,
+        ( forall x_1 : B , C x_1 -> A )
+        ->
+        forall x : 依存直和型@{ i } B C ,
+        A
+    :=
+        fun A : Type@{ i } =>
+        fun B : Type@{ i } =>
+        fun C : B -> Type@{ i } =>
+        fun f : forall x_1 : B , C x_1 -> A =>
+        fun x : 依存直和型@{ i } B C =>
+        依存直和型.場合分け B C x A f
+.
+
 End A_2024_08_30_0000 .
 
 (** * 残り *)
@@ -1057,18 +1077,6 @@ Import A_2024_08_28_0000 .
 Import A_2024_08_28_0006 .
 
 Import A_2024_08_30_0000 .
-
-(** それぞれの区域を取る関数を、依存直和型を取る関数に変えます。 *)
-
-Definition A_2024_07_21_0024@{ i | }
-        ( A : Type@{ i } )
-        ( B : Type@{ i } )
-        ( C : B -> Type@{ i } )
-        ( f : forall x_1 : B , C x_1 -> A )
-        ( x : 依存直和型@{ i } B C )
-    : A
-    := match x with A_2024_07_21_0020 _ _ x_1 x_2 => f x_1 x_2 end
-.
 
 (** ブール型を定義します。「ブール型」は "boolean type" の訳語です。 *)
 
