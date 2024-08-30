@@ -918,6 +918,35 @@ Definition 構築子@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) ( x_1 : 
     := A_2024_07_21_0020@{ i } A B x_1 x_2
 .
 
+Definition A_2024_08_30_0001@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall B : A -> Type@{ i } ,
+        依存直和型@{ i } A B
+        ->
+        forall 目標 : Type@{ i } ,
+        ( forall x_1 : A , B x_1 -> 目標 )
+        ->
+        目標
+    :=
+        fun A : Type@{ i } =>
+        fun B : A -> Type@{ i } =>
+        fun 対象 : 依存直和型@{ i } A B =>
+        fun 目標 : Type@{ i } =>
+        fun 処理 : forall x_1 : A , B x_1 -> 目標 =>
+        match 対象 with A_2024_07_21_0020 _ _ x_1 x_2 => 処理 x_1 x_2 end
+.
+
+Definition 場合分け@{ i | }
+    ( A : Type@{ i } )
+    ( B : A -> Type@{ i } )
+    ( 対象 : 依存直和型@{ i } A B )
+    ( 目標 : Type@{ i } )
+    ( 処理 : forall x_1 : A , B x_1 -> 目標 )
+    : 目標
+    := A_2024_08_30_0001@{ i } A B 対象 目標 処理
+.
+
 End A_2024_07_21_0019 .
 
 Module 依存直和型 := A_2024_07_21_0019 .
