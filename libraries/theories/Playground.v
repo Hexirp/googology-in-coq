@@ -898,6 +898,22 @@ Definition A_2024_07_21_0018@{ i | }
 
 End A_2024_08_28_0006 .
 
+(** * 依存直和型に関する定義 *)
+
+(** 依存直和型に関するモジュールを定義します。 *)
+
+Module A_2024_08_30_0000 .
+
+(** 依存直和型を定義します。 *)
+
+Inductive A_2024_07_21_0019@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) : Type@{ i }
+    := A_2024_07_21_0020 : forall x : A , B x -> A_2024_07_21_0019 A B
+.
+
+Definition 依存直和型@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) : Type@{ i } := A_2024_07_21_0019@{ i } A B .
+
+End A_2024_08_30_0000 .
+
 (** * 残り *)
 
 Import A_2024_08_26_0002 .
@@ -912,21 +928,17 @@ Import A_2024_08_28_0000 .
 
 Import A_2024_08_28_0006 .
 
-(** 依存直和型を定義します。 *)
-
-Inductive A_2024_07_21_0019@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) : Type@{ i }
-    := A_2024_07_21_0020 : forall x : A , B x -> A_2024_07_21_0019 A B
-.
+Import A_2024_08_30_0000 .
 
 (** 一番目の領域の値を取り出します *)
 
-Definition A_2024_07_21_0021@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) ( x : A_2024_07_21_0019@{ i } A B ) : A
+Definition A_2024_07_21_0021@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) ( x : 依存直和型@{ i } A B ) : A
     := match x with A_2024_07_21_0020 _ _ x_1 x_2 => x_1 end
 .
 
 (** 二番目の領域の値を取り出します *)
 
-Definition A_2024_07_21_0022@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) ( x : A_2024_07_21_0019@{ i } A B )
+Definition A_2024_07_21_0022@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) ( x : 依存直和型@{ i } A B )
     : B ( A_2024_07_21_0021@{ i } A B x )
     := match x as x_ return B ( A_2024_07_21_0021@{ i } A B x_ ) with A_2024_07_21_0020 _ _ x_1 x_2 => x_2 end
 .
@@ -937,7 +949,7 @@ Definition A_2024_07_21_0023@{ i | }
         ( A : Type@{ i } )
         ( B : Type@{ i } )
         ( C : B -> Type@{ i } )
-        ( f : A_2024_07_21_0019@{ i } B C -> A )
+        ( f : 依存直和型@{ i } B C -> A )
         ( x_1 : B )
         ( x_2 : C x_1 )
     : A
@@ -951,7 +963,7 @@ Definition A_2024_07_21_0024@{ i | }
         ( B : Type@{ i } )
         ( C : B -> Type@{ i } )
         ( f : forall x_1 : B , C x_1 -> A )
-        ( x : A_2024_07_21_0019@{ i } B C )
+        ( x : 依存直和型@{ i } B C )
     : A
     := match x with A_2024_07_21_0020 _ _ x_1 x_2 => f x_1 x_2 end
 .
