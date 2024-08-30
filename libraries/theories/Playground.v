@@ -1001,6 +1001,22 @@ Definition A_2024_07_21_0021@{ i | } : forall A : Type@{ i } , forall B : A -> T
         依存直和型.場合分け A B x A ( fun x_1 : A => fun x_2 : B x_1 => x_1 )
 .
 
+(** 二番目の領域の値を取り出します *)
+
+Definition A_2024_07_21_0022@{ i | }
+    : forall A : Type@{ i } , forall B : A -> Type@{ i } , forall x : 依存直和型@{ i } A B , B ( A_2024_07_21_0021@{ i } A B x )
+    :=
+        fun A : Type@{ i } =>
+        fun B : A -> Type@{ i } =>
+        fun x : 依存直和型@{ i } A B =>
+        依存直和型.依存型の場合分け
+            A
+            B
+            x
+            ( fun x_ : 依存直和型@{ i } A B => B ( A_2024_07_21_0021@{ i } A B x_ ) )
+            ( fun x_1 : A => fun x_2 : B x_1 => x_2 )
+.
+
 End A_2024_08_30_0000 .
 
 (** * 残り *)
@@ -1018,13 +1034,6 @@ Import A_2024_08_28_0000 .
 Import A_2024_08_28_0006 .
 
 Import A_2024_08_30_0000 .
-
-(** 二番目の領域の値を取り出します *)
-
-Definition A_2024_07_21_0022@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) ( x : 依存直和型@{ i } A B )
-    : B ( A_2024_07_21_0021@{ i } A B x )
-    := match x as x_ return B ( A_2024_07_21_0021@{ i } A B x_ ) with A_2024_07_21_0020 _ _ x_1 x_2 => x_2 end
-.
 
 (** 依存直和型を取る関数を、それぞれの領域を取る関数に変えます。 *)
 
