@@ -2749,16 +2749,7 @@ Module 列記型 := A_2024_08_16_0000 .
 (** 折り畳みます。 *)
 
 Definition A_2024_08_16_0003@{ i | }
-    :
-        forall A : Type@{ i } ,
-        forall B : Type@{ i } ,
-        A
-        ->
-        ( B -> A -> A )
-        ->
-        列記型@{ i } B
-        ->
-        A
+    : forall A : Type@{ i } , forall B : Type@{ i } , A -> ( B -> A -> A ) -> 列記型@{ i } B -> A
     :=
         fun A : Type@{ i } =>
         fun B : Type@{ i } =>
@@ -2781,6 +2772,27 @@ Definition 折り畳む@{ i | }
     ( x : 列記型@{ i } B )
     : A
     := A_2024_08_16_0003@{ i } A B 空の場合の処理 節の場合の処理 x
+.
+
+(** 列記型の上で写します。 *)
+
+Definition A_2024_08_16_0004@{ i | }
+    : forall A : Type@{ i } , forall B : Type@{ i } , ( B -> A ) -> 列記型@{ i } B -> 列記型@{ i } A
+    :=
+        fun A : Type@{ i } =>
+        fun B : Type@{ i } =>
+        fun f : B -> A =>
+        fun x : 列記型@{ i } B =>
+        列記型.再帰@{ i }
+            B
+            x
+            ( 列記型@{ i } A )
+            ( 列記型.空の場合の構築子@{ i } A )
+            ( fun x_1 : B => fun x_2 : 列記型@{ i } B => fun a_2 : 列記型@{ i } A => 列記型.節の場合の構築子@{ i } A ( f x_1 ) a_2 )
+.
+
+Definition 写す@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( f : B -> A ) ( x : 列記型@{ i } B ) : 列記型@{ i } A
+    := A_2024_08_16_0004@{ i } A B f x
 .
 
 End A_2024_09_06_0000 .
@@ -2810,29 +2822,6 @@ Import A_2024_09_02_0000 .
 Import A_2024_09_03_0000 .
 
 Import A_2024_09_06_0000 .
-
-(** 関数を列記へ適用します。 *)
-
-Definition A_2024_08_16_0004@{ i | }
-        ( A : Type@{ i } )
-        ( B : Type@{ i } )
-        ( f : B -> A )
-        ( x : 列記型@{ i } B )
-    : 列記型@{ i } A
-    :=
-        let
-            fix a ( x_ : 列記型@{ i } B ) { struct x_ } : 列記型@{ i } A
-                :=
-                    match
-                        x_
-                    with
-                        A_2024_08_16_0001 _ => A_2024_08_16_0001@{ i } A
-                        |
-                        A_2024_08_16_0002 _ x_1 x_2 => A_2024_08_16_0002@{ i } A ( f x_1 ) ( a x_2 )
-                    end
-        in
-            a x
-.
 
 (** 長さを求めます。 *)
 
