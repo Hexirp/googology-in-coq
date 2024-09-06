@@ -3344,8 +3344,8 @@ Proof .
     refine ( fun A : Type@{ i } => _ ) .
     refine ( 否定型.構築子@{ i } ( 双関数型@{ i } A ( 否定型@{ i } A ) ) _ ) .
     refine ( fun x : 双関数型@{ i } A ( 否定型@{ i } A ) => _ ) .
-    refine ( 否定型.分解子@{ i } A _ _ ) .
-    {
+    refine ( let a : 否定型@{ i } A := ?[a] in _ ) .
+    [a]: {
         refine ( 否定型.構築子@{ i } A _ ) .
         refine ( fun y : A => _ ) .
         refine ( 否定型.分解子@{ i } A _ _ ) .
@@ -3358,16 +3358,13 @@ Proof .
         }
     }
     {
-        refine ( 双関数型.二番目の区域の分解子@{ i } A ( 否定型@{ i } A ) x _ ) .
-        refine ( 否定型.構築子@{ i } A _ ) .
-        refine ( fun y : A => _ ) .
         refine ( 否定型.分解子@{ i } A _ _ ) .
         {
-            refine ( 双関数型.一番目の区域の分解子@{ i } ( 否定型@{ i } A ) A x _ ) .
-            exact y .
+            exact a .
         }
         {
-            exact y .
+            refine ( 双関数型.二番目の区域の分解子@{ i } A ( 否定型@{ i } A ) x _ ) .
+            exact a .
         }
     }
 Defined .
