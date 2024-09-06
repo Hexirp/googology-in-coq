@@ -2837,6 +2837,8 @@ Definition A_2024_08_16_0005@{ i | } : forall A : Type@{ i } , 列記型@{ i } A
             ( fun x_1 : A => fun x_2 : 列記型@{ i } A => fun a_2 : 自然数@{ i } => 後者関数@{ i } a_2 )
 .
 
+Definition 長さを計算する@{ i | } ( A : Type@{ i } ) ( x : 列記型@{ i } A ) : 自然数@{ i } := A_2024_08_16_0005@{ i } A x .
+
 (** 総和を求めます。 *)
 
 Definition A_2024_08_16_0006@{ i | } : 列記型@{ i } 自然数@{ i } -> 自然数@{ i }
@@ -2865,7 +2867,7 @@ Definition A_2024_08_16_0007@{ i | } : 列記型@{ i } 自然数@{ i } -> 自然
 
 (** 結合します。 *)
 
-Definition A_2024_08_16_0008@{ i } : forall A : Type@{ i } , 列記型@{ i } A -> 列記型@{ i } A -> 列記型@{ i } A
+Definition A_2024_08_16_0008@{ i | } : forall A : Type@{ i } , 列記型@{ i } A -> 列記型@{ i } A -> 列記型@{ i } A
     :=
         fun A : Type@{ i } =>
         fun x : 列記型@{ i } A =>
@@ -2883,7 +2885,11 @@ Definition A_2024_08_16_0008@{ i } : forall A : Type@{ i } , 列記型@{ i } A -
             )
 .
 
-(** 結合します。 *)
+Definition 結合する@{ i | } ( A : Type@{ i } ) ( x : 列記型@{ i } A ) ( y : 列記型@{ i } A ) : 列記型@{ i } A
+    := A_2024_08_16_0008@{ i } A x y
+.
+
+(** 平らにします。 *)
 
 Definition A_2024_08_16_0009@{ i | } : forall A : Type@{ i } , 列記型@{ i } ( 列記型@{ i } A ) -> 列記型@{ i } A
     :=
@@ -2902,7 +2908,11 @@ Definition A_2024_08_16_0009@{ i | } : forall A : Type@{ i } , 列記型@{ i } (
             )
 .
 
-(** 反転します。 *)
+Definition 平らにする@{ i | } ( A : Type@{ i } ) ( x : 列記型@{ i } ( 列記型@{ i } A ) ) : 列記型@{ i } A
+    := A_2024_08_16_0009@{ i } A x
+.
+
+(** 逆順にします。 *)
 
 Definition A_2024_08_16_0010@{ i | } : forall A : Type@{ i } , 列記型@{ i } A -> 列記型@{ i } A
     :=
@@ -2924,6 +2934,8 @@ Definition A_2024_08_16_0010@{ i | } : forall A : Type@{ i } , 列記型@{ i } A
         )
             ( 列記型.空の場合の構築子@{ i } A )
 .
+
+Definition 逆順にする@{ i | } ( A : Type@{ i } ) ( x : 列記型@{ i } A ) : 列記型@{ i } A := A_2024_08_16_0010@{ i } A x .
 
 End A_2024_09_06_0000 .
 
