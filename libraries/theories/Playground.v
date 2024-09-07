@@ -3465,6 +3465,25 @@ Proof .
     exact ( 定数関数を作る@{ i } A B y ) .
 Defined .
 
+(** 排中律です。 *)
+
+Definition A_2024_08_09_0003@{ i | }
+    : forall A : Type@{ i } , forall B : Type@{ i } , 否定型@{ i } ( 否定型@{ i } ( 直和型@{ i } A ( 否定型@{ i } A ) ) )
+.
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun B : Type@{ i } => _ ) .
+    refine ( 否定型.構築子@{ i } ( 否定型@{ i } ( 直和型@{ i } A ( 否定型@{ i } A ) ) ) _ ) .
+    refine ( fun x : ( 否定型@{ i } ( 直和型@{ i } A ( 否定型@{ i } A ) ) ) => _ ) .
+    refine ( 否定型.分解子@{ i } ( 直和型@{ i } A ( 否定型@{ i } A ) ) x _ ) .
+    refine ( 直和型.右の場合の構築子@{ i } A ( 否定型@{ i } A ) _ ) .
+    refine ( 否定型.構築子@{ i } A _ ) .
+    refine ( fun y : A => _ ) .
+    refine ( 否定型.分解子@{ i } ( 直和型@{ i } A ( 否定型@{ i } A ) ) x _ ) .
+    refine ( 直和型.左の場合の構築子@{ i } A ( 否定型@{ i } A ) _ ) .
+    exact y .
+Defined .
+
 End A_2024_09_07_0000 .
 
 (** * 残り *)
@@ -3488,39 +3507,6 @@ Import A_2024_08_30_0006 .
 Import A_2024_09_06_0005 .
 
 Import A_2024_09_07_0000 .
-
-(** [A] と [A] の否定の直和の否定の否定です。 *)
-
-Definition A_2024_08_09_0003@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } )
-    : 否定型@{ i } ( 否定型@{ i } ( 直和型@{ i } A ( 否定型@{ i } A ) ) )
-.
-Proof .
-    refine ( 否定型.構築子@{ i } ( 否定型@{ i } ( 直和型@{ i } A ( 否定型@{ i } A ) ) ) _ ) .
-    refine
-        (
-            let
-                a ( x : 否定型@{ i } ( 直和型@{ i } A ( 否定型@{ i } A ) ) )
-                    : 空型@{ i }
-                    := _
-            in
-                a
-        )
-    .
-    refine ( 否定型.分解子@{ i } ( 直和型@{ i } A ( 否定型@{ i } A ) ) x _ ) .
-    refine ( 直和型.右の場合の構築子@{ i } A ( 否定型@{ i } A ) _ ) .
-    refine ( 否定型.構築子@{ i } A _ ) .
-    refine
-        (
-            let
-                a ( y : A ) : 空型@{ i } := _
-            in
-                a
-        )
-    .
-    refine ( 否定型.分解子@{ i } ( 直和型@{ i } A ( 否定型@{ i } A ) ) x _ ) .
-    refine ( 直和型.左の場合の構築子@{ i } A ( 否定型@{ i } A ) _ ) .
-    exact y .
-Defined .
 
 (** [A] と [A] の否定の直和から [A] の否定の否定から [A] への関数を得ます。 *)
 
