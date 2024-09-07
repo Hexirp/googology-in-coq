@@ -3844,6 +3844,56 @@ Proof .
     }
 Defined .
 
+(** 含意と二重否定の定理です。 *)
+
+Definition A_2024_08_15_0000@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall B : Type@{ i } ,
+        双関数型@{ i }
+            ( 否定型@{ i } ( 否定型@{ i } ( B -> A ) ) )
+            ( 否定型@{ i } ( 否定型@{ i } B ) -> 否定型@{ i } ( 否定型@{ i } A ) )
+.
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun B : Type@{ i } => _ ) .
+    refine
+        (
+            双関数型を構築する@{ i }
+                ( 否定型@{ i } ( 否定型@{ i } ( B -> A ) ) )
+                ( 否定型@{ i } ( 否定型@{ i } B ) -> 否定型@{ i } ( 否定型@{ i } A ) )
+                _
+                _
+        )
+    .
+    {
+        refine ( fun x : 否定型@{ i } ( 否定型@{ i } ( B -> A ) ) => _ ) .
+        refine ( fun y : 否定型@{ i } ( 否定型@{ i } B ) => _ ) .
+        refine ( 否定型.構築子@{ i } ( 否定型@{ i } A ) _ ) .
+        refine ( fun z : 否定型@{ i } A => _ ) .
+        refine ( 否定型.分解子@{ i } ( 否定型@{ i } ( B -> A ) ) x _ ) .
+        refine ( 否定型.構築子@{ i } ( B -> A ) _ ) .
+        refine ( fun w : B -> A => _ ) .
+        refine ( 否定型.分解子@{ i } ( 否定型@{ i } B ) y _ ) .
+        refine ( 否定型.構築子@{ i } B _ ) .
+        refine ( fun v : B => _ ) .
+        refine ( 否定型.分解子@{ i } A z _ ) .
+        refine ( w _ ) .
+        exact v .
+    }
+    {
+        refine ( fun x : 否定型@{ i } ( 否定型@{ i } B ) -> 否定型@{ i } ( 否定型@{ i } A ) => _ ) .
+        refine ( 否定型.構築子@{ i } ( 否定型@{ i } ( B -> A ) ) _ ) .
+        refine ( fun y : 否定型@{ i } ( B -> A ) => _ ) .
+        refine ( 否定型.分解子@{ i } ( B -> A ) y _ ) .
+        refine ( fun z : B => _ ) .
+        refine ( 終了する@{ i } A _ ) .
+        refine ( 否定型.分解子@{ i } ( 否定型@{ i } A ) ( x ( A_2024_08_06_0000@{ i } B z ) ) _ ) .
+        refine ( 対偶を取る@{ i } A ( B -> A ) _ y ) .
+        exact ( 定数関数を作る@{ i } A B ) .
+    }
+Defined .
+
 End A_2024_09_07_0000 .
 
 (** * 残り *)
@@ -3867,137 +3917,6 @@ Import A_2024_08_30_0006 .
 Import A_2024_09_06_0005 .
 
 Import A_2024_09_07_0000 .
-
-Definition A_2024_08_15_0000@{ i }
-        ( A : Type@{ i } )
-        ( B : Type@{ i } )
-    :
-        双関数型@{ i }
-            ( 否定型@{ i } ( 否定型@{ i } ( B -> A ) ) )
-            ( 否定型@{ i } ( 否定型@{ i } B ) -> 否定型@{ i } ( 否定型@{ i } A ) )
-.
-Proof .
-    refine
-        (
-            A_2024_08_02_0005@{ i }
-                ( 否定型@{ i } ( 否定型@{ i } ( B -> A ) ) )
-                ( 否定型@{ i } ( 否定型@{ i } B ) -> 否定型@{ i } ( 否定型@{ i } A ) )
-                _
-                _
-        )
-    .
-    {
-        refine
-            (
-                let
-                    a
-                            ( x : 否定型@{ i } ( 否定型@{ i } ( B -> A ) ) )
-                            ( y : 否定型@{ i } ( 否定型@{ i } B ) )
-                        : 否定型@{ i } ( 否定型@{ i } A )
-                        := _
-                in
-                    a
-            )
-        .
-        refine ( 否定型.構築子@{ i } ( 否定型@{ i } A ) _ ) .
-        refine
-            (
-                let
-                    a ( z : 否定型@{ i } A ) : 空型@{ i } := _
-                in
-                    a
-            )
-        .
-        refine ( 否定型.分解子@{ i } ( 否定型@{ i } ( B -> A ) ) x _ ) .
-        refine ( 否定型.構築子@{ i } ( B -> A ) _ ) .
-        refine
-            (
-                let
-                    a ( w : B -> A ) : 空型@{ i } := _
-                in
-                    a
-            )
-        .
-        refine ( 否定型.分解子@{ i } ( 否定型@{ i } B ) y _ ) .
-        refine ( 否定型.構築子@{ i } B _ ) .
-        refine
-            (
-                let
-                    a ( v : B ) : 空型@{ i } := _
-                in
-                    a
-            )
-        .
-        refine ( 否定型.分解子@{ i } A z _ ) .
-        exact ( w v ) .
-    }
-    {
-        refine
-            (
-                let
-                    a
-                            (
-                                x
-                                    :
-                                        否定型@{ i } ( 否定型@{ i } B )
-                                        ->
-                                        否定型@{ i } ( 否定型@{ i } A )
-                            )
-                        : 否定型@{ i } ( 否定型@{ i } ( B -> A ) )
-                        := _
-                in
-                    a
-            )
-        .
-        refine ( 否定型.構築子@{ i } ( 否定型@{ i } ( B -> A ) ) _ ) .
-        refine
-            (
-                let
-                    a ( y : 否定型@{ i } ( B -> A ) ) : 空型@{ i } := _
-                in
-                    a
-            )
-        .
-        refine ( 否定型.分解子@{ i } ( B -> A ) y _ ) .
-        refine
-            (
-                let
-                    a ( z : B ) : A := _
-                in
-                    a
-            )
-        .
-        refine
-            (
-                let
-                    a : 否定型@{ i } ( 否定型@{ i } B ) := A_2024_08_06_0000@{ i } B z
-                in
-                    _
-            )
-        .
-        refine ( 終了する@{ i } A _ ) .
-        refine ( 否定型.分解子@{ i } ( 否定型@{ i } A ) ( x a ) _ ) .
-        refine ( 否定型.構築子@{ i } A _ ) .
-        refine
-            (
-                let
-                    b ( w : A ) : 空型@{ i } := _
-                in
-                    b
-            )
-        .
-        refine ( 否定型.分解子@{ i } ( B -> A ) y _ ) .
-        refine
-            (
-                let
-                    b ( v : B ) : A := _
-                in
-                    b
-            )
-        .
-        exact w .
-    }
-Defined .
 
 (** 道を定義します。「道」は "path" の訳語です。 *)
 
