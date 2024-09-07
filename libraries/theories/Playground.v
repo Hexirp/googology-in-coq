@@ -3889,8 +3889,10 @@ Proof .
         refine ( fun z : B => _ ) .
         refine ( 終了する@{ i } A _ ) .
         refine ( 否定型.分解子@{ i } ( 否定型@{ i } A ) ( x ( A_2024_08_06_0000@{ i } B z ) ) _ ) .
-        refine ( 対偶を取る@{ i } A ( B -> A ) _ y ) .
-        exact ( 定数関数を作る@{ i } A B ) .
+        refine ( 否定型.構築子@{ i } A _ ) .
+        refine ( fun w : A => _ ) .
+        refine ( 否定型.分解子@{ i } ( B -> A ) y _ ) .
+        exact ( 定数関数を作る@{ i } A B w ) .
     }
 Defined .
 
