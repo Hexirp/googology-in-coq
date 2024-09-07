@@ -3421,8 +3421,10 @@ Proof .
     refine ( fun y : 否定型@{ i } ( 否定型@{ i } A ) => _ ) .
     refine ( 終了する@{ i } A _ ) .
     refine ( 否定型.分解子@{ i } ( 否定型@{ i } A ) y _ ) .
-    refine ( 対偶を取る@{ i } A ( 否定型@{ i } ( 否定型@{ i } A ) -> A ) _ x ) .
-    exact ( 定数関数を作る@{ i } A ( 否定型@{ i } ( 否定型@{ i } A ) ) ) .
+    refine ( 否定型.構築子@{ i } A _ ) .
+    refine ( fun z : A => _ ) .
+    refine ( 否定型.分解子@{ i } ( 否定型@{ i } ( 否定型@{ i } A ) -> A ) x _ ) .
+    exact ( 定数関数を作る@{ i } A ( 否定型@{ i } ( 否定型@{ i } A ) ) z ) .
 Defined .
 
 (** パースの法則です。 *)
@@ -3441,8 +3443,26 @@ Proof .
     refine ( fun z : A => _ ) .
     refine ( 終了する@{ i } B _ ) .
     refine ( 否定型.分解子@{ i } ( ( ( A -> B ) -> A ) -> A ) x _ ) .
-    refine ( fun w : ( A -> B ) -> A => _ ) .
-    exact z .
+    exact ( 定数関数を作る@{ i } A ( ( A -> B ) -> A ) z ) .
+Defined .
+
+(** [A] から [B] への関数と [B] から [A] への関数の直和です。 *)
+
+Definition A_2024_08_09_0002@{ i | }
+    : forall A : Type@{ i } , forall B : Type@{ i } , 否定型@{ i } ( 否定型@{ i } ( 直和型@{ i } ( A -> B ) ( B -> A ) ) )
+.
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun B : Type@{ i } => _ ) .
+    refine ( 否定型.構築子@{ i } ( 否定型@{ i } ( 直和型@{ i } ( A -> B ) ( B -> A ) ) ) _ ) .
+    refine ( fun x : ( 否定型@{ i } ( 直和型@{ i } ( A -> B ) ( B -> A ) ) ) => _ ) .
+    refine ( 否定型.分解子@{ i } ( 直和型@{ i } ( A -> B ) ( B -> A ) ) x _ ) .
+    refine ( 直和型.左の場合の構築子@{ i } ( A -> B ) ( B -> A ) _ ) .
+    refine ( fun y : A => _ ) .
+    refine ( 終了する@{ i } B _ ) .
+    refine ( 否定型.分解子@{ i } ( 直和型@{ i } ( A -> B ) ( B -> A ) ) x _ ) .
+    refine ( 直和型.右の場合の構築子@{ i } ( A -> B ) ( B -> A ) _ ) .
+    exact ( 定数関数を作る@{ i } A B y ) .
 Defined .
 
 End A_2024_09_07_0000 .
@@ -3468,45 +3488,6 @@ Import A_2024_08_30_0006 .
 Import A_2024_09_06_0005 .
 
 Import A_2024_09_07_0000 .
-
-(** [A] から [B] への関数と [B] から [A] への関数の直和の否定の否定です。 *)
-
-Definition A_2024_08_09_0002@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } )
-    : 否定型@{ i } ( 否定型@{ i } ( 直和型@{ i } ( A -> B ) ( B -> A ) ) )
-.
-Proof .
-    refine ( 否定型.構築子@{ i } ( 否定型@{ i } ( 直和型@{ i } ( A -> B ) ( B -> A ) ) ) _ ) .
-    refine
-        (
-            let
-                a ( x : 否定型@{ i } ( 直和型@{ i } ( A -> B ) ( B -> A ) ) ) : 空型@{ i } := _
-            in
-                a
-        )
-    .
-    refine ( 否定型.分解子@{ i } ( 直和型@{ i } ( A -> B ) ( B -> A ) ) x _ ) .
-    refine ( 直和型.左の場合の構築子@{ i } ( A -> B ) ( B -> A ) _ ) .
-    refine
-        (
-            let
-                a ( y : A ) : B := _
-            in
-                a
-        )
-    .
-    refine ( 終了する@{ i } B _ ) .
-    refine ( 否定型.分解子@{ i } ( 直和型@{ i } ( A -> B ) ( B -> A ) ) x _ ) .
-    refine ( 直和型.右の場合の構築子@{ i } ( A -> B ) ( B -> A ) _ ) .
-    refine
-        (
-            let
-                a ( z : B ) : A := _
-            in
-                a
-        )
-    .
-    exact y .
-Defined .
 
 (** [A] と [A] の否定の直和の否定の否定です。 *)
 
