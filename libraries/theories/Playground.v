@@ -3463,7 +3463,7 @@ Proof .
     refine ( fun A : Type@{ i } => _ ) .
     refine ( fun B : Type@{ i } => _ ) .
     refine ( 否定型.構築子@{ i } ( 否定型@{ i } ( 直和型@{ i } ( A -> B ) ( B -> A ) ) ) _ ) .
-    refine ( fun x : ( 否定型@{ i } ( 直和型@{ i } ( A -> B ) ( B -> A ) ) ) => _ ) .
+    refine ( fun x : 否定型@{ i } ( 直和型@{ i } ( A -> B ) ( B -> A ) ) => _ ) .
     refine ( 否定型.分解子@{ i } ( 直和型@{ i } ( A -> B ) ( B -> A ) ) x _ ) .
     refine ( 直和型.左の場合の構築子@{ i } ( A -> B ) ( B -> A ) _ ) .
     refine ( fun y : A => _ ) .
@@ -3795,37 +3795,33 @@ Proof .
         )
     .
     {
-        refine ( fun x : 否定型@{ i } ( 否定型@{ i } ( 直和型@{ i } A B ) ) => _ ) .
-        refine ( 否定型.構築子@{ i } ( 直積型@{ i } ( 否定型@{ i } A ) ( 否定型@{ i } B ) ) _ ) .
-        refine ( fun y : 直積型@{ i } ( 否定型@{ i } A ) ( 否定型@{ i } B ) => _ ) .
-        refine ( 否定型.分解子@{ i } ( 否定型@{ i } ( 直和型@{ i } A B ) ) x _ ) .
+        refine ( 対偶を取る@{ i } ( 直積型@{ i } ( 否定型@{ i } A ) ( 否定型@{ i } B ) ) ( 否定型@{ i } ( 直和型@{ i } A B ) ) _ ) .
+        refine ( fun x : 直積型@{ i } ( 否定型@{ i } A ) ( 否定型@{ i } B ) => _ ) .
         refine ( 否定型.構築子@{ i } ( 直和型@{ i } A B ) _ ) .
-        refine ( fun z : 直和型@{ i } A B => _ ) .
+        refine ( fun y : 直和型@{ i } A B => _ ) .
         refine
             (
                 直和型.場合分け@{ i }
                     A
                     B
-                    z
+                    y
                     空型@{ i }
-                    ( fun z_左 : A => _ )
-                    ( fun z_右 : B => _ )
+                    ( fun y_左 : A => _ )
+                    ( fun y_右 : B => _ )
             )
         .
         {
-            refine ( 否定型.分解子@{ i } A ( 直積型.一番目の区域の分解子@{ i } ( 否定型@{ i } A ) ( 否定型@{ i } B ) y ) _ ) .
-            exact z_左 .
+            refine ( 否定型.分解子@{ i } A ( 直積型.一番目の区域の分解子@{ i } ( 否定型@{ i } A ) ( 否定型@{ i } B ) x ) _ ) .
+            exact y_左 .
         }
         {
-            refine ( 否定型.分解子@{ i } B ( 直積型.二番目の区域の分解子@{ i } ( 否定型@{ i } B ) ( 否定型@{ i } A ) y ) _ ) .
-            exact z_右 .
+            refine ( 否定型.分解子@{ i } B ( 直積型.二番目の区域の分解子@{ i } ( 否定型@{ i } B ) ( 否定型@{ i } A ) x ) _ ) .
+            exact y_右 .
         }
     }
     {
-        refine ( fun x : 否定型@{ i } ( 直積型@{ i } ( 否定型@{ i } A ) ( 否定型@{ i } B ) ) => _ ) .
-        refine ( 否定型.構築子@{ i } ( 否定型@{ i } ( 直和型@{ i } A B ) ) _ ) .
-        refine ( fun y : 否定型@{ i } ( 直和型@{ i } A B ) => _ ) .
-        refine ( 否定型.分解子@{ i } ( 直積型@{ i } ( 否定型@{ i } A ) ( 否定型@{ i } B ) ) x _ ) .
+        refine ( 対偶を取る@{ i } ( 否定型@{ i } ( 直和型@{ i } A B ) ) ( 直積型@{ i } ( 否定型@{ i } A ) ( 否定型@{ i } B ) ) _ ) .
+        refine ( fun x : 否定型@{ i } ( 直和型@{ i } A B ) => _ ) .
         refine
             (
                 直積型.余場合分け@{ i }
@@ -3834,7 +3830,7 @@ Proof .
                     ( 否定型@{ i } ( 直和型@{ i } A B ) )
                     _
                     _
-                    y
+                    x
             )
         .
         {
