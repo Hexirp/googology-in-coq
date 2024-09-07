@@ -3425,6 +3425,26 @@ Proof .
     exact ( 定数関数を作る@{ i } A ( 否定型@{ i } ( 否定型@{ i } A ) ) ) .
 Defined .
 
+(** パースの法則です。 *)
+
+Definition A_2024_08_09_0001@{ i | }
+    : forall A : Type@{ i } , forall B : Type@{ i } , 否定型@{ i } ( 否定型@{ i } ( ( ( A -> B ) -> A ) -> A ) )
+.
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun B : Type@{ i } => _ ) .
+    refine ( 否定型.構築子@{ i } ( 否定型@{ i } ( ( ( A -> B ) -> A ) -> A ) ) _ ) .
+    refine ( fun x : ( 否定型@{ i } ( ( ( A -> B ) -> A ) -> A ) ) => _ ) .
+    refine ( 否定型.分解子@{ i } ( ( ( A -> B ) -> A ) -> A ) x _ ) .
+    refine ( fun y : ( A -> B ) -> A => _ ) .
+    refine ( y _ ) .
+    refine ( fun z : A => _ ) .
+    refine ( 終了する@{ i } B _ ) .
+    refine ( 否定型.分解子@{ i } ( ( ( A -> B ) -> A ) -> A ) x _ ) .
+    refine ( fun w : ( A -> B ) -> A => _ ) .
+    exact z .
+Defined .
+
 End A_2024_09_07_0000 .
 
 (** * 残り *)
@@ -3448,52 +3468,6 @@ Import A_2024_08_30_0006 .
 Import A_2024_09_06_0005 .
 
 Import A_2024_09_07_0000 .
-
-(** [A] から [B] への関数から [A] への関数から [A] への関数の否定の否定です。 *)
-
-Definition A_2024_08_09_0001@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } )
-    : 否定型@{ i } ( 否定型@{ i } ( ( ( A -> B ) -> A ) -> A ) )
-.
-Proof .
-    refine ( 否定型.構築子@{ i } ( 否定型@{ i } ( ( ( A -> B ) -> A ) -> A ) ) _ ) .
-    refine
-        (
-            let
-                a ( x : 否定型@{ i } ( ( ( A -> B ) -> A ) -> A ) ) : 空型@{ i } := _
-            in
-                a
-        )
-    .
-    refine ( 否定型.分解子@{ i } ( ( ( A -> B ) -> A ) -> A ) x _ ) .
-    refine
-        (
-            let
-                a ( y : ( A -> B ) -> A ) : A := _
-            in
-                a
-        )
-    .
-    refine ( y _ ) .
-    refine
-        (
-            let
-                a ( z : A ) : B := _
-            in
-                a
-        )
-    .
-    refine ( 終了する@{ i } B _ ) .
-    refine ( 否定型.分解子@{ i } ( ( ( A -> B ) -> A ) -> A ) x _ ) .
-    refine
-        (
-            let
-                a ( w : ( A -> B ) -> A ) : A := _
-            in
-                a
-        )
-    .
-    exact z .
-Defined .
 
 (** [A] から [B] への関数と [B] から [A] への関数の直和の否定の否定です。 *)
 
