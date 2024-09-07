@@ -3330,13 +3330,8 @@ Proof .
     refine ( fun A : Type@{ i } => _ ) .
     refine ( 否定型.構築子@{ i } ( 直積型@{ i } A ( 否定型@{ i } A ) ) _ ) .
     refine ( fun x : 直積型@{ i } A ( 否定型@{ i } A ) => _ ) .
-    refine ( 否定型.分解子@{ i } A _ _ ) .
-    {
-        exact ( 直積型.二番目の区域の分解子@{ i } ( 否定型@{ i } A ) A x ) .
-    }
-    {
-        exact ( 直積型.一番目の区域の分解子@{ i } A ( 否定型@{ i } A ) x ) .
-    }
+    refine ( 否定型.分解子@{ i } A ( 直積型.二番目の区域の分解子@{ i } ( 否定型@{ i } A ) A x ) _ ) .
+    exact ( 直積型.一番目の区域の分解子@{ i } A ( 否定型@{ i } A ) x ) .
 Defined .
 
 (** [A] と [A] の否定の双関数の否定です。 *)
@@ -3350,24 +3345,12 @@ Proof .
     [a]: {
         refine ( 否定型.構築子@{ i } A _ ) .
         refine ( fun y : A => _ ) .
-        refine ( 否定型.分解子@{ i } A _ _ ) .
-        {
-            refine ( 双関数型.一番目の区域の分解子@{ i } ( 否定型@{ i } A ) A x _ ) .
-            exact y .
-        }
-        {
-            exact y .
-        }
+        refine ( 否定型.分解子@{ i } A ( 双関数型.一番目の区域の分解子@{ i } ( 否定型@{ i } A ) A x y ) _ ) .
+        exact y .
     }
     {
-        refine ( 否定型.分解子@{ i } A _ _ ) .
-        {
-            exact a .
-        }
-        {
-            refine ( 双関数型.二番目の区域の分解子@{ i } A ( 否定型@{ i } A ) x _ ) .
-            exact a .
-        }
+        refine ( 否定型.分解子@{ i } A a _ ) .
+        exact ( 双関数型.二番目の区域の分解子@{ i } A ( 否定型@{ i } A ) x a ) .
     }
 Defined .
 
@@ -3381,13 +3364,8 @@ Proof .
     refine ( fun x : A => _ ) .
     refine ( 否定型.構築子@{ i } ( 否定型@{ i } A ) _ ) .
     refine ( fun y : 否定型@{ i } A => _ ) .
-    refine ( 否定型.分解子@{ i } A _ _ ) .
-    {
-        exact y .
-    }
-    {
-        exact x .
-    }
+    refine ( 否定型.分解子@{ i } A y _ ) .
+    exact x .
 Defined .
 
 (** [A] から [B] への関数から [A] の否定の否定から [B] の否定の否定への関数への関数です。 *)
@@ -3402,6 +3380,32 @@ Proof .
     refine ( 対偶を取る@{ i } ( 否定型@{ i } A ) ( 否定型@{ i } B ) _ ) .
     refine ( 対偶を取る@{ i } B A _ ) .
     exact f .
+Defined .
+
+(** [A] から [B] の否定の否定への関数から [A] の否定の否定から [B] の否定の否定への関数への関数です。 *)
+
+Definition A_2024_08_06_0002@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall B : Type@{ i } ,
+        ( B -> 否定型@{ i } ( 否定型@{ i } A ) )
+        ->
+        ( 否定型@{ i } ( 否定型@{ i } B ) )
+        ->
+        否定型@{ i } ( 否定型@{ i } A )
+.
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun B : Type@{ i } => _ ) .
+    refine ( fun f : B -> 否定型@{ i } ( 否定型@{ i } A ) => _ ) .
+    refine ( fun x : 否定型@{ i } ( 否定型@{ i } B ) => _ ) .
+    refine ( 否定型.構築子@{ i } ( 否定型@{ i } A ) _ ) .
+    refine ( fun y : 否定型@{ i } A => _ ) .
+    refine ( 否定型.分解子@{ i } ( 否定型@{ i } B ) x _ ) .
+    refine ( 否定型.構築子@{ i } B _ ) .
+    refine ( fun z : B => _ ) .
+    refine ( 否定型.分解子@{ i } ( 否定型@{ i } A ) ( f z ) _ ) .
+    exact y .
 Defined .
 
 End A_2024_09_07_0000 .
@@ -3427,41 +3431,6 @@ Import A_2024_08_30_0006 .
 Import A_2024_09_06_0005 .
 
 Import A_2024_09_07_0000 .
-
-(** [A] から [B] の否定の否定への関数から [A] の否定の否定から [B] の否定の否定への関数を得ます。 *)
-
-Definition A_2024_08_06_0002@{ i | }
-        ( A : Type@{ i } )
-        ( B : Type@{ i } )
-        ( f : B -> 否定型@{ i } ( 否定型@{ i } A ) )
-        ( x : 否定型@{ i } ( 否定型@{ i } B ) )
-    : 否定型@{ i } ( 否定型@{ i } A )
-    :=
-        否定型.構築子@{ i }
-            ( 否定型@{ i } A )
-            (
-                let
-                    a ( y : 否定型@{ i } A ) : 空型@{ i }
-                        :=
-                            let
-                                a : 否定型@{ i } B
-                                    :=
-                                        否定型.構築子@{ i }
-                                            B
-                                            (
-                                                let
-                                                    a ( z : B ) : 空型@{ i }
-                                                        :=
-                                                            否定型.分解子@{ i } ( 否定型@{ i } A ) ( f z ) y
-                                                in
-                                                    a
-                                            )
-                            in
-                                否定型.分解子@{ i } ( 否定型@{ i } B ) x a
-                in
-                    a
-            )
-.
 
 (** [A] の否定の否定から [A] への関数の否定の否定です。 *)
 
