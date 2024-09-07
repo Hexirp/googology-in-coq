@@ -3248,7 +3248,7 @@ Definition A_2024_09_06_0009@{ i | }
         処理 ( 双関数型.一番目の区域の分解子@{ i } B A 対象 ) ( 双関数型.二番目の区域の分解子@{ i } A B 対象 )
 .
 
-(** 直積型について依存型の場合分けをします。 *)
+(** 双関数型について依存型の場合分けをします。 *)
 
 Definition A_2024_09_06_0010@{ i | }
     :
@@ -3516,6 +3516,74 @@ Proof .
     }
 Defined .
 
+(** 二重否定の元で [A] から [B] が導けることは、 [B] の排中律を仮定して [A] から [B] が導けることと、同値です。 *)
+
+Definition A_2024_08_11_0001@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall B : Type@{ i } ,
+        双関数型@{ i } ( 否定型@{ i } ( 否定型@{ i } ( B -> A ) ) ) ( 直和型@{ i } A ( 否定型@{ i } A ) -> B -> A )
+.
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun B : Type@{ i } => _ ) .
+    refine
+        (
+            A_2024_09_06_0008@{ i }
+                ( 否定型@{ i } ( 否定型@{ i } ( B -> A ) ) )
+                ( 直和型@{ i } A ( 否定型@{ i } A ) -> B -> A )
+                _
+                _
+        )
+    .
+    {
+        refine ( fun x : 否定型@{ i } ( 否定型@{ i } ( B -> A ) ) => _ ) .
+        refine ( fun y : 直和型@{ i } A ( 否定型@{ i } A ) => _ ) .
+        refine ( fun z : B => _ ) .
+        refine
+            (
+                直和型.場合分け@{ i }
+                    A
+                    ( 否定型@{ i } A )
+                    y
+                    A
+                    ( fun y_左 : A => _ )
+                    ( fun y_右 : 否定型@{ i } A => _ )
+            )
+        .
+        {
+            exact y_左 .
+        }
+        {
+            refine ( 終了する@{ i } A _ ) .
+            refine ( 否定型.分解子@{ i } ( 否定型@{ i } ( B -> A ) ) x _ ) .
+            refine ( 否定型.構築子@{ i } ( B -> A ) _ ) .
+            refine ( fun w : B -> A => _ ) .
+            refine ( 否定型.分解子@{ i } A y_右 _ ) .
+            refine ( w _ ) .
+            exact z .
+        }
+    }
+    {
+        refine ( fun x : 直和型@{ i } A ( 否定型@{ i } A ) -> B -> A => _ ) .
+        refine ( 否定型.構築子@{ i } ( 否定型@{ i } ( B -> A ) ) _ ) .
+        refine ( fun y : 否定型@{ i } ( B -> A ) => _ ) .
+        refine ( 否定型.分解子@{ i } ( B -> A ) y _ ) .
+        refine ( fun z : B => _ ) .
+        refine ( x _ _ ) .
+        {
+            refine ( 直和型.右の場合の構築子@{ i } A ( 否定型@{ i } A ) _ ) .
+            refine ( 否定型.構築子@{ i } A _ ) .
+            refine ( fun w : A => _ ) .
+            refine ( 否定型.分解子@{ i } ( B -> A ) y _ ) .
+            exact ( 定数関数を作る@{ i } A B w ) .
+        }
+        {
+            exact z .
+        }
+    }
+Defined .
+
 End A_2024_09_07_0000 .
 
 (** * 残り *)
@@ -3539,128 +3607,6 @@ Import A_2024_08_30_0006 .
 Import A_2024_09_06_0005 .
 
 Import A_2024_09_07_0000 .
-
-(** [A] から [B] への関数の否定の否定と [P] と [P] の否定の直和から [A] から [B] への関数への関数と [P] と [P] の否定の直和から [A] から [B] への関数への関数から [A] から [B] への関数の否定の否定への関数の直積です。 *)
-
-Definition A_2024_08_11_0001@{ i | }
-        ( A : Type@{ i } )
-        ( B : Type@{ i } )
-    :
-        双関数型@{ i }
-            ( 否定型@{ i } ( 否定型@{ i } ( B -> A ) ) )
-            ( 直和型@{ i } A ( 否定型@{ i } A ) -> B -> A )
-.
-Proof .
-    refine
-        (
-            A_2024_08_02_0005@{ i }
-                ( 否定型@{ i } ( 否定型@{ i } ( B -> A ) ) )
-                ( 直和型@{ i } A ( 否定型@{ i } A ) -> B -> A )
-                _
-                _
-        )
-    .
-    {
-        refine
-            (
-                let
-                    a
-                        ( x : 否定型@{ i } ( 否定型@{ i } ( B -> A ) ) )
-                        ( y : 直和型@{ i } A ( 否定型@{ i } A ) )
-                        ( z : B )
-                        : A
-                        := _
-                in
-                    a
-            )
-        .
-        refine
-            (
-                match
-                    y
-                with
-                    A_2024_07_21_0006 _ _ y_左 => _
-                    |
-                    A_2024_07_21_0007 _ _ y_右 => _
-                end
-            )
-        .
-        {
-            exact y_左 .
-        }
-        {
-            refine ( 終了する@{ i } A _ ) .
-            refine ( 否定型.分解子@{ i } ( 否定型@{ i } ( B -> A ) ) x _ ) .
-            refine ( 否定型.構築子@{ i } ( B -> A ) _ ) .
-            refine
-                (
-                    let
-                        a ( w : B -> A ) : 空型@{ i } := _
-                    in
-                        a
-                )
-            .
-            refine ( 否定型.分解子@{ i } A y_右 _ ) .
-            exact ( w z ) .
-        }
-    }
-    {
-        refine
-            (
-                let
-                    a ( x : 直和型@{ i } A ( 否定型@{ i } A )  -> B -> A )
-                        : 否定型@{ i } ( 否定型@{ i } ( B -> A ) )
-                        := _
-                in
-                    a
-            )
-        .
-        refine ( 否定型.構築子@{ i } ( 否定型@{ i } ( B -> A ) ) _ ) .
-        refine
-            (
-                let
-                    a ( y : 否定型@{ i } ( B -> A ) ) : 空型@{ i } := _
-                in
-                    a
-            )
-        .
-        refine ( 否定型.分解子@{ i } ( B -> A ) y _ ) .
-        refine
-            (
-                let
-                    a ( z : B ) : A := _
-                in
-                    a
-            )
-        .
-        refine ( x _ _ ) .
-        {
-            refine ( 直和型.右の場合の構築子@{ i } A ( 否定型@{ i } A ) _ ) .
-            refine ( 否定型.構築子@{ i } A _ ) .
-            refine
-                (
-                    let
-                        a ( w : A ) : 空型@{ i } := _
-                    in
-                        a
-                )
-            .
-            refine ( 否定型.分解子@{ i } ( B -> A ) y _ ) .
-            refine
-                (
-                    let
-                        a ( v : B ) : A := _
-                    in
-                        a
-                )
-            .
-            exact w .
-        }
-        {
-            exact z .
-        }
-    }
-Defined .
 
 (** [A] の否定の否定の否定から [A] の否定を得ます。 *)
 
