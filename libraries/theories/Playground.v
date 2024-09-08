@@ -4005,6 +4005,12 @@ End A_2024_07_22_0009 .
 
 Module 道 := A_2024_07_22_0009 .
 
+(** 恒等道です。 *)
+
+Definition A_2024_09_09_0000@{ i | } : forall A : Type@{ i } , forall x : A , 道@{ i } A x x := 道.構築子@{ i } .
+
+Definition 恒等道@{ i | } ( A : Type@{ i } ) ( x : A ) : 道@{ i } A x x := A_2024_09_09_0000@{ i } A x .
+
 (** 結合です。 *)
 
 Definition A_2024_07_22_0011@{ i | }
@@ -4048,7 +4054,7 @@ Proof .
                 ( fun v : A => _ )
         )
     .
-    exact ( 道.構築子@{ i } A v ) .
+    exact ( 恒等道@{ i } A v ) .
 Defined .
 
 Definition 結合する@{ i | }
