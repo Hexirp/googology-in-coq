@@ -3916,6 +3916,48 @@ Module A_2024_07_22_0009 .
 
 Definition 構築子@{ i | } ( A : Type@{ i } ) ( x : A ) : 道@{ i } A x x := A_2024_07_22_0010@{ i } A x .
 
+(** 道について場合分けします。 *)
+
+Definition A_2024_09_08_0001@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall x : A ,
+        forall y : A ,
+        道@{ i } A x y
+        ->
+        forall 目標 : A -> A -> Type@{ i } ,
+        ( forall z : A , 目標 z z )
+        ->
+        目標 x y
+    :=
+        fun A : Type@{ i } =>
+        fun x : A =>
+        fun y : A =>
+        fun 対象 : 道@{ i } A x y =>
+        fun 目標 : A -> A -> Type@{ i } =>
+        fun 処理 : forall z : A , 目標 z z =>
+        match
+            対象
+        in
+            A_2024_07_22_0009 _ x_ y_
+        return
+            目標 x_ y_
+        with
+            A_2024_07_22_0010 _ z => 処理 z
+        end
+.
+
+Definition 場合分け@{ i | }
+    ( A : Type@{ i } )
+    ( x : A )
+    ( y : A )
+    ( 対象 : 道@{ i } A x y )
+    ( 目標 : A -> A -> Type@{ i } )
+    ( 処理 : forall z : A , 目標 z z )
+    : 目標 x y
+    := A_2024_09_08_0001@{ i } A x y 対象 目標 処理
+.
+
 End A_2024_07_22_0009 .
 
 Module 道 := A_2024_07_22_0009 .
