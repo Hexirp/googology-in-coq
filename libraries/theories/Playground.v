@@ -3958,6 +3958,49 @@ Definition 場合分け@{ i | }
     := A_2024_09_08_0001@{ i } A x y 対象 目標 処理
 .
 
+(** 道について依存型の場合分けをします。 *)
+
+Definition A_2024_09_08_0002@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall x : A ,
+        forall y : A ,
+        forall 対象 : 道@{ i } A x y ,
+        forall 目標 : forall x : A , forall y : A , 道@{ i } A x y -> Type@{ i } ,
+        ( forall z : A , 目標 z z ( 構築子@{ i } A z ) )
+        ->
+        目標 x y 対象
+    :=
+        fun A : Type@{ i } =>
+        fun x : A =>
+        fun y : A =>
+        fun 対象 : 道@{ i } A x y =>
+        fun 目標 : forall x : A , forall y : A , 道@{ i } A x y -> Type@{ i } =>
+        fun 処理 : forall z : A , 目標 z z ( 構築子@{ i } A z ) =>
+        match
+            対象
+        as
+            対象_
+        in
+            A_2024_07_22_0009 _ x_ y_
+        return
+            目標 x_ y_ 対象_
+        with
+            A_2024_07_22_0010 _ z => 処理 z
+        end
+.
+
+Definition 依存型の場合分け@{ i | }
+    ( A : Type@{ i } )
+    ( x : A )
+    ( y : A )
+    ( 対象 : 道@{ i } A x y )
+    ( 目標 : forall x : A , forall y : A , 道@{ i } A x y -> Type@{ i } )
+    ( 処理 : forall z : A , 目標 z z ( 構築子@{ i } A z ) )
+    : 目標 x y 対象
+    := A_2024_09_08_0002@{ i } A x y 対象 目標 処理
+.
+
 End A_2024_07_22_0009 .
 
 Module 道 := A_2024_07_22_0009 .
