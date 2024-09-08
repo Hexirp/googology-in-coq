@@ -3912,6 +3912,14 @@ Inductive A_2024_07_22_0009@{ i | } ( A : Type@{ i } ) : A -> A -> Type@{ i }
 
 Definition 道@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) : Type@{ i } := A_2024_07_22_0009@{ i } A x y .
 
+Module A_2024_07_22_0009 .
+
+Definition 構築子@{ i | } ( A : Type@{ i } ) ( x : A ) : 道@{ i } A x x := A_2024_07_22_0010@{ i } A x .
+
+End A_2024_07_22_0009 .
+
+Module 道 := A_2024_07_22_0009 .
+
 End A_2024_09_08_0000 .
 
 (** ** 残り *)
