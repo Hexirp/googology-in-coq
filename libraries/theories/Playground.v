@@ -4315,6 +4315,40 @@ Proof .
     exact ( 恒等道@{ i } ( 道@{ i } A t t ) ( 恒等道@{ i } A t ) ) .
 Defined .
 
+(** 恒等道と [p] を結合した道は [p] に等しくなります。 *)
+
+Definition A_2024_07_25_0000@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall x : A ,
+        forall y : A ,
+        forall p : 道@{ i } A x y ,
+        道@{ i } ( 道@{ i } A x y ) ( 結合@{ i } A x y x ( 恒等道@{ i } A x ) p ) p
+.
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun x : A => _ ) .
+    refine ( fun y : A => _ ) .
+    refine ( fun p : 道@{ i } A x y => _ ) .
+    refine
+        (
+            道.依存型の場合分け@{ i }
+                A
+                x
+                y
+                p
+                (
+                    fun x_ : A =>
+                    fun y_ : A =>
+                    fun p_ : 道@{ i } A x_ y_ =>
+                    道@{ i } ( 道@{ i } A x_ y_ ) ( 結合@{ i } A x_ y_ x_ ( 恒等道@{ i } A x_ ) p_ ) p_
+                )
+                ( fun z : A => _ )
+        )
+    .
+    exact ( 恒等道@{ i } ( 道@{ i } A z z ) ( 恒等道@{ i } A z ) ) .
+Defined .
+
 End A_2024_09_08_0000 .
 
 (** ** 残り *)
@@ -4338,31 +4372,6 @@ Import A_2024_08_30_0006 .
 Import A_2024_09_06_0005 .
 
 Import A_2024_09_08_0000 .
-
-(** 恒等道と [p] を結合した道は [p] に等しくなります。 *)
-
-Definition A_2024_07_25_0000@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( p : 道@{ i } A x y )
-    :
-        道@{ i }
-            ( 道@{ i } A x y )
-            ( 結合@{ i } A x y x ( A_2024_07_22_0010@{ i } A x ) p )
-            p
-    :=
-        match
-            p
-        as
-            p_
-        in
-            A_2024_07_22_0009 _ x_ y_
-        return
-            道@{ i }
-                ( 道@{ i } A x_ y_ )
-                ( 結合@{ i } A x_ y_ x_ ( A_2024_07_22_0010@{ i } A x_ ) p_ )
-                p_
-        with
-            A_2024_07_22_0010 _ z => A_2024_07_22_0010@{ i } ( 道@{ i } A z z ) ( A_2024_07_22_0010@{ i } A z )
-        end
-.
 
 (** [p] と恒等道を結合した道は [p] に等しくなります。 *)
 
