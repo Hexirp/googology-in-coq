@@ -4123,7 +4123,7 @@ Proof .
     refine ( 恒等道@{ i } A ( f z ) ) .
 Defined .
 
-Definition 適用する@{ i | }
+Definition 適用@{ i | }
     ( A : Type@{ i } )
     ( B : Type@{ i } )
     ( f : B -> A )
@@ -4594,7 +4594,7 @@ Definition A_2024_07_25_0004@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( p 
     :
         道@{ i }
             ( 道@{ i } A x y )
-            ( 適用する@{ i } A A ( 恒等関数@{ i } A ) x y p )
+            ( 適用@{ i } A A ( 恒等関数@{ i } A ) x y p )
             p
     :=
         match
@@ -4606,7 +4606,7 @@ Definition A_2024_07_25_0004@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( p 
         return
             道@{ i }
                 ( 道@{ i } A x_ y_ )
-                ( 適用する@{ i } A A ( 恒等関数@{ i } A ) x_ y_ p_ )
+                ( 適用@{ i } A A ( 恒等関数@{ i } A ) x_ y_ p_ )
                 p_
         with
             A_2024_07_22_0010 _ z => A_2024_07_22_0010@{ i } ( 道@{ i } A z z ) ( A_2024_07_22_0010@{ i } A z )
@@ -4627,8 +4627,8 @@ Definition A_2024_07_25_0005@{ i | }
     :
         道@{ i }
             ( 道@{ i } A ( f ( g x ) ) ( f ( g y ) ) )
-            ( 適用する@{ i } A C ( 合成する@{ i } A B C f g ) x y p )
-            ( 適用する@{ i } A B f ( g x ) ( g y ) ( 適用する@{ i } B C g x y p ) )
+            ( 適用@{ i } A C ( 合成する@{ i } A B C f g ) x y p )
+            ( 適用@{ i } A B f ( g x ) ( g y ) ( 適用@{ i } B C g x y p ) )
     :=
         match
             p
@@ -4639,8 +4639,8 @@ Definition A_2024_07_25_0005@{ i | }
         return
             道@{ i }
                 ( 道@{ i } A ( f ( g x_ ) ) ( f ( g y_ ) ) )
-                ( 適用する@{ i } A C ( 合成する@{ i } A B C f g ) x_ y_ p_ )
-                ( 適用する@{ i } A B f ( g x_ ) ( g y_ ) ( 適用する@{ i } B C g x_ y_ p_ ) )
+                ( 適用@{ i } A C ( 合成する@{ i } A B C f g ) x_ y_ p_ )
+                ( 適用@{ i } A B f ( g x_ ) ( g y_ ) ( 適用@{ i } B C g x_ y_ p_ ) )
         with
             A_2024_07_22_0010 _ z
                 =>
@@ -4656,7 +4656,7 @@ Definition A_2024_07_22_0029@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( f :
     :
         道@{ i }
             ( 道@{ i } A ( f x ) ( f x ) )
-            ( 適用する@{ i } A B f x x ( A_2024_07_22_0010@{ i } B x ) )
+            ( 適用@{ i } A B f x x ( A_2024_07_22_0010@{ i } B x ) )
             ( A_2024_07_22_0010@{ i } A ( f x ) )
     := A_2024_07_22_0010@{ i } ( 道@{ i } A ( f x ) ( f x ) ) ( A_2024_07_22_0010@{ i } A ( f x ) )
 .
@@ -4675,15 +4675,15 @@ Definition A_2024_07_25_0006@{ i | }
     :
         道@{ i }
             ( 道@{ i } A ( f x ) ( f y ) )
-            ( 適用する@{ i } A B f x y ( 結合@{ i } B x y z p q ) )
+            ( 適用@{ i } A B f x y ( 結合@{ i } B x y z p q ) )
             (
                 結合@{ i }
                     A
                     ( f x )
                     ( f y )
                     ( f z )
-                    ( 適用する@{ i } A B f x z p )
-                    ( 適用する@{ i } A B f z y q )
+                    ( 適用@{ i } A B f x z p )
+                    ( 適用@{ i } A B f z y q )
             )
 .
 Proof .
@@ -4696,7 +4696,7 @@ Proof .
                         道@{ i }
                             ( 道@{ i } A ( f x ) ( f y ) )
                             (
-                                適用する@{ i } A B f x y ( 結合@{ i } B x y z p q_ )
+                                適用@{ i } A B f x y ( 結合@{ i } B x y z p q_ )
                             )
                             (
                                 結合@{ i }
@@ -4704,8 +4704,8 @@ Proof .
                                     ( f x )
                                     ( f y )
                                     ( f z )
-                                    ( 適用する@{ i } A B f x z p )
-                                    ( 適用する@{ i } A B f z y q_ )
+                                    ( 適用@{ i } A B f x z p )
+                                    ( 適用@{ i } A B f z y q_ )
                             )
                     := _
             in
@@ -4725,7 +4725,7 @@ Proof .
                 道@{ i }
                     ( 道@{ i } A ( f x_ ) ( f y ) )
                     (
-                        適用する@{ i } A B f x_ y ( 結合@{ i } B x_ y z_ p_ q_ )
+                        適用@{ i } A B f x_ y ( 結合@{ i } B x_ y z_ p_ q_ )
                     )
                     (
                         結合@{ i }
@@ -4733,8 +4733,8 @@ Proof .
                             ( f x_ )
                             ( f y )
                             ( f z_ )
-                            ( 適用する@{ i } A B f x_ z_ p_ )
-                            ( 適用する@{ i } A B f z_ y q_ )
+                            ( 適用@{ i } A B f x_ z_ p_ )
+                            ( 適用@{ i } A B f z_ y q_ )
                     )
             with
                 A_2024_07_22_0010 _ w => _
@@ -4749,7 +4749,7 @@ Proof .
                         道@{ i }
                             ( 道@{ i } A ( f w ) ( f y ) )
                             (
-                                適用する@{ i }
+                                適用@{ i }
                                     A
                                     B
                                     f
@@ -4763,8 +4763,8 @@ Proof .
                                     ( f w )
                                     ( f y )
                                     ( f w )
-                                    ( 適用する@{ i } A B f w w ( A_2024_07_22_0010@{ i } B w ) )
-                                    ( 適用する@{ i } A B f w y q_ )
+                                    ( 適用@{ i } A B f w w ( A_2024_07_22_0010@{ i } B w ) )
+                                    ( 適用@{ i } A B f w y q_ )
                             )
                     := _
             in
@@ -4782,15 +4782,15 @@ Proof .
             return
                 道@{ i }
                     ( 道@{ i } A ( f w_ ) ( f y_ ) )
-                    ( 適用する@{ i } A B f w_ y_ ( 結合@{ i } B w_ y_ w_ ( A_2024_07_22_0010@{ i } B w_ ) q__ ) )
+                    ( 適用@{ i } A B f w_ y_ ( 結合@{ i } B w_ y_ w_ ( A_2024_07_22_0010@{ i } B w_ ) q__ ) )
                     (
                         結合@{ i }
                             A
                             ( f w_ )
                             ( f y_ )
                             ( f w_ )
-                            ( 適用する@{ i } A B f w_ w_ ( A_2024_07_22_0010@{ i } B w_ ) )
-                            ( 適用する@{ i } A B f w_ y_ q__ )
+                            ( 適用@{ i } A B f w_ w_ ( A_2024_07_22_0010@{ i } B w_ ) )
+                            ( 適用@{ i } A B f w_ y_ q__ )
                     )
             with
                 A_2024_07_22_0010 _ v => _
@@ -4812,8 +4812,8 @@ Definition A_2024_07_26_0000@{ i | }
     :
         道@{ i }
             ( 道@{ i } A ( f x ) ( f y ) )
-            ( 適用する@{ i } A B f x y ( 反転@{ i } B x y p ) )
-            ( 反転@{ i } A ( f x ) ( f y ) ( 適用する@{ i } A B f y x p ) )
+            ( 適用@{ i } A B f x y ( 反転@{ i } B x y p ) )
+            ( 反転@{ i } A ( f x ) ( f y ) ( 適用@{ i } A B f y x p ) )
     :=
         match
             p
@@ -4824,8 +4824,8 @@ Definition A_2024_07_26_0000@{ i | }
         return
             道@{ i }
                 ( 道@{ i } A ( f x_ ) ( f y_ ) )
-                ( 適用する@{ i } A B f x_ y_ ( 反転@{ i } B x_ y_ p_ ) )
-                ( 反転@{ i } A ( f x_ ) ( f y_ ) ( 適用する@{ i } A B f y_ x_ p_ ) )
+                ( 適用@{ i } A B f x_ y_ ( 反転@{ i } B x_ y_ p_ ) )
+                ( 反転@{ i } A ( f x_ ) ( f y_ ) ( 適用@{ i } A B f y_ x_ p_ ) )
         with
             A_2024_07_22_0010 _ z
                 => A_2024_07_22_0010@{ i } ( 道@{ i } A ( f z ) ( f z ) ) ( A_2024_07_22_0010@{ i } A ( f z ) )
@@ -5302,7 +5302,7 @@ Proof .
                     .
                     refine
                         (
-                            適用する@{ i }
+                            適用@{ i }
                                 自然数@{ i }
                                 自然数@{ i }
                                 ( fun z : 自然数@{ i } => A_2024_07_21_0033@{ i } ( A_2024_07_21_0033@{ i } z ) )
@@ -5419,7 +5419,7 @@ Proof .
                     .
                     refine
                         (
-                            適用する@{ i }
+                            適用@{ i }
                                 自然数@{ i }
                                 自然数@{ i }
                                 ( fun z : 自然数@{ i } => A_2024_07_21_0033@{ i } ( A_2024_07_21_0033@{ i } z ) )
@@ -5608,7 +5608,7 @@ Proof .
                     .
                     refine
                         (
-                            適用する@{ i }
+                            適用@{ i }
                                 自然数@{ i }
                                 自然数@{ i }
                                 ( fun z : 自然数@{ i } => A_2024_07_21_0033@{ i } ( A_2024_07_21_0033@{ i } z ) )
@@ -5702,7 +5702,7 @@ Proof .
                     .
                     refine
                         (
-                            適用する@{ i }
+                            適用@{ i }
                                 自然数@{ i }
                                 自然数@{ i }
                                 ( fun z : 自然数@{ i } => A_2024_07_21_0033@{ i } ( A_2024_07_21_0033@{ i } z ) )
@@ -6023,7 +6023,7 @@ Proof .
                     .
                     refine
                         (
-                            適用する@{ i }
+                            適用@{ i }
                                 自然数@{ i }
                                 自然数@{ i }
                                 (
@@ -6101,7 +6101,7 @@ Proof .
                         .
                         refine
                             (
-                                適用する@{ i }
+                                適用@{ i }
                                     自然数@{ i }
                                     自然数@{ i }
                                     (
@@ -6139,7 +6139,7 @@ Proof .
                         .
                         refine
                             (
-                                適用する@{ i }
+                                適用@{ i }
                                     自然数@{ i }
                                     自然数@{ i }
                                     (
@@ -6286,7 +6286,7 @@ Proof .
             .
             refine
                 (
-                    適用する@{ i }
+                    適用@{ i }
                         自然数@{ i }
                         自然数@{ i }
                         ( fun x : 自然数@{ i } => A_2024_07_21_0033@{ i } ( A_2024_07_21_0033@{ i } x ) )
