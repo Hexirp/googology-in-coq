@@ -4085,7 +4085,7 @@ Proof .
     exact ( 恒等道@{ i } A z ) .
 Defined .
 
-Definition 反転する@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( p : 道@{ i } A y x ) : 道@{ i } A x y
+Definition 反転@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( p : 道@{ i } A y x ) : 道@{ i } A x y
     := A_2024_07_22_0012@{ i } A x y p
 .
 
@@ -4395,7 +4395,7 @@ Definition A_2024_07_25_0002@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( p 
     :
         道@{ i }
             ( 道@{ i } A x x )
-            ( 結合@{ i } A x x y p ( 反転する@{ i } A y x p ) )
+            ( 結合@{ i } A x x y p ( 反転@{ i } A y x p ) )
             ( A_2024_07_22_0010@{ i } A x )
     :=
         match
@@ -4407,7 +4407,7 @@ Definition A_2024_07_25_0002@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( p 
         return
             道@{ i }
                 ( 道@{ i } A x_ x_ )
-                ( 結合@{ i } A x_ x_ y_ p_ ( 反転する@{ i } A y_ x_ p_ ) )
+                ( 結合@{ i } A x_ x_ y_ p_ ( 反転@{ i } A y_ x_ p_ ) )
                 ( A_2024_07_22_0010@{ i } A x_ )
         with
             A_2024_07_22_0010 _ z => A_2024_07_22_0010@{ i } ( 道@{ i } A z z ) ( A_2024_07_22_0010 A z )
@@ -4420,7 +4420,7 @@ Definition A_2024_07_25_0003@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( p 
     :
         道@{ i }
             ( 道@{ i } A x x )
-            ( 結合@{ i } A x x y ( 反転する@{ i } A x y p ) p )
+            ( 結合@{ i } A x x y ( 反転@{ i } A x y p ) p )
             ( A_2024_07_22_0010@{ i } A x )
     :=
         match
@@ -4432,7 +4432,7 @@ Definition A_2024_07_25_0003@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( p 
         return
             道@{ i }
                 ( 道@{ i } A x_ x_ )
-                ( 結合@{ i } A x_ x_ y_ ( 反転する@{ i } A x_ y_ p_ ) p_ )
+                ( 結合@{ i } A x_ x_ y_ ( 反転@{ i } A x_ y_ p_ ) p_ )
                 ( A_2024_07_22_0010@{ i } A x_ )
         with
             A_2024_07_22_0010 _ z => A_2024_07_22_0010@{ i } ( 道@{ i } A z z ) ( A_2024_07_22_0010@{ i } A z )
@@ -4445,7 +4445,7 @@ Definition A_2024_07_22_0028@{ i | } ( A : Type@{ i } ) ( x : A )
     :
         道@{ i }
             ( 道@{ i } A x x )
-            ( 反転する@{ i } A x x ( A_2024_07_22_0010@{ i } A x ) )
+            ( 反転@{ i } A x x ( A_2024_07_22_0010@{ i } A x ) )
             ( A_2024_07_22_0010@{ i } A x )
     := A_2024_07_22_0010@{ i } ( 道@{ i } A x x ) ( A_2024_07_22_0010@{ i } A x )
 .
@@ -4462,8 +4462,8 @@ Definition A_2024_07_26_0001@{ i | }
     :
         道@{ i }
             ( 道@{ i } A x y )
-            ( 反転する@{ i } A x y ( 結合@{ i } A y x z q p ) )
-            ( 結合@{ i } A x y z ( 反転する@{ i } A x z p ) ( 反転する@{ i } A z y q ) )
+            ( 反転@{ i } A x y ( 結合@{ i } A y x z q p ) )
+            ( 結合@{ i } A x y z ( 反転@{ i } A x z p ) ( 反転@{ i } A z y q ) )
 .
 Proof .
     refine
@@ -4474,15 +4474,15 @@ Proof .
                         forall q_ : 道@{ i } A y z ,
                         道@{ i }
                             ( 道@{ i } A x y )
-                            ( 反転する@{ i } A x y ( 結合@{ i } A y x z q_ p ) )
+                            ( 反転@{ i } A x y ( 結合@{ i } A y x z q_ p ) )
                             (
                                 結合@{ i }
                                     A
                                     x
                                     y
                                     z
-                                    ( 反転する@{ i } A x z p )
-                                    ( 反転する@{ i } A z y q_ )
+                                    ( 反転@{ i } A x z p )
+                                    ( 反転@{ i } A z y q_ )
                             )
                     := _
             in
@@ -4501,8 +4501,8 @@ Proof .
                 forall q_ : 道@{ i } A y z_ ,
                 道@{ i }
                     ( 道@{ i } A x_ y )
-                    ( 反転する@{ i } A x_ y ( 結合@{ i } A y x_ z_ q_ p_ ) )
-                    ( 結合@{ i } A x_ y z_ ( 反転する@{ i } A x_ z_ p_ ) ( 反転する@{ i } A z_ y q_ ) )
+                    ( 反転@{ i } A x_ y ( 結合@{ i } A y x_ z_ q_ p_ ) )
+                    ( 結合@{ i } A x_ y z_ ( 反転@{ i } A x_ z_ p_ ) ( 反転@{ i } A z_ y q_ ) )
             with
                 A_2024_07_22_0010 _ w => _
             end
@@ -4516,7 +4516,7 @@ Proof .
                         道@{ i }
                             ( 道@{ i } A w y )
                             (
-                                反転する@{ i } A w y ( 結合@{ i } A y w w q_ ( A_2024_07_22_0010@{ i } A w ) )
+                                反転@{ i } A w y ( 結合@{ i } A y w w q_ ( A_2024_07_22_0010@{ i } A w ) )
                             )
                             (
                                 結合@{ i }
@@ -4524,8 +4524,8 @@ Proof .
                                     w
                                     y
                                     w
-                                    ( 反転する@{ i } A w w ( A_2024_07_22_0010@{ i } A w ) )
-                                    ( 反転する@{ i } A w y q_ )
+                                    ( 反転@{ i } A w w ( A_2024_07_22_0010@{ i } A w ) )
+                                    ( 反転@{ i } A w y q_ )
                             )
                     := _
             in
@@ -4544,7 +4544,7 @@ Proof .
                 道@{ i }
                     ( 道@{ i } A w_ y_ )
                     (
-                        反転する@{ i } A w_ y_ ( 結合@{ i } A y_ w_ w_ q__ ( A_2024_07_22_0010@{ i } A w_ ) )
+                        反転@{ i } A w_ y_ ( 結合@{ i } A y_ w_ w_ q__ ( A_2024_07_22_0010@{ i } A w_ ) )
                     )
                     (
                         結合@{ i }
@@ -4552,8 +4552,8 @@ Proof .
                             w_
                             y_
                             w_
-                            ( 反転する@{ i } A w_ w_ ( A_2024_07_22_0010@{ i } A w_ ) )
-                            ( 反転する@{ i } A w_ y_ q__ )
+                            ( 反転@{ i } A w_ w_ ( A_2024_07_22_0010@{ i } A w_ ) )
+                            ( 反転@{ i } A w_ y_ q__ )
                     )
             with
                 A_2024_07_22_0010 _ v => _
@@ -4569,7 +4569,7 @@ Definition A_2024_07_26_0002@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( p 
     :
         道@{ i }
             ( 道@{ i } A x y )
-            ( 反転する@{ i } A x y ( 反転する@{ i } A y x p ) )
+            ( 反転@{ i } A x y ( 反転@{ i } A y x p ) )
             p
     :=
         match
@@ -4581,7 +4581,7 @@ Definition A_2024_07_26_0002@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( p 
         return
             道@{ i }
                 ( 道@{ i } A x_ y_ )
-                ( 反転する@{ i } A x_ y_ ( 反転する@{ i } A y_ x_ p_ ) )
+                ( 反転@{ i } A x_ y_ ( 反転@{ i } A y_ x_ p_ ) )
                 p_
         with
             A_2024_07_22_0010 _ z => A_2024_07_22_0010@{ i } ( 道@{ i } A z z ) ( A_2024_07_22_0010@{ i } A z )
@@ -4812,8 +4812,8 @@ Definition A_2024_07_26_0000@{ i | }
     :
         道@{ i }
             ( 道@{ i } A ( f x ) ( f y ) )
-            ( 適用する@{ i } A B f x y ( 反転する@{ i } B x y p ) )
-            ( 反転する@{ i } A ( f x ) ( f y ) ( 適用する@{ i } A B f y x p ) )
+            ( 適用する@{ i } A B f x y ( 反転@{ i } B x y p ) )
+            ( 反転@{ i } A ( f x ) ( f y ) ( 適用する@{ i } A B f y x p ) )
     :=
         match
             p
@@ -4824,8 +4824,8 @@ Definition A_2024_07_26_0000@{ i | }
         return
             道@{ i }
                 ( 道@{ i } A ( f x_ ) ( f y_ ) )
-                ( 適用する@{ i } A B f x_ y_ ( 反転する@{ i } B x_ y_ p_ ) )
-                ( 反転する@{ i } A ( f x_ ) ( f y_ ) ( 適用する@{ i } A B f y_ x_ p_ ) )
+                ( 適用する@{ i } A B f x_ y_ ( 反転@{ i } B x_ y_ p_ ) )
+                ( 反転@{ i } A ( f x_ ) ( f y_ ) ( 適用する@{ i } A B f y_ x_ p_ ) )
         with
             A_2024_07_22_0010 _ z
                 => A_2024_07_22_0010@{ i } ( 道@{ i } A ( f z ) ( f z ) ) ( A_2024_07_22_0010@{ i } A ( f z ) )
@@ -6160,7 +6160,7 @@ Proof .
                         .
                         refine
                             (
-                                反転する@{ i }
+                                反転@{ i }
                                     自然数@{ i }
                                     (
                                         A_2024_07_21_0033@{ i }
