@@ -4226,6 +4226,95 @@ Proof .
     exact ( 恒等道@{ i } ( 道@{ i } A x x ) ( 恒等道@{ i } A x ) ) .
 Defined .
 
+(** 結合演算は結合法則を満たします。 *)
+
+Definition A_2024_07_22_0032@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall x : A ,
+        forall y : A ,
+        forall z : A ,
+        forall w : A ,
+        forall p : 道@{ i } A x w ,
+        forall q : 道@{ i } A w z ,
+        forall r : 道@{ i } A z y ,
+        道@{ i }
+            ( 道@{ i } A x y )
+            ( 結合する@{ i } A x y z ( 結合する@{ i } A x z w p q ) r )
+            ( 結合する@{ i } A x y w p ( 結合する@{ i } A w y z q r ) )
+.
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun x : A => _ ) .
+    refine ( fun y : A => _ ) .
+    refine ( fun z : A => _ ) .
+    refine ( fun w : A => _ ) .
+    refine ( fun p : 道@{ i } A x w => _ ) .
+    refine
+        (
+            道.依存型の場合分け@{ i }
+                A
+                x
+                w
+                p
+                (
+                    fun x_ : A =>
+                    fun w_ : A =>
+                    fun p_ : 道@{ i } A x_ w_ =>
+                    forall q : 道@{ i } A w_ z ,
+                    forall r : 道@{ i } A z y ,
+                    道@{ i }
+                        ( 道@{ i } A x_ y )
+                        ( 結合する@{ i } A x_ y z ( 結合する@{ i } A x_ z w_ p_ q ) r )
+                        ( 結合する@{ i } A x_ y w_ p_ ( 結合する@{ i } A w_ y z q r ) )
+                )
+                ( fun v : A => _ )
+        )
+    .
+    refine ( fun q : 道@{ i } A v z => _ ) .
+    refine
+        (
+            道.依存型の場合分け@{ i }
+                A
+                v
+                z
+                q
+                (
+                    fun v_ : A =>
+                    fun z_ : A =>
+                    fun q_ : 道@{ i } A v_ z_ =>
+                    forall r : 道@{ i } A z_ y ,
+                    道@{ i }
+                        ( 道@{ i } A v_ y )
+                        ( 結合する@{ i } A v_ y z_ ( 結合する@{ i } A v_ z_ v_ ( 恒等道@{ i } A v_ ) q_ ) r )
+                        ( 結合する@{ i } A v_ y v_ ( 恒等道@{ i } A v_ ) ( 結合する@{ i } A v_ y z_ q_ r ) )
+                )
+                ( fun u : A => _ )
+        )
+    .
+    refine ( fun r : 道@{ i } A u y => _ ) .
+    refine
+        (
+            道.依存型の場合分け@{ i }
+                A
+                u
+                y
+                r
+                (
+                    fun u_ : A =>
+                    fun y_ : A =>
+                    fun r_ : 道@{ i } A u_ y_ =>
+                    道@{ i }
+                        ( 道@{ i } A u_ y_ )
+                        ( 結合する@{ i } A u_ y_ u_ ( 結合する@{ i } A u_ u_ u_ ( 恒等道@{ i } A u_ ) ( 恒等道@{ i } A u_ ) ) r_ )
+                        ( 結合する@{ i } A u_ y_ u_ ( 恒等道@{ i } A u_ ) ( 結合する@{ i } A u_ y_ u_ ( 恒等道@{ i } A u_ ) r_ ) )
+                )
+                ( fun t : A => _ )
+        )
+    .
+    exact ( 恒等道@{ i } ( 道@{ i } A t t ) ( 恒等道@{ i } A t ) ) .
+Defined .
+
 End A_2024_09_08_0000 .
 
 (** ** 残り *)
@@ -4249,224 +4338,6 @@ Import A_2024_08_30_0006 .
 Import A_2024_09_06_0005 .
 
 Import A_2024_09_08_0000 .
-
-(** 結合演算は結合法則を満たします。 *)
-
-Definition A_2024_07_22_0032@{ i | }
-        ( A : Type@{ i } )
-        ( x : A )
-        ( y : A )
-        ( z : A )
-        ( w : A )
-        ( p : 道@{ i } A x z )
-        ( q : 道@{ i } A z w )
-        ( r : 道@{ i } A w y )
-    :
-        道@{ i }
-            ( 道@{ i } A x y )
-            ( 結合する@{ i } A x y w ( 結合する@{ i } A x w z p q ) r )
-            ( 結合する@{ i } A x y z p ( 結合する@{ i } A z y w q r ) )
-.
-Proof .
-    refine
-        (
-            let
-                a
-                    :
-                        forall q_ : 道@{ i } A z w ,
-                        forall r_ : 道@{ i } A w y ,
-                        道@{ i }
-                            ( 道@{ i } A x y )
-                            ( 結合する@{ i } A x y w ( 結合する@{ i } A x w z p q_ ) r_ )
-                            ( 結合する@{ i } A x y z p ( 結合する@{ i } A z y w q_ r_ ) )
-                    := _
-            in
-                a q r
-        )
-    .
-    refine
-        (
-            match
-                p
-            as
-                p_
-            in
-                A_2024_07_22_0009 _ x_ z_
-            return
-                forall q_ : 道@{ i } A z_ w ,
-                forall r_ : 道@{ i } A w y ,
-                道@{ i }
-                    ( 道@{ i } A x_ y )
-                    ( 結合する@{ i } A x_ y w ( 結合する@{ i } A x_ w z_ p_ q_ ) r_ )
-                    ( 結合する@{ i } A x_ y z_ p_ ( 結合する@{ i } A z_ y w q_ r_ ) )
-            with
-                A_2024_07_22_0010 _ v => _
-            end
-        )
-    .
-    refine
-        (
-            let
-                a ( q_ : 道@{ i } A v w )
-                    :
-                        forall r_ : 道@{ i } A w y ,
-                        道@{ i }
-                            ( 道@{ i } A v y )
-                            (
-                                結合する@{ i }
-                                    A
-                                    v
-                                    y
-                                    w
-                                    ( 結合する@{ i } A v w v ( A_2024_07_22_0010@{ i } A v ) q_ )
-                                    r_
-                            )
-                            (
-                                結合する@{ i }
-                                    A
-                                    v
-                                    y
-                                    v
-                                    ( A_2024_07_22_0010@{ i } A v ) ( 結合する@{ i } A v y w q_ r_ )
-                            )
-                    := _
-            in
-                a
-        )
-    .
-    refine
-        (
-            match
-                q_
-            as
-                q__
-            in
-                A_2024_07_22_0009 _ v_ w_
-            return
-                forall r_ : 道@{ i } A w_ y ,
-                道@{ i }
-                    ( 道@{ i } A v_ y )
-                    (
-                        結合する@{ i }
-                            A
-                            v_
-                            y
-                            w_
-                            ( 結合する@{ i } A v_ w_ v_ ( A_2024_07_22_0010@{ i } A v_ ) q__ )
-                            r_
-                    )
-                    (
-                        結合する@{ i }
-                            A
-                            v_
-                            y
-                            v_
-                            ( A_2024_07_22_0010@{ i } A v_ )
-                            ( 結合する@{ i } A v_ y w_ q__ r_ )
-                    )
-            with
-                A_2024_07_22_0010 _ u => _
-            end
-        )
-    .
-    refine
-        (
-            let
-                a ( r_ : 道@{ i } A u y )
-                    :
-                        道@{ i }
-                            ( 道@{ i } A u y )
-                            (
-                                結合する@{ i }
-                                    A
-                                    u
-                                    y
-                                    u
-                                    (
-                                        結合する@{ i }
-                                            A
-                                            u
-                                            u
-                                            u
-                                            ( A_2024_07_22_0010@{ i } A u )
-                                            ( A_2024_07_22_0010@{ i } A u )
-                                    )
-                                    r_
-                            )
-                            (
-                                結合する@{ i }
-                                    A
-                                    u
-                                    y
-                                    u
-                                    ( A_2024_07_22_0010@{ i } A u )
-                                    (
-                                        結合する@{ i }
-                                            A
-                                            u
-                                            y
-                                            u
-                                            ( A_2024_07_22_0010@{ i } A u )
-                                            r_
-                                    )
-                            )
-                    := _
-            in
-                a
-        )
-    .
-    refine
-        (
-            match
-                r_
-            as
-                r__
-            in
-                A_2024_07_22_0009 _ u_ y_
-            return
-                道@{ i }
-                    ( 道@{ i } A u_ y_ )
-                    (
-                        結合する@{ i }
-                            A
-                            u_
-                            y_
-                            u_
-                            (
-                                結合する@{ i }
-                                    A
-                                    u_
-                                    u_
-                                    u_
-                                    ( A_2024_07_22_0010@{ i } A u_ )
-                                    ( A_2024_07_22_0010@{ i } A u_ )
-                            )
-                            r__
-                    )
-                    (
-                        結合する@{ i }
-                            A
-                            u_
-                            y_
-                            u_
-                            ( A_2024_07_22_0010@{ i } A u_ )
-                            (
-                                結合する@{ i }
-                                    A
-                                    u_
-                                    y_
-                                    u_
-                                    ( A_2024_07_22_0010@{ i } A u_ )
-                                    r__
-                            )
-                    )
-            with
-                A_2024_07_22_0010 _ t => _
-            end
-        )
-    .
-    exact ( A_2024_07_22_0010@{ i } ( 道@{ i } A t t ) ( A_2024_07_22_0010@{ i } A t ) ) .
-Defined .
 
 (** 恒等道と [p] を結合した道は [p] に等しくなります。 *)
 
