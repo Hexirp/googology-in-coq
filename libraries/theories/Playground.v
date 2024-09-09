@@ -2889,7 +2889,7 @@ Definition A_2024_08_16_0008@{ i | } : forall A : Type@{ i } , 列記型@{ i } A
             )
 .
 
-Definition 結合する@{ i | } ( A : Type@{ i } ) ( x : 列記型@{ i } A ) ( y : 列記型@{ i } A ) : 列記型@{ i } A
+Definition 結合@{ i | } ( A : Type@{ i } ) ( x : 列記型@{ i } A ) ( y : 列記型@{ i } A ) : 列記型@{ i } A
     := A_2024_08_16_0008@{ i } A x y
 .
 
@@ -2908,7 +2908,7 @@ Definition A_2024_08_16_0009@{ i | } : forall A : Type@{ i } , 列記型@{ i } (
                 fun x_1 : 列記型@{ i } A =>
                 fun x_2 : 列記型@{ i } ( 列記型@{ i } A ) =>
                 fun a_2 : 列記型@{ i } A =>
-                A_2024_08_16_0008@{ i } A x_1 a_2
+                結合@{ i } A x_1 a_2
             )
 .
 
