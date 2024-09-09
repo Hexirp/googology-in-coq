@@ -4383,6 +4383,40 @@ Proof .
     exact ( 恒等道@{ i } ( 道@{ i } A z z ) ( 恒等道@{ i } A z ) ) .
 Defined .
 
+(** [p] と [p] を反転した道を結合した道は恒等道に等しくなります。 *)
+
+Definition A_2024_07_25_0002@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall x : A ,
+        forall y : A ,
+        forall p : 道@{ i } A x y ,
+        道@{ i } ( 道@{ i } A x x ) ( 結合@{ i } A x x y p ( 反転@{ i } A y x p ) ) ( 恒等道@{ i } A x )
+.
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun x : A => _ ) .
+    refine ( fun y : A => _ ) .
+    refine ( fun p : 道@{ i } A x y => _ ) .
+    refine
+        (
+            道.依存型の場合分け@{ i }
+                A
+                x
+                y
+                p
+                (
+                    fun x_ : A =>
+                    fun y_ : A =>
+                    fun p_ : 道@{ i } A x_ y_ =>
+                    道@{ i } ( 道@{ i } A x_ x_ ) ( 結合@{ i } A x_ x_ y_ p_ ( 反転@{ i } A y_ x_ p_ ) ) ( 恒等道@{ i } A x_ )
+                )
+                ( fun z : A => _ )
+        )
+    .
+    exact ( 恒等道@{ i } ( 道@{ i } A z z ) ( 恒等道@{ i } A z ) ) .
+Defined .
+
 End A_2024_09_08_0000 .
 
 (** ** 残り *)
@@ -4406,31 +4440,6 @@ Import A_2024_08_30_0006 .
 Import A_2024_09_06_0005 .
 
 Import A_2024_09_08_0000 .
-
-(** [p] と [p] を反転した道を結合した道は恒等道に等しくなります。 *)
-
-Definition A_2024_07_25_0002@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( p : 道@{ i } A x y )
-    :
-        道@{ i }
-            ( 道@{ i } A x x )
-            ( 結合@{ i } A x x y p ( 反転@{ i } A y x p ) )
-            ( A_2024_07_22_0010@{ i } A x )
-    :=
-        match
-            p
-        as
-            p_
-        in
-            A_2024_07_22_0009 _ x_ y_
-        return
-            道@{ i }
-                ( 道@{ i } A x_ x_ )
-                ( 結合@{ i } A x_ x_ y_ p_ ( 反転@{ i } A y_ x_ p_ ) )
-                ( A_2024_07_22_0010@{ i } A x_ )
-        with
-            A_2024_07_22_0010 _ z => A_2024_07_22_0010@{ i } ( 道@{ i } A z z ) ( A_2024_07_22_0010 A z )
-        end
-.
 
 (** [p] を反転した道 と [p] を結合した道は恒等道に等しくなります。 *)
 
