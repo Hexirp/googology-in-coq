@@ -3904,6 +3904,10 @@ End A_2024_09_07_0000 .
 
 Module A_2024_09_08_0000 .
 
+(** << A_2024_08_26_0002 >> を取り込みます。 *)
+
+Import A_2024_08_26_0002 .
+
 (** 道を定義します。「道」は "path" の訳語です。 *)
 
 Inductive A_2024_07_22_0009@{ i | } ( A : Type@{ i } ) : A -> A -> Type@{ i }
@@ -4130,6 +4134,35 @@ Definition 適用する@{ i | }
     := A_2024_07_22_0013@{ i } A B f x y p
 .
 
+(** 道に沿って輸送します。「輸送する」は "transport" の訳語です。 *)
+
+Definition A_2024_07_22_0014@{ i | }
+    : forall A : Type@{ i } , forall B : A -> Type@{ i } , forall x : A , forall y : A , 道@{ i } A y x -> B y -> B x
+.
+Proof.
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun B : A -> Type@{ i } => _ ) .
+    refine ( fun x : A => _ ) .
+    refine ( fun y : A => _ ) .
+    refine ( fun p : 道@{ i } A y x => _ ) .
+    refine
+        (
+            道.場合分け@{ i }
+                A
+                y
+                x
+                p
+                ( fun y_ : A => fun x_ : A => B y_ -> B x_ )
+                ( fun z : A => _ )
+        )
+    .
+    exact ( 恒等関数@{ i } ( B z ) ) .
+Defined .
+
+Definition 輸送する@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) ( x : A ) ( y : A ) ( p : 道@{ i } A y x ) ( u : B y ) : B x
+    := A_2024_07_22_0014@{ i } A B x y p u
+.
+
 End A_2024_09_08_0000 .
 
 (** ** 残り *)
@@ -4154,38 +4187,6 @@ Import A_2024_09_06_0005 .
 
 Import A_2024_09_08_0000 .
 
-(** 道に沿って輸送します。「輸送する」は "transport" の訳語です。 *)
-
-Definition A_2024_07_22_0014@{ i | }
-        ( A : Type@{ i } )
-        ( B : A -> Type@{ i } )
-        ( x : A )
-        ( y : A )
-        ( p : 道@{ i } A y x )
-        ( u : B y )
-    : B x
-    :=
-        let
-            a : B y -> B x
-                :=
-                    match
-                        p
-                    in
-                        A_2024_07_22_0009 _ y_ x_
-                    return
-                        B y_ -> B x_
-                    with
-                        A_2024_07_22_0010 _ z
-                            =>
-                                let
-                                    a ( u_ : B z ) : B z := u_
-                                in
-                                    a
-                    end
-        in
-            a u
-.
-
 (** 依存関数を道に適用します。 *)
 
 Definition A_2024_07_22_0015@{ i | }
@@ -4195,7 +4196,7 @@ Definition A_2024_07_22_0015@{ i | }
         ( x : A )
         ( y : A )
         ( p : 道@{ i } A x y )
-    : 道@{ i } ( B y ) ( A_2024_07_22_0014@{ i } A B y x p ( f x ) ) ( f y )
+    : 道@{ i } ( B y ) ( 輸送する@{ i } A B y x p ( f x ) ) ( f y )
     :=
         match
             p
@@ -4204,7 +4205,7 @@ Definition A_2024_07_22_0015@{ i | }
         in
             A_2024_07_22_0009 _ x_ y_
         return
-            道@{ i } ( B y_ ) ( A_2024_07_22_0014@{ i } A B y_ x_ p_ ( f x_ ) ) ( f y_ )
+            道@{ i } ( B y_ ) ( 輸送する@{ i } A B y_ x_ p_ ( f x_ ) ) ( f y_ )
         with
             A_2024_07_22_0010 _ z => A_2024_07_22_0010@{ i } ( B z ) ( f z )
         end
@@ -4938,7 +4939,7 @@ Definition A_2024_07_22_0030@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) 
     :
         道@{ i }
             ( B x )
-            ( A_2024_07_22_0014@{ i } A B x x ( A_2024_07_22_0010@{ i } A x ) u )
+            ( 輸送する@{ i } A B x x ( A_2024_07_22_0010@{ i } A x ) u )
             u
     := A_2024_07_22_0010@{ i } ( B x ) u
 .
@@ -4957,8 +4958,8 @@ Definition A_2024_07_26_0003@{ i | }
     :
         道@{ i }
             ( B x )
-            ( A_2024_07_22_0014@{ i } A B x z ( 結合する@{ i } A z x y q p ) u )
-            ( A_2024_07_22_0014@{ i } A B x y p ( A_2024_07_22_0014@{ i } A B y z q u ) )
+            ( 輸送する@{ i } A B x z ( 結合する@{ i } A z x y q p ) u )
+            ( 輸送する@{ i } A B x y p ( 輸送する@{ i } A B y z q u ) )
 .
 Proof .
     refine
@@ -4970,8 +4971,8 @@ Proof .
                         forall u_ : B z ,
                         道@{ i }
                             ( B x )
-                            ( A_2024_07_22_0014@{ i } A B x z ( 結合する@{ i } A z x y q_ p ) u_ )
-                            ( A_2024_07_22_0014@{ i } A B x y p ( A_2024_07_22_0014@{ i } A B y z q_ u_ ) )
+                            ( 輸送する@{ i } A B x z ( 結合する@{ i } A z x y q_ p ) u_ )
+                            ( 輸送する@{ i } A B x y p ( 輸送する@{ i } A B y z q_ u_ ) )
                     := _
             in
                 a q u
@@ -4990,8 +4991,8 @@ Proof .
                 forall u_ : B z ,
                 道@{ i }
                     ( B x_ )
-                    ( A_2024_07_22_0014@{ i } A B x_ z ( 結合する@{ i } A z x_ y_ q_ p_ ) u_ )
-                    ( A_2024_07_22_0014@{ i } A B x_ y_ p_ ( A_2024_07_22_0014@{ i } A B y_ z q_ u_ ) )
+                    ( 輸送する@{ i } A B x_ z ( 結合する@{ i } A z x_ y_ q_ p_ ) u_ )
+                    ( 輸送する@{ i } A B x_ y_ p_ ( 輸送する@{ i } A B y_ z q_ u_ ) )
             with
                 A_2024_07_22_0010 _ w => _
             end
@@ -5006,7 +5007,7 @@ Proof .
                         道@{ i }
                             ( B w )
                             (
-                                A_2024_07_22_0014@{ i }
+                                輸送する@{ i }
                                     A
                                     B
                                     w
@@ -5015,13 +5016,13 @@ Proof .
                                     u_
                             )
                             (
-                                A_2024_07_22_0014@{ i }
+                                輸送する@{ i }
                                     A
                                     B
                                     w
                                     w
                                     ( A_2024_07_22_0010@{ i } A w )
-                                    ( A_2024_07_22_0014@{ i } A B w z q_ u_ )
+                                    ( 輸送する@{ i } A B w z q_ u_ )
                             )
                     := _
             in
@@ -5041,7 +5042,7 @@ Proof .
                 道@{ i }
                     ( B w_ )
                     (
-                        A_2024_07_22_0014@{ i }
+                        輸送する@{ i }
                             A
                             B
                             w_
@@ -5049,7 +5050,7 @@ Proof .
                             ( 結合する@{ i } A z_ w_ w_ q__ ( A_2024_07_22_0010@{ i } A w_ ) )
                             u_
                     )
-                    ( A_2024_07_22_0014@{ i } A B w_ w_ ( A_2024_07_22_0010@{ i } A w_ ) ( A_2024_07_22_0014@{ i } A B w_ z_ q__ u_ ) )
+                    ( 輸送する@{ i } A B w_ w_ ( A_2024_07_22_0010@{ i } A w_ ) ( 輸送する@{ i } A B w_ z_ q__ u_ ) )
             with
                 A_2024_07_22_0010 _ v => _
             end
@@ -5063,7 +5064,7 @@ Proof .
                         道@{ i }
                             ( B v )
                             (
-                                A_2024_07_22_0014@{ i }
+                                輸送する@{ i }
                                     A
                                     B
                                     v
@@ -5072,14 +5073,14 @@ Proof .
                                     u_
                             )
                             (
-                                A_2024_07_22_0014@{ i }
+                                輸送する@{ i }
                                     A
                                     B
                                     v
                                     v
                                     ( A_2024_07_22_0010@{ i } A v )
                                     (
-                                        A_2024_07_22_0014@{ i }
+                                        輸送する@{ i }
                                             A
                                             B
                                             v
