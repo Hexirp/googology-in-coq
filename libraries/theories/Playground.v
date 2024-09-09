@@ -4159,7 +4159,7 @@ Proof.
     exact ( 恒等関数@{ i } ( B z ) ) .
 Defined .
 
-Definition 輸送する@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) ( x : A ) ( y : A ) ( p : 道@{ i } A y x ) ( u : B y ) : B x
+Definition 輸送@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) ( x : A ) ( y : A ) ( p : 道@{ i } A y x ) ( u : B y ) : B x
     := A_2024_07_22_0014@{ i } A B x y p u
 .
 
@@ -4173,7 +4173,7 @@ Definition A_2024_07_22_0015@{ i | }
         forall x : A ,
         forall y : A ,
         forall p : 道@{ i } A x y ,
-        道@{ i } ( B y ) ( 輸送する@{ i } A B y x p ( f x ) ) ( f y )
+        道@{ i } ( B y ) ( 輸送@{ i } A B y x p ( f x ) ) ( f y )
 .
 Proof .
     refine ( fun A : Type@{ i } => _ ) .
@@ -4193,7 +4193,7 @@ Proof .
                     fun x_ : A =>
                     fun y_ : A =>
                     fun p_ : 道@{ i } A x_ y_ =>
-                    道@{ i } ( B y_ ) ( 輸送する@{ i } A B y_ x_ p_ ( f x_ ) ) ( f y_ )
+                    道@{ i } ( B y_ ) ( 輸送@{ i } A B y_ x_ p_ ( f x_ ) ) ( f y_ )
                 )
                 ( fun z : A => _ )
         )
@@ -4208,7 +4208,7 @@ Definition 依存型の適用@{ i | }
     ( x : A )
     ( y : A )
     ( p : 道@{ i } A x y )
-    : 道@{ i } ( B y ) ( 輸送する@{ i } A B y x p ( f x ) ) ( f y )
+    : 道@{ i } ( B y ) ( 輸送@{ i } A B y x p ( f x ) ) ( f y )
     := A_2024_07_22_0015@{ i } A B f x y p
 .
 
@@ -4838,7 +4838,7 @@ Definition A_2024_07_22_0030@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) 
     :
         道@{ i }
             ( B x )
-            ( 輸送する@{ i } A B x x ( A_2024_07_22_0010@{ i } A x ) u )
+            ( 輸送@{ i } A B x x ( A_2024_07_22_0010@{ i } A x ) u )
             u
     := A_2024_07_22_0010@{ i } ( B x ) u
 .
@@ -4857,8 +4857,8 @@ Definition A_2024_07_26_0003@{ i | }
     :
         道@{ i }
             ( B x )
-            ( 輸送する@{ i } A B x z ( 結合@{ i } A z x y q p ) u )
-            ( 輸送する@{ i } A B x y p ( 輸送する@{ i } A B y z q u ) )
+            ( 輸送@{ i } A B x z ( 結合@{ i } A z x y q p ) u )
+            ( 輸送@{ i } A B x y p ( 輸送@{ i } A B y z q u ) )
 .
 Proof .
     refine
@@ -4870,8 +4870,8 @@ Proof .
                         forall u_ : B z ,
                         道@{ i }
                             ( B x )
-                            ( 輸送する@{ i } A B x z ( 結合@{ i } A z x y q_ p ) u_ )
-                            ( 輸送する@{ i } A B x y p ( 輸送する@{ i } A B y z q_ u_ ) )
+                            ( 輸送@{ i } A B x z ( 結合@{ i } A z x y q_ p ) u_ )
+                            ( 輸送@{ i } A B x y p ( 輸送@{ i } A B y z q_ u_ ) )
                     := _
             in
                 a q u
@@ -4890,8 +4890,8 @@ Proof .
                 forall u_ : B z ,
                 道@{ i }
                     ( B x_ )
-                    ( 輸送する@{ i } A B x_ z ( 結合@{ i } A z x_ y_ q_ p_ ) u_ )
-                    ( 輸送する@{ i } A B x_ y_ p_ ( 輸送する@{ i } A B y_ z q_ u_ ) )
+                    ( 輸送@{ i } A B x_ z ( 結合@{ i } A z x_ y_ q_ p_ ) u_ )
+                    ( 輸送@{ i } A B x_ y_ p_ ( 輸送@{ i } A B y_ z q_ u_ ) )
             with
                 A_2024_07_22_0010 _ w => _
             end
@@ -4906,7 +4906,7 @@ Proof .
                         道@{ i }
                             ( B w )
                             (
-                                輸送する@{ i }
+                                輸送@{ i }
                                     A
                                     B
                                     w
@@ -4915,13 +4915,13 @@ Proof .
                                     u_
                             )
                             (
-                                輸送する@{ i }
+                                輸送@{ i }
                                     A
                                     B
                                     w
                                     w
                                     ( A_2024_07_22_0010@{ i } A w )
-                                    ( 輸送する@{ i } A B w z q_ u_ )
+                                    ( 輸送@{ i } A B w z q_ u_ )
                             )
                     := _
             in
@@ -4941,7 +4941,7 @@ Proof .
                 道@{ i }
                     ( B w_ )
                     (
-                        輸送する@{ i }
+                        輸送@{ i }
                             A
                             B
                             w_
@@ -4949,7 +4949,7 @@ Proof .
                             ( 結合@{ i } A z_ w_ w_ q__ ( A_2024_07_22_0010@{ i } A w_ ) )
                             u_
                     )
-                    ( 輸送する@{ i } A B w_ w_ ( A_2024_07_22_0010@{ i } A w_ ) ( 輸送する@{ i } A B w_ z_ q__ u_ ) )
+                    ( 輸送@{ i } A B w_ w_ ( A_2024_07_22_0010@{ i } A w_ ) ( 輸送@{ i } A B w_ z_ q__ u_ ) )
             with
                 A_2024_07_22_0010 _ v => _
             end
@@ -4963,7 +4963,7 @@ Proof .
                         道@{ i }
                             ( B v )
                             (
-                                輸送する@{ i }
+                                輸送@{ i }
                                     A
                                     B
                                     v
@@ -4972,14 +4972,14 @@ Proof .
                                     u_
                             )
                             (
-                                輸送する@{ i }
+                                輸送@{ i }
                                     A
                                     B
                                     v
                                     v
                                     ( A_2024_07_22_0010@{ i } A v )
                                     (
-                                        輸送する@{ i }
+                                        輸送@{ i }
                                             A
                                             B
                                             v
