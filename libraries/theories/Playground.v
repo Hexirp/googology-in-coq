@@ -4163,6 +4163,55 @@ Definition 輸送する@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) ( x :
     := A_2024_07_22_0014@{ i } A B x y p u
 .
 
+(** 依存関数を道に適用します。 *)
+
+Definition A_2024_07_22_0015@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall B : A -> Type@{ i } ,
+        forall f : forall x : A , B x ,
+        forall x : A ,
+        forall y : A ,
+        forall p : 道@{ i } A x y ,
+        道@{ i } ( B y ) ( 輸送する@{ i } A B y x p ( f x ) ) ( f y )
+.
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun B : A -> Type@{ i } => _ ) .
+    refine ( fun f : forall x : A , B x => _ ) .
+    refine ( fun x : A => _ ) .
+    refine ( fun y : A => _ ) .
+    refine ( fun p : 道@{ i } A x y => _ ) .
+    refine
+        (
+            道.依存型の場合分け@{ i }
+                A
+                x
+                y
+                p
+                (
+                    fun x_ : A =>
+                    fun y_ : A =>
+                    fun p_ : 道@{ i } A x_ y_ =>
+                    道@{ i } ( B y_ ) ( 輸送する@{ i } A B y_ x_ p_ ( f x_ ) ) ( f y_ )
+                )
+                ( fun z : A => _ )
+        )
+    .
+    exact ( 恒等道@{ i } ( B z ) ( f z ) ) .
+Defined .
+
+Definition 依存型の適用@{ i | }
+    ( A : Type@{ i } )
+    ( B : A -> Type@{ i } )
+    ( f : forall x : A , B x )
+    ( x : A )
+    ( y : A )
+    ( p : 道@{ i } A x y )
+    : 道@{ i } ( B y ) ( 輸送する@{ i } A B y x p ( f x ) ) ( f y )
+    := A_2024_07_22_0015@{ i } A B f x y p
+.
+
 End A_2024_09_08_0000 .
 
 (** ** 残り *)
@@ -4186,30 +4235,6 @@ Import A_2024_08_30_0006 .
 Import A_2024_09_06_0005 .
 
 Import A_2024_09_08_0000 .
-
-(** 依存関数を道に適用します。 *)
-
-Definition A_2024_07_22_0015@{ i | }
-        ( A : Type@{ i } )
-        ( B : A -> Type@{ i } )
-        ( f : forall x : A , B x )
-        ( x : A )
-        ( y : A )
-        ( p : 道@{ i } A x y )
-    : 道@{ i } ( B y ) ( 輸送する@{ i } A B y x p ( f x ) ) ( f y )
-    :=
-        match
-            p
-        as
-            p_
-        in
-            A_2024_07_22_0009 _ x_ y_
-        return
-            道@{ i } ( B y_ ) ( 輸送する@{ i } A B y_ x_ p_ ( f x_ ) ) ( f y_ )
-        with
-            A_2024_07_22_0010 _ z => A_2024_07_22_0010@{ i } ( B z ) ( f z )
-        end
-.
 
 (** 恒等道と恒等道を結合した道は恒等道に等しくなります。 *)
 
@@ -5103,7 +5128,7 @@ Definition A_2024_07_22_0031@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) 
     :
         道@{ i }
             ( 道@{ i } ( B x ) ( f x ) ( f x ) )
-            ( A_2024_07_22_0015@{ i } A B f x x ( A_2024_07_22_0010@{ i } A x ) )
+            ( 依存型の適用@{ i } A B f x x ( A_2024_07_22_0010@{ i } A x ) )
             ( A_2024_07_22_0010@{ i } ( B x ) ( f x ) )
     := A_2024_07_22_0010@{ i } ( 道@{ i } ( B x ) ( f x ) ( f x ) ) ( A_2024_07_22_0010@{ i } ( B x ) ( f x ) )
 .
