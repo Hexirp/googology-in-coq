@@ -27,11 +27,11 @@ Definition 恒等関数@{ i | } ( A : Type@{ i } ) ( x : A ) : A := A_2024_07_21
 (** 関数合成を定義します。 *)
 
 Definition A_2024_07_21_0001@{ i | }
-    : forall A : Type@{ i } , forall B : Type@{ i } , forall C : Type@{ i } , ( B -> A ) -> ( C -> B ) -> C -> A
-    := fun A : Type@{ i } => fun B : Type@{ i } => fun C : Type@{ i } => fun f : B -> A => fun g : C -> B => fun x : C => f ( g x )
+    : forall A : Type@{ i } , forall B : Type@{ i } , forall C : Type@{ i } , ( C -> A ) -> ( B -> C ) -> B -> A
+    := fun A : Type@{ i } => fun B : Type@{ i } => fun C : Type@{ i } => fun f : C -> A => fun g : B -> C => fun x : B => f ( g x )
 .
 
-Definition 合成@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( C : Type@{ i } ) ( f : B -> A ) ( g : C -> B ) ( x : C ) : A
+Definition 合成@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( C : Type@{ i } ) ( f : C -> A ) ( g : B -> C ) ( x : B ) : A
     := A_2024_07_21_0001@{ i } A B C f g x
 .
 
@@ -4594,6 +4594,54 @@ Proof .
     exact ( 恒等道@{ i } ( 道@{ i } A z z ) ( 恒等道@{ i } A z ) ) .
 Defined .
 
+(** [f] と [g] を合成した関数を [p] へ適用した道は [p] へ [g] を適用した道へ [f] を適用した道に等しくなります。 *)
+
+Definition A_2024_07_25_0005@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall B : Type@{ i } ,
+        forall C : Type@{ i } ,
+        forall f : C -> A ,
+        forall g : B -> C ,
+        forall x : B ,
+        forall y : B ,
+        forall p : 道@{ i } B x y ,
+        道@{ i }
+            ( 道@{ i } A ( f ( g x ) ) ( f ( g y ) ) )
+            ( 適用@{ i } A B ( 合成@{ i } A B C f g ) x y p )
+            ( 適用@{ i } A C f ( g x ) ( g y ) ( 適用@{ i } C B g x y p ) )
+.
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun B : Type@{ i } => _ ) .
+    refine ( fun C : Type@{ i } => _ ) .
+    refine ( fun f : C -> A => _ ) .
+    refine ( fun g : B -> C => _ ) .
+    refine ( fun x : B => _ ) .
+    refine ( fun y : B => _ ) .
+    refine ( fun p : 道@{ i } B x y => _ ) .
+    refine
+        (
+            道.依存型の場合分け@{ i }
+                B
+                x
+                y
+                p
+                (
+                    fun x_ : B =>
+                    fun y_ : B =>
+                    fun p_ : 道@{ i } B x_ y_ =>
+                    道@{ i }
+                        ( 道@{ i } A ( f ( g x_ ) ) ( f ( g y_ ) ) )
+                        ( 適用@{ i } A B ( 合成@{ i } A B C f g ) x_ y_ p_ )
+                        ( 適用@{ i } A C f ( g x_ ) ( g y_ ) ( 適用@{ i } C B g x_ y_ p_ ) )
+                )
+                ( fun z => _ )
+        )
+    .
+    exact ( 恒等道@{ i } ( 道@{ i } A ( f ( g z ) ) ( f ( g z ) ) ) ( 恒等道@{ i } A ( f ( g z ) ) ) ) .
+Defined .
+
 End A_2024_09_08_0000 .
 
 (** ** 残り *)
@@ -4617,43 +4665,6 @@ Import A_2024_08_30_0006 .
 Import A_2024_09_06_0005 .
 
 Import A_2024_09_08_0000 .
-
-(** [f] と [g] を合成した関数を [p] へ適用した道は [p] へ [g] を適用した道へ [f] を適用した道に等しくなります。 *)
-
-Definition A_2024_07_25_0005@{ i | }
-        ( A : Type@{ i } )
-        ( B : Type@{ i } )
-        ( C : Type@{ i } )
-        ( f : B -> A )
-        ( g : C -> B )
-        ( x : C )
-        ( y : C )
-        ( p : 道@{ i } C x y )
-    :
-        道@{ i }
-            ( 道@{ i } A ( f ( g x ) ) ( f ( g y ) ) )
-            ( 適用@{ i } A C ( 合成@{ i } A B C f g ) x y p )
-            ( 適用@{ i } A B f ( g x ) ( g y ) ( 適用@{ i } B C g x y p ) )
-    :=
-        match
-            p
-        as
-            p_
-        in
-            A_2024_07_22_0009 _ x_ y_
-        return
-            道@{ i }
-                ( 道@{ i } A ( f ( g x_ ) ) ( f ( g y_ ) ) )
-                ( 適用@{ i } A C ( 合成@{ i } A B C f g ) x_ y_ p_ )
-                ( 適用@{ i } A B f ( g x_ ) ( g y_ ) ( 適用@{ i } B C g x_ y_ p_ ) )
-        with
-            A_2024_07_22_0010 _ z
-                =>
-                    A_2024_07_22_0010@{ i }
-                        ( 道@{ i } A ( f ( g z ) ) ( f ( g z ) ) )
-                        ( A_2024_07_22_0010@{ i } A ( f ( g z ) ) )
-        end
-.
 
 (** 恒等道へ関数を適用した道は恒等道に等しくなります。 *)
 
