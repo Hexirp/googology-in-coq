@@ -4642,6 +4642,24 @@ Proof .
     exact ( 恒等道@{ i } ( 道@{ i } A ( f ( g z ) ) ( f ( g z ) ) ) ( 恒等道@{ i } A ( f ( g z ) ) ) ) .
 Defined .
 
+(** 恒等道へ関数を適用した道は恒等道に等しくなります。 *)
+
+Definition A_2024_07_22_0029@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall B : Type@{ i } ,
+        forall f : B -> A ,
+        forall x : B ,
+        道@{ i } ( 道@{ i } A ( f x ) ( f x ) ) ( 適用@{ i } A B f x x ( 恒等道@{ i } B x ) ) ( 恒等道@{ i } A ( f x ) )
+.
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun B : Type@{ i } => _ ) .
+    refine ( fun f : B -> A => _ ) .
+    refine ( fun x : B => _ ) .
+    exact ( 恒等道@{ i } ( 道@{ i } A ( f x ) ( f x ) ) ( 恒等道@{ i } A ( f x ) ) ) .
+Defined .
+
 End A_2024_09_08_0000 .
 
 (** ** 残り *)
@@ -4665,17 +4683,6 @@ Import A_2024_08_30_0006 .
 Import A_2024_09_06_0005 .
 
 Import A_2024_09_08_0000 .
-
-(** 恒等道へ関数を適用した道は恒等道に等しくなります。 *)
-
-Definition A_2024_07_22_0029@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( f : B -> A ) ( x : B )
-    :
-        道@{ i }
-            ( 道@{ i } A ( f x ) ( f x ) )
-            ( 適用@{ i } A B f x x ( A_2024_07_22_0010@{ i } B x ) )
-            ( A_2024_07_22_0010@{ i } A ( f x ) )
-    := A_2024_07_22_0010@{ i } ( 道@{ i } A ( f x ) ( f x ) ) ( A_2024_07_22_0010@{ i } A ( f x ) )
-.
 
 (** [p] と [q] を結合した道に [f] を適用した道は [p] に [f] を適用した道と [q] に [f] を適用した道を結合した道に等しくなります。 *)
 
