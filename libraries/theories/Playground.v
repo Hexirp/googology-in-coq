@@ -31,7 +31,7 @@ Definition A_2024_07_21_0001@{ i | }
     := fun A : Type@{ i } => fun B : Type@{ i } => fun C : Type@{ i } => fun f : B -> A => fun g : C -> B => fun x : C => f ( g x )
 .
 
-Definition 合成する@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( C : Type@{ i } ) ( f : B -> A ) ( g : C -> B ) ( x : C ) : A
+Definition 合成@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( C : Type@{ i } ) ( f : B -> A ) ( g : C -> B ) ( x : C ) : A
     := A_2024_07_21_0001@{ i } A B C f g x
 .
 
@@ -4632,7 +4632,7 @@ Definition A_2024_07_25_0005@{ i | }
     :
         道@{ i }
             ( 道@{ i } A ( f ( g x ) ) ( f ( g y ) ) )
-            ( 適用@{ i } A C ( 合成する@{ i } A B C f g ) x y p )
+            ( 適用@{ i } A C ( 合成@{ i } A B C f g ) x y p )
             ( 適用@{ i } A B f ( g x ) ( g y ) ( 適用@{ i } B C g x y p ) )
     :=
         match
@@ -4644,7 +4644,7 @@ Definition A_2024_07_25_0005@{ i | }
         return
             道@{ i }
                 ( 道@{ i } A ( f ( g x_ ) ) ( f ( g y_ ) ) )
-                ( 適用@{ i } A C ( 合成する@{ i } A B C f g ) x_ y_ p_ )
+                ( 適用@{ i } A C ( 合成@{ i } A B C f g ) x_ y_ p_ )
                 ( 適用@{ i } A B f ( g x_ ) ( g y_ ) ( 適用@{ i } B C g x_ y_ p_ ) )
         with
             A_2024_07_22_0010 _ z
