@@ -4462,6 +4462,70 @@ Proof.
     exact ( 恒等道@{ i } ( 道@{ i } A x x ) ( 恒等道@{ i } A x ) ) .
 Defined .
 
+(** [p] と [q] を結合した道を反転した道は [q] を反転した道と [p] を反転した道に等しくなります。 *)
+
+Definition A_2024_07_26_0001@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall x : A ,
+        forall y : A ,
+        forall z : A ,
+        forall p : 道@{ i } A y z ,
+        forall q : 道@{ i } A z x ,
+        道@{ i }
+            ( 道@{ i } A x y )
+            ( 反転@{ i } A x y ( 結合@{ i } A y x z p q ) )
+            ( 結合@{ i } A x y z ( 反転@{ i } A x z q ) ( 反転@{ i } A z y p ) )
+.
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun x : A => _ ) .
+    refine ( fun y : A => _ ) .
+    refine ( fun z : A => _ ) .
+    refine ( fun p : 道@{ i } A y z => _ ) .
+    refine
+        (
+            道.依存型の場合分け@{ i }
+                A
+                y
+                z
+                p
+                (
+                    fun y_ : A =>
+                    fun z_ : A =>
+                    fun p_ : 道@{ i } A y_ z_ =>
+                    forall q : 道@{ i } A z_ x ,
+                    道@{ i }
+                        ( 道@{ i } A x y_ )
+                        ( 反転@{ i } A x y_ ( 結合@{ i } A y_ x z_ p_ q ) )
+                        ( 結合@{ i } A x y_ z_ ( 反転@{ i } A x z_ q ) ( 反転@{ i } A z_ y_ p_ ) )
+                )
+                ( fun w : A => _ )
+        )
+    .
+    refine ( fun q : 道@{ i } A w x => _ ) .
+    refine
+        (
+            道.依存型の場合分け@{ i }
+                A
+                w
+                x
+                q
+                (
+                    fun w_ : A =>
+                    fun x_ : A =>
+                    fun q_ : 道@{ i } A w_ x_ =>
+                    道@{ i }
+                        ( 道@{ i } A x_ w_ )
+                        ( 反転@{ i } A x_ w_ ( 結合@{ i } A w_ x_ w_ ( 恒等道@{ i } A w_ ) q_ ) )
+                        ( 結合@{ i } A x_ w_ w_ ( 反転@{ i } A x_ w_ q_ ) ( 反転@{ i } A w_ w_ ( 恒等道@{ i } A w_ ) ) )
+                )
+                ( fun v : A => _ )
+        )
+    .
+    exact ( 恒等道@{ i } ( 道@{ i } A v v ) ( 恒等道@{ i } A v ) ) .
+Defined .
+
 End A_2024_09_08_0000 .
 
 (** ** 残り *)
@@ -4485,119 +4549,6 @@ Import A_2024_08_30_0006 .
 Import A_2024_09_06_0005 .
 
 Import A_2024_09_08_0000 .
-
-(** [p] と [q] を結合した道を反転した道は [q] を反転した道と [p] を反転した道に等しくなります。 *)
-
-Definition A_2024_07_26_0001@{ i | }
-        ( A : Type@{ i } )
-        ( x : A )
-        ( y : A )
-        ( z : A )
-        ( p : 道@{ i } A z x )
-        ( q : 道@{ i } A y z )
-    :
-        道@{ i }
-            ( 道@{ i } A x y )
-            ( 反転@{ i } A x y ( 結合@{ i } A y x z q p ) )
-            ( 結合@{ i } A x y z ( 反転@{ i } A x z p ) ( 反転@{ i } A z y q ) )
-.
-Proof .
-    refine
-        (
-            let
-                a
-                    :
-                        forall q_ : 道@{ i } A y z ,
-                        道@{ i }
-                            ( 道@{ i } A x y )
-                            ( 反転@{ i } A x y ( 結合@{ i } A y x z q_ p ) )
-                            (
-                                結合@{ i }
-                                    A
-                                    x
-                                    y
-                                    z
-                                    ( 反転@{ i } A x z p )
-                                    ( 反転@{ i } A z y q_ )
-                            )
-                    := _
-            in
-                a q
-        )
-    .
-    refine
-        (
-            match
-                p
-            as
-                p_
-            in
-                A_2024_07_22_0009 _ z_ x_
-            return
-                forall q_ : 道@{ i } A y z_ ,
-                道@{ i }
-                    ( 道@{ i } A x_ y )
-                    ( 反転@{ i } A x_ y ( 結合@{ i } A y x_ z_ q_ p_ ) )
-                    ( 結合@{ i } A x_ y z_ ( 反転@{ i } A x_ z_ p_ ) ( 反転@{ i } A z_ y q_ ) )
-            with
-                A_2024_07_22_0010 _ w => _
-            end
-        )
-    .
-    refine
-        (
-            let
-                a ( q_ : 道@{ i } A y w )
-                    :
-                        道@{ i }
-                            ( 道@{ i } A w y )
-                            (
-                                反転@{ i } A w y ( 結合@{ i } A y w w q_ ( A_2024_07_22_0010@{ i } A w ) )
-                            )
-                            (
-                                結合@{ i }
-                                    A
-                                    w
-                                    y
-                                    w
-                                    ( 反転@{ i } A w w ( A_2024_07_22_0010@{ i } A w ) )
-                                    ( 反転@{ i } A w y q_ )
-                            )
-                    := _
-            in
-                a
-        )
-    .
-    refine
-        (
-            match
-                q_
-            as
-                q__
-            in
-                A_2024_07_22_0009 _ y_ w_
-            return
-                道@{ i }
-                    ( 道@{ i } A w_ y_ )
-                    (
-                        反転@{ i } A w_ y_ ( 結合@{ i } A y_ w_ w_ q__ ( A_2024_07_22_0010@{ i } A w_ ) )
-                    )
-                    (
-                        結合@{ i }
-                            A
-                            w_
-                            y_
-                            w_
-                            ( 反転@{ i } A w_ w_ ( A_2024_07_22_0010@{ i } A w_ ) )
-                            ( 反転@{ i } A w_ y_ q__ )
-                    )
-            with
-                A_2024_07_22_0010 _ v => _
-            end
-        )
-    .
-    exact ( A_2024_07_22_0010@{ i } ( 道@{ i } A v v ) ( A_2024_07_22_0010@{ i } A v ) ) .
-Defined .
 
 (** [p] を反転した道を反転した道は [p] に等しくなります。 *)
 
