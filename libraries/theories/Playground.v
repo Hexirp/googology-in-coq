@@ -4560,6 +4560,40 @@ Proof .
     exact ( 恒等道@{ i } ( 道@{ i } A z z ) ( 恒等道@{ i } A z ) ) .
 Defined .
 
+(** 恒等関数を [p] に適用した道は [p] に等しくなります。 *)
+
+Definition A_2024_07_25_0004@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall x : A ,
+        forall y : A ,
+        forall p : 道@{ i } A x y ,
+        道@{ i } ( 道@{ i } A x y ) ( 適用@{ i } A A ( 恒等関数@{ i } A ) x y p ) p
+.
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun x : A => _ ) .
+    refine ( fun y : A => _ ) .
+    refine ( fun p : 道@{ i } A x y => _ ) .
+    refine
+        (
+            道.依存型の場合分け@{ i }
+                A
+                x
+                y
+                p
+                (
+                    fun x_ : A =>
+                    fun y_ : A =>
+                    fun p_ : 道@{ i } A x_ y_ =>
+                    道@{ i } ( 道@{ i } A x_ y_ ) ( 適用@{ i } A A ( 恒等関数@{ i } A ) x_ y_ p_ ) p_
+                )
+                ( fun z : A => _ )
+        )
+    .
+    exact ( 恒等道@{ i } ( 道@{ i } A z z ) ( 恒等道@{ i } A z ) ) .
+Defined .
+
 End A_2024_09_08_0000 .
 
 (** ** 残り *)
@@ -4583,31 +4617,6 @@ Import A_2024_08_30_0006 .
 Import A_2024_09_06_0005 .
 
 Import A_2024_09_08_0000 .
-
-(** 恒等関数を [p] に適用した道は [p] に等しくなります。 *)
-
-Definition A_2024_07_25_0004@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( p : 道@{ i } A x y )
-    :
-        道@{ i }
-            ( 道@{ i } A x y )
-            ( 適用@{ i } A A ( 恒等関数@{ i } A ) x y p )
-            p
-    :=
-        match
-            p
-        as
-            p_
-        in
-            A_2024_07_22_0009 _ x_ y_
-        return
-            道@{ i }
-                ( 道@{ i } A x_ y_ )
-                ( 適用@{ i } A A ( 恒等関数@{ i } A ) x_ y_ p_ )
-                p_
-        with
-            A_2024_07_22_0010 _ z => A_2024_07_22_0010@{ i } ( 道@{ i } A z z ) ( A_2024_07_22_0010@{ i } A z )
-        end
-.
 
 (** [f] と [g] を合成した関数を [p] へ適用した道は [p] へ [g] を適用した道へ [f] を適用した道に等しくなります。 *)
 
