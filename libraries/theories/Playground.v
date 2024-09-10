@@ -4660,6 +4660,82 @@ Proof .
     exact ( 恒等道@{ i } ( 道@{ i } A ( f x ) ( f x ) ) ( 恒等道@{ i } A ( f x ) ) ) .
 Defined .
 
+(** [p] と [q] を結合した道に [f] を適用した道は [p] に [f] を適用した道と [q] に [f] を適用した道を結合した道に等しくなります。 *)
+
+Definition A_2024_07_25_0006@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall B : Type@{ i } ,
+        forall f : B -> A ,
+        forall x : B ,
+        forall y : B ,
+        forall z : B ,
+        forall p : 道@{ i } B x z ,
+        forall q : 道@{ i } B z y ,
+        道@{ i }
+            ( 道@{ i } A ( f x ) ( f y ) )
+            ( 適用@{ i } A B f x y ( 結合@{ i } B x y z p q ) )
+            ( 結合@{ i } A ( f x ) ( f y ) ( f z ) ( 適用@{ i } A B f x z p ) ( 適用@{ i } A B f z y q ) )
+.
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun B : Type@{ i } => _ ) .
+    refine ( fun f : B -> A => _ ) .
+    refine ( fun x : B => _ ) .
+    refine ( fun y : B => _ ) .
+    refine ( fun z : B => _ ) .
+    refine ( fun p : 道@{ i } B x z => _ ) .
+    refine
+        (
+            道.依存型の場合分け@{ i }
+                B
+                x
+                z
+                p
+                (
+                    fun x_ : B =>
+                    fun z_ : B =>
+                    fun p_ : 道@{ i } B x_ z_ =>
+                    forall q : 道@{ i } B z_ y ,
+                    道@{ i }
+                        ( 道@{ i } A ( f x_ ) ( f y ) )
+                        ( 適用@{ i } A B f x_ y ( 結合@{ i } B x_ y z_ p_ q ) )
+                        ( 結合@{ i } A ( f x_ ) ( f y ) ( f z_ ) ( 適用@{ i } A B f x_ z_ p_ ) ( 適用@{ i } A B f z_ y q ) )
+                )
+                ( fun w : B => _ )
+        )
+    .
+    refine ( fun q : 道@{ i } B w y => _ ) .
+    refine
+        (
+            道.依存型の場合分け@{ i }
+                B
+                w
+                y
+                q
+                (
+                    fun w_ : B =>
+                    fun y_ : B =>
+                    fun q_ : 道@{ i } B w_ y_ =>
+                    道@{ i }
+                        ( 道@{ i } A ( f w_ ) ( f y_ ) )
+                        ( 適用@{ i } A B f w_ y_ ( 結合@{ i } B w_ y_ w_ ( 恒等道@{ i } B w_ ) q_ ) )
+                        (
+                            結合@{ i }
+                                A
+                                ( f w_ )
+                                ( f y_ )
+                                ( f w_ )
+                                ( 適用@{ i } A B f w_ w_ ( 恒等道@{ i } B w_ ) )
+                                ( 適用@{ i } A B f w_ y_ q_ )
+                        )
+                )
+                ( fun v : B => _ )
+        )
+    .
+    exact ( 恒等道@{ i } ( 道@{ i } A ( f v ) ( f v ) ) ( 恒等道@{ i } A ( f v ) ) ) .
+Defined .
+
 End A_2024_09_08_0000 .
 
 (** ** 残り *)
@@ -4683,145 +4759,6 @@ Import A_2024_08_30_0006 .
 Import A_2024_09_06_0005 .
 
 Import A_2024_09_08_0000 .
-
-(** [p] と [q] を結合した道に [f] を適用した道は [p] に [f] を適用した道と [q] に [f] を適用した道を結合した道に等しくなります。 *)
-
-Definition A_2024_07_25_0006@{ i | }
-        ( A : Type@{ i } )
-        ( B : Type@{ i } )
-        ( f : B -> A )
-        ( x : B )
-        ( y : B )
-        ( z : B )
-        ( p : 道@{ i } B x z )
-        ( q : 道@{ i } B z y )
-    :
-        道@{ i }
-            ( 道@{ i } A ( f x ) ( f y ) )
-            ( 適用@{ i } A B f x y ( 結合@{ i } B x y z p q ) )
-            (
-                結合@{ i }
-                    A
-                    ( f x )
-                    ( f y )
-                    ( f z )
-                    ( 適用@{ i } A B f x z p )
-                    ( 適用@{ i } A B f z y q )
-            )
-.
-Proof .
-    refine
-        (
-            let
-                a
-                    :
-                        forall q_ : 道@{ i } B z y ,
-                        道@{ i }
-                            ( 道@{ i } A ( f x ) ( f y ) )
-                            (
-                                適用@{ i } A B f x y ( 結合@{ i } B x y z p q_ )
-                            )
-                            (
-                                結合@{ i }
-                                    A
-                                    ( f x )
-                                    ( f y )
-                                    ( f z )
-                                    ( 適用@{ i } A B f x z p )
-                                    ( 適用@{ i } A B f z y q_ )
-                            )
-                    := _
-            in
-                a q
-        )
-    .
-    refine
-        (
-            match
-                p
-            as
-                p_
-            in
-                A_2024_07_22_0009 _ x_ z_
-            return
-                forall q_ : 道@{ i } B z_ y ,
-                道@{ i }
-                    ( 道@{ i } A ( f x_ ) ( f y ) )
-                    (
-                        適用@{ i } A B f x_ y ( 結合@{ i } B x_ y z_ p_ q_ )
-                    )
-                    (
-                        結合@{ i }
-                            A
-                            ( f x_ )
-                            ( f y )
-                            ( f z_ )
-                            ( 適用@{ i } A B f x_ z_ p_ )
-                            ( 適用@{ i } A B f z_ y q_ )
-                    )
-            with
-                A_2024_07_22_0010 _ w => _
-            end
-        )
-    .
-    refine
-        (
-            let
-                a ( q_ : 道@{ i } B w y )
-                    :
-                        道@{ i }
-                            ( 道@{ i } A ( f w ) ( f y ) )
-                            (
-                                適用@{ i }
-                                    A
-                                    B
-                                    f
-                                    w
-                                    y
-                                    ( 結合@{ i } B w y w ( A_2024_07_22_0010@{ i } B w ) q_ )
-                            )
-                            (
-                                結合@{ i }
-                                    A
-                                    ( f w )
-                                    ( f y )
-                                    ( f w )
-                                    ( 適用@{ i } A B f w w ( A_2024_07_22_0010@{ i } B w ) )
-                                    ( 適用@{ i } A B f w y q_ )
-                            )
-                    := _
-            in
-                a
-        )
-    .
-    refine
-        (
-            match
-                q_
-            as
-                q__
-            in
-                A_2024_07_22_0009 _ w_ y_
-            return
-                道@{ i }
-                    ( 道@{ i } A ( f w_ ) ( f y_ ) )
-                    ( 適用@{ i } A B f w_ y_ ( 結合@{ i } B w_ y_ w_ ( A_2024_07_22_0010@{ i } B w_ ) q__ ) )
-                    (
-                        結合@{ i }
-                            A
-                            ( f w_ )
-                            ( f y_ )
-                            ( f w_ )
-                            ( 適用@{ i } A B f w_ w_ ( A_2024_07_22_0010@{ i } B w_ ) )
-                            ( 適用@{ i } A B f w_ y_ q__ )
-                    )
-            with
-                A_2024_07_22_0010 _ v => _
-            end
-        )
-    .
-    exact ( A_2024_07_22_0010@{ i } ( 道@{ i } A ( f v ) ( f v ) ) ( A_2024_07_22_0010@{ i } A ( f v ) ) ) .
-Defined .
 
 (** [p] を反転した道に [f] を適用した道は [p] に [f] を適用した道を反転した道に等しくなります。 *)
 
