@@ -4888,6 +4888,8 @@ Defined .
 
 End A_2024_09_08_0000 .
 
+Module 道 := A_2024_09_08_0000 .
+
 (** ** 片端自由道 *)
 
 (** 片端自由道に関するモジュールを定義します。 *)
@@ -4989,6 +4991,14 @@ End A_2024_07_26_0004 .
 
 Module 片端自由道 := A_2024_07_26_0004 .
 
+(** 恒等道です。 *)
+
+Definition A_2024_07_26_0008@{ i | } : forall A : Type@{ i } , forall x : A , 片端自由道@{ i } A x
+    := fun A : Type@{ i } => fun x : A => 片端自由道.構築子@{ i } A x x ( 道.恒等道@{ i } A x )
+.
+
+Definition 恒等道@{ i | } ( A : Type@{ i } ) ( x : A ) : 片端自由道@{ i } A x := A_2024_07_26_0008@{ i } A x .
+
 (** 端点を得ます。 *)
 
 Definition A_2024_07_26_0006@{ i | } : forall A : Type@{ i } , forall x : A , 片端自由道@{ i } A x -> A
@@ -5020,20 +5030,10 @@ Definition A_2024_07_26_0007@{ i | }
             ( fun 対象_端点 : A => fun 対象_中身 : 道@{ i } A x 対象_端点 => 対象_中身 )
 .
 
-(** 恒等道です。 *)
-
-Definition A_2024_07_26_0008@{ i | } : forall A : Type@{ i } , forall x : A , 片端自由道@{ i } A x
-    := fun A : Type@{ i } => fun x : A => 片端自由道.構築子@{ i } A x x ( 恒等道@{ i } A x )
-.
-
 (** 常に恒等道と等しくなります。 *)
 
 Definition A_2024_07_26_0009@{ i | }
-    :
-        forall A : Type@{ i } ,
-        forall x : A ,
-        forall p : 片端自由道@{ i } A x ,
-        道@{ i } ( 片端自由道@{ i } A x ) ( A_2024_07_26_0008@{ i } A x ) p
+    : forall A : Type@{ i } , forall x : A , forall p : 片端自由道@{ i } A x , 道@{ i } ( 片端自由道@{ i } A x ) ( 恒等道@{ i } A x ) p
 .
 Proof .
     refine ( fun A : Type@{ i } => _ ) .
@@ -5045,7 +5045,7 @@ Proof .
                 A
                 x
                 p
-                ( fun p_ : 片端自由道@{ i } A x => 道@{ i } ( 片端自由道@{ i } A x ) ( A_2024_07_26_0008@{ i } A x ) p_ )
+                ( fun p_ : 片端自由道@{ i } A x => 道@{ i } ( 片端自由道@{ i } A x ) ( 恒等道@{ i } A x ) p_ )
                 ( fun p_端点 : A => fun p_中身 : 道@{ i } A x p_端点 => _ )
         )
     .
@@ -5060,12 +5060,12 @@ Proof .
                     fun x_ : A =>
                     fun p_端点_ : A =>
                     fun p_中身_ : 道@{ i } A x_ p_端点_ =>
-                    道@{ i } ( 片端自由道@{ i } A x_ ) ( A_2024_07_26_0008@{ i } A x_ ) ( 片端自由道.構築子@{ i } A x_ p_端点_ p_中身_ )
+                    道@{ i } ( 片端自由道@{ i } A x_ ) ( 恒等道@{ i } A x_ ) ( 片端自由道.構築子@{ i } A x_ p_端点_ p_中身_ )
                 )
                 ( fun y : A => _ )
         )
     .
-    exact ( 恒等道@{ i } ( 片端自由道@{ i } A y ) ( A_2024_07_26_0008@{ i } A y ) ) .
+    exact ( 道.恒等道@{ i } ( 片端自由道@{ i } A y ) ( 恒等道@{ i } A y ) ) .
 Defined .
 
 End A_2024_09_11_0000 .
@@ -5091,8 +5091,6 @@ Import A_2024_08_30_0006 .
 Import A_2024_09_06_0005 .
 
 Import A_2024_09_08_0000 .
-
-Import A_2024_09_11_0000 .
 
 (** ゼロとゼロを足した数はゼロに等しくなります。 *)
 
