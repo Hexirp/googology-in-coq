@@ -4798,6 +4798,73 @@ Proof .
     exact ( 恒等道@{ i } ( B x ) u ) .
 Defined .
 
+(** [p] と [q] を結合した道に沿って [u] を輸送した値は [u] を [p] に沿って輸送した値を [q] に沿って輸送した値に等しくなります。 *)
+
+Definition A_2024_07_26_0003@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall B : A -> Type@{ i } ,
+        forall x : A ,
+        forall y : A ,
+        forall z : A ,
+        forall p : 道@{ i } A y z ,
+        forall q : 道@{ i } A z x ,
+        forall u : B y ,
+        道@{ i } ( B x ) ( 輸送@{ i } A B x y ( 結合@{ i } A y x z p q ) u ) ( 輸送@{ i } A B x z q ( 輸送@{ i } A B z y p u ) )
+.
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun B : A -> Type@{ i } => _ ) .
+    refine ( fun x : A => _ ) .
+    refine ( fun y : A => _ ) .
+    refine ( fun z : A => _ ) .
+    refine ( fun p : 道@{ i } A y z => _ ) .
+    refine
+        (
+            道.依存型の場合分け@{ i }
+                A
+                y
+                z
+                p
+                (
+                    fun y_ : A =>
+                    fun z_ : A =>
+                    fun p_ : 道@{ i } A y_ z_ =>
+                    forall q : 道@{ i } A z_ x ,
+                    forall u : B y_ ,
+                    道@{ i }
+                        ( B x )
+                        ( 輸送@{ i } A B x y_ ( 結合@{ i } A y_ x z_ p_ q ) u )
+                        ( 輸送@{ i } A B x z_ q ( 輸送@{ i } A B z_ y_ p_ u ) )
+                )
+                ( fun w : A => _ )
+        )
+    .
+    refine ( fun q : 道@{ i } A w x => _ ) .
+    refine
+        (
+            道.依存型の場合分け@{ i }
+                A
+                w
+                x
+                q
+                (
+                    fun w_ : A =>
+                    fun x_ : A =>
+                    fun q_ : 道@{ i } A w_ x_ =>
+                    forall u : B w_ ,
+                    道@{ i }
+                        ( B x_ )
+                        ( 輸送@{ i } A B x_ w_ ( 結合@{ i } A w_ x_ w_ ( 恒等道@{ i } A w_ ) q_ ) u )
+                        ( 輸送@{ i } A B x_ w_ q_ ( 輸送@{ i } A B w_ w_ ( 恒等道@{ i } A w_ ) u ) )
+                )
+                ( fun v : A => _ )
+        )
+    .
+    refine ( fun u : B v => _ ) .
+    exact ( 恒等道@{ i } ( B v ) u  ) .
+Defined .
+
 End A_2024_09_08_0000 .
 
 (** ** 残り *)
@@ -4821,159 +4888,6 @@ Import A_2024_08_30_0006 .
 Import A_2024_09_06_0005 .
 
 Import A_2024_09_08_0000 .
-
-(** [p] と [q] を結合した道に沿って [u] を輸送した値は [u] を [p] に沿って輸送した値を [q] に沿って輸送した値に等しくなります。 *)
-
-Definition A_2024_07_26_0003@{ i | }
-        ( A : Type@{ i } )
-        ( B : A -> Type@{ i } )
-        ( x : A )
-        ( y : A )
-        ( z : A )
-        ( p : 道@{ i } A y x )
-        ( q : 道@{ i } A z y )
-        ( u : B z )
-    :
-        道@{ i }
-            ( B x )
-            ( 輸送@{ i } A B x z ( 結合@{ i } A z x y q p ) u )
-            ( 輸送@{ i } A B x y p ( 輸送@{ i } A B y z q u ) )
-.
-Proof .
-    refine
-        (
-            let
-                a
-                    :
-                        forall q_ : 道@{ i } A z y ,
-                        forall u_ : B z ,
-                        道@{ i }
-                            ( B x )
-                            ( 輸送@{ i } A B x z ( 結合@{ i } A z x y q_ p ) u_ )
-                            ( 輸送@{ i } A B x y p ( 輸送@{ i } A B y z q_ u_ ) )
-                    := _
-            in
-                a q u
-        )
-    .
-    refine
-        (
-            match
-                p
-            as
-                p_
-            in
-                A_2024_07_22_0009 _ y_ x_
-            return
-                forall q_ : 道@{ i } A z y_ ,
-                forall u_ : B z ,
-                道@{ i }
-                    ( B x_ )
-                    ( 輸送@{ i } A B x_ z ( 結合@{ i } A z x_ y_ q_ p_ ) u_ )
-                    ( 輸送@{ i } A B x_ y_ p_ ( 輸送@{ i } A B y_ z q_ u_ ) )
-            with
-                A_2024_07_22_0010 _ w => _
-            end
-        )
-    .
-    refine
-        (
-            let
-                a ( q_ : 道@{ i } A z w )
-                    :
-                        forall u_ : B z ,
-                        道@{ i }
-                            ( B w )
-                            (
-                                輸送@{ i }
-                                    A
-                                    B
-                                    w
-                                    z
-                                    ( 結合@{ i } A z w w q_ ( A_2024_07_22_0010@{ i } A w ) )
-                                    u_
-                            )
-                            (
-                                輸送@{ i }
-                                    A
-                                    B
-                                    w
-                                    w
-                                    ( A_2024_07_22_0010@{ i } A w )
-                                    ( 輸送@{ i } A B w z q_ u_ )
-                            )
-                    := _
-            in
-                a
-        )
-    .
-    refine
-        (
-            match
-                q_
-            as
-                q__
-            in
-                A_2024_07_22_0009 _ z_ w_
-            return
-                forall u_ : B z_ ,
-                道@{ i }
-                    ( B w_ )
-                    (
-                        輸送@{ i }
-                            A
-                            B
-                            w_
-                            z_
-                            ( 結合@{ i } A z_ w_ w_ q__ ( A_2024_07_22_0010@{ i } A w_ ) )
-                            u_
-                    )
-                    ( 輸送@{ i } A B w_ w_ ( A_2024_07_22_0010@{ i } A w_ ) ( 輸送@{ i } A B w_ z_ q__ u_ ) )
-            with
-                A_2024_07_22_0010 _ v => _
-            end
-        )
-    .
-    refine
-        (
-            let
-                a ( u_ : B v )
-                    :
-                        道@{ i }
-                            ( B v )
-                            (
-                                輸送@{ i }
-                                    A
-                                    B
-                                    v
-                                    v
-                                    ( 結合@{ i } A v v v ( A_2024_07_22_0010@{ i } A v ) ( A_2024_07_22_0010@{ i } A v ) )
-                                    u_
-                            )
-                            (
-                                輸送@{ i }
-                                    A
-                                    B
-                                    v
-                                    v
-                                    ( A_2024_07_22_0010@{ i } A v )
-                                    (
-                                        輸送@{ i }
-                                            A
-                                            B
-                                            v
-                                            v
-                                            ( A_2024_07_22_0010@{ i } A v )
-                                            u_
-                                    )
-                            )
-                    := _
-            in
-                a
-        )
-    .
-    exact ( A_2024_07_22_0010@{ i } ( B v ) u_ ) .
-Defined .
 
 (** 恒等道へ依存関数を適用した道は恒等道に等しくまります。 *)
 
