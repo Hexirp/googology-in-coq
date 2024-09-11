@@ -4780,6 +4780,24 @@ Proof .
     exact ( 恒等道@{ i } ( 道@{ i } A ( f z ) ( f z ) ) ( 恒等道@{ i } A ( f z ) ) ) .
 Defined .
 
+(** 恒等道に沿って [u] を輸送した値は [u] に等しくなります。 *)
+
+Definition A_2024_07_22_0030@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall B : A -> Type@{ i } ,
+        forall x : A ,
+        forall u : B x ,
+        道@{ i } ( B x ) ( 輸送@{ i } A B x x ( 恒等道@{ i } A x ) u ) u
+.
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun B : A -> Type@{ i } => _ ) .
+    refine ( fun x : A => _ ) .
+    refine ( fun u : B x => _ ) .
+    exact ( 恒等道@{ i } ( B x ) u ) .
+Defined .
+
 End A_2024_09_08_0000 .
 
 (** ** 残り *)
@@ -4803,17 +4821,6 @@ Import A_2024_08_30_0006 .
 Import A_2024_09_06_0005 .
 
 Import A_2024_09_08_0000 .
-
-(** 恒等道に沿って [u] を輸送した値は [u] に等しくなります。 *)
-
-Definition A_2024_07_22_0030@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) ( x : A ) ( u : B x )
-    :
-        道@{ i }
-            ( B x )
-            ( 輸送@{ i } A B x x ( A_2024_07_22_0010@{ i } A x ) u )
-            u
-    := A_2024_07_22_0010@{ i } ( B x ) u
-.
 
 (** [p] と [q] を結合した道に沿って [u] を輸送した値は [u] を [p] に沿って輸送した値を [q] に沿って輸送した値に等しくなります。 *)
 
