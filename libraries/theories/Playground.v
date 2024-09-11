@@ -5026,6 +5026,48 @@ Definition A_2024_07_26_0008@{ i | } : forall A : Type@{ i } , forall x : A , �
     := fun A : Type@{ i } => fun x : A => 片端自由道.構築子@{ i } A x x ( 恒等道@{ i } A x )
 .
 
+(** 常に恒等道と等しくなります。 *)
+
+Definition A_2024_07_26_0009@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall x : A ,
+        forall p : 片端自由道@{ i } A x ,
+        道@{ i } ( 片端自由道@{ i } A x ) ( A_2024_07_26_0008@{ i } A x ) p
+.
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun x : A => _ ) .
+    refine ( fun p : 片端自由道@{ i } A x => _ ) .
+    refine
+        (
+            片端自由道.依存型の場合分け@{ i }
+                A
+                x
+                p
+                ( fun p_ : 片端自由道@{ i } A x => 道@{ i } ( 片端自由道@{ i } A x ) ( A_2024_07_26_0008@{ i } A x ) p_ )
+                ( fun p_端点 : A => fun p_中身 : 道@{ i } A x p_端点 => _ )
+        )
+    .
+    refine
+        (
+            道.依存型の場合分け@{ i }
+                A
+                x
+                p_端点
+                p_中身
+                (
+                    fun x_ : A =>
+                    fun p_端点_ : A =>
+                    fun p_中身_ : 道@{ i } A x_ p_端点_ =>
+                    道@{ i } ( 片端自由道@{ i } A x_ ) ( A_2024_07_26_0008@{ i } A x_ ) ( 片端自由道.構築子@{ i } A x_ p_端点_ p_中身_ )
+                )
+                ( fun y : A => _ )
+        )
+    .
+    exact ( 恒等道@{ i } ( 片端自由道@{ i } A y ) ( A_2024_07_26_0008@{ i } A y ) ) .
+Defined .
+
 End A_2024_09_11_0000 .
 
 (** ** 残り *)
@@ -5051,46 +5093,6 @@ Import A_2024_09_06_0005 .
 Import A_2024_09_08_0000 .
 
 Import A_2024_09_11_0000 .
-
-(** 片端自由道は常に恒等道と等しくなります。 *)
-
-Definition A_2024_07_26_0009@{ i | } ( A : Type@{ i } ) ( x : A ) ( p : 片端自由道@{ i } A x )
-    : 道@{ i } ( 片端自由道@{ i } A x ) ( A_2024_07_26_0008@{ i } A x ) p
-.
-Proof .
-    refine
-        (
-            match
-                p
-            as
-                p_
-            return
-                道@{ i } ( 片端自由道@{ i } A x ) ( A_2024_07_26_0008@{ i } A x ) p_
-            with
-                A_2024_07_26_0005 _ _ y p_中身 => _
-            end
-        )
-    .
-    refine
-        (
-            match
-                p_中身
-            as
-                p_中身_
-            in
-                A_2024_07_22_0009 _ x_ y_
-            return
-                道@{ i }
-                    ( 片端自由道@{ i } A x_ )
-                    ( A_2024_07_26_0008@{ i } A x_ )
-                    ( A_2024_07_26_0005@{ i } A x_ y_ p_中身_ )
-            with
-                A_2024_07_22_0010 _ z => _
-            end
-        )
-    .
-    exact ( A_2024_07_22_0010@{ i } ( 片端自由道@{ i } A z ) ( A_2024_07_26_0008@{ i } A z ) ) .
-Defined .
 
 (** ゼロとゼロを足した数はゼロに等しくなります。 *)
 
