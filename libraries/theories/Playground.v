@@ -4865,6 +4865,27 @@ Proof .
     exact ( 恒等道@{ i } ( B v ) u  ) .
 Defined .
 
+(** 恒等道へ依存関数を適用した道は恒等道に等しくまります。 *)
+
+Definition A_2024_07_22_0031@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall B : A -> Type@{ i } ,
+        forall f : forall x : A , B x ,
+        forall x : A ,
+        道@{ i }
+            ( 道@{ i } ( B x ) ( f x ) ( f x ) )
+            ( 依存型の適用@{ i } A B f x x ( 恒等道@{ i } A x ) )
+            ( 恒等道@{ i } ( B x ) ( f x ) )
+.
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun B : A -> Type@{ i } => _ ) .
+    refine ( fun f : forall x : A , B x => _ ) .
+    refine ( fun x : A => _ ) .
+    exact ( 恒等道@{ i } ( 道@{ i } ( B x ) ( f x ) ( f x ) ) ( 恒等道@{ i } ( B x ) ( f x ) ) ) .
+Defined .
+
 End A_2024_09_08_0000 .
 
 (** ** 残り *)
@@ -4888,17 +4909,6 @@ Import A_2024_08_30_0006 .
 Import A_2024_09_06_0005 .
 
 Import A_2024_09_08_0000 .
-
-(** 恒等道へ依存関数を適用した道は恒等道に等しくまります。 *)
-
-Definition A_2024_07_22_0031@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) ( f : forall x : A , B x ) ( x : A )
-    :
-        道@{ i }
-            ( 道@{ i } ( B x ) ( f x ) ( f x ) )
-            ( 依存型の適用@{ i } A B f x x ( A_2024_07_22_0010@{ i } A x ) )
-            ( A_2024_07_22_0010@{ i } ( B x ) ( f x ) )
-    := A_2024_07_22_0010@{ i } ( 道@{ i } ( B x ) ( f x ) ( f x ) ) ( A_2024_07_22_0010@{ i } ( B x ) ( f x ) )
-.
 
 (** 一方の端点を自由にした道を定義します。「片端自由道」と呼びます。 *)
 
