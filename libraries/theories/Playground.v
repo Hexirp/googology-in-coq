@@ -4736,6 +4736,50 @@ Proof .
     exact ( 恒等道@{ i } ( 道@{ i } A ( f v ) ( f v ) ) ( 恒等道@{ i } A ( f v ) ) ) .
 Defined .
 
+(** [p] を反転した道に [f] を適用した道は [p] に [f] を適用した道を反転した道に等しくなります。 *)
+
+Definition A_2024_07_26_0000@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall B : Type@{ i } ,
+        forall f : B -> A ,
+        forall x : B ,
+        forall y : B ,
+        forall p : 道@{ i } B y x ,
+        道@{ i }
+            ( 道@{ i } A ( f x ) ( f y ) )
+            ( 適用@{ i } A B f x y ( 反転@{ i } B x y p ) )
+            ( 反転@{ i } A ( f x ) ( f y ) ( 適用@{ i } A B f y x p ) )
+.
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun B : Type@{ i } => _ ) .
+    refine ( fun f : B -> A => _ ) .
+    refine ( fun x : B => _ ) .
+    refine ( fun y : B => _ ) .
+    refine ( fun p : 道@{ i } B y x => _ ) .
+    refine
+        (
+            道.依存型の場合分け@{ i }
+                B
+                y
+                x
+                p
+                (
+                    fun y_ : B =>
+                    fun x_ : B =>
+                    fun p_ : 道@{ i } B y_ x_ =>
+                    道@{ i }
+                        ( 道@{ i } A ( f x_ ) ( f y_ ) )
+                        ( 適用@{ i } A B f x_ y_ ( 反転@{ i } B x_ y_ p_ ) )
+                        ( 反転@{ i } A ( f x_ ) ( f y_ ) ( 適用@{ i } A B f y_ x_ p_ ) )
+                )
+                ( fun z : B => _ )
+        )
+    .
+    exact ( 恒等道@{ i } ( 道@{ i } A ( f z ) ( f z ) ) ( 恒等道@{ i } A ( f z ) ) ) .
+Defined .
+
 End A_2024_09_08_0000 .
 
 (** ** 残り *)
@@ -4759,38 +4803,6 @@ Import A_2024_08_30_0006 .
 Import A_2024_09_06_0005 .
 
 Import A_2024_09_08_0000 .
-
-(** [p] を反転した道に [f] を適用した道は [p] に [f] を適用した道を反転した道に等しくなります。 *)
-
-Definition A_2024_07_26_0000@{ i | }
-        ( A : Type@{ i } )
-        ( B : Type@{ i } )
-        ( f : B -> A )
-        ( x : B )
-        ( y : B )
-        ( p : 道@{ i } B y x )
-    :
-        道@{ i }
-            ( 道@{ i } A ( f x ) ( f y ) )
-            ( 適用@{ i } A B f x y ( 反転@{ i } B x y p ) )
-            ( 反転@{ i } A ( f x ) ( f y ) ( 適用@{ i } A B f y x p ) )
-    :=
-        match
-            p
-        as
-            p_
-        in
-            A_2024_07_22_0009 _ y_ x_
-        return
-            道@{ i }
-                ( 道@{ i } A ( f x_ ) ( f y_ ) )
-                ( 適用@{ i } A B f x_ y_ ( 反転@{ i } B x_ y_ p_ ) )
-                ( 反転@{ i } A ( f x_ ) ( f y_ ) ( 適用@{ i } A B f y_ x_ p_ ) )
-        with
-            A_2024_07_22_0010 _ z
-                => A_2024_07_22_0010@{ i } ( 道@{ i } A ( f z ) ( f z ) ) ( A_2024_07_22_0010@{ i } A ( f z ) )
-        end
-.
 
 (** 恒等道に沿って [u] を輸送した値は [u] に等しくなります。 *)
 
