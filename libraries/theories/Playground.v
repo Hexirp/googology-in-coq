@@ -4,13 +4,13 @@
 
 (** << Googology_In_Coq.Base >> を読み込みます。 *)
 
-Require Googology_In_Coq.Base.
+Require Googology_In_Coq.Base .
 
 (** ** 他のモジュールの取り込み *)
 
 (** << Googology_In_Coq.Base >> を取り込みます。 *)
 
-Import Googology_In_Coq.Base.
+Import Googology_In_Coq.Base .
 
 (** ** 関数に関する定義 *)
 
