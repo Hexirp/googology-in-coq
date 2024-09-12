@@ -1,2073 +1,5721 @@
 (** Playground モジュールは、まだ単独のモジュールに分割していないコードを置く場所です。 *)
 
-Require Googology_In_Coq.Base.
+(** ** 他のファイルの読み込み *)
 
-Import Googology_In_Coq.Base.
+(** << Googology_In_Coq.Base >> を読み込みます。 *)
 
-(** 依存関数型を定義します。  *)
+Require Googology_In_Coq.Base .
 
-Definition 依存関数@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) : Type@{ i } := forall x : A, B x.
+(** ** 他のモジュールの取り込み *)
 
-(** 関数型を定義します。 *)
+(** << Googology_In_Coq.Base >> を取り込みます。 *)
 
-Definition 関数@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) : Type@{ i } := A -> B.
+Import Googology_In_Coq.Base .
 
-Definition 恒等関数_関数@{ i | } ( A : Type@{ i } ) : A -> A := fun x : A => x.
+(** ** 関数に関する定義 *)
 
-Definition 合成する_関数@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( C : Type@{ i } ) ( f : B -> C ) ( g : A -> B )
-    : A -> C
-    := fun x : A => f ( g x )
+(** 関数に関するモジュールを定義します。 *)
+
+Module A_2024_08_26_0002 .
+
+(** 恒等関数を定義します。 *)
+
+Definition A_2024_07_21_0000@{ i | } : forall A : Type@{ i } , A -> A := fun A : Type@{ i } => fun x : A => x .
+
+Definition 恒等関数@{ i | } ( A : Type@{ i } ) ( x : A ) : A := A_2024_07_21_0000@{ i } A x .
+
+(** 関数合成を定義します。 *)
+
+Definition A_2024_07_21_0001@{ i | }
+    : forall A : Type@{ i } , forall B : Type@{ i } , forall C : Type@{ i } , ( C -> A ) -> ( B -> C ) -> B -> A
+    := fun A : Type@{ i } => fun B : Type@{ i } => fun C : Type@{ i } => fun f : C -> A => fun g : B -> C => fun x : B => f ( g x )
 .
 
-Definition 定数関数_関数@{ i } ( A : Type@{ i } ) ( B : Type@{ i } ) ( x : A ) : B -> A := fun y : B => x.
+Definition 合成@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( C : Type@{ i } ) ( f : C -> A ) ( g : B -> C ) ( x : B ) : A
+    := A_2024_07_21_0001@{ i } A B C f g x
+.
+
+(** 二個の引数を取る依存関数を取り、その二個の引数を入れ替えます。 *)
+
+Definition A_2024_08_02_0002@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall B : Type@{ i } ,
+        forall C : A -> B -> Type@{ i } ,
+        ( forall x : A , forall y : B , C x y )
+        ->
+        forall y : B , forall x : A , C x y
+    :=
+        fun A : Type@{ i } =>
+        fun B : Type@{ i } =>
+        fun C : A -> B -> Type@{ i } =>
+        fun f : forall x : A , forall y : B , C x y =>
+        fun y : B => fun x : A => f x y
+.
+
+(** ある値を取り、その値を常に返す定数関数を作ります。 *)
+
+Definition A_2024_07_21_0002@{ i | }
+    : forall A : Type@{ i } , forall B : Type@{ i } , A -> B -> A
+    := fun A : Type@{ i } => fun B : Type@{ i } => fun x : A => fun y : B => x
+.
+
+Definition 定数関数を作る@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( x : A ) ( y : B ) : A := A_2024_07_21_0002@{ i } A B x y .
+
+End A_2024_08_26_0002 .
+
+(** ** 空型 *)
+
+(** 空型に関するモジュールを定義します。 *)
+
+Module A_2024_08_26_0003 .
 
 (** 空型を定義します。「空型」は "empty type" の訳語です。 *)
 
-Inductive 空型@{ i | } : Type@{ i } :=.
+Inductive A_2024_07_21_0003@{ i | } : Type@{ i } := .
 
-(** 「不条理である」は "absurd" の訳語です。 *)
+Definition 空型@{ i | } : Type@{ i } := A_2024_07_21_0003@{ i } .
 
-Definition 不条理である_空型@{ i | } ( A : Type@{ i } ) ( x : 空型@{ i } ) : A := match x with end.
+Module A_2024_07_21_0003 .
 
-(** 否定を定義します。 *)
+(** 空型について場合分けします。 *)
 
-Definition 否定@{ i | } ( A : Type@{ i } ) : Type@{ i } := A -> 空型@{ i }.
-
-Definition A_2024_01_26_0000@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( f : A -> B ) : 否定@{ i } B -> 否定@{ i } A
-    := fun x : 否定@{ i } B => fun y : A => x ( f y )
+Definition A_2024_07_21_0004@{ i | }
+    : 空型@{ i } -> forall 目標 : Type@{ i } , 目標
+    := fun 対象 : 空型@{ i } => fun 目標 : Type@{ i } => match 対象 with end
 .
+
+Definition 場合分け@{ i | } ( 対象 : 空型@{ i } ) ( 目標 : Type@{ i } ) : 目標 := A_2024_07_21_0004@{ i } 対象 目標 .
+
+(** 空型について依存型の場合分けをします。 *)
+
+Definition A_2024_08_26_0004@{ i | }
+    : forall 対象 : 空型@{ i } , forall 目標 : 空型@{ i } -> Type@{ i } , 目標 対象
+    := fun 対象 : 空型@{ i } => fun 目標 : 空型@{ i } -> Type@{ i } => match 対象 as 対象_ return 目標 対象_ with end
+.
+
+Definition 依存型の場合分け@{ i | } ( 対象 : 空型@{ i } ) ( 目標 : 空型@{ i } -> Type@{ i } ) : 目標 対象
+    := A_2024_08_26_0004@{ i } 対象 目標
+.
+
+End A_2024_07_21_0003 .
+
+Module 空型 := A_2024_07_21_0003 .
+
+(** 空型の値が存在する時には終了することができます。 *)
+
+Definition A_2024_08_27_0007@{ i | } ( A : Type@{ i } ) ( x : 空型@{ i } ) : A := 空型.場合分け x A .
+
+Definition 終了する@{ i | } ( A : Type@{ i } ) ( x : 空型@{ i } ) : A := A_2024_08_27_0007 A x .
+
+(** 対偶を取る関数です。 *)
+
+Definition A_2024_07_21_0008@{ i | }
+    : forall A : Type@{ i } , forall B : Type@{ i } , ( A -> B ) -> ( B -> 空型@{ i } ) -> A -> 空型@{ i }
+    := fun A : Type@{ i } => fun B : Type@{ i } => fun f : A -> B => fun x : B -> 空型@{ i } => fun y : A => x ( f y )
+.
+
+End A_2024_08_26_0003 .
+
+(** ** 否定型 *)
+
+(** 否定型に関するモジュールを定義します。 *)
+
+Module A_2024_08_27_0000 .
+
+(** << A_2024_08_26_0003 >> を取り込みます。 *)
+
+Import A_2024_08_26_0003 .
+
+(** 否定を表す型を定義します。これを「否定型」と呼びます。 *)
+
+Inductive A_2024_08_01_0001@{ i | } ( A : Type@{ i } ) : Type@{ i }
+    := A_2024_08_01_0002 : ( A -> 空型@{ i } ) -> A_2024_08_01_0001 A
+.
+
+Definition 否定型@{ i | } ( A : Type@{ i } ) : Type@{ i } := A_2024_08_01_0001@{ i } A .
+
+Module A_2024_08_01_0001 .
+
+Definition 構築子@{ i | } ( A : Type@{ i } ) ( x : A -> 空型@{ i } ) : 否定型@{ i } A := A_2024_08_01_0002@{ i } A x .
+
+(** [A] の否定を分解します。 *)
+
+Definition A_2024_08_01_0003@{ i | }
+    : forall A : Type@{ i } , 否定型@{ i } A -> A -> 空型@{ i }
+    := fun A : Type@{ i } => fun 対象 : 否定型@{ i } A => fun x : A => match 対象 with A_2024_08_01_0002 _ 対象_中身 => 対象_中身 x end
+.
+
+Definition 分解子@{ i | } ( A : Type@{ i } ) ( 対象 : 否定型@{ i } A ) ( x : A ) : 空型@{ i }
+    := A_2024_08_01_0003@{ i } A 対象 x
+.
+
+(** 否定型について場合分けします。 *)
+
+Definition A_2024_08_27_0001@{ i | }
+    : forall A : Type@{ i } , 否定型@{ i } A -> forall 目標 : Type@{ i } , ( ( A -> 空型@{ i } ) -> 目標 ) -> 目標
+    :=
+        fun A : Type@{ i } =>
+        fun 対象 : 否定型@{ i } A =>
+        fun 目標 : Type@{ i } =>
+        fun 処理 : ( A -> 空型@{ i } ) -> 目標 =>
+        match 対象 with A_2024_08_01_0002 _ 対象_中身 => 処理 対象_中身 end
+.
+
+Definition 場合分け@{ i | }
+    ( A : Type@{ i } )
+    ( 対象 : 否定型@{ i } A )
+    ( 目標 : Type@{ i } )
+    ( 処理 : ( A -> 空型@{ i } ) -> 目標 )
+    : 目標
+    := A_2024_08_27_0001@{ i } A 対象 目標 処理
+.
+
+(** 否定型について依存型の場合分けをします。 *)
+
+Definition A_2024_08_27_0002@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall 対象 : 否定型@{ i } A ,
+        forall 目標 : 否定型@{ i } A -> Type@{ i } ,
+        ( forall 対象_中身 : A -> 空型@{ i } , 目標 ( 構築子@{ i } A 対象_中身 ) )
+        ->
+        目標 対象
+    :=
+        fun A : Type@{ i } =>
+        fun 対象 : 否定型@{ i } A =>
+        fun 目標 : 否定型@{ i } A -> Type@{ i } =>
+        fun 処理 : forall 対象_中身 : A -> 空型@{ i } , 目標 ( 構築子@{ i } A 対象_中身 ) =>
+        match 対象 as 対象_ return 目標 対象_ with A_2024_08_01_0002 _ 対象_中身 => 処理 対象_中身 end
+.
+
+Definition 依存型の場合分け@{ i | }
+    ( A : Type@{ i } )
+    ( 対象 : 否定型@{ i } A )
+    ( 目標 : 否定型@{ i } A -> Type@{ i } )
+    ( 処理 : forall 対象_中身 : A -> 空型@{ i } , 目標 ( 構築子@{ i } A 対象_中身 ) )
+    : 目標 対象
+    := A_2024_08_27_0002@{ i } A 対象 目標 処理
+.
+
+(** 否定型についての余場合分けです。 *)
+
+Definition A_2024_08_27_0003@{ i | }
+    : forall A : Type@{ i } , forall 前提 : Type@{ i } , ( 前提 -> A -> 空型@{ i } ) -> 前提 -> 否定型@{ i } A
+    :=
+        fun A : Type@{ i } =>
+        fun 前提 : Type@{ i } =>
+        fun 処理 : 前提 -> A -> 空型@{ i } =>
+        fun 対象 : 前提 =>
+        A_2024_08_01_0002@{ i } A ( 処理 対象 )
+.
+
+Definition 余場合分け@{ i | }
+    ( A : Type@{ i } )
+    ( 前提 : Type@{ i } )
+    ( 処理 : 前提 -> A -> 空型@{ i } )
+    ( 対象 : 前提 )
+    : 否定型@{ i } A
+    := A_2024_08_27_0003@{ i } A 前提 処理 対象
+.
+
+End A_2024_08_01_0001 .
+
+Module 否定型 := A_2024_08_01_0001 .
+
+(** 対偶を取る関数です。 *)
+
+Definition A_2024_08_01_0004@{ i | }
+    : forall A : Type@{ i } , forall B : Type@{ i } , ( A -> B ) -> 否定型@{ i } B -> 否定型@{ i } A
+    :=
+        fun A : Type@{ i } =>
+        fun B : Type@{ i } =>
+        fun f : A -> B =>
+        fun x : 否定型@{ i } B =>
+        否定型.構築子@{ i } A ( fun y : A => 否定型.分解子@{ i } B x ( f y ) )
+.
+
+Definition 対偶を取る@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( f : A -> B ) ( x : 否定型@{ i } B ) : 否定型@{ i } A
+    := A_2024_08_01_0004@{ i } A B f x
+.
+
+End A_2024_08_27_0000 .
+
+(** ** 直和型 *)
+
+(** 直和型に関するモジュールを定義します。 *)
+
+Module A_2024_08_27_0004 .
+
+(** << A_2024_08_26_0003 >> を取り込みます。 *)
+
+Import A_2024_08_26_0003 .
+
+(** << A_2024_08_27_0000 >> を取り込みます。 *)
+
+Import A_2024_08_27_0000 .
 
 (** 直和型を定義します。 *)
 
-Inductive 直和@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) : Type@{ i }
-    := 左_構築子_直和 : A -> 直和 A B | 右_構築子_直和 : B -> 直和 A B
+Inductive A_2024_07_21_0005@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) : Type@{ i }
+    := A_2024_07_21_0006 : A -> A_2024_07_21_0005 A B | A_2024_07_21_0007 : B -> A_2024_07_21_0005 A B
 .
 
-Definition A_2024_01_26_0001@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( e : 否定@{ i } B ) ( x : 直和@{ i } A B ) : A
-    := match x with 左_構築子_直和 _ _ x_l => x_l | 右_構築子_直和 _ _ x_r => 不条理である_空型 A ( e x_r ) end
+Definition 直和型@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) : Type@{ i } := A_2024_07_21_0005@{ i } A B .
+
+Module A_2024_07_21_0005 .
+
+Definition 左の場合の構築子@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( x : A ) : 直和型@{ i } A B
+    := A_2024_07_21_0006@{ i } A B x
 .
 
-Definition A_2024_01_26_0002@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( e : 否定@{ i } A ) ( x : 直和@{ i } A B ) : B
-    := match x with 左_構築子_直和 _ _ x_l => 不条理である_空型 B ( e x_l ) | 右_構築子_直和 _ _ x_r => x_r end
+Definition 右の場合の構築子@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( x : B ) : 直和型@{ i } A B
+    := A_2024_07_21_0007@{ i } A B x
 .
+
+(** 直和型について場合分けします。 *)
+
+Definition A_2024_08_27_0005@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall B : Type@{ i } ,
+        直和型@{ i } A B
+        ->
+        forall 目標 : Type@{ i } ,
+        ( A -> 目標 )
+        ->
+        ( B -> 目標 )
+        ->
+        目標
+    :=
+        fun A : Type@{ i } =>
+        fun B : Type@{ i } =>
+        fun 対象 : 直和型@{ i } A B =>
+        fun 目標 : Type@{ i } =>
+        fun 左の場合の処理 : A -> 目標 =>
+        fun 右の場合の処理 : B -> 目標 =>
+        match
+            対象
+        with
+            A_2024_07_21_0006 _ _ 対象_左 => 左の場合の処理 対象_左
+            |
+            A_2024_07_21_0007 _ _ 対象_右 => 右の場合の処理 対象_右
+        end
+.
+
+Definition 場合分け@{ i | }
+    ( A : Type@{ i } )
+    ( B : Type@{ i } )
+    ( 対象 : 直和型@{ i } A B )
+    ( 目標 : Type@{ i } )
+    ( 左の場合の処理 : A -> 目標 )
+    ( 右の場合の処理 : B -> 目標 )
+    : 目標
+    := A_2024_08_27_0005@{ i } A B 対象 目標 左の場合の処理 右の場合の処理
+.
+
+(** 直和型について依存型の場合分けをします。 *)
+
+Definition A_2024_08_27_0006@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall B : Type@{ i } ,
+        forall 対象 : 直和型@{ i } A B ,
+        forall 目標 : 直和型@{ i } A B -> Type@{ i } ,
+        ( forall 対象_左 : A , 目標 ( 左の場合の構築子@{ i } A B 対象_左 ) )
+        ->
+        ( forall 対象_右 : B , 目標 ( 右の場合の構築子@{ i } A B 対象_右 ) )
+        ->
+        目標 対象
+    :=
+        fun A : Type@{ i } =>
+        fun B : Type@{ i } =>
+        fun 対象 : 直和型@{ i } A B =>
+        fun 目標 : 直和型@{ i } A B -> Type@{ i } =>
+        fun 左の場合の処理 : forall 対象_左 : A , 目標 ( 左の場合の構築子@{ i } A B 対象_左 ) =>
+        fun 右の場合の処理 : forall 対象_右 : B , 目標 ( 右の場合の構築子@{ i } A B 対象_右 ) =>
+        match
+            対象
+        as
+            対象_
+        return
+            目標 対象_
+        with
+            A_2024_07_21_0006 _ _ 対象_左 => 左の場合の処理 対象_左
+            |
+            A_2024_07_21_0007 _ _ 対象_右 => 右の場合の処理 対象_右
+        end
+.
+
+Definition 依存型の場合分け@{ i | }
+    ( A : Type@{ i } )
+    ( B : Type@{ i } )
+    ( 対象 : 直和型@{ i } A B )
+    ( 目標 : 直和型@{ i } A B -> Type@{ i } )
+    ( 左の場合の処理 : forall 対象_左 : A , 目標 ( 左の場合の構築子@{ i } A B 対象_左 ) )
+    ( 右の場合の処理 : forall 対象_右 : B , 目標 ( 右の場合の構築子@{ i } A B 対象_右 ) )
+    : 目標 対象
+    := A_2024_08_27_0006@{ i } A B 対象 目標 左の場合の処理 右の場合の処理
+.
+
+End A_2024_07_21_0005 .
+
+Module 直和型 := A_2024_07_21_0005 .
+
+(** 直和型の値において、それが右の型の値である時に空型の値を生み出す場合、必ず左の型の値を取り出すことが出来ます。 *)
+
+Definition A_2024_07_21_0009@{ i | }
+    : forall A : Type@{ i } , forall B : Type@{ i } , ( B -> 空型@{ i } ) -> 直和型@{ i } A B -> A
+    :=
+        fun A : Type@{ i } =>
+        fun B : Type@{ i } =>
+        fun 証拠 : B -> 空型@{ i } =>
+        fun x : 直和型@{ i } A B =>
+        直和型.場合分け A B x A ( fun x_左 : A => x_左 ) ( fun x_右 : B => 終了する@{ i } A ( 証拠 x_右 ) )
+.
+
+(** 直和型の値において、それが左の型の値である時に空型の値を生み出す場合、必ず右の型の値を取り出すことが出来ます。 *)
+
+Definition A_2024_07_21_0010@{ i | }
+    : forall A : Type@{ i } , forall B : Type@{ i } , ( B -> 空型@{ i } ) -> 直和型@{ i } B A -> A
+    :=
+        fun A : Type@{ i } =>
+        fun B : Type@{ i } =>
+        fun 証拠 : B -> 空型@{ i } =>
+        fun x : 直和型@{ i } B A =>
+        直和型.場合分け B A x A ( fun x_左 : B => 終了する@{ i } A ( 証拠 x_左 ) ) ( fun x_右 : A => x_右 )
+.
+
+(** 直和型の値において、その右の型の否定の値がある場合、必ず左の型の値を取り出すことが出来ます。 *)
+
+Definition A_2024_08_02_0000@{ i | }
+    : forall A : Type@{ i } , forall B : Type@{ i } , 否定型@{ i } B -> 直和型@{ i } A B -> A
+    :=
+        fun A : Type@{ i } =>
+        fun B : Type@{ i } =>
+        fun 証拠 : 否定型@{ i } B =>
+        fun x : 直和型@{ i } A B =>
+        直和型.場合分け A B x A ( fun x_左 : A => x_左 ) ( fun x_右 : B => 終了する@{ i } A ( 否定型.分解子@{ i } B 証拠 x_右 ) )
+.
+
+(** 直和型の値において、その左の型の否定の値がある場合、必ず右の型の値を取り出すことが出来ます。 *)
+
+Definition A_2024_08_02_0001@{ i | }
+    : forall A : Type@{ i } , forall B : Type@{ i } , 否定型@{ i } B -> 直和型@{ i } B A -> A
+    :=
+        fun A : Type@{ i } =>
+        fun B : Type@{ i } =>
+        fun 証拠 : 否定型@{ i } B =>
+        fun x : 直和型@{ i } B A =>
+        直和型.場合分け B A x A ( fun x_左 : B => 終了する@{ i } A ( 否定型.分解子@{ i } B 証拠 x_左 ) ) ( fun x_右 : A => x_右 )
+.
+
+End A_2024_08_27_0004 .
+
+(** ** 単一型 *)
+
+(** 単一型に関するモジュールを定義します。 *)
+
+Module A_2024_08_28_0000 .
+
+(** << A_2024_08_26_0002 >> を取り込みます。 *)
+
+Import A_2024_08_26_0002 .
+
+(** << A_2024_08_26_0003 >> を取り込みます。 *)
+
+Import A_2024_08_26_0003 .
 
 (** 単一型を定義します。「単一型」は "unit type" の訳語です。 *)
 
-Inductive 単一型@{ i | } : Type@{ i } := 構築子_単一型 : 単一型.
+Inductive A_2024_07_21_0011@{ i | } : Type@{ i } := A_2024_07_21_0012 : A_2024_07_21_0011 .
+
+Definition 単一型@{ i | } : Type@{ i } := A_2024_07_21_0011@{ i } .
+
+Module A_2024_07_21_0011 .
+
+(** 単一型についての余場合分けです。 *)
+
+Definition A_2024_08_28_0001@{ i | }
+    : forall 前提 : Type@{ i } , 前提 -> 単一型@{ i }
+    := fun 前提 : Type@{ i } => fun 対象 : 前提 => A_2024_07_21_0012@{ i }
+.
+
+Definition 余場合分け@{ i | } ( 前提 : Type@{ i } ) ( 対象 : 前提 ) : 単一型@{ i } := A_2024_08_28_0001@{ i } 前提 対象 .
+
+(** 単一型についての余場合分けの整合性です。 *)
+
+Definition A_2024_08_28_0003@{ i | }
+    :
+        forall 前提 : Type@{ i } ,
+        forall 余表示射 : 単一型@{ i } -> 前提 ,
+        forall 対象 : 単一型@{ i } ,
+        forall 述語 : 単一型@{ i } -> Type@{ i } ,
+        述語 ( 余場合分け@{ i } 前提 ( 余表示射 対象 ) )
+        ->
+        述語 対象
+    :=
+        fun 前提 : Type@{ i } =>
+        fun 余表示射 : 単一型@{ i } -> 前提 =>
+        fun 対象 : 単一型@{ i } =>
+        match
+            対象
+        as
+            対象_
+        return
+            forall 述語 : 単一型@{ i } -> Type@{ i } ,
+            述語 ( 余場合分け@{ i } 前提 ( 余表示射 対象_ ) )
+            ->
+            述語 対象_
+        with
+            A_2024_07_21_0012
+                =>
+                    fun 述語 : 単一型@{ i } -> Type@{ i } =>
+                    fun x : 述語 ( 余場合分け@{ i } 前提 ( 余表示射 A_2024_07_21_0012@{ i } ) ) =>
+                    x
+        end
+.
+
+Definition 余場合分けの整合性@{ i | }
+    ( 前提 : Type@{ i } )
+    ( 余表示射 : 単一型@{ i } -> 前提 )
+    ( 対象 : 単一型@{ i } )
+    ( 述語 : 単一型@{ i } -> Type@{ i } )
+    ( x : 述語 ( 余場合分け@{ i } 前提 ( 余表示射 対象 ) ) )
+    : 述語 対象
+    := A_2024_08_28_0003@{ i } 前提 余表示射 対象 述語 x
+.
+
+End A_2024_07_21_0011 .
+
+Module 単一型 := A_2024_07_21_0011 .
+
+(** 単一型の唯一の値です。 *)
+
+Definition A_2024_08_28_0002@{ i | }
+    : 単一型@{ i }
+    := 単一型.余場合分け@{ i } ( 空型@{ i } -> 空型@{ i } ) ( 恒等関数@{ i } 空型@{ i } )
+.
+
+Definition 単一値@{ i | } : 単一型@{ i } := A_2024_08_28_0002@{ i } .
+
+(** 単一型について場合分けします。 *)
+
+Definition A_2024_08_28_0004@{ i | }
+    : 単一型@{ i } -> forall 目標 : Type@{ i } , 目標 -> 目標
+    := fun 対象 : 単一型@{ i } => fun 目標 : Type@{ i } => fun 処理 : 目標 => 処理
+.
+
+(** 単一型について依存型の場合分けをします。 *)
+
+Definition A_2024_08_28_0005@{ i | }
+    : forall 対象 : 単一型@{ i } , forall 目標 : 単一型@{ i } -> Type@{ i } , 目標 単一値@{ i } -> 目標 対象
+    :=
+        fun 対象 : 単一型@{ i } =>
+        fun 目標 : 単一型@{ i } -> Type@{ i } =>
+        fun 処理 : 目標 単一値@{ i } =>
+        単一型.余場合分けの整合性@{ i } ( 単一型@{ i } ) ( 恒等関数@{ i } ( 単一型@{ i } ) ) 対象 目標 処理
+.
+
+End A_2024_08_28_0000 .
+
+(** ** 直積型 *)
+
+(** 直積型に関するモジュールを定義します。 *)
+
+Module A_2024_08_28_0006 .
+
+(** << A_2024_08_26_0002 >> を取り込みます。 *)
+
+Import A_2024_08_26_0002 .
+
+(** << A_2024_08_28_0000 >> を取り込みます。 *)
+
+Import A_2024_08_28_0000 .
 
 (** 直積型を定義します。 *)
 
-Inductive 直積@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) : Type@{ i } := 構築子_直積 : A -> B -> 直積 A B.
-
-
-Definition 構築する_直積@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( x : A ) ( y : B ) : 直積@{ i } A B
-    := 構築子_直積 A B x y
+Inductive A_2024_07_21_0013@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) : Type@{ i }
+    := A_2024_07_21_0014 : A -> B -> A_2024_07_21_0013 A B
 .
 
-Definition 第一射影関数_直積@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( x : 直積@{ i } A B ) : A
-    := match x with 構築子_直積 _ _ x_1 x_2 => x_1 end
+Definition 直積型@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) : Type@{ i } := A_2024_07_21_0013@{ i } A B .
+
+Module A_2024_07_21_0013 .
+
+(** 一番目の区域の値を取り出します。「区域」は "field" の訳語です。 *)
+
+Definition A_2024_07_21_0015@{ i | }
+    : forall A : Type@{ i } , forall B : Type@{ i } , 直積型@{ i } A B -> A
+    :=
+        fun A : Type@{ i } =>
+        fun B : Type@{ i } =>
+        fun 対象 : 直積型@{ i } A B =>
+        match 対象 with A_2024_07_21_0014 _ _ 対象_1 対象_2 => 対象_1 end
 .
 
-Definition 第二射影関数_直積@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( x : 直積@{ i } A B ) : B
-    := match x with 構築子_直積 _ _ x_1 x_2 => x_2 end
+Definition 一番目の区域の分解子@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( 対象 : 直積型@{ i } A B ) : A
+    := A_2024_07_21_0015 A B 対象
 .
 
-Definition カリー化する_直積@{ i | }
-        ( A : Type@{ i } )
-        ( B : Type@{ i } )
-        ( C : Type@{ i } )
-        ( f : 直積@{ i } A B -> C )
-    : A -> B -> C
-    := fun ( x_1 : A ) ( x_2 : B ) => f ( 構築する_直積 A B x_1 x_2 )
+(** 二番目の区域の値を取り出します。「区域」は "field" の訳語です。 *)
+
+Definition A_2024_07_21_0016@{ i | }
+    : forall A : Type@{ i } , forall B : Type@{ i } , 直積型@{ i } B A -> A
+    :=
+        fun A : Type@{ i } =>
+        fun B : Type@{ i } =>
+        fun 対象 : 直積型@{ i } B A =>
+        match 対象 with A_2024_07_21_0014 _ _ 対象_1 対象_2 => 対象_2 end
 .
 
-Definition 非カリー化する_直積@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( C : Type@{ i } ) ( f : A -> B -> C )
-    : 直積@{ i } A B -> C
-    := fun x : 直積@{ i } A B => match x with 構築子_直積 _ _ x_1 x_2 => f x_1 x_2 end
+Definition 二番目の区域の分解子@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( 対象 : 直積型@{ i } B A ) : A
+    := A_2024_07_21_0016 A B 対象
 .
+
+(** 直積型についての余場合分けです。 *)
+
+Definition A_2024_08_28_0007@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall B : Type@{ i } ,
+        forall 前提 : Type@{ i } ,
+        ( 前提 -> A )
+        ->
+        ( 前提 -> B )
+        ->
+        前提
+        ->
+        直積型@{ i } A B
+    :=
+        fun A : Type@{ i } =>
+        fun B : Type@{ i } =>
+        fun 前提 : Type@{ i } =>
+        fun 一番目の区域の処理 : 前提 -> A =>
+        fun 二番目の区域の処理 : 前提 -> B =>
+        fun 対象 : 前提 =>
+        A_2024_07_21_0014@{ i } A B ( 一番目の区域の処理 対象 ) ( 二番目の区域の処理 対象 )
+.
+
+Definition 余場合分け@{ i | }
+    ( A : Type@{ i } )
+    ( B : Type@{ i } )
+    ( 前提 : Type@{ i } )
+    ( 一番目の区域の処理 : 前提 -> A )
+    ( 二番目の区域の処理 : 前提 -> B )
+    ( 対象 : 前提 )
+    : 直積型@{ i } A B
+    := A_2024_08_28_0007@{ i } A B 前提 一番目の区域の処理 二番目の区域の処理 対象
+.
+
+(** 直積型についての余場合分けの整合性です。 *)
+
+Definition A_2024_08_28_0008@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall B : Type@{ i } ,
+        forall 前提 : Type@{ i } ,
+        forall 余表示射 : 直積型@{ i } A B -> 前提 ,
+        forall 一番目の区域の処理 : 前提 -> A ,
+        (
+            forall 対象 : 直積型@{ i } A B ,
+            forall 述語 : A -> Type@{ i } ,
+            述語 ( 一番目の区域の処理 ( 余表示射 対象 ) )
+            ->
+            述語 ( 一番目の区域の分解子@{ i } A B 対象 )
+        )
+        ->
+        forall 二番目の区域の処理 : 前提 -> B ,
+        (
+            forall 対象 : 直積型@{ i } A B ,
+            forall 述語 : B -> Type@{ i } ,
+            述語 ( 二番目の区域の処理 ( 余表示射 対象 ) )
+            ->
+            述語 ( 二番目の区域の分解子@{ i } B A 対象 )
+        )
+        ->
+        forall 対象 : 直積型@{ i } A B ,
+        forall 述語 : 直積型@{ i } A B -> Type@{ i } ,
+        述語 ( 余場合分け@{ i } A B 前提 一番目の区域の処理 二番目の区域の処理 ( 余表示射 対象 ) )
+        ->
+        述語 対象
+.
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun B : Type@{ i } => _ ) .
+    refine ( fun 前提 : Type@{ i } => _ ) .
+    refine ( fun 余表示射 : 直積型@{ i } A B -> 前提 => _ ) .
+    refine ( fun 一番目の区域の処理 : 前提 -> A => _ ) .
+    refine
+        (
+            fun
+                一番目の区域の処理の整合性
+                    :
+                        forall 対象 : 直積型@{ i } A B ,
+                        forall 述語 : A -> Type@{ i } ,
+                        述語 ( 一番目の区域の処理 ( 余表示射 対象 ) )
+                        ->
+                        述語 ( 一番目の区域の分解子@{ i } A B 対象 )
+            =>
+                _
+        )
+    .
+    refine ( fun 二番目の区域の処理 : 前提 -> B => _ ) .
+    refine
+        (
+            fun
+                二番目の区域の処理の整合性
+                    :
+                        forall 対象 : 直積型@{ i } A B ,
+                        forall 述語 : B -> Type@{ i } ,
+                        述語 ( 二番目の区域の処理 ( 余表示射 対象 ) )
+                        ->
+                        述語 ( 二番目の区域の分解子@{ i } B A 対象 )
+            =>
+                _
+        )
+    .
+    refine ( fun 対象 : 直積型@{ i } A B => _ ) .
+    refine
+        (
+            match
+                対象
+            as
+                対象_
+            return
+                forall 述語 : 直積型@{ i } A B -> Type@{ i } ,
+                述語 ( 余場合分け@{ i } A B 前提 一番目の区域の処理 二番目の区域の処理 ( 余表示射 対象_ ) )
+                ->
+                述語 対象_
+            with
+                A_2024_07_21_0014 _ _ 対象_1 対象_2 => _
+            end
+        )
+    .
+    refine ( fun 述語 : 直積型@{ i } A B -> Type@{ i } => _ ) .
+    refine
+        (
+            fun
+                x
+                    :
+                        述語
+                            (
+                                余場合分け@{ i }
+                                    A
+                                    B
+                                    前提
+                                    一番目の区域の処理
+                                    二番目の区域の処理
+                                    ( 余表示射 ( A_2024_07_21_0014@{ i } A B 対象_1 対象_2 ) )
+                            )
+            =>
+                _
+        )
+    .
+    refine
+        (
+            一番目の区域の処理の整合性
+                ( A_2024_07_21_0014@{ i } A B 対象_1 対象_2 )
+                ( fun 対象_1_ : A => 述語 ( A_2024_07_21_0014@{ i } A B 対象_1_ 対象_2 ) )
+                _
+        )
+    .
+    refine
+        (
+            二番目の区域の処理の整合性
+                ( A_2024_07_21_0014@{ i } A B 対象_1 対象_2 )
+                (
+                    fun 対象_2_ : B =>
+                    述語
+                    (
+                        A_2024_07_21_0014@{i}
+                            A
+                            B
+                            ( 一番目の区域の処理 ( 余表示射 ( A_2024_07_21_0014@{ i } A B 対象_1 対象_2 ) ) )
+                            対象_2_
+                    )
+                )
+                _
+        )
+    .
+    exact x .
+Defined .
+
+Definition 余場合分けの整合性@{ i | }
+    ( A : Type@{ i } )
+    ( B : Type@{ i } )
+    ( 前提 : Type@{ i } )
+    ( 余表示射 : 直積型@{ i } A B -> 前提 )
+    ( 一番目の区域の処理 : 前提 -> A )
+    (
+        一番目の区域の処理の整合性
+            :
+                forall 対象 : 直積型@{ i } A B ,
+                forall 述語 : A -> Type@{ i } ,
+                述語 ( 一番目の区域の処理 ( 余表示射 対象 ) )
+                ->
+                述語 ( 一番目の区域の分解子@{ i } A B 対象 )
+    )
+    ( 二番目の区域の処理 : 前提 -> B )
+    (
+        二番目の区域の処理の整合性
+            :
+                forall 対象 : 直積型@{ i } A B ,
+                forall 述語 : B -> Type@{ i } ,
+                述語 ( 二番目の区域の処理 ( 余表示射 対象 ) )
+                ->
+                述語 ( 二番目の区域の分解子@{ i } B A 対象 )
+    )
+    ( 対象 : 直積型@{ i } A B )
+    ( 述語 : 直積型@{ i } A B -> Type@{ i } )
+    ( x : 述語 ( 余場合分け@{ i } A B 前提 一番目の区域の処理 二番目の区域の処理 ( 余表示射 対象 ) ) )
+    : 述語 対象
+    :=
+        A_2024_08_28_0008@{ i }
+            A
+            B
+            前提
+            余表示射
+            一番目の区域の処理
+            一番目の区域の処理の整合性
+            二番目の区域の処理
+            二番目の区域の処理の整合性
+            対象
+            述語
+            x
+.
+
+End A_2024_07_21_0013 .
+
+Module 直積型 := A_2024_07_21_0013 .
+
+(** 直積型を構築します。 *)
+
+Definition A_2024_08_28_0009@{ i | }
+    : forall A : Type@{ i } , forall B : Type@{ i } , A -> B -> 直積型@{ i } A B
+    :=
+        fun A : Type@{ i } =>
+        fun B : Type@{ i } =>
+        fun 対象_1 : A =>
+        fun 対象_2 : B =>
+            直積型.余場合分け@{ i }
+                A
+                B
+                単一型@{ i }
+                ( 定数関数を作る@{ i } A 単一型@{ i } 対象_1 )
+                ( 定数関数を作る@{ i } B 単一型@{ i } 対象_2 )
+                単一値@{ i }
+.
+
+Definition 直積型を構築する@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( x_1 : A ) ( x_2 : B ) : 直積型@{ i } A B
+    := A_2024_08_28_0009@{ i } A B x_1 x_2
+.
+
+(** 直積型について場合分けします。 *)
+
+Definition A_2024_08_28_0010@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall B : Type@{ i } ,
+        直積型@{ i } A B
+        ->
+        forall 目標 : Type@{ i } ,
+        ( A -> B -> 目標 )
+        ->
+        目標
+    :=
+        fun A : Type@{ i } =>
+        fun B : Type@{ i } =>
+        fun 対象 : 直積型@{ i } A B =>
+        fun 目標 : Type@{ i } =>
+        fun 処理 : A -> B -> 目標 =>
+        処理 ( 直積型.一番目の区域の分解子@{ i } A B 対象 ) ( 直積型.二番目の区域の分解子@{ i } B A 対象 )
+.
+
+(** 直積型について依存型の場合分けをします。 *)
+
+Definition A_2024_08_28_0011@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall B : Type@{ i } ,
+        forall 対象 : 直積型@{ i } A B ,
+        forall 目標 : 直積型@{ i } A B -> Type@{ i } ,
+        ( forall 対象_1 : A , forall 対象_2 : B , 目標 ( 直積型を構築する@{ i } A B 対象_1 対象_2 ) )
+        ->
+        目標 対象
+    :=
+        fun A : Type@{ i } =>
+        fun B : Type@{ i } =>
+        fun 対象 : 直積型@{ i } A B =>
+        fun 目標 : 直積型@{ i } A B -> Type@{ i } =>
+        fun 処理 : forall 対象_1 : A , forall 対象_2 : B , 目標 ( 直積型を構築する@{ i } A B 対象_1 対象_2 ) =>
+        直積型.余場合分けの整合性@{ i }
+            A
+            B
+            ( 直積型@{ i } A B )
+            ( 恒等関数@{ i } ( 直積型@{ i } A B ) )
+            ( 直積型.一番目の区域の分解子@{ i } A B )
+            (
+                fun 対象 : 直積型@{ i } A B =>
+                fun 述語 : A -> Type@{ i } =>
+                fun x : 述語 ( 直積型.一番目の区域の分解子@{ i } A B ( 恒等関数@{ i } ( 直積型@{ i } A B ) 対象 ) ) =>
+                x
+            )
+            ( 直積型.二番目の区域の分解子@{ i } B A )
+            (
+                fun 対象 : 直積型@{ i } A B =>
+                fun 述語 : B -> Type@{ i } =>
+                fun x : 述語 ( 直積型.二番目の区域の分解子@{ i } B A ( 恒等関数@{ i } ( 直積型@{ i } A B ) 対象 ) ) =>
+                x
+            )
+            対象
+            目標
+            ( 処理 ( 直積型.一番目の区域の分解子@{ i } A B 対象 ) ( 直積型.二番目の区域の分解子@{ i } B A 対象 ) )
+.
+
+(** 直積型を取る関数を、それぞれの区域を取る関数に変えます。 *)
+
+Definition A_2024_07_21_0017@{ i | }
+    : forall A : Type@{ i } , forall B : Type@{ i } , forall C : Type@{ i } , ( 直積型@{ i } B C -> A ) -> B -> C -> A
+    :=
+        fun A : Type@{ i } =>
+        fun B : Type@{ i } =>
+        fun C : Type@{ i } =>
+        fun f : 直積型@{ i } B C -> A =>
+        fun x_1 : B =>
+        fun x_2 : C =>
+        f ( 直積型を構築する@{ i } B C x_1 x_2 )
+.
+
+(** それぞれの区域を取る関数を、直積型を取る関数に変えます。 *)
+
+Definition A_2024_07_21_0018@{ i | }
+    : forall A : Type@{ i } , forall B : Type@{ i } , forall C : Type@{ i } , ( B -> C -> A ) -> 直積型@{ i } B C -> A
+    :=
+        fun A : Type@{ i } =>
+        fun B : Type@{ i } =>
+        fun C : Type@{ i } =>
+        fun f : B -> C -> A =>
+        fun x : 直積型@{ i } B C =>
+        f ( 直積型.一番目の区域の分解子@{ i } B C x ) ( 直積型.二番目の区域の分解子@{ i } C B x )
+.
+
+End A_2024_08_28_0006 .
+
+(** ** 依存直和型 *)
+
+(** 依存直和型に関するモジュールを定義します。 *)
+
+Module A_2024_08_30_0000 .
 
 (** 依存直和型を定義します。 *)
 
-Inductive 依存直和@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) : Type@{ i }
-    := 構築子_依存直和 : forall x : A, B x -> 依存直和 A B
+Inductive A_2024_07_21_0019@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) : Type@{ i }
+    := A_2024_07_21_0020 : forall x : A , B x -> A_2024_07_21_0019 A B
 .
 
-Definition 構築する_依存直和@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) ( x : A ) ( y : B x )
-    : 依存直和@{ i } A B
-    := 構築子_依存直和 A B x y
+Definition 依存直和型@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) : Type@{ i } := A_2024_07_21_0019@{ i } A B .
+
+Module A_2024_07_21_0019 .
+
+Definition 構築子@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) ( x_1 : A ) ( x_2 : B x_1 ) : 依存直和型@{ i } A B
+    := A_2024_07_21_0020@{ i } A B x_1 x_2
 .
 
-Definition 第一射影関数_依存直和@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) ( x : 依存直和@{ i } A B ) : A
-    := match x with 構築子_依存直和 _ _ x_1 x_2 => x_1 end
+(** 依存直和型について場合分けします。 *)
+
+Definition A_2024_08_30_0001@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall B : A -> Type@{ i } ,
+        依存直和型@{ i } A B
+        ->
+        forall 目標 : Type@{ i } ,
+        ( forall 対象_1 : A , B 対象_1 -> 目標 )
+        ->
+        目標
+    :=
+        fun A : Type@{ i } =>
+        fun B : A -> Type@{ i } =>
+        fun 対象 : 依存直和型@{ i } A B =>
+        fun 目標 : Type@{ i } =>
+        fun 処理 : forall 対象_1 : A , B 対象_1 -> 目標 =>
+        match 対象 with A_2024_07_21_0020 _ _ 対象_1 対象_2 => 処理 対象_1 対象_2 end
 .
 
-Definition 第二射影関数_依存直和@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) ( x : 依存直和@{ i } A B )
-    : B ( 第一射影関数_依存直和 A B x )
-    := match x as x_ return B ( 第一射影関数_依存直和 A B x_ ) with 構築子_依存直和 _ _ x_1 x_2 => x_2 end
+Definition 場合分け@{ i | }
+    ( A : Type@{ i } )
+    ( B : A -> Type@{ i } )
+    ( 対象 : 依存直和型@{ i } A B )
+    ( 目標 : Type@{ i } )
+    ( 処理 : forall 対象_1 : A , B 対象_1 -> 目標 )
+    : 目標
+    := A_2024_08_30_0001@{ i } A B 対象 目標 処理
 .
 
-Definition カリー化する_依存直和@{ i | }
-        ( A : Type@{ i } )
-        ( B : A -> Type@{ i } )
-        ( C : Type@{ i } )
-        ( f : 依存直和@{ i } A B -> C )
-    : forall x : A, B x -> C
-    := fun ( x_1 : A ) ( x_2 : B x_1 ) => f ( 構築する_依存直和 A B x_1 x_2 )
+(** 依存直和型について依存型の場合分けをします。 *)
+
+Definition A_2024_08_30_0002@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall B : A -> Type@{ i } ,
+        forall 対象 : 依存直和型@{ i } A B ,
+        forall 目標 : 依存直和型@{ i } A B -> Type@{ i } ,
+        ( forall 対象_1 : A , forall 対象_2 : B 対象_1 , 目標 ( 構築子@{ i } A B 対象_1 対象_2 ) )
+        ->
+        目標 対象
+    :=
+        fun A : Type@{ i } =>
+        fun B : A -> Type@{ i } =>
+        fun 対象 : 依存直和型@{ i } A B =>
+        fun 目標 : 依存直和型@{ i } A B -> Type@{ i } =>
+        fun 処理 : forall 対象_1 : A , forall 対象_2 : B 対象_1 , 目標 ( 構築子@{ i } A B 対象_1 対象_2 ) =>
+        match
+            対象
+        as
+            対象_
+        return
+            目標 対象_
+        with
+            A_2024_07_21_0020 _ _ 対象_1 対象_2 => 処理 対象_1 対象_2
+        end
 .
 
-Definition 非カリー化する_依存直和@{ i | }
-        ( A : Type@{ i } )
-        ( B : A -> Type@{ i } )
-        ( C : Type@{ i } )
-        ( f : forall x : A, B x -> C )
-    : 依存直和@{ i } A B -> C
-    := fun x : 依存直和@{ i } A B => match x with 構築子_依存直和 _ _ x_1 x_2 => f x_1 x_2 end
+Definition 依存型の場合分け@{ i | }
+    ( A : Type@{ i } )
+    ( B : A -> Type@{ i } )
+    ( 対象 : 依存直和型@{ i } A B )
+    ( 目標 : 依存直和型@{ i } A B -> Type@{ i } )
+    ( 処理 : forall 対象_1 : A , forall 対象_2 : B 対象_1 , 目標 ( 構築子@{ i } A B 対象_1 対象_2 ) )
+    : 目標 対象
+    := A_2024_08_30_0002@{ i } A B 対象 目標 処理
 .
 
-(** 依存直積型を定義します。 *)
+End A_2024_07_21_0019 .
 
-Definition 依存直積@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) : Type@{ i } := forall x : A, B x.
+Module 依存直和型 := A_2024_07_21_0019 .
+
+(** 一番目の区域の値を取り出します *)
+
+Definition A_2024_07_21_0021@{ i | } : forall A : Type@{ i } , forall B : A -> Type@{ i } , 依存直和型@{ i } A B -> A
+    :=
+        fun A : Type@{ i } =>
+        fun B : A -> Type@{ i } =>
+        fun x : 依存直和型@{ i } A B =>
+        依存直和型.場合分け A B x A ( fun x_1 : A => fun x_2 : B x_1 => x_1 )
+.
+
+(** 二番目の区域の値を取り出します *)
+
+Definition A_2024_07_21_0022@{ i | }
+    : forall A : Type@{ i } , forall B : A -> Type@{ i } , forall x : 依存直和型@{ i } A B , B ( A_2024_07_21_0021@{ i } A B x )
+    :=
+        fun A : Type@{ i } =>
+        fun B : A -> Type@{ i } =>
+        fun x : 依存直和型@{ i } A B =>
+        依存直和型.依存型の場合分け
+            A
+            B
+            x
+            ( fun x_ : 依存直和型@{ i } A B => B ( A_2024_07_21_0021@{ i } A B x_ ) )
+            ( fun x_1 : A => fun x_2 : B x_1 => x_2 )
+.
+
+(** 依存直和型を取る関数を、それぞれの区域を取る関数に変えます。 *)
+
+Definition A_2024_07_21_0023@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall B : Type@{ i } ,
+        forall C : B -> Type@{ i } ,
+        ( 依存直和型@{ i } B C -> A )
+        ->
+        forall x_1 : B ,
+        C x_1
+        ->
+        A
+    :=
+        fun A : Type@{ i } =>
+        fun B : Type@{ i } =>
+        fun C : B -> Type@{ i } =>
+        fun f : 依存直和型@{ i } B C -> A =>
+        fun x_1 : B =>
+        fun x_2 : C x_1 =>
+        f ( 依存直和型.構築子@{ i } B C x_1 x_2 )
+.
+
+(** それぞれの区域を取る関数を、依存直和型を取る関数に変えます。 *)
+
+Definition A_2024_07_21_0024@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall B : Type@{ i } ,
+        forall C : B -> Type@{ i } ,
+        ( forall x_1 : B , C x_1 -> A )
+        ->
+        forall x : 依存直和型@{ i } B C ,
+        A
+    :=
+        fun A : Type@{ i } =>
+        fun B : Type@{ i } =>
+        fun C : B -> Type@{ i } =>
+        fun f : forall x_1 : B , C x_1 -> A =>
+        fun x : 依存直和型@{ i } B C =>
+        依存直和型.場合分け B C x A f
+.
+
+End A_2024_08_30_0000 .
+
+(** ** ブール型 *)
+
+(** ブール型に関するモジュールを定義します。 *)
+
+Module A_2024_08_30_0003 .
 
 (** ブール型を定義します。「ブール型」は "boolean type" の訳語です。 *)
 
-Inductive ブール型@{ i | } : Type@{ i } := 偽_構築子_ブール型 : ブール型 | 真_構築子_ブール型 : ブール型.
-
-Definition 偽_ブール型@{ i } : ブール型@{ i } := 偽_構築子_ブール型.
-
-Definition 真_ブール型@{ i } : ブール型@{ i } := 真_構築子_ブール型.
-
-Definition 否定_ブール型@{ i | } ( x : ブール型@{ i } ) : ブール型@{ i }
+Inductive A_2024_07_21_0025@{ i | } : Type@{ i }
     :=
-        match
-            x
-        with
-            偽_構築子_ブール型 => 真_ブール型
-            |
-            真_構築子_ブール型 => 偽_ブール型
-        end
-.
-
-Definition 論理和_ブール型@{ i | } ( x : ブール型@{ i } ) ( y : ブール型@{ i } ) : ブール型@{ i }
-    :=
-        match
-            x
-        with
-            偽_構築子_ブール型
-                =>
-                    match
-                        y
-                    with
-                        偽_構築子_ブール型 => 偽_ブール型
-                        |
-                        真_構築子_ブール型 => 真_ブール型
-                    end
-            |
-            真_構築子_ブール型
-                =>
-                    match
-                        y
-                    with
-                        偽_構築子_ブール型 => 真_ブール型
-                        |
-                        真_構築子_ブール型 => 真_ブール型
-                    end
-        end
-.
-
-Definition 論理積_ブール型@{ i | } ( x : ブール型@{ i } ) ( y : ブール型@{ i } ) : ブール型@{ i }
-    :=
-        match
-            x
-        with
-            偽_構築子_ブール型
-                =>
-                    match
-                        y
-                    with
-                        偽_構築子_ブール型 => 偽_ブール型
-                        |
-                        真_構築子_ブール型 => 偽_ブール型
-                    end
-            |
-            真_構築子_ブール型
-                =>
-                    match
-                        y
-                    with
-                        偽_構築子_ブール型 => 偽_ブール型
-                        |
-                        真_構築子_ブール型 => 真_ブール型
-                    end
-        end
-.
-
-(** 自然数を定義します。 *)
-
-Inductive 自然数@{ i | } : Type@{i} := 零_構築子_自然数 : 自然数 | 後者_構築子_自然数 : 自然数 -> 自然数.
-
-Definition 零_自然数@{ i | } : 自然数@{ i } := 零_構築子_自然数.
-
-Definition 後者を計算する_自然数@{ i | } : 自然数@{ i } -> 自然数@{ i } := 後者_構築子_自然数.
-
-Definition 一_自然数@{ i | } : 自然数@{ i } := 後者を計算する_自然数 零_自然数.
-
-Definition 二_自然数@{ i | } : 自然数@{ i } := 後者を計算する_自然数 一_自然数.
-
-Definition 三_自然数@{ i | } : 自然数@{ i } := 後者を計算する_自然数 二_自然数.
-
-Definition 四_自然数@{ i | } : 自然数@{ i } := 後者を計算する_自然数 三_自然数.
-
-Definition 五_自然数@{ i | } : 自然数@{ i } := 後者を計算する_自然数 四_自然数.
-
-Definition 六_自然数@{ i | } : 自然数@{ i } := 後者を計算する_自然数 五_自然数.
-
-Definition 七_自然数@{ i | } : 自然数@{ i } := 後者を計算する_自然数 六_自然数.
-
-Definition 八_自然数@{ i | } : 自然数@{ i } := 後者を計算する_自然数 七_自然数.
-
-Definition 九_自然数@{ i | } : 自然数@{ i } := 後者を計算する_自然数 八_自然数.
-
-Definition 十_自然数@{ i | } : 自然数@{ i } := 後者を計算する_自然数 九_自然数.
-
-Definition 一を足す_自然数@{ i | } : 自然数@{ i } -> 自然数@{ i } := 後者を計算する_自然数.
-
-Definition 二を足す_自然数@{ i | } ( x : 自然数@{ i } ) : 自然数@{ i } := 後者を計算する_自然数 ( 一を足す_自然数 x ).
-
-Definition 三を足す_自然数@{ i | } ( x : 自然数@{ i } ) : 自然数@{ i } := 後者を計算する_自然数 ( 二を足す_自然数 x ).
-
-Definition 足す_自然数@{ i | } : 自然数@{ i } -> 自然数@{ i } -> 自然数@{ i }
-    :=
-        fix a ( x : 自然数@{ i } ) ( y : 自然数@{ i } ) { struct x } : 自然数@{ i }
-            :=
-                match
-                    x
-                with
-                    零_構築子_自然数
-                        =>
-                            match
-                                y
-                            with
-                                零_構築子_自然数 => 零_自然数
-                                |
-                                後者_構築子_自然数 y_p => 後者を計算する_自然数 y_p
-                            end
-                    |
-                    後者_構築子_自然数 x_p
-                        =>
-                            match
-                                y
-                            with
-                                零_構築子_自然数 => 後者を計算する_自然数 x_p
-                                |
-                                後者_構築子_自然数 y_p => 後者を計算する_自然数 ( 後者を計算する_自然数 ( a x_p y_p ) )
-                            end
-                end
-.
-
-Definition 掛ける_自然数@{ i | } : 自然数@{ i } -> 自然数@{ i } -> 自然数@{ i }
-    :=
-        fix a ( x : 自然数@{ i } ) ( y : 自然数@{ i } ) { struct y } : 自然数@{ i }
-            :=
-                match
-                    y
-                with
-                    零_構築子_自然数 => 零_自然数
-                    |
-                    後者_構築子_自然数 y_p => 足す_自然数 x ( a x y_p )
-                end
-.
-
-Definition 冪乗を計算する_自然数@{ i | } : 自然数@{ i } -> 自然数@{ i } -> 自然数@{ i }
-    :=
-        fix a ( x : 自然数@{ i } ) ( y : 自然数@{ i } ) { struct y } : 自然数@{ i }
-            :=
-                match
-                    y
-                with
-                    零_構築子_自然数 => 一_自然数
-                    |
-                    後者_構築子_自然数 y_p => 掛ける_自然数 x ( a x y_p )
-                end
-.
-
-Definition 最小値を計算する_自然数@{ i | } : 自然数@{ i } -> 自然数@{ i } -> 自然数@{ i }
-    :=
-        fix a ( x : 自然数@{ i } ) ( y : 自然数@{ i } ) { struct x } : 自然数@{ i }
-            :=
-                match
-                    x
-                with
-                    零_構築子_自然数
-                        =>
-                            match
-                                y
-                            with
-                                零_構築子_自然数 => 零_自然数
-                                |
-                                後者_構築子_自然数 y_p => 零_自然数
-                            end
-                    |
-                    後者_構築子_自然数 x_p
-                        =>
-                            match
-                                y
-                            with
-                                零_構築子_自然数 => 零_自然数
-                                |
-                                後者_構築子_自然数 y_p => 後者を計算する_自然数 ( a x_p y_p )
-                            end
-                end
-.
-
-Definition 最大値を計算する_自然数@{ i | } : 自然数@{ i } -> 自然数@{ i } -> 自然数@{ i }
-    :=
-        fix a ( x : 自然数@{ i } ) ( y : 自然数@{ i } ) { struct x } : 自然数@{ i }
-            :=
-                match
-                    x
-                with
-                    零_構築子_自然数
-                        =>
-                            match
-                                y
-                            with
-                                零_構築子_自然数 => 零_自然数
-                                |
-                                後者_構築子_自然数 y_p => 後者を計算する_自然数 y_p
-                            end
-                    |
-                    後者_構築子_自然数 x_p
-                        =>
-                            match
-                                y
-                            with
-                                零_構築子_自然数 => 後者を計算する_自然数 x_p
-                                |
-                                後者_構築子_自然数 y_p => 後者を計算する_自然数 ( a x_p y_p )
-                            end
-                end
-.
-
-Definition 三角数を計算する_自然数@{ i | } : 自然数@{ i } -> 自然数@{ i }
-    :=
-        fix a ( x : 自然数@{ i } ) { struct x } : 自然数@{ i }
-            :=
-                match
-                    x
-                with
-                    零_構築子_自然数 => 零_自然数
-                    |
-                    後者_構築子_自然数 x_p => 足す_自然数 x ( a x_p )
-                end
-.
-
-Definition 階乗を計算する_自然数@{ i | } : 自然数@{ i } -> 自然数@{ i }
-    :=
-        fix a ( x : 自然数@{ i } ) { struct x } : 自然数@{ i }
-            :=
-                match
-                    x
-                with
-                    零_構築子_自然数 => 一_自然数
-                    |
-                    後者_構築子_自然数 x_p => 掛ける_自然数 x ( a x_p )
-                end
-.
-
-Definition 二項係数を計算する_自然数@{ i | } : 自然数@{ i } -> 自然数@{ i } -> 自然数@{ i }
-    :=
-        fix a ( x : 自然数@{ i } ) ( y : 自然数@{ i } ) { struct x } : 自然数@{ i }
-            :=
-                match
-                    x
-                with
-                    零_構築子_自然数
-                        =>
-                            match
-                                y
-                            with
-                                零_構築子_自然数 => 一_自然数
-                                |
-                                後者_構築子_自然数 y_p => 零_自然数
-                            end
-                    |
-                    後者_構築子_自然数 x_p
-                        =>
-                            match
-                                y
-                            with
-                                零_構築子_自然数 => 一_自然数
-                                |
-                                後者_構築子_自然数 y_p => 足す_自然数 ( a x_p y ) ( a x_p y_p )
-                        end
-                end
-.
-
-Definition フィボナッチ数を計算する_自然数@{ i | } : 自然数@{ i } -> 自然数@{ i }
-    :=
-        let
-            fix a ( x : 自然数@{ i } ) ( y : 自然数@{ i } ) ( z : 自然数@{ i } ) { struct x } : 自然数@{ i }
-                :=
-                    match
-                        x
-                    with
-                        零_構築子_自然数 => y
-                        |
-                        後者_構築子_自然数 x_p => a x_p z ( 足す_自然数 y z )
-                    end
-        in
-            fun x : 自然数@{ i } => a x 零_自然数 一_自然数
-.
-
-(** 正の自然数を定義します。 *)
-
-Inductive 正の自然数@{ i | } : Type@{i}
-    :=
-        一_構築子_正の自然数 : 正の自然数
+        A_2024_07_21_0026 : A_2024_07_21_0025
         |
-        後者_構築子_正の自然数 : 正の自然数 -> 正の自然数
+        A_2024_07_21_0027 : A_2024_07_21_0025
 .
 
-Definition 一_正の自然数@{ i | } : 正の自然数@{ i } := 一_構築子_正の自然数.
+Definition ブール型@{ i | } : Type@{ i } := A_2024_07_21_0025@{ i } .
 
-Definition 後者を計算する_正の自然数@{ i | } : 正の自然数@{ i } -> 正の自然数@{ i } := 後者_構築子_正の自然数.
+Module A_2024_07_21_0025 .
 
-Definition 二_正の自然数@{ i | } : 正の自然数@{ i } := 後者を計算する_正の自然数 一_正の自然数.
+Definition 偽の場合の構築子@{ i | } : ブール型@{ i } := A_2024_07_21_0026@{ i } .
 
-Definition 三_正の自然数@{ i | } : 正の自然数@{ i } := 後者を計算する_正の自然数 二_正の自然数.
+Definition 真の場合の構築子@{ i | } : ブール型@{ i } := A_2024_07_21_0027@{ i } .
 
-Definition 四_正の自然数@{ i | } : 正の自然数@{ i } := 後者を計算する_正の自然数 三_正の自然数.
+(** ブール型について場合分けします。 *)
 
-Definition 五_正の自然数@{ i | } : 正の自然数@{ i } := 後者を計算する_正の自然数 四_正の自然数.
-
-Definition 六_正の自然数@{ i | } : 正の自然数@{ i } := 後者を計算する_正の自然数 五_正の自然数.
-
-Definition 七_正の自然数@{ i | } : 正の自然数@{ i } := 後者を計算する_正の自然数 六_正の自然数.
-
-Definition 八_正の自然数@{ i | } : 正の自然数@{ i } := 後者を計算する_正の自然数 七_正の自然数.
-
-Definition 九_正の自然数@{ i | } : 正の自然数@{ i } := 後者を計算する_正の自然数 八_正の自然数.
-
-Definition 十_正の自然数@{ i | } : 正の自然数@{ i } := 後者を計算する_正の自然数 九_正の自然数.
-
-Definition 一を足す_正の自然数@{ i | } : 正の自然数@{ i } -> 正の自然数@{ i } := 後者を計算する_正の自然数.
-
-Definition 二を足す_正の自然数@{ i | } ( x : 正の自然数@{ i } ) : 正の自然数@{ i }
-    := 後者を計算する_正の自然数 ( 一を足す_正の自然数 x )
-.
-
-Definition 三を足す_正の自然数@{ i | } ( x : 正の自然数@{ i } ) : 正の自然数@{ i }
-    := 後者を計算する_正の自然数 ( 二を足す_正の自然数 x )
-.
-
-Definition 足す_正の自然数@{ i | } : 正の自然数@{ i } -> 正の自然数@{ i } -> 正の自然数@{ i }
+Definition A_2024_08_30_0004@{ i | }
+    : ブール型@{ i } -> forall 目標 : Type@{ i } , 目標 -> 目標 -> 目標
     :=
-        fix a ( x : 正の自然数@{ i } ) ( y : 正の自然数@{ i } ) { struct x } : 正の自然数@{ i }
-            :=
-                match
-                    x
-                with
-                    一_構築子_正の自然数
-                        =>
-                            match
-                                y
-                            with
-                                一_構築子_正の自然数 => 二_正の自然数
-                                |
-                                後者_構築子_正の自然数 y_p => 後者を計算する_正の自然数 ( 後者を計算する_正の自然数 y_p )
-                            end
-                    |
-                    後者_構築子_正の自然数 x_p
-                        =>
-                            match
-                                y
-                            with
-                                一_構築子_正の自然数 => 後者を計算する_正の自然数 ( 後者を計算する_正の自然数 x_p )
-                                |
-                                後者_構築子_正の自然数 y_p
-                                    => 後者を計算する_正の自然数 ( 後者を計算する_正の自然数 ( a x_p y_p ) )
-                            end
-                end
+        fun 対象 : ブール型@{ i } =>
+        fun 目標 : Type@{ i } =>
+        fun 偽の場合の処理 : 目標 =>
+        fun 真の場合の処理 : 目標 =>
+        match
+            対象
+        with
+            A_2024_07_21_0026 => 偽の場合の処理
+            |
+            A_2024_07_21_0027 => 真の場合の処理
+        end
 .
 
-Definition 掛ける_正の自然数@{ i | } : 正の自然数@{ i } -> 正の自然数@{ i } -> 正の自然数@{ i }
+Definition 場合分け@{ i | } ( 対象 : ブール型@{ i } ) ( 目標 : Type@{ i } ) ( 偽の場合の処理 : 目標 ) ( 真の場合の処理 : 目標 ) : 目標
+    := A_2024_08_30_0004@{ i } 対象 目標 偽の場合の処理 真の場合の処理
+.
+
+(** ブール型について依存型の場合分けをします。 *)
+
+Definition A_2024_08_30_0005@{ i | }
+    :
+        forall 対象 : ブール型@{ i } ,
+        forall 目標 : ブール型@{ i } -> Type@{ i } ,
+        目標 偽の場合の構築子@{ i }
+        ->
+        目標 真の場合の構築子@{ i }
+        ->
+        目標 対象
     :=
-        fix a ( x : 正の自然数@{ i } ) ( y : 正の自然数@{ i } ) { struct y } : 正の自然数@{ i }
-            :=
-                match
+        fun 対象 : ブール型@{ i } =>
+        fun 目標 : ブール型@{ i } -> Type@{ i } =>
+        fun 偽の場合の処理 : 目標 偽の場合の構築子@{ i } =>
+        fun 真の場合の処理 : 目標 真の場合の構築子@{ i } =>
+        match
+            対象
+        as
+            対象_
+        return
+            目標 対象_
+        with
+            A_2024_07_21_0026 => 偽の場合の処理
+            |
+            A_2024_07_21_0027 => 真の場合の処理
+        end
+.
+
+Definition 依存型の場合分け@{ i | }
+    ( 対象 : ブール型@{ i } )
+    ( 目標 : ブール型@{ i } -> Type@{ i } )
+    ( 偽の場合の処理 : 目標 偽の場合の構築子@{ i } )
+    ( 真の場合の処理 : 目標 真の場合の構築子@{ i } )
+    : 目標 対象
+    := A_2024_08_30_0005@{ i } 対象 目標 偽の場合の処理 真の場合の処理
+.
+
+End A_2024_07_21_0025 .
+
+Module ブール型 := A_2024_07_21_0025 .
+
+(** 偽です。 *)
+
+Definition A_2024_08_30_0012@{ i | } : ブール型@{ i } := ブール型.偽の場合の構築子@{ i } .
+
+Definition 偽@{ i | } : ブール型@{ i } := A_2024_08_30_0012@{ i } .
+
+(** 真です。 *)
+
+Definition A_2024_08_30_0013@{ i | } : ブール型@{ i } := ブール型.真の場合の構築子@{ i } .
+
+Definition 真@{ i | } : ブール型@{ i } := A_2024_08_30_0013@{ i } .
+
+(** 論理否定です。 *)
+
+Definition A_2024_07_21_0028@{ i | } : ブール型@{ i } -> ブール型@{ i }
+    :=
+        fun x : ブール型@{ i } =>
+        ブール型.場合分け
+            x
+            ブール型@{ i }
+            真@{ i }
+            偽@{ i }
+.
+
+Definition 論理否定@{ i | } ( x : ブール型@{ i } ) : ブール型@{ i } := A_2024_07_21_0028@{ i } x .
+
+(** 論理和です。 *)
+
+Definition A_2024_07_21_0029@{ i | } : ブール型@{ i } -> ブール型@{ i } -> ブール型@{ i }
+    :=
+        fun x : ブール型@{ i } =>
+        ブール型.場合分け
+            x
+            ( ブール型@{ i } -> ブール型@{ i } )
+            (
+                fun y : ブール型@{ i } =>
+                ブール型.場合分け
                     y
-                with
-                    一_構築子_正の自然数 => x
-                    |
-                    後者_構築子_正の自然数 y_p => 足す_正の自然数 x ( a x y_p )
-                end
-.
-
-Definition 冪乗を計算する_正の自然数@{ i | } : 正の自然数@{ i } -> 正の自然数@{ i } -> 正の自然数@{ i }
-    :=
-        fix a ( x : 正の自然数@{ i } ) ( y : 正の自然数@{ i } ) { struct y } : 正の自然数@{ i }
-            :=
-                match
+                    ブール型@{ i }
+                    偽@{ i }
+                    真@{ i }
+            )
+            (
+                fun y : ブール型@{ i } =>
+                ブール型.場合分け
                     y
-                with
-                    一_構築子_正の自然数 => x
-                    |
-                    後者_構築子_正の自然数 y_p => 掛ける_正の自然数 x ( a x y_p )
-                end
+                    ブール型@{ i }
+                    真@{ i }
+                    真@{ i }
+            )
 .
 
-Definition 最小値を計算する_正の自然数@{ i | } : 正の自然数@{ i } -> 正の自然数@{ i } -> 正の自然数@{ i }
+Definition 論理和@{ i | } ( x : ブール型@{ i } ) ( y : ブール型@{ i } ) : ブール型@{ i } := A_2024_07_21_0029@{ i } x y .
+
+(** 論理積です。 *)
+
+Definition A_2024_07_21_0030@{ i | } : ブール型@{ i } -> ブール型@{ i } -> ブール型@{ i }
     :=
-        fix a ( x : 正の自然数@{ i } ) ( y : 正の自然数@{ i } ) { struct x } : 正の自然数@{ i }
-            :=
-                match
-                    x
-                with
-                    一_構築子_正の自然数
-                        =>
-                            match
-                                y
-                            with
-                                一_構築子_正の自然数 => 一_正の自然数
-                                |
-                                後者_構築子_正の自然数 y_p => 一_正の自然数
-                            end
-                    |
-                    後者_構築子_正の自然数 x_p
-                        =>
-                            match
-                                y
-                            with
-                                一_構築子_正の自然数 => 一_正の自然数
-                                |
-                                後者_構築子_正の自然数 y_p => 後者を計算する_正の自然数 ( a x_p y_p )
-                            end
-                end
+        fun x : ブール型@{ i } =>
+        ブール型.場合分け
+            x
+            ( ブール型@{ i } -> ブール型@{ i } )
+            (
+                fun y : ブール型@{ i } =>
+                ブール型.場合分け
+                    y
+                    ブール型@{ i }
+                    偽@{ i }
+                    偽@{ i }
+            )
+            (
+                fun y : ブール型@{ i } =>
+                ブール型.場合分け
+                    y
+                    ブール型@{ i }
+                    偽@{ i }
+                    真@{ i }
+            )
 .
 
-Definition 最大値を計算する_正の自然数@{ i | } : 正の自然数@{ i } -> 正の自然数@{ i } -> 正の自然数@{ i }
+Definition 論理積@{ i | } ( x : ブール型@{ i } ) ( y : ブール型@{ i } ) : ブール型@{ i } := A_2024_07_21_0030@{ i } x y .
+
+End A_2024_08_30_0003 .
+
+(** ** ゼロから始まる自然数 *)
+
+(** ゼロから始まる自然数に関するモジュールを定義します。 *)
+
+Module A_2024_08_30_0006 .
+
+(** ゼロから始まる自然数を定義します。 *)
+
+Inductive A_2024_07_21_0031@{ i | } : Type@{ i }
     :=
-        fix a ( x : 正の自然数@{ i } ) ( y : 正の自然数@{ i } ) { struct x } : 正の自然数@{ i }
-            :=
-                match
-                    x
-                with
-                    一_構築子_正の自然数
-                        =>
-                            match
-                                y
-                            with
-                                一_構築子_正の自然数 => 一_正の自然数
-                                |
-                                後者_構築子_正の自然数 y_p => 後者を計算する_正の自然数 y_p
-                            end
-                    |
-                    後者_構築子_正の自然数 x_p
-                        =>
-                            match
-                                y
-                            with
-                                一_構築子_正の自然数 => 後者を計算する_正の自然数 x_p
-                                |
-                                後者_構築子_正の自然数 y_p => 後者を計算する_正の自然数 ( a x_p y_p )
-                            end
-                end
+        A_2024_07_21_0032 : A_2024_07_21_0031
+        |
+        A_2024_07_21_0033 : A_2024_07_21_0031 -> A_2024_07_21_0031
 .
 
-Definition 三角数を計算する_正の自然数@{ i | } : 正の自然数@{ i } -> 正の自然数@{ i }
+Definition 自然数@{ i | } : Type@{ i } := A_2024_07_21_0031@{ i } .
+
+Module A_2024_07_21_0031 .
+
+Definition ゼロの場合の構築子@{ i | } : 自然数@{ i } := A_2024_07_21_0032@{ i } .
+
+Definition 後者の場合の構築子@{ i | } ( x : 自然数@{ i } ) : 自然数@{ i } := A_2024_07_21_0033@{ i } x .
+
+(** 自然数について場合分けします。 *)
+
+Definition A_2024_08_30_0007@{ i | }
+    : 自然数@{ i } -> forall 目標 : Type@{ i } , 目標 -> ( 自然数@{ i } -> 目標 ) -> 目標
     :=
-        fix a ( x : 正の自然数@{ i } ) { struct x } : 正の自然数@{ i }
-            :=
-                match
-                    x
-                with
-                    一_構築子_正の自然数 => 一_正の自然数
-                    |
-                    後者_構築子_正の自然数 x_p => 足す_正の自然数 x ( a x_p )
-                end
+        fun 対象 : 自然数@{ i } =>
+        fun 目標 : Type@{ i } =>
+        fun ゼロの場合の処理 : 目標 =>
+        fun 後者の場合の処理 : 自然数@{ i } -> 目標 =>
+        match
+            対象
+        with
+            A_2024_07_21_0032 => ゼロの場合の処理
+            |
+            A_2024_07_21_0033 対象_前 => 後者の場合の処理 対象_前
+        end
 .
 
-Definition 階乗を計算する_正の自然数@{ i | } : 正の自然数@{ i } -> 正の自然数@{ i }
-    :=
-        fix a ( x : 正の自然数@{ i } ) { struct x } : 正の自然数@{ i }
-            :=
-                match
-                    x
-                with
-                    一_構築子_正の自然数 => 一_正の自然数
-                    |
-                    後者_構築子_正の自然数 x_p => 掛ける_正の自然数 x ( a x_p )
-                end
+Definition 場合分け@{ i | }
+    ( 対象 : 自然数@{ i } )
+    ( 目標 : Type@{ i } )
+    ( ゼロの場合の処理 : 目標 )
+    ( 後者の場合の処理 : 自然数@{ i } -> 目標 )
+    : 目標
+    := A_2024_08_30_0007@{ i } 対象 目標 ゼロの場合の処理 後者の場合の処理
 .
 
-Definition フィボナッチ数を計算する_正の自然数@{ i | } : 正の自然数@{ i } -> 正の自然数@{ i }
+(** 自然数について依存型の場合分けをします。 *)
+
+Definition A_2024_08_30_0008@{ i | }
+    :
+        forall 対象 : 自然数@{ i } ,
+        forall 目標 : 自然数@{ i } -> Type@{ i } ,
+        目標 ゼロの場合の構築子@{ i }
+        ->
+        ( forall 対象_前 : 自然数@{ i } , 目標 ( 後者の場合の構築子@{ i } 対象_前 ) )
+        ->
+        目標 対象
     :=
-        let
-            fix a ( x : 正の自然数@{ i } ) ( y : 正の自然数@{ i } ) ( z : 正の自然数@{ i } ) { struct x }
-                : 正の自然数@{ i }
+        fun 対象 : 自然数@{ i } =>
+        fun 目標 : 自然数@{ i } -> Type@{ i } =>
+        fun ゼロの場合の処理 : 目標 ゼロの場合の構築子@{ i } =>
+        fun 後者の場合の処理 : forall 対象_前 : 自然数@{ i } , 目標 ( 後者の場合の構築子@{ i } 対象_前 ) =>
+        match
+            対象
+        as
+            対象_
+        return
+            目標 対象_
+        with
+            A_2024_07_21_0032 => ゼロの場合の処理
+            |
+            A_2024_07_21_0033 対象_前 => 後者の場合の処理 対象_前
+        end
+.
+
+Definition 依存型の場合分け@{ i | }
+    ( 対象 : 自然数@{ i } )
+    ( 目標 : 自然数@{ i } -> Type@{ i } )
+    ( ゼロの場合の処理 : 目標 ゼロの場合の構築子@{ i } )
+    ( 後者の場合の処理 : forall 対象_前 : 自然数@{ i } , 目標 ( 後者の場合の構築子@{ i } 対象_前 ) )
+    : 目標 対象
+    := A_2024_08_30_0008@{ i } 対象 目標 ゼロの場合の処理 後者の場合の処理
+.
+
+(** 自然数について再帰します。 *)
+
+Definition A_2024_08_30_0009@{ i | }
+    : 自然数@{ i } -> forall 目標 : Type@{ i } , 目標 -> ( 自然数@{ i } -> 目標 -> 目標 ) -> 目標
+    :=
+        fun 対象 : 自然数@{ i } =>
+        fun 目標 : Type@{ i } =>
+        fun ゼロの場合の処理 : 目標 =>
+        fun 後者の場合の処理 : 自然数@{ i } -> 目標 -> 目標 =>
+        (
+            fix a ( 対象_ : 自然数@{ i } ) { struct 対象_ } : 目標
                 :=
-                    match
-                        x
-                    with
-                        一_構築子_正の自然数 => y
-                        |
-                        後者_構築子_正の自然数 x_p => a x_p z ( 足す_正の自然数 y z )
-                    end
-        in
-            fun x : 正の自然数@{ i } => a x 一_正の自然数 一_正の自然数
+                    場合分け@{ i }
+                        対象_
+                        目標
+                        ゼロの場合の処理
+                        ( fun 対象_前 : 自然数@{ i } => 後者の場合の処理 対象_前 ( a 対象_前 ) )
+        )
+            対象
 .
+
+Definition 再帰@{ i | }
+    ( 対象 : 自然数@{ i } )
+    ( 目標 : Type@{ i } )
+    ( ゼロの場合の処理 : 目標 )
+    ( 後者の場合の処理 : 自然数@{ i } -> 目標 -> 目標 )
+    : 目標
+    := A_2024_08_30_0009@{ i } 対象 目標 ゼロの場合の処理 後者の場合の処理
+.
+
+(** 自然数について依存型の再帰をします。 *)
+
+Definition A_2024_08_30_0010@{ i | }
+    :
+        forall 対象 : 自然数@{ i } ,
+        forall 目標 : 自然数@{ i } -> Type@{ i } ,
+        目標 ゼロの場合の構築子@{ i }
+        ->
+        ( forall 対象_前 : 自然数@{ i } , 目標 対象_前 -> 目標 ( 後者の場合の構築子@{ i } 対象_前 ) )
+        ->
+        目標 対象
+    :=
+        fun 対象 : 自然数@{ i } =>
+        fun 目標 : 自然数@{ i } -> Type@{ i } =>
+        fun ゼロの場合の処理 : 目標 ゼロの場合の構築子@{ i } =>
+        fun 後者の場合の処理 : forall 対象_前 : 自然数@{ i } , 目標 対象_前 -> 目標 ( 後者の場合の構築子@{ i } 対象_前 ) =>
+        (
+            fix a ( 対象_ : 自然数@{ i } ) { struct 対象_ } : 目標 対象_
+                :=
+                    依存型の場合分け@{ i }
+                        対象_
+                        目標
+                        ゼロの場合の処理
+                        ( fun 対象_前 : 自然数@{ i } => 後者の場合の処理 対象_前 ( a 対象_前 ) )
+        )
+            対象
+.
+
+Definition 依存型の再帰@{ i | }
+    ( 対象 : 自然数@{ i } )
+    ( 目標 : 自然数@{ i } -> Type@{ i } )
+    ( ゼロの場合の処理 : 目標 ゼロの場合の構築子@{ i } )
+    ( 後者の場合の処理 : forall 対象_前 : 自然数@{ i } , 目標 対象_前 -> 目標 ( 後者の場合の構築子@{ i } 対象_前 ) )
+    : 目標 対象
+    := A_2024_08_30_0010@{ i } 対象 目標 ゼロの場合の処理 後者の場合の処理
+.
+
+End A_2024_07_21_0031 .
+
+Module 自然数 := A_2024_07_21_0031 .
+
+(** ゼロです。 *)
+
+Definition A_2024_08_30_0011@{ i | } : 自然数@{ i } := 自然数.ゼロの場合の構築子@{ i } .
+
+Definition ゼロ@{ i | } : 自然数@{ i } := A_2024_08_30_0011@{ i } .
+
+(** 後者関数です。 *)
+
+Definition A_2024_08_30_0012@{ i | } : 自然数@{ i } -> 自然数@{ i } := 自然数.後者の場合の構築子@{ i } .
+
+Definition 後者関数@{ i | } ( x : 自然数@{ i } ) : 自然数@{ i } := A_2024_08_30_0012@{ i } x .
+
+(** 一です。 *)
+
+Definition A_2024_07_21_0034@{ i | } : 自然数@{ i } := 後者関数@{ i } ゼロ@{ i } .
+
+Definition 一@{ i } : 自然数@{ i } := A_2024_07_21_0034@{ i } .
+
+(** 二です。 *)
+
+Definition A_2024_07_21_0035@{ i | } : 自然数@{ i } := 後者関数@{ i } 一@{ i } .
+
+Definition 二@{ i } : 自然数@{ i } := A_2024_07_21_0035@{ i } .
+
+(** 三です。 *)
+
+Definition A_2024_07_21_0036@{ i | } : 自然数@{ i } := 後者関数@{ i } 二@{ i } .
+
+Definition 三@{ i } : 自然数@{ i } := A_2024_07_21_0036@{ i } .
+
+(** 四です。 *)
+
+Definition A_2024_07_21_0037@{ i | } : 自然数@{ i } := 後者関数@{ i } 三@{ i } .
+
+Definition 四@{ i } : 自然数@{ i } := A_2024_07_21_0037@{ i } .
+
+(** 五です。 *)
+
+Definition A_2024_07_21_0038@{ i | } : 自然数@{ i } := 後者関数@{ i } 四@{ i } .
+
+Definition 五@{ i } : 自然数@{ i } := A_2024_07_21_0038@{ i } .
+
+(** 六です。 *)
+
+Definition A_2024_07_21_0039@{ i | } : 自然数@{ i } := 後者関数@{ i } 五@{ i } .
+
+Definition 六@{ i } : 自然数@{ i } := A_2024_07_21_0039@{ i } .
+
+(** 七です。 *)
+
+Definition A_2024_07_21_0040@{ i | } : 自然数@{ i } := 後者関数@{ i } 六@{ i } .
+
+Definition 七@{ i } : 自然数@{ i } := A_2024_07_21_0040@{ i } .
+
+(** 八です。 *)
+
+Definition A_2024_07_21_0041@{ i | } : 自然数@{ i } := 後者関数@{ i } 七@{ i } .
+
+Definition 八@{ i } : 自然数@{ i } := A_2024_07_21_0041@{ i } .
+
+(** 九です。 *)
+
+Definition A_2024_07_21_0042@{ i | } : 自然数@{ i } := 後者関数@{ i } 八@{ i } .
+
+Definition 九@{ i } : 自然数@{ i } := A_2024_07_21_0042@{ i } .
+
+(** 十です。 *)
+
+Definition A_2024_07_21_0043@{ i | } : 自然数@{ i } := 後者関数@{ i } 九@{ i } .
+
+Definition 十@{ i } : 自然数@{ i } := A_2024_07_21_0043@{ i } .
+
+(** 一を足します。 *)
+
+Definition A_2024_08_30_0014@{ i | } : 自然数@{ i } -> 自然数@{ i } := 後者関数@{ i } .
+
+Definition 一を足す@{ i | } ( x : 自然数@{ i } ) : 自然数@{ i } := A_2024_08_30_0014@{ i } x .
+
+(** 二を足します。 *)
+
+Definition A_2024_07_21_0044@{ i | } : 自然数@{ i } -> 自然数@{ i } := fun x : 自然数@{ i } => 後者関数@{ i } ( 一を足す@{ i } x ) .
+
+Definition 二を足す@{ i | } ( x : 自然数@{ i } ) : 自然数@{ i } := A_2024_07_21_0044@{ i } x .
+
+(** 三を足します。 *)
+
+Definition A_2024_07_21_0045@{ i | } : 自然数@{ i } -> 自然数@{ i } := fun x : 自然数@{ i } => 後者関数@{ i } ( 二を足す@{ i } x ) .
+
+Definition 三を足す@{ i | } ( x : 自然数@{ i } ) : 自然数@{ i } := A_2024_07_21_0045@{ i } x .
+
+(** 四を足します。 *)
+
+Definition A_2024_07_21_0046@{ i | } : 自然数@{ i } -> 自然数@{ i } := fun x : 自然数@{ i } => 後者関数@{ i } ( 三を足す@{ i } x ) .
+
+Definition 四を足す@{ i | } ( x : 自然数@{ i } ) : 自然数@{ i } := A_2024_07_21_0046@{ i } x .
+
+(** 五を足します。 *)
+
+Definition A_2024_07_21_0047@{ i | } : 自然数@{ i } -> 自然数@{ i } := fun x : 自然数@{ i } => 後者関数@{ i } ( 四を足す@{ i } x ) .
+
+Definition 五を足す@{ i | } ( x : 自然数@{ i } ) : 自然数@{ i } := A_2024_07_21_0047@{ i } x .
+
+(** 六を足します。 *)
+
+Definition A_2024_07_21_0048@{ i | } : 自然数@{ i } -> 自然数@{ i } := fun x : 自然数@{ i } => 後者関数@{ i } ( 五を足す@{ i } x ) .
+
+Definition 六を足す@{ i | } ( x : 自然数@{ i } ) : 自然数@{ i } := A_2024_07_21_0048@{ i } x .
+
+(** 七を足します。 *)
+
+Definition A_2024_07_21_0049@{ i | } : 自然数@{ i } -> 自然数@{ i } := fun x : 自然数@{ i } => 後者関数@{ i } ( 六を足す@{ i } x ) .
+
+Definition 七を足す@{ i | } ( x : 自然数@{ i } ) : 自然数@{ i } := A_2024_07_21_0049@{ i } x .
+
+(** 八を足します。 *)
+
+Definition A_2024_07_21_0050@{ i | } : 自然数@{ i } -> 自然数@{ i } := fun x : 自然数@{ i } => 後者関数@{ i } ( 七を足す@{ i } x ) .
+
+Definition 八を足す@{ i | } ( x : 自然数@{ i } ) : 自然数@{ i } := A_2024_07_21_0050@{ i } x .
+
+(** 九を足します。 *)
+
+Definition A_2024_07_21_0051@{ i | } : 自然数@{ i } -> 自然数@{ i } := fun x : 自然数@{ i } => 後者関数@{ i } ( 八を足す@{ i } x ) .
+
+Definition 九を足す@{ i | } ( x : 自然数@{ i } ) : 自然数@{ i } := A_2024_07_21_0051@{ i } x .
+
+(** 十を足します。 *)
+
+Definition A_2024_07_21_0052@{ i | } : 自然数@{ i } -> 自然数@{ i } := fun x : 自然数@{ i } => 後者関数@{ i } ( 九を足す@{ i } x ) .
+
+Definition 十を足す@{ i | } ( x : 自然数@{ i } ) : 自然数@{ i } := A_2024_07_21_0052@{ i } x .
+
+(** 足します。 *)
+
+Definition A_2024_07_21_0053@{ i | } : 自然数@{ i } -> 自然数@{ i } -> 自然数@{ i }
+    :=
+        fun x : 自然数@{ i } =>
+        自然数.再帰@{ i }
+            x
+            ( 自然数@{ i } -> 自然数@{ i } )
+            (
+                fun y : 自然数@{ i } =>
+                自然数.場合分け@{ i }
+                    y
+                    自然数@{ i }
+                    ゼロ@{ i }
+                    ( fun y_前 : 自然数@{ i } => 後者関数@{ i } y_前 )
+            )
+            (
+                fun x_前 : 自然数@{ i } =>
+                fun a_前 : 自然数@{ i } -> 自然数@{ i } =>
+                fun y : 自然数@{ i } =>
+                自然数.場合分け@{ i }
+                    y
+                    自然数@{ i }
+                    ( 後者関数@{ i } x_前 )
+                    ( fun y_前 : 自然数@{ i } => 後者関数@{ i } ( 後者関数@{ i } ( a_前 y_前 ) ) )
+            )
+.
+
+Definition 足す@{ i | } ( x : 自然数@{ i } ) ( y : 自然数@{ i } ) : 自然数@{ i } := A_2024_07_21_0053@{ i } x y .
+
+(** 掛けます。 *)
+
+Definition A_2024_07_21_0054@{ i | } : 自然数@{ i } -> 自然数@{ i } -> 自然数@{ i }
+    :=
+        fun x : 自然数@{ i } =>
+        fun y : 自然数@{ i } =>
+        自然数.再帰@{ i }
+            y
+            自然数@{ i }
+            ゼロ@{ i }
+            ( fun y_前 : 自然数@{ i } => fun a_前 : 自然数@{ i } => 足す@{ i } x a_前 )
+.
+
+Definition 掛ける@{ i | } ( x : 自然数@{ i } ) ( y : 自然数@{ i } ) : 自然数@{ i } := A_2024_07_21_0054@{ i } x y .
+
+(** 冪乗です。 *)
+
+Definition A_2024_07_21_0055@{ i | } : 自然数@{ i } -> 自然数@{ i } -> 自然数@{ i }
+    :=
+        fun x : 自然数@{ i } =>
+        fun y : 自然数@{ i } =>
+        自然数.再帰@{ i }
+            y
+            自然数@{ i }
+            一@{ i }
+            ( fun y_前 : 自然数@{ i } => fun a_前 : 自然数@{ i } => 掛ける@{ i } x a_前 )
+.
+
+Definition 冪乗@{ i | } ( x : 自然数@{ i } ) ( y : 自然数@{ i } ) : 自然数@{ i } := A_2024_07_21_0055@{ i } x y .
+
+(** 超冪です。 *)
+
+Definition A_2024_07_21_0060@{ i | } : 自然数@{ i } -> 自然数@{ i } -> 自然数@{ i }
+    :=
+        fun x : 自然数@{ i } =>
+        fun y : 自然数@{ i } =>
+        自然数.再帰@{ i }
+            y
+            自然数@{ i }
+            一@{ i }
+            ( fun y_前 : 自然数@{ i } => fun a_前 : 自然数@{ i } => 冪乗@{ i } x a_前 )
+.
+
+Definition 超冪@{ i | } ( x : 自然数@{ i } ) ( y : 自然数@{ i } ) : 自然数@{ i } := A_2024_07_21_0060@{ i } x y .
+
+(** 最小値です。 *)
+
+Definition A_2024_07_21_0056@{ i | } : 自然数@{ i } -> 自然数@{ i } -> 自然数@{ i }
+    :=
+        fun x : 自然数@{ i } =>
+        自然数.再帰@{ i }
+            x
+            ( 自然数@{ i } -> 自然数@{ i } )
+            (
+                fun y : 自然数@{ i } =>
+                自然数.場合分け@{ i }
+                    y
+                    自然数@{ i }
+                    ゼロ@{ i }
+                    ( fun y_前 : 自然数@{ i } => ゼロ@{ i } )
+            )
+            (
+                fun x_前 : 自然数@{ i } =>
+                fun a_前 : 自然数@{ i } -> 自然数@{ i } =>
+                fun y : 自然数@{ i } =>
+                自然数.場合分け@{ i }
+                    y
+                    自然数@{ i }
+                    ゼロ@{ i }
+                    ( fun y_前 : 自然数@{ i } => 後者関数@{ i } ( a_前 y_前 ) )
+            )
+.
+
+Definition 最小値を計算する@{ i | } ( x : 自然数@{ i } ) ( y : 自然数@{ i } ) : 自然数@{ i } := A_2024_07_21_0056@{ i } x y .
+
+(** 最大値です。 *)
+
+Definition A_2024_07_21_0057@{ i | } : 自然数@{ i } -> 自然数@{ i } -> 自然数@{ i }
+    :=
+        fun x : 自然数@{ i } =>
+        自然数.再帰@{ i }
+            x
+            ( 自然数@{ i } -> 自然数@{ i } )
+            (
+                fun y : 自然数@{ i } =>
+                自然数.場合分け@{ i }
+                    y
+                    自然数@{ i }
+                    ゼロ@{ i }
+                    ( fun y_前 : 自然数@{ i } => 後者関数@{ i } y_前 )
+            )
+            (
+                fun x_前 : 自然数@{ i } =>
+                fun a_前 : 自然数@{ i } -> 自然数@{ i } =>
+                fun y : 自然数@{ i } =>
+                自然数.場合分け@{ i }
+                    y
+                    自然数@{ i }
+                    ( 後者関数@{ i } x_前 )
+                    ( fun y_前 : 自然数@{ i } => 後者関数@{ i } ( a_前 y_前 ) )
+            )
+.
+
+Definition 最大値を計算する@{ i | } ( x : 自然数@{ i } ) ( y : 自然数@{ i } ) : 自然数@{ i } := A_2024_07_21_0057@{ i } x y .
+
+(** 三角数です。 *)
+
+Definition A_2024_07_21_0058@{ i | } : 自然数@{ i } -> 自然数@{ i }
+    :=
+        fun x : 自然数@{ i } =>
+        自然数.再帰@{ i }
+            x
+            自然数@{ i }
+            ゼロ@{ i }
+            ( fun x_前 : 自然数@{ i } => fun a_前 : 自然数@{ i } => 足す@{ i } ( 後者関数@{ i } x_前 ) a_前 )
+.
+
+Definition 三角数を計算する@{ i | } ( x : 自然数@{ i } ) : 自然数@{ i } := A_2024_07_21_0058@{ i } x .
+
+(** 階乗です。 *)
+
+Definition A_2024_07_21_0059@{ i | } : 自然数@{ i } -> 自然数@{ i }
+    :=
+        fun x : 自然数@{ i } =>
+        自然数.再帰@{ i }
+            x
+            自然数@{ i }
+            一@{ i }
+            ( fun x_前 : 自然数@{ i } => fun a_前 : 自然数@{ i } => 掛ける@{ i } ( 後者関数@{ i } x_前 ) a_前 )
+.
+
+Definition 階乗@{ i | } ( x : 自然数@{ i } ) : 自然数@{ i } := A_2024_07_21_0059@{ i } x .
+
+(** 二項係数です。 *)
+
+Definition A_2024_07_21_0061@{ i | } : 自然数@{ i } -> 自然数@{ i } -> 自然数@{ i }
+    :=
+        fun x : 自然数@{ i } =>
+        自然数.再帰@{ i }
+            x
+            ( 自然数@{ i } -> 自然数@{ i } )
+            (
+                fun y : 自然数@{ i } =>
+                自然数.場合分け@{ i }
+                    y
+                    自然数@{ i }
+                    一@{ i }
+                    ( fun y_前 : 自然数@{ i } => ゼロ@{ i } )
+            )
+            (
+                fun x_前 : 自然数@{ i } =>
+                fun a_前 : 自然数@{ i } -> 自然数@{ i } =>
+                fun y : 自然数@{ i } =>
+                自然数.場合分け@{ i }
+                    y
+                    自然数@{ i }
+                    一@{ i }
+                    ( fun y_前 : 自然数@{ i } => 足す@{ i } ( a_前 ( 後者関数@{ i } y_前 ) ) ( a_前 y_前 ) )
+            )
+.
+
+Definition 二項係数@{ i | } ( x : 自然数@{ i } ) ( y : 自然数@{ i } ) : 自然数@{ i } := A_2024_07_21_0061 x y .
+
+(** フィボナッチ数列です。 *)
+
+Definition A_2024_07_21_0062@{ i | } : 自然数@{ i } -> 自然数@{ i }
+    :=
+        fun x : 自然数@{ i } =>
+        (
+            自然数.再帰@{ i }
+                x
+                ( 自然数@{ i } -> 自然数@{ i } -> 自然数@{ i } )
+                ( fun y : 自然数@{ i } => fun z : 自然数@{ i } => y )
+                (
+                    fun x_前 : 自然数@{ i } =>
+                    fun a_前 : 自然数@{ i } -> 自然数@{ i } -> 自然数@{ i } =>
+                    fun y : 自然数@{ i } =>
+                    fun z : 自然数@{ i } =>
+                    a_前 z ( 足す@{ i } y z )
+                )
+        )
+            ゼロ@{ i }
+            一@{ i }
+.
+
+Definition フィボナッチ数列を計算する@{ i | } ( x : 自然数@{ i } ) : 自然数@{ i } := A_2024_07_21_0062@{ i } x .
+
+(** 二で割ります。 *)
+
+Definition A_2024_08_02_0003@{ i | } : 自然数@{ i } -> 自然数@{ i }
+    :=
+        fun x : 自然数@{ i } =>
+        (
+            自然数.再帰@{ i }
+                x
+                ( 自然数@{ i } -> 自然数@{ i } -> 自然数@{ i } )
+                ( fun y : 自然数@{ i } => fun z : 自然数@{ i } => y )
+                (
+                    fun x_前 : 自然数@{ i } =>
+                    fun a_前 : 自然数@{ i } -> 自然数@{ i } -> 自然数@{ i } =>
+                    fun y : 自然数@{ i } =>
+                    fun z : 自然数@{ i } =>
+                    a_前 z ( 後者関数@{ i } y )
+                )
+        )
+            ゼロ@{ i }
+            ゼロ@{ i }
+.
+
+End A_2024_08_30_0006 .
+
+(** ** 一から始まる自然数 *)
+
+(** 一から始まる自然数に関するモジュールを定義します。 *)
+
+Module A_2024_09_02_0000 .
+
+(** 一から始まる自然数を定義します。 *)
+
+Inductive A_2024_07_21_0063@{ i | } : Type@{ i }
+    :=
+        A_2024_07_21_0064 : A_2024_07_21_0063
+        |
+        A_2024_07_21_0065 : A_2024_07_21_0063 -> A_2024_07_21_0063
+.
+
+Definition 正の自然数@{ i | } : Type@{ i } := A_2024_07_21_0063@{ i } .
+
+Module A_2024_07_21_0063 .
+
+Definition 一の場合の構築子@{ i | } : 正の自然数@{ i } := A_2024_07_21_0064@{ i } .
+
+Definition 後者の場合の構築子@{ i | } ( x : 正の自然数@{ i } ) : 正の自然数@{ i } := A_2024_07_21_0065@{ i } x .
+
+(** 正の自然数について場合分けします。 *)
+
+Definition A_2024_09_02_0001@{ i | }
+    : 正の自然数@{ i } -> forall 目標 : Type@{ i } , 目標 -> ( 正の自然数@{ i } -> 目標 ) -> 目標
+    :=
+        fun 対象 : 正の自然数@{ i } =>
+        fun 目標 : Type@{ i } =>
+        fun 一の場合の処理 : 目標 =>
+        fun 後者の場合の処理 : 正の自然数@{ i } -> 目標 =>
+        match
+            対象
+        with
+            A_2024_07_21_0064 => 一の場合の処理
+            |
+            A_2024_07_21_0065 対象_前 => 後者の場合の処理 対象_前
+        end
+.
+
+Definition 場合分け@{ i | }
+    ( 対象 : 正の自然数@{ i } )
+    ( 目標 : Type@{ i } )
+    ( 一の場合の処理 : 目標 )
+    ( 後者の場合の処理 : 正の自然数@{ i } -> 目標 )
+    : 目標
+    := A_2024_09_02_0001@{ i } 対象 目標 一の場合の処理 後者の場合の処理
+.
+
+(** 正の自然数について依存型の場合分けをします。 *)
+
+Definition A_2024_09_02_0002@{ i | }
+    :
+        forall 対象 : 正の自然数@{ i } ,
+        forall 目標 : 正の自然数@{ i } -> Type@{ i } ,
+        目標 一の場合の構築子@{ i }
+        ->
+        ( forall 対象_前 : 正の自然数@{ i } , 目標 ( 後者の場合の構築子@{ i } 対象_前 ) )
+        ->
+        目標 対象
+    :=
+        fun 対象 : 正の自然数@{ i } =>
+        fun 目標 : 正の自然数@{ i } -> Type@{ i } =>
+        fun 一の場合の処理 : 目標 一の場合の構築子@{ i } =>
+        fun 後者の場合の処理 : forall 対象_前 : 正の自然数@{ i } , 目標 ( 後者の場合の構築子@{ i } 対象_前 ) =>
+        match
+            対象
+        as
+            対象_
+        return
+            目標 対象_
+        with
+            A_2024_07_21_0064 => 一の場合の処理
+            |
+            A_2024_07_21_0065 対象_前 => 後者の場合の処理 対象_前
+        end
+.
+
+Definition 依存型の場合分け@{ i | }
+    ( 対象 : 正の自然数@{ i } )
+    ( 目標 : 正の自然数@{ i } -> Type@{ i } )
+    ( 一の場合の処理 : 目標 一の場合の構築子@{ i } )
+    ( 後者の場合の処理 : forall 対象_前 : 正の自然数@{ i } , 目標 ( 後者の場合の構築子@{ i } 対象_前 ) )
+    : 目標 対象
+    := A_2024_09_02_0002@{ i } 対象 目標 一の場合の処理 後者の場合の処理
+.
+
+(** 正の自然数について再帰します。 *)
+
+Definition A_2024_09_02_0003@{ i | }
+    :
+        正の自然数@{ i }
+        ->
+        forall 目標 : Type@{ i } ,
+        目標
+        ->
+        ( 正の自然数@{ i } -> 目標 -> 目標 )
+        ->
+        目標
+    :=
+        fun 対象 : 正の自然数@{ i } =>
+        fun 目標 : Type@{ i } =>
+        fun 一の場合の処理 : 目標 =>
+        fun 後者の場合の処理 : 正の自然数@{ i } -> 目標 -> 目標 =>
+        (
+            fix a ( 対象_ : 正の自然数@{ i } ) { struct 対象_ } : 目標
+                :=
+                    場合分け@{ i }
+                        対象_
+                        目標
+                        一の場合の処理
+                        ( fun 対象_前 : 正の自然数@{ i } => 後者の場合の処理 対象_前 ( a 対象_前 ) )
+        )
+            対象
+.
+
+Definition 再帰@{ i | }
+    ( 対象 : 正の自然数@{ i } )
+    ( 目標 : Type@{ i } )
+    ( 一の場合の処理 : 目標 )
+    ( 後者の場合の処理 : 正の自然数@{ i } -> 目標 -> 目標 )
+    : 目標
+    := A_2024_09_02_0003@{ i } 対象 目標 一の場合の処理 後者の場合の処理
+.
+
+(** 正の自然数について依存型の再帰をします。 *)
+
+Definition A_2024_09_02_0004@{ i | }
+    :
+        forall 対象 : 正の自然数@{ i } ,
+        forall 目標 : 正の自然数@{ i } -> Type@{ i } ,
+        目標 一の場合の構築子@{ i }
+        ->
+        ( forall 対象_前 : 正の自然数@{ i } , 目標 対象_前 -> 目標 ( 後者の場合の構築子@{ i } 対象_前 ) )
+        ->
+        目標 対象
+    :=
+        fun 対象 : 正の自然数@{ i } =>
+        fun 目標 : 正の自然数@{ i } -> Type@{ i } =>
+        fun 一の場合の処理 : 目標 一の場合の構築子@{ i } =>
+        fun 後者の場合の処理 : forall 対象_前 : 正の自然数@{ i } , 目標 対象_前 -> 目標 ( 後者の場合の構築子@{ i } 対象_前 ) =>
+        (
+            fix a ( 対象_ : 正の自然数@{ i } ) { struct 対象_ } : 目標 対象_
+                :=
+                    依存型の場合分け@{ i }
+                        対象_
+                        目標
+                        一の場合の処理
+                        ( fun 対象_前 : 正の自然数@{ i } => 後者の場合の処理 対象_前 ( a 対象_前 ) )
+        )
+            対象
+.
+
+Definition 依存型の再帰@{ i | }
+    ( 対象 : 正の自然数@{ i } )
+    ( 目標 : 正の自然数@{ i } -> Type@{ i } )
+    ( 一の場合の処理 : 目標 一の場合の構築子@{ i } )
+    ( 後者の場合の処理 : forall 対象_前 : 正の自然数@{ i } , 目標 対象_前 -> 目標 ( 後者の場合の構築子@{ i } 対象_前 ) )
+    : 目標 対象
+    := A_2024_09_02_0004@{ i } 対象 目標 一の場合の処理 後者の場合の処理
+.
+
+End A_2024_07_21_0063 .
+
+Module 正の自然数 := A_2024_07_21_0063 .
+
+(** 一です。 *)
+
+Definition A_2024_09_02_0005@{ i | } : 正の自然数@{ i } := 正の自然数.一の場合の構築子@{ i } .
+
+Definition 一@{ i | } : 正の自然数@{ i } := A_2024_09_02_0005@{ i } .
+
+(** 後者関数です。 *)
+
+Definition A_2024_09_02_0006@{ i | } : 正の自然数@{ i } -> 正の自然数@{ i } := 正の自然数.後者の場合の構築子@{ i } .
+
+Definition 後者関数@{ i | } ( x : 正の自然数@{ i } ) : 正の自然数@{ i } := A_2024_09_02_0006@{ i } x .
+
+(** 二です。 *)
+
+Definition A_2024_07_21_0066@{ i | } : 正の自然数@{ i } := 後者関数@{ i } 一@{ i } .
+
+Definition 二@{ i | } : 正の自然数@{ i } := A_2024_07_21_0066@{ i } .
+
+(** 三です。 *)
+
+Definition A_2024_07_21_0067@{ i | } : 正の自然数@{ i } := 後者関数@{ i } 二@{ i } .
+
+Definition 三@{ i | } : 正の自然数@{ i } := A_2024_07_21_0067@{ i } .
+
+(** 四です。 *)
+
+Definition A_2024_07_21_0068@{ i | } : 正の自然数@{ i } := 後者関数@{ i } 三@{ i } .
+
+Definition 四@{ i | } : 正の自然数@{ i } := A_2024_07_21_0068@{ i } .
+
+(** 五です。 *)
+
+Definition A_2024_07_21_0069@{ i | } : 正の自然数@{ i } := 後者関数@{ i } 四@{ i } .
+
+Definition 五@{ i | } : 正の自然数@{ i } := A_2024_07_21_0069@{ i } .
+
+(** 六です。 *)
+
+Definition A_2024_07_21_0070@{ i | } : 正の自然数@{ i } := 後者関数@{ i } 五@{ i } .
+
+Definition 六@{ i | } : 正の自然数@{ i } := A_2024_07_21_0070@{ i } .
+
+(** 七です。 *)
+
+Definition A_2024_07_21_0071@{ i | } : 正の自然数@{ i } := 後者関数@{ i } 六@{ i } .
+
+Definition 七@{ i | } : 正の自然数@{ i } := A_2024_07_21_0071@{ i } .
+
+(** 八です。 *)
+
+Definition A_2024_07_21_0072@{ i | } : 正の自然数@{ i } := 後者関数@{ i } 七@{ i } .
+
+Definition 八@{ i | } : 正の自然数@{ i } := A_2024_07_21_0072@{ i } .
+
+(** 九です。 *)
+
+Definition A_2024_07_21_0073@{ i | } : 正の自然数@{ i } := 後者関数@{ i } 八@{ i } .
+
+Definition 九@{ i | } : 正の自然数@{ i } := A_2024_07_21_0073@{ i } .
+
+(** 十です。 *)
+
+Definition A_2024_07_21_0074@{ i | } : 正の自然数@{ i } := 後者関数@{ i } 九@{ i } .
+
+Definition 十@{ i | } : 正の自然数@{ i } := A_2024_07_21_0074@{ i } .
+
+(** 一を足します。 *)
+
+Definition A_2024_08_03_0000@{ i | } : 正の自然数@{ i } -> 正の自然数@{ i } := 後者関数@{ i } .
+
+Definition 一を足す@{ i | } ( x : 正の自然数@{ i } ) : 正の自然数@{ i } := A_2024_08_03_0000@{ i } x .
+
+(** 二を足します。 *)
+
+Definition A_2024_07_21_0075@{ i | } : 正の自然数@{ i } -> 正の自然数@{ i }
+    := fun x : 正の自然数@{ i } => 後者関数@{ i } ( 一を足す@{ i } x )
+.
+
+Definition 二を足す@{ i | } ( x : 正の自然数@{ i } ) : 正の自然数@{ i } := A_2024_07_21_0075@{ i } x .
+
+(** 三を足します。 *)
+
+Definition A_2024_07_21_0076@{ i | } : 正の自然数@{ i } -> 正の自然数@{ i }
+    := fun x : 正の自然数@{ i } => 後者関数@{ i } ( 二を足す@{ i } x )
+.
+
+Definition 三を足す@{ i | } ( x : 正の自然数@{ i } ) : 正の自然数@{ i } := A_2024_07_21_0076@{ i } x .
+
+(** 四を足します。 *)
+
+Definition A_2024_07_21_0077@{ i | } : 正の自然数@{ i } -> 正の自然数@{ i }
+    := fun x : 正の自然数@{ i } => 後者関数@{ i } ( 三を足す@{ i } x )
+.
+
+Definition 四を足す@{ i | } ( x : 正の自然数@{ i } ) : 正の自然数@{ i } := A_2024_07_21_0077@{ i } x .
+
+(** 五を足します。 *)
+
+Definition A_2024_07_21_0078@{ i | } : 正の自然数@{ i } -> 正の自然数@{ i }
+    := fun x : 正の自然数@{ i } => 後者関数@{ i } ( 四を足す@{ i } x )
+.
+
+Definition 五を足す@{ i | } ( x : 正の自然数@{ i } ) : 正の自然数@{ i } := A_2024_07_21_0078@{ i } x .
+
+(** 六を足します。 *)
+
+Definition A_2024_07_21_0079@{ i | } : 正の自然数@{ i } -> 正の自然数@{ i }
+    := fun x : 正の自然数@{ i } => 後者関数@{ i } ( 五を足す@{ i } x )
+.
+
+Definition 六を足す@{ i | } ( x : 正の自然数@{ i } ) : 正の自然数@{ i } := A_2024_07_21_0079@{ i } x .
+
+(** 七を足します。 *)
+
+Definition A_2024_07_21_0080@{ i | } : 正の自然数@{ i } -> 正の自然数@{ i }
+    := fun x : 正の自然数@{ i } => 後者関数@{ i } ( 六を足す@{ i } x )
+.
+
+Definition 七を足す@{ i | } ( x : 正の自然数@{ i } ) : 正の自然数@{ i } := A_2024_07_21_0080@{ i } x .
+
+(** 八を足します。 *)
+
+Definition A_2024_07_21_0081@{ i | } : 正の自然数@{ i } -> 正の自然数@{ i }
+    := fun x : 正の自然数@{ i } => 後者関数@{ i } ( 七を足す@{ i } x )
+.
+
+Definition 八を足す@{ i | } ( x : 正の自然数@{ i } ) : 正の自然数@{ i } := A_2024_07_21_0081@{ i } x .
+
+(** 九を足します。 *)
+
+Definition A_2024_07_21_0082@{ i | } : 正の自然数@{ i } -> 正の自然数@{ i }
+    := fun x : 正の自然数@{ i } => 後者関数@{ i } ( 八を足す@{ i } x )
+.
+
+Definition 九を足す@{ i | } ( x : 正の自然数@{ i } ) : 正の自然数@{ i } := A_2024_07_21_0082@{ i } x .
+
+(** 十を足します。 *)
+
+Definition A_2024_07_21_0083@{ i | } : 正の自然数@{ i } -> 正の自然数@{ i }
+    := fun x : 正の自然数@{ i } => 後者関数@{ i } ( 九を足す@{ i } x )
+.
+
+Definition 十を足す@{ i | } ( x : 正の自然数@{ i } ) : 正の自然数@{ i } := A_2024_07_21_0083@{ i } x .
+
+(** 足します。 *)
+
+Definition A_2024_07_22_0000@{ i | } : 正の自然数@{ i } -> 正の自然数@{ i } -> 正の自然数@{ i }
+    :=
+        fun x : 正の自然数@{ i } =>
+        正の自然数.再帰@{ i }
+            x
+            ( 正の自然数@{ i } -> 正の自然数@{ i } )
+            (
+                fun y : 正の自然数@{ i } =>
+                正の自然数.場合分け@{ i }
+                    y
+                    正の自然数@{ i }
+                    二@{ i }
+                    ( fun y_前 : 正の自然数@{ i } => 後者関数@{ i } ( 後者関数@{ i } y_前 ) )
+            )
+            (
+                fun x_前 : 正の自然数@{ i } =>
+                fun a_前 : 正の自然数@{ i } -> 正の自然数@{ i } =>
+                fun y : 正の自然数@{ i } =>
+                正の自然数.場合分け@{ i }
+                    y
+                    正の自然数@{ i }
+                    ( 後者関数@{ i } ( 後者関数@{ i } x_前 ) )
+                    ( fun y_前 : 正の自然数@{ i } => 後者関数@{ i } ( 後者関数@{ i } ( a_前 y_前 ) ) )
+            )
+.
+
+Definition 足す@{ i | } ( x : 正の自然数@{ i } ) ( y : 正の自然数@{ i } ) : 正の自然数@{ i } := A_2024_07_22_0000@{ i } x y .
+
+(** 掛けます。 *)
+
+Definition A_2024_07_22_0001@{ i | } : 正の自然数@{ i } -> 正の自然数@{ i } -> 正の自然数@{ i }
+    :=
+        fun x : 正の自然数@{ i } =>
+        fun y : 正の自然数@{ i } =>
+        正の自然数.再帰@{ i }
+            y
+            正の自然数@{ i }
+            x
+            ( fun y_前 : 正の自然数@{ i } => fun a_前 : 正の自然数@{ i } => 足す@{ i } x a_前 )
+.
+
+Definition 掛ける@{ i | } ( x : 正の自然数@{ i } ) ( y : 正の自然数@{ i } ) : 正の自然数@{ i } := A_2024_07_22_0001@{ i } x y .
+
+(** 冪乗です。 *)
+
+Definition A_2024_07_22_0002@{ i | } : 正の自然数@{ i } -> 正の自然数@{ i } -> 正の自然数@{ i }
+    :=
+        fun x : 正の自然数@{ i } =>
+        fun y : 正の自然数@{ i } =>
+        正の自然数.再帰@{ i }
+            y
+            正の自然数@{ i }
+            x
+            ( fun y_前 : 正の自然数@{ i } => fun a_前 : 正の自然数@{ i } => A_2024_07_22_0001@{ i } x a_前 )
+.
+
+Definition 冪乗@{ i | } ( x : 正の自然数@{ i } ) ( y : 正の自然数@{ i } ) : 正の自然数@{ i } := A_2024_07_22_0002@{ i } x y .
+
+(** テトレーションです。 *)
+
+Definition A_2024_07_22_0003@{ i | } : 正の自然数@{ i } -> 正の自然数@{ i } -> 正の自然数@{ i }
+    :=
+        fun x : 正の自然数@{ i } =>
+        fun y : 正の自然数@{ i } =>
+        正の自然数.再帰@{ i }
+            y
+            正の自然数@{ i }
+            x
+            ( fun y_前 : 正の自然数@{ i } => fun a_前 : 正の自然数@{ i } => A_2024_07_22_0002@{ i } x a_前 )
+.
+
+Definition テトレーション@{ i | } ( x : 正の自然数@{ i } ) ( y : 正の自然数@{ i } ) : 正の自然数@{ i } := A_2024_07_22_0003@{ i } x y .
+
+(** 最小値です。 *)
+
+Definition A_2024_07_22_0004@{ i | } : 正の自然数@{ i } -> 正の自然数@{ i } -> 正の自然数@{ i }
+    :=
+        fun x : 正の自然数@{ i } =>
+        正の自然数.再帰@{ i }
+            x
+            ( 正の自然数@{ i } -> 正の自然数@{ i } )
+            (
+                fun y : 正の自然数@{ i } =>
+                正の自然数.場合分け@{ i }
+                    y
+                    正の自然数@{ i }
+                    一@{ i }
+                    ( fun y_前 : 正の自然数@{ i } => 一@{ i } )
+            )
+            (
+                fun x_前 : 正の自然数@{ i } =>
+                fun a_前 : 正の自然数@{ i } -> 正の自然数@{ i } =>
+                fun y : 正の自然数@{ i } =>
+                正の自然数.場合分け@{ i }
+                    y
+                    正の自然数@{ i }
+                    ( 一@{ i } )
+                    ( fun y_前 : 正の自然数@{ i } => 後者関数@{ i } ( a_前 y_前 ) )
+            )
+.
+
+Definition 最小値を計算する@{ i | } ( x : 正の自然数@{ i } ) ( y : 正の自然数@{ i } ) : 正の自然数@{ i } := A_2024_07_22_0004@{ i } x y .
+
+(** 最大値です。 *)
+
+Definition A_2024_07_22_0005@{ i | } : 正の自然数@{ i } -> 正の自然数@{ i } -> 正の自然数@{ i }
+    :=
+        fun x : 正の自然数@{ i } =>
+        正の自然数.再帰@{ i }
+            x
+            ( 正の自然数@{ i } -> 正の自然数@{ i } )
+            (
+                fun y : 正の自然数@{ i } =>
+                正の自然数.場合分け@{ i }
+                    y
+                    正の自然数@{ i }
+                    一@{ i }
+                    ( fun y_前 : 正の自然数@{ i } => 後者関数@{ i } y_前 )
+            )
+            (
+                fun x_前 : 正の自然数@{ i } =>
+                fun a_前 : 正の自然数@{ i } -> 正の自然数@{ i } =>
+                fun y : 正の自然数@{ i } =>
+                正の自然数.場合分け@{ i }
+                    y
+                    正の自然数@{ i }
+                    ( 後者関数@{ i } x_前 )
+                    ( fun y_前 : 正の自然数@{ i } => 後者関数@{ i } ( a_前 y_前 ) )
+            )
+.
+
+Definition 最大値を計算する@{ i | } ( x : 正の自然数@{ i } ) ( y : 正の自然数@{ i } ) : 正の自然数@{ i } := A_2024_07_22_0005@{ i } x y .
+
+(** 三角数です。 *)
+
+Definition A_2024_07_22_0006@{ i | } : 正の自然数@{ i } -> 正の自然数@{ i }
+    :=
+        fun x : 正の自然数@{ i } =>
+        正の自然数.再帰@{ i }
+            x
+            正の自然数@{ i }
+            一@{ i }
+            ( fun x_前 : 正の自然数@{ i } => fun a_前 : 正の自然数@{ i } => 足す@{ i } ( 後者関数@{ i } x_前 ) a_前 )
+.
+
+Definition 三角数を計算する@{ i | } ( x : 正の自然数@{ i } ) : 正の自然数@{ i } := A_2024_07_22_0006@{ i } x .
+
+(** 階乗です。 *)
+
+Definition A_2024_07_22_0007@{ i | } : 正の自然数@{ i } -> 正の自然数@{ i }
+    :=
+        fun x : 正の自然数@{ i } =>
+        正の自然数.再帰@{ i }
+            x
+            正の自然数@{ i }
+            一@{ i }
+            ( fun x_前 : 正の自然数@{ i } => fun a_前 : 正の自然数@{ i } => 掛ける@{ i } ( 後者関数@{ i } x_前 ) a_前 )
+.
+
+Definition 階乗を計算する@{ i | } ( x : 正の自然数@{ i } ) : 正の自然数@{ i } := A_2024_07_22_0007@{ i } x .
+
+(** フィボナッチ数列です。 *)
+
+Definition A_2024_07_22_0008@{ i | } : 正の自然数@{ i } -> 正の自然数@{ i }
+    :=
+        fun x : 正の自然数@{ i } =>
+        (
+            正の自然数.再帰@{ i }
+                x
+                ( 正の自然数@{ i } -> 正の自然数@{ i } -> 正の自然数@{ i } )
+                ( fun y : 正の自然数@{ i } => fun z : 正の自然数@{ i } => y )
+                (
+                    fun x_前 : 正の自然数@{ i } =>
+                    fun a_前 : 正の自然数@{ i } -> 正の自然数@{ i } -> 正の自然数@{ i } =>
+                    fun y : 正の自然数@{ i } =>
+                    fun z : 正の自然数@{ i } =>
+                    a_前 z ( 足す@{ i } y z )
+                )
+        )
+            一@{ i }
+            一@{ i }
+.
+
+Definition フィボナッチ数列を計算する@{ i | } ( x : 正の自然数@{ i } ) : 正の自然数@{ i } := A_2024_07_22_0008@{ i } x .
+
+End A_2024_09_02_0000 .
+
+Module 正の自然数 := A_2024_09_02_0000 .
+
+(** ** 整数 *)
+
+(** 整数に関するモジュールを定義します。 *)
+
+Module A_2024_09_03_0000 .
+
+(** << A_2024_09_02_0000 >> を取り込みます。 *)
+
+Import A_2024_09_02_0000 .
 
 (** 整数を定義します。 *)
 
-Inductive 整数@{ i | } : Type@{ i }
-    := 負_構築子_整数 : 正の自然数@{ i } -> 整数 | 零_構築子_整数 : 整数 | 正_構築子_整数 : 正の自然数@{ i } -> 整数
+Inductive A_2024_07_22_0016@{ i | } : Type@{ i }
+    :=
+        A_2024_07_22_0017 : 正の自然数@{ i } -> A_2024_07_22_0016
+        |
+        A_2024_07_22_0018 : A_2024_07_22_0016
+        |
+        A_2024_07_22_0019 : 正の自然数@{ i } -> A_2024_07_22_0016
 .
 
-Definition 負の符号を付ける_整数@{ i | } ( x : 正の自然数@{ i } ) : 整数@{ i } := 負_構築子_整数 x.
+Definition 整数@{ i | } : Type@{ i } := A_2024_07_22_0016@{ i } .
 
-Definition 零_整数@{ i | } : 整数@{ i } := 零_構築子_整数.
+Module A_2024_07_22_0016 .
 
-Definition 正の符号を付ける_整数@{ i | } ( x : 正の自然数@{ i } ) : 整数@{ i } := 正_構築子_整数 x.
+Definition 負の場合の構築子@{ i | } ( x : 正の自然数@{ i } ) : 整数@{ i } := A_2024_07_22_0017@{ i } x .
 
-Definition 後者を計算する_整数@{ i | } ( x : 整数@{ i } ) : 整数@{ i }
+Definition ゼロの場合の構築子@{ i | } : 整数@{ i } := A_2024_07_22_0018@{ i } .
+
+Definition 正の場合の構築子@{ i | } ( x : 正の自然数@{ i } ) : 整数@{ i } := A_2024_07_22_0019@{ i } x .
+
+(** 整数について場合分けします。 *)
+
+Definition A_2024_09_03_0001@{ i | }
+    : 整数@{ i } -> forall 目標 : Type@{ i } , ( 正の自然数@{ i } -> 目標 ) -> 目標 -> ( 正の自然数@{ i } -> 目標 ) -> 目標
     :=
+        fun 対象 : 整数@{ i } =>
+        fun 目標 : Type@{ i } =>
+        fun 負の場合の処理 : 正の自然数@{ i } -> 目標 =>
+        fun ゼロの場合の処理 : 目標 =>
+        fun 正の場合の処理 : 正の自然数@{ i } -> 目標 =>
         match
-            x
+            対象
         with
-            負_構築子_整数 x_n
-                =>
-                    match
-                        x_n
-                    with
-                        一_構築子_正の自然数 => 零_整数
-                        |
-                        後者_構築子_正の自然数 x_n_p => 負の符号を付ける_整数 x_n_p
-                    end
+            A_2024_07_22_0017 対象_負 => 負の場合の処理 対象_負
             |
-            零_構築子_整数 => 正の符号を付ける_整数 一_正の自然数
+            A_2024_07_22_0018 => ゼロの場合の処理
             |
-            正_構築子_整数 x_p => 正の符号を付ける_整数 ( 後者を計算する_正の自然数 x_p )
+            A_2024_07_22_0019 対象_正 => 正の場合の処理 対象_正
         end
 .
 
-Definition 前者を計算する_整数@{ i | } ( x : 整数@{ i } ) : 整数@{ i }
+Definition 場合分け@{ i | }
+    ( 対象 : 整数@{ i } )
+    ( 目標 : Type@{ i } )
+    ( 負の場合の処理 : 正の自然数@{ i } -> 目標 )
+    ( ゼロの場合の処理 : 目標 )
+    ( 正の場合の処理 : 正の自然数@{ i } -> 目標 )
+    : 目標
+    := A_2024_09_03_0001@{ i } 対象 目標 負の場合の処理 ゼロの場合の処理 正の場合の処理
+.
+
+(** 整数について依存型の場合分けをします。 *)
+
+Definition A_2024_09_03_0002@{ i | }
+    :
+        forall 対象 : 整数@{ i } ,
+        forall 目標 : 整数@{ i } -> Type@{ i } ,
+        ( forall 対象_負 : 正の自然数@{ i } , 目標 ( 負の場合の構築子@{ i } 対象_負 ) )
+        ->
+        目標 ゼロの場合の構築子@{ i }
+        ->
+        ( forall 対象_正 : 正の自然数@{ i } , 目標 ( 正の場合の構築子@{ i } 対象_正 ) )
+        ->
+        目標 対象
     :=
+        fun 対象 : 整数@{ i } =>
+        fun 目標 : 整数@{ i } -> Type@{ i } =>
+        fun 負の場合の処理 : forall 対象_負 : 正の自然数@{ i } , 目標 ( 負の場合の構築子@{ i } 対象_負 ) =>
+        fun ゼロの場合の処理 : 目標 ゼロの場合の構築子@{ i } =>
+        fun 正の場合の処理 : forall 対象_正 : 正の自然数@{ i } , 目標 ( 正の場合の構築子@{ i } 対象_正 ) =>
         match
-            x
+            対象
+        as
+            対象_
+        return
+            目標 対象_
         with
-            負_構築子_整数 x_n => 負の符号を付ける_整数 ( 後者を計算する_正の自然数 x_n )
+            A_2024_07_22_0017 対象_負 => 負の場合の処理 対象_負
             |
-            零_構築子_整数 => 負の符号を付ける_整数 一_正の自然数
+            A_2024_07_22_0018 => ゼロの場合の処理
             |
-            正_構築子_整数 x_p
-                =>
-                    match
-                        x_p
-                    with
-                        一_構築子_正の自然数 => 零_整数
-                        |
-                        後者_構築子_正の自然数 x_p_p => 正の符号を付ける_整数 x_p_p
-                    end
+            A_2024_07_22_0019 対象_正 => 正の場合の処理 対象_正
         end
 .
 
-Definition 正の自然数から正の自然数を引く_整数@{ i | } : 正の自然数@{ i } -> 正の自然数@{ i } -> 整数@{ i }
+Definition 依存型の場合分け@{ i | }
+    ( 対象 : 整数@{ i } )
+    ( 目標 : 整数@{ i } -> Type@{ i } )
+    ( 負の場合の処理 : forall 対象_負 : 正の自然数@{ i } , 目標 ( 負の場合の構築子@{ i } 対象_負 ) )
+    ( ゼロの場合の処理 : 目標 ゼロの場合の構築子@{ i } )
+    ( 正の場合の処理 : forall 対象_正 : 正の自然数@{ i } , 目標 ( 正の場合の構築子@{ i } 対象_正 ) )
+    : 目標 対象
+    := A_2024_09_03_0002@{ i } 対象 目標 負の場合の処理 ゼロの場合の処理 正の場合の処理
+.
+
+End A_2024_07_22_0016 .
+
+Module 整数 := A_2024_07_22_0016 .
+
+(** 後者を計算します。 *)
+
+Definition A_2024_07_22_0020@{ i | } : 整数@{ i } -> 整数@{ i }
     :=
-        fix a ( x : 正の自然数@{ i } ) ( y : 正の自然数@{ i } ) { struct x } : 整数@{ i }
-            :=
-                match
+        fun x : 整数@{ i } =>
+        整数.場合分け@{ i }
+            x
+            整数@{ i }
+            (
+                fun x_負 : 正の自然数@{ i } =>
+                正の自然数.場合分け@{ i }
+                    x_負
+                    整数@{ i }
+                    整数.ゼロの場合の構築子@{ i }
+                    ( fun x_負_前 : 正の自然数@{ i } => 整数.負の場合の構築子@{ i } x_負_前 )
+            )
+            ( 整数.正の場合の構築子@{ i } 一@{ i } )
+            ( fun x_正 : 正の自然数@{ i } => 整数.正の場合の構築子@{ i } ( 正の自然数.後者関数@{ i } x_正 ) )
+.
+
+Definition 後者関数@{ i | } ( x : 整数@{ i } ) : 整数@{ i } := A_2024_07_22_0020@{ i } x .
+
+(** 前者を計算します。 *)
+
+Definition A_2024_07_22_0021@{ i | } : 整数@{ i } -> 整数@{ i }
+    :=
+        fun x : 整数@{ i } =>
+        整数.場合分け@{ i }
+            x
+            整数@{ i }
+            ( fun x_負 : 正の自然数@{ i } => 整数.負の場合の構築子@{ i } ( 正の自然数.後者関数@{ i } x_負 ) )
+            ( 整数.負の場合の構築子@{ i } 一@{ i } )
+            (
+                fun x_正 : 正の自然数@{ i } =>
+                正の自然数.場合分け@{ i }
+                    x_正
+                    整数@{ i }
+                    整数.ゼロの場合の構築子@{ i }
+                    ( fun x_正_前 : 正の自然数@{ i } => 整数.正の場合の構築子@{ i } x_正_前 )
+            )
+.
+
+Definition 前者関数@{ i | } ( x : 整数@{ i } ) : 整数@{ i } := A_2024_07_22_0021@{ i } x .
+
+(** [x - y] を計算する。 *)
+
+Definition A_2024_07_22_0022@{ i | } : 正の自然数@{ i } -> 正の自然数@{ i } -> 整数@{ i }
+    :=
+        fun x : 正の自然数@{ i } =>
+        正の自然数.再帰@{ i }
+            x
+            ( 正の自然数@{ i } -> 整数@{ i } )
+            (
+                fun y : 正の自然数@{ i } =>
+                正の自然数.場合分け@{ i }
+                    y
+                    整数@{ i }
+                    整数.ゼロの場合の構築子@{ i }
+                    ( fun y_前 : 正の自然数@{ i } => 整数.負の場合の構築子@{ i } y_前 )
+            )
+            (
+                fun x_前 : 正の自然数@{ i } =>
+                fun a_前 : 正の自然数@{ i } -> 整数@{ i } =>
+                fun y : 正の自然数@{ i } =>
+                正の自然数.場合分け@{ i }
+                    y
+                    整数@{ i }
+                    ( 整数.正の場合の構築子@{ i } x_前 )
+                    ( fun y_前 : 正の自然数@{ i } => a_前 y_前 )
+            )
+.
+
+Definition 甲から乙を引く@{ i | } ( x : 正の自然数@{ i } ) ( y : 正の自然数@{ i } ) : 整数@{ i } := A_2024_07_22_0022@{ i } x y .
+
+(** [y - x] を計算する。 *)
+
+Definition A_2024_07_22_0023@{ i | } : 正の自然数@{ i } -> 正の自然数@{ i } -> 整数@{ i }
+    :=
+        fun x : 正の自然数@{ i } =>
+        正の自然数.再帰@{ i }
+            x
+            ( 正の自然数@{ i } -> 整数@{ i } )
+            (
+                fun y : 正の自然数@{ i } =>
+                正の自然数.場合分け@{ i }
+                    y
+                    整数@{ i }
+                    整数.ゼロの場合の構築子@{ i }
+                    ( fun y_前 : 正の自然数@{ i } => 整数.正の場合の構築子@{ i } y_前 )
+            )
+            (
+                fun x_前 : 正の自然数@{ i } =>
+                fun a_前 : 正の自然数@{ i } -> 整数@{ i } =>
+                fun y : 正の自然数@{ i } =>
+                正の自然数.場合分け@{ i }
+                    y
+                    整数@{ i }
+                    ( 整数.負の場合の構築子@{ i } x_前 )
+                    ( fun y_前 : 正の自然数@{ i } => a_前 y_前 )
+            )
+.
+
+Definition 乙から甲を引く@{ i | } ( x : 正の自然数@{ i } ) ( y : 正の自然数@{ i } ) : 整数@{ i } := A_2024_07_22_0023@{ i } x y .
+
+(** 足します。 *)
+
+Definition A_2024_07_22_0024@{ i | } : 整数@{ i } -> 整数@{ i } -> 整数@{ i }
+    :=
+        fun x : 整数@{ i } =>
+        整数.場合分け@{ i }
+            x
+            ( 整数@{ i } -> 整数@{ i } )
+            (
+                fun x_負 : 正の自然数@{ i } =>
+                fun y : 整数@{ i } =>
+                整数.場合分け@{ i }
+                    y
+                    整数@{ i }
+                    ( fun y_負 : 正の自然数@{ i } => 整数.負の場合の構築子@{ i } ( 正の自然数.足す@{ i } x_負 y_負 ) )
+                    ( 整数.負の場合の構築子@{ i } x_負 )
+                    ( fun y_正 : 正の自然数@{ i } => 乙から甲を引く@{ i } x_負 y_正 )
+            )
+            (
+                fun y : 整数@{ i } =>
+                整数.場合分け@{ i }
+                    y
+                    整数@{ i }
+                    ( fun y_負 : 正の自然数@{ i } => 整数.負の場合の構築子@{ i } y_負 )
+                    整数.ゼロの場合の構築子@{ i }
+                    ( fun y_正 : 正の自然数@{ i } => 整数.正の場合の構築子@{ i } y_正 )
+            )
+            (
+                fun x_正 : 正の自然数@{ i } =>
+                fun y : 整数@{ i } =>
+                整数.場合分け@{ i }
+                    y
+                    整数@{ i }
+                    ( fun y_負 : 正の自然数@{ i } => 甲から乙を引く@{ i } x_正 y_負 )
+                    ( 整数.正の場合の構築子@{ i } x_正 )
+                    ( fun y_正 : 正の自然数@{ i } => 整数.正の場合の構築子@{ i } ( 正の自然数.足す@{ i } x_正 y_正 ) )
+            )
+.
+
+Definition 足す@{ i | } ( x : 整数@{ i } ) ( y : 整数@{ i } ) : 整数@{ i } := A_2024_07_22_0024@{ i } x y .
+
+(** 符号を反転する。 *)
+
+Definition A_2024_07_22_0025@{ i | } : 整数@{ i } -> 整数@{ i }
+    :=
+        fun x : 整数@{ i } =>
+        整数.場合分け@{ i }
+            x
+            整数@{ i }
+            ( fun x_負 : 正の自然数@{ i } => 整数.正の場合の構築子@{ i } x_負 )
+            整数.ゼロの場合の構築子@{ i }
+            ( fun x_正 : 正の自然数@{ i } => 整数.負の場合の構築子@{ i } x_正 )
+.
+
+Definition 符号を反転する@{ i | } ( x : 整数@{ i } ) : 整数@{ i } := A_2024_07_22_0025@{ i } x .
+
+(** 掛ける。 *)
+
+Definition A_2024_07_22_0026@{ i | } : 整数@{ i } -> 整数@{ i } -> 整数@{ i }
+    :=
+        fun x : 整数@{ i } =>
+        整数.場合分け@{ i }
+            x
+            ( 整数@{ i } -> 整数@{ i } )
+            (
+                fun x_負 : 正の自然数@{ i } =>
+                fun y : 整数@{ i } =>
+                整数.場合分け@{ i }
+                    y
+                    整数@{ i }
+                    ( fun y_負 : 正の自然数@{ i } => 整数.正の場合の構築子@{ i } ( 正の自然数.掛ける@{ i } x_負 y_負 ) )
+                    整数.ゼロの場合の構築子
+                    ( fun y_正 : 正の自然数@{ i } => 整数.負の場合の構築子@{ i } ( 正の自然数.掛ける@{ i } x_負 y_正 ) )
+            )
+            (
+                fun y : 整数@{ i } =>
+                整数.場合分け@{ i }
+                    y
+                    整数@{ i }
+                    ( fun y_負 : 正の自然数@{ i } => 整数.ゼロの場合の構築子@{ i } )
+                    整数.ゼロの場合の構築子@{ i }
+                    ( fun y_正 : 正の自然数@{ i } => 整数.ゼロの場合の構築子@{ i } )
+            )
+            (
+                fun x_正 : 正の自然数@{ i } =>
+                fun y : 整数@{ i } =>
+                整数.場合分け@{ i }
+                    y
+                    整数@{ i }
+                    ( fun y_負 : 正の自然数@{ i } => 整数.負の場合の構築子@{ i } ( 正の自然数.掛ける@{ i } x_正 y_負 ) )
+                    整数.ゼロの場合の構築子
+                    ( fun y_正 : 正の自然数@{ i } => 整数.正の場合の構築子@{ i } ( 正の自然数.掛ける@{ i } x_正 y_正 ) )
+            )
+.
+
+Definition 掛ける@{ i | } ( x : 整数@{ i } ) ( y : 整数@{ i } ) : 整数@{ i } := A_2024_07_22_0026@{ i } x y .
+
+End A_2024_09_03_0000 .
+
+(** ** 列記型 *)
+
+(** 列記型に関するモジュールを定義します。 *)
+
+Module A_2024_09_06_0000 .
+
+(** << A_2024_08_30_0006 >> を取り込みます。 *)
+
+Import A_2024_08_30_0006 .
+
+(** 列記型です。「列記」は "list" の訳語です。 *)
+
+Inductive A_2024_08_16_0000@{ i | } ( A : Type@{ i } ) : Type@{ i }
+:=
+    A_2024_08_16_0001 : A_2024_08_16_0000 A
+    |
+    A_2024_08_16_0002 : A -> A_2024_08_16_0000 A -> A_2024_08_16_0000 A
+.
+
+Definition 列記型@{ i | } ( A : Type@{ i } ) : Type@{ i } := A_2024_08_16_0000@{ i } A .
+
+Module A_2024_08_16_0000 .
+
+Definition 空の場合の構築子@{ i | } ( A : Type@{ i } ) : 列記型@{ i } A := A_2024_08_16_0001@{ i } A .
+
+Definition 節の場合の構築子@{ i | } ( A : Type@{ i } ) ( x_1 : A ) ( x_2 : 列記型@{ i } A ) : 列記型@{ i } A
+    := A_2024_08_16_0002@{ i } A x_1 x_2
+.
+
+(** 列記型について場合分けします。 *)
+
+Definition A_2024_09_06_0001@{ i | }
+    :
+        forall A : Type@{ i } ,
+        列記型@{ i } A
+        ->
+        forall 目標 : Type@{ i } ,
+        目標
+        ->
+        ( A -> 列記型@{ i } A -> 目標 )
+        ->
+        目標
+    :=
+        fun A : Type@{ i } =>
+        fun 対象 : 列記型@{ i } A =>
+        fun 目標 : Type@{ i } =>
+        fun 空の場合の処理 : 目標 =>
+        fun 節の場合の処理 : A -> 列記型@{ i } A -> 目標 =>
+        match
+            対象
+        with
+            A_2024_08_16_0001 _ => 空の場合の処理
+            |
+            A_2024_08_16_0002 _ 対象_1 対象_2 => 節の場合の処理 対象_1 対象_2
+        end
+.
+
+Definition 場合分け@{ i | }
+    ( A : Type@{ i } )
+    ( 対象 : 列記型@{ i } A )
+    ( 目標 : Type@{ i } )
+    ( 空の場合の処理 : 目標 )
+    ( 節の場合の処理 : A -> 列記型@{ i } A -> 目標 )
+    : 目標
+    := A_2024_09_06_0001@{ i } A 対象 目標 空の場合の処理 節の場合の処理
+.
+
+(** 列記型について依存型の場合分けをします。 *)
+
+Definition A_2024_09_06_0002@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall 対象 : 列記型@{ i } A ,
+        forall 目標 : 列記型@{ i } A -> Type@{ i } ,
+        目標 ( 空の場合の構築子@{ i } A )
+        ->
+        ( forall 対象_1 : A , forall 対象_2 : 列記型@{ i } A , 目標 ( 節の場合の構築子@{ i } A 対象_1 対象_2 ) )
+        ->
+        目標 対象
+    :=
+        fun A : Type@{ i } =>
+        fun 対象 : 列記型@{ i } A =>
+        fun 目標 : 列記型@{ i } A -> Type@{ i } =>
+        fun 空の場合の処理 : 目標 ( 空の場合の構築子@{ i } A ) =>
+        fun 節の場合の処理 : forall 対象_1 : A , forall 対象_2 : 列記型@{ i } A , 目標 ( 節の場合の構築子@{ i } A 対象_1 対象_2 ) =>
+        match
+            対象
+        as
+            対象_
+        return
+            目標 対象_
+        with
+            A_2024_08_16_0001 _ => 空の場合の処理
+            |
+            A_2024_08_16_0002 _ 対象_1 対象_2 => 節の場合の処理 対象_1 対象_2
+        end
+.
+
+Definition 依存型の場合分け@{ i | }
+    ( A : Type@{ i } )
+    ( 対象 : 列記型@{ i } A )
+    ( 目標 : 列記型@{ i } A -> Type@{ i } )
+    ( 空の場合の処理 : 目標 ( 空の場合の構築子@{ i } A ) )
+    ( 節の場合の処理 : forall 対象_1 : A , forall 対象_2 : 列記型@{ i } A , 目標 ( 節の場合の構築子@{ i } A 対象_1 対象_2 ) )
+    : 目標 対象
+    := A_2024_09_06_0002@{ i } A 対象 目標 空の場合の処理 節の場合の処理
+.
+
+Definition A_2024_09_06_0003@{ i | }
+    :
+        forall A : Type@{ i } ,
+        列記型@{ i } A
+        ->
+        forall 目標 : Type@{ i } ,
+        目標
+        ->
+        ( A -> 列記型@{ i } A -> 目標 -> 目標 )
+        ->
+        目標
+    :=
+        fun A : Type@{ i } =>
+        fun 対象 : 列記型@{ i } A =>
+        fun 目標 : Type@{ i } =>
+        fun 空の場合の処理 : 目標 =>
+        fun 節の場合の処理 : A -> 列記型@{ i } A -> 目標 -> 目標 =>
+        (
+            fix a ( 対象_ : 列記型@{ i } A ) { struct 対象_ } : 目標
+                :=
+                    場合分け@{ i }
+                        A
+                        対象_
+                        目標
+                        空の場合の処理
+                        ( fun 対象_1 : A => fun 対象_2 : 列記型@{ i } A => 節の場合の処理 対象_1 対象_2 ( a 対象_2 ) )
+        )
+            対象
+.
+
+Definition 再帰@{ i | }
+    ( A : Type@{ i } )
+    ( 対象 : 列記型@{ i } A )
+    ( 目標 : Type@{ i } )
+    ( 空の場合の処理 : 目標 )
+    ( 節の場合の処理 : A -> 列記型@{ i } A -> 目標 -> 目標 )
+    : 目標
+    := A_2024_09_06_0003@{ i } A 対象 目標 空の場合の処理 節の場合の処理
+.
+
+Definition A_2024_09_06_0004@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall 対象 : 列記型@{ i } A ,
+        forall 目標 : 列記型@{ i } A -> Type@{ i } ,
+        目標 ( 空の場合の構築子@{ i } A )
+        ->
+        ( forall 対象_1 : A , forall 対象_2 : 列記型@{ i } A , 目標 対象_2 -> 目標 ( 節の場合の構築子@{ i } A 対象_1 対象_2 ) )
+        ->
+        目標 対象
+    :=
+        fun A : Type@{ i } =>
+        fun 対象 : 列記型@{ i } A =>
+        fun 目標 : 列記型@{ i } A -> Type@{ i } =>
+        fun 空の場合の処理 : 目標 ( 空の場合の構築子@{ i } A ) =>
+        fun
+            節の場合の処理
+                : forall 対象_1 : A , forall 対象_2 : 列記型@{ i } A , 目標 対象_2 -> 目標 ( 節の場合の構築子@{ i } A 対象_1 対象_2 )
+        =>
+        (
+            fix a ( 対象_ : 列記型@{ i } A ) { struct 対象_ } : 目標 対象_
+                :=
+                    依存型の場合分け@{ i }
+                        A
+                        対象_
+                        目標
+                        空の場合の処理
+                        ( fun 対象_1 : A => fun 対象_2 : 列記型@{ i } A => 節の場合の処理 対象_1 対象_2 ( a 対象_2 ) )
+        )
+            対象
+.
+
+Definition 依存型の再帰@{ i | }
+    ( A : Type@{ i } )
+    ( 対象 : 列記型@{ i } A )
+    ( 目標 : 列記型@{ i } A -> Type@{ i } )
+    ( 空の場合の処理 : 目標 ( 空の場合の構築子@{ i } A ) )
+    ( 節の場合の処理 : forall 対象_1 : A , forall 対象_2 : 列記型@{ i } A , 目標 対象_2 -> 目標 ( 節の場合の構築子@{ i } A 対象_1 対象_2 ) )
+    : 目標 対象
+    := A_2024_09_06_0004@{ i } A 対象 目標 空の場合の処理 節の場合の処理
+.
+
+End A_2024_08_16_0000 .
+
+Module 列記型 := A_2024_08_16_0000 .
+
+(** 折り畳みます。 *)
+
+Definition A_2024_08_16_0003@{ i | }
+    : forall A : Type@{ i } , forall B : Type@{ i } , A -> ( B -> A -> A ) -> 列記型@{ i } B -> A
+    :=
+        fun A : Type@{ i } =>
+        fun B : Type@{ i } =>
+        fun 空の場合の処理 : A =>
+        fun 節の場合の処理 : B -> A -> A =>
+        fun x : 列記型@{ i } B =>
+        列記型.再帰@{ i }
+            B
+            x
+            A
+            空の場合の処理
+            ( fun x_1 : B => fun x_2 : 列記型@{ i } B => fun a_2 : A => 節の場合の処理 x_1 a_2 )
+.
+
+Definition 折り畳む@{ i | }
+    ( A : Type@{ i } )
+    ( B : Type@{ i } )
+    ( 空の場合の処理 : A )
+    ( 節の場合の処理 : B -> A -> A )
+    ( x : 列記型@{ i } B )
+    : A
+    := A_2024_08_16_0003@{ i } A B 空の場合の処理 節の場合の処理 x
+.
+
+(** 列記型の上で写します。 *)
+
+Definition A_2024_08_16_0004@{ i | }
+    : forall A : Type@{ i } , forall B : Type@{ i } , ( B -> A ) -> 列記型@{ i } B -> 列記型@{ i } A
+    :=
+        fun A : Type@{ i } =>
+        fun B : Type@{ i } =>
+        fun f : B -> A =>
+        fun x : 列記型@{ i } B =>
+        列記型.再帰@{ i }
+            B
+            x
+            ( 列記型@{ i } A )
+            ( 列記型.空の場合の構築子@{ i } A )
+            ( fun x_1 : B => fun x_2 : 列記型@{ i } B => fun a_2 : 列記型@{ i } A => 列記型.節の場合の構築子@{ i } A ( f x_1 ) a_2 )
+.
+
+Definition 写す@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( f : B -> A ) ( x : 列記型@{ i } B ) : 列記型@{ i } A
+    := A_2024_08_16_0004@{ i } A B f x
+.
+
+(** 長さを求めます。 *)
+
+Definition A_2024_08_16_0005@{ i | } : forall A : Type@{ i } , 列記型@{ i } A -> 自然数@{ i }
+    :=
+        fun A : Type@{ i } =>
+        fun x : 列記型@{ i } A =>
+        列記型.再帰@{ i }
+            A
+            x
+            自然数@{ i }
+            ゼロ@{ i }
+            ( fun x_1 : A => fun x_2 : 列記型@{ i } A => fun a_2 : 自然数@{ i } => 後者関数@{ i } a_2 )
+.
+
+Definition 長さを計算する@{ i | } ( A : Type@{ i } ) ( x : 列記型@{ i } A ) : 自然数@{ i } := A_2024_08_16_0005@{ i } A x .
+
+(** 総和を求めます。 *)
+
+Definition A_2024_08_16_0006@{ i | } : 列記型@{ i } 自然数@{ i } -> 自然数@{ i }
+    :=
+        fun x : 列記型@{ i } 自然数@{ i } =>
+        列記型.再帰@{ i }
+            自然数@{ i }
+            x
+            自然数@{ i }
+            ゼロ@{ i }
+            ( fun x_1 : 自然数@{ i } => fun x_2 : 列記型@{ i } 自然数@{ i } => fun a_2 : 自然数@{ i } => 足す@{ i } x_1 a_2 )
+.
+
+(** 総乗を求めます。 *)
+
+Definition A_2024_08_16_0007@{ i | } : 列記型@{ i } 自然数@{ i } -> 自然数@{ i }
+    :=
+        fun x : 列記型@{ i } 自然数@{ i } =>
+        列記型.再帰@{ i }
+            自然数@{ i }
+            x
+            自然数@{ i }
+            一@{ i }
+            ( fun x_1 : 自然数@{ i } => fun x_2 : 列記型@{ i } 自然数@{ i } => fun a_2 : 自然数@{ i } => 掛ける@{ i } x_1 a_2 )
+.
+
+(** 連結します。 *)
+
+Definition A_2024_08_16_0008@{ i | } : forall A : Type@{ i } , 列記型@{ i } A -> 列記型@{ i } A -> 列記型@{ i } A
+    :=
+        fun A : Type@{ i } =>
+        fun x : 列記型@{ i } A =>
+        列記型.再帰@{ i }
+            A
+            x
+            ( 列記型@{ i } A -> 列記型@{ i } A )
+            ( fun y : 列記型@{ i } A => y )
+            (
+                    fun x_1 : A =>
+                    fun x_2 : 列記型@{ i } A =>
+                    fun a_2 : 列記型@{ i } A -> 列記型@{ i } A =>
+                    fun y : 列記型@{ i } A =>
+                    列記型.節の場合の構築子@{ i } A x_1 ( a_2 y )
+            )
+.
+
+Definition 連結@{ i | } ( A : Type@{ i } ) ( x : 列記型@{ i } A ) ( y : 列記型@{ i } A ) : 列記型@{ i } A
+    := A_2024_08_16_0008@{ i } A x y
+.
+
+(** 平らにします。 *)
+
+Definition A_2024_08_16_0009@{ i | } : forall A : Type@{ i } , 列記型@{ i } ( 列記型@{ i } A ) -> 列記型@{ i } A
+    :=
+        fun A : Type@{ i } =>
+        fun x : 列記型@{ i } ( 列記型@{ i } A ) =>
+        列記型.再帰@{ i }
+            ( 列記型@{ i } A )
+            x
+            ( 列記型@{ i } A )
+            ( 列記型.空の場合の構築子@{ i } A )
+            (
+                fun x_1 : 列記型@{ i } A =>
+                fun x_2 : 列記型@{ i } ( 列記型@{ i } A ) =>
+                fun a_2 : 列記型@{ i } A =>
+                連結@{ i } A x_1 a_2
+            )
+.
+
+Definition 平らにする@{ i | } ( A : Type@{ i } ) ( x : 列記型@{ i } ( 列記型@{ i } A ) ) : 列記型@{ i } A
+    := A_2024_08_16_0009@{ i } A x
+.
+
+(** 逆順にします。 *)
+
+Definition A_2024_08_16_0010@{ i | } : forall A : Type@{ i } , 列記型@{ i } A -> 列記型@{ i } A
+    :=
+        fun A : Type@{ i } =>
+        fun x : 列記型@{ i } A =>
+        (
+            列記型.再帰@{ i }
+                A
+                x
+                ( 列記型@{ i } A -> 列記型@{ i } A )
+                ( fun y : 列記型@{ i } A => y )
+                (
+                    fun x_1 : A =>
+                    fun x_2 : 列記型@{ i } A =>
+                    fun a_2 : 列記型@{ i } A -> 列記型@{ i } A =>
+                    fun y : 列記型@{ i } A =>
+                    a_2 ( 列記型.節の場合の構築子@{ i } A x_1 y )
+                )
+        )
+            ( 列記型.空の場合の構築子@{ i } A )
+.
+
+Definition 逆順にする@{ i | } ( A : Type@{ i } ) ( x : 列記型@{ i } A ) : 列記型@{ i } A := A_2024_08_16_0010@{ i } A x .
+
+End A_2024_09_06_0000 .
+
+(** ** 双関数型 *)
+
+(** 双関数型に関するモジュールを定義します。 *)
+
+Module A_2024_09_06_0005 .
+
+(** << A_2024_08_26_0002 >> を取り込みます。 *)
+
+Import A_2024_08_26_0002 .
+
+(** << A_2024_08_28_0000 >> を取り込みます。 *)
+
+Import A_2024_08_28_0000 .
+
+(** 双関数型です。 [A] から [B] への関数と [B] から [A] への関数の直積です。 *)
+
+Inductive A_2024_08_02_0004@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) : Type@{ i }
+    := A_2024_08_02_0005 : ( A -> B ) -> ( B -> A ) -> A_2024_08_02_0004 A B
+.
+
+Definition 双関数型@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) : Type@{ i } := A_2024_08_02_0004@{ i } A B .
+
+Module A_2024_08_02_0004 .
+
+(** 一番目の区域の値を取り出します。 *)
+
+Definition A_2024_08_02_0006@{ i | } : forall A : Type@{ i } , forall B : Type@{ i } , 双関数型@{ i } B A -> B -> A
+    :=
+        fun A : Type@{ i } =>
+        fun B : Type@{ i } =>
+        fun 対象 : 双関数型@{ i } B A =>
+        fun x : B =>
+        match 対象 with A_2024_08_02_0005 _ _ 対象_1 対象_2 => 対象_1 x end
+.
+
+Definition 一番目の区域の分解子@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( 対象 : 双関数型@{ i } B A ) ( x : B ) : A
+    := A_2024_08_02_0006@{ i } A B 対象 x
+.
+
+(** 二番目の区域の値を取り出します。 *)
+
+Definition A_2024_08_02_0007@{ i | } : forall A : Type@{ i } , forall B : Type@{ i } , 双関数型@{ i } A B -> B -> A
+    :=
+        fun A : Type@{ i } =>
+        fun B : Type@{ i } =>
+        fun 対象 : 双関数型@{ i } A B =>
+        fun x : B =>
+        match 対象 with A_2024_08_02_0005 _ _ 対象_1 対象_2 => 対象_2 x end
+.
+
+Definition 二番目の区域の分解子@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( 対象 : 双関数型@{ i } A B ) ( x : B ) : A
+    := A_2024_08_02_0007@{ i } A B 対象 x
+.
+
+(** 双関数型についての余場合分けです。 *)
+
+Definition A_2024_09_06_0006@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall B : Type@{ i } ,
+        forall 前提 : Type@{ i } ,
+        ( 前提 -> A -> B )
+        ->
+        ( 前提 -> B -> A )
+        ->
+        前提
+        ->
+        双関数型@{ i } A B
+    :=
+        fun A : Type@{ i } =>
+        fun B : Type@{ i } =>
+        fun 前提 : Type@{ i } =>
+        fun 一番目の区域の処理 : 前提 -> A -> B =>
+        fun 二番目の区域の処理 : 前提 -> B -> A =>
+        fun 対象 : 前提 =>
+        A_2024_08_02_0005@{ i } A B ( 一番目の区域の処理 対象 ) ( 二番目の区域の処理 対象 )
+.
+
+Definition 余場合分け@{ i | }
+    ( A : Type@{ i } )
+    ( B : Type@{ i } )
+    ( 前提 : Type@{ i } )
+    ( 一番目の区域の処理 : 前提 -> A -> B )
+    ( 二番目の区域の処理 : 前提 -> B -> A )
+    ( 対象 : 前提 )
+    : 双関数型@{ i } A B
+    := A_2024_09_06_0006@{ i } A B 前提 一番目の区域の処理 二番目の区域の処理 対象
+.
+
+(** 双関数型についての余場合分けの整合性です。 *)
+
+Definition A_2024_09_06_0007@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall B : Type@{ i } ,
+        forall 前提 : Type@{ i } ,
+        forall 余表示射 : 双関数型@{ i } A B -> 前提 ,
+        forall 一番目の区域の処理 : 前提 -> A -> B ,
+        (
+            forall 対象 : 双関数型@{ i } A B ,
+            forall 述語 : ( A -> B ) -> Type@{ i } ,
+            述語 ( 一番目の区域の処理 ( 余表示射 対象 ) )
+            ->
+            述語 ( 一番目の区域の分解子@{ i } B A 対象 )
+        )
+        ->
+        forall 二番目の区域の処理 : 前提 -> B -> A ,
+        (
+            forall 対象 : 双関数型@{ i } A B ,
+            forall 述語 : ( B -> A ) -> Type@{ i } ,
+            述語 ( 二番目の区域の処理 ( 余表示射 対象 ) )
+            ->
+            述語 ( 二番目の区域の分解子@{ i } A B 対象 )
+        )
+        ->
+        forall 対象 : 双関数型@{ i } A B ,
+        forall 述語 : 双関数型@{ i } A B -> Type@{ i } ,
+        述語 ( 余場合分け@{ i } A B 前提 一番目の区域の処理 二番目の区域の処理 ( 余表示射 対象 ) )
+        ->
+        述語 対象
+.
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun B : Type@{ i } => _ ) .
+    refine ( fun 前提 : Type@{ i } => _ ) .
+    refine ( fun 余表示射 : 双関数型@{ i } A B -> 前提 => _ ) .
+    refine ( fun 一番目の区域の処理 : 前提 -> A -> B => _ ) .
+    refine
+        (
+            fun
+                一番目の区域の処理の整合性
+                    :
+                        forall 対象 : 双関数型@{ i } A B ,
+                        forall 述語 : ( A -> B ) -> Type@{ i } ,
+                        述語 ( 一番目の区域の処理 ( 余表示射 対象 ) )
+                        ->
+                        述語 ( 一番目の区域の分解子@{ i } B A 対象 )
+            =>
+                _
+        )
+    .
+    refine ( fun 二番目の区域の処理 : 前提 -> B -> A => _ ) .
+    refine
+        (
+            fun
+                二番目の区域の処理の整合性
+                    :
+                        forall 対象 : 双関数型@{ i } A B ,
+                        forall 述語 : ( B -> A ) -> Type@{ i } ,
+                        述語 ( 二番目の区域の処理 ( 余表示射 対象 ) )
+                        ->
+                        述語 ( 二番目の区域の分解子@{ i } A B 対象 )
+            =>
+                _
+        )
+    .
+    refine ( fun 対象 : 双関数型@{ i } A B => _ ) .
+    refine
+        (
+            match
+                対象
+            as
+                対象_
+            return
+                forall 述語 : 双関数型@{ i } A B -> Type@{ i } ,
+                述語 ( 余場合分け@{ i } A B 前提 一番目の区域の処理 二番目の区域の処理 ( 余表示射 対象_ ) )
+                ->
+                述語 対象_
+            with
+                A_2024_08_02_0005 _ _ 対象_1 対象_2 => _
+            end
+        )
+    .
+    refine ( fun 述語 : 双関数型@{ i } A B -> Type@{ i } => _ ) .
+    refine
+        (
+            fun
+                x
+                    :
+                        述語
+                            (
+                                余場合分け@{ i }
+                                    A
+                                    B
+                                    前提
+                                    一番目の区域の処理
+                                    二番目の区域の処理
+                                    ( 余表示射 ( A_2024_08_02_0005@{ i } A B 対象_1 対象_2 ) )
+                            )
+            =>
+                _
+        )
+    .
+    refine
+        (
+            一番目の区域の処理の整合性
+                ( A_2024_08_02_0005@{ i } A B 対象_1 対象_2 )
+                ( fun 対象_1_ : A -> B => 述語 ( A_2024_08_02_0005@{ i } A B 対象_1_ 対象_2 ) )
+                _
+        )
+    .
+    refine
+        (
+            二番目の区域の処理の整合性
+                ( A_2024_08_02_0005@{ i } A B 対象_1 対象_2 )
+                (
+                    fun 対象_2_ : B -> A =>
+                    述語
+                        (
+                            A_2024_08_02_0005@{ i }
+                                A
+                                B
+                                ( 一番目の区域の処理 ( 余表示射 ( A_2024_08_02_0005@{ i } A B 対象_1 対象_2 ) ) )
+                                対象_2_
+                        )
+                )
+                _
+        )
+    .
+    exact x .
+Defined .
+
+Definition 余場合分けの整合性@{ i | }
+    ( A : Type@{ i } )
+    ( B : Type@{ i } )
+    ( 前提 : Type@{ i } )
+    ( 余表示射 : 双関数型@{ i } A B -> 前提 )
+    ( 一番目の区域の処理 : 前提 -> A -> B )
+    (
+        一番目の区域の処理の整合性
+            :
+                forall 対象 : 双関数型@{ i } A B ,
+                forall 述語 : ( A -> B ) -> Type@{ i } ,
+                述語 ( 一番目の区域の処理 ( 余表示射 対象 ) )
+                ->
+                述語 ( 一番目の区域の分解子@{ i } B A 対象 )
+    )
+    ( 二番目の区域の処理 : 前提 -> B -> A )
+    (
+        二番目の区域の処理の整合性
+            :
+                forall 対象 : 双関数型@{ i } A B ,
+                forall 述語 : ( B -> A ) -> Type@{ i } ,
+                述語 ( 二番目の区域の処理 ( 余表示射 対象 ) )
+                ->
+                述語 ( 二番目の区域の分解子@{ i } A B 対象 )
+    )
+    ( 対象 : 双関数型@{ i } A B )
+    ( 述語 : 双関数型@{ i } A B -> Type@{ i } )
+    ( x : 述語 ( 余場合分け@{ i } A B 前提 一番目の区域の処理 二番目の区域の処理 ( 余表示射 対象 ) ) )
+    : 述語 対象
+    :=
+        A_2024_09_06_0007@{ i }
+            A
+            B
+            前提
+            余表示射
+            一番目の区域の処理
+            一番目の区域の処理の整合性
+            二番目の区域の処理
+            二番目の区域の処理の整合性
+            対象
+            述語
+            x
+.
+
+End A_2024_08_02_0004 .
+
+Module 双関数型 := A_2024_08_02_0004 .
+
+(** 双関数型を構築します。 *)
+
+Definition A_2024_09_06_0008@{ i | }
+    : forall A : Type@{ i } , forall B : Type@{ i } , ( A -> B ) -> ( B -> A ) -> 双関数型@{ i } A B
+    :=
+        fun A : Type@{ i } =>
+        fun B : Type@{ i } =>
+        fun 対象_1 : A -> B =>
+        fun 対象_2 : B -> A =>
+            双関数型.余場合分け@{ i }
+                A
+                B
+                単一型@{ i }
+                ( 定数関数を作る@{ i } ( A -> B ) 単一型@{ i } 対象_1 )
+                ( 定数関数を作る@{ i } ( B -> A ) 単一型@{ i } 対象_2 )
+                単一値@{ i }
+.
+
+Definition 双関数型を構築する@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( x_1 : A -> B ) ( x_2 : B -> A ) : 双関数型@{ i } A B
+    := A_2024_09_06_0008@{ i } A B x_1 x_2
+.
+
+(** 双関数型について場合分けします。 *)
+
+Definition A_2024_09_06_0009@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall B : Type@{ i } ,
+        双関数型@{ i } A B
+        ->
+        forall 目標 : Type@{ i } ,
+        ( ( A -> B ) -> ( B -> A ) -> 目標 )
+        ->
+        目標
+    :=
+        fun A : Type@{ i } =>
+        fun B : Type@{ i } =>
+        fun 対象 : 双関数型@{ i } A B =>
+        fun 目標 : Type@{ i } =>
+        fun 処理 : ( A -> B ) -> ( B -> A ) -> 目標 =>
+        処理 ( 双関数型.一番目の区域の分解子@{ i } B A 対象 ) ( 双関数型.二番目の区域の分解子@{ i } A B 対象 )
+.
+
+(** 双関数型について依存型の場合分けをします。 *)
+
+Definition A_2024_09_06_0010@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall B : Type@{ i } ,
+        forall 対象 : 双関数型@{ i } A B ,
+        forall 目標 : 双関数型@{ i } A B -> Type@{ i } ,
+        ( forall 対象_1 : A -> B , forall 対象_2 : B -> A , 目標 ( 双関数型を構築する@{ i } A B 対象_1 対象_2 ) )
+        ->
+        目標 対象
+    :=
+        fun A : Type@{ i } =>
+        fun B : Type@{ i } =>
+        fun 対象 : 双関数型@{ i } A B =>
+        fun 目標 : 双関数型@{ i } A B -> Type@{ i } =>
+        fun 処理 : forall 対象_1 : A -> B , forall 対象_2 : B -> A , 目標 ( 双関数型を構築する@{ i } A B 対象_1 対象_2 ) =>
+        双関数型.余場合分けの整合性@{ i }
+            A
+            B
+            ( 双関数型@{ i } A B )
+            ( 恒等関数@{ i } ( 双関数型@{ i } A B ) )
+            ( 双関数型.一番目の区域の分解子@{ i } B A )
+            (
+                fun 対象 : 双関数型@{ i } A B =>
+                fun 述語 : ( A -> B ) -> Type@{ i } =>
+                fun x : 述語 ( 双関数型.一番目の区域の分解子@{ i } B A ( 恒等関数@{ i } ( 双関数型@{ i } A B ) 対象 ) ) =>
+                x
+            )
+            ( 双関数型.二番目の区域の分解子@{ i } A B )
+            (
+                fun 対象 : 双関数型@{ i } A B =>
+                fun 述語 : ( B -> A ) -> Type@{ i } =>
+                fun x : 述語 ( 双関数型.二番目の区域の分解子@{ i } A B ( 恒等関数@{ i } ( 双関数型@{ i } A B ) 対象 ) ) =>
+                x
+            )
+            対象
+            目標
+            ( 処理 ( 双関数型.一番目の区域の分解子@{ i } B A 対象 ) ( 双関数型.二番目の区域の分解子@{ i } A B 対象 ) )
+.
+
+End A_2024_09_06_0005 .
+
+(** ** 否定に関する命題論理の範囲の定理 *)
+
+(** 否定に関する命題論理の範囲の定理を証明します。 *)
+
+Module A_2024_09_07_0000 .
+
+(** << A_2024_08_26_0002 >> を取り込みます。 *)
+
+Import A_2024_08_26_0002 .
+
+(** << A_2024_08_26_0003 >> を取り込みます。 *)
+
+Import A_2024_08_26_0003 .
+
+(** << A_2024_08_27_0000 >> を取り込みます。 *)
+
+Import A_2024_08_27_0000 .
+
+(** << A_2024_08_27_0004 >> を取り込みます。 *)
+
+Import A_2024_08_27_0004 .
+
+(** << A_2024_08_28_0006 >> を取り込みます。 *)
+
+Import A_2024_08_28_0006 .
+
+(** << A_2024_09_06_0005 >> を取り込みます。 *)
+
+Import A_2024_09_06_0005 .
+
+(** [A] と [A] の否定は両立せず、また決して同値にならないことを示します。 *)
+
+(** [A] と [A] の否定の直積の否定です。 *)
+
+Definition A_2024_08_02_0008@{ i | } : forall A : Type@{ i } , 否定型@{ i } ( 直積型@{ i } A ( 否定型@{ i } A ) ) .
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( 否定型.構築子@{ i } ( 直積型@{ i } A ( 否定型@{ i } A ) ) _ ) .
+    refine ( fun x : 直積型@{ i } A ( 否定型@{ i } A ) => _ ) .
+    refine ( 否定型.分解子@{ i } A ( 直積型.二番目の区域の分解子@{ i } ( 否定型@{ i } A ) A x ) _ ) .
+    exact ( 直積型.一番目の区域の分解子@{ i } A ( 否定型@{ i } A ) x ) .
+Defined .
+
+(** [A] と [A] の否定の双関数の否定です。 *)
+
+Definition A_2024_08_02_0009@{ i | } : forall A : Type@{ i } , 否定型@{ i } ( 双関数型@{ i } A ( 否定型@{ i } A ) ) .
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( 否定型.構築子@{ i } ( 双関数型@{ i } A ( 否定型@{ i } A ) ) _ ) .
+    refine ( fun x : 双関数型@{ i } A ( 否定型@{ i } A ) => _ ) .
+    refine ( let a : 否定型@{ i } A := ?[a] in _ ) .
+    [a]: {
+        refine ( 否定型.構築子@{ i } A _ ) .
+        refine ( fun y : A => _ ) .
+        refine ( 否定型.分解子@{ i } A ( 双関数型.一番目の区域の分解子@{ i } ( 否定型@{ i } A ) A x y ) _ ) .
+        exact y .
+    }
+    {
+        refine ( 否定型.分解子@{ i } A a _ ) .
+        exact ( 双関数型.二番目の区域の分解子@{ i } A ( 否定型@{ i } A ) x a ) .
+    }
+Defined .
+
+(** 二重否定が作用子として振る舞うことを証明します。 *)
+
+(** 持ち上げます。 *)
+
+Definition A_2024_08_06_0000@{ i | } : forall A : Type@{ i } , A -> 否定型@{ i } ( 否定型@{ i } A ) .
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun x : A => _ ) .
+    refine ( 否定型.構築子@{ i } ( 否定型@{ i } A ) _ ) .
+    refine ( fun y : 否定型@{ i } A => _ ) .
+    refine ( 否定型.分解子@{ i } A y _ ) .
+    exact x .
+Defined .
+
+(** 写します。 *)
+
+Definition A_2024_08_06_0001@{ i | }
+    : forall A : Type@{ i } , forall B : Type@{ i } , ( B -> A ) -> 否定型@{ i } ( 否定型@{ i } B ) -> 否定型@{ i } ( 否定型@{ i } A )
+.
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun B : Type@{ i } => _ ) .
+    refine ( fun f : B -> A => _ ) .
+    refine ( 対偶を取る@{ i } ( 否定型@{ i } A ) ( 否定型@{ i } B ) _ ) .
+    refine ( 対偶を取る@{ i } B A _ ) .
+    exact f .
+Defined .
+
+(** 束縛します。 *)
+
+Definition A_2024_08_06_0002@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall B : Type@{ i } ,
+        ( B -> 否定型@{ i } ( 否定型@{ i } A ) )
+        ->
+        ( 否定型@{ i } ( 否定型@{ i } B ) )
+        ->
+        否定型@{ i } ( 否定型@{ i } A )
+.
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun B : Type@{ i } => _ ) .
+    refine ( fun f : B -> 否定型@{ i } ( 否定型@{ i } A ) => _ ) .
+    refine ( fun x : 否定型@{ i } ( 否定型@{ i } B ) => _ ) .
+    refine ( 否定型.構築子@{ i } ( 否定型@{ i } A ) _ ) .
+    refine ( fun y : 否定型@{ i } A => _ ) .
+    refine ( 否定型.分解子@{ i } ( 否定型@{ i } B ) x _ ) .
+    refine ( 否定型.構築子@{ i } B _ ) .
+    refine ( fun z : B => _ ) .
+    refine ( 否定型.分解子@{ i } ( 否定型@{ i } A ) ( f z ) _ ) .
+    exact y .
+Defined .
+
+(** 二重否定で包んだ古典論理の定理を証明します。 *)
+
+(** 二重否定除去です。 *)
+
+Definition A_2024_08_09_0000@{ i | } : forall A : Type@{ i } , 否定型@{ i } ( 否定型@{ i } ( 否定型@{ i } ( 否定型@{ i } A ) -> A ) ) .
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( 否定型.構築子@{ i } ( 否定型@{ i } ( 否定型@{ i } ( 否定型@{ i } A ) -> A ) ) _ ) .
+    refine ( fun x : 否定型@{ i } ( 否定型@{ i } ( 否定型@{ i } A ) -> A ) => _ ) .
+    refine ( 否定型.分解子@{ i } ( 否定型@{ i } ( 否定型@{ i } A ) -> A ) x _ ) .
+    refine ( fun y : 否定型@{ i } ( 否定型@{ i } A ) => _ ) .
+    refine ( 終了する@{ i } A _ ) .
+    refine ( 否定型.分解子@{ i } ( 否定型@{ i } A ) y _ ) .
+    refine ( 否定型.構築子@{ i } A _ ) .
+    refine ( fun z : A => _ ) .
+    refine ( 否定型.分解子@{ i } ( 否定型@{ i } ( 否定型@{ i } A ) -> A ) x _ ) .
+    exact ( 定数関数を作る@{ i } A ( 否定型@{ i } ( 否定型@{ i } A ) ) z ) .
+Defined .
+
+(** パースの法則です。 *)
+
+Definition A_2024_08_09_0001@{ i | }
+    : forall A : Type@{ i } , forall B : Type@{ i } , 否定型@{ i } ( 否定型@{ i } ( ( ( A -> B ) -> A ) -> A ) )
+.
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun B : Type@{ i } => _ ) .
+    refine ( 否定型.構築子@{ i } ( 否定型@{ i } ( ( ( A -> B ) -> A ) -> A ) ) _ ) .
+    refine ( fun x : ( 否定型@{ i } ( ( ( A -> B ) -> A ) -> A ) ) => _ ) .
+    refine ( 否定型.分解子@{ i } ( ( ( A -> B ) -> A ) -> A ) x _ ) .
+    refine ( fun y : ( A -> B ) -> A => _ ) .
+    refine ( y _ ) .
+    refine ( fun z : A => _ ) .
+    refine ( 終了する@{ i } B _ ) .
+    refine ( 否定型.分解子@{ i } ( ( ( A -> B ) -> A ) -> A ) x _ ) .
+    exact ( 定数関数を作る@{ i } A ( ( A -> B ) -> A ) z ) .
+Defined .
+
+(** [A] から [B] への関数と [B] から [A] への関数の直和です。 *)
+
+Definition A_2024_08_09_0002@{ i | }
+    : forall A : Type@{ i } , forall B : Type@{ i } , 否定型@{ i } ( 否定型@{ i } ( 直和型@{ i } ( A -> B ) ( B -> A ) ) )
+.
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun B : Type@{ i } => _ ) .
+    refine ( 否定型.構築子@{ i } ( 否定型@{ i } ( 直和型@{ i } ( A -> B ) ( B -> A ) ) ) _ ) .
+    refine ( fun x : 否定型@{ i } ( 直和型@{ i } ( A -> B ) ( B -> A ) ) => _ ) .
+    refine ( 否定型.分解子@{ i } ( 直和型@{ i } ( A -> B ) ( B -> A ) ) x _ ) .
+    refine ( 直和型.左の場合の構築子@{ i } ( A -> B ) ( B -> A ) _ ) .
+    refine ( fun y : A => _ ) .
+    refine ( 終了する@{ i } B _ ) .
+    refine ( 否定型.分解子@{ i } ( 直和型@{ i } ( A -> B ) ( B -> A ) ) x _ ) .
+    refine ( 直和型.右の場合の構築子@{ i } ( A -> B ) ( B -> A ) _ ) .
+    exact ( 定数関数を作る@{ i } A B y ) .
+Defined .
+
+(** 排中律です。 *)
+
+Definition A_2024_08_09_0003@{ i | }
+    : forall A : Type@{ i } , forall B : Type@{ i } , 否定型@{ i } ( 否定型@{ i } ( 直和型@{ i } A ( 否定型@{ i } A ) ) )
+.
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun B : Type@{ i } => _ ) .
+    refine ( 否定型.構築子@{ i } ( 否定型@{ i } ( 直和型@{ i } A ( 否定型@{ i } A ) ) ) _ ) .
+    refine ( fun x : ( 否定型@{ i } ( 直和型@{ i } A ( 否定型@{ i } A ) ) ) => _ ) .
+    refine ( 否定型.分解子@{ i } ( 直和型@{ i } A ( 否定型@{ i } A ) ) x _ ) .
+    refine ( 直和型.右の場合の構築子@{ i } A ( 否定型@{ i } A ) _ ) .
+    refine ( 否定型.構築子@{ i } A _ ) .
+    refine ( fun y : A => _ ) .
+    refine ( 否定型.分解子@{ i } ( 直和型@{ i } A ( 否定型@{ i } A ) ) x _ ) .
+    refine ( 直和型.左の場合の構築子@{ i } A ( 否定型@{ i } A ) _ ) .
+    exact y .
+Defined .
+
+(** 排中律を仮定することについての定理を証明します。 *)
+
+(** 排中律を仮定して二重否定の除去を導きます。 *)
+
+Definition A_2024_08_11_0000@{ i | }
+    : forall A : Type@{ i } , 直和型@{ i } A ( 否定型@{ i } A ) -> 否定型@{ i } ( 否定型@{ i } A ) -> A
+.
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun x : 直和型@{ i } A ( 否定型@{ i } A ) => _ ) .
+    refine ( fun y : 否定型@{ i } ( 否定型@{ i } A ) => _ ) .
+    refine
+        (
+            直和型.場合分け@{ i }
+                A
+                ( 否定型@{ i } A )
+                x
+                A
+                ( fun x_左 : A => _ )
+                ( fun x_右 : 否定型@{ i } A => _ )
+        )
+    .
+    {
+        exact x_左 .
+    }
+    {
+        refine ( 終了する@{ i } A _ ) .
+        refine ( 否定型.分解子@{ i } ( 否定型@{ i } A ) y _ ) .
+        exact x_右 .
+    }
+Defined .
+
+(** 二重否定の元で [A] から [B] が導けることは、 [B] の排中律を仮定して [A] から [B] が導けることと、同値です。 *)
+
+Definition A_2024_08_11_0001@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall B : Type@{ i } ,
+        双関数型@{ i } ( 否定型@{ i } ( 否定型@{ i } ( B -> A ) ) ) ( 直和型@{ i } A ( 否定型@{ i } A ) -> B -> A )
+.
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun B : Type@{ i } => _ ) .
+    refine
+        (
+            双関数型を構築する@{ i }
+                ( 否定型@{ i } ( 否定型@{ i } ( B -> A ) ) )
+                ( 直和型@{ i } A ( 否定型@{ i } A ) -> B -> A )
+                _
+                _
+        )
+    .
+    {
+        refine ( fun x : 否定型@{ i } ( 否定型@{ i } ( B -> A ) ) => _ ) .
+        refine ( fun y : 直和型@{ i } A ( 否定型@{ i } A ) => _ ) .
+        refine ( fun z : B => _ ) .
+        refine
+            (
+                直和型.場合分け@{ i }
+                    A
+                    ( 否定型@{ i } A )
+                    y
+                    A
+                    ( fun y_左 : A => _ )
+                    ( fun y_右 : 否定型@{ i } A => _ )
+            )
+        .
+        {
+            exact y_左 .
+        }
+        {
+            refine ( 終了する@{ i } A _ ) .
+            refine ( 否定型.分解子@{ i } ( 否定型@{ i } ( B -> A ) ) x _ ) .
+            refine ( 否定型.構築子@{ i } ( B -> A ) _ ) .
+            refine ( fun w : B -> A => _ ) .
+            refine ( 否定型.分解子@{ i } A y_右 _ ) .
+            refine ( w _ ) .
+            exact z .
+        }
+    }
+    {
+        refine ( fun x : 直和型@{ i } A ( 否定型@{ i } A ) -> B -> A => _ ) .
+        refine ( 否定型.構築子@{ i } ( 否定型@{ i } ( B -> A ) ) _ ) .
+        refine ( fun y : 否定型@{ i } ( B -> A ) => _ ) .
+        refine ( 否定型.分解子@{ i } ( B -> A ) y _ ) .
+        refine ( fun z : B => _ ) .
+        refine ( x _ _ ) .
+        {
+            refine ( 直和型.右の場合の構築子@{ i } A ( 否定型@{ i } A ) _ ) .
+            refine ( 否定型.構築子@{ i } A _ ) .
+            refine ( fun w : A => _ ) .
+            refine ( 否定型.分解子@{ i } ( B -> A ) y _ ) .
+            exact ( 定数関数を作る@{ i } A B w ) .
+        }
+        {
+            exact z .
+        }
+    }
+Defined .
+
+(** 特定の種類の命題では二重否定除去が可能であることを証明します。 *)
+
+(** [A] の否定についての二重否定除去です。 *)
+
+Definition A_2024_08_12_0000@{ i | } : forall A : Type@{ i } , 否定型@{ i } ( 否定型@{ i } ( 否定型@{ i } A ) ) -> 否定型@{ i } A .
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( 対偶を取る@{ i } A ( 否定型@{ i } ( 否定型@{ i } A ) ) _ ) .
+    exact ( A_2024_08_06_0000@{ i } A ) .
+Defined .
+
+(** [A] から [B] の否定の否定への関数についての二重否定除去です。 *)
+
+Definition A_2024_08_12_0001@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall B : Type@{ i } ,
+        否定型@{ i } ( 否定型@{ i } ( B -> 否定型@{ i } ( 否定型@{ i } A ) ) )
+        ->
+        B
+        ->
+        否定型@{ i } ( 否定型@{ i } A )
+.
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun B : Type@{ i } => _ ) .
+    refine ( fun x : 否定型@{ i } ( 否定型@{ i } ( B -> 否定型@{ i } ( 否定型@{ i } A ) ) ) => _ ) .
+    refine ( fun y : B => _ ) .
+    refine ( 否定型.構築子@{ i } ( 否定型@{ i } A ) _ ) .
+    refine ( fun z : 否定型@{ i } A => _ ) .
+    refine ( 否定型.分解子@{ i } ( 否定型@{ i } ( B -> 否定型@{ i } ( 否定型@{ i } A ) ) ) x _ ) .
+    refine ( 否定型.構築子@{ i } ( B -> 否定型@{ i } ( 否定型@{ i } A ) ) _ ) .
+    refine ( fun w : B -> 否定型@{ i } ( 否定型@{ i } A ) => _ ) .
+    refine ( 否定型.分解子@{ i } ( 否定型@{ i } A ) ( w y ) _ ) .
+    exact z .
+Defined .
+
+(** [A] の否定の否定と [B] の否定の否定の直積についての二重否定除去です。 *)
+
+Definition A_2024_08_12_0002@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall B : Type@{ i } ,
+        否定型@{ i } ( 否定型@{ i } ( 直積型@{ i } ( 否定型@{ i } ( 否定型@{ i } A ) ) ( 否定型@{ i } ( 否定型@{ i } B ) ) ) )
+        ->
+        直積型@{ i } ( 否定型@{ i } ( 否定型@{ i } A ) ) ( 否定型@{ i } ( 否定型@{ i } B ) )
+.
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun B : Type@{ i } => _ ) .
+    refine
+        (
+            fun
+                x : 否定型@{ i } ( 否定型@{ i } ( 直積型@{ i } ( 否定型@{ i } ( 否定型@{ i } A ) ) ( 否定型@{ i } ( 否定型@{ i } B ) ) ) )
+            =>
+                _
+        )
+    .
+    refine ( 直積型を構築する@{ i } ( 否定型@{ i } ( 否定型@{ i } A ) ) ( 否定型@{ i } ( 否定型@{ i } B ) ) _ _ ) .
+    {
+        refine ( 否定型.構築子@{ i } ( 否定型@{ i } A ) _ ) .
+        refine ( fun y : 否定型@{ i } A => _ ) .
+        refine
+            (
+                否定型.分解子@{ i }
+                    ( 否定型@{ i } ( 直積型@{ i } ( 否定型@{ i } ( 否定型@{ i } A ) ) ( 否定型@{ i } ( 否定型@{ i } B ) ) ) )
                     x
-                with
-                    一_構築子_正の自然数
-                        =>
-                            match
-                                y
-                            with
-                                一_構築子_正の自然数 => 零_整数
-                                |
-                                後者_構築子_正の自然数 y_p => 負の符号を付ける_整数 y_p
-                            end
-                    |
-                    後者_構築子_正の自然数 x_p
-                        =>
-                            match
-                                y
-                            with
-                                一_構築子_正の自然数 => 正の符号を付ける_整数 x_p
-                                |
-                                後者_構築子_正の自然数 y_p => a x_p y_p
-                            end
-                end
-.
+                    _
+            )
+        .
+        refine ( 否定型.構築子@{ i } ( 直積型@{ i } ( 否定型@{ i } ( 否定型@{ i } A ) ) ( 否定型@{ i } ( 否定型@{ i } B ) ) ) _ ) .
+        refine ( fun z : 直積型@{ i } ( 否定型@{ i } ( 否定型@{ i } A ) ) ( 否定型@{ i } ( 否定型@{ i } B ) ) => _ ) .
+        refine
+            (
+                否定型.分解子@{ i }
+                    ( 否定型@{ i } A )
+                    ( 直積型.一番目の区域の分解子@{ i } ( 否定型@{ i } ( 否定型@{ i } A ) ) ( 否定型@{ i } ( 否定型@{ i } B ) ) z )
+                    _
+            )
+        .
+        exact y .
+    }
+    {
+        refine ( 否定型.構築子@{ i } ( 否定型@{ i } B ) _ ) .
+        refine ( fun y : 否定型@{ i } B => _ ) .
+        refine
+            (
+                否定型.分解子@{ i }
+                    ( 否定型@{ i } ( 直積型@{ i } ( 否定型@{ i } ( 否定型@{ i } A ) ) ( 否定型@{ i } ( 否定型@{ i } B ) ) ) )
+                    x
+                    _
+            )
+        .
+        refine ( 否定型.構築子@{ i } ( 直積型@{ i } ( 否定型@{ i } ( 否定型@{ i } A ) ) ( 否定型@{ i } ( 否定型@{ i } B ) ) ) _ ) .
+        refine ( fun z : 直積型@{ i } ( 否定型@{ i } ( 否定型@{ i } A ) ) ( 否定型@{ i } ( 否定型@{ i } B ) ) => _ ) .
+        refine
+            (
+                否定型.分解子@{ i }
+                    ( 否定型@{ i } B )
+                    ( 直積型.二番目の区域の分解子@{ i } ( 否定型@{ i } ( 否定型@{ i } B ) ) ( 否定型@{ i } ( 否定型@{ i } A ) ) z )
+                    _
+            )
+        .
+        exact y .
+    }
+Defined .
 
-Definition 足す_整数@{ i | } ( x : 整数@{ i } ) ( y : 整数@{ i } ) : 整数@{ i }
-    :=
-        match
-            x
-        with
-            負_構築子_整数 x_n
-                =>
-                    match
-                        y
-                    with
-                        負_構築子_整数 y_n => 負の符号を付ける_整数 ( 足す_正の自然数 x_n y_n )
-                        |
-                        零_構築子_整数 => 負の符号を付ける_整数 x_n
-                        |
-                        正_構築子_整数 y_p => 正の自然数から正の自然数を引く_整数 y_p x_n
-                    end
-            |
-            零_構築子_整数
-                =>
-                    match
-                        y
-                    with
-                        負_構築子_整数 y_n => 負の符号を付ける_整数 y_n
-                        |
-                        零_構築子_整数 => 零_整数
-                        |
-                        正_構築子_整数 y_p => 正の符号を付ける_整数 y_p
-                    end
-            |
-            正_構築子_整数 x_p
-                =>
-                    match
-                        y
-                    with
-                        負_構築子_整数 y_n => 正の自然数から正の自然数を引く_整数 x_p y_n
-                        |
-                        零_構築子_整数 => 正の符号を付ける_整数 x_p
-                        |
-                        正_構築子_整数 y_p => 正の符号を付ける_整数 ( 足す_正の自然数 x_p y_p )
-                    end
-        end
-.
+(** 否定の位置を動かす定理を証明します。 *)
 
-Definition 符号を反転する_整数@{ i } ( x : 整数@{ i } ) : 整数@{ i }
-    :=
-        match
-            x
-        with
-            負_構築子_整数 x_n => 正の符号を付ける_整数 x_n
-            |
-            零_構築子_整数 => 零_整数
-            |
-            正_構築子_整数 x_p => 負の符号を付ける_整数 x_p
-        end
-.
+(** 直積と二重否定の定理です。 *)
 
-Definition 掛ける_整数@{ i | } ( x : 整数@{ i } ) ( y : 整数@{ i } ) : 整数@{ i }
-    :=
-        match
-            x
-        with
-            負_構築子_整数 x_n
-                =>
-                    match
-                        y
-                    with
-                        負_構築子_整数 y_n => 正の符号を付ける_整数 ( 掛ける_正の自然数 x_n y_n )
-                        |
-                        零_構築子_整数 => 零_整数
-                        |
-                        正_構築子_整数 y_p => 負の符号を付ける_整数 ( 掛ける_正の自然数 x_n y_p )
-                    end
-            |
-            零_構築子_整数
-                =>
-                    match
-                        y
-                    with
-                        負_構築子_整数 y_n => 零_整数
-                        |
-                        零_構築子_整数 => 零_整数
-                        |
-                        正_構築子_整数 y_p => 零_整数
-                    end
-            |
-            正_構築子_整数 x_p
-                =>
-                    match
-                        y
-                    with
-                        負_構築子_整数 y_n => 負の符号を付ける_整数 ( 掛ける_正の自然数 x_p y_n )
-                        |
-                        零_構築子_整数 => 零_整数
-                        |
-                        正_構築子_整数 y_p => 正の符号を付ける_整数 ( 掛ける_正の自然数 x_p y_p )
-                    end
-        end
+Definition A_2024_08_13_0000@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall B : Type@{ i } ,
+        双関数型@{ i }
+            ( 否定型@{ i } ( 否定型@{ i } ( 直積型@{ i } A B ) ) )
+            ( 直積型@{ i } ( 否定型@{ i } ( 否定型@{ i } A ) ) ( 否定型@{ i } ( 否定型@{ i } B ) ) )
 .
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun B : Type@{ i } => _ ) .
+    refine
+        (
+            双関数型を構築する@{ i }
+                ( 否定型@{ i } ( 否定型@{ i } ( 直積型@{ i } A B ) ) )
+                ( 直積型@{ i } ( 否定型@{ i } ( 否定型@{ i } A ) ) ( 否定型@{ i } ( 否定型@{ i } B ) ) )
+                _
+                _
+        )
+    .
+    {
+        refine
+            (
+                直積型.余場合分け@{ i }
+                    ( 否定型@{ i } ( 否定型@{ i } A ) )
+                    ( 否定型@{ i } ( 否定型@{ i } B ) )
+                    ( 否定型@{ i } ( 否定型@{ i } ( 直積型@{ i } A B ) ) )
+                    _
+                    _
+            )
+        .
+        {
+            refine ( A_2024_08_06_0001@{ i } A ( 直積型@{ i } A B ) _ ) .
+            exact ( 直積型.一番目の区域の分解子@{ i } A B ) .
+        }
+        {
+            refine ( A_2024_08_06_0001@{ i } B ( 直積型@{ i } A B ) _ ) .
+            exact ( 直積型.二番目の区域の分解子@{ i } B A ) .
+        }
+    }
+    {
+        refine ( fun x : 直積型@{ i } ( 否定型@{ i } ( 否定型@{ i } A ) ) ( 否定型@{ i } ( 否定型@{ i } B ) ) => _ ) .
+        refine ( 否定型.構築子@{ i } ( 否定型@{ i } ( 直積型@{ i } A B ) ) _ ) .
+        refine ( fun y : 否定型@{ i } ( 直積型@{ i } A B ) => _ ) .
+        refine
+            (
+                否定型.分解子@{ i }
+                    ( 否定型@{ i } A )
+                    ( 直積型.一番目の区域の分解子@{ i } ( 否定型@{ i } ( 否定型@{ i } A ) ) ( 否定型@{ i } ( 否定型@{ i } B ) ) x )
+                    _
+            )
+        .
+        refine ( 否定型.構築子@{ i } A _ ) .
+        refine ( fun z_1 : A => _ ) .
+        refine
+            (
+                否定型.分解子@{ i }
+                    ( 否定型@{ i } B )
+                    ( 直積型.二番目の区域の分解子@{ i } ( 否定型@{ i } ( 否定型@{ i } B ) ) ( 否定型@{ i } ( 否定型@{ i } A ) ) x )
+                    _
+            )
+        .
+        refine ( 否定型.構築子@{ i } B _ ) .
+        refine ( fun z_2 : B => _ ) .
+        refine ( 否定型.分解子@{ i } ( 直積型@{ i } A B ) y _ ) .
+        exact ( 直積型を構築する@{ i } A B z_1 z_2 ) .
+    }
+Defined .
+
+(** 直和と二重否定の定理です。 *)
+
+Definition A_2024_08_14_0000@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall B : Type@{ i } ,
+        双関数型@{ i }
+            ( 否定型@{ i } ( 否定型@{ i } ( 直和型@{ i } A B ) ) )
+            ( 否定型@{ i } ( 直積型@{ i } ( 否定型@{ i } A ) ( 否定型@{ i } B ) ) )
+.
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun B : Type@{ i } => _ ) .
+    refine
+        (
+            双関数型を構築する@{ i }
+                ( 否定型@{ i } ( 否定型@{ i } ( 直和型@{ i } A B ) ) )
+                ( 否定型@{ i } ( 直積型@{ i } ( 否定型@{ i } A ) ( 否定型@{ i } B ) ) )
+                _
+                _
+        )
+    .
+    {
+        refine ( 対偶を取る@{ i } ( 直積型@{ i } ( 否定型@{ i } A ) ( 否定型@{ i } B ) ) ( 否定型@{ i } ( 直和型@{ i } A B ) ) _ ) .
+        refine ( fun x : 直積型@{ i } ( 否定型@{ i } A ) ( 否定型@{ i } B ) => _ ) .
+        refine ( 否定型.構築子@{ i } ( 直和型@{ i } A B ) _ ) .
+        refine ( fun y : 直和型@{ i } A B => _ ) .
+        refine
+            (
+                直和型.場合分け@{ i }
+                    A
+                    B
+                    y
+                    空型@{ i }
+                    ( fun y_左 : A => _ )
+                    ( fun y_右 : B => _ )
+            )
+        .
+        {
+            refine ( 否定型.分解子@{ i } A ( 直積型.一番目の区域の分解子@{ i } ( 否定型@{ i } A ) ( 否定型@{ i } B ) x ) _ ) .
+            exact y_左 .
+        }
+        {
+            refine ( 否定型.分解子@{ i } B ( 直積型.二番目の区域の分解子@{ i } ( 否定型@{ i } B ) ( 否定型@{ i } A ) x ) _ ) .
+            exact y_右 .
+        }
+    }
+    {
+        refine ( 対偶を取る@{ i } ( 否定型@{ i } ( 直和型@{ i } A B ) ) ( 直積型@{ i } ( 否定型@{ i } A ) ( 否定型@{ i } B ) ) _ ) .
+        refine ( fun x : 否定型@{ i } ( 直和型@{ i } A B ) => _ ) .
+        refine
+            (
+                直積型.余場合分け@{ i }
+                    ( 否定型@{ i } A )
+                    ( 否定型@{ i } B )
+                    ( 否定型@{ i } ( 直和型@{ i } A B ) )
+                    _
+                    _
+                    x
+            )
+        .
+        {
+            refine ( 対偶を取る@{ i } A ( 直和型@{ i } A B ) _ ) .
+            exact ( 直和型.左の場合の構築子@{ i } A B ) .
+        }
+        {
+            refine ( 対偶を取る@{ i } B ( 直和型@{ i } A B ) _ ) .
+            exact ( 直和型.右の場合の構築子@{ i } A B ) .
+        }
+    }
+Defined .
+
+(** 含意と二重否定の定理です。 *)
+
+Definition A_2024_08_15_0000@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall B : Type@{ i } ,
+        双関数型@{ i }
+            ( 否定型@{ i } ( 否定型@{ i } ( B -> A ) ) )
+            ( 否定型@{ i } ( 否定型@{ i } B ) -> 否定型@{ i } ( 否定型@{ i } A ) )
+.
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun B : Type@{ i } => _ ) .
+    refine
+        (
+            双関数型を構築する@{ i }
+                ( 否定型@{ i } ( 否定型@{ i } ( B -> A ) ) )
+                ( 否定型@{ i } ( 否定型@{ i } B ) -> 否定型@{ i } ( 否定型@{ i } A ) )
+                _
+                _
+        )
+    .
+    {
+        refine ( fun x : 否定型@{ i } ( 否定型@{ i } ( B -> A ) ) => _ ) .
+        refine ( fun y : 否定型@{ i } ( 否定型@{ i } B ) => _ ) .
+        refine ( 否定型.構築子@{ i } ( 否定型@{ i } A ) _ ) .
+        refine ( fun z : 否定型@{ i } A => _ ) .
+        refine ( 否定型.分解子@{ i } ( 否定型@{ i } ( B -> A ) ) x _ ) .
+        refine ( 否定型.構築子@{ i } ( B -> A ) _ ) .
+        refine ( fun w : B -> A => _ ) .
+        refine ( 否定型.分解子@{ i } ( 否定型@{ i } B ) y _ ) .
+        refine ( 否定型.構築子@{ i } B _ ) .
+        refine ( fun v : B => _ ) .
+        refine ( 否定型.分解子@{ i } A z _ ) .
+        refine ( w _ ) .
+        exact v .
+    }
+    {
+        refine ( fun x : 否定型@{ i } ( 否定型@{ i } B ) -> 否定型@{ i } ( 否定型@{ i } A ) => _ ) .
+        refine ( 否定型.構築子@{ i } ( 否定型@{ i } ( B -> A ) ) _ ) .
+        refine ( fun y : 否定型@{ i } ( B -> A ) => _ ) .
+        refine ( 否定型.分解子@{ i } ( B -> A ) y _ ) .
+        refine ( fun z : B => _ ) .
+        refine ( 終了する@{ i } A _ ) .
+        refine ( 否定型.分解子@{ i } ( 否定型@{ i } A ) ( x ( A_2024_08_06_0000@{ i } B z ) ) _ ) .
+        refine ( 否定型.構築子@{ i } A _ ) .
+        refine ( fun w : A => _ ) .
+        refine ( 否定型.分解子@{ i } ( B -> A ) y _ ) .
+        exact ( 定数関数を作る@{ i } A B w ) .
+    }
+Defined .
+
+End A_2024_09_07_0000 .
+
+(** ** 道 *)
+
+(** 道に関するモジュールを定義します。 *)
+
+Module A_2024_09_08_0000 .
+
+(** << A_2024_08_26_0002 >> を取り込みます。 *)
+
+Import A_2024_08_26_0002 .
 
 (** 道を定義します。「道」は "path" の訳語です。 *)
 
-Inductive 道@{ i | } ( A : Type@{ i } ) ( x : A ) : A -> Type@{ i } := 構築子_道 : 道 A x x.
-
-(** 「恒等道」は "identity path" の訳語です。 *)
-
-Definition 恒等道_道@{ i | } ( A : Type@{ i } ) ( x : A ) : 道 A x x := 構築子_道 A x.
-
-Definition 結合する_道@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( z : A ) ( p : 道 A x y ) ( q : 道 A y z )
-    : 道 A x z
-    :=
-        match
-            q
-        in
-            道 _ _ z_
-        return
-            道 A x z_
-        with
-            構築子_道 _ _ => match p in 道 _ _ y_ return 道 A x y_ with 構築子_道 _ _ => 恒等道_道 A x end
-        end
+Inductive A_2024_07_22_0009@{ i | } ( A : Type@{ i } ) : A -> A -> Type@{ i }
+    := A_2024_07_22_0010 : forall x : A , A_2024_07_22_0009 A x x
 .
 
-Definition 反転する_道@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( p : 道 A x y ) : 道 A y x
-    := match p in 道 _ _ y_ return 道 A y_ x with 構築子_道 _ _ => 構築子_道 A x end
-.
+Definition 道@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) : Type@{ i } := A_2024_07_22_0009@{ i } A x y .
 
-Definition 関数を適用する_道@{ i | }
-        ( A : Type@{ i } )
-        ( B : Type@{ i } )
-        ( f : A -> B )
-        ( x : A )
-        ( y : A )
-        ( p : 道 A x y )
-    : 道 B ( f x ) ( f y )
-    := match p in 道 _ _ y_ return 道@{ i } B ( f x ) ( f y_ ) with 構築子_道 _ _ => 構築子_道 B ( f x ) end
-.
+Module A_2024_07_22_0009 .
 
-(** 「輸送する」は "transport" の訳語です。 *)
+Definition 構築子@{ i | } ( A : Type@{ i } ) ( x : A ) : 道@{ i } A x x := A_2024_07_22_0010@{ i } A x .
 
-Definition 輸送する_道@{ i | }
-        ( A : Type@{ i } )
-        ( B : A -> Type@{ i } )
-        ( x : A )
-        ( y : A )
-        ( p : 道@{ i } A x y )
-        ( u : B x )
-    : B y
-    := match p in 道 _ _ y_ return B y_ with 構築子_道 _ _ => u end
-.
+(** 道について場合分けします。 *)
 
-Definition 依存関数を適用する_道@{ i | }
-        ( A : Type@{ i } )
-        ( B : A -> Type@{ i } )
-        ( f : forall x : A, B x )
-        ( x : A )
-        ( y : A )
-        ( p : 道@{ i } A x y )
-    : 道@{ i } ( B y ) ( 輸送する_道 A B x y p ( f x ) ) ( f y )
-    :=
-        match
-            p
-        as
-            p_
-        in
-            道 _ _ y_
-        return
-            道@{ i } ( B y_ ) ( 輸送する_道 A B x y_ p_ ( f x ) ) ( f y_ )
-        with
-            構築子_道 _ _ => 恒等道_道 ( B x ) ( f x )
-        end
-.
-
-(** 道の定理を証明します。 *)
-
-Definition A_2024_02_01_0000@{ i | } ( A : Type@{ i } ) ( x : A )
-    : 道@{ i } ( 道@{ i } A x x ) ( 結合する_道 A x x x ( 恒等道_道 A x ) ( 恒等道_道 A x ) ) ( 恒等道_道 A x )
-    := 恒等道_道 _ _
-.
-
-Definition A_2024_02_06_0005@{ i | } ( A : Type@{ i } ) ( x : A )
-    : 道@{ i } ( 道@{ i } A x x ) ( 反転する_道 A x x ( 恒等道_道 A x ) ) ( 恒等道_道 A x )
-    := 恒等道_道 _ _
-.
-
-Definition A_2024_02_06_0008@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( f : A -> B ) ( x : A )
-    : 道@{ i } ( 道@{ i } B ( f x ) ( f x ) ) ( 関数を適用する_道 A B f x x ( 恒等道_道 A x ) ) ( 恒等道_道 B ( f x ) )
-    := 恒等道_道 _ _
-.
-
-Definition A_2024_02_06_0006@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) ( x : A ) ( u : B x )
-    : 道@{ i } ( B x ) ( 輸送する_道 A B x x ( 恒等道_道 A x ) u ) u
-    := 恒等道_道 _ _
-.
-
-Definition A_2024_02_06_0007@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) ( f : forall x : A, B x ) ( x : A )
+Definition A_2024_09_08_0001@{ i | }
     :
+        forall A : Type@{ i } ,
+        forall x : A ,
+        forall y : A ,
+        道@{ i } A x y
+        ->
+        forall 目標 : A -> A -> Type@{ i } ,
+        ( forall z : A , 目標 z z )
+        ->
+        目標 x y
+    :=
+        fun A : Type@{ i } =>
+        fun x : A =>
+        fun y : A =>
+        fun 対象 : 道@{ i } A x y =>
+        fun 目標 : A -> A -> Type@{ i } =>
+        fun 処理 : forall z : A , 目標 z z =>
+        match
+            対象
+        in
+            A_2024_07_22_0009 _ x_ y_
+        return
+            目標 x_ y_
+        with
+            A_2024_07_22_0010 _ z => 処理 z
+        end
+.
+
+Definition 場合分け@{ i | }
+    ( A : Type@{ i } )
+    ( x : A )
+    ( y : A )
+    ( 対象 : 道@{ i } A x y )
+    ( 目標 : A -> A -> Type@{ i } )
+    ( 処理 : forall z : A , 目標 z z )
+    : 目標 x y
+    := A_2024_09_08_0001@{ i } A x y 対象 目標 処理
+.
+
+(** 道について依存型の場合分けをします。 *)
+
+Definition A_2024_09_08_0002@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall x : A ,
+        forall y : A ,
+        forall 対象 : 道@{ i } A x y ,
+        forall 目標 : forall x : A , forall y : A , 道@{ i } A x y -> Type@{ i } ,
+        ( forall z : A , 目標 z z ( 構築子@{ i } A z ) )
+        ->
+        目標 x y 対象
+    :=
+        fun A : Type@{ i } =>
+        fun x : A =>
+        fun y : A =>
+        fun 対象 : 道@{ i } A x y =>
+        fun 目標 : forall x : A , forall y : A , 道@{ i } A x y -> Type@{ i } =>
+        fun 処理 : forall z : A , 目標 z z ( 構築子@{ i } A z ) =>
+        match
+            対象
+        as
+            対象_
+        in
+            A_2024_07_22_0009 _ x_ y_
+        return
+            目標 x_ y_ 対象_
+        with
+            A_2024_07_22_0010 _ z => 処理 z
+        end
+.
+
+Definition 依存型の場合分け@{ i | }
+    ( A : Type@{ i } )
+    ( x : A )
+    ( y : A )
+    ( 対象 : 道@{ i } A x y )
+    ( 目標 : forall x : A , forall y : A , 道@{ i } A x y -> Type@{ i } )
+    ( 処理 : forall z : A , 目標 z z ( 構築子@{ i } A z ) )
+    : 目標 x y 対象
+    := A_2024_09_08_0002@{ i } A x y 対象 目標 処理
+.
+
+End A_2024_07_22_0009 .
+
+Module 道 := A_2024_07_22_0009 .
+
+(** 恒等道です。 *)
+
+Definition A_2024_09_09_0000@{ i | } : forall A : Type@{ i } , forall x : A , 道@{ i } A x x := 道.構築子@{ i } .
+
+Definition 恒等道@{ i | } ( A : Type@{ i } ) ( x : A ) : 道@{ i } A x x := A_2024_09_09_0000@{ i } A x .
+
+(** 結合です。 *)
+
+Definition A_2024_07_22_0011@{ i | }
+    : forall A : Type@{ i } , forall x : A , forall y : A , forall z : A , 道@{ i } A x z -> 道@{ i } A z y -> 道@{ i } A x y
+.
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun x : A => _ ) .
+    refine ( fun y : A => _ ) .
+    refine ( fun z : A => _ ) .
+    refine ( fun p : 道@{ i } A x z => _ ) .
+    refine
+        (
+            道.場合分け@{ i }
+                A
+                x
+                z
+                p
+                ( fun x_ : A => fun z_ : A => 道@{ i } A z_ y -> 道@{ i } A x_ y )
+                ( fun w : A => _ )
+        )
+    .
+    refine ( fun q : 道@{ i } A w y => _ ) .
+    refine
+        (
+            道.場合分け@{ i }
+                A
+                w
+                y
+                q
+                ( fun w_ : A => fun y_ : A => 道@{ i } A w_ y_ )
+                ( fun v : A => _ )
+        )
+    .
+    exact ( 恒等道@{ i } A v ) .
+Defined .
+
+Definition 結合@{ i | }
+    ( A : Type@{ i } )
+    ( x : A )
+    ( y : A )
+    ( z : A )
+    ( p : 道@{ i } A x z )
+    ( q : 道@{ i } A z y )
+    : 道@{ i } A x y
+    := A_2024_07_22_0011@{ i } A x y z p q
+.
+
+(** 反転です。 *)
+
+Definition A_2024_07_22_0012@{ i | } : forall A : Type@{ i } , forall x : A , forall y : A , 道@{ i } A y x -> 道@{ i } A x y .
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun x : A => _ ) .
+    refine ( fun y : A => _ ) .
+    refine ( fun p : 道@{ i } A y x => _ ) .
+    refine
+        (
+            道.場合分け@{ i }
+                A
+                y
+                x
+                p
+                ( fun y_ : A => fun x_ : A => 道@{ i } A x_ y_ )
+                ( fun z : A => _ )
+        )
+    .
+    exact ( 恒等道@{ i } A z ) .
+Defined .
+
+Definition 反転@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( p : 道@{ i } A y x ) : 道@{ i } A x y
+    := A_2024_07_22_0012@{ i } A x y p
+.
+
+(** 関数を道へ適用します。 *)
+
+Definition A_2024_07_22_0013@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall B : Type@{ i } ,
+        forall f : B -> A ,
+        forall x : B ,
+        forall y : B ,
+        道@{ i } B x y
+        ->
+        道@{ i } A ( f x ) ( f y )
+.
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun B : Type@{ i } => _ ) .
+    refine ( fun f : B -> A => _ ) .
+    refine ( fun x : B => _ ) .
+    refine ( fun y : B => _ ) .
+    refine ( fun p : 道@{ i } B x y => _ ) .
+    refine
+        (
+            道.場合分け@{ i }
+                B
+                x
+                y
+                p
+                ( fun x_ : B => fun y_ : B => 道@{ i } A ( f x_ ) ( f y_ ) )
+                ( fun z : B => _ )
+        )
+    .
+    refine ( 恒等道@{ i } A ( f z ) ) .
+Defined .
+
+Definition 適用@{ i | }
+    ( A : Type@{ i } )
+    ( B : Type@{ i } )
+    ( f : B -> A )
+    ( x : B )
+    ( y : B )
+    ( p : 道@{ i } B x y )
+    : 道@{ i } A ( f x ) ( f y )
+    := A_2024_07_22_0013@{ i } A B f x y p
+.
+
+(** 道に沿って輸送します。「輸送する」は "transport" の訳語です。 *)
+
+Definition A_2024_07_22_0014@{ i | }
+    : forall A : Type@{ i } , forall B : A -> Type@{ i } , forall x : A , forall y : A , 道@{ i } A y x -> B y -> B x
+.
+Proof.
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun B : A -> Type@{ i } => _ ) .
+    refine ( fun x : A => _ ) .
+    refine ( fun y : A => _ ) .
+    refine ( fun p : 道@{ i } A y x => _ ) .
+    refine
+        (
+            道.場合分け@{ i }
+                A
+                y
+                x
+                p
+                ( fun y_ : A => fun x_ : A => B y_ -> B x_ )
+                ( fun z : A => _ )
+        )
+    .
+    exact ( 恒等関数@{ i } ( B z ) ) .
+Defined .
+
+Definition 輸送@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) ( x : A ) ( y : A ) ( p : 道@{ i } A y x ) ( u : B y ) : B x
+    := A_2024_07_22_0014@{ i } A B x y p u
+.
+
+(** 依存関数を道に適用します。 *)
+
+Definition A_2024_07_22_0015@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall B : A -> Type@{ i } ,
+        forall f : forall x : A , B x ,
+        forall x : A ,
+        forall y : A ,
+        forall p : 道@{ i } A x y ,
+        道@{ i } ( B y ) ( 輸送@{ i } A B y x p ( f x ) ) ( f y )
+.
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun B : A -> Type@{ i } => _ ) .
+    refine ( fun f : forall x : A , B x => _ ) .
+    refine ( fun x : A => _ ) .
+    refine ( fun y : A => _ ) .
+    refine ( fun p : 道@{ i } A x y => _ ) .
+    refine
+        (
+            道.依存型の場合分け@{ i }
+                A
+                x
+                y
+                p
+                (
+                    fun x_ : A =>
+                    fun y_ : A =>
+                    fun p_ : 道@{ i } A x_ y_ =>
+                    道@{ i } ( B y_ ) ( 輸送@{ i } A B y_ x_ p_ ( f x_ ) ) ( f y_ )
+                )
+                ( fun z : A => _ )
+        )
+    .
+    exact ( 恒等道@{ i } ( B z ) ( f z ) ) .
+Defined .
+
+Definition 依存型の適用@{ i | }
+    ( A : Type@{ i } )
+    ( B : A -> Type@{ i } )
+    ( f : forall x : A , B x )
+    ( x : A )
+    ( y : A )
+    ( p : 道@{ i } A x y )
+    : 道@{ i } ( B y ) ( 輸送@{ i } A B y x p ( f x ) ) ( f y )
+    := A_2024_07_22_0015@{ i } A B f x y p
+.
+
+(** 恒等道と恒等道を結合した道は恒等道に等しくなります。 *)
+
+Definition A_2024_07_22_0027@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall x : A ,
+        道@{ i } ( 道@{ i } A x x ) ( 結合@{ i } A x x x ( 恒等道@{ i } A x ) ( 恒等道@{ i } A x ) ) ( 恒等道@{ i } A x )
+.
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun x : A => _ ) .
+    exact ( 恒等道@{ i } ( 道@{ i } A x x ) ( 恒等道@{ i } A x ) ) .
+Defined .
+
+(** 結合演算は結合法則を満たします。 *)
+
+Definition A_2024_07_22_0032@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall x : A ,
+        forall y : A ,
+        forall z : A ,
+        forall w : A ,
+        forall p : 道@{ i } A x w ,
+        forall q : 道@{ i } A w z ,
+        forall r : 道@{ i } A z y ,
+        道@{ i }
+            ( 道@{ i } A x y )
+            ( 結合@{ i } A x y z ( 結合@{ i } A x z w p q ) r )
+            ( 結合@{ i } A x y w p ( 結合@{ i } A w y z q r ) )
+.
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun x : A => _ ) .
+    refine ( fun y : A => _ ) .
+    refine ( fun z : A => _ ) .
+    refine ( fun w : A => _ ) .
+    refine ( fun p : 道@{ i } A x w => _ ) .
+    refine
+        (
+            道.依存型の場合分け@{ i }
+                A
+                x
+                w
+                p
+                (
+                    fun x_ : A =>
+                    fun w_ : A =>
+                    fun p_ : 道@{ i } A x_ w_ =>
+                    forall q : 道@{ i } A w_ z ,
+                    forall r : 道@{ i } A z y ,
+                    道@{ i }
+                        ( 道@{ i } A x_ y )
+                        ( 結合@{ i } A x_ y z ( 結合@{ i } A x_ z w_ p_ q ) r )
+                        ( 結合@{ i } A x_ y w_ p_ ( 結合@{ i } A w_ y z q r ) )
+                )
+                ( fun v : A => _ )
+        )
+    .
+    refine ( fun q : 道@{ i } A v z => _ ) .
+    refine
+        (
+            道.依存型の場合分け@{ i }
+                A
+                v
+                z
+                q
+                (
+                    fun v_ : A =>
+                    fun z_ : A =>
+                    fun q_ : 道@{ i } A v_ z_ =>
+                    forall r : 道@{ i } A z_ y ,
+                    道@{ i }
+                        ( 道@{ i } A v_ y )
+                        ( 結合@{ i } A v_ y z_ ( 結合@{ i } A v_ z_ v_ ( 恒等道@{ i } A v_ ) q_ ) r )
+                        ( 結合@{ i } A v_ y v_ ( 恒等道@{ i } A v_ ) ( 結合@{ i } A v_ y z_ q_ r ) )
+                )
+                ( fun u : A => _ )
+        )
+    .
+    refine ( fun r : 道@{ i } A u y => _ ) .
+    refine
+        (
+            道.依存型の場合分け@{ i }
+                A
+                u
+                y
+                r
+                (
+                    fun u_ : A =>
+                    fun y_ : A =>
+                    fun r_ : 道@{ i } A u_ y_ =>
+                    道@{ i }
+                        ( 道@{ i } A u_ y_ )
+                        ( 結合@{ i } A u_ y_ u_ ( 結合@{ i } A u_ u_ u_ ( 恒等道@{ i } A u_ ) ( 恒等道@{ i } A u_ ) ) r_ )
+                        ( 結合@{ i } A u_ y_ u_ ( 恒等道@{ i } A u_ ) ( 結合@{ i } A u_ y_ u_ ( 恒等道@{ i } A u_ ) r_ ) )
+                )
+                ( fun t : A => _ )
+        )
+    .
+    exact ( 恒等道@{ i } ( 道@{ i } A t t ) ( 恒等道@{ i } A t ) ) .
+Defined .
+
+(** 恒等道と [p] を結合した道は [p] に等しくなります。 *)
+
+Definition A_2024_07_25_0000@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall x : A ,
+        forall y : A ,
+        forall p : 道@{ i } A x y ,
+        道@{ i } ( 道@{ i } A x y ) ( 結合@{ i } A x y x ( 恒等道@{ i } A x ) p ) p
+.
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun x : A => _ ) .
+    refine ( fun y : A => _ ) .
+    refine ( fun p : 道@{ i } A x y => _ ) .
+    refine
+        (
+            道.依存型の場合分け@{ i }
+                A
+                x
+                y
+                p
+                (
+                    fun x_ : A =>
+                    fun y_ : A =>
+                    fun p_ : 道@{ i } A x_ y_ =>
+                    道@{ i } ( 道@{ i } A x_ y_ ) ( 結合@{ i } A x_ y_ x_ ( 恒等道@{ i } A x_ ) p_ ) p_
+                )
+                ( fun z : A => _ )
+        )
+    .
+    exact ( 恒等道@{ i } ( 道@{ i } A z z ) ( 恒等道@{ i } A z ) ) .
+Defined .
+
+(** [p] と恒等道を結合した道は [p] に等しくなります。 *)
+
+Definition A_2024_07_25_0001@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall x : A ,
+        forall y : A ,
+        forall p : 道@{ i } A x y ,
+        道@{ i } ( 道@{ i } A x y ) ( 結合@{ i } A x y y p ( 恒等道@{ i } A y ) ) p
+.
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun x : A => _ ) .
+    refine ( fun y : A => _ ) .
+    refine ( fun p : 道@{ i } A x y => _ ) .
+    refine
+        (
+            道.依存型の場合分け@{ i }
+                A
+                x
+                y
+                p
+                (
+                    fun x_ : A =>
+                    fun y_ : A =>
+                    fun p_ : 道@{ i } A x_ y_ =>
+                    道@{ i } ( 道@{ i } A x_ y_ ) ( 結合@{ i } A x_ y_ y_ p_ ( 恒等道@{ i } A y_ ) ) p_
+                )
+                ( fun z : A => _ )
+        )
+    .
+    exact ( 恒等道@{ i } ( 道@{ i } A z z ) ( 恒等道@{ i } A z ) ) .
+Defined .
+
+(** [p] と [p] を反転した道を結合した道は恒等道に等しくなります。 *)
+
+Definition A_2024_07_25_0002@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall x : A ,
+        forall y : A ,
+        forall p : 道@{ i } A x y ,
+        道@{ i } ( 道@{ i } A x x ) ( 結合@{ i } A x x y p ( 反転@{ i } A y x p ) ) ( 恒等道@{ i } A x )
+.
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun x : A => _ ) .
+    refine ( fun y : A => _ ) .
+    refine ( fun p : 道@{ i } A x y => _ ) .
+    refine
+        (
+            道.依存型の場合分け@{ i }
+                A
+                x
+                y
+                p
+                (
+                    fun x_ : A =>
+                    fun y_ : A =>
+                    fun p_ : 道@{ i } A x_ y_ =>
+                    道@{ i } ( 道@{ i } A x_ x_ ) ( 結合@{ i } A x_ x_ y_ p_ ( 反転@{ i } A y_ x_ p_ ) ) ( 恒等道@{ i } A x_ )
+                )
+                ( fun z : A => _ )
+        )
+    .
+    exact ( 恒等道@{ i } ( 道@{ i } A z z ) ( 恒等道@{ i } A z ) ) .
+Defined .
+
+(** [p] を反転した道 と [p] を結合した道は恒等道に等しくなります。 *)
+
+Definition A_2024_07_25_0003@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall x : A ,
+        forall y : A ,
+        forall p : 道@{ i } A y x ,
+        道@{ i } ( 道@{ i } A x x ) ( 結合@{ i } A x x y ( 反転@{ i } A x y p ) p ) ( 恒等道@{ i } A x )
+.
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun x : A => _ ) .
+    refine ( fun y : A => _ ) .
+    refine ( fun p : 道@{ i } A y x => _ ) .
+    refine
+        (
+            道.依存型の場合分け@{ i }
+                A
+                y
+                x
+                p
+                (
+                    fun y_ : A =>
+                    fun x_ : A =>
+                    fun p_ : 道@{ i } A y_ x_ =>
+                    道@{ i } ( 道@{ i } A x_ x_ ) ( 結合@{ i } A x_ x_ y_ ( 反転@{ i } A x_ y_ p_ ) p_ ) ( 恒等道@{ i } A x_ )
+                )
+                ( fun z : A => _ )
+        )
+    .
+    exact ( 恒等道@{ i } ( 道@{ i } A z z ) ( 恒等道@{ i } A z ) ) .
+Defined .
+
+(** 恒等道を反転した道は恒等道に等しくなります。 *)
+
+Definition A_2024_07_22_0028@{ i | }
+    : forall A : Type@{ i } , forall x : A , 道@{ i } ( 道@{ i } A x x ) ( 反転@{ i } A x x ( 恒等道@{ i } A x ) ) ( 恒等道@{ i } A x )
+.
+Proof.
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun x : A => _ ) .
+    exact ( 恒等道@{ i } ( 道@{ i } A x x ) ( 恒等道@{ i } A x ) ) .
+Defined .
+
+(** [p] と [q] を結合した道を反転した道は [q] を反転した道と [p] を反転した道に等しくなります。 *)
+
+Definition A_2024_07_26_0001@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall x : A ,
+        forall y : A ,
+        forall z : A ,
+        forall p : 道@{ i } A y z ,
+        forall q : 道@{ i } A z x ,
+        道@{ i }
+            ( 道@{ i } A x y )
+            ( 反転@{ i } A x y ( 結合@{ i } A y x z p q ) )
+            ( 結合@{ i } A x y z ( 反転@{ i } A x z q ) ( 反転@{ i } A z y p ) )
+.
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun x : A => _ ) .
+    refine ( fun y : A => _ ) .
+    refine ( fun z : A => _ ) .
+    refine ( fun p : 道@{ i } A y z => _ ) .
+    refine
+        (
+            道.依存型の場合分け@{ i }
+                A
+                y
+                z
+                p
+                (
+                    fun y_ : A =>
+                    fun z_ : A =>
+                    fun p_ : 道@{ i } A y_ z_ =>
+                    forall q : 道@{ i } A z_ x ,
+                    道@{ i }
+                        ( 道@{ i } A x y_ )
+                        ( 反転@{ i } A x y_ ( 結合@{ i } A y_ x z_ p_ q ) )
+                        ( 結合@{ i } A x y_ z_ ( 反転@{ i } A x z_ q ) ( 反転@{ i } A z_ y_ p_ ) )
+                )
+                ( fun w : A => _ )
+        )
+    .
+    refine ( fun q : 道@{ i } A w x => _ ) .
+    refine
+        (
+            道.依存型の場合分け@{ i }
+                A
+                w
+                x
+                q
+                (
+                    fun w_ : A =>
+                    fun x_ : A =>
+                    fun q_ : 道@{ i } A w_ x_ =>
+                    道@{ i }
+                        ( 道@{ i } A x_ w_ )
+                        ( 反転@{ i } A x_ w_ ( 結合@{ i } A w_ x_ w_ ( 恒等道@{ i } A w_ ) q_ ) )
+                        ( 結合@{ i } A x_ w_ w_ ( 反転@{ i } A x_ w_ q_ ) ( 反転@{ i } A w_ w_ ( 恒等道@{ i } A w_ ) ) )
+                )
+                ( fun v : A => _ )
+        )
+    .
+    exact ( 恒等道@{ i } ( 道@{ i } A v v ) ( 恒等道@{ i } A v ) ) .
+Defined .
+
+(** [p] を反転した道を反転した道は [p] に等しくなります。 *)
+
+Definition A_2024_07_26_0002@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall x : A ,
+        forall y : A ,
+        forall p : 道@{ i } A x y ,
+        道@{ i } ( 道@{ i } A x y ) ( 反転@{ i } A x y ( 反転@{ i } A y x p ) ) p
+.
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun x : A => _ ) .
+    refine ( fun y : A => _ ) .
+    refine ( fun p : 道@{ i } A x y => _ ) .
+    refine
+        (
+            道.依存型の場合分け@{ i }
+                A
+                x
+                y
+                p
+                (
+                    fun x_ : A =>
+                    fun y_ : A =>
+                    fun p_ : 道@{ i } A x_ y_ =>
+                    道@{ i } ( 道@{ i } A x_ y_ ) ( 反転@{ i } A x_ y_ ( 反転@{ i } A y_ x_ p_ ) ) p_
+                )
+                ( fun z : A => _ )
+        )
+    .
+    exact ( 恒等道@{ i } ( 道@{ i } A z z ) ( 恒等道@{ i } A z ) ) .
+Defined .
+
+(** 恒等関数を [p] に適用した道は [p] に等しくなります。 *)
+
+Definition A_2024_07_25_0004@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall x : A ,
+        forall y : A ,
+        forall p : 道@{ i } A x y ,
+        道@{ i } ( 道@{ i } A x y ) ( 適用@{ i } A A ( 恒等関数@{ i } A ) x y p ) p
+.
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun x : A => _ ) .
+    refine ( fun y : A => _ ) .
+    refine ( fun p : 道@{ i } A x y => _ ) .
+    refine
+        (
+            道.依存型の場合分け@{ i }
+                A
+                x
+                y
+                p
+                (
+                    fun x_ : A =>
+                    fun y_ : A =>
+                    fun p_ : 道@{ i } A x_ y_ =>
+                    道@{ i } ( 道@{ i } A x_ y_ ) ( 適用@{ i } A A ( 恒等関数@{ i } A ) x_ y_ p_ ) p_
+                )
+                ( fun z : A => _ )
+        )
+    .
+    exact ( 恒等道@{ i } ( 道@{ i } A z z ) ( 恒等道@{ i } A z ) ) .
+Defined .
+
+(** [f] と [g] を合成した関数を [p] へ適用した道は [p] へ [g] を適用した道へ [f] を適用した道に等しくなります。 *)
+
+Definition A_2024_07_25_0005@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall B : Type@{ i } ,
+        forall C : Type@{ i } ,
+        forall f : C -> A ,
+        forall g : B -> C ,
+        forall x : B ,
+        forall y : B ,
+        forall p : 道@{ i } B x y ,
+        道@{ i }
+            ( 道@{ i } A ( f ( g x ) ) ( f ( g y ) ) )
+            ( 適用@{ i } A B ( 合成@{ i } A B C f g ) x y p )
+            ( 適用@{ i } A C f ( g x ) ( g y ) ( 適用@{ i } C B g x y p ) )
+.
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun B : Type@{ i } => _ ) .
+    refine ( fun C : Type@{ i } => _ ) .
+    refine ( fun f : C -> A => _ ) .
+    refine ( fun g : B -> C => _ ) .
+    refine ( fun x : B => _ ) .
+    refine ( fun y : B => _ ) .
+    refine ( fun p : 道@{ i } B x y => _ ) .
+    refine
+        (
+            道.依存型の場合分け@{ i }
+                B
+                x
+                y
+                p
+                (
+                    fun x_ : B =>
+                    fun y_ : B =>
+                    fun p_ : 道@{ i } B x_ y_ =>
+                    道@{ i }
+                        ( 道@{ i } A ( f ( g x_ ) ) ( f ( g y_ ) ) )
+                        ( 適用@{ i } A B ( 合成@{ i } A B C f g ) x_ y_ p_ )
+                        ( 適用@{ i } A C f ( g x_ ) ( g y_ ) ( 適用@{ i } C B g x_ y_ p_ ) )
+                )
+                ( fun z => _ )
+        )
+    .
+    exact ( 恒等道@{ i } ( 道@{ i } A ( f ( g z ) ) ( f ( g z ) ) ) ( 恒等道@{ i } A ( f ( g z ) ) ) ) .
+Defined .
+
+(** 恒等道へ関数を適用した道は恒等道に等しくなります。 *)
+
+Definition A_2024_07_22_0029@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall B : Type@{ i } ,
+        forall f : B -> A ,
+        forall x : B ,
+        道@{ i } ( 道@{ i } A ( f x ) ( f x ) ) ( 適用@{ i } A B f x x ( 恒等道@{ i } B x ) ) ( 恒等道@{ i } A ( f x ) )
+.
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun B : Type@{ i } => _ ) .
+    refine ( fun f : B -> A => _ ) .
+    refine ( fun x : B => _ ) .
+    exact ( 恒等道@{ i } ( 道@{ i } A ( f x ) ( f x ) ) ( 恒等道@{ i } A ( f x ) ) ) .
+Defined .
+
+(** [p] と [q] を結合した道に [f] を適用した道は [p] に [f] を適用した道と [q] に [f] を適用した道を結合した道に等しくなります。 *)
+
+Definition A_2024_07_25_0006@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall B : Type@{ i } ,
+        forall f : B -> A ,
+        forall x : B ,
+        forall y : B ,
+        forall z : B ,
+        forall p : 道@{ i } B x z ,
+        forall q : 道@{ i } B z y ,
+        道@{ i }
+            ( 道@{ i } A ( f x ) ( f y ) )
+            ( 適用@{ i } A B f x y ( 結合@{ i } B x y z p q ) )
+            ( 結合@{ i } A ( f x ) ( f y ) ( f z ) ( 適用@{ i } A B f x z p ) ( 適用@{ i } A B f z y q ) )
+.
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun B : Type@{ i } => _ ) .
+    refine ( fun f : B -> A => _ ) .
+    refine ( fun x : B => _ ) .
+    refine ( fun y : B => _ ) .
+    refine ( fun z : B => _ ) .
+    refine ( fun p : 道@{ i } B x z => _ ) .
+    refine
+        (
+            道.依存型の場合分け@{ i }
+                B
+                x
+                z
+                p
+                (
+                    fun x_ : B =>
+                    fun z_ : B =>
+                    fun p_ : 道@{ i } B x_ z_ =>
+                    forall q : 道@{ i } B z_ y ,
+                    道@{ i }
+                        ( 道@{ i } A ( f x_ ) ( f y ) )
+                        ( 適用@{ i } A B f x_ y ( 結合@{ i } B x_ y z_ p_ q ) )
+                        ( 結合@{ i } A ( f x_ ) ( f y ) ( f z_ ) ( 適用@{ i } A B f x_ z_ p_ ) ( 適用@{ i } A B f z_ y q ) )
+                )
+                ( fun w : B => _ )
+        )
+    .
+    refine ( fun q : 道@{ i } B w y => _ ) .
+    refine
+        (
+            道.依存型の場合分け@{ i }
+                B
+                w
+                y
+                q
+                (
+                    fun w_ : B =>
+                    fun y_ : B =>
+                    fun q_ : 道@{ i } B w_ y_ =>
+                    道@{ i }
+                        ( 道@{ i } A ( f w_ ) ( f y_ ) )
+                        ( 適用@{ i } A B f w_ y_ ( 結合@{ i } B w_ y_ w_ ( 恒等道@{ i } B w_ ) q_ ) )
+                        (
+                            結合@{ i }
+                                A
+                                ( f w_ )
+                                ( f y_ )
+                                ( f w_ )
+                                ( 適用@{ i } A B f w_ w_ ( 恒等道@{ i } B w_ ) )
+                                ( 適用@{ i } A B f w_ y_ q_ )
+                        )
+                )
+                ( fun v : B => _ )
+        )
+    .
+    exact ( 恒等道@{ i } ( 道@{ i } A ( f v ) ( f v ) ) ( 恒等道@{ i } A ( f v ) ) ) .
+Defined .
+
+(** [p] を反転した道に [f] を適用した道は [p] に [f] を適用した道を反転した道に等しくなります。 *)
+
+Definition A_2024_07_26_0000@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall B : Type@{ i } ,
+        forall f : B -> A ,
+        forall x : B ,
+        forall y : B ,
+        forall p : 道@{ i } B y x ,
+        道@{ i }
+            ( 道@{ i } A ( f x ) ( f y ) )
+            ( 適用@{ i } A B f x y ( 反転@{ i } B x y p ) )
+            ( 反転@{ i } A ( f x ) ( f y ) ( 適用@{ i } A B f y x p ) )
+.
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun B : Type@{ i } => _ ) .
+    refine ( fun f : B -> A => _ ) .
+    refine ( fun x : B => _ ) .
+    refine ( fun y : B => _ ) .
+    refine ( fun p : 道@{ i } B y x => _ ) .
+    refine
+        (
+            道.依存型の場合分け@{ i }
+                B
+                y
+                x
+                p
+                (
+                    fun y_ : B =>
+                    fun x_ : B =>
+                    fun p_ : 道@{ i } B y_ x_ =>
+                    道@{ i }
+                        ( 道@{ i } A ( f x_ ) ( f y_ ) )
+                        ( 適用@{ i } A B f x_ y_ ( 反転@{ i } B x_ y_ p_ ) )
+                        ( 反転@{ i } A ( f x_ ) ( f y_ ) ( 適用@{ i } A B f y_ x_ p_ ) )
+                )
+                ( fun z : B => _ )
+        )
+    .
+    exact ( 恒等道@{ i } ( 道@{ i } A ( f z ) ( f z ) ) ( 恒等道@{ i } A ( f z ) ) ) .
+Defined .
+
+(** 恒等道に沿って [u] を輸送した値は [u] に等しくなります。 *)
+
+Definition A_2024_07_22_0030@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall B : A -> Type@{ i } ,
+        forall x : A ,
+        forall u : B x ,
+        道@{ i } ( B x ) ( 輸送@{ i } A B x x ( 恒等道@{ i } A x ) u ) u
+.
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun B : A -> Type@{ i } => _ ) .
+    refine ( fun x : A => _ ) .
+    refine ( fun u : B x => _ ) .
+    exact ( 恒等道@{ i } ( B x ) u ) .
+Defined .
+
+(** [p] と [q] を結合した道に沿って [u] を輸送した値は [u] を [p] に沿って輸送した値を [q] に沿って輸送した値に等しくなります。 *)
+
+Definition A_2024_07_26_0003@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall B : A -> Type@{ i } ,
+        forall x : A ,
+        forall y : A ,
+        forall z : A ,
+        forall p : 道@{ i } A y z ,
+        forall q : 道@{ i } A z x ,
+        forall u : B y ,
+        道@{ i } ( B x ) ( 輸送@{ i } A B x y ( 結合@{ i } A y x z p q ) u ) ( 輸送@{ i } A B x z q ( 輸送@{ i } A B z y p u ) )
+.
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun B : A -> Type@{ i } => _ ) .
+    refine ( fun x : A => _ ) .
+    refine ( fun y : A => _ ) .
+    refine ( fun z : A => _ ) .
+    refine ( fun p : 道@{ i } A y z => _ ) .
+    refine
+        (
+            道.依存型の場合分け@{ i }
+                A
+                y
+                z
+                p
+                (
+                    fun y_ : A =>
+                    fun z_ : A =>
+                    fun p_ : 道@{ i } A y_ z_ =>
+                    forall q : 道@{ i } A z_ x ,
+                    forall u : B y_ ,
+                    道@{ i }
+                        ( B x )
+                        ( 輸送@{ i } A B x y_ ( 結合@{ i } A y_ x z_ p_ q ) u )
+                        ( 輸送@{ i } A B x z_ q ( 輸送@{ i } A B z_ y_ p_ u ) )
+                )
+                ( fun w : A => _ )
+        )
+    .
+    refine ( fun q : 道@{ i } A w x => _ ) .
+    refine
+        (
+            道.依存型の場合分け@{ i }
+                A
+                w
+                x
+                q
+                (
+                    fun w_ : A =>
+                    fun x_ : A =>
+                    fun q_ : 道@{ i } A w_ x_ =>
+                    forall u : B w_ ,
+                    道@{ i }
+                        ( B x_ )
+                        ( 輸送@{ i } A B x_ w_ ( 結合@{ i } A w_ x_ w_ ( 恒等道@{ i } A w_ ) q_ ) u )
+                        ( 輸送@{ i } A B x_ w_ q_ ( 輸送@{ i } A B w_ w_ ( 恒等道@{ i } A w_ ) u ) )
+                )
+                ( fun v : A => _ )
+        )
+    .
+    refine ( fun u : B v => _ ) .
+    exact ( 恒等道@{ i } ( B v ) u  ) .
+Defined .
+
+(** 恒等道へ依存関数を適用した道は恒等道に等しくまります。 *)
+
+Definition A_2024_07_22_0031@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall B : A -> Type@{ i } ,
+        forall f : forall x : A , B x ,
+        forall x : A ,
         道@{ i }
             ( 道@{ i } ( B x ) ( f x ) ( f x ) )
-            ( 依存関数を適用する_道 A B f x x ( 恒等道_道 A x ) )
-            ( 恒等道_道 ( B x ) ( f x ) )
-    := 恒等道_道 _ _
+            ( 依存型の適用@{ i } A B f x x ( 恒等道@{ i } A x ) )
+            ( 恒等道@{ i } ( B x ) ( f x ) )
+.
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun B : A -> Type@{ i } => _ ) .
+    refine ( fun f : forall x : A , B x => _ ) .
+    refine ( fun x : A => _ ) .
+    exact ( 恒等道@{ i } ( 道@{ i } ( B x ) ( f x ) ( f x ) ) ( 恒等道@{ i } ( B x ) ( f x ) ) ) .
+Defined .
+
+End A_2024_09_08_0000 .
+
+Module 道 := A_2024_09_08_0000 .
+
+(** ** 片端自由道 *)
+
+(** 片端自由道に関するモジュールを定義します。 *)
+
+Module A_2024_09_11_0000 .
+
+(** << A_2024_09_08_0000 >> を取り込みます。 *)
+
+Import A_2024_09_08_0000 .
+
+(** 一方の端点を自由にした道を定義します。「片端自由道」と呼びます。 *)
+
+Inductive A_2024_07_26_0004@{ i | } ( A : Type@{ i } ) ( x : A ) : Type@{ i }
+    := A_2024_07_26_0005 : forall y : A , 道@{ i } A x y -> A_2024_07_26_0004 A x
 .
 
-Definition 結合演算の結合法則_道@{ i | }
-        ( A : Type@{ i } )
-        ( x : A )
-        ( y : A )
-        ( z : A )
-        ( w : A )
-        ( p : 道@{ i } A x y )
-        ( q : 道@{ i } A y z )
-        ( r : 道@{ i } A z w )
-    :
-        道@{ i }
-            ( 道@{ i } A x w )
-            ( 結合する_道 A x z w ( 結合する_道 A x y z p q ) r )
-            ( 結合する_道 A x y w p ( 結合する_道 A y z w q r ) )
+Definition 片端自由道@{ i | } ( A : Type@{ i } ) ( x : A ) : Type@{ i } := A_2024_07_26_0004@{ i } A x .
+
+Module A_2024_07_26_0004 .
+
+Definition 構築子@{ i | } ( A : Type@{ i } ) ( x : A ) ( 対象_端点 : A ) ( 対象_中身 : 道@{ i } A x 対象_端点 ) : 片端自由道@{ i } A x
+    := A_2024_07_26_0005@{ i } A x 対象_端点 対象_中身
 .
-Proof.
+
+(** 片端自由道について場合分けします。 *)
+
+Definition A_2024_09_11_0001@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall x : A ,
+        片端自由道@{ i } A x
+        ->
+        forall 目標 : Type@{ i } ,
+        ( forall 対象_端点 : A , 道@{ i } A x 対象_端点 -> 目標 )
+        ->
+        目標
+    :=
+        fun A : Type@{ i } =>
+        fun x : A =>
+        fun 対象 : 片端自由道@{ i } A x =>
+        fun 目標 : Type@{ i } =>
+        fun 処理 : forall 対象_端点 : A , 道@{ i } A x 対象_端点 -> 目標 =>
+        match
+            対象
+        with
+            A_2024_07_26_0005 _ _ 対象_端点 対象_中身 => 処理 対象_端点 対象_中身
+        end
+.
+
+Definition 場合分け@{ i | }
+    ( A : Type@{ i } )
+    ( x : A )
+    ( 対象 : 片端自由道@{ i } A x )
+    ( 目標 : Type@{ i } )
+    ( 処理 : forall 対象_端点 : A , 道@{ i } A x 対象_端点 -> 目標 )
+    : 目標
+    := A_2024_09_11_0001@{ i } A x 対象 目標 処理
+.
+
+(** 片端自由道について依存型の場合分けをします。 *)
+
+Definition A_2024_09_11_0002@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall x : A ,
+        forall 対象 : 片端自由道@{ i } A x ,
+        forall 目標 : 片端自由道@{ i } A x -> Type@{ i } ,
+        ( forall 対象_端点 : A , forall 対象_中身 : 道@{ i } A x 対象_端点 , 目標 ( 構築子@{ i } A x 対象_端点 対象_中身 ) )
+        ->
+        目標 対象
+    :=
+        fun A : Type@{ i } =>
+        fun x : A =>
+        fun 対象 : 片端自由道@{ i } A x =>
+        fun 目標 : 片端自由道@{ i } A x -> Type@{ i } =>
+        fun 処理 : forall 対象_端点 : A , forall 対象_中身 : 道@{ i } A x 対象_端点 , 目標 ( 構築子@{ i } A x 対象_端点 対象_中身 ) =>
+        match
+            対象
+        as
+            対象_
+        return
+            目標 対象_
+        with
+            A_2024_07_26_0005 _ _ 対象_端点 対象_中身 => 処理 対象_端点 対象_中身
+        end
+.
+
+Definition 依存型の場合分け@{ i | }
+    ( A : Type@{ i } )
+    ( x : A )
+    ( 対象 : 片端自由道@{ i } A x )
+    ( 目標 : 片端自由道@{ i } A x -> Type@{ i } )
+    ( 処理 : forall 対象_端点 : A , forall 対象_中身 : 道@{ i } A x 対象_端点 , 目標 ( 構築子@{ i } A x 対象_端点 対象_中身 ) )
+    : 目標 対象
+    := A_2024_09_11_0002@{ i } A x 対象 目標 処理
+.
+
+End A_2024_07_26_0004 .
+
+Module 片端自由道 := A_2024_07_26_0004 .
+
+(** 恒等道です。 *)
+
+Definition A_2024_07_26_0008@{ i | } : forall A : Type@{ i } , forall x : A , 片端自由道@{ i } A x
+    := fun A : Type@{ i } => fun x : A => 片端自由道.構築子@{ i } A x x ( 道.恒等道@{ i } A x )
+.
+
+Definition 恒等道@{ i | } ( A : Type@{ i } ) ( x : A ) : 片端自由道@{ i } A x := A_2024_07_26_0008@{ i } A x .
+
+(** 端点を得ます。 *)
+
+Definition A_2024_07_26_0006@{ i | } : forall A : Type@{ i } , forall x : A , 片端自由道@{ i } A x -> A
+    :=
+        fun A : Type@{ i } =>
+        fun x : A =>
+        fun 対象 : 片端自由道@{ i } A x =>
+        片端自由道.場合分け@{ i }
+            A
+            x
+            対象
+            A
+            ( fun 対象_端点 : A => fun 対象_中身 : 道@{ i } A x 対象_端点 => 対象_端点 )
+.
+
+(** 中身の道を得ます。 *)
+
+Definition A_2024_07_26_0007@{ i | }
+    : forall A : Type@{ i } , forall x : A , forall 対象 : 片端自由道@{ i } A x , 道@{ i } A x ( A_2024_07_26_0006@{ i } A x 対象 )
+    :=
+        fun A : Type@{ i } =>
+        fun x : A =>
+        fun 対象 : 片端自由道@{ i } A x =>
+        片端自由道.依存型の場合分け@{ i }
+            A
+            x
+            対象
+            ( fun 対象_ : 片端自由道@{ i } A x => 道@{ i } A x ( A_2024_07_26_0006@{ i } A x 対象_ ) )
+            ( fun 対象_端点 : A => fun 対象_中身 : 道@{ i } A x 対象_端点 => 対象_中身 )
+.
+
+(** 常に恒等道と等しくなります。 *)
+
+Definition A_2024_07_26_0009@{ i | }
+    : forall A : Type@{ i } , forall x : A , forall p : 片端自由道@{ i } A x , 道@{ i } ( 片端自由道@{ i } A x ) ( 恒等道@{ i } A x ) p
+.
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun x : A => _ ) .
+    refine ( fun p : 片端自由道@{ i } A x => _ ) .
     refine
         (
-            match
-                r
-            as
-                r_
-            in
-                道 _ _ w_
-            return
-                道@{ i }
-                    ( 道@{ i } A x w_ )
-                    ( 結合する_道 A x z w_ ( 結合する_道 A x y z p q ) r_ )
-                    ( 結合する_道 A x y w_ p ( 結合する_道 A y z w_ q r_ ) )
-            with
-                構築子_道 _ _ => _
-            end
-        )
-    .
-    refine
-        (
-            match
-                q
-            as
-                q_
-            in
-                道 _ _ z_
-            return
-                道@{ i }
-                    ( 道@{ i } A x z_ )
-                    ( 結合する_道 A x z_ z_ ( 結合する_道 A x y z_ p q_ ) ( 恒等道_道 A z_ ) )
-                    ( 結合する_道 A x y z_ p ( 結合する_道 A y z_ z_ q_ ( 恒等道_道 A z_ ) ) )
-            with
-                構築子_道 _ _ => _
-            end
-        )
-    .
-    refine
-        (
-            match
+            片端自由道.依存型の場合分け@{ i }
+                A
+                x
                 p
-            as
-                p_
-            in
-                道 _ _ y_
-            return
-                道@{ i }
-                    ( 道@{ i } A x y_ )
-                    ( 結合する_道 A x y_ y_ ( 結合する_道 A x y_ y_ p_ ( 恒等道_道 A y_ ) ) ( 恒等道_道 A y_ ) )
-                    ( 結合する_道 A x y_ y_ p_ ( 結合する_道 A y_ y_ y_ ( 恒等道_道 A y_ ) ( 恒等道_道 A y_ ) ) )
-            with
-                構築子_道 _ _ => _
-            end
-        )
-    .
-    change
-        (
-            道@{ i }
-                ( 道@{ i } A x x )
-                ( 結合する_道 A x x x ( 結合する_道 A x x x ( 恒等道_道 A x ) ( 恒等道_道 A x ) ) ( 恒等道_道 A x ) )
-                ( 結合する_道 A x x x ( 恒等道_道 A x ) ( 結合する_道 A x x x ( 恒等道_道 A x ) ( 恒等道_道 A x ) ) )
-        )
-    .
-    change ( 道@{ i } ( 道@{ i } A x x ) ( 恒等道_道 A x ) ( 恒等道_道 A x ) ).
-    exact ( 恒等道_道 ( 道@{ i } A x x ) ( 恒等道_道 A x ) ).
-Defined.
-
-Definition A_2024_02_01_0001@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( p : 道@{ i } A x y )
-    : 道@{ i } ( 道@{ i } A x y ) ( 結合する_道 A x y y p ( 恒等道_道 A y ) ) p
-    :=
-        match
-            p
-        as
-            p_
-        in
-            道 _ _ y_
-        return
-            道@{ i } ( 道@{ i } A x y_ ) ( 結合する_道 A x y_ y_ p_ ( 恒等道_道 A y_ ) ) p_
-        with
-            構築子_道 _ _ => 恒等道_道 ( 道@{ i } A x x ) ( 恒等道_道 A x )
-        end
-.
-
-Definition A_2024_02_01_0002@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( p : 道@{ i } A x y )
-    : 道@{ i } ( 道@{ i } A x y ) ( 結合する_道 A x x y ( 恒等道_道 A x ) p ) p
-    :=
-        match
-            p
-        as
-            p_
-        in
-            道 _ _ y_
-        return
-            道@{ i } ( 道@{ i } A x y_ ) ( 結合する_道 A x x y_ ( 恒等道_道 A x ) p_ ) p_
-        with
-            構築子_道 _ _ => 恒等道_道 ( 道@{ i } A x x ) ( 恒等道_道 A x )
-        end
-.
-
-Definition A_2024_02_05_0000@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( p : 道@{ i } A x y )
-    : 道@{ i } ( 道@{ i } A y y ) ( 結合する_道 A y x y ( 反転する_道 A x y p ) p ) ( 恒等道_道 A y )
-    :=
-        match
-            p
-        as
-            p_
-        in
-            道 _ _ y_
-        return
-            道@{ i } ( 道@{ i } A y_ y_ ) ( 結合する_道 A y_ x y_ ( 反転する_道 A x y_ p_ ) p_ ) ( 恒等道_道 A y_ )
-        with
-            構築子_道 _ _ => 恒等道_道 ( 道@{ i } A x x ) ( 恒等道_道 A x )
-        end
-.
-
-Definition A_2024_02_05_0001@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( p : 道@{ i } A x y )
-    : 道@{ i } ( 道@{ i } A x x ) ( 結合する_道 A x y x p ( 反転する_道 A x y p ) ) ( 恒等道_道 A x )
-    :=
-        match
-            p
-        as
-            p_
-        in
-            道 _ _ y_
-        return
-            道@{ i } ( 道@{ i } A x x ) ( 結合する_道 A x y_ x p_ ( 反転する_道 A x y_ p_ ) ) ( 恒等道_道 A x )
-        with
-            構築子_道 _ _ => 恒等道_道 ( 道@{ i } A x x ) ( 恒等道_道 A x )
-        end
-.
-
-Definition A_2024_02_06_0000@{ i | } ( A : Type@{ i } ) ( x : A ) ( y : A ) ( p : 道@{ i } A x y )
-    : 道@{ i } ( 道@{ i } A x y ) ( 関数を適用する_道 A A ( 恒等関数_関数 A ) x y p ) p
-    :=
-        match
-            p
-        as
-            p_
-        in
-            道 _ _ y_
-        return
-            道@{ i } ( 道@{ i } A x y_ ) ( 関数を適用する_道 A A ( 恒等関数_関数 A ) x y_ p_ ) p_
-        with
-            構築子_道 _ _ => 恒等道_道 ( 道@{ i } A x x ) ( 恒等道_道 A x )
-        end
-.
-
-Definition A_2024_02_06_0001@{ i | }
-        ( A : Type@{ i } )
-        ( B : Type@{ i } )
-        ( C : Type@{ i } )
-        ( f : B -> C )
-        ( g : A -> B )
-        ( x : A )
-        ( y : A )
-        ( p : 道@{ i } A x y )
-    :
-        道@{ i }
-            ( 道@{ i } C ( f ( g x ) ) ( f ( g y ) ) )
-            ( 関数を適用する_道 A C ( 合成する_関数 A B C f g ) x y p )
-            ( 関数を適用する_道 B C f ( g x ) ( g y ) ( 関数を適用する_道 A B g x y p ) )
-    :=
-        match
-            p
-        as
-            p_
-        in
-            道 _ _ y_
-        return
-            道@{ i }
-                ( 道@{ i } C ( f ( g x ) ) ( f ( g y_ ) ) )
-                ( 関数を適用する_道 A C ( 合成する_関数 A B C f g ) x y_ p_ )
-                ( 関数を適用する_道 B C f ( g x ) ( g y_ ) ( 関数を適用する_道 A B g x y_ p_ ) )
-        with
-            構築子_道 _ _ => 恒等道_道 ( 道@{ i } C ( f ( g x ) ) ( f ( g x ) ) ) ( 恒等道_道 C ( f ( g x ) ) )
-        end
-.
-
-Definition A_2024_02_06_0002@{ i | } ( A : Type@{ i } ) ( B : Type@{ i } ) ( f : A -> B ) ( x : A )
-    : 道@{ i } ( 道@{ i } B ( f x ) ( f x ) ) ( 関数を適用する_道 A B f x x ( 恒等道_道 A x ) ) ( 恒等道_道 B ( f x ) )
-    := 恒等道_道 ( 道@{ i } B ( f x ) ( f x ) ) ( 恒等道_道 B ( f x ) )
-.
-
-Definition A_2024_02_06_0003@{ i | }
-        ( A : Type@{ i } )
-        ( B : Type@{ i } )
-        ( f : A -> B )
-        ( x : A )
-        ( y : A )
-        ( z : A )
-        ( p : 道@{ i } A x y )
-        ( q : 道@{ i } A y z )
-    :
-        道@{ i }
-            ( 道@{ i } B ( f x ) ( f z ) )
-            ( 関数を適用する_道 A B f x z ( 結合する_道 A x y z p q ) )
-            ( 結合する_道 B ( f x ) ( f y ) ( f z ) ( 関数を適用する_道 A B f x y p ) ( 関数を適用する_道 A B f y z q ) )
-.
-Proof.
-    refine
-        (
-            match
-                q
-            as
-                q_
-            in
-                道 _ _ z_
-            return
-                道@{ i }
-                    ( 道@{ i } B ( f x ) ( f z_ ) )
-                    ( 関数を適用する_道 A B f x z_ ( 結合する_道 A x y z_ p q_ ) )
-                    (
-                        結合する_道
-                            B
-                            ( f x )
-                            ( f y )
-                            ( f z_ )
-                            ( 関数を適用する_道 A B f x y p )
-                            ( 関数を適用する_道 A B f y z_ q_ )
-                    )
-            with
-                構築子_道 _ _ => _
-            end
+                ( fun p_ : 片端自由道@{ i } A x => 道@{ i } ( 片端自由道@{ i } A x ) ( 恒等道@{ i } A x ) p_ )
+                ( fun p_端点 : A => fun p_中身 : 道@{ i } A x p_端点 => _ )
         )
     .
     refine
         (
-            match
-                p
-            as
-                p_
-            in
-                道 _ _ y_
-            return
-                道@{ i }
-                    ( 道@{ i } B ( f x ) ( f y_ ) )
-                    ( 関数を適用する_道 A B f x y_ ( 結合する_道 A x y_ y_ p_ ( 恒等道_道 A y_ ) ) )
-                    (
-                        結合する_道
-                            B
-                            ( f x )
-                            ( f y_ )
-                            ( f y_ )
-                            ( 関数を適用する_道 A B f x y_ p_ )
-                            ( 関数を適用する_道 A B f y_ y_ ( 恒等道_道 A y_ ) )
-                    )
-            with
-                構築子_道 _ _ => _
-            end
-        )
-    .
-    change
-        (
-            道@{ i }
-                ( 道@{ i } B ( f x ) ( f x ) )
-                ( 関数を適用する_道 A B f x x ( 結合する_道 A x x x ( 恒等道_道 A x ) ( 恒等道_道 A x ) ) )
+            道.依存型の場合分け@{ i }
+                A
+                x
+                p_端点
+                p_中身
                 (
-                    結合する_道
-                        B
-                        ( f x )
-                        ( f x )
-                        ( f x )
-                        ( 関数を適用する_道 A B f x x ( 恒等道_道 A x ) )
-                        ( 関数を適用する_道 A B f x x ( 恒等道_道 A x ) )
+                    fun x_ : A =>
+                    fun p_端点_ : A =>
+                    fun p_中身_ : 道@{ i } A x_ p_端点_ =>
+                    道@{ i } ( 片端自由道@{ i } A x_ ) ( 恒等道@{ i } A x_ ) ( 片端自由道.構築子@{ i } A x_ p_端点_ p_中身_ )
                 )
+                ( fun y : A => _ )
         )
     .
-    change ( 道@{ i } ( 道@{ i } B ( f x ) ( f x ) ) ( 恒等道_道 B ( f x ) ) ( 恒等道_道 B ( f x ) ) ).
-    exact ( 恒等道_道 ( 道@{ i } B ( f x ) ( f x ) ) ( 恒等道_道 B ( f x ) ) ).
-Defined.
+    exact ( 道.恒等道@{ i } ( 片端自由道@{ i } A y ) ( 恒等道@{ i } A y ) ) .
+Defined .
 
-Definition A_2024_02_06_0004@{ i | }
-        ( A : Type@{ i } )
-        ( B : Type@{ i } )
-        ( f : A -> B )
-        ( x : A )
-        ( y : A )
-        ( p : 道@{ i } A x y )
+End A_2024_09_11_0000 .
+
+(** ** 自然数に関する定理 *)
+
+(** 自然数に関する定理についてのモジュールを定義します。 *)
+
+Module A_2024_09_11_0003 .
+
+(** << A_2024_08_30_0006 >> を取り込みます。 *)
+
+Import A_2024_08_30_0006 .
+
+(** << A_2024_09_08_0000 >> を取り込みます。 *)
+
+Import A_2024_09_08_0000 .
+
+(** ゼロとゼロを足した数はゼロに等しくなります。 *)
+
+Definition A_2024_07_28_0000@{ i | } : 道@{ i } 自然数@{ i } ( 足す@{ i } ゼロ@{ i } ゼロ@{ i } ) ゼロ@{ i } .
+Proof .
+    exact ( 恒等道@{ i } 自然数@{ i } ゼロ@{ i } ) .
+Defined .
+
+(** ゼロと [x] の後者を足した数は [x] の後者に等しくなります。 *)
+
+Definition A_2024_07_28_0001@{ i | }
+    : forall x : 自然数@{ i } , 道@{ i } 自然数@{ i } ( 足す@{ i } ゼロ@{ i } ( 後者関数@{ i } x ) ) ( 後者関数@{ i } x )
+.
+Proof .
+    refine ( fun x : 自然数@{ i } => _ ) .
+    exact ( 恒等道@{ i } 自然数@{ i } ( 後者関数@{ i } x ) ) .
+Defined .
+
+(** [x] の後者とゼロを足した数は [x] の後者に等しくなります。 *)
+
+Definition A_2024_07_28_0002@{ i | }
+    : forall x : 自然数@{ i } , 道@{ i } 自然数@{ i } ( 足す@{ i } ( 後者関数@{ i } x ) ゼロ@{ i } ) ( 後者関数@{ i } x )
+.
+Proof .
+    refine ( fun x : 自然数@{ i } => _ ) .
+    exact ( 恒等道@{ i } 自然数@{ i } ( 後者関数@{ i } x ) ) .
+Defined .
+
+(** [x] の後者と [y] の後者を足した数は [x] と [y] を足した数の後者の後者に等しくなります。 *)
+
+Definition A_2024_07_28_0003@{ i | }
     :
-        道@{ i }
-            ( 道@{ i } B ( f y ) ( f x ) )
-            ( 関数を適用する_道 A B f y x ( 反転する_道 A x y p ) )
-            ( 反転する_道 B ( f x ) ( f y ) ( 関数を適用する_道 A B f x y p ) )
-    :=
-        match
-            p
-        as
-            p_
-        in
-            道 _ _ y_
-        return
-            道@{ i }
-                ( 道@{ i } B ( f y_ ) ( f x ) )
-                ( 関数を適用する_道 A B f y_ x ( 反転する_道 A x y_ p_ ) )
-                ( 反転する_道 B ( f x ) ( f y_ ) ( 関数を適用する_道 A B f x y_ p_ ) )
-        with
-            構築子_道 _ _ => 恒等道_道 ( 道@{ i } B ( f x ) ( f x ) ) ( 恒等道_道 B ( f x ) )
-        end
-.
-
-(** 基点付き道を定義します。 *)
-
-Definition 基点付き道@{ i | } ( A : Type@{ i } ) ( x : A ) : Type@{ i }
-    := 依存直和@{ i } A ( fun y : A => 道@{ i } A x y )
-.
-
-Definition 基点付き恒等道_基点付き道@{ i | } ( A : Type@{ i } ) ( x : A ) : 基点付き道@{ i } A x
-    := 構築する_依存直和 A ( fun y : A => 道@{ i } A x y ) x ( 恒等道_道 A x )
-.
-
-Definition A_2024_01_30_0000@{ i | } ( A : Type@{ i } ) ( x : A ) ( p : 基点付き道@{ i } A x )
-    : 道@{ i } ( 基点付き道@{ i } A x ) ( 基点付き恒等道_基点付き道 A x ) p
-.
-Proof.
-    refine
-        (
-            match
-                p
-            as
-                p_
-            return
-                道@{ i } ( 基点付き道@{ i } A x ) ( 基点付き恒等道_基点付き道 A x ) p_
-            with
-                構築子_依存直和 _ _ y p => _
-            end
-        )
-    .
-    refine
-        (
-            match
-                p
-            as
-                p_
-            in
-                道 _ _ y_
-            return
-                道@{ i }
-                    ( 基点付き道@{ i } A x )
-                    ( 基点付き恒等道_基点付き道 A x )
-                    ( 構築する_依存直和 A ( fun y : A => 道@{ i } A x y ) y_ p_ )
-            with
-                構築子_道 _ _ => _
-            end
-        )
-    .
-    change
-        (
-            道@{ i }
-                ( 基点付き道@{ i } A x )
-                ( 基点付き恒等道_基点付き道 A x )
-                ( 構築する_依存直和 A ( fun y : A => 道@{ i } A x y ) x ( 恒等道_道 A x ) )
-        )
-    .
-    change ( 道@{ i } ( 基点付き道@{ i } A x ) ( 基点付き恒等道_基点付き道 A x ) ( 基点付き恒等道_基点付き道 A x ) ).
-    exact ( 恒等道_道 ( 基点付き道@{ i } A x ) ( 基点付き恒等道_基点付き道 A x ) ).
-Defined.
-
-(** 自然数の定理を証明します。 *)
-
-Definition A_2024_01_24_0000@{ i | } : 道@{ i } 自然数@{ i } ( 後者を計算する_自然数 八_自然数 ) 九_自然数
-    := 恒等道_道 _ _
-.
-
-Definition A_2024_01_24_0001@{ i | } : 道@{ i } 自然数@{ i } ( 足す_自然数 三_自然数 二_自然数 ) 五_自然数
-    := 恒等道_道 _ _
-.
-
-Definition A_2024_01_24_0002@{ i | } : 道@{ i } 自然数@{ i } ( 掛ける_自然数 三_自然数 三_自然数 ) 九_自然数
-    := 恒等道_道 _ _
-.
-
-Definition A_2024_01_24_0003@{ i | } : 道@{ i } 自然数@{ i } ( 冪乗を計算する_自然数 二_自然数 三_自然数 ) 八_自然数
-    := 恒等道_道 _ _
-.
-
-Definition A_2024_01_24_0004@{ i | } : 道@{ i } 自然数@{ i } ( 最小値を計算する_自然数 八_自然数 七_自然数 ) 七_自然数
-    := 恒等道_道 _ _
-.
-
-Definition A_2024_01_24_0005@{ i | } : 道@{ i } 自然数@{ i } ( 最大値を計算する_自然数 五_自然数 六_自然数 ) 六_自然数
-    := 恒等道_道 _ _
-.
-
-Definition A_2024_01_24_0006@{ i | } : 道@{ i } 自然数@{ i } ( 三角数を計算する_自然数 四_自然数 ) 十_自然数
-    := 恒等道_道 _ _
-.
-
-Definition A_2024_01_24_0007@{ i | }
-    : 道@{ i } 自然数@{ i } ( 階乗を計算する_自然数 四_自然数 ) ( 掛ける_自然数 六_自然数 四_自然数 )
-    := 恒等道_道 _ _
-.
-
-Definition A_2024_01_24_0008@{ i | }
-    : 道@{ i } 自然数@{ i } ( 二項係数を計算する_自然数 八_自然数 四_自然数 ) ( 掛ける_自然数 十_自然数 七_自然数 )
-    := 恒等道_道 _ _
-.
-
-Definition A_2024_01_24_0009@{ i | }
-    : 道@{ i } 自然数@{ i } ( フィボナッチ数を計算する_自然数 八_自然数 ) ( 掛ける_自然数 七_自然数 三_自然数 )
-    := 恒等道_道 _ _
-.
-
-Definition A_2024_01_29_0000@{ i | } : 道@{ i } 自然数@{ i } ( 足す_自然数 零_自然数 零_自然数 ) 零_自然数
-    := 恒等道_道 _ _
-.
-
-Definition A_2024_01_29_0001@{ i | } ( m : 自然数@{ i } )
-    : 道@{ i } 自然数@{ i } ( 足す_自然数 ( 後者を計算する_自然数 m ) 零_自然数 ) ( 後者を計算する_自然数 m )
-    := 恒等道_道 _ _
-.
-
-Definition A_2024_01_29_0002@{ i | } ( n : 自然数@{ i } )
-    : 道@{ i } 自然数@{ i } ( 足す_自然数 零_自然数 ( 後者を計算する_自然数 n ) ) ( 後者を計算する_自然数 n )
-    := 恒等道_道 _ _
-.
-
-Definition A_2024_01_29_0003@{ i | } ( m : 自然数@{ i } ) ( n : 自然数@{ i } )
-    :
+        forall x : 自然数@{ i } ,
+        forall y : 自然数@{ i } ,
         道@{ i }
             自然数@{ i }
-            ( 足す_自然数 ( 後者を計算する_自然数 m ) ( 後者を計算する_自然数 n ) )
-            ( 後者を計算する_自然数 ( 後者を計算する_自然数 ( 足す_自然数 m n ) ) )
-    := 恒等道_道 _ _
+            ( 足す@{ i } ( 後者関数@{ i } x ) ( 後者関数@{ i } y ) )
+            ( 後者関数@{ i } ( 後者関数@{ i } ( 足す@{ i } x y ) ) )
 .
+Proof .
+    refine ( fun x : 自然数@{ i } => _ ) .
+    refine ( fun y : 自然数@{ i } => _ ) .
+    exact ( 恒等道@{ i } 自然数@{ i } ( 後者関数@{ i } ( 後者関数@{ i } ( 足す@{ i } x y ) ) ) ) .
+Defined .
 
-Definition A_2024_01_25_0000@{ i | } ( m : 自然数@{ i } ) : 道@{ i } 自然数@{ i } ( 足す_自然数 m 零_自然数 ) m
-    :=
-        match
-            m
-        as
-            m_
-        return
-            道 自然数@{ i } ( 足す_自然数 m_ 零_自然数 ) m_
-        with
-            零_構築子_自然数 => 恒等道_道 自然数@{ i } 零_自然数
-            |
-            後者_構築子_自然数 m_p => 恒等道_道 自然数@{ i } ( 後者を計算する_自然数 m_p )
-        end
-.
+(** ゼロと [x] を足した数は [x] に等しくなります。 *)
 
-Definition A_2024_01_25_0001@{ i | } ( n : 自然数@{ i } ) : 道@{ i } 自然数@{ i } ( 足す_自然数 零_自然数 n ) n
-    :=
-        match
-            n
-        as
-            n_
-        return
-            道 自然数@{ i } ( 足す_自然数 零_自然数 n_ ) n_
-        with
-            零_構築子_自然数 => 恒等道_道 自然数@{ i } 零_自然数
-            |
-            後者_構築子_自然数 n_p => 恒等道_道 自然数@{ i } ( 後者を計算する_自然数 n_p )
-        end
-.
-
-Definition A_2024_01_25_0002@{ i | } ( m : 自然数@{ i } ) ( n : 自然数@{ i } )
-    : 道@{ i } 自然数@{ i } ( 足す_自然数 m ( 後者を計算する_自然数 n ) ) ( 後者を計算する_自然数 ( 足す_自然数 m n ) )
-.
-Proof.
-    refine ( let a := _ in a m n ).
+Definition A_2024_07_28_0004@{ i | } : forall x : 自然数@{ i } , 道@{ i } 自然数@{ i } ( 足す@{ i } ゼロ@{ i } x ) x .
+Proof .
+    refine ( fun x : 自然数@{ i } => _ ) .
     refine
         (
-            fix a ( m : 自然数@{ i } ) ( n : 自然数@{ i } ) { struct m }
-                :
-                    道@{ i }
-                        自然数@{ i }
-                        ( 足す_自然数 m ( 後者を計算する_自然数 n ) )
-                        ( 後者を計算する_自然数 ( 足す_自然数 m n ) )
-                := _
-        )
-    .
-    refine
-        (
-            match
-                m
-            as
-                m_
-            return
-                道@{ i }
-                    自然数@{ i }
-                    ( 足す_自然数 m_ ( 後者を計算する_自然数 n ) )
-                    ( 後者を計算する_自然数 ( 足す_自然数 m_ n ) )
-            with
-                零_構築子_自然数 => _ | 後者_構築子_自然数 m_p => _
-            end
+            自然数.依存型の場合分け@{ i }
+                x
+                ( fun x_ : 自然数@{ i } => 道@{ i } 自然数@{ i } ( 足す@{ i } ゼロ@{ i } x_ ) x_ )
+                _
+                ( fun x_前 : 自然数@{ i } => _ )
         )
     .
     {
+        exact ( 恒等道@{ i } 自然数@{ i } ゼロ@{ i } ) .
+    }
+    {
+        exact ( 恒等道@{ i } 自然数@{ i } ( 後者関数@{ i } x_前 ) ) .
+    }
+Defined .
+
+(** [x] とゼロを足した数は [x] に等しくなります。 *)
+
+Definition A_2024_07_28_0005@{ i | } : forall x : 自然数@{ i } , 道@{ i } 自然数@{ i } ( 足す@{ i } x ゼロ@{ i } ) x .
+Proof .
+    refine ( fun x : 自然数@{ i } => _ ) .
+    refine
+        (
+            自然数.依存型の場合分け@{ i }
+                x
+                ( fun x_ : 自然数@{ i } => 道@{ i } 自然数@{ i } ( 足す@{ i } x_ ゼロ@{ i } ) x_ )
+                _
+                ( fun x_前 : 自然数@{ i } => _ )
+        )
+    .
+    {
+        exact ( 恒等道@{ i } 自然数@{ i } ゼロ@{ i } ) .
+    }
+    {
+        exact ( 恒等道@{ i } 自然数@{ i } ( 後者関数@{ i } x_前 ) ) .
+    }
+Defined .
+
+(** [x] と [y] の後者を足した数は [x] と [y] を足した数の後者に等しくなります。 *)
+
+Definition A_2024_08_01_0000@{ i | }
+    :
+        forall x : 自然数@{ i } ,
+        forall y : 自然数@{ i } ,
+        道@{ i } 自然数@{ i } ( 足す@{ i } x ( 後者関数@{ i } y ) ) ( 後者関数@{ i } ( 足す@{ i } x y ) )
+.
+Proof .
+    refine ( fun x : 自然数@{ i } => _ ) .
+    refine
+        (
+            自然数.依存型の再帰@{ i }
+                x
+                (
+                    fun x_ : 自然数@{ i } =>
+                    forall y : 自然数@{ i } ,
+                    道@{ i } 自然数@{ i } ( 足す@{ i } x_ ( 後者関数@{ i } y ) ) ( 後者関数@{ i } ( 足す@{ i } x_ y ) )
+                )
+                _
+                (
+                    fun x_前 : 自然数@{ i } =>
+                    fun
+                        a_前
+                            :
+                                forall y : 自然数@{ i } ,
+                                道@{ i } 自然数@{ i } ( 足す@{ i } x_前 ( 後者関数@{ i } y ) ) ( 後者関数@{ i } ( 足す@{ i } x_前 y ) )
+                    =>
+                    _
+                )
+        )
+    .
+    {
+        refine ( fun y : 自然数@{ i } => _ ) .
         refine
             (
-                match
-                    n
-                as
-                    n_
-                return
-                    道@{ i }
-                        自然数@{ i }
-                        ( 足す_自然数 零_自然数 ( 後者を計算する_自然数 n_ ) )
-                        ( 後者を計算する_自然数 ( 足す_自然数 零_自然数 n_ ) )
-                with
-                    零_構築子_自然数 => _ | 後者_構築子_自然数 n_p => _
-                end
+                自然数.依存型の場合分け@{ i }
+                    y
+                    (
+                        fun y_ : 自然数@{ i } =>
+                        道@{ i }
+                            自然数@{ i }
+                            ( 足す@{ i } ゼロ@{ i } ( 後者関数@{ i } y_ ) )
+                            ( 後者関数@{ i } ( 足す@{ i } ゼロ@{ i } y_ ) )
+                    )
+                    _
+                    ( fun y_前 : 自然数@{ i } => _ )
             )
         .
         {
-            change
-                (
-                    道@{ i }
-                        自然数@{ i }
-                        ( 足す_自然数 零_自然数 ( 後者を計算する_自然数 零_自然数 ) )
-                        ( 後者を計算する_自然数 ( 足す_自然数 零_自然数 零_自然数 ) )
-                )
-            .
-            change ( 道@{ i } 自然数@{ i } ( 後者を計算する_自然数 零_自然数 ) ( 後者を計算する_自然数 零_自然数 ) ).
-            exact ( 恒等道_道 自然数@{ i } ( 後者を計算する_自然数 零_自然数 ) ).
+            exact ( 恒等道@{ i } 自然数@{ i } ( 後者関数@{ i } ゼロ@{ i } ) ) .
         }
         {
-            change
-                (
-                    道@{ i }
-                        自然数@{ i }
-                        ( 足す_自然数 零_自然数 ( 後者を計算する_自然数 ( 後者を計算する_自然数 n_p ) ) )
-                        ( 後者を計算する_自然数 ( 足す_自然数 零_自然数 ( 後者を計算する_自然数 n_p ) ) )
-                )
-            .
-            change
-                (
-                    道@{ i }
-                        自然数@{ i }
-                        ( 後者を計算する_自然数 ( 後者を計算する_自然数 n_p ) )
-                        ( 後者を計算する_自然数 ( 後者を計算する_自然数 n_p ) )
-                )
-            .
-            exact ( 恒等道_道 自然数@{ i } ( 後者を計算する_自然数 ( 後者を計算する_自然数 n_p ) ) ).
+            exact ( 恒等道@{ i } 自然数@{ i } ( 後者関数@{ i } ( 後者関数@{ i } y_前 ) ) ) .
         }
     }
     {
+        refine ( fun y : 自然数@{ i } => _ ) .
         refine
             (
-                match
-                    n
-                as
-                    n_
-                return
-                    道@{ i }
-                        自然数@{ i }
-                        ( 足す_自然数 ( 後者を計算する_自然数 m_p ) ( 後者を計算する_自然数 n_ ) )
-                        ( 後者を計算する_自然数 ( 足す_自然数 ( 後者を計算する_自然数 m_p ) n_ ) )
-                with
-                    零_構築子_自然数 => _ | 後者_構築子_自然数 n_p => _
-                end
+                自然数.依存型の場合分け@{ i }
+                    y
+                    (
+                        fun y_ : 自然数@{ i } =>
+                        道@{ i }
+                            自然数@{ i }
+                            ( 足す@{ i } ( 後者関数@{ i } x_前 ) ( 後者関数@{ i } y_ ) )
+                            ( 後者関数@{ i } ( 足す@{ i } ( 後者関数@{ i } x_前 ) y_ ) )
+                    )
+                    _
+                    ( fun y_前 : 自然数@{ i } => _ )
             )
         .
         {
-            change
-                (
-                    道@{ i }
-                        自然数@{ i }
-                        ( 足す_自然数 ( 後者を計算する_自然数 m_p ) ( 後者を計算する_自然数 零_自然数 ) )
-                        ( 後者を計算する_自然数 ( 足す_自然数 ( 後者を計算する_自然数 m_p ) 零_自然数 ) )
-                )
-            .
-            change
-                (
-                    道@{ i }
-                        自然数@{ i }
-                        ( 後者を計算する_自然数 ( 後者を計算する_自然数 ( 足す_自然数 m_p 零_自然数 ) ) )
-                        ( 後者を計算する_自然数 ( 後者を計算する_自然数 m_p ) )
-                )
-            .
-            change ( 道@{ i } 自然数@{ i } ( 二を足す_自然数 ( 足す_自然数 m_p 零_自然数 ) ) ( 二を足す_自然数 m_p ) ).
-            refine ( 関数を適用する_道 自然数@{ i } 自然数@{ i } 二を足す_自然数 ( 足す_自然数 m_p 零_自然数 ) m_p _ ).
-            exact ( A_2024_01_25_0000 m_p ).
-        }
-        {
-            change
-                (
-                    道@{ i }
-                        自然数@{ i }
-                        (
-                            足す_自然数
-                                ( 後者を計算する_自然数 m_p )
-                                ( 後者を計算する_自然数 ( 後者を計算する_自然数 n_p ) )
-                        )
-                        (
-                            後者を計算する_自然数
-                                ( 足す_自然数 ( 後者を計算する_自然数 m_p ) ( 後者を計算する_自然数 n_p ) )
-                        )
-                )
-            .
-            change
-                (
-                    道@{ i }
-                        自然数@{ i }
-                        (
-                            後者を計算する_自然数
-                                ( 後者を計算する_自然数 ( 足す_自然数 m_p ( 後者を計算する_自然数 n_p ) ) )
-                        )
-                        (
-                            後者を計算する_自然数
-                                ( 後者を計算する_自然数 ( 後者を計算する_自然数 ( 足す_自然数 m_p n_p ) ) )
-                        )
-                )
-            .
-            change
-                (
-                    道@{ i }
-                        自然数@{ i }
-                        ( 二を足す_自然数 ( 足す_自然数 m_p ( 後者を計算する_自然数 n_p ) ) )
-                        ( 二を足す_自然数 ( 後者を計算する_自然数 ( 足す_自然数 m_p n_p ) ) )
-                )
-            .
             refine
                 (
-                    関数を適用する_道
+                    結合@{ i }
                         自然数@{ i }
-                        自然数@{ i }
-                        二を足す_自然数
-                        ( 足す_自然数 m_p ( 後者を計算する_自然数 n_p ) )
-                        ( 後者を計算する_自然数 ( 足す_自然数 m_p n_p ) )
+                        ( 足す@{ i } ( 後者関数@{ i } x_前 ) ( 後者関数@{ i } ゼロ@{ i } ) )
+                        ( 後者関数@{ i } ( 足す@{ i } ( 後者関数@{ i } x_前 ) ゼロ@{ i } ) )
+                        ( 後者関数@{ i } ( 後者関数@{ i } ( 足す@{ i } x_前 ゼロ@{ i } ) ) )
+                        _
                         _
                 )
             .
-            exact ( a m_p n_p ).
-        }
-    }
-Defined.
-
-Definition A_2024_01_25_0003@{ i | } ( m : 自然数@{ i } ) ( n : 自然数@{ i } )
-    : 道@{ i } 自然数@{ i } ( 足す_自然数 ( 後者を計算する_自然数 m ) n ) ( 後者を計算する_自然数 ( 足す_自然数 m n ) )
-.
-Proof.
-    refine ( let a := _ in a m n ).
-    refine
-        (
-            fix a ( m : 自然数@{ i } ) ( n : 自然数@{ i } ) { struct m }
-                :
-                    道@{ i }
-                        自然数@{ i }
-                        ( 足す_自然数 ( 後者を計算する_自然数 m ) n )
-                        ( 後者を計算する_自然数 ( 足す_自然数 m n ) )
-                := _
-        )
-    .
-    refine
-        (
-            match
-                m
-            as
-                m_
-            return
-                道@{ i }
-                    自然数@{ i }
-                    ( 足す_自然数 ( 後者を計算する_自然数 m_ ) n )
-                    ( 後者を計算する_自然数 ( 足す_自然数 m_ n ) )
-            with
-                零_構築子_自然数 => _ | 後者_構築子_自然数 m_p => _
-            end
-        )
-    .
-    -
-        refine
-            (
-                match
-                    n
-                as
-                    n_
-                return
-                    道@{ i }
-                        自然数@{ i }
-                        ( 足す_自然数 ( 後者を計算する_自然数 零_自然数 ) n_ )
-                        ( 後者を計算する_自然数 ( 足す_自然数 零_自然数 n_ ) )
-                with
-                    零_構築子_自然数 => _ | 後者_構築子_自然数 n_p => _
-                end
-            )
-        .
-        +
-            change
-                (
-                    道@{ i }
-                        自然数@{ i }
-                        ( 足す_自然数 ( 後者を計算する_自然数 零_自然数 ) 零_自然数 )
-                        ( 後者を計算する_自然数 ( 足す_自然数 零_自然数 零_自然数 ) )
-                )
-            .
-            change ( 道@{ i } 自然数@{ i } ( 後者を計算する_自然数 零_自然数 ) ( 後者を計算する_自然数 零_自然数 ) ).
-            exact ( 恒等道_道 自然数@{ i } ( 後者を計算する_自然数 零_自然数 ) ).
-        +
-            change
-                (
-                    道@{ i }
-                        自然数@{ i }
-                        ( 足す_自然数 ( 後者を計算する_自然数 零_自然数 ) ( 後者を計算する_自然数 n_p ) )
-                        ( 後者を計算する_自然数 ( 足す_自然数 零_自然数 ( 後者を計算する_自然数 n_p ) ) )
-                )
-            .
-            change
-                (
-                    道@{ i }
-                        自然数@{ i }
-                        ( 後者を計算する_自然数 ( 後者を計算する_自然数 ( 足す_自然数 零_自然数 n_p ) ) )
-                        ( 後者を計算する_自然数 ( 後者を計算する_自然数 n_p ) )
-                )
-            .
-            change ( 道@{ i } 自然数@{ i } ( 二を足す_自然数 ( 足す_自然数 零_自然数 n_p ) ) ( 二を足す_自然数 n_p ) ).
-            refine ( 関数を適用する_道 自然数@{ i } 自然数@{ i } 二を足す_自然数 ( 足す_自然数 零_自然数 n_p ) n_p _ ).
-            exact ( A_2024_01_25_0001 n_p ).
-    -
-        refine
-            (
-                match
-                    n
-                as
-                    n_
-                return
-                    道@{ i }
-                        自然数@{ i }
-                        ( 足す_自然数 ( 後者を計算する_自然数 ( 後者を計算する_自然数 m_p ) ) n_ )
-                        ( 後者を計算する_自然数 ( 足す_自然数 ( 後者を計算する_自然数 m_p ) n_ ) )
-                with
-                    零_構築子_自然数 => _ | 後者_構築子_自然数 n_p => _
-                end
-            )
-        .
-        +
-            change
-                (
-                    道@{ i }
-                        自然数@{ i }
-                        ( 足す_自然数 ( 後者を計算する_自然数 ( 後者を計算する_自然数 m_p ) ) 零_自然数 )
-                        ( 後者を計算する_自然数 ( 足す_自然数 ( 後者を計算する_自然数 m_p ) 零_自然数 ) )
-                )
-            .
-            change
-                (
-                    道@{ i }
-                        自然数@{ i }
-                        ( 後者を計算する_自然数 ( 後者を計算する_自然数 m_p ) )
-                        ( 後者を計算する_自然数 ( 後者を計算する_自然数 m_p ) )
-                )
-            .
-            exact ( 恒等道_道 自然数@{ i } ( 後者を計算する_自然数 ( 後者を計算する_自然数 m_p ) ) ).
-        +
-            change
-                (
-                    道@{ i }
-                        自然数@{ i }
-                        (
-                            足す_自然数
-                                ( 後者を計算する_自然数 ( 後者を計算する_自然数 m_p ) )
-                                ( 後者を計算する_自然数 n_p )
-                        )
-                        (
-                            後者を計算する_自然数
-                                ( 足す_自然数 ( 後者を計算する_自然数 m_p ) ( 後者を計算する_自然数 n_p ) )
-                        )
-                )
-            .
-            change
-                (
-                    道@{ i }
-                        自然数@{ i }
-                        (
-                            後者を計算する_自然数
-                                ( 後者を計算する_自然数 ( 足す_自然数 ( 後者を計算する_自然数 m_p ) n_p ) )
-                        )
-                        (
-                            後者を計算する_自然数
-                                ( 後者を計算する_自然数 ( 後者を計算する_自然数 ( 足す_自然数 m_p n_p ) ) )
-                        )
-                )
-            .
-            change
-                (
-                    道@{ i }
-                        自然数@{ i }
-                        ( 二を足す_自然数 ( 足す_自然数 ( 後者を計算する_自然数 m_p ) n_p ) )
-                        ( 二を足す_自然数 ( 後者を計算する_自然数 ( 足す_自然数 m_p n_p ) ) )
-                )
-            .
-            refine
-                (
-                    関数を適用する_道
-                        自然数@{ i }
-                        自然数@{ i }
-                        二を足す_自然数
-                        ( 足す_自然数 ( 後者を計算する_自然数 m_p ) n_p )
-                        ( 後者を計算する_自然数 ( 足す_自然数 m_p n_p ) )
-                        _
-                )
-            .
-            exact ( a m_p n_p ).
-Defined.
-
-Definition 加算の結合法則_自然数@{ i | } ( m : 自然数@{ i } ) ( n : 自然数@{ i } ) ( o : 自然数@{ i } )
-    : 道@{ i } 自然数@{ i } ( 足す_自然数 ( 足す_自然数 m n ) o ) ( 足す_自然数 m ( 足す_自然数 n o ) )
-.
-Proof.
-    refine ( let a := _ in a m n o ).
-    refine
-        (
-            fix a ( m : 自然数@{ i } ) ( n : 自然数@{ i } ) ( o : 自然数@{ i } ) { struct m }
-                : 道@{ i } 自然数@{ i } ( 足す_自然数 ( 足す_自然数 m n ) o ) ( 足す_自然数 m ( 足す_自然数 n o ) )
-                := _
-        )
-    .
-    refine
-        (
-            match
-                m
-            as
-                m_
-            return
-                道@{ i } 自然数@{ i } ( 足す_自然数 ( 足す_自然数 m_ n ) o ) ( 足す_自然数 m_ ( 足す_自然数 n o ) )
-            with
-                零_構築子_自然数 => _ | 後者_構築子_自然数 m_p => _
-            end
-        )
-    .
-    {
-        refine
-            (
-                match
-                    n
-                as
-                    n_
-                return
-                    道@{ i }
-                        自然数@{ i }
-                        ( 足す_自然数 ( 足す_自然数 零_自然数 n_ ) o )
-                        ( 足す_自然数 零_自然数 ( 足す_自然数 n_ o ) )
-                with
-                    零_構築子_自然数 => _ | 後者_構築子_自然数 n_p => _
-                end
-            )
-        .
-        {
-            refine
-                (
-                    match
-                        o
-                    as
-                        o_
-                    return
-                        道@{ i }
-                            自然数@{ i }
-                            ( 足す_自然数 ( 足す_自然数 零_自然数 零_自然数 ) o_ )
-                            ( 足す_自然数 零_自然数 ( 足す_自然数 零_自然数 o_ ) )
-                    with
-                        零_構築子_自然数 => _ | 後者_構築子_自然数 o_p => _
-                    end
-                )
-            .
             {
-                change
-                    (
-                        道@{ i }
-                            自然数@{ i }
-                            ( 足す_自然数 ( 足す_自然数 零_自然数 零_自然数 ) 零_自然数 )
-                            ( 足す_自然数 零_自然数 ( 足す_自然数 零_自然数 零_自然数 ) )
-                    )
-                .
-                change ( 道@{ i } 自然数@{ i } 零_自然数 零_自然数 ).
-                exact ( 恒等道_道 自然数@{ i } 零_自然数 ).
+                exact ( 恒等道@{ i } 自然数 ( 後者関数@{ i } ( 後者関数@{ i } ( 足す@{ i } x_前 ゼロ@{ i } ) ) ) ) .
             }
             {
-                change
-                    (
-                        道@{ i }
-                            自然数@{ i }
-                            ( 足す_自然数 ( 足す_自然数 零_自然数 零_自然数 ) ( 後者を計算する_自然数 o_p ) )
-                            ( 足す_自然数 零_自然数 ( 足す_自然数 零_自然数 ( 後者を計算する_自然数 o_p ) ) )
-                    )
-                .
-                change ( 道@{ i } 自然数@{ i } ( 後者を計算する_自然数 o_p ) ( 後者を計算する_自然数 o_p ) ).
-                exact ( 恒等道_道 自然数@{ i } ( 後者を計算する_自然数 o_p ) ).
-            }
-        }
-        {
-            refine
-                (
-                    match
-                        o
-                    as
-                        o_
-                    return
-                        道@{ i }
-                            自然数@{ i }
-                            ( 足す_自然数 ( 足す_自然数 零_自然数 ( 後者を計算する_自然数 n_p ) ) o_ )
-                            ( 足す_自然数 零_自然数 ( 足す_自然数 ( 後者を計算する_自然数 n_p ) o_ ) )
-                    with
-                        零_構築子_自然数 => _ | 後者_構築子_自然数 o_p => _
-                    end
-                )
-            .
-            {
-                change
-                    (
-                        道@{ i }
-                            自然数@{ i }
-                            ( 足す_自然数 ( 足す_自然数 零_自然数 ( 後者を計算する_自然数 n_p ) ) 零_自然数 )
-                            ( 足す_自然数 零_自然数 ( 足す_自然数 ( 後者を計算する_自然数 n_p ) 零_自然数 ) )
-                    )
-                .
-                change ( 道@{ i } 自然数@{ i } ( 後者を計算する_自然数 n_p ) ( 後者を計算する_自然数 n_p ) ).
-                exact ( 恒等道_道 自然数@{ i } ( 後者を計算する_自然数 n_p ) ).
-            }
-            {
-                change
-                    (
-                        道@{ i }
-                            自然数@{ i }
-                            (
-                                足す_自然数
-                                    ( 足す_自然数 零_自然数 ( 後者を計算する_自然数 n_p ) )
-                                    ( 後者を計算する_自然数 o_p )
-                            )
-                            (
-                                足す_自然数
-                                    零_自然数
-                                    ( 足す_自然数 ( 後者を計算する_自然数 n_p ) ( 後者を計算する_自然数 o_p ) )
-                            )
-                    )
-                .
-                change
-                    (
-                        道@{ i }
-                            自然数@{ i }
-                            ( 後者を計算する_自然数 ( 後者を計算する_自然数 ( 足す_自然数 n_p o_p ) ) )
-                            ( 後者を計算する_自然数 ( 後者を計算する_自然数 ( 足す_自然数 n_p o_p ) ) )
-                    )
-                .
-                exact
-                    (
-                        恒等道_道
-                            自然数@{ i }
-                            ( 後者を計算する_自然数 ( 後者を計算する_自然数 ( 足す_自然数 n_p o_p ) ) )
-                    )
-                .
-            }
-        }
-    }
-    {
-        refine
-            (
-                match
-                    n
-                as
-                    n_
-                return
-                    道@{ i }
-                        自然数@{ i }
-                        ( 足す_自然数 ( 足す_自然数 ( 後者を計算する_自然数 m_p ) n_ ) o )
-                        ( 足す_自然数 ( 後者を計算する_自然数 m_p ) ( 足す_自然数 n_ o ) )
-                with
-                    零_構築子_自然数 => _ | 後者_構築子_自然数 n_p => _
-                end
-            )
-        .
-        {
-            refine
-                (
-                    match
-                        o
-                    as
-                        o_
-                    return
-                        道@{ i }
-                            自然数@{ i }
-                            ( 足す_自然数 ( 足す_自然数 ( 後者を計算する_自然数 m_p ) 零_自然数 ) o_ )
-                            ( 足す_自然数 ( 後者を計算する_自然数 m_p ) ( 足す_自然数 零_自然数 o_ ) )
-                    with
-                        零_構築子_自然数 => _ | 後者_構築子_自然数 o_p => _
-                    end
-                )
-            .
-            {
-                change
-                    (
-                        道@{ i }
-                            自然数@{ i }
-                            ( 足す_自然数 ( 足す_自然数 ( 後者を計算する_自然数 m_p ) 零_自然数 ) 零_自然数 )
-                            ( 足す_自然数 ( 後者を計算する_自然数 m_p ) ( 足す_自然数 零_自然数 零_自然数 ) )
-                    )
-                .
-                change ( 道@{ i } 自然数@{ i } ( 後者を計算する_自然数 m_p ) ( 後者を計算する_自然数 m_p ) ).
-                exact ( 恒等道_道 自然数@{ i } ( 後者を計算する_自然数 m_p ) ).
-            }
-            {
-                change
-                    (
-                        道@{ i }
-                            自然数@{ i }
-                            (
-                                足す_自然数
-                                    ( 足す_自然数 ( 後者を計算する_自然数 m_p ) 零_自然数 )
-                                    ( 後者を計算する_自然数 o_p )
-                            )
-                            (
-                                足す_自然数
-                                    ( 後者を計算する_自然数 m_p )
-                                    ( 足す_自然数 零_自然数 ( 後者を計算する_自然数 o_p ) )
-                            )
-                    )
-                .
-                change
-                    (
-                        道@{ i }
-                            自然数@{ i }
-                            ( 後者を計算する_自然数 ( 後者を計算する_自然数 ( 足す_自然数 m_p o_p ) ) )
-                            ( 後者を計算する_自然数 ( 後者を計算する_自然数 ( 足す_自然数 m_p o_p ) ) )
-                    )
-                .
-                exact
-                    (
-                        恒等道_道
-                            自然数@{ i }
-                            ( 後者を計算する_自然数 ( 後者を計算する_自然数 ( 足す_自然数 m_p o_p ) ) )
-                    )
-                .
-            }
-        }
-        {
-            refine
-                (
-                    match
-                        o
-                    as
-                        o_
-                    return
-                        道@{ i }
-                            自然数@{ i }
-                            ( 足す_自然数 ( 足す_自然数 ( 後者を計算する_自然数 m_p ) ( 後者を計算する_自然数 n_p ) ) o_ )
-                            ( 足す_自然数 ( 後者を計算する_自然数 m_p ) ( 足す_自然数 ( 後者を計算する_自然数 n_p ) o_ ) )
-                    with
-                        零_構築子_自然数 => _ | 後者_構築子_自然数 o_p => _
-                    end
-                )
-            .
-            {
-                change
-                    (
-                        道@{ i }
-                            自然数@{ i }
-                            (
-                                足す_自然数
-                                    ( 足す_自然数 ( 後者を計算する_自然数 m_p ) ( 後者を計算する_自然数 n_p ) )
-                                    零_自然数
-                            )
-                            (
-                                足す_自然数
-                                    ( 後者を計算する_自然数 m_p )
-                                    ( 足す_自然数 ( 後者を計算する_自然数 n_p ) 零_自然数 )
-                            )
-                    )
-                .
-                change
-                    (
-                        道@{ i }
-                            自然数@{ i }
-                            ( 後者を計算する_自然数 ( 後者を計算する_自然数 ( 足す_自然数 m_p n_p ) ) )
-                            ( 後者を計算する_自然数 ( 後者を計算する_自然数 ( 足す_自然数 m_p n_p ) ) )
-                    )
-                .
-                exact
-                    (
-                        恒等道_道
-                            自然数@{ i }
-                            ( 後者を計算する_自然数 ( 後者を計算する_自然数 ( 足す_自然数 m_p n_p ) ) )
-                    )
-                .
-            }
-            {
-                change
-                    (
-                        道@{ i }
-                            自然数@{ i }
-                            (
-                                足す_自然数
-                                    ( 足す_自然数 ( 後者を計算する_自然数 m_p ) ( 後者を計算する_自然数 n_p ) )
-                                    ( 後者を計算する_自然数 o_p )
-                            )
-                            (
-                                足す_自然数
-                                    ( 後者を計算する_自然数 m_p )
-                                    ( 足す_自然数 ( 後者を計算する_自然数 n_p ) ( 後者を計算する_自然数 o_p ) )
-                            )
-                    )
-                .
-                change
-                    (
-                        道@{ i }
-                            自然数@{ i }
-                            (
-                                後者を計算する_自然数
-                                    (
-                                        後者を計算する_自然数
-                                            ( 足す_自然数 ( 後者を計算する_自然数 ( 足す_自然数 m_p n_p ) ) o_p )
-                                    )
-                            )
-                            (
-                                後者を計算する_自然数
-                                    (
-                                        後者を計算する_自然数
-                                            ( 足す_自然数 m_p ( 後者を計算する_自然数 ( 足す_自然数 n_p o_p ) ) )
-                                    )
-                            )
-                    )
-                .
-                change
-                    (
-                        道@{ i }
-                            自然数@{ i }
-                            ( 二を足す_自然数 ( 足す_自然数 ( 後者を計算する_自然数 ( 足す_自然数 m_p n_p ) ) o_p ) )
-                            ( 二を足す_自然数 ( 足す_自然数 m_p ( 後者を計算する_自然数 ( 足す_自然数 n_p o_p ) ) ) )
-                    )
-                .
                 refine
                     (
-                        関数を適用する_道
+                        結合@{ i }
                             自然数@{ i }
-                            自然数@{ i }
-                            二を足す_自然数
-                            ( 足す_自然数 ( 後者を計算する_自然数 ( 足す_自然数 m_p n_p ) ) o_p )
-                            ( 足す_自然数 m_p ( 後者を計算する_自然数 ( 足す_自然数 n_p o_p ) ) )
-                            _
-                    )
-                .
-                refine
-                    (
-                        結合する_道
-                            自然数@{ i }
-                            ( 足す_自然数 ( 後者を計算する_自然数 ( 足す_自然数 m_p n_p ) ) o_p )
-                            ( 後者を計算する_自然数 ( 足す_自然数 ( 足す_自然数 m_p n_p ) o_p ) )
-                            ( 足す_自然数 m_p ( 後者を計算する_自然数 ( 足す_自然数 n_p o_p ) ) )
+                            ( 後者関数@{ i } ( 後者関数@{ i } ( 足す@{ i } x_前 ゼロ@{ i } ) ) )
+                            ( 後者関数@{ i } ( 足す@{ i } ( 後者関数@{ i } x_前 ) ゼロ@{ i } ) )
+                            ( 後者関数@{ i } ( 後者関数@{ i } x_前 ) )
                             _
                             _
                     )
                 .
                 {
-                    exact ( A_2024_01_25_0003 ( 足す_自然数 m_p n_p ) o_p ).
+                    refine
+                        (
+                            適用@{ i }
+                                自然数@{ i }
+                                自然数@{ i }
+                                ( fun z : 自然数@{ i } => 後者関数@{ i } ( 後者関数@{ i } z ) )
+                                ( 足す@{ i } x_前 ゼロ@{ i } )
+                                x_前
+                                _
+                        )
+                    .
+                    exact ( A_2024_07_28_0005@{ i } x_前 ) .
+                }
+                {
+                    exact ( 恒等道@{ i } 自然数@{ i } ( 後者関数@{ i } ( 後者関数@{ i } x_前 ) ) ) .
+                }
+            }
+        }
+        {
+            refine
+                (
+                    結合@{ i }
+                        自然数@{ i }
+                        ( 足す@{ i } ( 後者関数@{ i } x_前 ) ( 後者関数@{ i } ( 後者関数@{ i } y_前 ) ) )
+                        ( 後者関数@{ i } ( 足す@{ i } ( 後者関数@{ i } x_前 ) ( 後者関数@{ i } y_前 ) ) )
+                        ( 後者関数@{ i } ( 後者関数@{ i } ( 足す@{ i } x_前 ( 後者関数@{ i } y_前 ) ) ) )
+                        _
+                        _
+                )
+            .
+            {
+                exact
+                    (
+                        恒等道@{ i }
+                            自然数@{ i }
+                            ( ( 後者関数@{ i } ( 後者関数@{ i } ( 足す@{ i } x_前 ( 後者関数@{ i } y_前 ) ) ) ) )
+                    )
+                .
+            }
+            {
+                refine
+                    (
+                        結合@{ i }
+                            自然数@{ i }
+                            ( 後者関数@{ i } ( 後者関数@{ i } ( 足す@{ i } x_前 ( 後者関数@{ i } y_前 ) ) ) )
+                            ( 後者関数@{ i } ( 足す@{ i } ( 後者関数@{ i } x_前 ) ( 後者関数@{ i } y_前 ) ) )
+                            ( 後者関数@{ i } ( 後者関数@{ i } ( 後者関数@{ i } ( 足す@{ i } x_前 y_前 ) ) ) )
+                            _
+                            _
+                    )
+                .
+                {
+                    refine
+                        (
+                            適用@{ i }
+                                自然数@{ i }
+                                自然数@{ i }
+                                ( fun z : 自然数@{ i } => 後者関数@{ i } ( 後者関数@{ i } z ) )
+                                ( 足す@{ i } x_前 ( 後者関数@{ i } y_前 ) )
+                                ( 後者関数@{ i } ( 足す@{ i } x_前 y_前 ) )
+                                _
+                        )
+                    .
+                    exact ( a_前 y_前 ) .
+                }
+                {
+                    exact
+                        (
+                            恒等道@{ i }
+                                自然数@{ i }
+                                ( 後者関数@{ i } ( 後者関数@{ i } ( 後者関数@{ i } ( 足す@{ i } x_前 y_前 ) ) ) )
+                        )
+                    .
+                }
+            }
+        }
+    }
+Defined .
+
+(** [x] の後者と [y] を足した数は [x] と [y] を足した数の後者に等しくなります。 *)
+
+Definition A_2024_07_28_0006@{ i | }
+    :
+        forall x : 自然数@{ i } ,
+        forall y : 自然数@{ i } ,
+        道@{ i } 自然数@{ i } ( 足す@{ i } ( 後者関数@{ i } x ) y ) ( 後者関数@{ i } ( 足す@{ i } x y ) )
+.
+Proof .
+    refine ( fun x : 自然数@{ i } => _ ) .
+    refine
+        (
+            自然数.依存型の再帰@{ i }
+                x
+                (
+                    fun x_ : 自然数@{ i } =>
+                    forall y : 自然数@{ i } ,
+                    道@{ i } 自然数@{ i } ( 足す@{ i } ( 後者関数@{ i } x_ ) y ) ( 後者関数@{ i } ( 足す@{ i } x_ y ) )
+                )
+                _
+                (
+                    fun x_前 : 自然数@{ i } =>
+                    fun
+                        a_前
+                            :
+                                forall y : 自然数@{ i } ,
+                                道@{ i } 自然数@{ i } ( 足す@{ i } ( 後者関数@{ i } x_前 ) y ) ( 後者関数@{ i } ( 足す@{ i } x_前 y ) )
+                    =>
+                        _
+                )
+        )
+    .
+    {
+        refine ( fun y : 自然数@{ i } => _ ) .
+        refine
+            (
+                自然数.依存型の場合分け@{ i }
+                    y
+                    (
+                        fun y_ : 自然数@{ i } =>
+                        道@{ i }
+                            自然数@{ i }
+                            ( 足す@{ i } ( 後者関数@{ i } ゼロ@{ i } ) y_ )
+                            ( 後者関数@{ i } ( 足す@{ i } ゼロ@{ i } y_ ) )
+                    )
+                    _
+                    ( fun y_前 : 自然数@{ i } => _ )
+            )
+        .
+        {
+            exact ( 恒等道@{ i } 自然数@{ i } ( 後者関数@{ i } ゼロ@{ i } ) ) .
+        }
+        {
+            refine
+                (
+                    結合@{ i }
+                        自然数@{ i }
+                        ( 足す@{ i } ( 後者関数@{ i } ゼロ@{ i } ) ( 後者関数@{ i } y_前 ) )
+                        ( 後者関数@{ i } ( 足す@{ i } ゼロ@{ i } ( 後者関数@{ i } y_前 ) ) )
+                        ( 後者関数@{ i } ( 後者関数@{ i } ( 足す@{ i } ゼロ@{ i } y_前 ) ) )
+                        _
+                        _
+                )
+            .
+            {
+                exact ( 恒等道@{ i } 自然数@{ i } ( 後者関数@{ i } ( 後者関数@{ i } ( 足す@{ i } ゼロ@{ i } y_前 ) ) ) ) .
+            }
+            {
+                refine
+                    (
+                        結合@{ i }
+                            自然数@{ i }
+                            ( 後者関数@{ i } ( 後者関数@{ i } ( 足す@{ i } ゼロ@{ i } y_前 ) ) )
+                            ( 後者関数@{ i } ( 足す@{ i } ゼロ@{ i } ( 後者関数@{ i } y_前 ) ) )
+                            ( 後者関数@{ i } ( 後者関数@{ i } y_前 ) )
+                            _
+                            _
+                    )
+                .
+                {
+                    refine
+                        (
+                            適用@{ i }
+                                自然数@{ i }
+                                自然数@{ i }
+                                ( fun z : 自然数@{ i } => 後者関数@{ i } ( 後者関数@{ i } z ) )
+                                ( 足す@{ i } ゼロ@{ i } y_前 )
+                                y_前
+                                _
+                        )
+                    .
+                    exact ( A_2024_07_28_0004@{ i } y_前 ) .
+                }
+                {
+                    exact ( 恒等道@{ i } 自然数@{ i } ( 後者関数@{ i } ( 後者関数@{ i } y_前 ) ) ) .
+                }
+            }
+        }
+    }
+    {
+        refine ( fun y : 自然数@{ i } => _ ) .
+        refine
+            (
+                自然数.依存型の場合分け@{ i }
+                    y
+                    (
+                        fun y_ : 自然数@{ i } =>
+                        道@{ i }
+                            自然数@{ i }
+                            ( 足す@{ i } ( 後者関数@{ i } ( 後者関数@{ i } x_前 ) ) y_ )
+                            ( 後者関数@{ i } ( 足す@{ i } ( 後者関数@{ i } x_前 ) y_ ) )
+                    )
+                    _
+                    ( fun y_前 : 自然数@{ i } => _ )
+            )
+        .
+        {
+            exact ( 恒等道@{ i } 自然数@{ i } ( 後者関数@{ i } ( 後者関数@{ i } x_前 ) ) ) .
+        }
+        {
+            refine
+                (
+                    結合@{ i }
+                        自然数@{ i }
+                        ( 足す@{ i } ( 後者関数@{ i } ( 後者関数@{ i } x_前 ) ) ( 後者関数@{ i } y_前 ) )
+                        ( 後者関数@{ i } ( 足す@{ i } ( 後者関数@{ i } x_前 ) ( 後者関数@{ i } y_前 ) ) )
+                        ( 後者関数@{ i } ( 後者関数@{ i } ( 足す@{ i } ( 後者関数@{ i } x_前 ) y_前 ) ) )
+                        _
+                        _
+                )
+            .
+            {
+                exact ( 恒等道@{ i } 自然数@{ i } ( 後者関数@{ i } ( 後者関数@{ i } ( 足す@{ i } ( 後者関数@{ i } x_前 ) y_前 ) ) ) ) .
+            }
+            {
+                refine
+                    (
+                        結合@{ i }
+                            自然数@{ i }
+                            ( 後者関数@{ i } ( 後者関数@{ i } ( 足す@{ i } ( 後者関数@{ i } x_前 ) y_前 ) ) )
+                            ( 後者関数@{ i } ( 足す@{ i } ( 後者関数@{ i } x_前 ) ( 後者関数@{ i } y_前 ) ) )
+                            ( 後者関数@{ i } ( 後者関数@{ i } ( 後者関数@{ i } ( 足す@{ i } x_前 y_前 ) ) ) )
+                            _
+                            _
+                    )
+                .
+                {
+                    refine
+                        (
+                            適用@{ i }
+                                自然数@{ i }
+                                自然数@{ i }
+                                ( fun z : 自然数@{ i } => 後者関数@{ i } ( 後者関数@{ i } z ) )
+                                ( 足す@{ i } ( 後者関数@{ i } x_前 ) y_前 )
+                                ( 後者関数@{ i } ( 足す@{ i } x_前 y_前 ) )
+                                _
+                        )
+                    .
+                    exact ( a_前 y_前 ) .
+                }
+                {
+                    exact
+                        (
+                            恒等道@{ i }
+                                自然数@{ i }
+                                ( 後者関数@{ i } ( 後者関数@{ i } ( 後者関数@{ i } ( 足す@{ i } x_前 y_前 ) ) ) )
+                        )
+                    .
+                }
+            }
+        }
+    }
+Defined .
+
+(** [m] と [n] を足した数と [o] を足した数は [m] と [n] と [o] を足した数を足した数に等しくなります。 *)
+
+Definition A_2024_08_26_0000@{ i | }
+    :
+        forall m : 自然数@{ i } ,
+        forall n : 自然数@{ i } ,
+        forall o : 自然数@{ i } ,
+        道@{ i } 自然数@{ i } ( 足す@{ i } ( 足す@{ i } m n ) o ) ( 足す@{ i } m ( 足す@{ i } n o ) )
+.
+Proof .
+    refine ( fun m : 自然数@{ i } => _ ) .
+    refine
+        (
+            自然数.依存型の再帰@{ i }
+                m
+                (
+                    fun m_ : 自然数@{ i } =>
+                    forall n : 自然数@{ i } ,
+                    forall o : 自然数@{ i } ,
+                    道@{ i } 自然数@{ i } ( 足す@{ i } ( 足す@{ i } m_ n ) o ) ( 足す@{ i } m_ ( 足す@{ i } n o ) )
+                )
+                _
+                (
+                    fun m_前 : 自然数@{ i } =>
+                    fun
+                        a_前
+                            :
+                                forall n : 自然数@{ i } ,
+                                forall o : 自然数@{ i } ,
+                                道@{ i } 自然数@{ i } ( 足す@{ i } ( 足す@{ i } m_前 n ) o ) ( 足す@{ i } m_前 ( 足す@{ i } n o ) )
+                    =>
+                        _
+                )
+        )
+    .
+    {
+        refine ( fun n : 自然数@{ i } => _ ) .
+        refine
+            (
+                自然数.依存型の場合分け@{ i }
+                    n
+                    (
+                        fun n_ : 自然数@{ i } =>
+                        forall o : 自然数@{ i } ,
+                        道@{ i } 自然数@{ i } ( 足す@{ i } ( 足す@{ i } ゼロ@{ i } n_ ) o ) ( 足す@{ i } ゼロ@{ i } ( 足す@{ i } n_ o ) )
+                    )
+                    _
+                    ( fun n_前 : 自然数@{ i } => _ )
+            )
+        .
+        {
+            refine ( fun o : 自然数@{ i } => _ ) .
+            refine
+                (
+                    自然数.依存型の場合分け@{ i }
+                        o
+                        (
+                            fun o_ : 自然数@{ i } =>
+                            道@{ i }
+                                自然数@{ i }
+                                ( 足す@{ i } ( 足す@{ i } ゼロ@{ i } ゼロ@{ i } ) o_ )
+                                ( 足す@{ i } ゼロ@{ i } ( 足す@{ i } ゼロ@{ i } o_ ) )
+                        )
+                        _
+                        ( fun o_前 : 自然数@{ i } => _ )
+                )
+            .
+            {
+                exact ( 恒等道@{ i } 自然数@{ i } ゼロ@{ i } ) .
+            }
+            {
+                exact ( 恒等道@{ i } 自然数@{ i } ( 後者関数@{ i } o_前 ) ) .
+            }
+        }
+        {
+            refine ( fun o : 自然数@{ i } => _ ) .
+            refine
+                (
+                    自然数.依存型の場合分け@{ i }
+                        o
+                        (
+                            fun o_ : 自然数@{ i } =>
+                            道@{ i }
+                                自然数@{ i }
+                                ( 足す@{ i } ( 足す@{ i } ゼロ@{ i } ( 後者関数@{ i } n_前 ) ) o_ )
+                                ( 足す@{ i } ゼロ@{ i } ( 足す@{ i } ( 後者関数@{ i } n_前 ) o_ ) )
+                        )
+                        _
+                        ( fun o_前 : 自然数@{ i } => _ )
+                )
+            .
+            {
+                exact ( 恒等道@{ i } 自然数@{ i } ( 後者関数@{ i } n_前 ) ) .
+            }
+            {
+                exact ( 恒等道@{ i } 自然数@{ i } ( 後者関数@{ i } ( 後者関数@{ i } ( 足す@{ i } n_前 o_前 ) ) ) ) .
+            }
+        }
+    }
+    {
+        refine ( fun n : 自然数@{ i } => _ ) .
+        refine
+            (
+                自然数.依存型の場合分け@{ i }
+                    n
+                    (
+                        fun n_ : 自然数@{ i } =>
+                        forall o : 自然数@{ i } ,
+                        道@{ i }
+                            自然数@{ i }
+                            ( 足す@{ i } ( 足す@{ i } ( 後者関数@{ i } m_前 ) n_ ) o )
+                            ( 足す@{ i } ( 後者関数@{ i } m_前 ) ( 足す@{ i } n_ o ) )
+                    )
+                    _
+                    ( fun n_前 : 自然数@{ i } => _ )
+            )
+        .
+        {
+            refine ( fun o : 自然数@{ i } => _ ) .
+            refine
+                (
+                    自然数.依存型の場合分け@{ i }
+                        o
+                        (
+                            fun o_ : 自然数@{ i } =>
+                            道@{ i }
+                                自然数@{ i }
+                                ( 足す@{ i } ( 足す@{ i } ( 後者関数@{ i } m_前 ) ゼロ@{ i } ) o_ )
+                                ( 足す@{ i } ( 後者関数@{ i } m_前 ) ( 足す@{ i } ゼロ@{ i } o_ ) )
+                        )
+                        _
+                        ( fun o_前 : 自然数@{ i } => _ )
+                )
+            .
+            {
+                exact ( 恒等道@{ i } 自然数@{ i } ( 後者関数@{ i } m_前 ) ) .
+            }
+            {
+                exact ( 恒等道@{ i } 自然数@{ i } ( 後者関数@{ i } ( 後者関数@{ i } ( 足す@{ i } m_前 o_前 ) ) ) ) .
+            }
+        }
+        {
+            refine ( fun o : 自然数@{ i } => _ ) .
+            refine
+                (
+                    自然数.依存型の場合分け@{ i }
+                        o
+                        (
+                            fun o_ : 自然数@{ i } =>
+                            道@{ i }
+                                自然数@{ i }
+                                ( 足す@{ i } ( 足す@{ i } ( 後者関数@{ i } m_前 ) ( 後者関数@{ i } n_前 ) ) o_ )
+                                ( 足す@{ i } ( 後者関数@{ i } m_前 ) ( 足す@{ i } ( 後者関数@{ i } n_前 ) o_ ) )
+                        )
+                        _
+                        ( fun o_前 : 自然数@{ i } => _ )
+                )
+            .
+            {
+                exact ( 恒等道@{ i } 自然数@{ i } ( 後者関数@{ i } ( 後者関数@{ i } ( 足す@{ i } m_前 n_前 ) ) ) ) .
+            }
+            {
+                refine
+                    (
+                        結合@{ i }
+                            自然数@{ i }
+                            ( 足す@{ i } ( 足す@{ i } ( 後者関数@{ i } m_前 ) ( 後者関数@{ i } n_前 ) ) ( 後者関数@{ i } o_前 ) )
+                            ( 足す@{ i } ( 後者関数@{ i } m_前 ) ( 足す@{ i } ( 後者関数@{ i } n_前 ) ( 後者関数@{ i } o_前 ) ) )
+                            ( 後者関数@{ i } ( 後者関数@{ i } ( 足す@{ i } ( 後者関数@{ i } ( 足す@{ i } m_前 n_前 ) ) o_前 ) ) )
+                            _
+                            _
+                    )
+                .
+                {
+                    exact
+                        (
+                            恒等道@{ i }
+                                自然数@{ i }
+                                ( 後者関数@{ i } ( 後者関数@{ i } ( 足す@{ i } ( 後者関数@{ i } ( 足す@{ i } m_前 n_前 ) ) o_前 ) ) )
+                        )
+                    .
                 }
                 {
                     refine
                         (
-                            結合する_道
+                            結合@{ i }
                                 自然数@{ i }
-                                ( 後者を計算する_自然数 ( 足す_自然数 ( 足す_自然数 m_p n_p ) o_p ) )
-                                ( 後者を計算する_自然数 ( 足す_自然数 m_p ( 足す_自然数 n_p o_p ) ) )
-                                ( 足す_自然数 m_p ( 後者を計算する_自然数 ( 足す_自然数 n_p o_p ) ) )
+                                ( 後者関数@{ i } ( 後者関数@{ i } ( 足す@{ i } ( 後者関数@{ i } ( 足す@{ i } m_前 n_前 ) ) o_前 ) ) )
+                                ( 足す@{ i } ( 後者関数@{ i } m_前 ) ( 足す@{ i } ( 後者関数@{ i } n_前 ) ( 後者関数@{ i } o_前 ) ) )
+                                ( 後者関数@{ i } ( 後者関数@{ i } ( 後者関数@{ i } ( 足す@{ i } ( 足す@{ i } m_前 n_前 ) o_前 ) ) ) )
                                 _
                                 _
                         )
@@ -2075,213 +5723,210 @@ Proof.
                     {
                         refine
                             (
-                                関数を適用する_道
+                                適用@{ i }
                                     自然数@{ i }
                                     自然数@{ i }
-                                    後者を計算する_自然数
-                                    ( 足す_自然数 ( 足す_自然数 m_p n_p ) o_p )
-                                    ( 足す_自然数 m_p ( 足す_自然数 n_p o_p ) )
+                                    ( fun z : 自然数@{ i } => 後者関数@{ i } ( 後者関数@{ i } z ) )
+                                    ( 足す@{ i } ( 後者関数@{ i } ( 足す@{ i } m_前 n_前 ) ) o_前 )
+                                    ( 後者関数@{ i } ( 足す@{ i } ( 足す@{ i } m_前 n_前 ) o_前 ) )
                                     _
                             )
                         .
-                        exact ( a m_p n_p o_p ).
+                        exact ( A_2024_07_28_0006@{ i } ( 足す@{ i } m_前 n_前 ) o_前 ) .
                     }
                     {
                         refine
                             (
-                                反転する_道
+                                結合@{ i }
                                     自然数@{ i }
-                                    ( 足す_自然数 m_p ( 後者を計算する_自然数 ( 足す_自然数 n_p o_p ) ) )
-                                    ( 後者を計算する_自然数 ( 足す_自然数 m_p ( 足す_自然数 n_p o_p ) ) )
+                                    ( 後者関数@{ i } ( 後者関数@{ i } ( 後者関数@{ i } ( 足す@{ i } ( 足す@{ i } m_前 n_前 ) o_前 ) ) ) )
+                                    ( 足す@{ i } ( 後者関数@{ i } m_前 ) ( 足す@{ i } ( 後者関数@{ i } n_前 ) ( 後者関数@{ i } o_前 ) ) )
+                                    ( 後者関数@{ i } ( 後者関数@{ i } ( 後者関数@{ i } ( 足す@{ i } m_前 ( 足す@{ i } n_前 o_前 ) ) ) ) )
+                                    _
                                     _
                             )
                         .
-                        exact ( A_2024_01_25_0002 m_p ( 足す_自然数 n_p o_p ) ).
+                        {
+                            refine
+                                (
+                                    適用@{ i }
+                                        自然数@{ i }
+                                        自然数@{ i }
+                                        ( fun z : 自然数@{ i } => 後者関数@{ i } ( 後者関数@{ i } ( 後者関数@{ i } z ) ) )
+                                        ( 足す@{ i } ( 足す@{ i } m_前 n_前 ) o_前 )
+                                        ( 足す@{ i } m_前 ( 足す@{ i } n_前 o_前 ) )
+                                        _
+                                )
+                            .
+                            exact ( a_前 n_前 o_前 ) .
+                        }
+                        {
+                            refine
+                                (
+                                    結合@{ i }
+                                        自然数@{ i }
+                                        (
+                                            後者関数@{ i }
+                                                ( 後者関数@{ i } ( 後者関数@{ i } ( 足す@{ i } m_前 ( 足す@{ i } n_前 o_前 ) ) ) )
+                                        )
+                                        (
+                                            足す@{ i }
+                                                ( 後者関数@{ i } m_前 )
+                                                ( 足す@{ i } ( 後者関数@{ i } n_前 ) ( 後者関数@{ i } o_前 ) )
+                                        )
+                                        (
+                                            後者関数@{ i }
+                                                ( 後者関数@{ i } ( 足す@{ i } m_前 ( 後者関数@{ i } ( 足す@{ i } n_前 o_前 ) ) ) )
+                                        )
+                                        _
+                                        _
+                                )
+                            .
+                            {
+                                refine
+                                    (
+                                        適用@{ i }
+                                            自然数@{ i }
+                                            自然数@{ i }
+                                            ( fun z : 自然数@{ i } => 後者関数@{ i } ( 後者関数@{ i } z ) )
+                                            ( 後者関数@{ i } ( 足す@{ i } m_前 ( 足す@{ i } n_前 o_前 ) ) )
+                                            ( 足す@{ i } m_前 ( 後者関数@{ i } ( 足す@{ i } n_前 o_前 ) ) )
+                                            _
+                                    )
+                                .
+                                refine
+                                    (
+                                        反転@{ i }
+                                            自然数@{ i }
+                                            ( 後者関数@{ i } ( 足す@{ i } m_前 ( 足す@{ i } n_前 o_前 ) ) )
+                                            ( 足す@{ i } m_前 ( 後者関数@{ i } ( 足す@{ i } n_前 o_前 ) ) )
+                                            _
+                                    )
+                                .
+                                exact ( A_2024_08_01_0000@{ i } m_前 ( 足す@{ i } n_前 o_前 ) ) .
+                            }
+                            {
+                                exact
+                                    (
+                                        恒等道@{ i }
+                                            自然数@{ i }
+                                            (
+                                                後者関数@{ i }
+                                                    ( 後者関数@{ i } ( 足す@{ i } m_前 ( 後者関数@{ i } ( 足す@{ i } n_前 o_前 ) ) ) )
+                                            )
+                                    )
+                                .
+                            }
+                        }
                     }
                 }
             }
         }
     }
-Defined.
+Defined .
 
-Definition 加算の交換法則_自然数@{ i | } ( m : 自然数@{ i } ) ( n : 自然数@{ i } )
-    : 道@{ i } 自然数@{ i } ( 足す_自然数 m n ) ( 足す_自然数 n m )
+(** [m] と [n] を足した数は [n] と [m] を足した数に等しくなります。 *)
+
+Definition A_2024_08_26_0001@{ i | }
+    : forall m : 自然数@{ i } , forall n : 自然数@{ i } , 道@{ i } 自然数@{ i } ( 足す@{ i } m n ) ( 足す@{ i } n m )
 .
-Proof.
-    refine ( let a := _ in a m n ).
+Proof .
+    refine ( fun m : 自然数@{ i } => _ ) .
     refine
         (
-            fix a ( m : 自然数@{ i } ) ( n : 自然数@{ i } ) { struct m }
-                : 道@{ i } 自然数@{ i } ( 足す_自然数 m n ) ( 足す_自然数 n m )
-                := _
-        )
-    .
-    refine
-        (
-            match
+            自然数.依存型の再帰@{ i }
                 m
-            as
-                m_
-            return
-                道@{ i } 自然数@{ i } ( 足す_自然数 m_ n ) ( 足す_自然数 n m_ )
-            with
-                零_構築子_自然数 => _ | 後者_構築子_自然数 m_p => _
-            end
+                ( fun m_ : 自然数@{ i } => forall n : 自然数@{ i } , 道@{ i } 自然数@{ i } ( 足す@{ i } m_ n ) ( 足す@{ i } n m_ ) )
+                _
+                (
+                    fun m_前 : 自然数@{ i } =>
+                    fun a_前 : forall n : 自然数@{ i } , 道@{ i } 自然数@{ i } ( 足す@{ i } m_前 n ) ( 足す@{ i } n m_前 ) =>
+                    _
+                )
         )
     .
     {
+        refine ( fun n : 自然数@{ i } => _ ) .
         refine
             (
-                match
+                自然数.依存型の場合分け@{ i }
                     n
-                as
-                    n_
-                return
-                    道@{ i } 自然数@{ i } ( 足す_自然数 零_自然数 n_ ) ( 足す_自然数 n_ 零_自然数 )
-                with
-                    零_構築子_自然数 => _ | 後者_構築子_自然数 n_p => _
-                end
+                    ( fun n_ : 自然数@{ i } => 道@{ i } 自然数@{ i } ( 足す@{ i } ゼロ@{ i } n_ ) ( 足す@{ i } n_ ゼロ@{ i } ) )
+                    _
+                    ( fun n_前 : 自然数@{ i } => _ )
             )
         .
         {
-            change ( 道@{ i } 自然数@{ i } ( 足す_自然数 零_自然数 零_自然数 ) ( 足す_自然数 零_自然数 零_自然数 ) ).
-            change ( 道@{ i } 自然数@{ i } 零_自然数 零_自然数 ).
-            exact ( 恒等道_道 自然数@{ i } 零_自然数 ).
+            exact ( 恒等道@{ i } 自然数@{ i } ゼロ@{ i } ) .
         }
         {
-            change
-                (
-                    道@{ i }
-                        自然数@{ i }
-                        ( 足す_自然数 零_自然数 ( 後者を計算する_自然数 n_p ) )
-                        ( 足す_自然数 ( 後者を計算する_自然数 n_p ) 零_自然数 )
-                )
-            .
-            change ( 道@{ i } 自然数@{ i } ( 後者を計算する_自然数 n_p ) ( 後者を計算する_自然数 n_p ) ).
-            exact ( 恒等道_道 自然数@{ i } ( 後者を計算する_自然数 n_p ) ).
+            exact ( 恒等道@{ i } 自然数@{ i } ( 後者関数@{ i } n_前 ) ) .
         }
     }
     {
+        refine ( fun n : 自然数@{ i } => _ ) .
         refine
             (
-                match
+                自然数.依存型の場合分け@{ i }
                     n
-                as
-                    n_
-                return
-                    道@{ i }
-                        自然数@{ i }
-                        ( 足す_自然数 ( 後者を計算する_自然数 m_p ) n_ )
-                        ( 足す_自然数 n_ ( 後者を計算する_自然数 m_p ) )
-                with
-                    零_構築子_自然数 => _ | 後者_構築子_自然数 n_p => _
-                end
+                    (
+                        fun n_ : 自然数@{ i } =>
+                        道@{ i } 自然数@{ i } ( 足す@{ i } ( 後者関数@{ i } m_前 ) n_ ) ( 足す@{ i } n_ ( 後者関数@{ i } m_前 ) )
+                    )
+                    _
+                    ( fun n_前 : 自然数@{ i } => _ )
             )
         .
         {
-            change
-                (
-                    道@{ i }
-                        自然数@{ i }
-                        ( 足す_自然数 ( 後者を計算する_自然数 m_p ) 零_自然数 )
-                        ( 足す_自然数 零_自然数 ( 後者を計算する_自然数 m_p ) )
-                )
-            .
-            change ( 道@{ i } 自然数@{ i } ( 後者を計算する_自然数 m_p ) ( 後者を計算する_自然数 m_p ) ).
-            exact ( 恒等道_道 自然数@{ i } ( 後者を計算する_自然数 m_p ) ).
+            exact ( 恒等道@{ i } 自然数@{ i } ( 後者関数@{ i } m_前 ) ) .
         }
         {
-            change
-                (
-                    道@{ i }
-                        自然数@{ i }
-                        ( 足す_自然数 ( 後者を計算する_自然数 m_p ) ( 後者を計算する_自然数 n_p ) )
-                        ( 足す_自然数 ( 後者を計算する_自然数 n_p ) ( 後者を計算する_自然数 m_p ) )
-                )
-            .
-            change
-                (
-                    道@{ i }
-                        自然数@{ i }
-                        ( 後者を計算する_自然数 ( 後者を計算する_自然数 ( 足す_自然数 m_p n_p ) ) )
-                        ( 後者を計算する_自然数 ( 後者を計算する_自然数 ( 足す_自然数 n_p m_p ) ) )
-                )
-            .
-            change
-                (
-                    道@{ i }
-                        自然数@{ i }
-                        ( 二を足す_自然数 ( 足す_自然数 m_p n_p ) )
-                        ( 二を足す_自然数 ( 足す_自然数 n_p m_p ) )
-                )
-            .
             refine
                 (
-                    関数を適用する_道
+                    結合@{ i }
                         自然数@{ i }
-                        自然数@{ i }
-                        二を足す_自然数
-                        ( 足す_自然数 m_p n_p )
-                        ( 足す_自然数 n_p m_p )
+                        ( 足す@{ i } ( 後者関数@{ i } m_前 ) ( 後者関数@{ i } n_前 ) )
+                        ( 足す@{ i } ( 後者関数@{ i } n_前 ) ( 後者関数@{ i } m_前 ) )
+                        ( 後者関数@{ i } ( 後者関数@{ i } ( 足す@{ i } m_前 n_前 ) ) )
+                        _
                         _
                 )
             .
-            exact ( a m_p n_p ).
+            {
+                exact ( 恒等道@{ i } 自然数@{ i } ( 後者関数@{ i } ( 後者関数@{ i } ( 足す@{ i } m_前 n_前 ) ) ) ) .
+            }
+            {
+                refine
+                    (
+                        結合@{ i }
+                            自然数@{ i }
+                            ( 後者関数@{ i } ( 後者関数@{ i } ( 足す@{ i } m_前 n_前 ) ) )
+                            ( 足す@{ i } ( 後者関数@{ i } n_前 ) ( 後者関数@{ i } m_前 ) )
+                            ( 後者関数@{ i } ( 後者関数@{ i } ( 足す@{ i } n_前 m_前 ) ) )
+                            _
+                            _
+                    )
+                .
+                {
+                    refine
+                        (
+                            適用@{ i }
+                            自然数@{ i }
+                            自然数@{ i }
+                            ( fun z : 自然数@{ i } => 後者関数@{ i } ( 後者関数@{ i } z ) )
+                            ( 足す@{ i } m_前 n_前 )
+                            ( 足す@{ i } n_前 m_前 )
+                            _
+                        )
+                    .
+                    exact ( a_前 n_前 ) .
+                }
+                {
+                    exact ( 恒等道@{ i } 自然数@{ i } ( 後者関数@{ i } ( 後者関数@{ i } ( 足す@{ i } n_前 m_前 ) ) ) ) .
+                }
+            }
         }
     }
-Defined.
+Defined .
 
-(** 正の自然数の定理を証明します。 *)
-
-Definition A_2024_02_06_0009@{ i | }
-    : 道@{ i } 正の自然数@{ i } ( 後者を計算する_正の自然数 八_正の自然数 ) 九_正の自然数
-    := 恒等道_道 _ _
-.
-
-Definition A_2024_02_06_0010@{ i | }
-    : 道@{ i } 正の自然数@{ i } ( 足す_正の自然数 三_正の自然数 二_正の自然数 ) 五_正の自然数
-    := 恒等道_道 _ _
-.
-
-Definition A_2024_02_06_0011@{ i | }
-    : 道@{ i } 正の自然数@{ i } ( 掛ける_正の自然数 三_正の自然数 三_正の自然数 ) 九_正の自然数
-    := 恒等道_道 _ _
-.
-
-Definition A_2024_02_06_0012@{ i | }
-    : 道@{ i } 正の自然数@{ i } ( 冪乗を計算する_正の自然数 二_正の自然数 三_正の自然数 ) 八_正の自然数
-    := 恒等道_道 _ _
-.
-
-Definition A_2024_02_06_0013@{ i | }
-    : 道@{ i } 正の自然数@{ i } ( 最小値を計算する_正の自然数 八_正の自然数 七_正の自然数 ) 七_正の自然数
-    := 恒等道_道 _ _
-.
-
-Definition A_2024_02_06_0014@{ i | }
-    : 道@{ i } 正の自然数@{ i } ( 最大値を計算する_正の自然数 五_正の自然数 六_正の自然数 ) 六_正の自然数
-    := 恒等道_道 _ _
-.
-
-Definition A_2024_02_06_0015@{ i | }
-    : 道@{ i } 正の自然数@{ i } ( 三角数を計算する_正の自然数 四_正の自然数 ) 十_正の自然数
-    := 恒等道_道 _ _
-.
-
-Definition A_2024_02_06_0016@{ i | }
-    :
-        道@{ i }
-            正の自然数@{ i }
-            ( 階乗を計算する_正の自然数 四_正の自然数 )
-            ( 掛ける_正の自然数 六_正の自然数 四_正の自然数 )
-    := 恒等道_道 _ _
-.
-
-Definition A_2024_02_06_0017@{ i | }
-    :
-        道@{ i }
-            正の自然数@{ i }
-            ( フィボナッチ数を計算する_正の自然数 八_正の自然数 )
-            ( 掛ける_正の自然数 七_正の自然数 三_正の自然数 )
-    := 恒等道_道 _ _
-.
+End A_2024_09_11_0003 .
