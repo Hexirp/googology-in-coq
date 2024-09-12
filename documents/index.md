@@ -13,7 +13,7 @@ googology-in-coq は、プログラムとして証明を書くことを目標と
 ```
 (** 帰納原理 (induction principle) を生成しないように設定します。 *)
 
-Unset Elimination Schemes.
+Unset Elimination Schemes .
 ```
 
 宇宙多相 (universe polymorphic) については必ず使用します。次のような指定を Vernacular ファイルの最初で行ってください。
@@ -21,9 +21,9 @@ Unset Elimination Schemes.
 ```
 (** 宇宙多相 (universe polymorphism) について設定します。 *)
 
-Set Universe Polymorphism.
+Set Universe Polymorphism .
 
-Set Polymorphic Inductive Cumulativity.
+Set Polymorphic Inductive Cumulativity .
 ```
 
 タクティックは項のコントロールを困難にすることもありますが、有用であるため、限定的に使用します。詳細はタクティックの節を見てください。使用するときは、次のような指定を Vernacular ファイルの最初で行ってください。
@@ -31,11 +31,11 @@ Set Polymorphic Inductive Cumulativity.
 ```
 (** タクティックが使用できるように設定します。 *)
 
-Set Default Proof Mode "Classic".
+Set Default Proof Mode "Classic" .
 
 (** 一つのゴールに対してタクティックを働かせないとエラーになるように設定します。 *)
 
-Set Default Goal Selector "!".
+Set Default Goal Selector "!" .
 ```
 
 カスタム表記 (notation) や暗黙引数 (implicit argument) や暗黙変換 (coercion) や型クラス (typeclass) などの機能は、項をコントロールすることを困難にするため、なるべく使いません。
@@ -55,11 +55,11 @@ universe level については、基本的に linear なものとして扱って
 ```coq
 (** ... *)
 
-Definition foo a b c.
+Definition foo a b c .
 
 (** ... *)
 
-Definition bar a b c.
+Definition bar a b c .
 ```
 
 ドキュメントとしてのコメントは、上記のように記述してください。 coqdoc が根差す文芸的プログラミングの考え方に従って、ソースコードとドキュメントが対等になるように記述します。
@@ -170,7 +170,7 @@ with
 end
 ```
 
-`Definition a _ _ _ : _ := _.` は、次のようにします。
+`Definition a _ _ _ : _ := _ .` は、次のようにします。
 
 ```coq
 Definition a _ _ _ : _
@@ -178,7 +178,7 @@ Definition a _ _ _ : _
 .
 ```
 
-`Definition a _ _ _ : _ := _.` は、次のようにします。
+`Definition a _ _ _ : _ := _ .` は、次のようにします。
 
 ```coq
 Definition a _ _ _
@@ -187,7 +187,7 @@ Definition a _ _ _
 .
 ```
 
-`Definition a _ _ _ : _ := _.` は、次のようにします。
+`Definition a _ _ _ : _ := _ .` は、次のようにします。
 
 ```coq
 Definition a
@@ -199,7 +199,7 @@ Definition a
 .
 ```
 
-`Inductive A _ _ _ : _ := _ : _ | _ : _ | _ : _.` は次のようにします。
+`Inductive A _ _ _ : _ := _ : _ | _ : _ | _ : _ .` は次のようにします。
 
 ```coq
 Inductive A _ _ _ : _
@@ -207,7 +207,7 @@ Inductive A _ _ _ : _
 .
 ```
 
-`Inductive A _ _ _ : _ := _ : _ | _ : _ | _ : _.` は次のようにします。
+`Inductive A _ _ _ : _ := _ : _ | _ : _ | _ : _ .` は次のようにします。
 
 ```coq
 Inductive A _ _ _
@@ -216,7 +216,7 @@ Inductive A _ _ _
 .
 ```
 
-`Inductive A _ _ _ : _ := _ : _ | _ : _ | _ : _.` は次のようにします。
+`Inductive A _ _ _ : _ := _ : _ | _ : _ | _ : _ .` は次のようにします。
 
 ```coq
 Inductive A
@@ -274,17 +274,17 @@ Gallina の項をコントロールできるとして許容されているタク
 ゴールが複数に増えたときは波括弧を使います。
 
 ```
-refine _.
+refine _ .
 {
-    exact x.
+    exact x .
 }
 {
-    refine _.
+    refine _ .
     {
-        exact y.
+        exact y .
     }
     {
-        exact z.
+        exact z .
     }
 }
 ```
