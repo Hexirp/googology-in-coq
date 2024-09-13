@@ -5546,6 +5546,53 @@ Proof .
     }
 Defined .
 
+(** 等式推論の関数の道を引数に取る部分と返り値の型の部分を併せて表現します。 *)
+
+Definition A_2024_09_13_0008@{ i i_次 i_次_次 | i < i_次 , i_次 < i_次_次 }
+    : forall n : 自然数@{ i } , forall A : Type@{ i } , A -> A_2024_09_13_0001@{ i_次 i_次_次 } n A ( A -> Type@{ i } )
+.
+Proof .
+    refine ( fun n : 自然数@{ i } => _ ) .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun x : A => _ ) .
+    refine
+        (
+            A_2024_09_13_0004@{ i_次 i_次_次 }
+                n
+                ( A -> Type@{ i } )
+                A
+                ( A -> Type@{ i } )
+                _
+                _
+        )
+    .
+    {
+        refine
+            (
+                A_2024_09_13_0003@{ i_次 i_次_次 }
+                    n
+                    ( ( A -> Type@{ i } ) -> A -> Type@{ i } )
+                    A
+                    ( A -> Type@{ i } -> Type@{ i } )
+                    _
+                    _
+            )
+        .
+        {
+            refine ( fun f_適用済み : A -> Type@{ i } -> Type@{ i } => _ ) .
+            refine ( fun g_適用済み : A -> Type@{ i } => _ ) .
+            refine ( fun y : A => _ ) .
+            exact ( f_適用済み y ( g_適用済み y ) ) .
+        }
+        {
+            exact ( A_2024_09_13_0006@{ i i_次 i_次_次 } n A x ) .
+        }
+    }
+    {
+        exact ( A_2024_09_13_0005@{ i i_次 i_次_次 } n A x ) .
+    }
+Defined .
+
 End A_2024_09_12_0000 .
 
 (** ** 自然数に関する定理 *)
