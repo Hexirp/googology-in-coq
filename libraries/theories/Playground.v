@@ -5113,17 +5113,27 @@ Import A_2024_08_30_0006 .
 
 (** [n] 個の引数を持つ関数です。 *)
 
-Definition A_2024_09_13_0001@{ i i_次 | i < i_次 } : 自然数@{ i } -> Type@{ i } -> Type@{ i } -> Type@{ i }
-    :=
-        fun n : 自然数@{ i } =>
-        fun A : Type@{ i } =>
-        fun B : Type@{ i } =>
-        自然数.再帰@{ i_次 }
-            n
-            Type@{ i }
-            B
-            ( fun n_前 : 自然数@{ i } => fun a_前 : Type@{ i } => A -> a_前 )
-.
+Definition A_2024_09_13_0001@{ i i_次 | i < i_次 } : 自然数@{ i } -> Type@{ i } -> Type@{ i } -> Type@{ i } .
+Proof .
+    refine ( fun n : 自然数@{ i } => _ ) .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun B : Type@{ i } => _ ) .
+    refine
+        (
+            自然数.再帰@{ i_次 }
+                n
+                Type@{ i }
+                _
+                ( fun n_前 : 自然数@{ i } => fun a_前 : Type@{ i } => _ )
+        )
+    .
+    {
+        exact B .
+    }
+    {
+        exact ( A -> a_前 ) .
+    }
+Defined .
 
 (** [n] 個の引数を持つ定数関数を作ります。 *)
 
