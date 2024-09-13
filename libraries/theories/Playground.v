@@ -5111,6 +5111,10 @@ Import A_2024_08_26_0002 .
 
 Import A_2024_08_30_0006 .
 
+(** << A_2024_09_08_0000 >> を取り込みます。 *)
+
+Import A_2024_09_08_0000 .
+
 (** [n] 個の引数を持つ関数です。 *)
 
 Definition A_2024_09_13_0001@{ i i_次 | i < i_次 } : 自然数@{ i } -> Type@{ i } -> Type@{ i } -> Type@{ i } .
@@ -5139,21 +5143,48 @@ Defined .
 
 Definition A_2024_09_13_0002@{ i i_次 | i < i_次 }
     : forall n : 自然数@{ i } , forall A : Type@{ i } , forall B : Type@{ i } , A -> A_2024_09_13_0001@{ i i_次 } n B A
-    :=
-        fun n : 自然数@{ i } =>
-        fun A : Type@{ i } =>
-        fun B : Type@{ i } =>
-        fun x : A =>
-        自然数.依存型の再帰@{ i }
-            n
-            ( fun n_ : 自然数@{ i } => A_2024_09_13_0001@{ i i_次 } n_ B A )
-            x
-            (
-                fun n_前 : 自然数@{ i } =>
-                fun a_前 : A_2024_09_13_0001@{ i i_次 } n_前 B A =>
-                定数関数を作る@{ i } ( A_2024_09_13_0001@{ i i_次 } n_前 B A ) B a_前
-            )
 .
+Proof .
+    refine ( fun n : 自然数@{ i } => _ ) .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun B : Type@{ i } => _ ) .
+    refine ( fun x : A => _ ) .
+    refine
+        (
+            自然数.依存型の再帰@{ i }
+                n
+                ( fun n_ : 自然数@{ i } => A_2024_09_13_0001@{ i i_次 } n_ B A )
+                _
+                ( fun n_前 : 自然数@{ i } => fun a_前 : A_2024_09_13_0001@{ i i_次 } n_前 B A => _ )
+        )
+    .
+    {
+        refine ( 鋳造@{ i i_次 } ( A_2024_09_13_0001@{ i i_次 } ゼロ@{ i } B A ) A _ _ ) .
+        {
+            exact ( 恒等道@{ i_次 } Type@{ i } A ) .
+        }
+        {
+            exact x .
+        }
+    }
+    {
+        refine
+            (
+                鋳造@{ i i_次 }
+                    ( A_2024_09_13_0001@{ i i_次 } ( 後者関数@{ i } n_前 ) B A )
+                    ( B -> A_2024_09_13_0001@{ i i_次 } n_前 B A )
+                    _
+                    _
+            )
+        .
+        {
+            exact ( 恒等道@{ i_次 } Type@{ i } ( B -> A_2024_09_13_0001@{ i i_次 } n_前 B A ) ) .
+        }
+        {
+            exact ( 定数関数を作る@{ i } ( A_2024_09_13_0001@{ i i_次 } n_前 B A ) B a_前 ) .
+        }
+    }
+Defined .
 
 (** [n] 個の引数を持つ関数と普通の関数を合成します。 *)
 
