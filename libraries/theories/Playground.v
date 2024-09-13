@@ -5679,6 +5679,245 @@ Proof .
     }
 Defined .
 
+(** 等式推論の関数です。 *)
+
+Definition A_2024_09_13_0011@{ i i_次 i_次_次 | i < i_次 , i_次 < i_次_次 }
+    : forall n : 自然数@{ i } , A_2024_09_13_0009@{ i i_次 i_次_次 } n
+.
+Proof .
+    refine ( fun n : 自然数@{ i } => _ ) .
+    refine
+        (
+            自然数.依存型の再帰@{ i_次 }
+                n
+                ( fun n_ : 自然数@{ i } => A_2024_09_13_0009@{ i i_次 i_次_次 } n_ )
+                _
+                (
+                    fun n_前 : 自然数@{ i } =>
+                    fun a_前 : A_2024_09_13_0009@{ i i_次 i_次_次 } n_前 =>
+                    _
+                )
+        )
+    .
+    {
+        refine
+            (
+                鋳造@{ i_次 i_次_次 }
+                    ( A_2024_09_13_0009@{ i i_次 i_次_次 } ゼロ@{ i } )
+                    ( forall A : Type@{ i } , forall x : A , forall y : A , 道@{ i } A x y -> 道@{ i } A x y )
+                    _
+                    _
+            )
+        .
+        {
+            exact
+                (
+                    恒等道@{ i_次_次 }
+                        Type@{ i_次 }
+                        ( forall A : Type@{ i } , forall x : A , forall y : A , 道@{ i } A x y -> 道@{ i } A x y )
+                )
+            .
+        }
+        {
+            refine ( fun A : Type@{ i } => _ ) .
+            refine ( fun x : A => _ ) .
+            refine ( fun y : A => _ ) .
+            exact ( 恒等関数@{ i } ( 道@{ i } A x y ) ) .
+        }
+    }
+    {
+        refine
+            (
+                鋳造@{ i_次 i_次_次 }
+                    ( A_2024_09_13_0009@{ i i_次 i_次_次 } ( 後者関数@{ i } n_前 ) )
+                    (
+                        forall A : Type@{ i } ,
+                        forall x : A ,
+                        A_2024_09_13_0010@{ i i_次 i_次_次 }
+                            ( 後者関数@{ i } n_前 )
+                            A
+                            (
+                                A_2024_09_13_0003@{ i_次 i_次_次 }
+                                    ( 後者関数@{ i } n_前 )
+                                    Type@{ i }
+                                    A
+                                    ( A -> Type@{ i } )
+                                    ( fun B : A -> Type@{ i } => forall y : A , B y )
+                                    ( A_2024_09_13_0008@{ i i_次 i_次_次 } ( 後者関数@{ i } n_前 ) A x )
+                            )
+                    )
+                    _
+                    _
+            )
+        .
+        {
+            refine
+                (
+                    恒等道@{ i_次_次 }
+                        Type@{ i_次 }
+                        (
+                            forall A : Type@{ i } ,
+                            forall x : A ,
+                            A_2024_09_13_0010@{ i i_次 i_次_次 }
+                                ( 後者関数@{ i } n_前 )
+                                A
+                                (
+                                    A_2024_09_13_0003@{ i_次 i_次_次 }
+                                        ( 後者関数@{ i } n_前 )
+                                        Type@{ i }
+                                        A
+                                        ( A -> Type@{ i } )
+                                        ( fun B : A -> Type@{ i } => forall y : A , B y )
+                                        ( A_2024_09_13_0008@{ i i_次 i_次_次 } ( 後者関数@{ i } n_前 ) A x )
+                                )
+                        )
+                )
+            .
+        }
+        {
+            refine
+                (
+                    鋳造@{ i_次 i_次_次 }
+                        (
+                            forall A : Type@{ i } ,
+                            forall x : A ,
+                            A_2024_09_13_0010@{ i i_次 i_次_次 }
+                                ( 後者関数@{ i } n_前 )
+                                A
+                                (
+                                    A_2024_09_13_0003@{ i_次 i_次_次 }
+                                        ( 後者関数@{ i } n_前 )
+                                        Type@{ i }
+                                        A
+                                        ( A -> Type@{ i } )
+                                        ( fun B : A -> Type@{ i } => forall y : A , B y )
+                                        ( A_2024_09_13_0008@{ i i_次 i_次_次 } ( 後者関数@{ i } n_前 ) A x )
+                                )
+                        )
+                        (
+                            forall A : Type@{ i } ,
+                            forall x : A ,
+                            forall y : A ,
+                            A_2024_09_13_0010@{ i i_次 i_次_次 }
+                                n_前
+                                A
+                                (
+                                    A_2024_09_13_0003@{ i_次 i_次_次 }
+                                        ( 後者関数@{ i } n_前 )
+                                        Type@{ i }
+                                        A
+                                        ( A -> Type@{ i } )
+                                        ( fun B : A -> Type@{ i } => forall z : A , B z )
+                                        ( A_2024_09_13_0008@{ i i_次 i_次_次 } ( 後者関数@{ i } n_前 ) A x )
+                                        y
+                                )
+                        )
+                        _
+                        _
+                )
+            .
+            {
+                exact
+                    (
+                        恒等道@{ i_次_次 }
+                            Type@{ i_次 }
+                            (
+                                forall A : Type@{ i } ,
+                                forall x : A ,
+                                forall y : A ,
+                                A_2024_09_13_0010@{ i i_次 i_次_次 }
+                                    n_前
+                                    A
+                                    (
+                                        A_2024_09_13_0003@{ i_次 i_次_次 }
+                                            ( 後者関数@{ i } n_前 )
+                                            Type@{ i }
+                                            A
+                                            ( A -> Type@{ i } )
+                                            ( fun B : A -> Type@{ i } => forall z : A , B z )
+                                            ( A_2024_09_13_0008@{ i i_次 i_次_次 } ( 後者関数@{ i } n_前 ) A x )
+                                            y
+                                    )
+                            )
+                    )
+                .
+            }
+            {
+                refine
+                    (
+                        鋳造@{ i_次 i_次_次 }
+                            (
+                                forall A : Type@{ i } ,
+                                forall x : A ,
+                                forall y : A ,
+                                A_2024_09_13_0010@{ i i_次 i_次_次 }
+                                    n_前
+                                    A
+                                    (
+                                        A_2024_09_13_0003@{ i_次 i_次_次 }
+                                            ( 後者関数@{ i } n_前 )
+                                            Type@{ i }
+                                            A
+                                            ( A -> Type@{ i } )
+                                            ( fun B : A -> Type@{ i } => forall z : A , B z )
+                                            ( A_2024_09_13_0008@{ i i_次 i_次_次 } ( 後者関数@{ i } n_前 ) A x )
+                                            y
+                                    )
+                            )
+                            (
+                                forall A : Type@{ i } ,
+                                forall x : A ,
+                                forall y : A ,
+                                A_2024_09_13_0010@{ i i_次 i_次_次 }
+                                    n_前
+                                    A
+                                    (
+                                        A_2024_09_13_0003@{ i_次 i_次_次 }
+                                            n_前
+                                            Type@{ i }
+                                            A
+                                            ( A -> Type@{ i } )
+                                            ( fun B : A -> Type@{ i } => forall z : A , B z )
+                                            ( A_2024_09_13_0008@{ i i_次 i_次_次 } ( 後者関数@{ i } n_前 ) A x y )
+                                    )
+                            )
+                            _
+                            _
+                    )
+                .
+                {
+                    exact
+                    (
+                        恒等道@{ i_次_次 }
+                            Type@{ i_次 }
+                            (
+                                forall A : Type@{ i } ,
+                                forall x : A ,
+                                forall y : A ,
+                                A_2024_09_13_0010@{ i i_次 i_次_次 }
+                                    n_前
+                                    A
+                                    (
+                                        A_2024_09_13_0003@{ i_次 i_次_次 }
+                                            n_前
+                                            Type@{ i }
+                                            A
+                                            ( A -> Type@{ i } )
+                                            ( fun B : A -> Type@{ i } => forall z : A , B z )
+                                            ( A_2024_09_13_0008@{ i i_次 i_次_次 } ( 後者関数@{ i } n_前 ) A x y )
+                                    )
+                            )
+                    )
+                .
+                }
+                {
+                    admit .
+                }
+            }
+        }
+    }
+Admitted .
+
 End A_2024_09_12_0000 .
 
 (** ** 自然数に関する定理 *)
