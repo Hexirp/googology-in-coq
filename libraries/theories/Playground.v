@@ -5449,12 +5449,15 @@ Import A_2024_09_13_0000 .
 
 Definition A_2024_09_13_0005@{ i i_次 i_次_次 | i < i_次 , i_次 < i_次_次 }
     : forall n : 自然数@{ i } , forall A : Type@{ i } , A -> A_2024_09_13_0001@{ i_次 i_次_次 } n A ( A -> Type@{ i } )
-    :=
-        fun n : 自然数@{ i } =>
-        fun A : Type@{ i } =>
-        fun x : A =>
-        A_2024_09_13_0002@{ i_次 i_次_次 } n ( A -> Type@{ i } ) A ( fun y : A => 道@{ i } A x y )
 .
+Proof .
+    refine ( fun n : 自然数@{ i } => _ ) .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun x : A => _ ) .
+    refine ( A_2024_09_13_0002@{ i_次 i_次_次 } n ( A -> Type@{ i } ) A _ ) .
+    refine ( fun y : A => _ ) .
+    exact ( 道@{ i } A x y ) .
+Defined .
 
 (** 等式推論の関数の道を引数に取る部分を表現します。 *)
 
