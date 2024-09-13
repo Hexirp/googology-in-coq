@@ -4163,6 +4163,33 @@ Definition 輸送@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) ( x : A ) (
     := A_2024_07_22_0014@{ i } A B x y p u
 .
 
+(** 道に沿って鋳造します。「鋳造する」は "cast" の訳語です。 *)
+
+Definition A_2024_09_13_0007@{ i i_次 | i < i_次 }
+    : forall A : Type@{ i } , forall B : Type@{ i } , 道@{ i_次 } Type@{ i } B A -> B -> A
+.
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun B : Type@{ i } => _ ) .
+    refine ( fun p : 道@{ i_次 } Type@{ i } B A => _ ) .
+    refine
+        (
+            道.場合分け@{ i_次 }
+                Type@{ i }
+                B
+                A
+                p
+                ( fun B_ : Type@{ i } => fun A_ : Type@{ i } => B_ -> A_ )
+                ( fun C : Type@{ i } => _ )
+        )
+    .
+    exact ( 恒等関数@{ i } C ) .
+Defined .
+
+Definition 鋳造@{ i i_次 | i < i_次 } ( A : Type@{ i } ) ( B : Type@{ i } ) ( p : 道@{ i_次 } Type@{ i } B A ) ( u : B ) : A
+    := A_2024_09_13_0007@{ i i_次 } A B p u
+.
+
 (** 依存関数を道に適用します。 *)
 
 Definition A_2024_07_22_0015@{ i | }
@@ -5084,39 +5111,80 @@ Import A_2024_08_26_0002 .
 
 Import A_2024_08_30_0006 .
 
+(** << A_2024_09_08_0000 >> を取り込みます。 *)
+
+Import A_2024_09_08_0000 .
+
 (** [n] 個の引数を持つ関数です。 *)
 
-Definition A_2024_09_13_0001@{ i i_次 | i < i_次 } : 自然数@{ i } -> Type@{ i } -> Type@{ i } -> Type@{ i }
-    :=
-        fun n : 自然数@{ i } =>
-        fun A : Type@{ i } =>
-        fun B : Type@{ i } =>
-        自然数.再帰@{ i_次 }
-            n
-            Type@{ i }
-            B
-            ( fun n_前 : 自然数@{ i } => fun a_前 : Type@{ i } => A -> a_前 )
-.
+Definition A_2024_09_13_0001@{ i i_次 | i < i_次 } : 自然数@{ i } -> Type@{ i } -> Type@{ i } -> Type@{ i } .
+Proof .
+    refine ( fun n : 自然数@{ i } => _ ) .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun B : Type@{ i } => _ ) .
+    refine
+        (
+            自然数.再帰@{ i_次 }
+                n
+                Type@{ i }
+                _
+                ( fun n_前 : 自然数@{ i } => fun a_前 : Type@{ i } => _ )
+        )
+    .
+    {
+        exact B .
+    }
+    {
+        exact ( A -> a_前 ) .
+    }
+Defined .
 
 (** [n] 個の引数を持つ定数関数を作ります。 *)
 
 Definition A_2024_09_13_0002@{ i i_次 | i < i_次 }
     : forall n : 自然数@{ i } , forall A : Type@{ i } , forall B : Type@{ i } , A -> A_2024_09_13_0001@{ i i_次 } n B A
-    :=
-        fun n : 自然数@{ i } =>
-        fun A : Type@{ i } =>
-        fun B : Type@{ i } =>
-        fun x : A =>
-        自然数.依存型の再帰@{ i }
-            n
-            ( fun n_ : 自然数@{ i } => A_2024_09_13_0001@{ i i_次 } n_ B A )
-            x
-            (
-                fun n_前 : 自然数@{ i } =>
-                fun a_前 : A_2024_09_13_0001@{ i i_次 } n_前 B A =>
-                定数関数を作る@{ i } ( A_2024_09_13_0001@{ i i_次 } n_前 B A ) B a_前
-            )
 .
+Proof .
+    refine ( fun n : 自然数@{ i } => _ ) .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun B : Type@{ i } => _ ) .
+    refine ( fun x : A => _ ) .
+    refine
+        (
+            自然数.依存型の再帰@{ i }
+                n
+                ( fun n_ : 自然数@{ i } => A_2024_09_13_0001@{ i i_次 } n_ B A )
+                _
+                ( fun n_前 : 自然数@{ i } => fun a_前 : A_2024_09_13_0001@{ i i_次 } n_前 B A => _ )
+        )
+    .
+    {
+        refine ( 鋳造@{ i i_次 } ( A_2024_09_13_0001@{ i i_次 } ゼロ@{ i } B A ) A _ _ ) .
+        {
+            exact ( 恒等道@{ i_次 } Type@{ i } A ) .
+        }
+        {
+            exact x .
+        }
+    }
+    {
+        refine
+            (
+                鋳造@{ i i_次 }
+                    ( A_2024_09_13_0001@{ i i_次 } ( 後者関数@{ i } n_前 ) B A )
+                    ( B -> A_2024_09_13_0001@{ i i_次 } n_前 B A )
+                    _
+                    _
+            )
+        .
+        {
+            exact ( 恒等道@{ i_次 } Type@{ i } ( B -> A_2024_09_13_0001@{ i i_次 } n_前 B A ) ) .
+        }
+        {
+            exact ( 定数関数を作る@{ i } ( A_2024_09_13_0001@{ i i_次 } n_前 B A ) B a_前 ) .
+        }
+    }
+Defined .
 
 (** [n] 個の引数を持つ関数と普通の関数を合成します。 *)
 
@@ -5131,26 +5199,71 @@ Definition A_2024_09_13_0003@{ i i_次 | i < i_次 }
         A_2024_09_13_0001@{ i i_次 } n B C
         ->
         A_2024_09_13_0001@{ i i_次 } n B A
-    :=
-        fun n : 自然数@{ i } =>
-        fun A : Type@{ i } =>
-        fun B : Type@{ i } =>
-        fun C : Type@{ i } =>
-        fun f : C -> A =>
-        自然数.依存型の再帰@{ i }
-            n
-            ( fun n_ : 自然数@{ i } => ( A_2024_09_13_0001@{ i i_次 } n_ B C ) -> A_2024_09_13_0001@{ i i_次 } n_ B A )
-            f
-            (
-                fun n_前 : 自然数@{ i } =>
-                fun a_前 : ( A_2024_09_13_0001@{ i i_次 } n_前 B C ) -> A_2024_09_13_0001@{ i i_次 } n_前 B A =>
-                合成@{ i }
-                    ( A_2024_09_13_0001@{ i i_次 } n_前 B A )
-                    B
-                    ( A_2024_09_13_0001@{ i i_次 } n_前 B C )
-                    a_前
-            )
 .
+Proof .
+    refine ( fun n : 自然数@{ i } => _ ) .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun B : Type@{ i } => _ ) .
+    refine ( fun C : Type@{ i } => _ ) .
+    refine ( fun f : C -> A => _ ) .
+    refine
+        (
+            自然数.依存型の再帰@{ i }
+                n
+                ( fun n_ : 自然数@{ i } => ( A_2024_09_13_0001@{ i i_次 } n_ B C ) -> A_2024_09_13_0001@{ i i_次 } n_ B A )
+                _
+                (
+                    fun n_前 : 自然数@{ i } =>
+                    fun a_前 : ( A_2024_09_13_0001@{ i i_次 } n_前 B C ) -> A_2024_09_13_0001@{ i i_次 } n_前 B A =>
+                    _
+                )
+        )
+    .
+    {
+        refine
+            (
+                鋳造@{ i i_次 }
+                    ( A_2024_09_13_0001@{ i i_次 } ゼロ@{ i } B C -> A_2024_09_13_0001@{ i i_次 } ゼロ@{ i } B A )
+                    ( C -> A )
+                    _
+                    _
+            )
+        .
+        {
+            exact ( 恒等道@{ i_次 } Type@{ i } ( C -> A ) ) .
+        }
+        {
+            exact f .
+        }
+    }
+    {
+        refine
+            (
+                鋳造@{ i i_次 }
+                    (
+                        A_2024_09_13_0001@{ i i_次 } ( 後者関数@{ i } n_前 ) B C
+                        ->
+                        A_2024_09_13_0001@{ i i_次 } ( 後者関数@{ i } n_前 ) B A
+                    )
+                    ( ( B -> A_2024_09_13_0001@{ i i_次 } n_前 B C ) -> B -> A_2024_09_13_0001@{ i i_次 } n_前 B A )
+                    _
+                    _
+            )
+        .
+        {
+            exact
+                (
+                    恒等道@{ i_次 }
+                        Type@{ i }
+                        ( ( B -> A_2024_09_13_0001@{ i i_次 } n_前 B C ) -> B -> A_2024_09_13_0001@{ i i_次 } n_前 B A )
+                )
+            .
+        }
+        {
+            exact ( 合成@{ i } ( A_2024_09_13_0001@{ i i_次 } n_前 B A ) B ( A_2024_09_13_0001@{ i i_次 } n_前 B C ) a_前 ) .
+        }
+    }
+Defined .
 
 (** [n] 個の [A] から [B] から [C] への関数への関数と [n] 個の [A] から [B] への関数を合成します。 *)
 
@@ -5165,43 +5278,112 @@ Definition A_2024_09_13_0004@{ i i_次 | i < i_次 }
         A_2024_09_13_0001@{ i i_次 } n B C
         ->
         A_2024_09_13_0001@{ i i_次 } n B A
-    :=
-        fun n : 自然数@{ i } =>
-        fun A : Type@{ i } =>
-        fun B : Type@{ i } =>
-        fun C : Type@{ i } =>
-        自然数.依存型の再帰@{ i }
-            n
+.
+Proof .
+    refine ( fun n : 自然数@{ i } => _ ) .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun B : Type@{ i } => _ ) .
+    refine ( fun C : Type@{ i } => _ ) .
+    refine
+        (
+            自然数.依存型の再帰@{ i }
+                n
+                (
+                    fun n_ : 自然数@{ i } =>
+                    A_2024_09_13_0001@{ i i_次 } n_ B ( C -> A )
+                    ->
+                    A_2024_09_13_0001@{ i i_次 } n_ B C
+                    ->
+                    A_2024_09_13_0001@{ i i_次 } n_ B A
+                )
+                _
+                (
+                    fun n_前 : 自然数@{ i } =>
+                    fun
+                        a_前
+                            :
+                                A_2024_09_13_0001@{ i i_次 } n_前 B ( C -> A )
+                                ->
+                                A_2024_09_13_0001@{ i i_次 } n_前 B C
+                                ->
+                                A_2024_09_13_0001@{ i i_次 } n_前 B A
+                    =>
+                    _
+                )
+        )
+    .
+    {
+        refine
             (
-                fun n_ : 自然数@{ i } =>
-                A_2024_09_13_0001@{ i i_次 } n_ B ( C -> A )
-                ->
-                A_2024_09_13_0001@{ i i_次 } n_ B C
-                ->
-                A_2024_09_13_0001@{ i i_次 } n_ B A
+                鋳造@{ i i_次 }
+                    (
+                        A_2024_09_13_0001@{ i i_次 } ゼロ@{ i } B ( C -> A )
+                        ->
+                        A_2024_09_13_0001@{ i i_次 } ゼロ@{ i } B C
+                        ->
+                        A_2024_09_13_0001@{ i i_次 } ゼロ@{ i } B A
+                    )
+                    ( ( C -> A ) -> C -> A )
+                    _
+                    _
             )
+        .
+        {
+            exact ( 恒等道@{ i_次 } Type@{ i } ( ( C -> A ) -> C -> A ) ) .
+        }
+        {
+            exact ( 恒等関数@{ i } ( C -> A ) ) .
+        }
+    }
+    {
+        refine
             (
-                fun f : A_2024_09_13_0001@{ i i_次 } ゼロ@{ i } B ( C -> A ) =>
-                fun g : A_2024_09_13_0001@{ i i_次 } ゼロ@{ i } B C =>
-                f g
+                鋳造@{ i i_次 }
+                    (
+                        A_2024_09_13_0001@{ i i_次 } ( 後者関数@{ i } n_前 ) B ( C -> A )
+                        ->
+                        A_2024_09_13_0001@{ i i_次 } ( 後者関数@{ i } n_前 ) B C
+                        ->
+                        A_2024_09_13_0001@{ i i_次 } ( 後者関数@{ i } n_前 ) B A
+                    )
+                    (
+                        ( B -> A_2024_09_13_0001@{ i i_次 } n_前 B ( C -> A ) )
+                        ->
+                        ( B -> A_2024_09_13_0001@{ i i_次 } n_前 B C )
+                        ->
+                        B
+                        ->
+                        A_2024_09_13_0001@{ i i_次 } n_前 B A
+                    )
+                    _
+                    _
             )
-            (
-                fun n_前 : 自然数@{ i } =>
-                fun
-                    a_前
-                        :
-                            A_2024_09_13_0001@{ i i_次 } n_前 B ( C -> A )
+        .
+        {
+            exact
+                (
+                    恒等道@{ i_次 }
+                        Type@{ i }
+                        (
+                            ( B -> A_2024_09_13_0001@{ i i_次 } n_前 B ( C -> A ) )
                             ->
-                            A_2024_09_13_0001@{ i i_次 } n_前 B C
+                            ( B -> A_2024_09_13_0001@{ i i_次 } n_前 B C )
+                            ->
+                            B
                             ->
                             A_2024_09_13_0001@{ i i_次 } n_前 B A
-                =>
-                fun f : A_2024_09_13_0001@{ i i_次 } ( 後者関数@{ i } n_前 ) B ( C -> A ) =>
-                fun g : A_2024_09_13_0001@{ i i_次 } ( 後者関数@{ i } n_前 ) B C =>
-                fun x : B =>
-                a_前 ( f x ) ( g x )
-            )
-.
+                        )
+                )
+            .
+        }
+        {
+            refine ( fun f : B -> A_2024_09_13_0001@{ i i_次 } n_前 B ( C -> A ) => _ ) .
+            refine ( fun g : B -> A_2024_09_13_0001@{ i i_次 } n_前 B C => _ ) .
+            refine ( fun x : B => _ ) .
+            exact ( a_前 ( f x ) ( g x ) ) .
+        }
+    }
+Defined .
 
 End A_2024_09_13_0000 .
 
@@ -5267,12 +5449,102 @@ Import A_2024_09_13_0000 .
 
 Definition A_2024_09_13_0005@{ i i_次 i_次_次 | i < i_次 , i_次 < i_次_次 }
     : forall n : 自然数@{ i } , forall A : Type@{ i } , A -> A_2024_09_13_0001@{ i_次 i_次_次 } n A ( A -> Type@{ i } )
-    :=
-        fun n : 自然数@{ i } =>
-        fun A : Type@{ i } =>
-        fun x : A =>
-        A_2024_09_13_0002@{ i_次 i_次_次 } n ( A -> Type@{ i } ) A ( fun y : A => 道@{ i } A x y )
 .
+Proof .
+    refine ( fun n : 自然数@{ i } => _ ) .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun x : A => _ ) .
+    refine ( A_2024_09_13_0002@{ i_次 i_次_次 } n ( A -> Type@{ i } ) A _ ) .
+    refine ( fun y : A => _ ) .
+    exact ( 道@{ i } A x y ) .
+Defined .
+
+(** 等式推論の関数の道を引数に取る部分を表現します。 *)
+
+Definition A_2024_09_13_0006@{ i i_次 i_次_次 | i < i_次 , i_次 < i_次_次 }
+    : forall n : 自然数@{ i } , forall A : Type@{ i } , A -> A_2024_09_13_0001@{ i_次 i_次_次 } n A ( A -> Type@{ i } -> Type@{ i } )
+.
+Proof .
+    refine ( fun n : 自然数@{ i } => _ ) .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine
+        (
+            自然数.依存型の再帰@{ i_次 }
+                n
+                ( fun n_ : 自然数@{ i } => A -> A_2024_09_13_0001@{ i_次 i_次_次 } n_ A ( A -> Type@{ i } -> Type@{ i } ) )
+                _
+                (
+                    fun n_前 : 自然数@{ i } =>
+                    fun a_前 : A -> A_2024_09_13_0001@{ i_次 i_次_次 } n_前 A ( A -> Type@{ i } -> Type@{ i } ) =>
+                    _
+                )
+        )
+    .
+    {
+        refine
+            (
+                鋳造@{ i_次 i_次_次 }
+                    ( A -> A_2024_09_13_0001@{ i_次 i_次_次 } ゼロ@{ i } A ( A -> Type@{ i } -> Type@{ i } ) )
+                    ( A -> A -> Type@{ i } -> Type@{ i } )
+                    _
+                    _
+            )
+        .
+        {
+            exact ( 恒等道@{ i_次_次 } Type@{ i_次 } ( A -> A -> Type@{ i } -> Type@{ i } ) ) .
+        }
+        {
+            refine ( fun x : A => _ ) .
+            refine ( fun y : A => _ ) .
+            refine ( fun B : Type@{ i } => _ ) .
+            exact ( 道@{ i } A x y -> B ) .
+        }
+    }
+    {
+        refine
+            (
+                鋳造@{ i_次 i_次_次 }
+                    ( A -> A_2024_09_13_0001@{ i_次 i_次_次 } ( 後者関数@{ i } n_前 ) A ( A -> Type@{ i } -> Type@{ i } ) )
+                    ( A -> A -> A_2024_09_13_0001@{ i_次 i_次_次 } n_前 A ( A -> Type@{ i } -> Type@{ i } ) )
+                    _
+                    _
+            )
+        .
+        {
+            exact
+                (
+                    恒等道@{ i_次_次 }
+                        Type@{ i_次 }
+                        ( A -> A -> A_2024_09_13_0001@{ i_次 i_次_次 } n_前 A ( A -> Type@{ i } -> Type@{ i } ) )
+                )
+            .
+        }
+        {
+            refine ( fun x : A => _ ) .
+            refine ( fun y : A => _ ) .
+            refine
+                (
+                    A_2024_09_13_0003@{ i_次 i_次_次 }
+                        n_前
+                        ( A -> Type@{ i } -> Type@{ i } )
+                        A
+                        ( A -> Type@{ i } -> Type@{ i } )
+                        _
+                        _
+                )
+            .
+            {
+                refine ( fun a_前_適用済み : A -> Type@{ i } -> Type@{ i } => _ ) .
+                refine ( fun z : A => _ ) .
+                refine ( fun B : Type@{ i } => _ ) .
+                exact ( 道@{ i } A x y -> a_前_適用済み z B ) .
+            }
+            {
+                exact ( a_前 y ) .
+            }
+        }
+    }
+Defined .
 
 End A_2024_09_12_0000 .
 
