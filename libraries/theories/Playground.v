@@ -5274,6 +5274,36 @@ Definition A_2024_09_13_0005@{ i i_次 i_次_次 | i < i_次 , i_次 < i_次_次
         A_2024_09_13_0002@{ i_次 i_次_次 } n ( A -> Type@{ i } ) A ( fun y : A => 道@{ i } A x y )
 .
 
+(** 等式推論の関数の道を引数に取る部分を表現します。 *)
+
+Fail Definition A_2024_09_13_0006@{ i i_次 i_次_次 | i < i_次 , i_次 < i_次_次 }
+    : forall n : 自然数@{ i } , forall A : Type@{ i } , A -> A_2024_09_13_0001@{ i_次 i_次_次 } n A ( A -> Type@{ i } -> Type@{ i } )
+    :=
+        fun n : 自然数@{ i } =>
+        fun A : Type@{ i } =>
+        fun x : A =>
+        自然数.再帰@{ i }
+            n
+            ( fun n_ : 自然数@{ i } => A_2024_09_13_0001@{ i_次 i_次_次 } n_ A ( A -> Type@{ i } -> Type@{ i } ) )
+            ( fun y : A => fun B : Type@{ i } => 道@{ i } A x y -> B )
+            (
+                fun n_前 : 自然数@{ i } =>
+                fun a_前 : A_2024_09_13_0001@{ i_次 i_次_次 } n_前 A ( A -> Type@{ i } -> Type@{ i } ) =>
+                fun y : A =>
+                    A_2024_09_13_0003@{ i_次 i_次_次 }
+                        ( A -> Type@{ i } -> Type@{ i } )
+                        A
+                        ( A -> Type@{ i } -> Type@{ i } )
+                        (
+                            fun a_前_適用済み : A -> Type@{ i } -> Type@{ i } =>
+                            fun z : A =>
+                            fun B : Type@{ i } =>
+                            _
+                        )
+                        a_前
+            )
+.
+
 End A_2024_09_12_0000 .
 
 (** ** 自然数に関する定理 *)
