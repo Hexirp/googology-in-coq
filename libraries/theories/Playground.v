@@ -5385,6 +5385,64 @@ Proof .
     }
 Defined .
 
+(** [n] 個の [A] を取る依存型を全称量化します。 *)
+
+Definition A_2024_09_13_0010@{ i i_次 i_次_次 | i < i_次 , i_次 < i_次_次 }
+    : forall n : 自然数@{ i } , forall A : Type@{ i } , A_2024_09_13_0001@{ i_次 i_次_次 } n A Type@{ i } -> Type@{ i }
+.
+Proof .
+    refine ( fun n : 自然数@{ i } => _ ) .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine
+        (
+            自然数.依存型の再帰@{ i_次 }
+                n
+                ( fun n_ : 自然数@{ i } => A_2024_09_13_0001@{ i_次 i_次_次 } n_ A Type@{ i } -> Type@{ i } )
+                _
+                (
+                    fun n_前 : 自然数@{ i } =>
+                    fun a_前 : A_2024_09_13_0001@{ i_次 i_次_次 } n_前 A Type@{ i } -> Type@{ i } =>
+                    _
+                )
+        )
+    .
+    {
+        refine
+            (
+                鋳造@{ i_次 i_次_次 }
+                    ( A_2024_09_13_0001@{ i_次 i_次_次 } ゼロ@{ i } A Type@{ i } -> Type@{ i } )
+                    ( Type@{ i } -> Type@{ i } )
+                    _
+                    _
+            )
+        .
+        {
+            exact ( 恒等道@{ i_次_次 } Type@{ i_次 } ( Type@{ i } -> Type@{ i } ) ) .
+        }
+        {
+            exact ( 恒等関数@{ i_次 } Type@{ i } ) .
+        }
+    }
+    {
+        refine
+            (
+                鋳造@{ i_次 i_次_次 }
+                    ( A_2024_09_13_0001@{ i_次 i_次_次 } ( 後者関数@{ i } n_前 ) A Type@{ i } -> Type@{ i } )
+                    ( ( A -> A_2024_09_13_0001@{ i_次 i_次_次 } n_前 A Type@{ i } ) -> Type@{ i } )
+                    _
+                    _
+            )
+        .
+        {
+            exact ( 恒等道@{ i_次_次 } Type@{ i_次 } ( ( A -> A_2024_09_13_0001@{ i_次 i_次_次 } n_前 A Type@{ i } ) -> Type@{ i } ) ) .
+        }
+        {
+            refine ( fun B : A -> A_2024_09_13_0001@{ i_次 i_次_次 } n_前 A Type@{ i } => _ ) .
+            exact ( forall x : A , a_前 ( B x ) ) .
+        }
+    }
+Defined .
+
 End A_2024_09_13_0000 .
 
 (** ** 等式推論 *)
@@ -5445,7 +5503,7 @@ Import A_2024_09_08_0000 .
 
 Import A_2024_09_13_0000 .
 
-(** 等式推論の関数の返り値の型の部分を表現します。 *)
+(** 等式推論の関数について、返り値の型の部分を表現します。 *)
 
 Definition A_2024_09_13_0005@{ i i_次 i_次_次 | i < i_次 , i_次 < i_次_次 }
     : forall n : 自然数@{ i } , forall A : Type@{ i } , A -> A_2024_09_13_0001@{ i_次 i_次_次 } n A ( A -> Type@{ i } )
@@ -5459,7 +5517,7 @@ Proof .
     exact ( 道@{ i } A x y ) .
 Defined .
 
-(** 等式推論の関数の道を引数に取る部分を表現します。 *)
+(** 等式推論の関数について、道を引数に取る部分を表現します。 *)
 
 Definition A_2024_09_13_0006@{ i i_次 i_次_次 | i < i_次 , i_次 < i_次_次 }
     : forall n : 自然数@{ i } , forall A : Type@{ i } , A -> A_2024_09_13_0001@{ i_次 i_次_次 } n A ( A -> Type@{ i } -> Type@{ i } )
@@ -5546,7 +5604,7 @@ Proof .
     }
 Defined .
 
-(** 等式推論の関数の道を引数に取る部分と返り値の型の部分を併せて表現します。 *)
+(** 等式推論の関数について、道を引数に取る部分と、返り値の型の部分を併せて表現します。 *)
 
 Definition A_2024_09_13_0008@{ i i_次 i_次_次 | i < i_次 , i_次 < i_次_次 }
     : forall n : 自然数@{ i } , forall A : Type@{ i } , A -> A_2024_09_13_0001@{ i_次 i_次_次 } n A ( A -> Type@{ i } )
@@ -5590,6 +5648,34 @@ Proof .
     }
     {
         exact ( A_2024_09_13_0005@{ i i_次 i_次_次 } n A x ) .
+    }
+Defined .
+
+(** 等式推論の関数について、 [A] を引数に取る部分と、道を引数に取る部分と、返り値の型の部分を併せて表現します。 *)
+
+Definition A_2024_09_13_0009@{ i i_次 i_次_次 | i < i_次 , i_次 < i_次_次 } : 自然数@{ i } -> Type@{ i_次 } .
+Proof .
+    refine ( fun n : 自然数@{ i } => _ ) .
+    refine ( forall A : Type@{ i } , _ ) .
+    refine ( forall x : A , _ ) .
+    refine ( A_2024_09_13_0010@{ i i_次 i_次_次 } n A _ ) .
+    refine
+        (
+            A_2024_09_13_0003@{ i_次 i_次_次 }
+                n
+                Type@{ i }
+                A
+                ( A -> Type@{ i } )
+                _
+                _
+        )
+    .
+    {
+        refine ( fun B : A -> Type@{ i } => _ ) .
+        exact ( forall y : A , B y ) .
+    }
+    {
+        exact ( A_2024_09_13_0008@{ i i_次 i_次_次 } n A x ) .
     }
 Defined .
 
