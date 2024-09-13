@@ -4163,6 +4163,33 @@ Definition 輸送@{ i | } ( A : Type@{ i } ) ( B : A -> Type@{ i } ) ( x : A ) (
     := A_2024_07_22_0014@{ i } A B x y p u
 .
 
+(** 道に沿って鋳造します。「鋳造する」は "cast" の訳語です。 *)
+
+Definition A_2024_09_13_0007@{ i i_次 | i < i_次 }
+    : forall A : Type@{ i } , forall B : Type@{ i } , 道@{ i_次 } Type@{ i } B A -> B -> A
+.
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun B : Type@{ i } => _ ) .
+    refine ( fun p : 道@{ i_次 } Type@{ i } B A => _ ) .
+    refine
+        (
+            道.場合分け@{ i_次 }
+                Type@{ i }
+                B
+                A
+                p
+                ( fun B_ : Type@{ i } => fun A_ : Type@{ i } => B_ -> A_ )
+                ( fun C : Type@{ i } => _ )
+        )
+    .
+    exact ( 恒等関数@{ i } C ) .
+Defined .
+
+Definition 鋳造@{ i i_次 | i < i_次 } ( A : Type@{ i } ) ( B : Type@{ i } ) ( p : 道@{ i_次 } Type@{ i } B A ) ( u : B ) : A
+    := A_2024_09_13_0007@{ i i_次 } A B p u
+.
+
 (** 依存関数を道に適用します。 *)
 
 Definition A_2024_07_22_0015@{ i | }
