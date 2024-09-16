@@ -5990,20 +5990,6 @@ Import A_2024_09_15_0000 .
 
 (** 等式推論の関数について、返り値の型の部分を表現します。 *)
 
-Definition A_2024_09_13_0005@{ i i_次 i_次_次 | i < i_次 , i_次 < i_次_次 }
-    : forall n : 自然数@{ i } , forall A : Type@{ i } , A -> A_2024_09_13_0001@{ i_次 i_次_次 } n A ( A -> Type@{ i } )
-.
-Proof .
-    refine ( fun n : 自然数@{ i } => _ ) .
-    refine ( fun A : Type@{ i } => _ ) .
-    refine ( fun x : A => _ ) .
-    refine ( A_2024_09_13_0002@{ i_次 i_次_次 } n ( A -> Type@{ i } ) A _ ) .
-    refine ( fun y : A => _ ) .
-    exact ( 道@{ i } A x y ) .
-Defined .
-
-(** 等式推論の関数について、返り値の型の部分を表現します。 *)
-
 Definition A_2024_09_16_0000@{ i i_次 | i < i_次 }
     : forall n : 自然数@{ i } , forall A : Type@{ i } , A -> 固定長列記型@{ i } n A -> A -> Type@{ i }
 .
@@ -6072,6 +6058,20 @@ Proof .
             )
         .
     }
+Defined .
+
+(** 等式推論の関数について、返り値の型の部分を表現します。 *)
+
+Definition A_2024_09_13_0005@{ i i_次 i_次_次 | i < i_次 , i_次 < i_次_次 }
+    : forall n : 自然数@{ i } , forall A : Type@{ i } , A -> A_2024_09_13_0001@{ i_次 i_次_次 } n A ( A -> Type@{ i } )
+.
+Proof .
+    refine ( fun n : 自然数@{ i } => _ ) .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun x : A => _ ) .
+    refine ( A_2024_09_13_0002@{ i_次 i_次_次 } n ( A -> Type@{ i } ) A _ ) .
+    refine ( fun y : A => _ ) .
+    exact ( 道@{ i } A x y ) .
 Defined .
 
 (** 等式推論の関数について、道を引数に取る部分を表現します。 *)
