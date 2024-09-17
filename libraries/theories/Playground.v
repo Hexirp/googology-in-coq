@@ -6086,6 +6086,22 @@ Proof .
     }
 Defined .
 
+(** 等式推論の関数です。 *)
+
+Definition A_2024_09_17_0001@{ i i_次 | i < i_次 }
+    :
+        forall n : 自然数@{ i } ,
+        forall A : Type@{ i } ,
+        forall x : A ,
+        forall y : 固定長列記型@{ i } n A ,
+        forall z : A ,
+        forall p : 固定長異種列記型@{ i i_次 } ( 後者関数@{ i } n ) ( A_2024_09_17_0000@{ i i_次 } n A x y z ) ,
+        A_2024_09_16_0000@{ i i_次 } n A x y z
+.
+Proof .
+    exact _ .
+Defined .
+
 (** 等式推論の関数について、道を引数に取る部分を表現します。 *)
 
 Definition A_2024_09_16_0001@{ i i_次 i_次_次 | i < i_次 , i_次 < i_次_次 }
