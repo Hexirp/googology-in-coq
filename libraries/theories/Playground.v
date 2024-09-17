@@ -6033,8 +6033,17 @@ Defined .
 
 (** 等式推論の関数について、道を引数に取る部分の型を表現する。 *)
 
-Definition A_2024_09_17_0000@{ i i_次 | i < i_次 }
-    : forall n : 自然数@{ i } , forall A : Type@{ i } , A -> 固定長列記型@{ i } n A -> A -> 列記型@{ i_次 } Type@{ i }
+Definition A_2024_09_17_0000@{ i i_次 i_次_次 | i < i_次 , i_次 < i_次_次 }
+    :
+        forall n : 自然数@{ i } ,
+        forall A : Type@{ i } ,
+        A
+        ->
+        固定長列記型@{ i } n A
+        ->
+        A
+        ->
+        固定長列記型@{ i_次 } ( 後者関数@{ i } n ) Type@{ i }
 .
 Proof .
     refine ( fun n : 自然数@{ i } => _ ) .
@@ -6045,12 +6054,12 @@ Proof .
                 n
                 (
                     fun n_ : 自然数@{ i } =>
-                    A -> 固定長列記型@{ i } n_ A -> A -> 列記型@{ i_次 } Type@{ i }
+                    A -> 固定長列記型@{ i } n_ A -> A -> 固定長列記型@{ i_次 } ( 後者関数@{ i } n_ ) Type@{ i }
                 )
                 _
                 (
                     fun n_前 : 自然数@{ i } =>
-                    fun a_前 : A -> 固定長列記型@{ i } n_前 A -> A -> 列記型@{ i_次 } Type@{ i } =>
+                    fun a_前 : A -> 固定長列記型@{ i } n_前 A -> A -> 固定長列記型@{ i_次 } ( 後者関数@{ i } n_前 ) Type@{ i } =>
                     _
                 )
         )
@@ -6059,8 +6068,8 @@ Proof .
         refine ( fun x : A => _ ) .
         refine ( fun y : 固定長列記型@{ i } ゼロ@{ i } A => _ ) .
         refine ( fun z : A => _ ) .
-        refine ( 列記型.節の場合の構築子@{ i_次 } Type@{ i } ( 道@{ i } A x z ) _ ) .
-        exact ( 列記型.空の場合の構築子@{ i_次 } Type@{ i } ) .
+        refine ( A_2024_09_15_0007@{ i_次 i_次_次 } ゼロ@{ i } Type@{ i } ( 道@{ i } A x z ) _ ) .
+        exact ( A_2024_09_15_0006@{ i_次 } Type@{ i } ) .
     }
     {
         refine ( fun x : A => _ ) .
@@ -6069,7 +6078,8 @@ Proof .
         refine ( let y_分解 : 直積型@{ i } A ( 固定長列記型@{ i } n_前 A ) := A_2024_09_16_0002@{ i i_次 } n_前 A y in _ ) .
         refine
             (
-                列記型.節の場合の構築子@{ i_次 }
+                A_2024_09_15_0007@{ i_次 i_次_次 }
+                ( 後者関数@{ i } n_前 )
                 Type@{ i }
                 ( 道@{ i } A x ( 直積型.一番目の区域の分解子@{ i } A ( 固定長列記型@{ i } n_前 A ) y_分解 ) )
                 _
