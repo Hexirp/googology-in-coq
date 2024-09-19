@@ -4913,46 +4913,6 @@ Proof .
     exact ( 恒等道@{ i } ( 道@{ i } ( B x ) ( f x ) ( f x ) ) ( 恒等道@{ i } ( B x ) ( f x ) ) ) .
 Defined .
 
-(** 等式推論の証明戦術です。 *)
-
-Ltac a_2024_09_19_0000 i A x y z := refine ( 結合@{ i } A x z y _ _ ) .
-
-(** 等式推論の証明戦術です。 *)
-
-Ltac a_2024_09_19_0001 i A w x y z := refine ( 結合@{ i } A w z x _ ( 結合@{ i } A x z y _ _ ) ) .
-
-(** 等式推論の証明戦術です。 *)
-
-Ltac a_2024_09_19_0002 i A v w x y z := refine ( 結合@{ i } A v z w _ ( 結合@{ i } A w z x _ ( 結合@{ i } A x z y _ _ ) ) ) .
-
-(** 等式推論の証明戦術です。 *)
-
-Ltac a_2024_09_19_0003 i A u v w x y z := refine ( 結合@{ i } A u z v _ ( 結合@{ i } A v z w _ ( 結合@{ i } A w z x _ ( 結合@{ i } A x z y _ _ ) ) ) ) .
-
-(** 等式推論の証明戦術です。 *)
-
-Ltac a_2024_09_19_0004 i A t u v w x y z := refine ( 結合@{ i } A t z u _ ( 結合@{ i } A u z v _ ( 結合@{ i } A v z w _ ( 結合@{ i } A w z x _ ( 結合@{ i } A x z y _ _ ) ) ) ) ) .
-
-(** 等式推論の証明戦術です。 *)
-
-Ltac a_2024_09_19_0005 i A s t u v w x y z := refine ( 結合@{ i } A s z t _ ( 結合@{ i } A t z u _ ( 結合@{ i } A u z v _ ( 結合@{ i } A v z w _ ( 結合@{ i } A w z x _ ( 結合@{ i } A x z y _ _ ) ) ) ) ) ) .
-
-(** 等式推論の証明戦術です。 *)
-
-Ltac a_2024_09_19_0006 i A r s t u v w x y z := refine ( 結合@{ i } A r z s _ ( 結合@{ i } A s z t _ ( 結合@{ i } A t z u _ ( 結合@{ i } A u z v _ ( 結合@{ i } A v z w _ ( 結合@{ i } A w z x _ ( 結合@{ i } A x z y _ _ ) ) ) ) ) ) ) .
-
-(** 等式推論の証明戦術です。 *)
-
-Ltac a_2024_09_19_0007 i A q r s t u v w x y z := refine ( 結合@{ i } A q z r _ ( 結合@{ i } A r z s _ ( 結合@{ i } A s z t _ ( 結合@{ i } A t z u _ ( 結合@{ i } A u z v _ ( 結合@{ i } A v z w _ ( 結合@{ i } A w z x _ ( 結合@{ i } A x z y _ _ ) ) ) ) ) ) ) ) .
-
-(** 等式推論の証明戦術です。 *)
-
-Ltac a_2024_09_19_0008 i A p q r s t u v w x y z := refine ( 結合@{ i } A p z q _ ( 結合@{ i } A q z r _ ( 結合@{ i } A r z s _ ( 結合@{ i } A s z t _ ( 結合@{ i } A t z u _ ( 結合@{ i } A u z v _ ( 結合@{ i } A v z w _ ( 結合@{ i } A w z x _ ( 結合@{ i } A x z y _ _ ) ) ) ) ) ) ) ) ) .
-
-(** 等式推論の証明戦術です。 *)
-
-Ltac a_2024_09_19_0009 i A o p q r s t u v w x y z := refine ( 結合@{ i } A o z p _ ( 結合@{ i } A p z q _ ( 結合@{ i } A q z r _ ( 結合@{ i } A r z s _ ( 結合@{ i } A s z t _ ( 結合@{ i } A t z u _ ( 結合@{ i } A u z v _ ( 結合@{ i } A v z w _ ( 結合@{ i } A w z x _ ( 結合@{ i } A x z y _ _ ) ) ) ) ) ) ) ) ) ) .
-
 End A_2024_09_08_0000 .
 
 Module 道 := A_2024_09_08_0000 .
@@ -5137,6 +5097,315 @@ Defined .
 
 End A_2024_09_11_0000 .
 
+(** ** 等式推論 *)
+
+(** 等式推論に関するモジュールを定義します。 *)
+
+Module A_2024_09_19_0000 .
+
+(** << A_2024_09_08_0000 >> を取り込みます。 *)
+
+Import A_2024_09_08_0000 .
+
+(** 等式推論の関数です。 *)
+
+Definition A_2024_09_19_0001@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall x_0 : A ,
+        forall x_1 : A ,
+        forall p_0 : 道@{ i } A x_0 x_1 ,
+        道@{ i } A x_0 x_1
+    :=
+        fun A : Type@{ i } =>
+        fun x_0 : A =>
+        fun x_1 : A =>
+        fun p_0 : 道@{ i } A x_0 x_1 =>
+        p_0
+.
+
+(** 等式推論の関数です。 *)
+
+Definition A_2024_09_19_0002@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall x_0 : A ,
+        forall x_1 : A ,
+        forall x_2 : A ,
+        forall p_0 : 道@{ i } A x_0 x_1 ,
+        forall p_1 : 道@{ i } A x_1 x_2 ,
+        道@{ i } A x_0 x_2
+    :=
+        fun A : Type@{ i } =>
+        fun x_0 : A =>
+        fun x_1 : A =>
+        fun x_2 : A =>
+        fun p_0 : 道@{ i } A x_0 x_1 =>
+        fun p_1 : 道@{ i } A x_1 x_2 =>
+        結合@{ i } A x_0 x_2 x_1 p_0 ( A_2024_09_19_0001@{ i } A x_1 x_2 p_1 )
+.
+
+(** 等式推論の関数です。 *)
+
+Definition A_2024_09_19_0003@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall x_0 : A ,
+        forall x_1 : A ,
+        forall x_2 : A ,
+        forall x_3 : A ,
+        forall p_0 : 道@{ i } A x_0 x_1 ,
+        forall p_1 : 道@{ i } A x_1 x_2 ,
+        forall p_2 : 道@{ i } A x_2 x_3 ,
+        道@{ i } A x_0 x_3
+    :=
+        fun A : Type@{ i } =>
+        fun x_0 : A =>
+        fun x_1 : A =>
+        fun x_2 : A =>
+        fun x_3 : A =>
+        fun p_0 : 道@{ i } A x_0 x_1 =>
+        fun p_1 : 道@{ i } A x_1 x_2 =>
+        fun p_2 : 道@{ i } A x_2 x_3 =>
+        結合@{ i } A x_0 x_3 x_1 p_0 ( A_2024_09_19_0002@{ i } A x_1 x_2 x_3 p_1 p_2 )
+.
+
+(** 等式推論の関数です。 *)
+
+Definition A_2024_09_19_0004@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall x_0 : A ,
+        forall x_1 : A ,
+        forall x_2 : A ,
+        forall x_3 : A ,
+        forall x_4 : A ,
+        forall p_0 : 道@{ i } A x_0 x_1 ,
+        forall p_1 : 道@{ i } A x_1 x_2 ,
+        forall p_2 : 道@{ i } A x_2 x_3 ,
+        forall p_3 : 道@{ i } A x_3 x_4 ,
+        道@{ i } A x_0 x_4
+    :=
+        fun A : Type@{ i } =>
+        fun x_0 : A =>
+        fun x_1 : A =>
+        fun x_2 : A =>
+        fun x_3 : A =>
+        fun x_4 : A =>
+        fun p_0 : 道@{ i } A x_0 x_1 =>
+        fun p_1 : 道@{ i } A x_1 x_2 =>
+        fun p_2 : 道@{ i } A x_2 x_3 =>
+        fun p_3 : 道@{ i } A x_3 x_4 =>
+        結合@{ i } A x_0 x_4 x_1 p_0 ( A_2024_09_19_0003@{ i } A x_1 x_2 x_3 x_4 p_1 p_2 p_3 )
+.
+
+(** 等式推論の関数です。 *)
+
+Definition A_2024_09_19_0005@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall x_0 : A ,
+        forall x_1 : A ,
+        forall x_2 : A ,
+        forall x_3 : A ,
+        forall x_4 : A ,
+        forall x_5 : A ,
+        forall p_0 : 道@{ i } A x_0 x_1 ,
+        forall p_1 : 道@{ i } A x_1 x_2 ,
+        forall p_2 : 道@{ i } A x_2 x_3 ,
+        forall p_3 : 道@{ i } A x_3 x_4 ,
+        forall p_4 : 道@{ i } A x_4 x_5 ,
+        道@{ i } A x_0 x_5
+    :=
+        fun A : Type@{ i } =>
+        fun x_0 : A =>
+        fun x_1 : A =>
+        fun x_2 : A =>
+        fun x_3 : A =>
+        fun x_4 : A =>
+        fun x_5 : A =>
+        fun p_0 : 道@{ i } A x_0 x_1 =>
+        fun p_1 : 道@{ i } A x_1 x_2 =>
+        fun p_2 : 道@{ i } A x_2 x_3 =>
+        fun p_3 : 道@{ i } A x_3 x_4 =>
+        fun p_4 : 道@{ i } A x_4 x_5 =>
+        結合@{ i } A x_0 x_5 x_1 p_0 ( A_2024_09_19_0004@{ i } A x_1 x_2 x_3 x_4 x_5 p_1 p_2 p_3 p_4 )
+.
+
+(** 等式推論の関数です。 *)
+
+Definition A_2024_09_19_0006@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall x_0 : A ,
+        forall x_1 : A ,
+        forall x_2 : A ,
+        forall x_3 : A ,
+        forall x_4 : A ,
+        forall x_5 : A ,
+        forall x_6 : A ,
+        forall p_0 : 道@{ i } A x_0 x_1 ,
+        forall p_1 : 道@{ i } A x_1 x_2 ,
+        forall p_2 : 道@{ i } A x_2 x_3 ,
+        forall p_3 : 道@{ i } A x_3 x_4 ,
+        forall p_4 : 道@{ i } A x_4 x_5 ,
+        forall p_5 : 道@{ i } A x_5 x_6 ,
+        道@{ i } A x_0 x_6
+    :=
+        fun A : Type@{ i } =>
+        fun x_0 : A =>
+        fun x_1 : A =>
+        fun x_2 : A =>
+        fun x_3 : A =>
+        fun x_4 : A =>
+        fun x_5 : A =>
+        fun x_6 : A =>
+        fun p_0 : 道@{ i } A x_0 x_1 =>
+        fun p_1 : 道@{ i } A x_1 x_2 =>
+        fun p_2 : 道@{ i } A x_2 x_3 =>
+        fun p_3 : 道@{ i } A x_3 x_4 =>
+        fun p_4 : 道@{ i } A x_4 x_5 =>
+        fun p_5 : 道@{ i } A x_5 x_6 =>
+        結合@{ i } A x_0 x_6 x_1 p_0 ( A_2024_09_19_0005@{ i } A x_1 x_2 x_3 x_4 x_5 x_6 p_1 p_2 p_3 p_4 p_5 )
+.
+
+(** 等式推論の関数です。 *)
+
+Definition A_2024_09_19_0007@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall x_0 : A ,
+        forall x_1 : A ,
+        forall x_2 : A ,
+        forall x_3 : A ,
+        forall x_4 : A ,
+        forall x_5 : A ,
+        forall x_6 : A ,
+        forall x_7 : A ,
+        forall p_0 : 道@{ i } A x_0 x_1 ,
+        forall p_1 : 道@{ i } A x_1 x_2 ,
+        forall p_2 : 道@{ i } A x_2 x_3 ,
+        forall p_3 : 道@{ i } A x_3 x_4 ,
+        forall p_4 : 道@{ i } A x_4 x_5 ,
+        forall p_5 : 道@{ i } A x_5 x_6 ,
+        forall p_6 : 道@{ i } A x_6 x_7 ,
+        道@{ i } A x_0 x_7
+    :=
+        fun A : Type@{ i } =>
+        fun x_0 : A =>
+        fun x_1 : A =>
+        fun x_2 : A =>
+        fun x_3 : A =>
+        fun x_4 : A =>
+        fun x_5 : A =>
+        fun x_6 : A =>
+        fun x_7 : A =>
+        fun p_0 : 道@{ i } A x_0 x_1 =>
+        fun p_1 : 道@{ i } A x_1 x_2 =>
+        fun p_2 : 道@{ i } A x_2 x_3 =>
+        fun p_3 : 道@{ i } A x_3 x_4 =>
+        fun p_4 : 道@{ i } A x_4 x_5 =>
+        fun p_5 : 道@{ i } A x_5 x_6 =>
+        fun p_6 : 道@{ i } A x_6 x_7 =>
+        結合@{ i } A x_0 x_7 x_1 p_0 ( A_2024_09_19_0006@{ i } A x_1 x_2 x_3 x_4 x_5 x_6 x_7 p_1 p_2 p_3 p_4 p_5 p_6 )
+.
+
+(** 等式推論の関数です。 *)
+
+Definition A_2024_09_19_0008@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall x_0 : A ,
+        forall x_1 : A ,
+        forall x_2 : A ,
+        forall x_3 : A ,
+        forall x_4 : A ,
+        forall x_5 : A ,
+        forall x_6 : A ,
+        forall x_7 : A ,
+        forall x_8 : A ,
+        forall p_0 : 道@{ i } A x_0 x_1 ,
+        forall p_1 : 道@{ i } A x_1 x_2 ,
+        forall p_2 : 道@{ i } A x_2 x_3 ,
+        forall p_3 : 道@{ i } A x_3 x_4 ,
+        forall p_4 : 道@{ i } A x_4 x_5 ,
+        forall p_5 : 道@{ i } A x_5 x_6 ,
+        forall p_6 : 道@{ i } A x_6 x_7 ,
+        forall p_7 : 道@{ i } A x_7 x_8 ,
+        道@{ i } A x_0 x_8
+    :=
+        fun A : Type@{ i } =>
+        fun x_0 : A =>
+        fun x_1 : A =>
+        fun x_2 : A =>
+        fun x_3 : A =>
+        fun x_4 : A =>
+        fun x_5 : A =>
+        fun x_6 : A =>
+        fun x_7 : A =>
+        fun x_8 : A =>
+        fun p_0 : 道@{ i } A x_0 x_1 =>
+        fun p_1 : 道@{ i } A x_1 x_2 =>
+        fun p_2 : 道@{ i } A x_2 x_3 =>
+        fun p_3 : 道@{ i } A x_3 x_4 =>
+        fun p_4 : 道@{ i } A x_4 x_5 =>
+        fun p_5 : 道@{ i } A x_5 x_6 =>
+        fun p_6 : 道@{ i } A x_6 x_7 =>
+        fun p_7 : 道@{ i } A x_7 x_8 =>
+        結合@{ i } A x_0 x_8 x_1 p_0 ( A_2024_09_19_0007@{ i } A x_1 x_2 x_3 x_4 x_5 x_6 x_7 x_8 p_1 p_2 p_3 p_4 p_5 p_6 p_7 )
+.
+
+(** 等式推論の関数です。 *)
+
+Definition A_2024_09_19_0009@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall x_0 : A ,
+        forall x_1 : A ,
+        forall x_2 : A ,
+        forall x_3 : A ,
+        forall x_4 : A ,
+        forall x_5 : A ,
+        forall x_6 : A ,
+        forall x_7 : A ,
+        forall x_8 : A ,
+        forall x_9 : A ,
+        forall p_0 : 道@{ i } A x_0 x_1 ,
+        forall p_1 : 道@{ i } A x_1 x_2 ,
+        forall p_2 : 道@{ i } A x_2 x_3 ,
+        forall p_3 : 道@{ i } A x_3 x_4 ,
+        forall p_4 : 道@{ i } A x_4 x_5 ,
+        forall p_5 : 道@{ i } A x_5 x_6 ,
+        forall p_6 : 道@{ i } A x_6 x_7 ,
+        forall p_7 : 道@{ i } A x_7 x_8 ,
+        forall p_8 : 道@{ i } A x_8 x_9 ,
+        道@{ i } A x_0 x_9
+    :=
+        fun A : Type@{ i } =>
+        fun x_0 : A =>
+        fun x_1 : A =>
+        fun x_2 : A =>
+        fun x_3 : A =>
+        fun x_4 : A =>
+        fun x_5 : A =>
+        fun x_6 : A =>
+        fun x_7 : A =>
+        fun x_8 : A =>
+        fun x_9 : A =>
+        fun p_0 : 道@{ i } A x_0 x_1 =>
+        fun p_1 : 道@{ i } A x_1 x_2 =>
+        fun p_2 : 道@{ i } A x_2 x_3 =>
+        fun p_3 : 道@{ i } A x_3 x_4 =>
+        fun p_4 : 道@{ i } A x_4 x_5 =>
+        fun p_5 : 道@{ i } A x_5 x_6 =>
+        fun p_6 : 道@{ i } A x_6 x_7 =>
+        fun p_7 : 道@{ i } A x_7 x_8 =>
+        fun p_8 : 道@{ i } A x_8 x_9 =>
+        結合@{ i } A x_0 x_9 x_1 p_0 ( A_2024_09_19_0008@{ i } A x_1 x_2 x_3 x_4 x_5 x_6 x_7 x_8 x_9 p_1 p_2 p_3 p_4 p_5 p_6 p_7 p_8 )
+.
+
+End A_2024_09_19_0000 .
+
 (** ** 自然数に関する定理 *)
 
 (** 自然数に関する定理についてのモジュールを定義します。 *)
@@ -5150,6 +5419,10 @@ Import A_2024_08_30_0006 .
 (** << A_2024_09_08_0000 >> を取り込みます。 *)
 
 Import A_2024_09_08_0000 .
+
+(** << A_2024_09_19_0000 >> を取り込みます。 *)
+
+Import A_2024_09_19_0000 .
 
 (** ゼロとゼロを足した数はゼロに等しくなります。 *)
 
@@ -5313,13 +5586,18 @@ Proof .
             )
         .
         {
-            a_2024_09_19_0001
-                i
-                自然数@{ i }
-                ( 足す@{ i } ( 後者関数@{ i } x_前 ) ( 後者関数@{ i } ゼロ@{ i } ) )
-                ( 後者関数@{ i } ( 後者関数@{ i } ( 足す@{ i } x_前 ゼロ@{ i } ) ) )
-                ( 後者関数@{ i } ( 後者関数@{ i } x_前 ) )
-                ( 後者関数@{ i } ( 足す@{ i } ( 後者関数@{ i } x_前 ) ゼロ@{ i } ) )
+            refine
+                (
+                    A_2024_09_19_0003@{ i }
+                        自然数@{ i }
+                        ( 足す@{ i } ( 後者関数@{ i } x_前 ) ( 後者関数@{ i } ゼロ@{ i } ) )
+                        ( 後者関数@{ i } ( 後者関数@{ i } ( 足す@{ i } x_前 ゼロ@{ i } ) ) )
+                        ( 後者関数@{ i } ( 後者関数@{ i } x_前 ) )
+                        ( 後者関数@{ i } ( 足す@{ i } ( 後者関数@{ i } x_前 ) ゼロ@{ i } ) )
+                        _
+                        _
+                        _
+                )
             .
             {
                 exact ( 恒等道@{ i } 自然数 ( 後者関数@{ i } ( 後者関数@{ i } ( 足す@{ i } x_前 ゼロ@{ i } ) ) ) ) .
@@ -5343,13 +5621,18 @@ Proof .
             }
         }
         {
-            a_2024_09_19_0001
-                i
-                自然数@{ i }
-                ( 足す@{ i } ( 後者関数@{ i } x_前 ) ( 後者関数@{ i } ( 後者関数@{ i } y_前 ) ) )
-                ( 後者関数@{ i } ( 後者関数@{ i } ( 足す@{ i } x_前 ( 後者関数@{ i } y_前 ) ) ) )
-                ( 後者関数@{ i } ( 後者関数@{ i } ( 後者関数@{ i } ( 足す@{ i } x_前 y_前 ) ) ) )
-                ( 後者関数@{ i } ( 足す@{ i } ( 後者関数@{ i } x_前 ) ( 後者関数@{ i } y_前 ) ) )
+            refine
+                (
+                    A_2024_09_19_0003@{ i }
+                        自然数@{ i }
+                        ( 足す@{ i } ( 後者関数@{ i } x_前 ) ( 後者関数@{ i } ( 後者関数@{ i } y_前 ) ) )
+                        ( 後者関数@{ i } ( 後者関数@{ i } ( 足す@{ i } x_前 ( 後者関数@{ i } y_前 ) ) ) )
+                        ( 後者関数@{ i } ( 後者関数@{ i } ( 後者関数@{ i } ( 足す@{ i } x_前 y_前 ) ) ) )
+                        ( 後者関数@{ i } ( 足す@{ i } ( 後者関数@{ i } x_前 ) ( 後者関数@{ i } y_前 ) ) )
+                        _
+                        _
+                        _
+                )
             .
             {
                 exact ( 恒等道@{ i } 自然数@{ i } ( 後者関数@{ i } ( 後者関数@{ i } ( 足す@{ i } x_前 ( 後者関数@{ i } y_前 ) ) ) ) ) .
@@ -5428,13 +5711,18 @@ Proof .
             exact ( 恒等道@{ i } 自然数@{ i } ( 後者関数@{ i } ゼロ@{ i } ) ) .
         }
         {
-            a_2024_09_19_0001
-                i
-                自然数@{ i }
-                ( 足す@{ i } ( 後者関数@{ i } ゼロ@{ i } ) ( 後者関数@{ i } y_前 ) )
-                ( 後者関数@{ i } ( 後者関数@{ i } ( 足す@{ i } ゼロ@{ i } y_前 ) ) )
-                ( 後者関数@{ i } ( 後者関数@{ i } y_前 ) )
-                ( 後者関数@{ i } ( 足す@{ i } ゼロ@{ i } ( 後者関数@{ i } y_前 ) ) )
+            refine
+                (
+                    A_2024_09_19_0003@{ i }
+                        自然数@{ i }
+                        ( 足す@{ i } ( 後者関数@{ i } ゼロ@{ i } ) ( 後者関数@{ i } y_前 ) )
+                        ( 後者関数@{ i } ( 後者関数@{ i } ( 足す@{ i } ゼロ@{ i } y_前 ) ) )
+                        ( 後者関数@{ i } ( 後者関数@{ i } y_前 ) )
+                        ( 後者関数@{ i } ( 足す@{ i } ゼロ@{ i } ( 後者関数@{ i } y_前 ) ) )
+                        _
+                        _
+                        _
+                )
             .
             {
                 exact ( 恒等道@{ i } 自然数@{ i } ( 後者関数@{ i } ( 後者関数@{ i } ( 足す@{ i } ゼロ@{ i } y_前 ) ) ) ) .
@@ -5479,13 +5767,18 @@ Proof .
             exact ( 恒等道@{ i } 自然数@{ i } ( 後者関数@{ i } ( 後者関数@{ i } x_前 ) ) ) .
         }
         {
-            a_2024_09_19_0001
-                i
-                自然数@{ i }
-                ( 足す@{ i } ( 後者関数@{ i } ( 後者関数@{ i } x_前 ) ) ( 後者関数@{ i } y_前 ) )
-                ( 後者関数@{ i } ( 後者関数@{ i } ( 足す@{ i } ( 後者関数@{ i } x_前 ) y_前 ) ) )
-                ( 後者関数@{ i } ( 後者関数@{ i } ( 後者関数@{ i } ( 足す@{ i } x_前 y_前 ) ) ) )
-                ( 後者関数@{ i } ( 足す@{ i } ( 後者関数@{ i } x_前 ) ( 後者関数@{ i } y_前 ) ) )
+            refine
+                (
+                    A_2024_09_19_0003@{ i }
+                        自然数@{ i }
+                        ( 足す@{ i } ( 後者関数@{ i } ( 後者関数@{ i } x_前 ) ) ( 後者関数@{ i } y_前 ) )
+                        ( 後者関数@{ i } ( 後者関数@{ i } ( 足す@{ i } ( 後者関数@{ i } x_前 ) y_前 ) ) )
+                        ( 後者関数@{ i } ( 後者関数@{ i } ( 後者関数@{ i } ( 足す@{ i } x_前 y_前 ) ) ) )
+                        ( 後者関数@{ i } ( 足す@{ i } ( 後者関数@{ i } x_前 ) ( 後者関数@{ i } y_前 ) ) )
+                        _
+                        _
+                        _
+                )
             .
             {
                 exact ( 恒等道@{ i } 自然数@{ i } ( 後者関数@{ i } ( 後者関数@{ i } ( 足す@{ i } ( 後者関数@{ i } x_前 ) y_前 ) ) ) ) .
@@ -5673,15 +5966,22 @@ Proof .
                 exact ( 恒等道@{ i } 自然数@{ i } ( 後者関数@{ i } ( 後者関数@{ i } ( 足す@{ i } m_前 n_前 ) ) ) ) .
             }
             {
-                a_2024_09_19_0003
-                    i
-                    自然数@{ i }
-                    ( 足す@{ i } ( 足す@{ i } ( 後者関数@{ i } m_前 ) ( 後者関数@{ i } n_前 ) ) ( 後者関数@{ i } o_前 ) )
-                    ( 後者関数@{ i } ( 後者関数@{ i } ( 足す@{ i } ( 後者関数@{ i } ( 足す@{ i } m_前 n_前 ) ) o_前 ) ) )
-                    ( 後者関数@{ i } ( 後者関数@{ i } ( 後者関数@{ i } ( 足す@{ i } ( 足す@{ i } m_前 n_前 ) o_前 ) ) ) )
-                    ( 後者関数@{ i } ( 後者関数@{ i } ( 後者関数@{ i } ( 足す@{ i } m_前 ( 足す@{ i } n_前 o_前 ) ) ) ) )
-                    ( 後者関数@{ i } ( 後者関数@{ i } ( 足す@{ i } m_前 ( 後者関数@{ i } ( 足す@{ i } n_前 o_前 ) ) ) ) )
-                    ( 足す@{ i } ( 後者関数@{ i } m_前 ) ( 足す@{ i } ( 後者関数@{ i } n_前 ) ( 後者関数@{ i } o_前 ) ) )
+                refine
+                    (
+                        A_2024_09_19_0005@{ i }
+                            自然数@{ i }
+                            ( 足す@{ i } ( 足す@{ i } ( 後者関数@{ i } m_前 ) ( 後者関数@{ i } n_前 ) ) ( 後者関数@{ i } o_前 ) )
+                            ( 後者関数@{ i } ( 後者関数@{ i } ( 足す@{ i } ( 後者関数@{ i } ( 足す@{ i } m_前 n_前 ) ) o_前 ) ) )
+                            ( 後者関数@{ i } ( 後者関数@{ i } ( 後者関数@{ i } ( 足す@{ i } ( 足す@{ i } m_前 n_前 ) o_前 ) ) ) )
+                            ( 後者関数@{ i } ( 後者関数@{ i } ( 後者関数@{ i } ( 足す@{ i } m_前 ( 足す@{ i } n_前 o_前 ) ) ) ) )
+                            ( 後者関数@{ i } ( 後者関数@{ i } ( 足す@{ i } m_前 ( 後者関数@{ i } ( 足す@{ i } n_前 o_前 ) ) ) ) )
+                            ( 足す@{ i } ( 後者関数@{ i } m_前 ) ( 足す@{ i } ( 後者関数@{ i } n_前 ) ( 後者関数@{ i } o_前 ) ) )
+                            _
+                            _
+                            _
+                            _
+                            _
+                    )
                 .
                 {
                     exact
@@ -5813,13 +6113,18 @@ Proof .
             exact ( 恒等道@{ i } 自然数@{ i } ( 後者関数@{ i } m_前 ) ) .
         }
         {
-            a_2024_09_19_0001
-                i
-                自然数@{ i }
-                ( 足す@{ i } ( 後者関数@{ i } m_前 ) ( 後者関数@{ i } n_前 ) )
-                ( 後者関数@{ i } ( 後者関数@{ i } ( 足す@{ i } m_前 n_前 ) ) )
-                ( 後者関数@{ i } ( 後者関数@{ i } ( 足す@{ i } n_前 m_前 ) ) )
-                ( 足す@{ i } ( 後者関数@{ i } n_前 ) ( 後者関数@{ i } m_前 ) )
+            refine
+                (
+                    A_2024_09_19_0003@{ i }
+                        自然数@{ i }
+                        ( 足す@{ i } ( 後者関数@{ i } m_前 ) ( 後者関数@{ i } n_前 ) )
+                        ( 後者関数@{ i } ( 後者関数@{ i } ( 足す@{ i } m_前 n_前 ) ) )
+                        ( 後者関数@{ i } ( 後者関数@{ i } ( 足す@{ i } n_前 m_前 ) ) )
+                        ( 足す@{ i } ( 後者関数@{ i } n_前 ) ( 後者関数@{ i } m_前 ) )
+                        _
+                        _
+                        _
+                )
             .
             {
                 exact ( 恒等道@{ i } 自然数@{ i } ( 後者関数@{ i } ( 後者関数@{ i } ( 足す@{ i } m_前 n_前 ) ) ) ) .
