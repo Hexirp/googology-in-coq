@@ -3902,6 +3902,8 @@ End A_2024_09_07_0000 .
 
 (** 道に関するモジュールを定義します。 *)
 
+(** 道の型の定義と、それに付随する単純な関数の定義をしています。関数の性質についても、ある程度は証明していますが、関数の引数が「恒等道」または「結合」または「反転」または「恒等関数」または「合成」である場合の性質だけです。 *)
+
 Module A_2024_09_08_0000 .
 
 (** << A_2024_08_26_0002 >> を取り込みます。 *)
@@ -5508,6 +5510,98 @@ Proof .
     }
     {
         exact ( 恒等道@{ i } ( 道@{ i } A w y ) ( 結合@{ i } A w y w ( 恒等道@{ i } A w ) r ) ) .
+    }
+Defined .
+
+(** [p] と [q] を結合した道が [r] と等しいならば、 [p] と [r] と [q] を反転した道を結合した道は等しくなります。 *)
+
+Definition A_2024_09_20_0002@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall x : A ,
+        forall y : A ,
+        forall z : A ,
+        forall p : 道@{ i } A x y ,
+        forall q : 道@{ i } A x z ,
+        forall r : 道@{ i } A y z ,
+        道@{ i } ( 道@{ i } A x z ) ( 結合@{ i } A x z y p r ) q
+        ->
+        道@{ i } ( 道@{ i } A x y ) p ( 結合@{ i } A x y z q ( 反転@{ i } A z y r ) )
+.
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun x : A => _ ) .
+    refine ( fun y : A => _ ) .
+    refine ( fun z : A => _ ) .
+    refine ( fun p : 道@{ i } A x y => _ ) .
+    refine ( fun q : 道@{ i } A x z => _ ) .
+    refine ( fun r : 道@{ i } A y z => _ ) .
+    refine
+        (
+            let
+                a
+                    :
+                        forall p_0 : 道@{ i } A x y ,
+                        forall q_0 : 道@{ i } A x z ,
+                        道@{ i } ( 道@{ i } A x z ) ( 結合@{ i } A x z y p_0 r ) q_0
+                        ->
+                        道@{ i } ( 道@{ i } A x y ) p_0 ( 結合@{ i } A x y z q_0 ( 反転@{ i } A z y r ) )
+                    := _
+            in
+                a p q
+        )
+    .
+    refine
+        (
+            道.依存型の場合分け@{ i }
+                A
+                y
+                z
+                r
+                (
+                    fun y_ : A =>
+                    fun z_ : A =>
+                    fun r_ : 道@{ i } A y_ z_ =>
+                    forall p_0 : 道@{ i } A x y_ ,
+                    forall q_0 : 道@{ i } A x z_ ,
+                    道@{ i } ( 道@{ i } A x z_ ) ( 結合@{ i } A x z_ y_ p_0 r_ ) q_0
+                    ->
+                    道@{ i } ( 道@{ i } A x y_ ) p_0 ( 結合@{ i } A x y_ z_ q_0 ( 反転@{ i } A z_ y_ r_ ) )
+                )
+                ( fun w : A => _ )
+        )
+    .
+    refine ( fun p_0 : 道@{ i } A x w => _ ) .
+    refine ( fun q_0 : 道@{ i } A x w => _ ) .
+    refine ( fun h : 道@{ i } ( 道@{ i } A x w ) ( 結合@{ i } A x w w p_0 ( 恒等道@{ i } A w ) ) q_0 => _ ) .
+    refine
+        (
+            A_2024_09_19_0004@{ i }
+                ( 道@{ i } A x w )
+                p_0
+                ( 結合@{ i } A x w w p_0 ( 恒等道@{ i } A w ) )
+                q_0
+                ( 結合@{ i } A x w w q_0 ( 恒等道@{ i } A w ) )
+                ( 結合@{ i } A x w w q_0 ( 反転@{ i } A w w ( 恒等道@{ i } A w ) ) )
+                _
+                _
+                _
+                _
+        )
+    .
+    {
+        refine ( 反転@{ i } ( 道@{ i } A x w ) p_0 ( 結合@{ i } A x w w p_0 ( 恒等道@{ i } A w ) ) _ ) .
+        exact ( A_2024_07_25_0001@{ i } A x w p_0 ) .
+    }
+    {
+        exact h .
+    }
+    {
+        refine ( 反転@{ i } ( 道@{ i } A x w ) q_0 ( 結合@{ i } A x w w q_0 ( 恒等道@{ i } A w ) ) _ ) .
+        exact ( A_2024_07_25_0001@{ i } A x w q_0 ) .
+    }
+    {
+        exact ( 恒等道@{ i } ( 道@{ i } A x w ) ( 結合@{ i } A x w w q_0 ( 恒等道@{ i } A w ) ) ) .
     }
 Defined .
 
