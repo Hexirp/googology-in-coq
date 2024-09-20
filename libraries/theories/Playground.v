@@ -4913,6 +4913,70 @@ Proof .
     exact ( 恒等道@{ i } ( 道@{ i } ( B x ) ( f x ) ( f x ) ) ( 恒等道@{ i } ( B x ) ( f x ) ) ) .
 Defined .
 
+(** [p] と [q] を結合した道が [r] と等しいならば、 [q] と [p] を反転した道と [r] を結合した道は等しくなります。 *)
+
+Definition A_2024_09_20_0000@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall x : A ,
+        forall y : A ,
+        forall z : A ,
+        forall p : 道@{ i } A x y ,
+        forall q : 道@{ i } A z x ,
+        forall r : 道@{ i } A z y ,
+        道@{ i } ( 道@{ i } A z y ) ( 結合@{ i } A z y x q p ) r
+        ->
+        道@{ i } ( 道@{ i } A x y ) p ( 結合@{ i } A x y z ( 反転@{ i } A x z q ) r )
+.
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun x : A => _ ) .
+    refine ( fun y : A => _ ) .
+    refine ( fun z : A => _ ) .
+    refine ( fun p : 道@{ i } A x y => _ ) .
+    refine
+        (
+            道.依存型の場合分け@{ i }
+                A
+                x
+                y
+                p
+                (
+                    fun x_ : A =>
+                    fun y_ : A =>
+                    fun p_ : 道@{ i } A x_ y_ =>
+                    forall q : 道@{ i } A z x_ ,
+                    forall r : 道@{ i } A z y_ ,
+                    道@{ i } ( 道@{ i } A z y_ ) ( 結合@{ i } A z y_ x_ q p_ ) r
+                    ->
+                    道@{ i } ( 道@{ i } A x_ y_ ) p_ ( 結合@{ i } A x_ y_ z ( 反転@{ i } A x_ z q ) r )
+                )
+                ( fun w : A => _ )
+        )
+    .
+    refine ( fun q : 道@{ i } A z w => _ ) .
+    refine
+        (
+            道.依存型の場合分け@{ i }
+                A
+                z
+                w
+                q
+                (
+                    fun z_ : A =>
+                    fun w_ : A =>
+                    fun q_ : 道@{ i } A z_ w_ =>
+                    forall r : 道@{ i } A z_ w_ ,
+                    道@{ i } ( 道@{ i } A z_ w_ ) ( 結合@{ i } A z_ w_ w_ q_ ( 恒等道@{ i } A w_ ) ) r
+                    ->
+                    道@{ i } ( 道@{ i } A w_ w_ ) ( 恒等道@{ i } A w_ ) ( 結合@{ i } A w_ w_ z_ ( 反転@{ i } A w_ z_ q_ ) r )
+                )
+                ( fun v : A => _ )
+        )
+    .
+    admit .
+Admitted .
+
 End A_2024_09_08_0000 .
 
 Module 道 := A_2024_09_08_0000 .
