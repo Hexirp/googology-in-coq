@@ -5414,6 +5414,10 @@ End A_2024_09_19_0000 .
 
 Module A_2024_09_20_0000 .
 
+(** << A_2024_08_30_0000 >> を取り込みます。 *)
+
+Import A_2024_08_30_0000 .
+
 (** << A_2024_09_08_0000 >> を取り込みます。 *)
 
 Import A_2024_09_08_0000 .
@@ -5603,6 +5607,67 @@ Proof .
     {
         exact ( 恒等道@{ i } ( 道@{ i } A x w ) ( 結合@{ i } A x w w q_0 ( 恒等道@{ i } A w ) ) ) .
     }
+Defined .
+
+(** [A] の道を [依存直和型@{ i } A B] の道へ持ち上げます。 *)
+
+Definition A_2024_09_21_0000@{ i }
+    :
+        forall A : Type@{ i } ,
+        forall B : A -> Type@{ i } ,
+        forall x : A ,
+        forall u : B x ,
+        forall y : A ,
+        forall p : 道@{ i } A x y ,
+        道@{ i }
+            ( 依存直和型@{ i } A B )
+            ( 依存直和型.構築子@{ i } A B x u )
+            ( 依存直和型.構築子@{ i } A B y ( 輸送@{ i } A B y x p u ) )
+.
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun B : A -> Type@{ i } => _ ) .
+    refine ( fun x : A => _ ) .
+    refine ( fun u : B x => _ ) .
+    refine ( fun y : A => _ ) .
+    refine ( fun p : 道@{ i } A x y => _ ) .
+    refine
+        (
+            let
+                a
+                    :
+                        forall u_0 : B x ,
+                        道@{ i }
+                            ( 依存直和型@{ i } A B )
+                            ( 依存直和型.構築子@{ i } A B x u_0 )
+                            ( 依存直和型.構築子@{ i } A B y ( 輸送@{ i } A B y x p u_0 ) )
+                    := _
+            in
+                a u
+        )
+    .
+    refine
+        (
+            道.依存型の場合分け@{ i }
+                A
+                x
+                y
+                p
+                (
+                    fun x_ : A =>
+                    fun y_ : A =>
+                    fun p_ : 道@{ i } A x_ y_ =>
+                    forall u_0 : B x_ ,
+                    道@{ i }
+                        ( 依存直和型@{ i } A B )
+                        ( 依存直和型.構築子@{ i } A B x_ u_0 )
+                        ( 依存直和型.構築子@{ i } A B y_ ( 輸送@{ i } A B y_ x_ p_ u_0 ) )
+                )
+                ( fun z : A => _ )
+        )
+    .
+    refine ( fun u_0 : B z => _ ) .
+    exact ( 恒等道@{ i } ( 依存直和型@{ i } A B ) ( 依存直和型.構築子@{ i } A B z u_0 ) ) .
 Defined .
 
 End A_2024_09_20_0000 .
