@@ -5670,6 +5670,80 @@ Proof .
     exact ( 恒等道@{ i } ( 依存直和型@{ i } A B ) ( 依存直和型.構築子@{ i } A B z u_0 ) ) .
 Defined .
 
+(** [p] と [q] を結合した道と [r] を結合した道と [s] を結合した道と [p] と [q] と [r] を結合した道と結合した道と [s] を結合した道は等しいです。 *)
+
+Definition A_2024_09_21_0001@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall x : A ,
+        forall y : A ,
+        forall z : A ,
+        forall w : A ,
+        forall v : A ,
+        forall p : 道@{ i } A x v ,
+        forall q : 道@{ i } A v w ,
+        forall r : 道@{ i } A w z ,
+        forall s : 道@{ i } A z y ,
+        道@{ i }
+            ( 道@{ i } A x y )
+            ( 結合@{ i } A x y z ( 結合@{ i } A x z w ( 結合@{ i } A x w v p q ) r ) s )
+            ( 結合@{ i } A x y z ( 結合@{ i } A x z v p ( 結合@{ i } A v z w q r ) ) s )
+.
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun x : A => _ ) .
+    refine ( fun y : A => _ ) .
+    refine ( fun z : A => _ ) .
+    refine ( fun w : A => _ ) .
+    refine ( fun v : A => _ ) .
+    refine ( fun p : 道@{ i } A x v => _ ) .
+    refine
+        (
+            道.依存型の場合分け@{ i }
+                A
+                x
+                v
+                p
+                (
+                    fun x_ : A =>
+                    fun v_ : A =>
+                    fun p_ : 道@{ i } A x_ v_ =>
+                    forall q : 道@{ i } A v_ w ,
+                    forall r : 道@{ i } A w z ,
+                    forall s : 道@{ i } A z y ,
+                    道@{ i }
+                        ( 道@{ i } A x_ y )
+                        ( 結合@{ i } A x_ y z ( 結合@{ i } A x_ z w ( 結合@{ i } A x_ w v_ p_ q ) r ) s )
+                        ( 結合@{ i } A x_ y z ( 結合@{ i } A x_ z v_ p_ ( 結合@{ i } A v_ z w q r ) ) s )
+                )
+                ( fun u : A => _ )
+        )
+    .
+    refine ( fun q : 道@{ i } A u w => _ ) .
+    refine
+        (
+            道.依存型の場合分け@{ i }
+                A
+                u
+                w
+                q
+                (
+                    fun u_ : A =>
+                    fun w_ : A =>
+                    fun q_ : 道@{ i } A u_ w_ =>
+                    forall r : 道@{ i } A w_ z ,
+                    forall s : 道@{ i } A z y ,
+                    道@{ i }
+                        ( 道@{ i } A u_ y )
+                        ( 結合@{ i } A u_ y z ( 結合@{ i } A u_ z w_ ( 結合@{ i } A u_ w_ u_ ( 恒等道@{ i } A u_ ) q_ ) r ) s )
+                        ( 結合@{ i } A u_ y z ( 結合@{ i } A u_ z u_ ( 恒等道@{ i } A u_ ) ( 結合@{ i } A u_ z w_ q_ r ) ) s )
+                )
+                ( fun t : A => _ )
+        )
+    .
+    admit .
+Admitted .
+
 End A_2024_09_20_0000 .
 
 (** ** 自然数に関する定理 *)
