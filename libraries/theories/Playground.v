@@ -4011,7 +4011,7 @@ End A_2024_07_22_0009 .
 
 Module 道 := A_2024_07_22_0009 .
 
-(** 恒等道です。 *)
+(** 恒等道です。「恒等道」は "identity path" の訳語です。 *)
 
 Definition A_2024_09_09_0000@{ i | } : forall A : Type@{ i } , forall x : A , 道@{ i } A x x := 道.構築子@{ i } .
 
@@ -5675,74 +5675,115 @@ Defined .
 Definition A_2024_09_21_0001@{ i | }
     :
         forall A : Type@{ i } ,
-        forall x : A ,
-        forall y : A ,
-        forall z : A ,
-        forall w : A ,
-        forall v : A ,
-        forall p : 道@{ i } A x v ,
-        forall q : 道@{ i } A v w ,
-        forall r : 道@{ i } A w z ,
-        forall s : 道@{ i } A z y ,
+        forall x_0 : A ,
+        forall x_1 : A ,
+        forall x_2 : A ,
+        forall x_3 : A ,
+        forall x_4 : A ,
+        forall p : 道@{ i } A x_0 x_4 ,
+        forall q : 道@{ i } A x_4 x_3 ,
+        forall r : 道@{ i } A x_3 x_2 ,
+        forall s : 道@{ i } A x_2 x_1 ,
         道@{ i }
-            ( 道@{ i } A x y )
-            ( 結合@{ i } A x y z ( 結合@{ i } A x z w ( 結合@{ i } A x w v p q ) r ) s )
-            ( 結合@{ i } A x y z ( 結合@{ i } A x z v p ( 結合@{ i } A v z w q r ) ) s )
+            ( 道@{ i } A x_0 x_1 )
+            ( 結合@{ i } A x_0 x_1 x_2 ( 結合@{ i } A x_0 x_2 x_3 ( 結合@{ i } A x_0 x_3 x_4 p q ) r ) s )
+            ( 結合@{ i } A x_0 x_1 x_2 ( 結合@{ i } A x_0 x_2 x_4 p ( 結合@{ i } A x_4 x_2 x_3 q r ) ) s )
 .
 Proof .
     refine ( fun A : Type@{ i } => _ ) .
-    refine ( fun x : A => _ ) .
-    refine ( fun y : A => _ ) .
-    refine ( fun z : A => _ ) .
-    refine ( fun w : A => _ ) .
-    refine ( fun v : A => _ ) .
-    refine ( fun p : 道@{ i } A x v => _ ) .
+    refine ( fun x_0 : A => _ ) .
+    refine ( fun x_1 : A => _ ) .
+    refine ( fun x_2 : A => _ ) .
+    refine ( fun x_3 : A => _ ) .
+    refine ( fun x_4 : A => _ ) .
+    refine ( fun p : 道@{ i } A x_0 x_4 => _ ) .
     refine
         (
             道.依存型の場合分け@{ i }
                 A
-                x
-                v
+                x_0
+                x_4
                 p
                 (
-                    fun x_ : A =>
-                    fun v_ : A =>
-                    fun p_ : 道@{ i } A x_ v_ =>
-                    forall q : 道@{ i } A v_ w ,
-                    forall r : 道@{ i } A w z ,
-                    forall s : 道@{ i } A z y ,
+                    fun x_0_ : A =>
+                    fun x_4_ : A =>
+                    fun p_ : 道@{ i } A x_0_ x_4_ =>
+                    forall q : 道@{ i } A x_4_ x_3 ,
+                    forall r : 道@{ i } A x_3 x_2 ,
+                    forall s : 道@{ i } A x_2 x_1 ,
                     道@{ i }
-                        ( 道@{ i } A x_ y )
-                        ( 結合@{ i } A x_ y z ( 結合@{ i } A x_ z w ( 結合@{ i } A x_ w v_ p_ q ) r ) s )
-                        ( 結合@{ i } A x_ y z ( 結合@{ i } A x_ z v_ p_ ( 結合@{ i } A v_ z w q r ) ) s )
+                        ( 道@{ i } A x_0_ x_1 )
+                        ( 結合@{ i } A x_0_ x_1 x_2 ( 結合@{ i } A x_0_ x_2 x_3 ( 結合@{ i } A x_0_ x_3 x_4_ p_ q ) r ) s )
+                        ( 結合@{ i } A x_0_ x_1 x_2 ( 結合@{ i } A x_0_ x_2 x_4_ p_ ( 結合@{ i } A x_4_ x_2 x_3 q r ) ) s )
                 )
-                ( fun u : A => _ )
+                ( fun x_5 : A => _ )
         )
     .
-    refine ( fun q : 道@{ i } A u w => _ ) .
+    refine ( fun q : 道@{ i } A x_5 x_3 => _ ) .
     refine
         (
             道.依存型の場合分け@{ i }
                 A
-                u
-                w
+                x_5
+                x_3
                 q
                 (
-                    fun u_ : A =>
-                    fun w_ : A =>
-                    fun q_ : 道@{ i } A u_ w_ =>
-                    forall r : 道@{ i } A w_ z ,
-                    forall s : 道@{ i } A z y ,
+                    fun x_5_ : A =>
+                    fun x_3_ : A =>
+                    fun q_ : 道@{ i } A x_5_ x_3_ =>
+                    forall r : 道@{ i } A x_3_ x_2 ,
+                    forall s : 道@{ i } A x_2 x_1 ,
                     道@{ i }
-                        ( 道@{ i } A u_ y )
-                        ( 結合@{ i } A u_ y z ( 結合@{ i } A u_ z w_ ( 結合@{ i } A u_ w_ u_ ( 恒等道@{ i } A u_ ) q_ ) r ) s )
-                        ( 結合@{ i } A u_ y z ( 結合@{ i } A u_ z u_ ( 恒等道@{ i } A u_ ) ( 結合@{ i } A u_ z w_ q_ r ) ) s )
+                        ( 道@{ i } A x_5_ x_1 )
+                        ( 結合@{ i } A x_5_ x_1 x_2 ( 結合@{ i } A x_5_ x_2 x_3_ ( 結合@{ i } A x_5_ x_3_ x_5_ ( 恒等道@{ i } A x_5_ ) q_ ) r ) s )
+                        ( 結合@{ i } A x_5_ x_1 x_2 ( 結合@{ i } A x_5_ x_2 x_5_ ( 恒等道@{ i } A x_5_ ) ( 結合@{ i } A x_5_ x_2 x_3_ q_ r ) ) s )
                 )
-                ( fun t : A => _ )
+                ( fun x_6 : A => _ )
         )
     .
-    admit .
-Admitted .
+    refine ( fun r : 道@{ i } A x_6 x_2 => _ ) .
+    refine
+        (
+            道.依存型の場合分け@{ i }
+                A
+                x_6
+                x_2
+                r
+                (
+                    fun x_6_ : A =>
+                    fun x_2_ : A =>
+                    fun r_ : 道@{ i } A x_6_ x_2_ =>
+                    forall s : 道@{ i } A x_2_ x_1 ,
+                    道@{ i }
+                        ( 道@{ i } A x_6_ x_1 )
+                        ( 結合@{ i } A x_6_ x_1 x_2_ ( 結合@{ i } A x_6_ x_2_ x_6_ ( 結合@{ i } A x_6_ x_6_ x_6_ ( 恒等道@{ i } A x_6_ ) ( 恒等道@{ i } A x_6_ ) ) r_ ) s )
+                        ( 結合@{ i } A x_6_ x_1 x_2_ ( 結合@{ i } A x_6_ x_2_ x_6_ ( 恒等道@{ i } A x_6_ ) ( 結合@{ i } A x_6_ x_2_ x_6_ ( 恒等道@{ i } A x_6_ ) r_ ) ) s )
+                )
+                ( fun x_7 : A => _ )
+        )
+    .
+    refine ( fun s : 道@{ i } A x_7 x_1 => _ ) .
+    refine
+        (
+            道.依存型の場合分け@{ i }
+                A
+                x_7
+                x_1
+                s
+                (
+                    fun x_7_ : A =>
+                    fun x_1_ : A =>
+                    fun s_ : 道@{ i } A x_7_ x_1_ =>
+                    道@{ i }
+                        ( 道@{ i } A x_7_ x_1_ )
+                        ( 結合@{ i } A x_7_ x_1_ x_7_ ( 結合@{ i } A x_7_ x_7_ x_7_ ( 結合@{ i } A x_7_ x_7_ x_7_ ( 恒等道@{ i } A x_7_ ) ( 恒等道@{ i } A x_7_ ) ) ( 恒等道@{ i } A x_7_ ) ) s_ )
+                        ( 結合@{ i } A x_7_ x_1_ x_7_ ( 結合@{ i } A x_7_ x_7_ x_7_ ( 恒等道@{ i } A x_7_ ) ( 結合@{ i } A x_7_ x_7_ x_7_ ( 恒等道@{ i } A x_7_ ) ( 恒等道@{ i } A x_7_ ) ) ) s_ )
+                )
+                ( fun x_8 : A => _ )
+        )
+    .
+    exact ( 恒等道@{ i } ( 道@{ i } A x_8 x_8 ) ( 恒等道@{ i } A x_8 ) ) .
+Defined .
 
 End A_2024_09_20_0000 .
 
