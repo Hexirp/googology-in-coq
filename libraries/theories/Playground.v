@@ -6245,6 +6245,116 @@ Proof .
     exact ( 恒等道@{ i } ( 道@{ i } A x_8 x_8 ) ( 恒等道@{ i } A x_8 ) ) .
 Defined .
 
+(** Mac Lane pentagon です。 *)
+
+Definition A_2024_09_22_0000@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall x_0 : A ,
+        forall x_1 : A ,
+        forall x_2 : A ,
+        forall x_3 : A ,
+        forall x_4 : A ,
+        forall p : 道@{ i } A x_0 x_4 ,
+        forall q : 道@{ i } A x_4 x_3 ,
+        forall r : 道@{ i } A x_3 x_2 ,
+        forall s : 道@{ i } A x_2 x_1 ,
+        道@{ i }
+            (
+                道@{ i }
+                    ( 道@{ i } A x_0 x_1 )
+                    ( 結合@{ i } A x_0 x_1 x_2 ( 結合@{ i } A x_0 x_2 x_3 ( 結合@{ i } A x_0 x_3 x_4 p q ) r ) s )
+                    ( 結合@{ i } A x_0 x_1 x_4 p ( 結合@{ i } A x_4 x_1 x_3 q ( 結合@{ i } A x_3 x_1 x_2 r s ) ) )
+            )
+            (
+                結合@{ i }
+                    ( 道@{ i } A x_0 x_1 )
+                    ( 結合@{ i } A x_0 x_1 x_2 ( 結合@{ i } A x_0 x_2 x_3 ( 結合@{ i } A x_0 x_3 x_4 p q ) r ) s )
+                    ( 結合@{ i } A x_0 x_1 x_4 p ( 結合@{ i } A x_4 x_1 x_3 q ( 結合@{ i } A x_3 x_1 x_2 r s ) ) )
+                    ( 結合@{ i } A x_0 x_1 x_2 ( 結合@{ i } A x_0 x_2 x_4 p ( 結合@{ i } A x_4 x_2 x_3 q r ) ) s )
+                    ( A_2024_09_21_0001@{ i } A x_0 x_1 x_2 x_3 x_4 p q r s )
+                    (
+                        結合@{ i }
+                            ( 道@{ i } A x_0 x_1 )
+                            ( 結合@{ i } A x_0 x_1 x_2 ( 結合@{ i } A x_0 x_2 x_4 p ( 結合@{ i } A x_4 x_2 x_3 q r ) ) s )
+                            ( 結合@{ i } A x_0 x_1 x_4 p ( 結合@{ i } A x_4 x_1 x_3 q ( 結合@{ i } A x_3 x_1 x_2 r s ) ) )
+                            ( 結合@{ i } A x_0 x_1 x_4 p ( 結合@{ i } A x_4 x_1 x_2 ( 結合@{ i } A x_4 x_2 x_3 q r ) s ) )
+                            ( A_2024_09_21_0002@{ i } A x_0 x_1 x_2 x_4 x_3 p q r s )
+                            ( A_2024_09_21_0003@{ i } A x_0 x_1 x_4 x_2 x_3 p q r s )
+                    )
+            )
+            (
+                結合@{ i }
+                    ( 道@{ i } A x_0 x_1 )
+                    ( 結合@{ i } A x_0 x_1 x_2 ( 結合@{ i } A x_0 x_2 x_3 ( 結合@{ i } A x_0 x_3 x_4 p q ) r ) s )
+                    ( 結合@{ i } A x_0 x_1 x_4 p ( 結合@{ i } A x_4 x_1 x_3 q ( 結合@{ i } A x_3 x_1 x_2 r s ) ) )
+                    ( 結合@{ i } A x_0 x_1 x_3 ( 結合@{ i } A x_0 x_3 x_4 p q ) ( 結合@{ i } A x_3 x_1 x_2 r s ) )
+                    ( A_2024_09_21_0004@{ i } A x_0 x_1 x_2 x_3 x_4 p q r s )
+                    ( A_2024_09_21_0005@{ i } A x_0 x_1 x_3 x_4 x_2 p q r s )
+            )
+.
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun x_0 : A => _ ) .
+    refine ( fun x_1 : A => _ ) .
+    refine ( fun x_2 : A => _ ) .
+    refine ( fun x_3 : A => _ ) .
+    refine ( fun x_4 : A => _ ) .
+    refine ( fun p : 道@{ i } A x_0 x_4 => _ ) .
+    refine
+        (
+            道.依存型の場合分け@{ i }
+                A
+                x_0
+                x_4
+                p
+                (
+                    fun x_0_ : A =>
+                    fun x_4_ : A =>
+                    fun p_ : 道@{ i } A x_0_ x_4_ =>
+                    forall q : 道@{ i } A x_4_ x_3 ,
+                    forall r : 道@{ i } A x_3 x_2 ,
+                    forall s : 道@{ i } A x_2 x_1 ,
+                    道@{ i }
+                        (
+                            道@{ i }
+                                ( 道@{ i } A x_0_ x_1 )
+                                ( 結合@{ i } A x_0_ x_1 x_2 ( 結合@{ i } A x_0_ x_2 x_3 ( 結合@{ i } A x_0_ x_3 x_4_ p_ q ) r ) s )
+                                ( 結合@{ i } A x_0_ x_1 x_4_ p_ ( 結合@{ i } A x_4_ x_1 x_3 q ( 結合@{ i } A x_3 x_1 x_2 r s ) ) )
+                        )
+                        (
+                            結合@{ i }
+                                ( 道@{ i } A x_0_ x_1 )
+                                ( 結合@{ i } A x_0_ x_1 x_2 ( 結合@{ i } A x_0_ x_2 x_3 ( 結合@{ i } A x_0_ x_3 x_4_ p_ q ) r ) s )
+                                ( 結合@{ i } A x_0_ x_1 x_4_ p_ ( 結合@{ i } A x_4_ x_1 x_3 q ( 結合@{ i } A x_3 x_1 x_2 r s ) ) )
+                                ( 結合@{ i } A x_0_ x_1 x_2 ( 結合@{ i } A x_0_ x_2 x_4_ p_ ( 結合@{ i } A x_4_ x_2 x_3 q r ) ) s )
+                                ( A_2024_09_21_0001@{ i } A x_0_ x_1 x_2 x_3 x_4_ p_ q r s )
+                                (
+                                    結合@{ i }
+                                        ( 道@{ i } A x_0_ x_1 )
+                                        ( 結合@{ i } A x_0_ x_1 x_2 ( 結合@{ i } A x_0_ x_2 x_4_ p_ ( 結合@{ i } A x_4_ x_2 x_3 q r ) ) s )
+                                        ( 結合@{ i } A x_0_ x_1 x_4_ p_ ( 結合@{ i } A x_4_ x_1 x_3 q ( 結合@{ i } A x_3 x_1 x_2 r s ) ) )
+                                        ( 結合@{ i } A x_0_ x_1 x_4_ p_ ( 結合@{ i } A x_4_ x_1 x_2 ( 結合@{ i } A x_4_ x_2 x_3 q r ) s ) )
+                                        ( A_2024_09_21_0002@{ i } A x_0_ x_1 x_2 x_4_ x_3 p_ q r s )
+                                        ( A_2024_09_21_0003@{ i } A x_0_ x_1 x_4_ x_2 x_3 p_ q r s )
+                                )
+                        )
+                        (
+                            結合@{ i }
+                                ( 道@{ i } A x_0_ x_1 )
+                                ( 結合@{ i } A x_0_ x_1 x_2 ( 結合@{ i } A x_0_ x_2 x_3 ( 結合@{ i } A x_0_ x_3 x_4_ p_ q ) r ) s )
+                                ( 結合@{ i } A x_0_ x_1 x_4_ p_ ( 結合@{ i } A x_4_ x_1 x_3 q ( 結合@{ i } A x_3 x_1 x_2 r s ) ) )
+                                ( 結合@{ i } A x_0_ x_1 x_3 ( 結合@{ i } A x_0_ x_3 x_4_ p_ q ) ( 結合@{ i } A x_3 x_1 x_2 r s ) )
+                                ( A_2024_09_21_0004@{ i } A x_0_ x_1 x_2 x_3 x_4_ p_ q r s )
+                                ( A_2024_09_21_0005@{ i } A x_0_ x_1 x_3 x_4_ x_2 p_ q r s )
+                        )
+                )
+                ( fun x_5 : A => _ )
+        )
+    .
+    admit .
+Admitted .
+
 End A_2024_09_20_0000 .
 
 (** ** 自然数に関する定理 *)
