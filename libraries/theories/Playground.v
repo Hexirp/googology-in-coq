@@ -5482,6 +5482,39 @@ Definition A_2024_09_24_0001@{ i | }
         結合@{ i } A x_0 x_1 x_2 p ( 結合@{ i } A x_2 x_1 x_3 q r )
 .
 
+(** [p] と [q] を結合した道と [r] を結合した道と [s] を結合した道です。 *)
+
+Definition A_2024_09_24_0002@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall x_0 : A ,
+        forall x_1 : A ,
+        forall x_2 : A ,
+        forall x_3 : A ,
+        forall x_4 : A ,
+        道@{ i } A x_0 x_2
+        ->
+        道@{ i } A x_2 x_3
+        ->
+        道@{ i } A x_3 x_4
+        ->
+        道@{ i } A x_4 x_1
+        ->
+        道@{ i } A x_0 x_1
+    :=
+        fun A : Type@{ i } =>
+        fun x_0 : A =>
+        fun x_1 : A =>
+        fun x_2 : A =>
+        fun x_3 : A =>
+        fun x_4 : A =>
+        fun p : 道@{ i } A x_0 x_2 =>
+        fun q : 道@{ i } A x_2 x_3 =>
+        fun r : 道@{ i } A x_3 x_4 =>
+        fun s : 道@{ i } A x_4 x_1 =>
+        結合@{ i } A x_0 x_1 x_4 ( 結合@{ i } A x_0 x_4 x_3 ( 結合@{ i } A x_0 x_3 x_2 p q ) r ) s
+.
+
 (** [p] と [q] を結合した道が [r] と等しいならば、 [q] と [p] を反転した道と [r] を結合した道は等しくなります。 *)
 
 Definition A_2024_09_20_0001@{ i | }
