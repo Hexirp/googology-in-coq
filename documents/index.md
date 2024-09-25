@@ -14,7 +14,7 @@ googology-in-coq は、プログラムとして証明を書くことを目標と
 Unset Elimination Schemes .
 ```
 
-宇宙多相 (universe polymorphic) については必ず使用します。次のような指定を Vernacular ファイルの最初で行ってください。
+universe polymorphism については必ず使用します。次のような指定を Vernacular ファイルの最初で行ってください。
 
 ```
 Set Universe Polymorphism .
