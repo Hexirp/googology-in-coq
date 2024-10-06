@@ -4408,12 +4408,11 @@ Definition 恒等道と甲の結合と甲は等しい@{ i | }
     ( x : A )
     ( y : A )
     ( p : 道@{ i } A x y )
-    :
-        道@{ i } ( 道@{ i } A x y ) ( 結合@{ i } A x y x ( 恒等道@{ i } A x ) p ) p
+    : 道@{ i } ( 道@{ i } A x y ) ( 結合@{ i } A x y x ( 恒等道@{ i } A x ) p ) p
     := A_2024_07_25_0000@{ i } A x y p
 .
 
-(** [p] と恒等道を結合した道は [p] に等しくなります。 *)
+(** [p] と恒等道の結合と [p] は等しいです。 *)
 
 Definition A_2024_07_25_0001@{ i | }
     :
@@ -4446,6 +4445,15 @@ Proof .
     .
     exact ( 恒等道@{ i } ( 道@{ i } A z z ) ( 恒等道@{ i } A z ) ) .
 Defined .
+
+Definition 甲と恒等道の結合と甲は等しい@{ i | }
+    ( A : Type@{ i } )
+    ( x : A )
+    ( y : A )
+    ( p : 道@{ i } A x y )
+    : 道@{ i } ( 道@{ i } A x y ) ( 結合@{ i } A x y y p ( 恒等道@{ i } A y ) ) p
+    := A_2024_07_25_0001@{ i } A x y p
+.
 
 (** [p] と [p] を反転した道を結合した道は恒等道に等しくなります。 *)
 
@@ -5950,14 +5958,14 @@ Proof .
     .
     {
         refine ( 反転@{ i } ( 道@{ i } A w y ) p_0 ( 結合@{ i } A w y w ( 恒等道@{ i } A w ) p_0 ) _ ) .
-        exact ( A_2024_07_25_0000@{ i } A w y p_0 ) .
+        exact ( 恒等道と甲の結合と甲は等しい@{ i } A w y p_0 ) .
     }
     {
         exact h .
     }
     {
         refine ( 反転@{ i } ( 道@{ i } A w y ) r ( 結合@{ i } A w y w ( 恒等道@{ i } A w ) r ) _ ) .
-        exact ( A_2024_07_25_0000@{ i } A w y r ) .
+        exact ( 恒等道と甲の結合と甲は等しい@{ i } A w y r ) .
     }
     {
         exact ( 恒等道@{ i } ( 道@{ i } A w y ) ( 結合@{ i } A w y w ( 恒等道@{ i } A w ) r ) ) .
@@ -6042,14 +6050,14 @@ Proof .
     .
     {
         refine ( 反転@{ i } ( 道@{ i } A x w ) p_0 ( 結合@{ i } A x w w p_0 ( 恒等道@{ i } A w ) ) _ ) .
-        exact ( A_2024_07_25_0001@{ i } A x w p_0 ) .
+        exact ( 甲と恒等道の結合と甲は等しい@{ i } A x w p_0 ) .
     }
     {
         exact h .
     }
     {
         refine ( 反転@{ i } ( 道@{ i } A x w ) q_0 ( 結合@{ i } A x w w q_0 ( 恒等道@{ i } A w ) ) _ ) .
-        exact ( A_2024_07_25_0001@{ i } A x w q_0 ) .
+        exact ( 甲と恒等道の結合と甲は等しい@{ i } A x w q_0 ) .
     }
     {
         exact ( 恒等道@{ i } ( 道@{ i } A x w ) ( 結合@{ i } A x w w q_0 ( 恒等道@{ i } A w ) ) ) .
