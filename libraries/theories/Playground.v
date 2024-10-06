@@ -4263,6 +4263,92 @@ Definition 恒等道と恒等道の結合と恒等道は等しい@{ i | }
     := A_2024_07_22_0027@{ i } A x
 .
 
+(** 恒等道と [p] の結合と [p] は等しいです。 *)
+
+Definition A_2024_07_25_0000@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall x : A ,
+        forall y : A ,
+        forall p : 道@{ i } A x y ,
+        道@{ i } ( 道@{ i } A x y ) ( 結合@{ i } A x y x ( 恒等道@{ i } A x ) p ) p
+.
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun x : A => _ ) .
+    refine ( fun y : A => _ ) .
+    refine ( fun p : 道@{ i } A x y => _ ) .
+    refine
+        (
+            道.依存型の場合分け@{ i }
+                A
+                x
+                y
+                p
+                (
+                    fun x_ : A =>
+                    fun y_ : A =>
+                    fun p_ : 道@{ i } A x_ y_ =>
+                    道@{ i } ( 道@{ i } A x_ y_ ) ( 結合@{ i } A x_ y_ x_ ( 恒等道@{ i } A x_ ) p_ ) p_
+                )
+                ( fun z : A => _ )
+        )
+    .
+    exact ( 恒等道@{ i } ( 道@{ i } A z z ) ( 恒等道@{ i } A z ) ) .
+Defined .
+
+Definition 恒等道と甲の結合と甲は等しい@{ i | }
+    ( A : Type@{ i } )
+    ( x : A )
+    ( y : A )
+    ( p : 道@{ i } A x y )
+    : 道@{ i } ( 道@{ i } A x y ) ( 結合@{ i } A x y x ( 恒等道@{ i } A x ) p ) p
+    := A_2024_07_25_0000@{ i } A x y p
+.
+
+(** [p] と恒等道の結合と [p] は等しいです。 *)
+
+Definition A_2024_07_25_0001@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall x : A ,
+        forall y : A ,
+        forall p : 道@{ i } A x y ,
+        道@{ i } ( 道@{ i } A x y ) ( 結合@{ i } A x y y p ( 恒等道@{ i } A y ) ) p
+.
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun x : A => _ ) .
+    refine ( fun y : A => _ ) .
+    refine ( fun p : 道@{ i } A x y => _ ) .
+    refine
+        (
+            道.依存型の場合分け@{ i }
+                A
+                x
+                y
+                p
+                (
+                    fun x_ : A =>
+                    fun y_ : A =>
+                    fun p_ : 道@{ i } A x_ y_ =>
+                    道@{ i } ( 道@{ i } A x_ y_ ) ( 結合@{ i } A x_ y_ y_ p_ ( 恒等道@{ i } A y_ ) ) p_
+                )
+                ( fun z : A => _ )
+        )
+    .
+    exact ( 恒等道@{ i } ( 道@{ i } A z z ) ( 恒等道@{ i } A z ) ) .
+Defined .
+
+Definition 甲と恒等道の結合と甲は等しい@{ i | }
+    ( A : Type@{ i } )
+    ( x : A )
+    ( y : A )
+    ( p : 道@{ i } A x y )
+    : 道@{ i } ( 道@{ i } A x y ) ( 結合@{ i } A x y y p ( 恒等道@{ i } A y ) ) p
+    := A_2024_07_25_0001@{ i } A x y p
+.
+
 (** [p] と [q] の結合と [r] の結合と [p] と [q] と [r] の結合の結合は等しいです。 *)
 
 Definition A_2024_07_22_0032@{ i | }
@@ -4367,92 +4453,6 @@ Definition 甲と乙の結合と丙の結合と甲と乙と丙の結合と結合
             ( 結合@{ i } A x y z ( 結合@{ i } A x z w p q ) r )
             ( 結合@{ i } A x y w p ( 結合@{ i } A w y z q r ) )
     := A_2024_07_22_0032@{ i } A x y z w p q r
-.
-
-(** 恒等道と [p] の結合と [p] は等しいです。 *)
-
-Definition A_2024_07_25_0000@{ i | }
-    :
-        forall A : Type@{ i } ,
-        forall x : A ,
-        forall y : A ,
-        forall p : 道@{ i } A x y ,
-        道@{ i } ( 道@{ i } A x y ) ( 結合@{ i } A x y x ( 恒等道@{ i } A x ) p ) p
-.
-Proof .
-    refine ( fun A : Type@{ i } => _ ) .
-    refine ( fun x : A => _ ) .
-    refine ( fun y : A => _ ) .
-    refine ( fun p : 道@{ i } A x y => _ ) .
-    refine
-        (
-            道.依存型の場合分け@{ i }
-                A
-                x
-                y
-                p
-                (
-                    fun x_ : A =>
-                    fun y_ : A =>
-                    fun p_ : 道@{ i } A x_ y_ =>
-                    道@{ i } ( 道@{ i } A x_ y_ ) ( 結合@{ i } A x_ y_ x_ ( 恒等道@{ i } A x_ ) p_ ) p_
-                )
-                ( fun z : A => _ )
-        )
-    .
-    exact ( 恒等道@{ i } ( 道@{ i } A z z ) ( 恒等道@{ i } A z ) ) .
-Defined .
-
-Definition 恒等道と甲の結合と甲は等しい@{ i | }
-    ( A : Type@{ i } )
-    ( x : A )
-    ( y : A )
-    ( p : 道@{ i } A x y )
-    : 道@{ i } ( 道@{ i } A x y ) ( 結合@{ i } A x y x ( 恒等道@{ i } A x ) p ) p
-    := A_2024_07_25_0000@{ i } A x y p
-.
-
-(** [p] と恒等道の結合と [p] は等しいです。 *)
-
-Definition A_2024_07_25_0001@{ i | }
-    :
-        forall A : Type@{ i } ,
-        forall x : A ,
-        forall y : A ,
-        forall p : 道@{ i } A x y ,
-        道@{ i } ( 道@{ i } A x y ) ( 結合@{ i } A x y y p ( 恒等道@{ i } A y ) ) p
-.
-Proof .
-    refine ( fun A : Type@{ i } => _ ) .
-    refine ( fun x : A => _ ) .
-    refine ( fun y : A => _ ) .
-    refine ( fun p : 道@{ i } A x y => _ ) .
-    refine
-        (
-            道.依存型の場合分け@{ i }
-                A
-                x
-                y
-                p
-                (
-                    fun x_ : A =>
-                    fun y_ : A =>
-                    fun p_ : 道@{ i } A x_ y_ =>
-                    道@{ i } ( 道@{ i } A x_ y_ ) ( 結合@{ i } A x_ y_ y_ p_ ( 恒等道@{ i } A y_ ) ) p_
-                )
-                ( fun z : A => _ )
-        )
-    .
-    exact ( 恒等道@{ i } ( 道@{ i } A z z ) ( 恒等道@{ i } A z ) ) .
-Defined .
-
-Definition 甲と恒等道の結合と甲は等しい@{ i | }
-    ( A : Type@{ i } )
-    ( x : A )
-    ( y : A )
-    ( p : 道@{ i } A x y )
-    : 道@{ i } ( 道@{ i } A x y ) ( 結合@{ i } A x y y p ( 恒等道@{ i } A y ) ) p
-    := A_2024_07_25_0001@{ i } A x y p
 .
 
 (** [p] と [p] の反転の結合と恒等道は等しいです。 *)
@@ -4681,114 +4681,6 @@ Definition 甲の反転の反転と甲は等しい@{ i | }
     := A_2024_07_26_0002@{ i } A x y p
 .
 
-(** 恒等関数を [p] に適用した道と [p] は等しいです。 *)
-
-Definition A_2024_07_25_0004@{ i | }
-    :
-        forall A : Type@{ i } ,
-        forall x : A ,
-        forall y : A ,
-        forall p : 道@{ i } A x y ,
-        道@{ i } ( 道@{ i } A x y ) ( 適用@{ i } A A ( 恒等関数@{ i } A ) x y p ) p
-.
-Proof .
-    refine ( fun A : Type@{ i } => _ ) .
-    refine ( fun x : A => _ ) .
-    refine ( fun y : A => _ ) .
-    refine ( fun p : 道@{ i } A x y => _ ) .
-    refine
-        (
-            道.依存型の場合分け@{ i }
-                A
-                x
-                y
-                p
-                (
-                    fun x_ : A =>
-                    fun y_ : A =>
-                    fun p_ : 道@{ i } A x_ y_ =>
-                    道@{ i } ( 道@{ i } A x_ y_ ) ( 適用@{ i } A A ( 恒等関数@{ i } A ) x_ y_ p_ ) p_
-                )
-                ( fun z : A => _ )
-        )
-    .
-    exact ( 恒等道@{ i } ( 道@{ i } A z z ) ( 恒等道@{ i } A z ) ) .
-Defined .
-
-Definition 恒等関数を甲に適用した道と甲は等しい@{ i | }
-    ( A : Type@{ i } )
-    ( x : A )
-    ( y : A )
-    ( p : 道@{ i } A x y )
-    : 道@{ i } ( 道@{ i } A x y ) ( 適用@{ i } A A ( 恒等関数@{ i } A ) x y p ) p
-    := A_2024_07_25_0004@{ i } A x y p
-.
-
-(** [f] と [g] を合成した関数を [p] に適用した道と [f] を [g] を [p] に適用した道に適用した道は等しいです。 *)
-
-Definition A_2024_07_25_0005@{ i | }
-    :
-        forall A : Type@{ i } ,
-        forall B : Type@{ i } ,
-        forall C : Type@{ i } ,
-        forall f : C -> A ,
-        forall g : B -> C ,
-        forall x : B ,
-        forall y : B ,
-        forall p : 道@{ i } B x y ,
-        道@{ i }
-            ( 道@{ i } A ( f ( g x ) ) ( f ( g y ) ) )
-            ( 適用@{ i } A B ( 合成@{ i } A B C f g ) x y p )
-            ( 適用@{ i } A C f ( g x ) ( g y ) ( 適用@{ i } C B g x y p ) )
-.
-Proof .
-    refine ( fun A : Type@{ i } => _ ) .
-    refine ( fun B : Type@{ i } => _ ) .
-    refine ( fun C : Type@{ i } => _ ) .
-    refine ( fun f : C -> A => _ ) .
-    refine ( fun g : B -> C => _ ) .
-    refine ( fun x : B => _ ) .
-    refine ( fun y : B => _ ) .
-    refine ( fun p : 道@{ i } B x y => _ ) .
-    refine
-        (
-            道.依存型の場合分け@{ i }
-                B
-                x
-                y
-                p
-                (
-                    fun x_ : B =>
-                    fun y_ : B =>
-                    fun p_ : 道@{ i } B x_ y_ =>
-                    道@{ i }
-                        ( 道@{ i } A ( f ( g x_ ) ) ( f ( g y_ ) ) )
-                        ( 適用@{ i } A B ( 合成@{ i } A B C f g ) x_ y_ p_ )
-                        ( 適用@{ i } A C f ( g x_ ) ( g y_ ) ( 適用@{ i } C B g x_ y_ p_ ) )
-                )
-                ( fun z => _ )
-        )
-    .
-    exact ( 恒等道@{ i } ( 道@{ i } A ( f ( g z ) ) ( f ( g z ) ) ) ( 恒等道@{ i } A ( f ( g z ) ) ) ) .
-Defined .
-
-Definition イとロの合成を甲に適用した道とイをロを甲に適用した道に適用した道は等しい@{ i | }
-    ( A : Type@{ i } )
-    ( B : Type@{ i } )
-    ( C : Type@{ i } )
-    ( f : C -> A )
-    ( g : B -> C )
-    ( x : B )
-    ( y : B )
-    ( p : 道@{ i } B x y )
-    :
-        道@{ i }
-            ( 道@{ i } A ( f ( g x ) ) ( f ( g y ) ) )
-            ( 適用@{ i } A B ( 合成@{ i } A B C f g ) x y p )
-            ( 適用@{ i } A C f ( g x ) ( g y ) ( 適用@{ i } C B g x y p ) )
-    := A_2024_07_25_0005@{ i } A B C f g x y p
-.
-
 (** [f] を恒等道に適用した道と恒等道は等しいです。 *)
 
 Definition A_2024_07_22_0029@{ i | }
@@ -4966,6 +4858,114 @@ Definition イを甲の反転に適用した道とイを甲に適用した道の
             ( 適用@{ i } A B f x y ( 反転@{ i } B x y p ) )
             ( 反転@{ i } A ( f x ) ( f y ) ( 適用@{ i } A B f y x p ) )
     := A_2024_07_26_0000@{ i } A B f x y p
+.
+
+(** 恒等関数を [p] に適用した道と [p] は等しいです。 *)
+
+Definition A_2024_07_25_0004@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall x : A ,
+        forall y : A ,
+        forall p : 道@{ i } A x y ,
+        道@{ i } ( 道@{ i } A x y ) ( 適用@{ i } A A ( 恒等関数@{ i } A ) x y p ) p
+.
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun x : A => _ ) .
+    refine ( fun y : A => _ ) .
+    refine ( fun p : 道@{ i } A x y => _ ) .
+    refine
+        (
+            道.依存型の場合分け@{ i }
+                A
+                x
+                y
+                p
+                (
+                    fun x_ : A =>
+                    fun y_ : A =>
+                    fun p_ : 道@{ i } A x_ y_ =>
+                    道@{ i } ( 道@{ i } A x_ y_ ) ( 適用@{ i } A A ( 恒等関数@{ i } A ) x_ y_ p_ ) p_
+                )
+                ( fun z : A => _ )
+        )
+    .
+    exact ( 恒等道@{ i } ( 道@{ i } A z z ) ( 恒等道@{ i } A z ) ) .
+Defined .
+
+Definition 恒等関数を甲に適用した道と甲は等しい@{ i | }
+    ( A : Type@{ i } )
+    ( x : A )
+    ( y : A )
+    ( p : 道@{ i } A x y )
+    : 道@{ i } ( 道@{ i } A x y ) ( 適用@{ i } A A ( 恒等関数@{ i } A ) x y p ) p
+    := A_2024_07_25_0004@{ i } A x y p
+.
+
+(** [f] と [g] を合成した関数を [p] に適用した道と [f] を [g] を [p] に適用した道に適用した道は等しいです。 *)
+
+Definition A_2024_07_25_0005@{ i | }
+    :
+        forall A : Type@{ i } ,
+        forall B : Type@{ i } ,
+        forall C : Type@{ i } ,
+        forall f : C -> A ,
+        forall g : B -> C ,
+        forall x : B ,
+        forall y : B ,
+        forall p : 道@{ i } B x y ,
+        道@{ i }
+            ( 道@{ i } A ( f ( g x ) ) ( f ( g y ) ) )
+            ( 適用@{ i } A B ( 合成@{ i } A B C f g ) x y p )
+            ( 適用@{ i } A C f ( g x ) ( g y ) ( 適用@{ i } C B g x y p ) )
+.
+Proof .
+    refine ( fun A : Type@{ i } => _ ) .
+    refine ( fun B : Type@{ i } => _ ) .
+    refine ( fun C : Type@{ i } => _ ) .
+    refine ( fun f : C -> A => _ ) .
+    refine ( fun g : B -> C => _ ) .
+    refine ( fun x : B => _ ) .
+    refine ( fun y : B => _ ) .
+    refine ( fun p : 道@{ i } B x y => _ ) .
+    refine
+        (
+            道.依存型の場合分け@{ i }
+                B
+                x
+                y
+                p
+                (
+                    fun x_ : B =>
+                    fun y_ : B =>
+                    fun p_ : 道@{ i } B x_ y_ =>
+                    道@{ i }
+                        ( 道@{ i } A ( f ( g x_ ) ) ( f ( g y_ ) ) )
+                        ( 適用@{ i } A B ( 合成@{ i } A B C f g ) x_ y_ p_ )
+                        ( 適用@{ i } A C f ( g x_ ) ( g y_ ) ( 適用@{ i } C B g x_ y_ p_ ) )
+                )
+                ( fun z => _ )
+        )
+    .
+    exact ( 恒等道@{ i } ( 道@{ i } A ( f ( g z ) ) ( f ( g z ) ) ) ( 恒等道@{ i } A ( f ( g z ) ) ) ) .
+Defined .
+
+Definition イとロの合成を甲に適用した道とイをロを甲に適用した道に適用した道は等しい@{ i | }
+    ( A : Type@{ i } )
+    ( B : Type@{ i } )
+    ( C : Type@{ i } )
+    ( f : C -> A )
+    ( g : B -> C )
+    ( x : B )
+    ( y : B )
+    ( p : 道@{ i } B x y )
+    :
+        道@{ i }
+            ( 道@{ i } A ( f ( g x ) ) ( f ( g y ) ) )
+            ( 適用@{ i } A B ( 合成@{ i } A B C f g ) x y p )
+            ( 適用@{ i } A C f ( g x ) ( g y ) ( 適用@{ i } C B g x y p ) )
+    := A_2024_07_25_0005@{ i } A B C f g x y p
 .
 
 (** 恒等道に沿って [u] を輸送した値と [u] は等しいです。 *)
