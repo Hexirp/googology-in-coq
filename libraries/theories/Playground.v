@@ -5334,7 +5334,7 @@ Definition A_2024_09_19_0002@{ i | }
         fun x_2 : A =>
         fun p_0 : 道@{ i } A x_0 x_1 =>
         fun p_1 : 道@{ i } A x_1 x_2 =>
-        結合@{ i } A x_0 x_2 x_1 p_0 ( A_2024_09_19_0001@{ i } A x_1 x_2 p_1 )
+        結合@{ i } A x_0 x_2 x_1 p_0 ( 等式推論の一@{ i } A x_1 x_2 p_1 )
 .
 
 Definition 等式推論の二@{ i }
@@ -5370,7 +5370,7 @@ Definition A_2024_09_19_0003@{ i | }
         fun p_0 : 道@{ i } A x_0 x_1 =>
         fun p_1 : 道@{ i } A x_1 x_2 =>
         fun p_2 : 道@{ i } A x_2 x_3 =>
-        結合@{ i } A x_0 x_3 x_1 p_0 ( A_2024_09_19_0002@{ i } A x_1 x_2 x_3 p_1 p_2 )
+        結合@{ i } A x_0 x_3 x_1 p_0 ( 等式推論の二@{ i } A x_1 x_2 x_3 p_1 p_2 )
 .
 
 Definition 等式推論の三@{ i }
@@ -5412,7 +5412,7 @@ Definition A_2024_09_19_0004@{ i | }
         fun p_1 : 道@{ i } A x_1 x_2 =>
         fun p_2 : 道@{ i } A x_2 x_3 =>
         fun p_3 : 道@{ i } A x_3 x_4 =>
-        結合@{ i } A x_0 x_4 x_1 p_0 ( A_2024_09_19_0003@{ i } A x_1 x_2 x_3 x_4 p_1 p_2 p_3 )
+        結合@{ i } A x_0 x_4 x_1 p_0 ( 等式推論の三@{ i } A x_1 x_2 x_3 x_4 p_1 p_2 p_3 )
 .
 
 Definition 等式推論の四@{ i }
@@ -5460,7 +5460,7 @@ Definition A_2024_09_19_0005@{ i | }
         fun p_2 : 道@{ i } A x_2 x_3 =>
         fun p_3 : 道@{ i } A x_3 x_4 =>
         fun p_4 : 道@{ i } A x_4 x_5 =>
-        結合@{ i } A x_0 x_5 x_1 p_0 ( A_2024_09_19_0004@{ i } A x_1 x_2 x_3 x_4 x_5 p_1 p_2 p_3 p_4 )
+        結合@{ i } A x_0 x_5 x_1 p_0 ( 等式推論の四@{ i } A x_1 x_2 x_3 x_4 x_5 p_1 p_2 p_3 p_4 )
 .
 
 Definition 等式推論の五@{ i }
@@ -5514,7 +5514,7 @@ Definition A_2024_09_19_0006@{ i | }
         fun p_3 : 道@{ i } A x_3 x_4 =>
         fun p_4 : 道@{ i } A x_4 x_5 =>
         fun p_5 : 道@{ i } A x_5 x_6 =>
-        結合@{ i } A x_0 x_6 x_1 p_0 ( A_2024_09_19_0005@{ i } A x_1 x_2 x_3 x_4 x_5 x_6 p_1 p_2 p_3 p_4 p_5 )
+        結合@{ i } A x_0 x_6 x_1 p_0 ( 等式推論の五@{ i } A x_1 x_2 x_3 x_4 x_5 x_6 p_1 p_2 p_3 p_4 p_5 )
 .
 
 Definition 等式推論の六@{ i }
@@ -5574,7 +5574,7 @@ Definition A_2024_09_19_0007@{ i | }
         fun p_4 : 道@{ i } A x_4 x_5 =>
         fun p_5 : 道@{ i } A x_5 x_6 =>
         fun p_6 : 道@{ i } A x_6 x_7 =>
-        結合@{ i } A x_0 x_7 x_1 p_0 ( A_2024_09_19_0006@{ i } A x_1 x_2 x_3 x_4 x_5 x_6 x_7 p_1 p_2 p_3 p_4 p_5 p_6 )
+        結合@{ i } A x_0 x_7 x_1 p_0 ( 等式推論の六@{ i } A x_1 x_2 x_3 x_4 x_5 x_6 x_7 p_1 p_2 p_3 p_4 p_5 p_6 )
 .
 
 Definition 等式推論の七@{ i }
@@ -5640,7 +5640,7 @@ Definition A_2024_09_19_0008@{ i | }
         fun p_5 : 道@{ i } A x_5 x_6 =>
         fun p_6 : 道@{ i } A x_6 x_7 =>
         fun p_7 : 道@{ i } A x_7 x_8 =>
-        結合@{ i } A x_0 x_8 x_1 p_0 ( A_2024_09_19_0007@{ i } A x_1 x_2 x_3 x_4 x_5 x_6 x_7 x_8 p_1 p_2 p_3 p_4 p_5 p_6 p_7 )
+        結合@{ i } A x_0 x_8 x_1 p_0 ( 等式推論の七@{ i } A x_1 x_2 x_3 x_4 x_5 x_6 x_7 x_8 p_1 p_2 p_3 p_4 p_5 p_6 p_7 )
 .
 
 Definition 等式推論の八@{ i }
@@ -5712,7 +5712,7 @@ Definition A_2024_09_19_0009@{ i | }
         fun p_6 : 道@{ i } A x_6 x_7 =>
         fun p_7 : 道@{ i } A x_7 x_8 =>
         fun p_8 : 道@{ i } A x_8 x_9 =>
-        結合@{ i } A x_0 x_9 x_1 p_0 ( A_2024_09_19_0008@{ i } A x_1 x_2 x_3 x_4 x_5 x_6 x_7 x_8 x_9 p_1 p_2 p_3 p_4 p_5 p_6 p_7 p_8 )
+        結合@{ i } A x_0 x_9 x_1 p_0 ( 等式推論の八@{ i } A x_1 x_2 x_3 x_4 x_5 x_6 x_7 x_8 x_9 p_1 p_2 p_3 p_4 p_5 p_6 p_7 p_8 )
 .
 
 Definition 等式推論の九@{ i }
