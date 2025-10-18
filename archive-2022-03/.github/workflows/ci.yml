@@ -1,0 +1,27 @@
+name: CI
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: "0 8 1 * *"
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: coq-community/docker-coq-action@v1
+        with:
+          custom_script: |
+            startGroup "Coordinate"
+              cd libraries/
+            endGroup
+            {{before_install}}
+            {{install}}
+            {{after_install}}
+            {{before_script}}
+            {{script}}
+            {{after_script}}
+            {{uninstall}}
+            startGroup "Uncoordinate"
+              cd ../
+            endGroup

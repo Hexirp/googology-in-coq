@@ -1,0 +1,172 @@
+/* 1 */
+
+body {
+    background-color: white;
+    color: black;
+}
+
+/* 1.1 */
+
+body > div#page {
+    /* to do */
+}
+
+/* 1.1.1 The Header */
+
+body > div#page > div#header {
+    /* to do */
+}
+
+/* 1.1.2 The Main Content */
+
+body > div#page > div#main {
+    padding: 0% 3.125%;
+}
+
+/* 1.1.2.1 The Headline of Library Pages */
+
+body > div#page > div#main > h1.libtitle {
+    background-color: rgb(50%,50%,100%);
+    padding: 0.75em;
+    font-size: 200%;
+}
+
+/* 1.1.2.2 Document Parts of Library Pages */
+
+body > div#page > div#main > div.doc {
+    /* to do */
+}
+
+body > div#page > div#main > div.doc > h1.section {
+    background-color: rgb(50%,50%,100%);
+    padding: 0.75em;
+    font-size: 200%;
+}
+
+body > div#page > div#main > div.doc > h2.section {
+    background-color: rgb(75%,75%,100%);
+    padding: 0.75em;
+    font-size: 150%;
+}
+
+body > div#page > div#main > div.doc > h3.section {
+    background-color: rgb(87.5%,87.5%,100%);
+    padding: 0.75em;
+    font-size: 125%;
+}
+
+body > div#page > div#main > div.doc > div.paragraph {
+    height: 1em;
+}
+
+body > div#page > div#main > div.doc span.inlinecode {
+    font-size: 125%;
+    font-family: monospace;
+}
+
+body > div#page > div#main > div.doc span.inlinecode > span.id {
+    color: darkslateblue;
+}
+
+/* 1.1.2.3 Code Parts of Library Pages */
+
+body > div#page > div#main > div.code {
+    font-size: 125%;
+    font-family: monospace;
+}
+
+body > div#page > div#main > div.code > a.idref {
+    text-decoration: none;
+}
+
+body > div#page > div#main > div.code > a.modref {
+    text-decoration: none;
+}
+
+body > div#page > div#main > div.code span.id {
+    color: yellow; /* To find elements that are not colored */
+}
+
+body > div#page > div#main > div.code span.id[title="keyword"] {
+    color: red;
+}
+
+body > div#page > div#main > div.code span.id[title="inductive"] {
+    color: darkred;
+}
+
+body > div#page > div#main > div.code span.id[title="record"] {
+    color: darkred;
+}
+
+body > div#page > div#main > div.code span.id[title="class"] {
+    color: darkred;
+}
+
+body > div#page > div#main > div.code span.id[title="constructor"] {
+    color: darkred;
+}
+
+body > div#page > div#main > div.code span.id[title="projection"] {
+    color: darkred;
+}
+
+body > div#page > div#main > div.code span.id[title="var"] {
+    color: darkviolet;
+}
+
+body > div#page > div#main > div.code span.id[title="binder"] {
+    color: rebeccapurple;
+}
+
+body > div#page > div#main > div.code span.id[title="variable"] {
+    color: rebeccapurple;
+}
+
+body > div#page > div#main > div.code span.id[title="definition"] {
+    color: green;
+}
+
+body > div#page > div#main > div.code span.id[title="abbreviation"] {
+    color: green;
+}
+
+body > div#page > div#main > div.code span.id[title="lemma"] {
+    color: green;
+}
+
+body > div#page > div#main > div.code span.id[title="instance"] {
+    color: green;
+}
+
+body > div#page > div#main > div.code span.id[title="notation"] {
+    color: gray;
+}
+
+body > div#page > div#main > div.code span.id[title="tactic"] {
+    color: mediumblue;
+}
+
+body > div#page > div#main > div.code span.id[title="module"] {
+    color: royalblue;
+}
+
+body > div#page > div#main > div.code span.id[title="library"] {
+    color: steelblue;
+}
+
+body > div#page > div#main > div.code > a.idref:target {
+    background-color: lightgray;
+}
+
+/* 1.1.2.4 The Navigation Table of The Index Page */
+
+body > div#page > div#main > table > tbody > tr > td {
+  padding: 0em 0.25em;
+}
+
+/* 1.1.3 The Footer */
+
+body > div#page > div#footer {
+    font-size: 75%;
+}

@@ -1,0 +1,114 @@
+digraph Dependencies {
+  # Base
+  # Dependent_Function
+  "Base" -> "Dependent_Function";
+  # Function
+  "Base" -> "Function";
+  "Dependent_Function" -> "Function";
+  # Dependent_Product
+  "Base" -> "Dependent_Product";
+  "Dependent_Function" -> "Dependent_Product";
+  # Dependent_Sum
+  "Base" -> "Dependent_Sum";
+  # Product
+  "Base" -> "Product";
+  "Dependent_Sum" -> "Product";
+  # Sum
+  "Base" -> "Sum";
+  # Unit
+  "Base" -> "Unit";
+  # Void
+  "Base" -> "Void";
+  # W_type_Beta
+  "Base" -> "W_type_Beta";
+  "Function" -> "W_type_Beta";
+  # W_type_Alpha
+  "Base" -> "W_type_Alpha";
+  "Dependent_Sum" -> "W_type_Alpha";
+  "W_type_Beta" -> "W_type_Alpha";
+  # W_type
+  "Base" -> "W_type";
+  "W_type_Alpha" -> "W_type";
+  "W_type_Beta" -> "W_type";
+  # Universe
+  "Base" -> "Universe";
+  # Path
+  "Base" -> "Path";
+  "Function" -> "Path";
+  # Dependent_Pointwise_Path
+  "Base" -> "Dependent_Pointwise_Path";
+  "Dependent_Function" -> "Dependent_Pointwise_Path";
+  "Path" -> "Dependent_Pointwise_Path";
+  # Pointwise_Path
+  "Base" -> "Pointwise_Path";
+  "Dependent_Function" -> "Pointwise_Path";
+  "Function" -> "Pointwise_Path";
+  "Path" -> "Pointwise_Path";
+  # Pointwise_Path_Pointwise_Path
+  "Base" -> "Pointwise_Path_Pointwise_Path";
+  "Dependent_Function" -> "Pointwise_Path_Pointwise_Path";
+  "Function" -> "Pointwise_Path_Pointwise_Path";
+  "Path" -> "Pointwise_Path_Pointwise_Path";
+  "Pointwise_Path" -> "Pointwise_Path_Pointwise_Path";
+  # Section
+  "Base" -> "Section";
+  "Function" -> "Section";
+  "Pointwise_Path" -> "Section";
+  # Retraction
+  "Base" -> "Retraction";
+  "Function" -> "Retraction";
+  "Pointwise_Path" -> "Retraction";
+  # Is_Half_Adjoint
+  "Base" -> "Is_Half_Adjoint";
+  "Dependent_Sum" -> "Is_Half_Adjoint";
+  "Product" -> "Is_Half_Adjoint";
+  "Path" -> "Is_Half_Adjoint";
+  "Pointwise_Path" -> "Is_Half_Adjoint";
+  "Pointwise_Path_Pointwise_Path" -> "Is_Half_Adjoint";
+  "Section" -> "Is_Half_Adjoint";
+  "Retraction" -> "Is_Half_Adjoint";
+  # Is_Half_Adjoint_Equivalence
+  "Base" -> "Is_Half_Adjoint_Equivalence";
+  "Dependent_Sum" -> "Is_Half_Adjoint_Equivalence";
+  "Product" -> "Is_Half_Adjoint_Equivalence";
+  "Is_Half_Adjoint" -> "Is_Half_Adjoint_Equivalence";
+  # Naive_Functional_Extensionality
+  "Base" -> "Naive_Functional_Extensionality";
+  "Dependent_Function" -> "Naive_Functional_Extensionality";
+  "Function" -> "Naive_Functional_Extensionality";
+  "Product" -> "Naive_Functional_Extensionality";
+  "Path" -> "Naive_Functional_Extensionality";
+  "Pointwise_Path" -> "Naive_Functional_Extensionality";
+  # Bool
+  "Base" -> "Bool";
+  "Function" -> "Bool";
+  "Sum" -> "Bool";
+  "Unit" -> "Bool";
+  # Peano_Number_Tag
+  "Base" -> "Peano_Number_Tag";
+  "Sum" -> "Peano_Number_Tag";
+  "Unit" -> "Peano_Number_Tag";
+  # Peano_Number_Arity_Zero
+  "Base" -> "Peano_Number_Arity_Zero";
+  "Void" -> "Peano_Number_Arity_Zero";
+  # Peano_Number_Arity_Successor
+  "Base" -> "Peano_Number_Arity_Successor";
+  "Unit" -> "Peano_Number_Arity_Successor";
+  # Peano_Number_Arity
+  "Base" -> "Peano_Number_Arity";
+  "Universe" -> "Peano_Number_Arity";
+  "Peano_Number_Tag" -> "Peano_Number_Arity";
+  "Peano_Number_Arity_Zero" -> "Peano_Number_Arity";
+  "Peano_Number_Arity_Successor" -> "Peano_Number_Arity";
+  # Peano_Number
+  "Base" -> "Peano_Number";
+  "Function" -> "Peano_Number";
+  "Product" -> "Peano_Number";
+  "Unit" -> "Peano_Number";
+  "W_type" -> "Peano_Number";
+  "Path" -> "Peano_Number";
+  "Pointwise_Path" -> "Peano_Number";
+  "Naive_Functional_Extensionality" -> "Peano_Number";
+  "Peano_Number_Tag" -> "Peano_Number";
+  "Peano_Number_Arity" -> "Peano_Number";
+}

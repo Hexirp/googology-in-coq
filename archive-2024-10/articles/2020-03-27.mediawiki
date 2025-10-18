@@ -1,0 +1,692 @@
+Coq で巨大数論 (Googology in Coq) は、単純に巨大数論を Coq で形式化しようという試みを行う、日刊連載のブログ記事です。
+
+== 2020-03-27 ==
+
+初回はユニット型を作成します。ユニット型は値が一つだけしかない型です。カリー＝ハワード対応を通して恒真式 ( \( \top \) ) に対応します。
+
+<pre class="code">
+Inductive Unit@{i} : Type@{i} := unit : Unit.
+</pre>
+
+<code>Inductive</code> キーワードを用いてユニット型を定義します。この型の構築子は一つだけであり、それは何も引数を受け取りません。
+
+== 2020-03-28 ==
+
+今日は関数型の表記を追加します。関数型はもともと Coq に組み込まれている全称型もしくは依存積型 <code>forall x, T</code> の特殊な場合として表されます。具体的に言うならば、ここでの <code>T</code> が <code>x</code> に依存していない場合が関数型です。
+
+<pre class="code">
+Notation "x -> y" := (forall (_ : x), y) (at level 99, right associativity, y at level 200).
+</pre>
+
+わざわざ <code>forall</code> を書くのは面倒なので矢印で書けるように記法を設定します。変数を <code>_</code> で使用されないと宣言することで、変数に依存しないことを強制しています。後に続く記述は記法としての優先順位や結合性を設定しています。
+
+== 2020-03-29 ==
+
+今日は空の型を作成します。空の型は値を持たない型です。カリー＝ハワード対応を通して矛盾 ( \( \bot \) ) に対応します。
+
+<pre class="code">
+Inductive Void@{i} : Type@{i} :=.
+</pre>
+
+空の型は構築子を持たない型として表されます。
+
+== 2020-03-30 ==
+
+今日は直積型を作成します。直積型の値は、二つの型の値のそれぞれを持ち、それらから成り立ちます。カリー＝ハワード対応を通して論理積 ( \( A \land B \) ) に対応します。
+
+<pre class="code">
+Inductive Prod@{i j} (A : Type@{i}) (B : Type@{j}) : Type@{max(i,j)} :=
+  | pair : A -> B -> Prod A B.
+
+Arguments pair {A} {B} a b.
+</pre>
+
+まず、直積型の型は、二つの型を受け取り一つの型を返すものです。宇宙のレベルについては、受け取るレベルに制約がかからないように <code>max(_,_)</code> を使っています。直積型の構築子は、二つの型の値それぞれを受け取ります。この構築子は、本来は四つの引数を持つのですが、そのうち型を受け取る二つの引数については推論できることが多いので、それらを推論するように <code>Arguments</code> を使って設定しています。
+
+== 2020-03-31 ==
+
+今日は直積型の第一引数の射影関数を作成します。
+
+<pre class="code">
+Definition fst@{i j} {A : Type@{i}} {B : Type@{j}} (x : Prod@{i j} A B) : A :=
+  match x with pair a b => a end.
+</pre>
+
+これからも直積を基本とする型には射影関数を定義していきたいと思います。ちなみに、直積を基本とする型は余帰納型として射影関数により定義するのが理想です。圏論の双対になっているから美しくなります（帰納型／余帰納型、直和／直積、構築子／射影関数）。理想に反して <code>Prod</code> を <code>Inductive</code> で定義する理由は、 Coq においての余帰納型は射影関数を基本として定義できなかったりバグが見つかることがあったり自動で簡約されなかったりと色々扱いが悪いからです。
+
+== 2020-04-01 ==
+
+今日は直積型の第二引数の射影関数を作成します。
+
+<pre class="code">
+Definition snd@{i j} {A : Type@{i}} {B : Type@{j}} (x : Prod@{i j} A B) : B :=
+  match x with pair a b => b end.
+</pre>
+
+宇宙のレベルは \( T : T \) という型付けが成り立つ状況を回避するためのものです。これは Girard's paradox という型理論における Russell's paradox をもたらすため許容されません。こうして宇宙のレベルを導入した結果、宇宙のレベルをどう扱うかという問題が出てきました。定義においてレベルを一つに固定すると、それぞれのレベルで別々に定義する必要が出てきてしまいます。これは非現実的なので、宇宙多相というレベルに関する量化が必要になります。宇宙多相を実現するにあたってレベルを引数として扱う必要があります。その際に Coq ではレベルを値と別種のものとして扱います。レベルに関する量化は、必ず定義の一番外側に置かれます。一方で Agda では別の方法を取っているようです。レベルに関して量化された型 <code>(n : Level) → Set n</code> は <code>Setω</code> という型が付きます。そのままだと <code>Setω : Setω</code> が成り立ちパラドックスが復活するように見えますが、 <code>Setω</code> を使うことが出来る箇所には制限があるため（少なくとも分かりやすい）矛盾は起きません。
+
+== 2020-04-02 ==
+
+今日は直和型を作成します。直和型の値は、二つの型の値のいずれかを持ち、それらから成り立ちます。カリー＝ハワード対応を通して論理和 ( \( A \lor B \) ) に対応します。
+
+<pre class="code">
+Inductive Sum@{i j} (A : Type@{i}) (B : Type@{j}) : Type@{max(i,j)} :=
+  | left : A -> Sum A B
+  | right : B -> Sum A B.
+
+Arguments left {A} {B} a.
+Arguments right {A} {B} b.
+</pre>
+
+直和型の型は、二つの型を受け取り一つの型を返すものです。直和型の構築子は二つ存在し、それらは二つの型の値のいずれかをそれぞれ受け取ります。これらの構築子は型についての引数を暗黙であると設定ています。
+
+直和型は、二つの異なる値を持ちます。この性質は等号を体系に導入したときに問題を生じます。論理式として \( A \lor B \) を証明したいときは、単純に考えるならば \( A \) を与えるか \( B \) を与えるかです。これを型と値として見做したとき、二種類の異なる値が存在することになります。そのどれを選択するかで後に続く証明に影響をもたらすことになります。命題を使うときは証明の内容に影響されずに使えるはずなのに、それでは困ります。このような状況を解決する手段の一つとして Homotopy Type Theory の truncation というものがあります。この記事では使われることがないと思いますが紹介しておきます。
+
+== 2020-04-03 ==
+
+今日は依存和型を作成します。依存和型の値は、最初の型の値を一つ持ち、さらにそれに対応する二つ目の型の値を持ちます。構築子は型についての引数を暗黙であると設定しています。依存和型は存在型とも呼ばれ、カリー＝ハワード対応を通して存在量化 ( \( \exists x \ldotp P \) ) に対応します。
+
+<pre class="code">
+Inductive DSum@{i j} (A : Type@{i}) (B : A -> Type@{j}) : Type@{max(i,j)}
+  := dpair : forall a : A, B a -> DSum A B.
+
+Arguments dpair {A} {B} a b.
+</pre>
+
+存在型もしくは依存和型には、二つの特徴的な使われ方があります。一つ目は二番目の引数に焦点を当てた使い方です。二番目の引数の型の違いを吸収して一つの型として扱うという使い方です。その際には一つ目の引数は重要ではありません。直和型も二つの型を一つの型に纏めたいときに使われることがあり、この使い方は直和型の正当な進化だと言えるかもしれません。二つ目は一番目の引数に焦点に当てた使い方です。一番目の引数に型で表現した条件を課するという使い方です。二番目の引数は条件から何かの帰結を導きたい時の他は無視されます。このような使われ方があるため、私は一番目の引数を暗黙だと設定しませんでした。なお、もちろん特徴的な使われ方は二種類に限られるわけではありません。
+
+== 2020-04-04 ==
+
+今日は依存和型の第一引数を取り出す関数を作成します。
+
+<pre class="code">
+Definition dfst@{i j} {A : Type@{i}} {B : A -> Type@{j}} (x : DSum@{i j} A B) : A
+  := match x with dpair a b => a end.
+</pre>
+
+望月新一教授により出版された ABC 予想を証明したとする論文が PRIMS に掲載されると京都大学が 4 月 3 日に発表しました。掲載されるまでの査読は約 8 年を要しました。<ref>{{cite_web |url=https://mainichi.jp/articles/20200403/k00/00m/040/093000c |title=未解明だった数学の超難問「ABC予想」を証明　京大の望月教授　斬新・難解で査読に8年 |date=2020-04-03 |website=毎日新聞 |publisher=毎日新聞 |accessdate=2020-04-04 }}</ref><ref>{{cite_web |url=https://www.yomiuri.co.jp/science/20200403-OYT1T50201/ |title=数学の未解決難問「ＡＢＣ予想」、望月・京大教授が証明…論文掲載へ |date=2020-04-03 |website=読売新聞オンライン |publisher=読売新聞 |accessdate=2020-04-04 }}</ref><ref>{{cite_web |url=https://www3.nhk.or.jp/news/html/20200403/k10012366491000.html |title=難問「ＡＢＣ予想」京大教授が証明 専門家「歴史に残る成果」 |date=2020-04-03 |website=NHKニュース |publisher=日本放送協会 |accessdate=2020-04-04 }}</ref><ref>{{cite_web |url=https://www.itmedia.co.jp/news/articles/2004/03/news155.html |title=査読8年、京大教授の「ABC予想」証明理論　ついに論文誌掲載へ |date=2020-04-03 |website=ITmedia NEWS |publisher=ITmedia |accessdate=2020-04-04 }}</ref>
+
+ABC 予想を証明したとする論文の査読には 8 年を要しました。数学は当然のことながら時間が経つにつれて複雑化してきます。しかし、それが度を超すと人生の全てをかけても一つの分野の最先端に到達すらできない人が増えていくことになります。それは、数学にとっての危機であるように思えます。人間が検証を出来ないのならば機械に検証させればいいという考え方があります。カリー＝ハワード対応を通した方法が Coq や Agda で実現されています。それは実際に四色定理の証明において実行されています。
+
+しかし、旧来のシステムでは二つの問題があります。一つ目は、詳細な表現に注意を向けなければならないことです。たとえば、ゼロと後続による自然数とバイナリによる自然数との二つの表現があったとしましょう。ゼロと後続による自然数に対する性質を定義したとき、それをバイナリによる自然数に適用することは出来ません。二つ目は、集合の商のような同一視を行うことが出来ないことです。これにより数学の様々な分野を形式化することが困難でした。
+
+そのような問題を解決して数学の基礎を機械に移すというプロジェクトが Univalent Foundations です。最初に Univalent Axiom (UA) が複数の型の表現を同一視することを可能にします。次に Higher Inductive Type (HIT, 高階帰納型) が値の同一視を実現します。それらを含む基礎となるのが Homotopy Type Theory (HoTT) という型理論です。 Coq においては [https://homotopytypetheory.org/coq/ Code | Homotopy Type Theory] であげられているように UniMath と CoqHoTT という二つのライブラリがありました。私が少しだけ読んだことがある CoqHoTT においては UA と HIT について公理が追加されています。そのため UA と HIT に関する計算は公理を使って証明をしながら進める必要がありました。しかし、つい最近に Cubical Type Theory という Homototy Type Theory の一種が考案されました。そこでは UA が公理ではなく、高階帰納型も組み込みであり、それらについての計算を機械が進めることができます。その型システムは最初に cubicaltt という言語として実装され、次に Cubical Agda として Agda に組み込まれました。
+
+Cubical Type Theory を見るにつき Univalent Foundations には現実性があると私は思います。なお、これらの記述は Homotopy Type Theory: Univalent Foundations of Mathematics の About this book と Introduction を参考にしました。 Higher Inductive Type の意義の説明と Univalent Foundations の意義の説明と Cubical Type Theory の説明については、この出典を元としていません。
+
+Univalent Foundations の主な部分を定めた Vladimir Voevodsky は 2017 年に 51 歳という若さで逝去しています。
+
+== 2020-04-05 ==
+
+今日は依存和型の第二引数を取り出す関数を作成します。
+
+<pre class="code">
+Definition dsnd@{i j} {A : Type@{i}} {B : A -> Type@{j}} (x : DSum@{i j} A B) : B (dfst@{i j} x)
+  := match x with dpair a b => b end.
+</pre>
+
+この関数の型は <code>dfst</code> という他の関数を使っているという点で面白いものだと思います。
+
+前日に続いて ABC 予想の話題ですが、 nLab の universe polymorphism のページ ([https://ncatlab.org/nlab/show/universe+polymorphism universe polymorphism in nLab]. Retrieved 2020-04-05.) には宇宙際タイヒミュラー理論が宇宙多相に関係があると書かれています。クエスチョンマークがついているので怪しいですが……。
+
+== 2020-04-06 ==
+
+今日は等式型を作成します。等式型は、ある型を受け取り、その型のある二つの値を受け取り、その二つが等しいことの証拠となります。カリー＝ハワード対応を通して等号 ( \( x = y \) ) に対応します。等式型の構築子は一つ存在し、ある値を受け取り、その値を両端に持つ等式型の値となります。構築子は一つですが、面白いことに、等式型の値は一つだけであるか複数存在するのか、一般に公理を追加しない限り分かりません。
+
+<pre class="code">
+Inductive Path@{i} (A : Type@{i}) (a : A) : A -> Type@{i}
+  := idpath : Path A a a.
+
+Arguments Path {A} a a'.
+
+Arguments idpath {A} {a}, [A] a.
+</pre>
+
+一階述語論理の等号は値のみを対象とします。ですが、この等式型は <code>{i i' | i < i'}</code> という宇宙の環境の下で <code>Path@{i'} Type@{i} Unit@{i} Unit@{i}</code> と書けるように、型の等しさも扱うことが出来ます。さらに <code>Path@{i} (Path@{i} Unit@{i} unit@{i} unit@{i}) idpath@{i} idpath@{i}</code> というように等しさの等しさも扱うことが出来ます。こうまでになると、等式という名前はふさわしくないように思えます。道 (path) の方がいいでしょう。この「道」型は Homotopy Type Theory を理解するための中核となるアイデアです。 Homotopy Type Theory によって等式型の値が複数存在するモデルが作られているので、一番目の段落で書いたことが成り立つわけです。
+
+<code>idpath</code> は特殊な暗黙引数の設定をしています。具体的に言うならば <code>idpath</code> と書かれているときは <code>@idpath _ _</code> というように補い <code>idpath a</code> と書かれているときは <code>@idpath _ a</code> と補います。
+
+== 2020-04-07 ==
+
+今日は恒等写像を定義します。カリー＝ハワード対応を通して \( A \rightarrow A \) に対応します。
+
+<pre class="code">
+Definition idmap@{i} {A : Type@{i}} (x : A) : A := x.
+</pre>
+
+Homotopy Type Theory では x が y と等しいとは x から y への道があると読み替えられます。それは x と y の型を空間として考えたときの道です。そして x から y への道 p と q が等しいとは p から q へ連続的に変形できると読み替えられます。
+
+A の値を対象として A に対する道を射として見做します。恒等射があり結合が可能であり、反転も可能です。 1-groupoid になります。そして、それの射である A に対する道、それらに対する道も考えられます。そのような構造も考えられるので 2-groupoid になります。さらに A に対する道に対する道に対する道と限りなく続けられますので ∞-groupoid になります。 ∞-groupoid は単純に定義できるように見えて定義が難しく、私は感覚でしか捉えられません。ですが、少なくとも Homotopy Type Theory の根幹にはこのアイデアがあるようです。
+
+== 2020-04-08 ==
+
+今日は定数関数を定義します。つまり <code>const a</code> は常に <code>a</code> を返す関数となります。カリー＝ハワード対応を通して \( A \rightarrow B \rightarrow A \) に対応します。
+
+<pre class="code">
+Definition const@{i j} {A : Type@{i}} {B : Type@{j}} (x : A) (y : B) : A := x.
+</pre>
+
+== 2020-04-09 ==
+
+今日は関数の合成を定義します。つまり <code>comp f g x</code> は <code>f (g x)</code> です。カリー＝ハワード対応を通して \( ( B \rightarrow C ) \rightarrow ( A \rightarrow B ) \rightarrow A \rightarrow C \) に対応します。
+
+<pre class="code">
+Definition comp@{i j k} {A : Type@{i}} {B : Type@{j}} {C : Type@{k}} (f : B -> C) (g : A -> B) (x : A) : C := f (g x).
+</pre>
+
+== 2020-04-10 ==
+
+今日は <code>comp</code> の依存版を定義します。定義は前と同じです。
+
+<pre class="code">
+Definition compD@{i j k} {A : Type@{i}} {B : Type@{j}} {C : B -> Type@{k}} (f : forall b : B, C b) (g : A -> B) (x : A) : C (g x) := f (g x).
+</pre>
+
+関数には時々依存版があることがあります。それらは末尾に dependent の d を付けて表したいと思います。
+
+== 2020-04-11 ==
+
+今日は関数の適用を定義します。カリー＝ハワード対応を通して \( ( A \rightarrow B ) \rightarrow A \rightarrow B \) に対応します。
+
+<pre class="code">
+Definition apply@{i j} {A : Type@{i}} {B : Type@{j}} (f : A -> B) (x : A) : B := f x.
+</pre>
+
+ちなみに Coq は直観主義論理を基礎としているので論理否定を使わない方が証明を書きやすいです。そのため論理否定を明確に使うことはないかと思います。その代わりに <code>Void</code> を多く使います。論理否定そのものは \( A \rightarrow \bot \) をカリー＝ハワード対応に通した形で導入できます。
+
+== 2020-04-12 ==
+
+今日は <code>apply</code> の依存版を定義します。
+
+<pre class="code">
+Definition applyD@{i j} {A : Type@{i}} {B : A -> Type@{j}} (f : forall a : A, B a) (x : A) : B x := f x.
+</pre>
+
+どこまで続くのか気になっている人がいると思いますが、とりあえずは ω の整礎性を証明したところで一区切りとする予定です。
+
+== 2020-04-13 ==
+
+今日は <code>absurd</code> を定義します。カリー＝ハワード対応を通して \( \bot \rightarrow A \) に対応します。つまり、爆発則です。
+
+<pre class="code">
+Definition absurd@{i j} {A : Type@{i}} (x : Void@{j}) : A
+  := match x with end.
+</pre>
+
+<code>Void</code> 型は値コンストラクタを一つも持ちません。そのためマッチするときはパターンが一つも必要がありません。
+
+== 2020-04-14 ==
+
+今日はカリー化の関数を定義します。カリー＝ハワード対応を通して \( ( A \land B \rightarrow C ) \rightarrow A \rightarrow B \rightarrow C \) に対応します。
+
+<pre class="code">
+Definition curry@{i j k} {A : Type@{i}} {B : Type@{j}} {C : Type@{k}} (f : Prod@{i j} A B -> C) (x : A) (y : B) : C
+  := f (pair x y).
+</pre>
+
+ちなみにカリー化とカリー＝ハワード対応のカリーは同じくハスケル・カリーに由来します。
+
+== 2020-04-15 ==
+
+今日はカリー化を元に戻す関数を定義します。カリー＝ハワード対応を通して \( ( A \rightarrow B \rightarrow C ) \rightarrow A \land B \rightarrow C \) に対応します。
+
+<pre class="code">
+Definition uncurry@{i j k} {A : Type@{i}} {B : Type@{j}} {C : Type@{k}} (f : A -> B -> C) (x : Prod@{i j} A B) : C
+  := match x with pair a b => f a b end.
+</pre>
+
+ちなみに Haskell にも <code>curry</code> と <code>uncurry</code> 関数があります。 Haskell ではほとんどの関数が既にカリー化された形で定義されるので、もっぱら <code>uncurry</code> の方がよく使います。
+
+== 2020-04-16 ==
+
+今日は道の反転を定義します。言い換えれば等式の対称性です。
+
+<pre class="code">
+Definition inv@{i} {A : Type@{i}} {x y : A} (p : Path@{i} x y) : Path@{i} y x
+  := match p with idpath => idpath end.
+</pre>
+
+ここでは <code>Path</code> に対するパターンマッチングが行われています。直感的にとらえにくいのですが、パターンマッチングの枝の中では y が x であることになります。すなわちパターンマッチングの式の全体の型は <code>Path y x</code> であり、その枝の全体の型は <code>Path x x</code> になっています。このような <code>match</code> 式の外部と内部での型の変化は依存型に対するパターンマッチングで現れる非直感的な状況の一つです。 <code>Path</code> である値へのパターンマッチングは Homotopy Type Theory においては基点付き道帰納法を行っていると言い換えられます。
+
+== 2020-04-17 ==
+
+今日は道の合成を定義します。言い換えれば等式の推移性です。
+
+<pre class="code">
+Definition conc@{i} {A : Type@{i}} {x y z : A} (p : Path@{i} x y) (q : Path@{i} y z) : Path@{i} x z
+  := match q with idpath => match p with idpath => idpath end end.
+</pre>
+
+興味深いことに、ここでの定義は少なくとも二通りあります。一つ目は上で使用した定義であり、二つ目は <code>(match p with idpath => fun q => q end) q</code> という定義です。両方の定義は外延的に等しいです。
+
+== 2020-04-18 ==
+
+今日は道による輸送を定義します。言い換えれば等式による置き換えです。
+
+<pre class="code">
+Definition trpt@{i j} {A : Type@{i}} {B : A -> Type@{j}} {x y : A} (p : Path@{i} x y) (u : B x) : B y
+  := match p with idpath => u end.
+</pre>
+
+ちなみに x と y が等しいことを forall P, P x -> P y と表す定義方法もあり Leibniz equality といいます。この関数は通常の equality から Leibniz Equality を導くという捉え方もできます。
+
+== 2020-04-19 ==
+
+今日は道の両辺への関数適用を定義します。
+
+<pre class="code">
+Definition ap@{i j} {A : Type@{i}} {B : Type@{j}} (f : A -> B) {x y : A} (p : Path@{i} x y) : Path@{j} (f x) (f y)
+  := match p with idpath => idpath end.
+</pre>
+
+ちなみに結果の型が確定していても <code>x</code> と <code>y</code> が何なのか分からないことがあります。そのときは <code>ap f (x := ...) (y := ...) p</code> というように指定します。
+
+== 2020-04-20 ==
+
+今日はブール型を定義します。
+
+<pre class="code">
+Inductive Bool@{i} : Type@{i}
+  := false : Bool | true : Bool.
+</pre>
+
+== 2020-04-21 ==
+
+今日は比較結果の型を定義します。
+
+<pre class="code">
+Inductive Ordering@{i} : Type@{i}
+  := les : Ordering | eql : Ordering | grt : Ordering.
+</pre>
+
+== 2020-04-22 ==
+
+今日は関係の型を定義します。
+
+<pre class="code>
+Definition Rel@{i j} (A : Type@{i}) : Type@{max(i,j)} := A -> A -> Bool@{j}.
+</pre>
+
+== 2020-04-23 ==
+
+今日は <code>Acc</code> 型を定義します。この名前は accessibility の略です。
+
+<pre class="code">
+Inductive Acc@{i j} {A : Type@{i}} (r : Rel@{i j} A) : A -> Type@{max(i,j)}
+  := mkAcc : forall a : A, (forall a' : A, Path@{j} (r a' a) true -> Acc r a') -> Acc r a.
+</pre>
+
+ちなみに、このような定義は他の数学の分野では見かけたことはありません。どうしてこのような定義が生まれたんでしょうかね。
+
+== 2020-04-24 ==
+
+今日は <code>WFd</code> 型を定義します。
+
+<pre class="code">
+Definition WFd@{i j} {A : Type@{i}} (r : Rel@{i j} A) : Type@{max(i,j)}
+  := forall a : A, Acc@{i j} r a.
+</pre>
+
+これは整礎性を表す型ですが、実際には使いません。また別の表現を使います。
+
+== 2020-04-25 ==
+
+今日は <code>Ord</code> 型を定義します。順序を表す型です。
+
+<pre class="code">
+Definition Ord@{i j} (A : Type@{i}) : Type@{max(i,j)} := A -> A -> Ordering@{j}.
+</pre>
+
+最初から三分律が成り立っていると仮定しています。また大小比較が計算できるようになっています。
+
+== 2020-04-26 ==
+
+今日は <code>Ord</code> から <code>Rel</code> への変換を定義します。
+
+<pre class="code">
+Definition fOrdToRef@{i j k} {A : Type@{i}} (ord : Ord@{i j} A) : Rel@{i k} A
+  := fun x y : A => match ord x y with les => true | eql => false | grt => false end.
+</pre>
+
+== 2020-04-27 ==
+
+今日は <code>Ord</code> が正しいものになるための条件を記述します。
+
+<pre class="code">
+Definition OrdRfl@{i j} {A : Type@{i}} (ord : Ord@{i j} A) : Type@{max(i,j)}
+  := forall x : A, Path@{j} (ord x x) eql.
+</pre>
+
+== 2020-04-28 ==
+
+今日は <code>Ordering</code> 型をひっくり返す関数を定義します。
+
+<pre class="code">
+Definition revOrdering@{i} (x : Ordering@{i}) : Ordering@{i}
+  := match x with les => grt | eql => eql | grt => les end.
+</pre>
+
+== 2020-04-29 ==
+
+今日は <code>Ord</code> が正しいものになるための条件を記述します。
+
+<pre class="code">
+Definition OrdSym@{i j} {A : Type@{i}} (ord : Ord@{i j} A) : Type@{max(i,j)}
+  := forall x y : A, forall res : Ordering@{j},
+    Path@{j} (ord x y) res -> Path@{j} (ord y x) (revOrdering@{j} res).
+</pre>
+
+<code>Ord</code> 型は関数で定義されているため、通常通りの \( x R x \rightarrow \bot \) のような書き方ができません。そのため、このような <code>OrdRfl</code> と <code>OrdSym</code> という条件で代替します。
+
+== 2020-04-30 ==
+
+今日は <code>Ord</code> に対する <code>Acc</code> を定義します。
+
+<pre class="code">
+Inductive OrdAcc@{i j} {A : Type@{i}} (r : Ord@{i j} A) : A -> Type@{max(i,j)}
+  := mkOrdAcc : forall a : A, (forall a' : A, Path@{j} (r a' a) les -> OrdAcc r a') -> OrdAcc r a.
+</pre>
+
+== 2020-05-01 ==
+
+今日は <code>Ord</code> に対する <code>WFd</code> を定義します。
+
+<pre class="code">
+Definition OrdWFd@{i j} {A : Type@{i}} (r : Ord@{i j} A) : Type@{max(i,j)}
+  := forall a : A, OrdAcc@{i j} r a.
+</pre>
+
+== 2020-05-02 ==
+
+今日は自然数の型を定義します。オーソドックスな定義です。
+
+<pre class="code">
+Inductive Nat@{i} : Type@{i}
+  := zero : Nat | succ : Nat -> Nat.
+</pre>
+
+== 2020-05-03 ==
+
+今日は自然数に対する通常の順序を定義します。
+
+<pre class="code">
+Definition natOrd@{i j} : Ord@{i j} Nat@{i}
+  := fix r (x y : Nat@{i}) {struct x} : Ordering@{j}
+    := match x, y with
+      | zero, zero => eql
+      | zero, succ yp => les
+      | succ xp, zero => grt
+      | succ xp, succ yp => r xp yp
+    end.
+</pre>
+
+この定義の <code>{struct x}</code> の部分は <code>{struct y}</code> でもよいのですが、最初の引数である <code>x</code> にしておきます。なお、ここの部分の意味は <code>x</code> の構造に対して帰納法を行うという指定です。
+
+== 2020-05-04 ==
+
+今日は <code>Unit</code> と <code>Void</code> が等しいならば矛盾が導かれるという定理を定義します。
+
+<pre class="code">
+Definition p_U_V@{i i' | i < i'} (p : Path@{i'} Unit@{i} Void@{i}) : Void@{i}
+  := match p with idpath => unit@{i} end.
+</pre>
+
+型を命題とみなすと、命題の間の等式という変わった物を使っていることになります。これは、たとえば <code>Path true false</code> から矛盾を導くために用います。
+
+== 2020-05-05 ==
+
+今日は Coq のタクティックを使うための設定を行います。
+
+<pre class="code">
+Declare ML Module "ltac_plugin" .
+Set Default Proof Mode "Classic" .
+</pre>
+
+https://github.com/Hexirp/googology-in-coq/compare/ad6954416c4ae19eaa181020ac348ebc590970e3...ace068b9a473aaec07fcf2891fb545976109c81b の一連のコミットで、生の式で証明を行っています。 Coq ではどうやって命題を証明するかの参考になると思います。ただし、生の式で証明するのは難しいです。
+
+https://github.com/Hexirp/googology-in-coq/compare/628cdc01cbfb01e831ec2d1bf1a49dda66d5064d...35cbacf4e5cf355438ca7efdac54602b1d1341c3 の一連のコミットで tactic を使った証明を行っています。段階的に式を組み立てて、型の検査を分散することによって、証明が簡単になります。 <code>[ident]: {</code> が追加されたことにより let 式を使いやすくなってやりやすくなりました。
+
+== 2020-05-06 ==
+
+今日は <code>p_natOrd_m_O_les@{i j k k'} : forall m : Nat@{i}, Path@{j} (natOrd@{i j} m zero@{i}) les@{j} -> Void@{k} (* i j k k' |= k < k' *)</code> を証明します。この命題は \( \forall m \ldotp m < 0 \rightarrow \bot \) と考えることができます。
+
+<pre class="code">
+Definition p_natOrd_m_O_les@{i j k k' | k < k'}
+  {m : Nat@{i}} (p : Path@{j} (natOrd@{i j} m zero@{i}) les@{j})
+  : Void@{k}.
+Proof.
+  refine (let D := ?[D] : Ordering@{j} -> Type@{k} in _).
+  [D]: {
+    refine (fun x : Ordering@{j} => _).
+    exact (match x return Type@{k} with les => Void@{k} | eql => Unit@{k} | grt => Unit@{k} end).
+  }
+  refine (let d := ?[d] : Path@{j} (natOrd@{i j} m zero@{i}) les@{j} -> Void@{k} in _).
+  [d]: {
+    refine (match m as m' return Path@{j} (natOrd@{i j} m' zero@{i}) les@{j} -> Void@{k} with zero => _ | succ mp => _ end).
+    {
+      refine (fun p => _).
+      refine (p_U_V@{k k'} _).
+      exact (ap@{j k'} D p).
+    }
+    {
+      refine (fun p => _).
+      refine (p_U_V@{k k'} _).
+      exact (ap@{j k'} D p).
+    }
+  }
+  exact (d p).
+Defined.
+</pre>
+
+let 式を使って読みやすくしたりしていますが、証明は <code>m</code> について場合分けした後で <code>natOrd@{i j} m zero@{i}</code> が決して <code>les@{j}</code> にならないことを証明して、最後に <code>p_U_V</code> により矛盾を導いているだけです。
+
+<code>p_U_V</code> により矛盾を導くのは常用するテクニックなので覚えておいた方がよいです。なお、 <code>D</code> という名前を使っている理由は判別 (discrimination) に由来します。ただし、この後の証明では本来の意味を離れて match 式が関数の適用において <code>(match ... with ... end) x</code> という風に現れる時に <code>let D := match ... with ... end in D x</code> と読みやすく書き直すときに使ったりしています。
+
+== 2920-05-06 ==
+
+今日は <code>p_natOrd_m_S_n_les@{i j k k' | k < k'} {m n : Nat@{i}} (p : Path@{j} (natOrd@{i j} m (succ@{i} n)) les@{j}) : Sum@{j j} (Path@{j} (natOrd@{i j} m n) eql@{j}) (Path@{j} (natOrd@{i j} m n) les@{j})</code> を証明します。この命題は \( \forall m \ldotp \forall n \ldotp m < n + 1 \rightarrow m = n \lor m < n \) だと考えることができます。
+
+\( \_ < \_ \) の整礎性は Coq の標準ライブラリにも \( \_ < \_ \) の推移性を使った証明が存在しますが、この補題を使った証明の方が使う定理が少なくて好きです。
+
+<pre class="code">
+Definition p_natOrd_m_S_n_les@{i j k k' | k < k'}
+  {m n : Nat@{i}} (p : Path@{j} (natOrd@{i j} m (succ@{i} n)) les@{j})
+  : Sum@{j j} (Path@{j} (natOrd@{i j} m n) eql@{j}) (Path@{j} (natOrd@{i j} m n) les@{j}).
+Proof.
+  refine (
+    let r
+      := ?[r]
+        : forall m n : Nat@{i},
+          Path@{j} (natOrd@{i j} m (succ@{i} n)) les@{j} -> Sum@{j j} (Path@{j} (natOrd@{i j} m n) eql@{j}) (Path@{j} (natOrd@{i j} m n) les@{j})
+      in _).
+  [r]: {
+    refine (
+      fix r (m n : Nat@{i}) {struct m}
+        : Path@{j} (natOrd@{i j} m (succ@{i} n)) les@{j} -> Sum@{j j} (Path@{j} (natOrd@{i j} m n) eql@{j}) (Path@{j} (natOrd@{i j} m n) les@{j})
+        := _).
+    refine (
+      match m, n with
+        | zero, zero => _
+        | zero, succ np => _
+        | succ mp, zero => _
+        | succ mp, succ np => _
+      end).
+    {
+      refine (fun p => _).
+      refine (left@{j j} _).
+      exact idpath@{j}.
+    }
+    {
+      refine (fun p => _).
+      refine (right@{j j} _).
+      exact idpath@{j}.
+    }
+    {
+      refine (fun p => _).
+      refine (absurd@{j k} _).
+      refine (p_natOrd_m_O_les@{i j k k'} (m := mp) _).
+      exact p.
+    }
+    {
+      refine (fun p => _).
+      refine (r mp np _).
+      exact p.
+    }
+  }
+  refine (r m n _).
+  exact p.
+Defined.
+</pre>
+
+== 2020-05-08 ==
+
+今日は <code>p_natOrd_S_m_O_eql@{i j k k' | k < k'} {m : Nat@{i}} (p : Path@{j} (natOrd@{i j} (succ@{i} m) zero@{i}) eql@{j}) : Void@{k}</code> を証明します。この命題は \( \forall m \ldotp S ( m ) = 0 \rightarrow \bot \) だと考えることができます。
+
+<pre class="code">
+Definition p_natOrd_S_m_O_eql@{i j k k' | k < k'}
+  {m : Nat@{i}} (p : Path@{j} (natOrd@{i j} (succ@{i} m) zero@{i}) eql@{j})
+  : Void@{k}.
+Proof.
+  refine (let D := ?[D] : Ordering@{j} -> Type@{k} in _).
+  [D]: {
+    refine (fun x => _).
+    exact (match x with les => Unit@{k} | eql => Void@{k} | grt => Unit@{k} end).
+  }
+  refine (p_U_V@{k k'} _).
+  exact (ap@{j k'} D p).
+Defined.
+</pre>
+
+== 2020-05-09 ==
+
+今日は <code>p_natOrd_O_S_n_eql@{i j k k' | k < k'} {n : Nat@{i}} (p : Path@{j} (natOrd@{i j} zero@{i} (succ@{i} n)) eql@{j}) : Void@{k}</code> を証明します。この命題は \( \forall n \ldotp 0 = S ( n ) \rightarrow \bot \) だと考えることができます。
+
+<pre class="code">
+Definition p_natOrd_O_S_n_eql@{i j k k' | k < k'}
+  {n : Nat@{i}} (p : Path@{j} (natOrd@{i j} zero@{i} (succ@{i} n)) eql@{j})
+  : Void@{k}.
+Proof.
+  refine (let D := ?[D] : Ordering@{j} -> Type@{k} in _).
+  [D]: {
+    refine (fun x => _).
+    exact (match x with les => Unit@{k} | eql => Void@{k} | grt => Unit@{k} end).
+  }
+  refine (p_U_V@{k k'} _).
+  exact (ap@{j k'} D p).
+Defined.
+</pre>
+
+== 2020-05-10 ==
+
+今日は <code>p_natOrd_m_n_eql@{i j k k' | k < k'} {m n : Nat@{i}} (p : Path@{j} (natOrd@{i j} m n) eql) : Path@{i} m n</code> を証明する。
+
+<pre class="code">
+Definition p_natOrd_m_n_eql@{i j k k' | k < k'} {m n : Nat@{i}} (p : Path@{j} (natOrd@{i j} m n) eql) : Path@{i} m n.
+Proof.
+  refine (let r := ?[r] : forall m n : Nat@{i}, Path@{j} (natOrd@{i j} m n) eql@{j} -> Path@{i} m n in _).
+  [r]: {
+    refine (fix r (m n : Nat@{i}) {struct m} : Path@{j} (natOrd@{i j} m n) eql@{j} -> Path@{i} m n := _).
+    refine (
+      match m, n with
+        | zero, zero => _
+        | zero, succ np => _
+        | succ mp, zero => _
+        | succ mp, succ np => _
+      end).
+    {
+      refine (fun p => _).
+      exact idpath@{i}.
+    }
+    {
+      refine (fun p => _).
+      refine (absurd@{i k} _).
+      refine (p_natOrd_O_S_n_eql@{i j k k'} (n := np) _).
+      exact p.
+    }
+    {
+      refine (fun p => _).
+      refine (absurd@{i k} _).
+      refine (p_natOrd_S_m_O_eql@{i j k k'} (m := mp) _).
+      exact p.
+    }
+    {
+      refine (fun p => _).
+      refine (ap@{i i} succ@{i} _).
+      refine (r mp np _).
+      exact p.
+    }
+  }
+  exact (r m n p).
+Defined.
+</pre>
+
+== 2020-05-11 ==
+
+今日は <pre>natOrd</code> の整礎性を証明します。
+
+<pre class="code">
+Definition ordWFd_natOrd@{i j k l l' | i <= k, j <= k, l < l'} : OrdWFd@{i j} natOrd@{i j}.
+Proof.
+  refine (fix r (x : Nat@{i}) {struct x} : OrdAcc@{i j} natOrd@{i j} x := _).
+  refine (match x with zero => _ | succ xp => _ end).
+  {
+    refine (mkOrdAcc@{i i} natOrd@{i j} zero@{i} _).
+    refine (fun x' o_x'_x => _).
+    refine (absurd@{k l} _).
+    refine (p_natOrd_m_O_les@{i j l l'} (m := x') _).
+    exact o_x'_x.
+  }
+  {
+    refine (mkOrdAcc@{i j} natOrd@{i j} (succ@{i} xp) _).
+    refine (fun x' o_x'_x => _).
+    refine (match p_natOrd_m_S_n_les@{i j l l'} o_x'_x with left p_x'_xp => _ | right o_x'_xp => _ end).
+    {
+      refine (trpt@{i k} (A := Nat@{i}) (B := OrdAcc@{i j} natOrd@{i j}) (x := xp) (y := x') _ _).
+      {
+        refine (inv@{i} _).
+        refine (p_natOrd_m_n_eql@{i j l l'} _).
+        exact p_x'_xp.
+      }
+      {
+        exact (r xp).
+      }
+    }
+    {
+      refine (let D := ?[D] : Path@{i} xp xp -> OrdAcc@{i j} natOrd@{i j} x' in _).
+      [D]: {
+        refine (
+          match r xp in OrdAcc _ xp' return Path@{i} xp xp' -> OrdAcc@{i j} natOrd@{i j} x' with
+            mkOrdAcc _ xp' ds_r_xp' => _
+          end).
+        refine (fun p_xp_xp' => _).
+        refine (ds_r_xp' x' _).
+        refine (trpt@{i j} (A := Nat@{i}) (B := fun xp' => Path@{j} (natOrd@{i j} x' xp') les@{j}) p_xp_xp' _).
+        exact o_x'_xp.
+      }
+    exact (D idpath@{i}).
+    }
+  }
+Defined.
+</pre>
+
+== 2020-05-12 ==
+
+今日は <code>ordRfl_natOrd@{i j} : OrdRfl@{i j} natOrd@{i j}</code> を定義します。
+
+<pre class="code">
+Definition ordRfl_natOrd@{i j} : OrdRfl@{i j} natOrd@{i j}.
+Proof.
+  refine (fix r (x : Nat@{i}) {struct x} : Path@{j} (natOrd@{i j} x x) eql@{j} := _).
+  refine (match x with zero => _ | succ xp => _ end).
+  {
+    exact idpath.
+  }
+  {
+    exact (r xp).
+  }
+Defined.
+</pre>
+
+== 脚注 ==
+
+<references />

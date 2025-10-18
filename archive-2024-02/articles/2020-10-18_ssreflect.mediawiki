@@ -1,0 +1,14 @@
+戦術 (tactic) を構造化したいので SSReflect を使う。
+
+まず、 SSRefrect を使うにはどうすればいいのだろう。現在では Coq そのものに組み込まれているので、 From Coq Require Import ssreflect などとすれば良いようだ。もちろん、 -nois を使って開発されているわけではないので Coq.Init.Prelude も Require Import する必要がある。
+
+SSReflect の戦術は整理されていて、規則的な役割を持つ。
+
+The <code>:</code> and <code>=><code> tacticals can be explained very simply if one views the goal as a stack of variables and assumptions piled on a conclusion:
+
+* <code>tactic : a b c</code> pushes the context constants <code>a</code>, <code>b</code>, <code>c</code> as goal variables before performing tactic.
+* <code>tactic => a b c</code> pops the top three goal variables as context constants <code>a</code>, <code>b</code>, <code>c</code>, after tactic has been performed.
+
+これが基本となる。つまり、 <code>tactic : a b c</code> は <code>tactic</code> を実行する前に <code>a</code>, <code>b</code>, <code>c</code> を目標へプッシュする。 <code>tactic => a b c<code> は <code>tactic を実行した後に <code>a</code>, <code>b</code>, <code>c</code> を目標からポップする。
+
+[https://coq.inria.fr/refman/proof-engine/ssreflect-proof-language.html#basic-tactics The SSReflect proof language — Coq 8.12.0 documentation] ([https://web.archive.org/web/20201004231918/https://coq.inria.fr/refman/proof-engine/ssreflect-proof-language.html#basic-tactics archive]) の所で語られている。

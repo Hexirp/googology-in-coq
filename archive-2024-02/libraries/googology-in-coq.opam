@@ -1,0 +1,40 @@
+opam-version: "2.0"
+
+maintainer: "hexirp@example.com"
+
+version: "dev"
+
+homepage: "https://github.com/Hexirp/googology-in-coq"
+
+dev-repo: "git+https://github.com/Hexirp/googology-in-coq.git"
+
+bug-reports: "https://github.com/Hexirp/googology-in-coq/issues"
+
+license: "Apache-2.0"
+
+synopsis: "Library of googology"
+
+description: """
+This is a library of googology.
+"""
+
+build: [
+  ["sh" "-c" "coq_makefile -f _CoqProject -o Makefile"]
+  [make "-j%{jobs}%"]
+]
+
+install: [make "install"]
+
+run-test: [make "test"]
+
+depends: [
+  "ocaml" {>= "4.05.0"}
+  "coq" {(>= "8.14") | (= "dev")}
+]
+
+tags: [
+]
+
+authors: [
+  "Hexirp Prixeh"
+]

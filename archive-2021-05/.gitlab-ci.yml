@@ -1,0 +1,27 @@
+image: coqorg/coq:8.13.0
+
+build-job:
+  stage: build
+  script:
+    - cd libraries/
+    # coq_path.sh の内容の変更は、 Docker Image を使うことにより、既に coq の実行ファイルがパスに含まれているので、不要である。
+    - ./compile.sh
+
+# test-job:
+#   stage: test
+#   script:
+#     - echo "The test has not been implemented yet."
+
+pages:
+  stage: deploy
+  script:
+    - cd libraries/
+    # coq_path.sh の内容の変更は、 Docker Image を使うことにより、既に coq の実行ファイルがパスに含まれているので、不要である。
+    - ./make_document.sh
+    - cd -
+    - cp -r libraries/docs/ public/
+  artifacts:
+    paths:
+      - public
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master"'

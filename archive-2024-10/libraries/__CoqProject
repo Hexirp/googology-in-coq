@@ -1,0 +1,8 @@
+-arg -nois
+
+-arg -verbose
+
+-R theories/ Googology_In_Coq
+
+theories/Base.v
+theories/Playground.v
