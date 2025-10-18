@@ -12,7 +12,7 @@ googology-in-coq は何回も作り直しているため、アーカイブする
 
 ### archive-2021-05
 
-二番目に古いバージョンです。当時の [Coq-Hott](https://github.com/HoTT/Coq-HoTT/tree/7b1b46057f97866a0c27678940bd1333984b79fc) を途中まで再構成しており、特に当時の [PathGroupoid](https://github.com/HoTT/Coq-HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v) にある定理を全て実装しています。ここからコーティングスタイルと coqdoc によるドキュメントの生成と shell スクリプトによるビルドシステムと GitLab CI による自動ビルドシステムを導入しています。
+二番目に古いバージョンです。当時の [Coq-HoTT](https://github.com/HoTT/Coq-HoTT/tree/7b1b46057f97866a0c27678940bd1333984b79fc) を途中まで再構成しており、特に当時の [PathGroupoid](https://github.com/HoTT/Coq-HoTT/blob/7b1b46057f97866a0c27678940bd1333984b79fc/theories/Basics/PathGroupoids.v) にある定理を全て実装しています。ここからコーティングスタイルと coqdoc によるドキュメントの生成と shell スクリプトによるビルドシステムと GitLab CI による自動ビルドシステムを導入しています。
 
 ### archive-2022-03
 
@@ -24,8 +24,8 @@ googology-in-coq は何回も作り直しているため、アーカイブする
 
 ### archive-2024-02
 
-五番目に古いバージョンです。当時の "[Introduction to Homotopy Type Theory](https://arxiv.org/abs/2212.11082)" を途中まで再構成しています。早すぎる分割を抑えるために一つのファイルにまとめて作り直しています。ここから日本語による名付けと日付・連番による名付けを導入しています。
+五番目に古いバージョンです。当時の "[Introduction to Homotopy Type Theory](https://arxiv.org/abs/2212.11082)" (Egbert Rijke, 2022) を途中まで再構成しています。早すぎる分割を抑えるために一つのファイルにまとめて作り直しています。ここから日本語による名付けと日付・連番による名付けを導入しています。
 
 ### archive-2024-10
 
-六番目に古いバージョンです。当時の "[Introduction to Homotopy Type Theory](https://arxiv.org/abs/2212.11082)" を途中まで再構成しており、特に第 1 部 "Martin-Löf’s Dependent Type Theory" の第 4 章 "More inductive types" までの演習問題の解を全て実装しています。ここから入れ子のモジュールと例外なき日付・連番による名付けと別名システムを導入しています。
+六番目に古いバージョンです。当時の "[Introduction to Homotopy Type Theory](https://arxiv.org/abs/2212.11082)" (Egbert Rijke, 2022) を途中まで再構成しており、特に第 1 部 "Martin-Löf’s Dependent Type Theory" の第 4 章 "More inductive types" までの演習問題の解を全て実装しています。ここから入れ子のモジュールと例外なき日付・連番による名付けと別名システムを導入しています。
